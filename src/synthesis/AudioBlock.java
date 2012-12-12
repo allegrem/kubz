@@ -1,5 +1,7 @@
 package synthesis;
 
+import synthesis.exceptions.TooManyInputsException;
+
 /**
  * Cette interface définit toutes les méthodes qui devront être implémentées 
  * par les AudioBlock. Les trois principales actions qu’effectue un AudioBlock 
@@ -45,7 +47,7 @@ public interface AudioBlock {
 	 * @param a AudioBlock à brancher
 	 * @param i numéro de l'entrée sur laquelle l'AudioBlock doit être branché
 	 */
-	public void plugin(AudioBlock a, int i);
+	public void plugin(AudioBlock a, int i) throws TooManyInputsException;
 
 	
 	/**
