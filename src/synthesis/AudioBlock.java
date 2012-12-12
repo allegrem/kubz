@@ -11,7 +11,7 @@ public interface AudioBlock {
 	 * La lecture d’un son demandera d’abord à tous les AudioBlock branchés 
 	 * en entrée de calculer le son, puis l’AudioBlock calculera le son à 
 	 * partir des entrées ainsi obtenues. Le son est calculé à l’instant t.
-	 * 
+	 * <br />
 	 * Attention ! Les boucles dans le graphe des AudioBlock ne sont pas 
 	 * autorisées (sinon les appels récursifs seront infinis !).
 	 * 
@@ -29,7 +29,7 @@ public interface AudioBlock {
 	 * d’entrées, d’autres n’autorisent aucune entrée, etc... Pour être certain 
 	 * de l’utilisation de la méthode plugin, il convient de se référer à la 
 	 * documentation de l’AudioBlock considéré.
-	 * 
+	 * <br />
 	 * Le numéro de l’entrée est parfois essentiel (pour certains AudioBlock, 
 	 * toutes les entrées ne jouent pas le même rôle). Là encore on se 
 	 * référera à la documentation de l’AudioBlock considéré. 
@@ -59,7 +59,7 @@ public interface AudioBlock {
 	 * Cette méthode débranche l’AudioBlock branché sur l’entrée i. Cette 
 	 * méthode ne devrait être utilisée que sur les AudioBlock pour lesquels 
 	 * l’ordre des entrées compte.
-	 * 
+	 * <br />
 	 * Attention ! A priori, rien ne garantit que les numéros d’entrée 
 	 * correspondent à l’ordre dans lequel la méthode plugin a été appelée. Il 
 	 * est toujours préférable de garder une référence sur les AudioBlock 
