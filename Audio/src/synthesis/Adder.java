@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Cette classe permet de faire la somme d’un nombre quelconque de signaux.
- * @author valeh
+ * @author valeh	
  */
 
 public class Adder implements AudioBlock {
