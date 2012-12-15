@@ -1,5 +1,6 @@
 package synthesis;
 
+import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.exceptions.TooManyInputsException;
 
 /**
