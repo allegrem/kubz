@@ -10,7 +10,7 @@ import synthesis.exceptions.TooManyInputsException;
  */
 public abstract class OneInputBlock implements AudioBlock {
 
-	private AudioBlock in;
+	protected AudioBlock in;
 	
 
 	/**

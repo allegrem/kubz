@@ -1,5 +1,6 @@
 package synthesis;
 
+import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.exceptions.TooManyInputsException;
 
 /**
@@ -22,7 +23,7 @@ public interface AudioBlock {
 	 * @param t l'instant auquel doit être calculé le son
 	 * @return le son calculé à l'instant t
 	 */
-	public Float play(int t);
+	public Float play(int t) throws RequireAudioBlocksException;
 
 	
 	/**
