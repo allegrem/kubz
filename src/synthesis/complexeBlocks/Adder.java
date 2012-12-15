@@ -7,7 +7,7 @@ import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
 *This class returns the sum of its entries.
-*@see Addder#play(int t) 
+*@see Adder#play(int t) 
 *@author valeh
 */
 
