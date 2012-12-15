@@ -32,7 +32,7 @@ public class Multiplier implements AudioBlock {
 		entries.add(a);	
 	}
 	
-	public void plugout(AudioBlock a) {
+	public void plugout(AudioBlock a){
 		entries.remove(a);
 		
 	}
