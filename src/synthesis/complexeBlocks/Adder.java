@@ -1,6 +1,9 @@
-package synthesis;
+package synthesis.complexeBlocks;
 
 import java.util.ArrayList;
+
+import synthesis.AudioBlock;
+import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
  * Cette classe permet de faire la somme d’un nombre quelconque de signaux.
@@ -21,7 +24,9 @@ public class Adder implements AudioBlock {
 	public Float play(int t) {
 		Float s=null;
 		for (AudioBlock a : entries){
-			s += a.play(t);
+			try{
+				s += a.play(t);
+			}catch(RequireAudioBlocksException e){}
 		}
 		return s;
 	}

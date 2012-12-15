@@ -1,6 +1,9 @@
-package synthesis;
+package synthesis.complexeBlocks;
 
 import java.util.ArrayList;
+
+import synthesis.AudioBlock;
+import synthesis.exceptions.RequireAudioBlocksException;
 
 /** 
 *Cette classe permet de faire le produit d’un nombre quelconque de signaux. 
@@ -21,7 +24,9 @@ public class Multiplier implements AudioBlock {
 	public Float play(int t) {
 		Float s=null;
 		for (AudioBlock a : entries){
-			s *= a.play(t);
+			try{
+				s *= a.play(t);
+			}catch(RequireAudioBlocksException e){}
 		}
 		return s;
 	}
@@ -30,7 +35,7 @@ public class Multiplier implements AudioBlock {
 		entries.add(a);	
 	}
 	
-	public void plugout(AudioBlock a) {
+	public void plugout(AudioBlock a){
 		entries.remove(a);
 		
 	}
