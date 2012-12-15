@@ -1,4 +1,4 @@
-package synthesis.basicBlocks;
+package synthesis.basicblocks.oneinputblocks;
 
 import synthesis.AudioBlock;
 import synthesis.exceptions.RequireAudioBlocksException;

@@ -1,4 +1,4 @@
-package synthesis.complexeBlocks;
+package synthesis.basicblocks;
 
 import java.util.ArrayList;
 
@@ -6,7 +6,7 @@ import synthesis.AudioBlock;
 import synthesis.exceptions.RequireAudioBlocksException;
 
 /** 
-*Cette classe permet de faire le produit d’un nombre quelconque de signaux. 
+*Cette classe permet de faire le produit d'un nombre quelconque de signaux. 
 *@author:valeh
 */
 
