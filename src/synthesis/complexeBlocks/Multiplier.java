@@ -1,6 +1,8 @@
-package synthesis;
+package synthesis.complexeBlocks;
 
 import java.util.ArrayList;
+
+import synthesis.AudioBlock;
 
 /** 
 *Cette classe permet de faire le produit d’un nombre quelconque de signaux. 

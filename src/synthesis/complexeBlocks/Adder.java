@@ -1,6 +1,8 @@
-package synthesis;
+package synthesis.complexeBlocks;
 
 import java.util.ArrayList;
+
+import synthesis.AudioBlock;
 
 /**
  * Cette classe permet de faire la somme d’un nombre quelconque de signaux.
