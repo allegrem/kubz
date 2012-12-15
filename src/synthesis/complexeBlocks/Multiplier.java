@@ -6,46 +6,33 @@ import synthesis.AudioBlock;
 import synthesis.exceptions.RequireAudioBlocksException;
 
 /** 
-*Cette classe permet de faire le produit d’un nombre quelconque de signaux. 
-*@author:valeh
+*This class returns the product of its entries.
+*@see Multiplier#play(int t) 
+*@author valeh
 */
 
-public class Multiplier implements AudioBlock {
+public class Multiplier extends SeveralInputBlocks {
 	
-	private ArrayList<AudioBlock> entries;
-	
-	public ArrayList<AudioBlock> getEntries(){
-		return entries;
-	}
-	public void setEntries( ArrayList<AudioBlock> entries ){
-		this.entries=entries;
+	public Multiplier(ArrayList<AudioBlock> entries){
+		super(entries);
 	}
 	
-	public Float play(int t) {
-		Float s=null;
-		for (AudioBlock a : entries){
-			try{
-				s *= a.play(t);
-			}catch(RequireAudioBlocksException e){}
-		}
-		return s;
-	}
-	
+
+	@Override
 	public void plugin(AudioBlock a, int i) {
 		entries.add(a);	
 	}
 	
-	public void plugout(AudioBlock a){
-		entries.remove(a);
-		
-	}
-	
+	@Override
 	public void plugout(int i) {
 		
 	}
 	
-	public void plugoutAll() {
-		entries=null;
+	public Float play(int t) throws RequireAudioBlocksException{
+		Float s = super.play(t);
+		for (AudioBlock a : entries)		
+				s *= a.play(t);
+		return s;
 	}
 	
 	

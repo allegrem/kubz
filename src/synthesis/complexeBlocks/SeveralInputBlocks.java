@@ -19,27 +19,22 @@ public abstract class SeveralInputBlocks implements AudioBlock {
 		this.entries = entries;
 	}
 	
-	public Float play(int t) {
-		if (entries == null) 
-			throw new RequireAudioBlocksException();
-		return null;
-	}
-	
-	public void plugin(AudioBlock a, int i) {
-		entries.add(a);	
-	}
-	
 	public void plugout(AudioBlock a) {
-		entries.remove(a);
-		
-	}
-	
-	public void plugout(int i) {
-		
+		entries.remove(a);	
 	}
 	
 	public void plugoutAll() {
 		entries=null;
+	}
+	
+	public abstract void plugin(AudioBlock a, int i);
+	public abstract void plugout(int i);
+	
+	
+	public Float play(int t) throws RequireAudioBlocksException{
+		if (entries == null) 
+			throw new RequireAudioBlocksException();
+		return null;
 	}
 
 }
