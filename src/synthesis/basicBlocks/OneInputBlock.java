@@ -1,6 +1,7 @@
 package synthesis.basicBlocks;
 
 import synthesis.AudioBlock;
+import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.exceptions.TooManyInputsException;
 
 /**
@@ -68,5 +69,18 @@ public abstract class OneInputBlock implements AudioBlock {
 	public void plugoutAll() {
 		plugout();
 	}
+
+	/**
+	 * Throws an exception if no input is plugged in.
+	 * @see synthesis.AudioBlock#play(int)
+	 */
+	@Override
+	public Float play(int t) throws RequireAudioBlocksException {
+		if (in == null)
+			throw new RequireAudioBlocksException();
+		return null;
+	}
+	
+	
 	
 }

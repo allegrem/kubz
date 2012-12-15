@@ -24,11 +24,11 @@ public class Offset extends OneInputBlock {
 
 	/**
 	 * The sound produced is given by : out(t) = offset + in(t).
+	 * @see OneInputBlock#play(int)
 	 */
 	@Override
 	public Float play(int t) throws RequireAudioBlocksException {
-		if (in == null)
-			throw new RequireAudioBlocksException();
+		super.play(t);
 		return in.play(t) + offset;
 	}
 
