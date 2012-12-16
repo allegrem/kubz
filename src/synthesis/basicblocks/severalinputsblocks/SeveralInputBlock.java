@@ -48,10 +48,7 @@ public abstract class SeveralInputBlock implements AudioBlock {
 	}
 	
 	@Override
-	public Float phi(Float t) {
-		System.out.println("ERROR! NOT YET IMPLEMENTED!!");
-		return null;
-	}
+	public abstract Float phi(Float t) throws RequireAudioBlocksException;
 	
 
 }
