@@ -21,7 +21,7 @@ public class Multiplier implements AudioBlock {
 		this.entries=entries;
 	}
 	
-	public Float play(int t) {
+	public Float play(Float t) {
 		Float s=null;
 		for (AudioBlock a : entries){
 			try{

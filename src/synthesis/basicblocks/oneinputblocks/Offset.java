@@ -27,7 +27,7 @@ public class Offset extends OneInputBlock {
 	 * @see OneInputBlock#play(int)
 	 */
 	@Override
-	public Float play(int t) throws RequireAudioBlocksException {
+	public Float play(Float t) throws RequireAudioBlocksException {
 		super.play(t);
 		return in.play(t) + offset;
 	}

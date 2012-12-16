@@ -33,7 +33,7 @@ public class SineWaveOscillator implements AudioBlock {
 	 * @see synthesis.AudioBlock#play(int)
 	 */
 	@Override
-	public Float play(int t) throws RequireAudioBlocksException {
+	public Float play(Float t) throws RequireAudioBlocksException {
 		return new Float(amplitude * Math.sin(2*Math.PI*frequency*t));
 	}
 

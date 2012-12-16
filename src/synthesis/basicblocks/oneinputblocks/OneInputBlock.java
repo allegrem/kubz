@@ -55,7 +55,7 @@ public abstract class OneInputBlock implements AudioBlock {
 	 * @see synthesis.AudioBlock#play(int)
 	 */
 	@Override
-	public Float play(int t) throws RequireAudioBlocksException {
+	public Float play(Float t) throws RequireAudioBlocksException {
 		if (in == null)
 			throw new RequireAudioBlocksException();
 		return null;

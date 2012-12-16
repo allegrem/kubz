@@ -1,9 +1,14 @@
 package synthesis;
 
-import java.util.ArrayList;
 
-import synthesis.basicblocks.noinputblocks.Constant;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.SourceDataLine;
+
+import synthesis.basicblocks.Adder;
 import synthesis.basicblocks.noinputblocks.SineWaveOscillator;
+import synthesis.basicblocks.oneinputblocks.Gain;
 import synthesis.basicblocks.oneinputblocks.Offset;
 import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.exceptions.TooManyInputsException;
@@ -20,32 +25,59 @@ public class MainSynthesis {
 	 * @param args
 	 * @throws TooManyInputsException 
 	 * @throws RequireAudioBlocksException 
+	 * @throws LineUnavailableException 
 	 */
 	public static void main(String[] args) throws TooManyInputsException, 
-	RequireAudioBlocksException {
-		SineWaveOscillator osc = 
-				new SineWaveOscillator(new Float(440), new Float(10));
+	RequireAudioBlocksException, LineUnavailableException {
+		SineWaveOscillator osc = new SineWaveOscillator(440f, 120f);
+		SineWaveOscillator osc2 = new SineWaveOscillator(660f, 120f);
 		
-		Constant c = new Constant((float) 12);
-		Offset off = new Offset((float) 3);
-		off.plugin(c);
-		off.plugout();
+		Offset off = new Offset(60f);
 		off.plugin(osc);
 		
-		System.out.println(play(0, 1, osc));
+		Gain g = new Gain(2f);
+		g.plugin(osc);
+		
+		SourceDataLine line = initSoundSystem();
+		playSound(0f, 1f, osc, line);
+		playSound(0f, 1f, osc2, line);
+		closeSoundSystem(line);
 	}
 	
 	
-	public static ArrayList<Integer> play(double start, double length, AudioBlock a) 
+	public static byte[] computeSound(Float start, Float length, AudioBlock a) 
 			throws RequireAudioBlocksException {
-		ArrayList<Integer> arr = new ArrayList<Integer>();
+		byte[] arr = new byte[(int) (length*AudioBlock.sampleRate)];
 		
 		for(int i = 0; i<length*AudioBlock.sampleRate ; i++) {
-			float f = a.play((int) (start + i/AudioBlock.sampleRate));
-			arr.add((int) f);
+			float f = a.play((start + i)/AudioBlock.sampleRate);
+			arr[i] = (byte) f;
 		}
 		
 		return arr;
 	}
+	
+	
+	public static void playSound(Float start, Float length, AudioBlock a, 
+			SourceDataLine line) throws RequireAudioBlocksException {
+		byte[] arr = computeSound(start, length, a);
+        line.write(arr, 0, arr.length);
+	}
+	
+	
+	public static SourceDataLine initSoundSystem() 
+			throws LineUnavailableException {
+		final AudioFormat af = 
+				new AudioFormat(AudioBlock.sampleRate, 16, 1, true, true);
+        SourceDataLine line = AudioSystem.getSourceDataLine(af);
+        line.open(af);
+        line.start();
+        return line;
+	}
+	
 
+	public static void closeSoundSystem(SourceDataLine line) {
+		line.drain();
+        line.close();
+	}
 }

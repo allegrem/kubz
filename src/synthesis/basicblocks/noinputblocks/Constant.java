@@ -27,7 +27,7 @@ public class Constant implements AudioBlock {
 	 * @see synthesis.AudioBlock#play(int)
 	 */
 	@Override
-	public Float play(int t) throws RequireAudioBlocksException {
+	public Float play(Float t) throws RequireAudioBlocksException {
 		return constant;
 	}
 
