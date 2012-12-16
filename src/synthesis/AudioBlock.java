@@ -1,7 +1,6 @@
 package synthesis;
 
 import synthesis.exceptions.RequireAudioBlocksException;
-import synthesis.exceptions.TooManyInputsException;
 
 /**
  * Cette interface définit toutes les méthodes qui devront être implémentées 
