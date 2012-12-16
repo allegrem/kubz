@@ -36,6 +36,14 @@ public class FixedSquareWaveOscillator implements AudioBlock {
 		else
 			return -1 * amplitude;
 	}
+
+
+	@Override
+	public Float phi(Float t) {
+		// TODO Auto-generated method stub
+		System.out.println("ERROR! NOT YET IMPLEMENTED!!");
+		return null;
+	}
 	
 	
 }

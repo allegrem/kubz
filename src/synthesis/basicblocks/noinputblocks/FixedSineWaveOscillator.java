@@ -16,8 +16,8 @@ public class FixedSineWaveOscillator implements AudioBlock {
 
 	/**
 	 * Creates a new FixedSineWaveOscillator.
-	 * @param frequency The frequency of the sinus in Hertz
-	 * @param amplitude The amplitude of the sinus.
+	 * @param frequency The frequency of the cosinus in Hertz
+	 * @param amplitude The amplitude of the cosinus.
 	 */
 	public FixedSineWaveOscillator(Float frequency, Float amplitude) {
 		super();
@@ -27,12 +27,25 @@ public class FixedSineWaveOscillator implements AudioBlock {
 
 
 	/**
-	 * 
+	 * Returns a cosinus function with the given amplitude.
 	 * @see synthesis.AudioBlock#play(int)
+	 * @return s(t) = a * cos(2 * Pi * f * t) where a is the amplitude and f is
+	 * the frequency.
 	 */
 	@Override
 	public Float play(Float t) throws RequireAudioBlocksException {
-		return new Float(amplitude * Math.sin(2*Math.PI*frequency*t));
+		return (float) (amplitude * Math.cos(2*Math.PI*frequency*t));
+	}
+
+	
+	/**
+	 * Returns the phi function of a cosinus.
+	 * @return s(t) = a / f * sin(2 * Pi * f * t) where a is the amplitude and 
+	 * f is the frequency.
+	 */
+	@Override
+	public Float phi(Float t) {
+		return (float) (amplitude / frequency * Math.sin(2*Math.PI*frequency*t));
 	}
 
 }

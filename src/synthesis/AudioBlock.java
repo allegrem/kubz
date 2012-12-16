@@ -14,6 +14,7 @@ public interface AudioBlock {
 	 */
 	public static final Float SAMPLE_RATE = 44100f;
 	
+	
 	/**
 	 * La lecture d’un son demandera d’abord à tous les AudioBlock branchés 
 	 * en entrée de calculer le son, puis l’AudioBlock calculera le son à 
@@ -28,5 +29,16 @@ public interface AudioBlock {
 	 * @return le son calculé à l'instant t
 	 */
 	public Float play(Float t) throws RequireAudioBlocksException;
+	
+	
+	/**
+	 * Compute the phi function which returns the integral of the signal.
+	 * @param t The time where to compute the phi function.
+	 * @return phi(t) = 2 * Pi * int(f(u), u=0..t) * t where f is the 
+	 * signal produced.
+	 * @throws RequireAudioBlocksException  si l’AudioBlock n’a pas toutes les 
+	 * entrées nécessaires pour calculer le son.
+	 */
+	public Float phi(Float t) throws RequireAudioBlocksException;
 	
 }

@@ -31,4 +31,13 @@ public class Constant implements AudioBlock {
 		return constant;
 	}
 
+
+	/**
+	 * @return s(t) = 2 * Pi * t
+	 */
+	@Override
+	public Float phi(Float t) {
+		return (float) (2 * Math.PI * t);
+	}
+
 }

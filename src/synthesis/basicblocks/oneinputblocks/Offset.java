@@ -32,4 +32,14 @@ public class Offset extends OneInputBlock {
 		return in.play(t) + offset;
 	}
 
+	/**
+	 * @return out(t) = 2 * Pi * offset * t + in.phi(t)
+	 * @see OneInputBlock#phi(Float)
+	 */
+	@Override
+	public Float phi(Float t) throws RequireAudioBlocksException {
+		super.phi(t);
+		return (float) (2 * Math.PI * offset * t + in.phi(t));
+	}
+
 }

@@ -28,6 +28,7 @@ public abstract class OneInputBlock implements AudioBlock {
 			throw new TooManyInputsException();
 	}
 
+	
 	/**
 	 * Plugs out the given AudioBlock only if it is plugged in. If the plugged
 	 * AudioBlock is not the given one, this method does nothing.
@@ -38,6 +39,7 @@ public abstract class OneInputBlock implements AudioBlock {
 			plugout();
 	}
 
+	
 	/**
 	 * Plugs out the plugged AudioBlock
 	 * If no AudioBlock is plugged in, a warning message is displayed.
@@ -49,6 +51,7 @@ public abstract class OneInputBlock implements AudioBlock {
 		in = null;
 	}
 
+	
 	/**
 	 * This method defines the default behavior for a OneInputBlock. It throws 
 	 * an exception if no input is plugged in.
@@ -56,6 +59,19 @@ public abstract class OneInputBlock implements AudioBlock {
 	 */
 	@Override
 	public Float play(Float t) throws RequireAudioBlocksException {
+		if (in == null)
+			throw new RequireAudioBlocksException();
+		return null;
+	}
+	
+	
+	/**
+	 * This method defines the default behavior for a OneInputBlock. It throws 
+	 * an exception if no input is plugged in.
+	 * @see synthesis.AudioBlock#phi(int)
+	 */
+	@Override
+	public Float phi(Float t) throws RequireAudioBlocksException {
 		if (in == null)
 			throw new RequireAudioBlocksException();
 		return null;

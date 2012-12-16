@@ -15,7 +15,7 @@ import javax.sound.sampled.TargetDataLine;
 
 import synthesis.basicblocks.noinputblocks.Constant;
 import synthesis.basicblocks.noinputblocks.FixedSineWaveOscillator;
-import synthesis.basicblocks.noinputblocks.FixedSquareWaveOscillator;
+import synthesis.basicblocks.oneinputblocks.Offset;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
 import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.exceptions.TooManyInputsException;
@@ -39,9 +39,10 @@ public class MainSynthesis {
 	RequireAudioBlocksException, LineUnavailableException, IOException {
 		
 		//playground
-		FixedSineWaveOscillator osc = new FixedSineWaveOscillator(440f, 120f);
-		Constant c = new Constant(120f);
-		SineWaveOscillator osc2 = new SineWaveOscillator(osc, c);
+		FixedSineWaveOscillator osc = new FixedSineWaveOscillator(100f, 10*100f);
+		Offset off = new Offset(1000f);
+		off.plugin(osc);
+		SineWaveOscillator osc2 = new SineWaveOscillator(off, new Constant(60f));
 		
 		AudioBlock out = osc2; //this should have a reference to the bottom AudioBlock
 		

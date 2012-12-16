@@ -47,6 +47,12 @@ public class Adder implements AudioBlock {
 	public void plugoutAll() {
 		entries=null;
 	}
+	@Override
+	public Float phi(Float t) {
+		// TODO Auto-generated method stub
+		System.out.println("ERROR! NOT YET IMPLEMENTED!!");
+		return null;
+	}
 	
 	
 }

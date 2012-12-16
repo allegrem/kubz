@@ -32,4 +32,15 @@ public class Gain extends OneInputBlock {
 		return in.play(t) * gain;
 	}
 
+	
+	/**
+	 * @return out(t) = gain * in.phi(t)
+	 * @see OneInputBlock#phi(Float)
+	 */
+	@Override
+	public Float phi(Float t) throws RequireAudioBlocksException {
+		super.phi(t);
+		return in.phi(t) * gain;
+	}
+
 }

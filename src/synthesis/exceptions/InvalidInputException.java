@@ -5,11 +5,11 @@ package synthesis.exceptions;
  * input number.
  * @author allegrem
  */
-public class InvalidInputExeption extends Exception {
+public class InvalidInputException extends Exception {
 	
 	private static final long serialVersionUID = 1L;
 
-	public InvalidInputExeption() {
+	public InvalidInputException() {
 		System.out.println("Error! The given input number is invalid.");
 	}
 	

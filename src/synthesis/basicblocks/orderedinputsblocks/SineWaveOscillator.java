@@ -1,7 +1,7 @@
 package synthesis.basicblocks.orderedinputsblocks;
 
 import synthesis.AudioBlock;
-import synthesis.exceptions.InvalidInputExeption;
+import synthesis.exceptions.InvalidInputException;
 import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.exceptions.TooManyInputsException;
 
@@ -57,7 +57,7 @@ public class SineWaveOscillator implements AudioBlock {
 		try {
 			plugout(AMPLITUDE_IN);
 			plugout(FREQUENCY_IN);
-		} catch (InvalidInputExeption e) {
+		} catch (InvalidInputException e) {
 			e.printStackTrace();
 		}
 	}
@@ -70,10 +70,10 @@ public class SineWaveOscillator implements AudioBlock {
 	 * {@link SineWaveOscillator} for the list of constants associated to inputs.
 	 * @throws TooManyInputsException if an AudioBlock was already plugged in
 	 * the given input.
-	 * @throws InvalidInputExeption if the given input number is not valid.
+	 * @throws InvalidInputException if the given input number is not valid.
 	 */
 	public void plugin(AudioBlock a, int i) 
-			throws TooManyInputsException, InvalidInputExeption {
+			throws TooManyInputsException, InvalidInputException {
 		switch (i) {
 		case AMPLITUDE_IN:
 			if (amplitude != null)
@@ -88,7 +88,7 @@ public class SineWaveOscillator implements AudioBlock {
 			break;
 			
 		default:
-			throw new InvalidInputExeption();
+			throw new InvalidInputException();
 		}
 	}
 	
@@ -97,9 +97,9 @@ public class SineWaveOscillator implements AudioBlock {
 	 * Plugs out the AudioBlock plugged in the given input.
 	 * @param i The input number to plug out. See {@link SineWaveOscillator} 
 	 * for the list of constants associated to inputs.
-	 * @throws InvalidInputExeption if the given input number is not valid.
+	 * @throws InvalidInputException if the given input number is not valid.
 	 */
-	public void plugout(int i) throws InvalidInputExeption {
+	public void plugout(int i) throws InvalidInputException {
 		switch (i) {
 		case AMPLITUDE_IN:
 			if (amplitude == null)
@@ -116,7 +116,7 @@ public class SineWaveOscillator implements AudioBlock {
 			break;
 			
 		default:
-			throw new InvalidInputExeption();
+			throw new InvalidInputException();
 		}
 	}
 
@@ -125,12 +125,17 @@ public class SineWaveOscillator implements AudioBlock {
 	 * @see synthesis.AudioBlock#play(java.lang.Float)
 	 */
 	@Override
-	public Float play(Float t) throws RequireAudioBlocksException {
-		Float phi = 0f;
-		for(int i=0; i<t*SAMPLE_RATE ; i++)
-			phi += frequency.play(i/SAMPLE_RATE); 
+	public Float play(Float t) throws RequireAudioBlocksException {		
 		return (float) (amplitude.play(t) * 
-				Math.cos(2 * Math.PI * phi / SAMPLE_RATE));
+				Math.cos(frequency.phi(t)));
+	}
+
+
+	@Override
+	public Float phi(Float t) {
+		// TODO Auto-generated method stub
+		System.out.println("ERROR! NOT YET IMPLEMENTED!!");
+		return null;
 	}
 
 }
