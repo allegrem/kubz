@@ -4,7 +4,6 @@ package synthesis;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;
@@ -14,10 +13,10 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
 
-import synthesis.basicblocks.noinputblocks.SineWaveOscillator;
-import synthesis.basicblocks.noinputblocks.SquareWaveOscillator;
-import synthesis.basicblocks.oneinputblocks.Gain;
-import synthesis.basicblocks.oneinputblocks.Offset;
+import synthesis.basicblocks.noinputblocks.Constant;
+import synthesis.basicblocks.noinputblocks.FixedSineWaveOscillator;
+import synthesis.basicblocks.noinputblocks.FixedSquareWaveOscillator;
+import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
 import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.exceptions.TooManyInputsException;
 
@@ -38,10 +37,13 @@ public class MainSynthesis {
 	 */
 	public static void main(String[] args) throws TooManyInputsException, 
 	RequireAudioBlocksException, LineUnavailableException, IOException {
-		SineWaveOscillator osc = new SineWaveOscillator(440f, 120f);
-		SquareWaveOscillator osc2 = new SquareWaveOscillator(440f, 50f);
 		
-		AudioBlock out = osc2;
+		//playground
+		FixedSineWaveOscillator osc = new FixedSineWaveOscillator(440f, 120f);
+		Constant c = new Constant(120f);
+		SineWaveOscillator osc2 = new SineWaveOscillator(osc, c);
+		
+		AudioBlock out = osc2; //this should have a reference to the bottom AudioBlock
 		
 		
 		//playing sound
@@ -51,7 +53,7 @@ public class MainSynthesis {
 		
 		
 		//save to wav
-		AudioFormat af = new AudioFormat(AudioBlock.sampleRate/2, 16, 1, true, true);
+		AudioFormat af = new AudioFormat(AudioBlock.SAMPLE_RATE/2, 16, 1, true, true);
 				//i dont know why it plays the sound twice too fast, but it does :(
         TargetDataLine lineOut = AudioSystem.getTargetDataLine(af);
         lineOut.open(af);
@@ -68,10 +70,10 @@ public class MainSynthesis {
 	
 	public static byte[] computeSound(Float start, Float length, AudioBlock a) 
 			throws RequireAudioBlocksException {
-		byte[] arr = new byte[(int) (length*AudioBlock.sampleRate)];
+		byte[] arr = new byte[(int) (length*AudioBlock.SAMPLE_RATE)];
 		
-		for(int i = 0; i<length*AudioBlock.sampleRate ; i++) {
-			float f = a.play((start + i)/AudioBlock.sampleRate);
+		for(int i = 0; i<length*AudioBlock.SAMPLE_RATE ; i++) {
+			float f = a.play((start + i)/AudioBlock.SAMPLE_RATE);
 			arr[i] = (byte) f;
 		}
 		
@@ -89,7 +91,7 @@ public class MainSynthesis {
 	public static SourceDataLine initSoundSystem() 
 			throws LineUnavailableException {
 		final AudioFormat af = 
-				new AudioFormat(AudioBlock.sampleRate/2, 16, 1, true, true);
+				new AudioFormat(AudioBlock.SAMPLE_RATE/2, 16, 1, true, true);
         SourceDataLine line = AudioSystem.getSourceDataLine(af);
         line.open(af);
         line.start();

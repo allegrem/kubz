@@ -12,7 +12,7 @@ public interface AudioBlock {
 	/**
 	 * Defines the sample rate of the synthesis engine.
 	 */
-	public static final Float sampleRate = 44100f;
+	public static final Float SAMPLE_RATE = 44100f;
 	
 	/**
 	 * La lecture d’un son demandera d’abord à tous les AudioBlock branchés 

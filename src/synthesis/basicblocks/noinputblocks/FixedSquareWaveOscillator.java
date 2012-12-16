@@ -8,18 +8,18 @@ import synthesis.exceptions.RequireAudioBlocksException;
  * and amplitude.
  * @author allegrem
  */
-public class SquareWaveOscillator implements AudioBlock {
+public class FixedSquareWaveOscillator implements AudioBlock {
 	
 	private final Float frequency;
 	private final Float amplitude;
 	
 	
 	/**
-	 * Creates a new SquareWaveOscillator.
+	 * Creates a new FixedSquareWaveOscillator.
 	 * @param frequency The frequency of the sinus in Hertz
 	 * @param amplitude The amplitude of the sinus.
 	 */
-	public SquareWaveOscillator(Float frequency, Float amplitude) {
+	public FixedSquareWaveOscillator(Float frequency, Float amplitude) {
 		super();
 		this.frequency = frequency;
 		this.amplitude = amplitude;
