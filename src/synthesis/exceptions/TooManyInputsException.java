@@ -11,7 +11,7 @@ public class TooManyInputsException extends Exception {
 
 	public TooManyInputsException() {
 		System.out.println("Error! Tried to plug in an AudioBlock whereas all" +
-				"inputs were occupied!");
+				" inputs were occupied! ");
 	}
 	
 }

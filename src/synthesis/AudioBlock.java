@@ -8,6 +8,12 @@ import synthesis.exceptions.RequireAudioBlocksException;
  * @author allegrem
  */
 public interface AudioBlock {
+	
+	/**
+	 * Defines the sample rate of the synthesis engine.
+	 */
+	public static final int sampleRate = 44000;
+	
 	/**
 	 * La lecture d’un son demandera d’abord à tous les AudioBlock branchés 
 	 * en entrée de calculer le son, puis l’AudioBlock calculera le son à 
