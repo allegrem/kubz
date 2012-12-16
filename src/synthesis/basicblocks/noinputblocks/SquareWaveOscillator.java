@@ -4,22 +4,22 @@ import synthesis.AudioBlock;
 import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
- * This class handles a sine wave oscillator which works at a fixed frequency
+ * This class handles a square wave oscillator which works at a fixed frequency
  * and amplitude.
  * @author allegrem
  */
-public class SineWaveOscillator implements AudioBlock {
-
+public class SquareWaveOscillator implements AudioBlock {
+	
 	private final Float frequency;
 	private final Float amplitude;
 	
-
+	
 	/**
-	 * Creates a new SineWaveOscillator.
+	 * Creates a new SquareWaveOscillator.
 	 * @param frequency The frequency of the sinus in Hertz
 	 * @param amplitude The amplitude of the sinus.
 	 */
-	public SineWaveOscillator(Float frequency, Float amplitude) {
+	public SquareWaveOscillator(Float frequency, Float amplitude) {
 		super();
 		this.frequency = frequency;
 		this.amplitude = amplitude;
@@ -28,11 +28,14 @@ public class SineWaveOscillator implements AudioBlock {
 
 	/**
 	 * 
-	 * @see synthesis.AudioBlock#play(int)
 	 */
 	@Override
 	public Float play(Float t) throws RequireAudioBlocksException {
-		return new Float(amplitude * Math.sin(2*Math.PI*frequency*t));
+		if (Math.sin(2*Math.PI*frequency*t) >= 0)
+			return amplitude;
+		else
+			return -1 * amplitude;
 	}
-
+	
+	
 }

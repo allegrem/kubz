@@ -8,6 +8,7 @@ import javax.sound.sampled.SourceDataLine;
 
 import synthesis.basicblocks.Adder;
 import synthesis.basicblocks.noinputblocks.SineWaveOscillator;
+import synthesis.basicblocks.noinputblocks.SquareWaveOscillator;
 import synthesis.basicblocks.oneinputblocks.Gain;
 import synthesis.basicblocks.oneinputblocks.Offset;
 import synthesis.exceptions.RequireAudioBlocksException;
@@ -29,8 +30,8 @@ public class MainSynthesis {
 	 */
 	public static void main(String[] args) throws TooManyInputsException, 
 	RequireAudioBlocksException, LineUnavailableException {
-		SineWaveOscillator osc = new SineWaveOscillator(440f, 120f);
-		SineWaveOscillator osc2 = new SineWaveOscillator(660f, 120f);
+		SineWaveOscillator osc = new SineWaveOscillator(110f, 120f);
+		SquareWaveOscillator osc2 = new SquareWaveOscillator(440f, 20f);
 		
 		Offset off = new Offset(60f);
 		off.plugin(osc);
@@ -40,8 +41,12 @@ public class MainSynthesis {
 		
 		SourceDataLine line = initSoundSystem();
 		playSound(0f, 1f, osc, line);
-		playSound(0f, 1f, osc2, line);
+		playSound(0f, 2f, osc2, line);
 		closeSoundSystem(line);
+		
+/*		byte[] arr = computeSound(0f, 1f, osc2); 
+		for(int i = 0; i<1f*AudioBlock.sampleRate ; i++)
+			System.out.println(arr[i]);*/
 	}
 	
 	
