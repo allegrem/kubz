@@ -34,7 +34,7 @@ public interface AudioBlock {
 	/**
 	 * Compute the phi function which returns the integral of the signal.
 	 * @param t The time where to compute the phi function.
-	 * @return phi(t) = 2 * Pi * int(f(u), u=0..t) * t where f is the 
+	 * @return phi(t) = 2 * Pi * int(f(u), u=0..t) where f is the 
 	 * signal produced.
 	 * @throws RequireAudioBlocksException  si l’AudioBlock n’a pas toutes les 
 	 * entrées nécessaires pour calculer le son.

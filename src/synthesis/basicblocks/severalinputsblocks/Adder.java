@@ -13,34 +13,33 @@ import synthesis.exceptions.RequireAudioBlocksException;
 
 
 public class Adder extends SeveralInputBlock {
-	
+	/**
+	 * Creates an Adder AudioBlock with the specified entries.
+	 * @param entries the list of input AudioBlocks 
+	 * @see SeveralInputBlock#SeveralInputBlock(ArrayList)
+	 */
 	public Adder(ArrayList<AudioBlock> entries){
 		super(entries);
 	}
 	
-
-	@Override
-	public void plugin(AudioBlock a, int i) {
-		entries.add(a);	
-	}
-	
-	@Override
-	public void plugout(int i) {
-		
-	}
-	
+	/**
+	 * Returns the sum of the entries s(t)=e1(t)+e2(t)+...
+	 * @param t the specified instant
+	 */
 	public Float play(Float t) throws RequireAudioBlocksException{
 		Float s = super.play(t);
 		for (AudioBlock a : entries)		
 				s += a.play(t);
 		return s;
 	}
+
+
 	@Override
-	public Float phi(Float t) {
+	public Float phi(Float t) throws RequireAudioBlocksException {
 		// TODO Auto-generated method stub
-		System.out.println("ERROR! NOT YET IMPLEMENTED!!");
+		System.out.println("Not yet implemented.");
 		return null;
 	}
-	
+
 	
 }

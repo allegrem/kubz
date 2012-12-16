@@ -55,7 +55,7 @@ public class SineWaveOscillator implements AudioBlock {
 	 */
 	public void plugoutAll() {
 		try {
-			plugout(AMPLITUDE_IN);
+			plugout(AMPLITUDE_IN);   
 			plugout(FREQUENCY_IN);
 		} catch (InvalidInputException e) {
 			e.printStackTrace();
@@ -133,8 +133,7 @@ public class SineWaveOscillator implements AudioBlock {
 
 	@Override
 	public Float phi(Float t) {
-		// TODO Auto-generated method stub
-		System.out.println("ERROR! NOT YET IMPLEMENTED!!");
+		System.out.println("Not yet implemented.");
 		return null;
 	}
 
