@@ -5,7 +5,7 @@ import synthesis.exceptions.RequireAudioBlocksException;
 /**
  * This class handles a gain block which multiplies the input signal by a 
  * constant.
- * @see Gain#play(int)
+ * @see Gain#play(Float)
  * @author allegrem
  */
 public class Gain extends OneInputBlock {
@@ -24,7 +24,6 @@ public class Gain extends OneInputBlock {
 
 	/**
 	 * The sound produced is given by : out(t) = gain * in(t).
-	 * @see OneInputBlock#play(int)
 	 */
 	@Override
 	public Float play(Float t) throws RequireAudioBlocksException {
