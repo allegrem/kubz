@@ -15,13 +15,13 @@ public abstract class OneInputBlock implements AudioBlock {
 	
 
 	/**
-	 * Plugs the given AudioBlock.
-	 * @param i This parameter is not used (gives 0 for example).
+	 * Plugs the given AudioBlock. This kind of block has only one input. You
+	 * cannot plug more than one block in.
+	 * @param a The AudioBlock to plug in.
 	 * @throws TooManyInputsException if there is already an AudioBlock plugged
 	 * in
 	 */
-	@Override
-	public void plugin(AudioBlock a, int i) throws TooManyInputsException {
+	public void plugin(AudioBlock a) throws TooManyInputsException {
 		if (in == null)
 			in = a;
 		else
@@ -33,23 +33,11 @@ public abstract class OneInputBlock implements AudioBlock {
 	 * AudioBlock is not the given one, this method does nothing.
 	 * @see OneInputBlock#plugout()
 	 */
-	@Override
 	public void plugout(AudioBlock a) {
 		if (in == a)
 			plugout();
 	}
 
-	/**
-	 * Plugs out the plugged AudioBlock.
-	 * @deprecated The method without parameter should be used
-	 * @param i This parameter is not used.
-	 * @see OneInputBlock#plugout()
-	 */
-	@Override
-	public void plugout(int i) {
-		plugout();
-	}
-	
 	/**
 	 * Plugs out the plugged AudioBlock
 	 * If no AudioBlock is plugged in, a warning message is displayed.
@@ -62,16 +50,8 @@ public abstract class OneInputBlock implements AudioBlock {
 	}
 
 	/**
-	 * This method is an alias for the plugout() method.
-	 * @see OneInputBlock#plugout()
-	 */
-	@Override
-	public void plugoutAll() {
-		plugout();
-	}
-
-	/**
-	 * Throws an exception if no input is plugged in.
+	 * This method defines the default behavior for a OneInputBlock. It throws 
+	 * an exception if no input is plugged in.
 	 * @see synthesis.AudioBlock#play(int)
 	 */
 	@Override
@@ -80,7 +60,5 @@ public abstract class OneInputBlock implements AudioBlock {
 			throw new RequireAudioBlocksException();
 		return null;
 	}
-	
-	
 	
 }

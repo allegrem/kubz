@@ -5,8 +5,7 @@ import synthesis.exceptions.TooManyInputsException;
 
 /**
  * Cette interface définit toutes les méthodes qui devront être implémentées 
- * par les AudioBlock. Les trois principales actions qu’effectue un AudioBlock 
- * sont : jouer un son, brancher un AudioBlock, débrancher un AudioBlock. 
+ * par les AudioBlock. La action qu’effectue un AudioBlock est de jouer un son. 
  * @author allegrem
  */
 public interface AudioBlock {
@@ -24,59 +23,5 @@ public interface AudioBlock {
 	 * @return le son calculé à l'instant t
 	 */
 	public Float play(int t) throws RequireAudioBlocksException;
-
 	
-	/**
-	 * Cette méthode permet de brancher l’AudioBlock a sur l’entrée i de 
-	 * l’AudioBlock considéré. Certains blocs n’autorisent qu’un nombre fixé 
-	 * d’entrées, d’autres n’autorisent aucune entrée, etc... Pour être certain 
-	 * de l’utilisation de la méthode plugin, il convient de se référer à la 
-	 * documentation de l’AudioBlock considéré.
-	 * <br />
-	 * Le numéro de l’entrée est parfois essentiel (pour certains AudioBlock, 
-	 * toutes les entrées ne jouent pas le même rôle). Là encore on se 
-	 * référera à la documentation de l’AudioBlock considéré. 
-	 * Généralement, des constantes représentant les différentes entrées sont 
-	 * définies dans la classe implémentant l’AudioBlock. Si l’ordre des 
-	 * entrées ne compte pas, n’importe quelle entrée pourra être passée en 
-	 * argument.
-	 * 
-	 * @throws TooManyInputsException si l’AudioBlock ne peut plus accepter 
-	 * d’entrées
-	 * @throws InvalidInputNumberException si l’argument i 
-	 * n’est pas une entrée valide.
-	 * @param a AudioBlock à brancher
-	 * @param i numéro de l'entrée sur laquelle l'AudioBlock doit être branché
-	 */
-	public void plugin(AudioBlock a, int i) throws TooManyInputsException;
-
-	
-	/**
-	 * Cette méthode débranche l’AudioBlock a.
-	 * @param a AudioBlock à débrancher
-	 */
-	void plugout(AudioBlock a);
-
-	
-	/**
-	 * Cette méthode débranche l’AudioBlock branché sur l’entrée i. Cette 
-	 * méthode ne devrait être utilisée que sur les AudioBlock pour lesquels 
-	 * l’ordre des entrées compte.
-	 * <br />
-	 * Attention ! A priori, rien ne garantit que les numéros d’entrée 
-	 * correspondent à l’ordre dans lequel la méthode plugin a été appelée. Il 
-	 * est toujours préférable de garder une référence sur les AudioBlock 
-	 * branchés et d’utiliser la méthode plugout(AudioBlock a).
-	 * 
-	 * @throws InvalidInputNumberException si l’argument i n’est pas une 
-	 * entrée valide.
-	 * @param i numéro de l'entrée à débrancher
-	 */
-	void plugout(int i);
-
-	
-	/**
-	 * Cette méthode débranche tous les AudioBlock actuellement branchés.
-	 */
-	void plugoutAll();
 }
