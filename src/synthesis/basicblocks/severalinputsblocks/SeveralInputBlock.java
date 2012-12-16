@@ -15,12 +15,22 @@ public abstract class SeveralInputBlock implements AudioBlock {
 	
 	protected ArrayList<AudioBlock> entries;
 	
+	/**
+	 * creates a SIB AudioBlock with the specified entries.
+	 * @param entries
+	 */
 	public SeveralInputBlock(ArrayList<AudioBlock> entries){
 		this.entries = entries;
 	}
 	
+	/**
+	 * Plugs out the specified AudioBlock by 
+	 * removing it from the entries if it already was in the list.
+	 * @param a
+	 */
 	public void plugout(AudioBlock a) {
-		entries.remove(a);	
+		if ( entries.contains(a) )
+			entries.remove(a);	
 	}
 	
 	public void plugoutAll() {
@@ -36,5 +46,12 @@ public abstract class SeveralInputBlock implements AudioBlock {
 			throw new RequireAudioBlocksException();
 		return null;
 	}
+	
+	@Override
+	public Float phi(Float t) {
+		System.out.println("ERROR! NOT YET IMPLEMENTED!!");
+		return null;
+	}
+	
 
 }

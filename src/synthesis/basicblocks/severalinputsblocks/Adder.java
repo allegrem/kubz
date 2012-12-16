@@ -35,12 +35,6 @@ public class Adder extends SeveralInputBlock {
 				s += a.play(t);
 		return s;
 	}
-	@Override
-	public Float phi(Float t) {
-		// TODO Auto-generated method stub
-		System.out.println("ERROR! NOT YET IMPLEMENTED!!");
-		return null;
-	}
-	
+
 	
 }
