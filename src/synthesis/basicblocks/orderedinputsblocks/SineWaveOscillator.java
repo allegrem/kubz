@@ -55,7 +55,7 @@ public class SineWaveOscillator implements AudioBlock {
 	 */
 	public void plugoutAll() {
 		try {
-			plugout(AMPLITUDE_IN);   //AMPLITUDE_IN is a value,not an AudioBlock!!
+			plugout(AMPLITUDE_IN);   
 			plugout(FREQUENCY_IN);
 		} catch (InvalidInputException e) {
 			e.printStackTrace();
