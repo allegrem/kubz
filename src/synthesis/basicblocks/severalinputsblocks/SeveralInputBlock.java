@@ -43,7 +43,7 @@ public abstract class SeveralInputBlock implements AudioBlock {
 	
 	public Float play(Float t) throws RequireAudioBlocksException{
 		if (entries == null) 
-			throw new RequireAudioBlocksException();
+			throw new RequireAudioBlocksException(this);
 		return null;
 	}
 	

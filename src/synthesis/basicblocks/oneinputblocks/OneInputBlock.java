@@ -60,7 +60,7 @@ public abstract class OneInputBlock implements AudioBlock {
 	@Override
 	public Float play(Float t) throws RequireAudioBlocksException {
 		if (in == null)
-			throw new RequireAudioBlocksException();
+			throw new RequireAudioBlocksException(this);
 		return null;
 	}
 	
@@ -73,7 +73,7 @@ public abstract class OneInputBlock implements AudioBlock {
 	@Override
 	public Float phi(Float t) throws RequireAudioBlocksException {
 		if (in == null)
-			throw new RequireAudioBlocksException();
+			throw new RequireAudioBlocksException(this);
 		return null;
 	}
 	
