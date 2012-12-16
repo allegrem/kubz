@@ -34,9 +34,12 @@ public class Multiplier extends SeveralInputBlock {
 				s *= a.play(t);
 		return s;
 	}
+
 	@Override
-	public Float phi(Float t) throws RequireAudioBlocksException;{
-		
+	public Float phi(Float t) throws RequireAudioBlocksException {
+		// TODO Auto-generated method stub
+		System.out.println("Not yet implemented.");
+		return null;
 	}
 
 

@@ -36,5 +36,13 @@ public class Adder extends SeveralInputBlock {
 		return s;
 	}
 
+
+	@Override
+	public Float phi(Float t) throws RequireAudioBlocksException {
+		// TODO Auto-generated method stub
+		System.out.println("Not yet implemented.");
+		return null;
+	}
+
 	
 }
