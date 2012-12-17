@@ -34,9 +34,14 @@ public class Multiplier extends SeveralInputBlock {
 		return s;
 	}
 
-	@Override
+	/**
+	 * Returns the phi of the output signal as sum of that of 
+	 * the input signals.
+	 * @param t instant t
+	 * @see SeveralInputBlock#phi(Float)
+	 */
 	public Float phi(Float t) throws RequireAudioBlocksException {
-		// TODO Auto-generated method stub
+		
 		System.out.println("Not yet implemented.");
 		return null;
 	}

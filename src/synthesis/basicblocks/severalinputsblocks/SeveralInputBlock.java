@@ -48,9 +48,8 @@ public abstract class SeveralInputBlock implements AudioBlock {
 		entries.add(a);	
 	}
 	
-	/***
-	 * Returns s(t) (the output signal at t).
-	 * Will be redefined in subclasses.Raises the RequireAudioBlockException 
+	/**
+	 * Returns s(t) (the output signal at t). Raises RequireAudioBlockException 
 	 * error if the list is empty. 
 	 * @param t the specified instant
 	 */
@@ -60,8 +59,16 @@ public abstract class SeveralInputBlock implements AudioBlock {
 		return null;
 	}
 	
-	@Override
-	public abstract Float phi(Float t) throws RequireAudioBlocksException;
+	/**
+	 * Calculates the phi of the output signal.
+	 * @param t the specified instant
+	 * @see AudioBlock#phi(Float)
+	 */
+	public Float phi(Float t) throws RequireAudioBlocksException{
+		if (entries==null)
+			throw new RequireAudioBlocksException(this);
+		return null;
+	}
 	
 
 }

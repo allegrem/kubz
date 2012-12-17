@@ -3,6 +3,7 @@ package synthesis.basicblocks.severalinputsblocks;
 import java.util.ArrayList;
 
 import synthesis.AudioBlock;
+import synthesis.basicblocks.oneinputblocks.OneInputBlock;
 import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
@@ -34,11 +35,17 @@ public class Adder extends SeveralInputBlock {
 	}
 
 
-	@Override
+	/**
+	 * Returns the phi of the output signal as sum of that of 
+	 * the input signals.
+	 * @param t instant t
+	 * @see SeveralInputBlock#phi(Float)
+	 */
 	public Float phi(Float t) throws RequireAudioBlocksException {
-		// TODO Auto-generated method stub
-		System.out.println("Not yet implemented.");
-		return null;
+		Float phi = super.phi(t);    //A revoir qd meme...
+		for (AudioBlock e : entries)
+			phi += e.phi(t);
+		return phi;
 	}
 
 	
