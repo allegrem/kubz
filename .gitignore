@@ -1,6 +1,8 @@
 .classpath
-.project
+#.project
 .settings/
 bin/
 fmout.wav
 doc/
+.DS_Store
+
