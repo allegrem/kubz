@@ -30,6 +30,14 @@ public class MainSynthesis {
 		
 		AudioBlock out = osc2; //this should have a reference to the bottom AudioBlock
 		
+		//test code for adder
+/*		FixedSineWaveOscillator osc3 = new FixedSineWaveOscillator(200f, 25f);
+		FixedSineWaveOscillator osc4 = new FixedSineWaveOscillator(400f, 25f);
+		Adder add = new Adder(new ArrayList<AudioBlock>());
+		add.plugin(osc3);
+		add.plugin(osc4);
+		out = add;*/
+
 		
 		//playing sound
 		SpeakersOutput speakersOutput = new SpeakersOutput();
