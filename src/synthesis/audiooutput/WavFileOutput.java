@@ -4,17 +4,17 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.sound.sampled.AudioFileFormat;
-import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 
-import synthesis.AudioBlock;
 
 /**
+ * This class can save a sound stream into a Wave file. The sound is not written
+ * in real time, but saved in a buffer until the {@link WavFileOutput#close() 
+ * close} method is called. Then, all the sound stored in memory is written into
+ * the output file.
  * @author allegrem
- *
  */
 public class WavFileOutput implements AudioOutput {
 	
@@ -24,7 +24,8 @@ public class WavFileOutput implements AudioOutput {
 	
 
 	/**
-	 * @param fileName
+	 * Creates a new WavFileOutput.
+	 * @param fileName the name of the file where the sound will be written.
 	 */
 	public WavFileOutput(String fileName) {
 		super();
@@ -34,6 +35,7 @@ public class WavFileOutput implements AudioOutput {
 
 	
 	/**
+	 * This method actually does nothing.
 	 * @see synthesis.audiooutput.AudioOutput#open()
 	 */
 	@Override
@@ -42,7 +44,13 @@ public class WavFileOutput implements AudioOutput {
 	
 
 	/**
-	 * @throws IOException 
+	 * Closes the stream. The content of the buffer is written into the file at
+	 * this moment.
+	 * <br />
+	 * Warning! Closing twice a WavFileOutput will overwrite the first sound 
+	 * saved in the file
+	 * @throws IOException if an error occurs while writing the sound into the
+	 * file.
 	 * @see synthesis.audiooutput.AudioOutput#close()
 	 */
 	@Override
@@ -52,19 +60,22 @@ public class WavFileOutput implements AudioOutput {
 			byte_arr[i] = arr.get(i);
 		
 		AudioSystem.write(new AudioInputStream(new ByteArrayInputStream(byte_arr), 
-					new AudioFormat(AudioBlock.SAMPLE_RATE/2, 16, 1, true, true), 
+					AudioOutput.audioFormat, 
 					arr.size()), 
 				AudioFileFormat.Type.WAVE, 
 				new File(fileName));
+		
+		arr.clear();
 	}
 	
 
 	/**
-	 * @throws Exception 
+	 * Adds the given array to the buffer. The sound is not written immediately
+	 * in the file!
 	 * @see synthesis.audiooutput.AudioOutput#play(byte[])
 	 */
 	@Override
-	public void play(byte[] arr) throws Exception {
+	public void play(byte[] arr) {
 		for(int i=0; i<arr.length; i++)
 			this.arr.add(arr[i]);
 	}
