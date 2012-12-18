@@ -55,7 +55,7 @@ public abstract class OneInputBlock implements AudioBlock {
 	/**
 	 * This method defines the default behavior for a OneInputBlock. It throws 
 	 * an exception if no input is plugged in.
-	 * @see synthesis.AudioBlock#play(int)
+	 * @see synthesis.AudioBlock#play(Float)
 	 */
 	@Override
 	public Float play(Float t) throws RequireAudioBlocksException {
@@ -68,7 +68,7 @@ public abstract class OneInputBlock implements AudioBlock {
 	/**
 	 * This method defines the default behavior for a OneInputBlock. It throws 
 	 * an exception if no input is plugged in.
-	 * @see synthesis.AudioBlock#phi(int)
+	 * @see synthesis.AudioBlock#phi(Float)
 	 */
 	@Override
 	public Float phi(Float t) throws RequireAudioBlocksException {

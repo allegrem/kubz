@@ -28,7 +28,6 @@ public class FixedSineWaveOscillator implements AudioBlock {
 
 	/**
 	 * Returns a cosinus function with the given amplitude.
-	 * @see synthesis.AudioBlock#play(int)
 	 * @return s(t) = a * cos(2 * Pi * f * t) where a is the amplitude and f is
 	 * the frequency.
 	 */

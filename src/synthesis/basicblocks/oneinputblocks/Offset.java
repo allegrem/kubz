@@ -4,7 +4,7 @@ import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
  * This class handles an offset block which adds a constant to the input signal.
- * @see Offset#play(int)
+ * @see Offset#play(Float)
  * @author allegrem
  */
 public class Offset extends OneInputBlock {
@@ -24,7 +24,6 @@ public class Offset extends OneInputBlock {
 
 	/**
 	 * The sound produced is given by : out(t) = offset + in(t).
-	 * @see OneInputBlock#play(int)
 	 */
 	@Override
 	public Float play(Float t) throws RequireAudioBlocksException {
