@@ -1,12 +1,18 @@
 package synthesis;
 
+import java.io.File;
+import java.io.FilterWriter;
+import java.util.ArrayList;
+
 import synthesis.audiooutput.SpeakersOutput;
 import synthesis.audiooutput.WavFileOutput;
 import synthesis.basicblocks.noinputblocks.Constant;
 import synthesis.basicblocks.noinputblocks.FixedSineWaveOscillator;
+import synthesis.basicblocks.oneinputblocks.Gain;
 import synthesis.basicblocks.oneinputblocks.Offset;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
 import synthesis.exceptions.RequireAudioBlocksException;
+import synthesis.filters.Filter;
 
 /**
  * This main is used to test the synthesis engine. This should not be used
@@ -30,6 +36,27 @@ public class MainSynthesis {
 		
 		AudioBlock out = osc2; //this should have a reference to the bottom AudioBlock
 		
+		
+/* one zero filter		
+		ArrayList<Float> feedback = new ArrayList<Float>();
+		feedback.add(0.25f);
+		
+		ArrayList<Float> feedforward = new ArrayList<Float>();
+		feedforward.add(1f);
+		feedforward.add(-1f);*/
+		
+		ArrayList<Float> feedback = new ArrayList<Float>();
+		feedback.add(2.5f);
+		feedback.add(0f);
+		
+		ArrayList<Float> feedforward = new ArrayList<Float>();
+		feedforward.add(1f);
+		
+		Filter filter = new Filter(feedback, feedforward);
+		filter.plugin(osc2);
+		
+		AudioBlock out2 = filter;
+		
 		//test code for adder
 /*		FixedSineWaveOscillator osc3 = new FixedSineWaveOscillator(200f, 25f);
 		FixedSineWaveOscillator osc4 = new FixedSineWaveOscillator(400f, 25f);
@@ -43,16 +70,21 @@ public class MainSynthesis {
 		SpeakersOutput speakersOutput = new SpeakersOutput();
 		speakersOutput.open();
 		speakersOutput.play(computeSound(0f, 1f, out));
-		speakersOutput.play(computeSound(0f, 1f, osc));
+		speakersOutput.play(computeSound(0f, 1f, out2));
 		speakersOutput.close();
 		
 		
 		//save to wav
-		WavFileOutput wavFileOutput = new WavFileOutput("fmout.wav");
+/*		WavFileOutput wavFileOutput = new WavFileOutput("fmout.wav");
 		wavFileOutput.open();
 		wavFileOutput.play(computeSound(0f, 1f, out));
-		wavFileOutput.play(computeSound(0f, 1f, osc));
-		wavFileOutput.close();
+		wavFileOutput.close();*/
+		
+		//save to wav
+		WavFileOutput wavFileOutput2 = new WavFileOutput("fmout2.wav");
+		wavFileOutput2.open();
+		wavFileOutput2.play(computeSound(0f, 1f, out2));
+		wavFileOutput2.close();
 	}
 	
 	
@@ -63,6 +95,7 @@ public class MainSynthesis {
 		for(int i = 0; i<length*AudioBlock.SAMPLE_RATE ; i++) {
 			float f = a.play((start + i)/AudioBlock.SAMPLE_RATE);
 			arr[i] = (byte) f;
+//			System.out.println(f);
 		}
 		
 		return arr;
