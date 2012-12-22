@@ -4,7 +4,8 @@ import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
  * Cette interface définit toutes les méthodes qui devront être implémentées 
- * par les AudioBlock. La action qu’effectue un AudioBlock est de jouer un son. 
+ * par les AudioBlock. La seule action qu’effectue un AudioBlock est de jouer 
+ * un son. 
  * @author allegrem
  */
 public interface AudioBlock {
