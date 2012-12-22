@@ -39,6 +39,6 @@ public interface AudioBlock {
 	 * @throws RequireAudioBlsocksException  si l’AudioBlock n’a pas toutes les 
 	 * entrées nécessaires pour calculer le son.
 	 */
-	public Float phi(Float t) throws RequireAudioBlocksException; //Bla
+	public Float phi(Float t) throws RequireAudioBlocksException; 
 	
 }
