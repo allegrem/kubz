@@ -28,7 +28,8 @@ public class Multiplier extends SeveralInputBlock {
 	 * @param t the specified instant
 	 */
 	public Float play(Float t) throws RequireAudioBlocksException{
-		Float s = super.play(t);
+		super.play(t);
+		Float s = new Float(1f);
 		for (AudioBlock a : entries)		
 				s *= a.play(t);
 		return s;
