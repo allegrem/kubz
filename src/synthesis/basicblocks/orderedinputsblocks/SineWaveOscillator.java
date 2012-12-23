@@ -1,5 +1,7 @@
 package synthesis.basicblocks.orderedinputsblocks;
 
+import java.util.concurrent.ConcurrentSkipListMap;
+
 import synthesis.AudioBlock;
 import synthesis.exceptions.InvalidInputException;
 import synthesis.exceptions.RequireAudioBlocksException;
@@ -25,6 +27,7 @@ public class SineWaveOscillator implements AudioBlock {
 	
 	private AudioBlock frequency = null;
 	private AudioBlock amplitude = null;
+	private ConcurrentSkipListMap<Float,Float> phiCache;
 
 	
 	/**
@@ -39,6 +42,7 @@ public class SineWaveOscillator implements AudioBlock {
 		super();
 		this.frequency = frequency;
 		this.amplitude = amplitude;
+		this.phiCache = new ConcurrentSkipListMap<Float,Float>();
 	}
 	
 	
@@ -132,9 +136,27 @@ public class SineWaveOscillator implements AudioBlock {
 
 
 	@Override
-	public Float phi(Float t) {
-		System.out.println("Not yet implemented.");
-		return null;
+	public Float phi(Float t) throws RequireAudioBlocksException {
+		//looks for the closest smaller time computed
+/*		Float sum = 0f;
+		Float startTime = phiCache.floorKey(t);
+		
+		if(startTime != null)
+			sum = phiCache.get(startTime);
+		else
+			startTime = 0f;
+			
+		//computes the integral starting at the previous time computed
+		Float step = 1f / SAMPLE_RATE;
+		for(Float u = startTime + step; u < t; u += step)
+			sum += frequency.play(u);
+		
+//		phiCache.put(t, sum);
+		return (float) (2 * Math.PI * step * sum);*/
+		
+		
+		return (float) (amplitude.play(t) / frequency.play(t) * 
+				Math.sin(frequency.phi(t)));  //a verifier !!!
 	}
 
 }

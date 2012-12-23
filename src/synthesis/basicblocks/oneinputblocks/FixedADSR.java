@@ -1,6 +1,6 @@
 package synthesis.basicblocks.oneinputblocks;
 
-public class FixedADSR extends OneInputBlock {
+//public class FixedADSR extends OneInputBlock {
 	
 	/*private final float a,d,s,r;
 	private final float slevel;*/
@@ -40,4 +40,4 @@ public class FixedADSR extends OneInputBlock {
 	}*/
 	
 
-}
+//}
