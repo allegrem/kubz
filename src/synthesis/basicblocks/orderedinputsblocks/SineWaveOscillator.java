@@ -27,7 +27,7 @@ public class SineWaveOscillator implements AudioBlock {
 	
 	private AudioBlock frequency = null;
 	private AudioBlock amplitude = null;
-	private ConcurrentSkipListMap<Float,Float> phiCache;
+//	private ConcurrentSkipListMap<Float,Float> phiCache;
 
 	
 	/**
@@ -42,7 +42,7 @@ public class SineWaveOscillator implements AudioBlock {
 		super();
 		this.frequency = frequency;
 		this.amplitude = amplitude;
-		this.phiCache = new ConcurrentSkipListMap<Float,Float>();
+//		this.phiCache = new ConcurrentSkipListMap<Float,Float>();
 	}
 	
 	
@@ -126,6 +126,7 @@ public class SineWaveOscillator implements AudioBlock {
 
 
 	/**
+	 * @return s(t) = amplitude(t) * cos( frequency.phi(t) )
 	 * @see synthesis.AudioBlock#play(java.lang.Float)
 	 */
 	@Override
@@ -135,10 +136,22 @@ public class SineWaveOscillator implements AudioBlock {
 	}
 
 
+	/*
+	 * (non-Javadoc)
+	 * Deux idées : 
+	 *  - intégrer réellement la fréquence donnée (lourd en calcul ou en 
+	 *  mémoire si on met les résultats en cache) ; cette méthode ne semble pas
+	 *  marcher pour l'instant
+	 *  - retourner s(t) = amplitude(t) / frequency(t) * sin( frequency.phi(t) )
+	 *  cette méthode fonctionne pour de la FM simple à deux oscillateurs (non
+	 *  testée sur des architectures plus complexes)
+	 *  
+	 * @see synthesis.AudioBlock#phi(java.lang.Float)
+	 */
 	@Override
 	public Float phi(Float t) throws RequireAudioBlocksException {
-		//looks for the closest smaller time computed
-/*		Float sum = 0f;
+/*		//looks for the closest smaller time computed
+		Float sum = 0f;
 		Float startTime = phiCache.floorKey(t);
 		
 		if(startTime != null)
@@ -151,7 +164,7 @@ public class SineWaveOscillator implements AudioBlock {
 		for(Float u = startTime + step; u < t; u += step)
 			sum += frequency.play(u);
 		
-//		phiCache.put(t, sum);
+		phiCache.put(t, sum);  //comment this line to disable caching
 		return (float) (2 * Math.PI * step * sum);*/
 		
 		
