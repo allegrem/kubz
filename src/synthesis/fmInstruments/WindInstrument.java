@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import synthesis.AudioBlock;
 import synthesis.basicblocks.noinputblocks.Constant;
 import synthesis.basicblocks.noinputblocks.FixedSineWaveOscillator;
-import synthesis.basicblocks.noinputblocks.Noise;
+import synthesis.basicblocks.noinputblocks.WhiteNoise;
 import synthesis.basicblocks.oneinputblocks.Gain;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
 import synthesis.basicblocks.severalinputsblocks.Adder;
@@ -71,7 +71,7 @@ public class WindInstrument implements AudioBlock {
 				frequency*vibratoFactor);
 		
 		Gain lowFreqNoise = new Gain(jitterFactor*frequency);
-		lowFreqNoise.plugin(new Noise()); //WARNING! Mising low pass filter
+		lowFreqNoise.plugin(new WhiteNoise()); //WARNING! Mising low pass filter
 		
 		Adder freqInput1 = new Adder(new ArrayList<AudioBlock>()); //Berk...
 		freqInput1.plugin(vibrato);
@@ -80,7 +80,7 @@ public class WindInstrument implements AudioBlock {
 		
 		
 		Gain noise = new Gain(ampNoiseFactor1);
-		noise.plugin(new Noise());
+		noise.plugin(new WhiteNoise());
 		
 		Adder ampInput1 = new Adder(new ArrayList<AudioBlock>()); //Berk...
 		ampInput1.plugin(noise);
