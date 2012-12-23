@@ -9,6 +9,7 @@ import synthesis.basicblocks.noinputblocks.FixedSineWaveOscillator;
 import synthesis.basicblocks.noinputblocks.Noise;
 import synthesis.basicblocks.oneinputblocks.Offset;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
+import synthesis.basicblocks.severalinputsblocks.Adder;
 import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.filters.Filter;
 import synthesis.fmInstruments.WindInstrument;
@@ -69,13 +70,13 @@ public class MainSynthesis {
 		AudioBlock out2 = filter; */
 		
 		
-		//test code for adder
-/*		FixedSineWaveOscillator osc3 = new FixedSineWaveOscillator(200f, 25f);
+		//*****test code for adder*********
+		FixedSineWaveOscillator osc3 = new FixedSineWaveOscillator(200f, 25f);
 		FixedSineWaveOscillator osc4 = new FixedSineWaveOscillator(400f, 25f);
 		Adder add = new Adder(new ArrayList<AudioBlock>());
 		add.plugin(osc3);
 		add.plugin(osc4);
-		out = add;*/
+		out = add;
 
 		
 		//playing sound
@@ -89,7 +90,7 @@ public class MainSynthesis {
 		//save to wav 1
 		WavFileOutput wavFileOutput = new WavFileOutput("fmout.wav");
 		wavFileOutput.open();
-		wavFileOutput.play(computeSound(0f, 10f, out));
+		wavFileOutput.play(computeSound(0f, 30f, out));
 		wavFileOutput.close();
 		
 		//save to wav 2
