@@ -11,6 +11,7 @@ import synthesis.basicblocks.oneinputblocks.Offset;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
 import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.filters.Filter;
+import synthesis.fmInstruments.WindInstrument;
 
 /**
  * This main is used to test the synthesis engine. This should not be used
@@ -38,13 +39,18 @@ public class MainSynthesis {
 		Noise noise = new Noise();
 		out = noise;
 		
-/* one zero filter	*/	
+		
+		//windInstrument tests
+		WindInstrument windy = new WindInstrument(5f, 440f, 0.005f, 0.01f, 10f, 100f, 1f, 1f);
+		out = windy;
+		
+/* one zero filter	
 		ArrayList<Float> feedback = new ArrayList<Float>();
 		feedback.add(0.25f);
 		
 		ArrayList<Float> feedforward = new ArrayList<Float>();
 		feedforward.add(1f);
-		feedforward.add(-1f);
+		feedforward.add(-1f); */
 		
 		
 		
@@ -55,12 +61,13 @@ public class MainSynthesis {
 		feedback.add(0.99f);
 		
 		ArrayList<Float> feedforward = new ArrayList<Float>();
-		feedforward.add(1f); */
+		feedforward.add(1f); 
 		
 		Filter filter = new Filter(feedback, feedforward);
 		filter.plugin(noise);
 		
-		AudioBlock out2 = filter;
+		AudioBlock out2 = filter; */
+		
 		
 		//test code for adder
 /*		FixedSineWaveOscillator osc3 = new FixedSineWaveOscillator(200f, 25f);
@@ -75,21 +82,21 @@ public class MainSynthesis {
 		SpeakersOutput speakersOutput = new SpeakersOutput();
 		speakersOutput.open();
 		speakersOutput.play(computeSound(0f, 1f, out));
-		speakersOutput.play(computeSound(0f, 1f, out2));
+//		speakersOutput.play(computeSound(0f, 1f, out2));
 		speakersOutput.close();
 		
 		
-		//save to wav
+		//save to wav 1
 		WavFileOutput wavFileOutput = new WavFileOutput("fmout.wav");
 		wavFileOutput.open();
 		wavFileOutput.play(computeSound(0f, 10f, out));
 		wavFileOutput.close();
 		
-		//save to wav
-		WavFileOutput wavFileOutput2 = new WavFileOutput("fmout2.wav");
+		//save to wav 2
+/*		WavFileOutput wavFileOutput2 = new WavFileOutput("fmout2.wav");
 		wavFileOutput2.open();
 		wavFileOutput2.play(computeSound(0f, 10f, out2));
-		wavFileOutput2.close();
+		wavFileOutput2.close();*/
 	}
 	
 	
