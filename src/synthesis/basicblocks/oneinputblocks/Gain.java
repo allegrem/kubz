@@ -24,10 +24,11 @@ public class Gain extends OneInputBlock {
 
 	/**
 	 * The sound produced is given by : out(t) = gain * in(t).
+	 * @throws RequireAudioBlocksException if the input block is not able to 
+	 * compute a sound.
 	 */
 	@Override
-	public Float play(Float t) throws RequireAudioBlocksException {
-		super.play(t);
+	public Float compute(Float t) throws RequireAudioBlocksException {
 		return in.play(t) * gain;
 	}
 

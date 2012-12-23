@@ -35,9 +35,7 @@ public class Filter extends OneInputBlock {
 	 * @see synthesis.AudioBlock#play(java.lang.Float)
 	 */
 	@Override
-	public Float play(Float t) throws RequireAudioBlocksException {
-		super.play(t);
-		
+	public Float compute(Float t) throws RequireAudioBlocksException {
 		//does not compute time before 0
 		if (t < 0)
 			return 0f;
