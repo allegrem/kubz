@@ -63,7 +63,7 @@ public class MainSynthesis {
 		
 		AudioBlock out2 = filter;
 		
-		//*****test code for adder**************
+		//*****test code for adder*********
 		FixedSineWaveOscillator osc3 = new FixedSineWaveOscillator(200f, 25f);
 		FixedSineWaveOscillator osc4 = new FixedSineWaveOscillator(400f, 25f);
 		Adder add = new Adder(new ArrayList<AudioBlock>());
@@ -83,7 +83,7 @@ public class MainSynthesis {
 		//save to wav
 		WavFileOutput wavFileOutput = new WavFileOutput("fmout.wav");
 		wavFileOutput.open();
-		wavFileOutput.play(computeSound(0f, 10f, out));
+		wavFileOutput.play(computeSound(0f, 30f, out));
 		wavFileOutput.close();
 		
 		//save to wav
