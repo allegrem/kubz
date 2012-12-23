@@ -24,8 +24,6 @@ public class Gain extends OneInputBlock {
 
 	/**
 	 * The sound produced is given by : out(t) = gain * in(t).
-	 * @throws RequireAudioBlocksException if the input block is not able to 
-	 * compute a sound.
 	 */
 	@Override
 	public Float compute(Float t) throws RequireAudioBlocksException {
@@ -35,11 +33,9 @@ public class Gain extends OneInputBlock {
 	
 	/**
 	 * @return out(t) = gain * in.phi(t)
-	 * @see OneInputBlock#phi(Float)
 	 */
 	@Override
-	public Float phi(Float t) throws RequireAudioBlocksException {
-		super.phi(t);
+	public Float computePhi(Float t) throws RequireAudioBlocksException {
 		return in.phi(t) * gain;
 	}
 

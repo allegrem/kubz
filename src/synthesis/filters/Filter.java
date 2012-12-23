@@ -68,7 +68,7 @@ public class Filter extends OneInputBlock {
 	 * @see synthesis.AudioBlock#phi(java.lang.Float)
 	 */
 	@Override
-	public Float phi(Float t) throws RequireAudioBlocksException {
+	public Float computePhi(Float t) throws RequireAudioBlocksException {
 		// TODO Auto-generated method stub
 		System.out.println("ERROR! Not yet implemented");
 		return null;
