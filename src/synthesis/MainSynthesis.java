@@ -7,11 +7,9 @@ import synthesis.basicblocks.noinputblocks.Constant;
 import synthesis.basicblocks.noinputblocks.FixedSineWaveOscillator;
 import synthesis.basicblocks.noinputblocks.WhiteNoise;
 import synthesis.basicblocks.oneinputblocks.Gain;
-import synthesis.basicblocks.oneinputblocks.Offset;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
 import synthesis.basicblocks.severalinputsblocks.Adder;
 import synthesis.exceptions.RequireAudioBlocksException;
-import synthesis.filters.Filter;
 
 
 

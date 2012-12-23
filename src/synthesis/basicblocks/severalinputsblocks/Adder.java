@@ -3,7 +3,6 @@ package synthesis.basicblocks.severalinputsblocks;
 import java.util.ArrayList;
 
 import synthesis.AudioBlock;
-import synthesis.basicblocks.oneinputblocks.OneInputBlock;
 import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
