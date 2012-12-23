@@ -29,10 +29,10 @@ public class Multiplier extends SeveralInputBlock {
 	 */
 	public Float play(Float t) throws RequireAudioBlocksException{
 		super.play(t);
-		Float s = new Float(1f);
+		float s = 1f;
 		for (AudioBlock a : entries)		
 				s *= a.play(t);
-		return s;
+		return new Float(s);
 	}
 
 	/**
