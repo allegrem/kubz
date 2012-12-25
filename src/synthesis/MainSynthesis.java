@@ -7,6 +7,7 @@ import synthesis.audiooutput.WavFileOutput;
 import synthesis.basicblocks.noinputblocks.Constant;
 import synthesis.basicblocks.noinputblocks.FixedSineWaveOscillator;
 import synthesis.basicblocks.noinputblocks.Noise;
+import synthesis.basicblocks.oneinputblocks.FixedADSR;
 import synthesis.basicblocks.oneinputblocks.Offset;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
 import synthesis.basicblocks.severalinputsblocks.Adder;
@@ -33,7 +34,7 @@ public class MainSynthesis {
 		off.plugin(osc);
 		SineWaveOscillator osc2 = new SineWaveOscillator(off, new Constant(60f));
 		
-		AudioBlock out = osc2; //this should have a reference to the bottom AudioBlock
+		AudioBlock out = osc2; //this (i.e. out) should have a reference to the bottom AudioBlock
 		
 		
 		Noise noise = new Noise();
@@ -67,8 +68,10 @@ public class MainSynthesis {
 		FixedSineWaveOscillator osc3 = new FixedSineWaveOscillator(200f, 25f);
 		FixedSineWaveOscillator osc4 = new FixedSineWaveOscillator(400f, 25f);
 		Adder add = new Adder(new ArrayList<AudioBlock>());
+		//FixedADSR envelop = new FixedADSR (0.25f,0.25f, 0.25f, 0.25f, 10f, 0.5f );
 		add.plugin(osc3);
 		add.plugin(osc4);
+		//envelop.plugin(add);
 		out = add;
 
 		
@@ -83,7 +86,7 @@ public class MainSynthesis {
 		//save to wav
 		WavFileOutput wavFileOutput = new WavFileOutput("fmout.wav");
 		wavFileOutput.open();
-		wavFileOutput.play(computeSound(0f, 30f, out));
+		wavFileOutput.play(computeSound(0f, 10f, out));
 		wavFileOutput.close();
 		
 		//save to wav
