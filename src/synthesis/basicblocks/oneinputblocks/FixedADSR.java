@@ -2,10 +2,16 @@ package synthesis.basicblocks.oneinputblocks;
 
 import synthesis.exceptions.RequireAudioBlocksException;
 
+/**
+ * 
+ * @author valeh
+ *
+ */
+
 public class FixedADSR extends OneInputBlock {
 	
 	private final float a,d,s,r;
-	private final float slevel, duration;
+	private final float slevel, duration; //slevel is a fraction of the plugged in signal
 	
 	
 	public FixedADSR(float a, float d, float s,float r, int duration, float slevel) /*throws nonValidproportionException, nonValidslevelException */{  //check in adsr are a partition of duration
@@ -22,13 +28,14 @@ public class FixedADSR extends OneInputBlock {
 		super.play(t);
 		
 		float previous = in.play(t).floatValue();
+		float sPrevious = slevel*previous;
 		float tfloat = t.floatValue();
 		float aDur=a*duration, dDur=aDur+d*duration,sDur=dDur+s*duration,rDur=sDur+r*duration;
 		
-		float aExpr=(previous/aDur)*tfloat;
-		float dExpr = ( (slevel-previous)/(d*duration) )*(tfloat-dDur) + slevel;
-		float sExpr = slevel;
-		float rExpr = ( (-slevel)/r*duration )*(tfloat-sDur) + slevel;
+		float aExpr = ( previous/aDur )*tfloat;
+		float dExpr = ( (sPrevious-previous)/(d*duration) )*(tfloat-dDur) + sPrevious;
+		float sExpr = sPrevious;
+		float rExpr = ( (-sPrevious)/r*duration )*(tfloat-sDur) + sPrevious;
 
 		if (tfloat <= aDur )
 			return new Float( previous*aExpr );
