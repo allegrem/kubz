@@ -15,8 +15,8 @@ public class PBox extends MBox {
 
 	public PBox(int line, int column, Map map) {
 		super(line, column, map);
-		i = line;
-		j = column;
+		i = column;
+		j = line;
 
 	}
 
@@ -30,7 +30,7 @@ public class PBox extends MBox {
 	 * 
 	 */
 	public void paint() {
-		glColor3ub((byte) 102, (byte) 51, (byte) 0); // face marron
+		glColor3ub((byte) 200, (byte) 150, (byte) 50); // face marron
 		glVertex3d(i, j, 0);
 		glVertex3d(i + 1, j, 0);
 		glVertex3d(i + 1, j + 1, 0);

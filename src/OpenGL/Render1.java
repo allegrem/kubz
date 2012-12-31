@@ -82,4 +82,14 @@ public class Render1 {
 		}
 		glEnd();
 	}
+
+	public double getl() {
+		
+		return l;
+	}
+
+	public double geth() {
+		
+		return h;
+	}
 }
