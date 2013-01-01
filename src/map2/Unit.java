@@ -4,7 +4,12 @@ import org.lwjgl.util.Color;
 import org.lwjgl.util.Point;
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.ReadablePoint;
-
+/**
+ * Une unité d'un joueur ou un monstre
+ * 
+ * @author paul
+ *
+ */
 public abstract class Unit {
 	private Point position;
 	private Color color;
@@ -36,12 +41,18 @@ public abstract class Unit {
 		position.setLocation(p);
 		
 	}
-	
+	/**
+	 * Si le cube n'est plus sur la table et n'est plus repéré par la caméra, on affiche l'unité en rouge
+	 * 
+	 */
 	public void unitUntracked(){
 		actualColor=Color.RED;
 		
 	}
-	
+	/**
+	 * Si le cube est reposé sur la tabe, l'unité reprend sa couleur normale
+	 * 
+	 */
 	public void unitTracked(){
 		actualColor=color;
 		
