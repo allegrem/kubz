@@ -1,3 +1,10 @@
+/**
+ * Rendu des base.
+ * @author valeh
+ * 
+ */
+
+
 package OpenGL;
 
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
