@@ -4,6 +4,7 @@
  */
 package Map;
 
+
 public class CircleMonster extends Monster{
 	
 	public static int side;
