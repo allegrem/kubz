@@ -92,8 +92,8 @@ public class GLBaseModule {
 		 */
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		//GLU.gluPerspective(70.0f, display_width / display_height, 5f,100.0f);
-		glOrtho(0, 100,100, 0, 1, -1);
+		// GLU.gluPerspective(70.0f, display_width / display_height, 5f,100.0f);
+		glOrtho(0, 100, 100, 0, 1, -1);
 		/* Diverses options OpenGL */
 		glShadeModel(GL_SMOOTH);
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);

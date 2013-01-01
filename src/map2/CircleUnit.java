@@ -7,13 +7,13 @@ public class CircleUnit extends Unit {
 
 	public CircleUnit(Point position, Color color) {
 		super(position, color);
-	
+
 	}
 
 	@Override
 	public void paint() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

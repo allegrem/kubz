@@ -10,7 +10,7 @@ public class WBox extends MBox {
 	public WBox(int line, int column, Map map) {
 		super(line, column, map);
 		i = column;
-		j =line;
+		j = line;
 	}
 
 	@Override
@@ -24,25 +24,22 @@ public class WBox extends MBox {
 	 */
 	public void paint() {
 
-		glColor3ub((byte) 100, (byte)100, (byte) 100); // face rouge
+		glColor3ub((byte) 100, (byte) 100, (byte) 100); // face rouge
 		glVertex3d(i, j, 0);
 		glVertex3d(i + 1, j, 0);
 		glVertex3d(i + 1, j + 1, 0);
 		glVertex3d(i, j + 1, 0);
 
-		
 		glVertex3d(i, j, 0);
 		glVertex3d(i, j, 1);
 		glVertex3d(i, j + 1, 1);
 		glVertex3d(i, j + 1, 0);
 
-		
 		glVertex3d(i, j, 0);
 		glVertex3d(i, j, 1);
 		glVertex3d(i + 1, j, 1);
 		glVertex3d(i + 1, j, 0);
 
-	
 		glVertex3d(i + 1, j, 0);
 		glVertex3d(i + 1, j, 1);
 		glVertex3d(i + 1, j + 1, 1);
@@ -52,7 +49,6 @@ public class WBox extends MBox {
 		glVertex3d(i + 1, j + 1, 1);
 		glVertex3d(i, j + 1, 1);
 		glVertex3d(i, j + 1, 0);
-
 
 		glVertex3d(i, j, 1);
 		glVertex3d(i + 1, j, 1);

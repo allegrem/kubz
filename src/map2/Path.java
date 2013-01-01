@@ -1,14 +1,28 @@
 package map2;
 
+import static org.lwjgl.opengl.GL11.glColor3ub;
+import static org.lwjgl.opengl.GL11.glVertex3d;
+
+import org.lwjgl.util.Color;
+
 public class Path {
+	private int width;
+	private int length;
+	private final Color color=new Color(200,150,50);
 
 	public Path(int width, int length) {
-		// TODO Auto-generated constructor stub
+		this.width=width;
+		this.length=length;
 	}
 
-	public static void paint(int width, int length) {
-		// TODO Auto-generated method stub
-		
+	public void paint() {
+		glColor3ub((byte) color.getRed(), (byte) color.getGreen() , (byte) color.getBlue()); // face marron
+		glVertex3d(0, 0, 0);
+		glVertex3d(width, 0, 0);
+		glVertex3d(width, length, 0);
+		glVertex3d(0,length, 0);
+
+
 	}
 
 }
