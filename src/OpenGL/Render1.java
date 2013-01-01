@@ -15,6 +15,7 @@ import static org.lwjgl.opengl.GL11.glViewport;
 
 import map2.Path;
 import map2.SquareUnit;
+import map2.ShapeUnit;
 import map2.Wall;
 
 import org.lwjgl.util.Color;
@@ -77,16 +78,14 @@ public class Render1 {
 		// (h-1)/2+1, 0, 0, 0, 1); // Positionnement de la caméra
 		/* Rotation du cube */
 
-		glBegin(GL_QUADS); // Définition du type de liaison entre les points
-		for (int i = 0; i < l; i++) {
-			/*
+		/*for (int i = 0; i < l; i++) {
+			
 			 * for (int j = 0; j < h; j++) { map.returnCase(i, j).paint(); }
-			 */
+			} */
 			new Path(100,100).paint();
 			new Wall(new Point(10, 10), new Point(50, 50), 5).paint();
 			new SquareUnit(new Point(30,10), Color.BLUE).paint();
-		}
-		glEnd();
+			new ShapeUnit(new Point(10,30),Color.GREEN).paint();
 	}
 
 	public double getl() {

@@ -1,10 +1,13 @@
 package map2;
 
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3ub;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
 import java.util.ArrayList;
 
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.Point;
 import org.lwjgl.util.ReadableColor;
@@ -122,6 +125,7 @@ public class Wall {
 	
 	public void paint() {
 
+		glBegin(GL_QUADS); // Définition du type de liaison entre les points
 		// Chargement de la couleur du mur
 		glColor3ub((byte) color.getRed(), (byte) color.getGreen(),
 				(byte) color.getBlue());
@@ -156,6 +160,7 @@ public class Wall {
 		glVertex3d(sommets[2].getX(), sommets[2].getY(), height);
 		glVertex3d(sommets[2].getX(), sommets[2].getY(), 0);
 
+		GL11.glEnd();
 	}
 
 }
