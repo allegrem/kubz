@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Users/valeh/Desktop/Eclipse1/lib/native-wins"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="C:/Users/valeh/Desktop/Eclipse1/lib/jar/AppleJavaExtensions.jar"/>
+	<classpathentry kind="lib" path="C:/Users/valeh/Desktop/Eclipse1/lib/jar/asm-debug-all.jar"/>
+	<classpathentry kind="lib" path="C:/Users/valeh/Desktop/Eclipse1/lib/jar/jinput.jar"/>
+	<classpathentry kind="lib" path="C:/Users/valeh/Desktop/Eclipse1/lib/jar/lwjgl.jar"/>
+	<classpathentry kind="lib" path="C:/Users/valeh/Desktop/Eclipse1/lib/jar/lwjgl_test.jar"/>
+	<classpathentry kind="lib" path="C:/Users/valeh/Desktop/Eclipse1/lib/jar/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="C:/Users/valeh/Desktop/Eclipse1/lib/jar/lwjgl_util_applet.jar"/>
+	<classpathentry kind="lib" path="C:/Users/valeh/Desktop/Eclipse1/lib/jar/lwjgl-debug.jar"/>
+	<classpathentry kind="lib" path="C:/Users/valeh/Desktop/Eclipse1/lib/jar/lzma.jar"/>
+	<classpathentry kind="lib" path="C:/Users/valeh/Desktop/Eclipse1/lib/jar/slick-util.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

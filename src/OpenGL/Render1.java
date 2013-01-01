@@ -13,6 +13,13 @@ import static org.lwjgl.opengl.GL11.glRotated;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 import static org.lwjgl.opengl.GL11.glViewport;
 
+import map2.Path;
+import map2.SquareUnit;
+import map2.ShapeUnit;
+import map2.Wall;
+
+import org.lwjgl.util.Color;
+import org.lwjgl.util.Point;
 import org.lwjgl.util.glu.GLU;
 
 import Map.Map;
@@ -51,10 +58,7 @@ public class Render1 {
 			e.printStackTrace();
 			System.exit(0);
 		}
-		/*
-		 * Matrice de projection (3D vers 2D): utilisation d'une projection
-		 * perspective
-		 */
+
 	}
 
 	/**
@@ -74,22 +78,23 @@ public class Render1 {
 		// (h-1)/2+1, 0, 0, 0, 1); // Positionnement de la caméra
 		/* Rotation du cube */
 
-		glBegin(GL_QUADS); // Définition du type de liaison entre les points
-		for (int i = 0; i < l; i++) {
-			for (int j = 0; j < h; j++) {
-				map.returnCase(i, j).paint();
-			}
-		}
-		glEnd();
+		/*for (int i = 0; i < l; i++) {
+			
+			 * for (int j = 0; j < h; j++) { map.returnCase(i, j).paint(); }
+			} */
+			new Path(100,100).paint();
+			new Wall(new Point(10, 10), new Point(50, 50), 5).paint();
+			new SquareUnit(new Point(30,10), Color.BLUE).paint();
+			new ShapeUnit(new Point(10,30),Color.GREEN).paint();
 	}
 
 	public double getl() {
-		
+
 		return l;
 	}
 
 	public double geth() {
-		
+
 		return h;
 	}
 }

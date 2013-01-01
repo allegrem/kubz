@@ -59,7 +59,7 @@ public class GLBaseModule {
 			render2.render2();
 			Display.update(); // On actualise la fenêtre pour afficher les
 								// nouveaux rendus
-			Display.sync(120); // On fait une pose de façcon à ce que
+			Display.sync(120); // On fait une pause de façon à ce que
 								// l'affichage s'actualise à 120 FPS
 
 		}
@@ -98,7 +98,7 @@ public class GLBaseModule {
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		// GLU.gluPerspective(70.0f, display_width / display_height, 5f,100.0f);
-		glOrtho(0, render1.getl(),render1.geth(), 0, 1, -1);
+		glOrtho(0, 100, 100, 0, 1, -1);
 		/* Diverses options OpenGL */
 		glShadeModel(GL_SMOOTH);
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
