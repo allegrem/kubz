@@ -4,7 +4,6 @@
  */
 package map2;
 
-import Map.Monster;
 
 public class CircleMonster extends Monster{
 	
