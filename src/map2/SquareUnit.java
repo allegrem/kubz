@@ -11,7 +11,7 @@ public class SquareUnit extends Unit {
 
 	@Override
 	public void paint() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

@@ -41,6 +41,17 @@ public abstract class Unit {
 		position.setLocation(p);
 		
 	}
+	
+	public int getX(){
+		
+		return position.getX();
+	}
+	
+	public int getY(){
+		
+		return position.getY();
+	}
+	
 	/**
 	 * Si le cube n'est plus sur la table et n'est plus repéré par la caméra, on affiche l'unité en rouge
 	 * 
@@ -57,4 +68,5 @@ public abstract class Unit {
 		actualColor=color;
 		
 	}
+	
 }

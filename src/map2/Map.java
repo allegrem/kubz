@@ -31,10 +31,6 @@ public class Map implements Observer{
 	}
 
 
-
-
-
-
 	
 	public void updateU(ArrayList<Unit> walls) {
 		this.units=copyOfU(walls);
