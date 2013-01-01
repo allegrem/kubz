@@ -56,7 +56,7 @@ public class GLBaseModule {
 																// de
 																// l'affichage
 			render1.render(); // On effectue le rendu de l'affichage 1
-			render2.render2();
+			render2.render2();  //valeh:rendu de l'affichage 2,i.e. celui qui ajoute les bases.
 			Display.update(); // On actualise la fenêtre pour afficher les
 								// nouveaux rendus
 			Display.sync(120); // On fait une pause de façon à ce que
