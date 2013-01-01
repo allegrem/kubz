@@ -67,8 +67,9 @@ public class Render2 {
 		glViewport(0, 0, display_width, display_height); 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-		GL11.glScalef(1.0f, GLBaseModule.ratio, 1.0f);
-		GL11.glTranslatef(4.0f,1.0f,0.0f);
+		GL11.glScalef(1.0f, GLBaseModule.ratio, 1.0f);  //marche pô :'(  on a une ellipse,pas un cercle...
+		GL11.glTranslatef(4.0f,1.0f,0.0f);  //juste un test
+		
 		for (Base base : baseRender)
 			base.paint();
 	}
