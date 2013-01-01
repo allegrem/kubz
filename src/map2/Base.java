@@ -1,4 +1,7 @@
-
+/**
+ * Classe correspondant à la Base d'un joueur, représenté par un cercle.
+ * @author valeh
+ */
 package map2;
 
 import java.awt.Point;
