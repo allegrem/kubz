@@ -4,11 +4,12 @@ import static org.lwjgl.opengl.GL11.glColor3ub;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
 import org.lwjgl.util.Color;
+import org.lwjgl.util.ReadableColor;
 
 public class Path {
 	private int width;
 	private int length;
-	private final Color color=new Color(200,150,50);
+	private final ReadableColor color=new Color(200,150,50);
 
 	public Path(int width, int length) {
 		this.width=width;

@@ -2,10 +2,11 @@ package map2;
 
 import org.lwjgl.util.Color;
 import org.lwjgl.util.Point;
+import org.lwjgl.util.ReadableColor;
 
 public class CircleUnit extends Unit {
 
-	public CircleUnit(Point position, Color color) {
+	public CircleUnit(Point position, ReadableColor color) {
 		super(position, color);
 
 	}

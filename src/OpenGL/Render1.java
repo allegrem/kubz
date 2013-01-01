@@ -14,8 +14,10 @@ import static org.lwjgl.opengl.GL11.glVertex3d;
 import static org.lwjgl.opengl.GL11.glViewport;
 
 import map2.Path;
+import map2.SquareUnit;
 import map2.Wall;
 
+import org.lwjgl.util.Color;
 import org.lwjgl.util.Point;
 import org.lwjgl.util.glu.GLU;
 
@@ -82,6 +84,7 @@ public class Render1 {
 			 */
 			new Path(100,100).paint();
 			new Wall(new Point(10, 10), new Point(50, 50), 5).paint();
+			new SquareUnit(new Point(30,10), Color.BLUE).paint();
 		}
 		glEnd();
 	}

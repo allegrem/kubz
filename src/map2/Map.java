@@ -33,6 +33,17 @@ public class Map implements Observer {
 		this.units = copyOfU(walls);
 
 	}
+	
+	public ArrayList<Wall> getInitialWalls(){
+		return copyOfW(walls);
+		
+	}
+	
+	public ArrayList<Unit> getInitialUnits(){
+		return copyOfU(units);
+		
+		
+	}
 
 	private void paintPath() {
 		path.paint();
@@ -65,7 +76,7 @@ public class Map implements Observer {
 	 * 
 	 * @param walls
 	 *            arraylist à copier
-	 * @return arraylist copiée
+	 * @return arraylist  copiée
 	 */
 	public ArrayList<Wall> copyOfW(ArrayList<Wall> walls) {
 		ArrayList<Wall> wallsCopy = new ArrayList<Wall>();

@@ -12,11 +12,12 @@ import org.lwjgl.util.ReadablePoint;
  * 
  */
 public abstract class Unit {
+	protected static final double size= 5.0;
 	private Point position;
-	private Color color;
+	private ReadableColor color;
 	protected ReadableColor actualColor;
 
-	public Unit(Point position, Color color) {
+	public Unit(Point position, ReadableColor color) {
 		this.position = position;
 		this.color = color;
 		actualColor = color;
