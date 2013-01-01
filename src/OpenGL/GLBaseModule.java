@@ -54,7 +54,7 @@ public class GLBaseModule {
 			render1.render(); // On effectue le rendu de l'affichage 1
 			Display.update(); // On actualise la fenêtre pour afficher les
 								// nouveaux rendus
-			Display.sync(120); // On fait une pose de façcon à ce que
+			Display.sync(120); // On fait une pause de façon à ce que
 								// l'affichage s'actualise à 120 FPS
 
 		}
