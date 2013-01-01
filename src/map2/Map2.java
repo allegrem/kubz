@@ -1,3 +1,11 @@
+
+/**
+ * Chargement de la carte du jeu,avec les murs et les bases.
+ * 
+ * @author valeh
+ * 
+ */
+
 package map2;
 
 import java.awt.Point;
@@ -19,12 +27,6 @@ import Map.MBox;
 import Map.PBox;
 import Map.WBox;
 
-/**
- * Chargement de la carte du jeu,avec les murs et les bases.
- * 
- * @author valeh
- * 
- */
 public class Map2 {
 
 	private int height;
