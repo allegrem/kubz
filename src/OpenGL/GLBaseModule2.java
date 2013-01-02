@@ -50,7 +50,7 @@ public class GLBaseModule2 {
 		}
 		MapReader mapReader = null;
 		try{
-			MapReader mapReader = new MapReader("map2.txt");
+			mapReader = new MapReader("map2.txt");
 		} catch (Exception e){e.printStackTrace();}
 		
 		while (do_run) {
