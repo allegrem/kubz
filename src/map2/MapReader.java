@@ -27,7 +27,8 @@ public class MapReader {
 	private int width;
 	private MBox[][] tab;
 	private ArrayList<Wall> wallList = new ArrayList<Wall>();
-	private ArrayList<Base> baseList = new ArrayList<Base>();  
+	private ArrayList<Base> baseList = new ArrayList<Base>();
+	private Map mapRead;
 	
 	
 	/**
@@ -44,6 +45,7 @@ public class MapReader {
 			findDimensions(file);
 			tab = new MBox[width][height];
 			initFromFile(file);
+			mapRead = new Map( wallList,new ArrayList<Unit>(), baseList,width,height);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -208,6 +210,9 @@ public class MapReader {
 	 */
 	public void changeCase(MBox newBox, int i, int j) {
 		tab[i][j] = newBox;
+	}
+	public void render(){
+		mapRead.paint();
 	}
 
 }
