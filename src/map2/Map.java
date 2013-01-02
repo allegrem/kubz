@@ -11,15 +11,17 @@ import java.util.ArrayList;
  */
 public class Map implements Observer {
 	private ArrayList<Wall> walls;
+	private ArrayList<Base> bases;
 	private ArrayList<Unit> units;
 	private int width;
 	private int length;
 	private Path path = new Path(width, length);
 
-	public Map(ArrayList<Wall> walls, ArrayList<Unit> units, int width,
+	public Map(ArrayList<Wall> walls, ArrayList<Unit> units,ArrayList<Base> bases, int width,
 			int length) {
 		this.walls = copyOfW(walls);
 		this.units = copyOfU(units);
+		this.bases=copyOfB(bases);
 		this.width = width;
 		this.length = length;
 	}
@@ -34,6 +36,11 @@ public class Map implements Observer {
 
 	}
 	
+	public void updateB(ArrayList<Base> bases) {
+		this.bases = copyOfB(bases);
+
+	}
+	
 	public ArrayList<Wall> getInitialWalls(){
 		return copyOfW(walls);
 		
@@ -41,6 +48,12 @@ public class Map implements Observer {
 	
 	public ArrayList<Unit> getInitialUnits(){
 		return copyOfU(units);
+		
+		
+	}
+	
+	public ArrayList<Base> getInitialBases(){
+		return copyOfB(bases);
 		
 		
 	}
@@ -63,11 +76,19 @@ public class Map implements Observer {
 		}
 
 	}
+	
+	private void paintBases() {
+		for (int i = 0; i < bases.size(); i++) {
+			bases.get(i).paint();
+		}
+
+	}
 
 	public void paint() {
 		paintPath();
 		paintWalls();
 		paintUnits();
+		paintBases();
 
 	}
 
@@ -103,6 +124,16 @@ public class Map implements Observer {
 		}
 
 		return unitsCopy;
+	}
+	
+	public ArrayList<Base> copyOfB(ArrayList<Base> bases) {
+		ArrayList<Base> basesCopy = new ArrayList<Base>();
+
+		for (int i = 0; i < bases.size(); i++) {
+			basesCopy.add(bases.get(i));
+		}
+
+		return basesCopy;
 	}
 
 }
