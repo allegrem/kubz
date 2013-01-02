@@ -145,12 +145,12 @@ public class MapReader {
 			br.readLine();  
 		
 			int sBase = Integer.parseInt( br.readLine() );	
-			System.out.println(sBase);
+			//System.out.println(sBase);
 			for (int i=0 ; i<sBase ; i++){
 				Scanner sc = new Scanner(br.readLine());  
 				int xCenter = sc.nextInt();   //On mettra probabalement des floats pour les coords,pour les tests on essaie avec 
 											  //des int pour l'instant
-				System.out.println(xCenter);
+				//System.out.println(xCenter);
 				int yCenter = sc.nextInt();
 				baseList.add( new Base( new Point(xCenter,yCenter) ) );
 				sc.close();
