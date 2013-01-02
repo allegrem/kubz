@@ -1,8 +1,5 @@
 package Map;
 
-import java.util.ArrayList;
-
-import javax.swing.JButton;
 
 /**
  * Classe abstraite representant une casse de la map
@@ -13,8 +10,6 @@ import javax.swing.JButton;
 public abstract class MBox {
 	private final int column;
 	private final int line;
-	private final Map map;
-
 	/**
 	 * 
 	 * 
@@ -28,7 +23,6 @@ public abstract class MBox {
 	public MBox(int line, int column, Map map) {
 		this.line = line;
 		this.column = column;
-		this.map = map;
 	}
 
 	/**

@@ -8,16 +8,8 @@
 package OpenGL;
 
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
-import static org.lwjgl.opengl.GL11.GL_PROJECTION;
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glColor3ub;
-import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
-import static org.lwjgl.opengl.GL11.glOrtho;
-import static org.lwjgl.opengl.GL11.glRotated;
-import static org.lwjgl.opengl.GL11.glVertex3d;
 import static org.lwjgl.opengl.GL11.glViewport;
 
 import java.util.ArrayList;
@@ -26,9 +18,6 @@ import map2.Base;
 import map2.MapReader;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.GLU;
-
-import Map.Map;
 
 /**
  * Rendu numero2

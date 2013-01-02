@@ -19,8 +19,11 @@ import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.opengl.GL11.glShadeModel;
 
+import map2.MapCreator;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
@@ -55,6 +58,7 @@ public class GLBaseModule {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		MapCreator creator=new MapCreator(display_width,display_height);
 		while (do_run) {
 			if (Display.isCloseRequested())
 				do_run = false;
@@ -64,11 +68,13 @@ public class GLBaseModule {
 																// actualisation
 																// de
 																// l'affichage
-			render1.render(); // On effectue le rendu de l'affichage 1
-			render2.render2();  //valeh:rendu de l'affichage 2,i.e. celui qui ajoute les bases.
+			//render1.render(); // On effectue le rendu de l'affichage 1
+			//render2.render2();  //valeh:rendu de l'affichage 2,i.e. celui qui ajoute les bases.
+			creator.checkInput();
+			creator.render();
 			Display.update(); // On actualise la fenêtre pour afficher les
 								// nouveaux rendus
-			Display.sync(120); // On fait une pause de façon à ce que
+			Display.sync(120);// On fait une pause de façon à ce que
 								// l'affichage s'actualise à 120 FPS
 
 		}

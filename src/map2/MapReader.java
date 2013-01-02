@@ -1,3 +1,4 @@
+package map2;
 
 /**
  * Chargement de la carte du jeu,avec les murs et les bases.
@@ -7,28 +8,18 @@
  */
 
 
-package map2;
+
 import java.awt.Point;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import map2.Base;
 import map2.Wall;
-
-import exceptions.MapReadingException;
-import exceptions.tooFewArgumentsException;
-
 import Map.MBox;
-import Map.PBox;
-import Map.WBox;
 
 public class MapReader {
 

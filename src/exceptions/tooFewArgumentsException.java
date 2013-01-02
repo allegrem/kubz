@@ -4,6 +4,7 @@ package exceptions;
  * la lecture du fichier dans initFromFile.
  * @author valeh 
  */
+@SuppressWarnings("serial")
 public class tooFewArgumentsException extends Exception{
 	
 	public tooFewArgumentsException(String message){
