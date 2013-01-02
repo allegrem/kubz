@@ -5,12 +5,13 @@ import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glViewport;
 import map2.Path;
+import map2.Point;
 import map2.ShapeUnit;
 import map2.SquareUnit;
 import map2.Wall;
 
 import org.lwjgl.util.Color;
-import org.lwjgl.util.Point;
+
 
 import Map.Map;
 
@@ -73,7 +74,7 @@ public class Render1 {
 			 * for (int j = 0; j < h; j++) { map.returnCase(i, j).paint(); }
 			} */
 			new Path(100,100).paint();
-			new Wall(new Point(10, 10), new Point(50, 50), 5).paint();
+			new Wall(new Point(10, 10), new Point(50, 50), 20,Wall.NORMAL).paint();
 			new SquareUnit(new Point(30,10), Color.BLUE).paint();
 			new ShapeUnit(new Point(10,30),Color.GREEN).paint();
 	}

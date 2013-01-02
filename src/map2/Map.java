@@ -28,6 +28,7 @@ public class Map implements Observer {
 
 	public void updateW(ArrayList<Wall> walls) {
 		this.walls = copyOfW(walls);
+		paintWalls();
 
 	}
 

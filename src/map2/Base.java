@@ -1,10 +1,10 @@
 /**
- * Classe correspondant à la Base d'un joueur, représentée par un cercle.
+ * Classe correspondant ï¿½ la Base d'un joueur, reprï¿½sentï¿½e par un cercle.
  * @author valeh
  */
 package map2;
 
-import java.awt.Point;
+
 
 import org.lwjgl.opengl.GL11;
 
@@ -25,7 +25,7 @@ public class Base {
 			float xorigin = (float) center.getX();
 			float yorigin = (float) center.getY();
 			
-			float xn = xorigin + (float) ( radius*Math.cos( (2*n*Math.PI)/100 ) );  //centre du cercle<->nouvelle origine du repère
+			float xn = xorigin + (float) ( radius*Math.cos( (2*n*Math.PI)/100 ) );  //centre du cercle<->nouvelle origine du repï¿½re
 			float yn = yorigin + (float) ( radius*Math.sin( (2*n*Math.PI)/100 ) );  //x=R*cos(theta),y=R*sin(theta)et on dessine 100 points soit tous les Pi/100 
 																				  //point pour faire le tour 
 			

@@ -1,7 +1,7 @@
 package map2;
 
 import org.lwjgl.util.Color;
-import org.lwjgl.util.Point;
+
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.ReadablePoint;
 
@@ -12,7 +12,7 @@ import org.lwjgl.util.ReadablePoint;
  * 
  */
 public abstract class Unit {
-	protected static final double size= 5.0;
+	protected static final double size= 10.0;
 	protected static final int height = 10;
 	private Point position;
 	private ReadableColor color;
@@ -30,26 +30,24 @@ public abstract class Unit {
 		position.translate(dx, dy);
 	}
 
-	public void translate(ReadablePoint p) {
-		position.translate(p);
-	}
+	
 
 	public void setLocation(int x, int y) {
-		position.setLocation(x, y);
+		position.move(x, y);
 
 	}
 
-	public void setLocation(ReadablePoint p) {
+	public void setLocation(Point p) {
 		position.setLocation(p);
 
 	}
 
-	public int getX() {
+	public double getX() {
 
 		return position.getX();
 	}
 
-	public int getY() {
+	public double getY() {
 
 		return position.getY();
 	}
