@@ -1,7 +1,13 @@
 package map2;
 
 import org.lwjgl.util.ReadablePoint;
-
+/**
+ * Objet Point représentant un point en 2D
+ * par ses coordonnées x et y
+ * 
+ * @author paul
+ *
+ */
 public class Point {
 	private double x;
 	private double y;

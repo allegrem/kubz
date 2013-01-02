@@ -15,7 +15,7 @@ public class Map implements Observer {
 	private ArrayList<Unit> units;
 	private int width;
 	private int length;
-	private Path path = new Path(width, length);
+	private Path path ;
 
 	public Map(ArrayList<Wall> walls, ArrayList<Unit> units,ArrayList<Base> bases, int width,
 			int length) {
@@ -24,6 +24,7 @@ public class Map implements Observer {
 		this.bases=copyOfB(bases);
 		this.width = width;
 		this.length = length;
+		path=new Path(width, length);
 	}
 
 	public void updateW(ArrayList<Wall> walls) {
