@@ -156,18 +156,21 @@ public class MapReader {
 				sc.close();
 			}
 			
-			/*int sWall = Integer.parseInt( br.readLine() );			
+			int sWall = Integer.parseInt( br.readLine() );			
 			wallList = new ArrayList<Wall> (sWall);
 			for (int i=0 ; i<sWall ; i++){
 				Scanner sc = new Scanner(br.readLine());  
 				float xWall = sc.nextFloat();   
 				float yWall = sc.nextFloat();
+				Point departure = new Point(xWall,yWall);
 				float xWallEnd = sc.nextFloat();
 				float yWallEnd = sc.nextFloat();
-				float tWall = sc.nextInt();
-				wallList.add( new Wall(xWall,yWall,tWall) );
+				Point arrival = new Point(xWallEnd,yWallEnd);
+				
+				int tWall = sc.nextInt();
+				wallList.add( new Wall(departure,arrival,tWall,Wall.NORMAL) );
 				sc.close();
-			}*/
+			}
 					
 	} catch (Exception e) { 
 		e.printStackTrace(); 
