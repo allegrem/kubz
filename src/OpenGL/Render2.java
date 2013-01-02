@@ -23,7 +23,7 @@ import static org.lwjgl.opengl.GL11.glViewport;
 import java.util.ArrayList;
 
 import map2.Base;
-import map2.Map2;
+import map2.MapReader;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
@@ -39,7 +39,7 @@ import Map.Map;
 public class Render2 {
 	private int display_width;
 	private int display_height;
-	private Map2 map2;
+	private MapReader mapReader;
 	private ArrayList<Base> baseRender = new ArrayList<Base>();
 
 	/**
@@ -55,8 +55,8 @@ public class Render2 {
 		this.display_height = display_height;
 
 		try {
-			map2 = new Map2("map2.txt");
-			this.baseRender = map2.getBaseList();
+			mapReader = new MapReader("map2.txt");
+			this.baseRender = mapReader.getBaseList();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -74,7 +74,7 @@ public class Render2 {
 		glViewport(0, 0, display_width, display_height); 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-		GL11.glScalef(1.0f, GLBaseModule.ratio, 1.0f);  //marche pô :'(  on a une ellipse,pas un cercle...
+		GL11.glScalef(1.0f, GLBaseModule.ratio, 1.0f);  //marche pï¿½ :'(  on a une ellipse,pas un cercle...
 		GL11.glTranslatef(4.0f,1.0f,0.0f);  //juste un test
 		
 		for (Base base : baseRender)
