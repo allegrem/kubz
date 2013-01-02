@@ -1,19 +1,28 @@
 package OpenGL;
 
-import java.io.FileInputStream;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_LEQUAL;
+import static org.lwjgl.opengl.GL11.GL_NICEST;
+import static org.lwjgl.opengl.GL11.GL_PERSPECTIVE_CORRECTION_HINT;
+import static org.lwjgl.opengl.GL11.GL_PROJECTION;
+import static org.lwjgl.opengl.GL11.GL_SMOOTH;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glClearColor;
+import static org.lwjgl.opengl.GL11.glClearDepth;
+import static org.lwjgl.opengl.GL11.glDepthFunc;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glHint;
+import static org.lwjgl.opengl.GL11.glLoadIdentity;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
+import static org.lwjgl.opengl.GL11.glOrtho;
+import static org.lwjgl.opengl.GL11.glShadeModel;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
-import static org.lwjgl.opengl.GL11.*;
-import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.util.glu.GLU;
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.lwjgl.opengl.ARBShaderObjects;
-import org.lwjgl.opengl.ARBVertexShader;
-import org.lwjgl.opengl.ARBFragmentShader;
 
 /**
  * Instructions OpenGL
@@ -73,7 +82,6 @@ public class GLBaseModule {
 					display_height));
 			Display.create();
 
-			DisplayMode mode = Display.getDisplayMode();
 		} catch (Exception e) {
 			System.out.println("Error setting up display: " + e.getMessage());
 			System.exit(0);

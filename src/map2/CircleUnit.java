@@ -1,6 +1,5 @@
 package map2;
 
-import org.lwjgl.util.Color;
 import org.lwjgl.util.Point;
 import org.lwjgl.util.ReadableColor;
 

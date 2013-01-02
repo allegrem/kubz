@@ -5,8 +5,6 @@ import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3ub;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
-import java.util.ArrayList;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.Point;
@@ -22,7 +20,7 @@ public class Wall {
 	private Point extremity1;
 	private Point extremity2;
 	private int thickness;
-	private final int height = 10;
+	private final int height = 20;
 	private Point[] sommets = new Point[4];
 	
 	/**

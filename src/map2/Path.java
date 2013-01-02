@@ -8,7 +8,12 @@ import static org.lwjgl.opengl.GL11.glVertex3d;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
-
+/**
+ * Le sol (chemin)
+ * 
+ * @author paul
+ *
+ */
 public class Path {
 	private int width;
 	private int length;

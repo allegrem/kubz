@@ -1,7 +1,12 @@
 package map2;
 
 import java.util.ArrayList;
-
+/**
+ * Interface qui doit être implémentée par les objets observeur
+ * 
+ * @author paul
+ *
+ */
 public interface Observer {
 
 	public void updateW(ArrayList<Wall> walls);

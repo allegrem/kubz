@@ -13,6 +13,7 @@ import org.lwjgl.util.ReadablePoint;
  */
 public abstract class Unit {
 	protected static final double size= 5.0;
+	protected static final int height = 10;
 	private Point position;
 	private ReadableColor color;
 	protected ReadableColor actualColor;
