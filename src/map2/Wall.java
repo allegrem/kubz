@@ -85,10 +85,10 @@ public class Wall {
 	 */
 	private void initializeSommets() {
 		for (int i = 0; i < 2; i++) {
-			sommets[i] = new Point(extremity1.getX(), extremity1.getY());
+			sommets[i] = new Point(extremity1.getX() + i*thickness, extremity1.getY() + i*thickness );
 		}
 		for (int i = 2; i < 4; i++) {
-			sommets[i] = new Point(extremity2.getX(), extremity2.getY());
+			sommets[i] = new Point(extremity2.getX()  + (i-2)*thickness , extremity2.getY() + (i-2)*thickness );
 		}
 	}
 
