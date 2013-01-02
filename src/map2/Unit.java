@@ -84,9 +84,9 @@ public abstract class Unit {
 		
 		glBegin(GL11.GL_TRIANGLES);
 		glColor3ub((byte)Color.RED.getRed(),(byte)Color.RED.getGreen(),(byte)Color.RED.getBlue());
-		glVertex3d(position.getX(),position.getY(),0);
-		glVertex3d(power*Math.sin(direction+angle)+position.getX(),power*Math.cos(direction+angle)+position.getY(),0);
-		glVertex3d(power*Math.sin(-(angle-direction))+position.getX(),power*Math.cos(-(angle-direction))+position.getY(),0);
+		glVertex3d(position.getX(),position.getY(),height/2);
+		glVertex3d(power*Math.sin(direction+angle)+position.getX(),power*Math.cos(direction+angle)+position.getY(),height/2);
+		glVertex3d(power*Math.sin(-(angle-direction))+position.getX(),power*Math.cos(-(angle-direction))+position.getY(),height/2);
 		GL11.glEnd();
 	}
 }
