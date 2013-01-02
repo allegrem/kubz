@@ -70,7 +70,7 @@ public class MapCreator extends Observable {
 		
 		if(Mouse.isButtonDown(0) && leftClicked){
 			if (Keyboard.isKeyDown(Keyboard.KEY_C)){
-				units.add(new SquareUnit(new Point(x,y),Color.RED));
+				units.add(new SquareUnit(new Point(x,y),Color.BLUE));
 				setChangedU();
 			}
 				
