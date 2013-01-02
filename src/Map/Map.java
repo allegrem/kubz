@@ -10,6 +10,8 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import exceptions.MapReadingException;
+
 /**
  * Chargement de la map de jeu
  * 

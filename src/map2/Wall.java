@@ -1,3 +1,4 @@
+
 package map2;
 
 import static org.lwjgl.opengl.GL11.GL_QUADS;
@@ -162,3 +163,4 @@ public class Wall {
 	}
 
 }
+

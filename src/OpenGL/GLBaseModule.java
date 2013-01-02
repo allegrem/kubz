@@ -33,9 +33,13 @@ import org.lwjgl.opengl.DisplayMode;
 public class GLBaseModule {
 
 	private boolean do_run = true; // runs until done is set to true
-	private int display_width = 640;
-	private int display_height = 480;
+	private static int display_width = 640;    //pourquoi pas static??
+	private static int display_height = 480; 
+	public static float ratio = display_width/display_height;
 	private Render1 render1 = new Render1(display_width, display_height);
+	private Render2 render2 = new Render2(display_width, display_height);
+	
+
 
 	/**
 	 * Lancement de l'affichage
@@ -61,6 +65,7 @@ public class GLBaseModule {
 																// de
 																// l'affichage
 			render1.render(); // On effectue le rendu de l'affichage 1
+			render2.render2();  //valeh:rendu de l'affichage 2,i.e. celui qui ajoute les bases.
 			Display.update(); // On actualise la fenêtre pour afficher les
 								// nouveaux rendus
 			Display.sync(120); // On fait une pause de façon à ce que
