@@ -5,8 +5,8 @@ import org.lwjgl.util.ReadableColor;
 
 public class CircleUnit extends Unit {
 
-	public CircleUnit(Point position, ReadableColor color) {
-		super(position, color);
+	public CircleUnit(Point position, ReadableColor color,Map map) {
+		super(position, color,map);
 
 	}
 

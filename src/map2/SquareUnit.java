@@ -16,8 +16,8 @@ import org.lwjgl.util.ReadableColor;
  */
 public class SquareUnit extends Unit {
 
-	public SquareUnit(Point position, ReadableColor color) {
-		super(position, color);
+	public SquareUnit(Point position, ReadableColor color,Map map) {
+		super(position, color,map);
 	}
 
 	@Override

@@ -26,6 +26,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.GLContext;
 
 /**
  * Instructions OpenGL
@@ -35,21 +36,19 @@ import org.lwjgl.opengl.DisplayMode;
  */
 public class GLBaseModule {
 
-	private boolean do_run = true; // runs until done is set to true
-	private static int display_width = 640;    //pourquoi pas static??
-	private static int display_height = 480; 
-	public static float ratio = display_width/display_height;
-	private Render1 render1 = new Render1(display_width, display_height);
-	private Render2 render2 = new Render2(display_width, display_height);
+	private final int display_width;
+	private final int display_height; 
+	public static float ratio;
 	
-
-
 	/**
 	 * Lancement de l'affichage
 	 * 
 	 * 
 	 */
-	public GLBaseModule() {
+	public GLBaseModule(int display_width,int display_height){
+		this.display_width=display_width;
+		this.display_height=display_height;
+		ratio = display_width/display_height;
 		initDisplay();
 		initGL();
 		try {
@@ -58,29 +57,22 @@ public class GLBaseModule {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		MapCreator creator=new MapCreator(display_width,display_height);
-		while (do_run) {
-			if (Display.isCloseRequested())
-				do_run = false;
-
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // On vide le
-																// buffer avant
-																// actualisation
-																// de
-																// l'affichage
-			//render1.render(); // On effectue le rendu de l'affichage 1
-			//render2.render2();  //valeh:rendu de l'affichage 2,i.e. celui qui ajoute les bases.
-			creator.checkInput();
-			creator.render();
-			Display.update(); // On actualise la fenêtre pour afficher les
-								// nouveaux rendus
-			Display.sync(120);// On fait une pause de façon à ce que
-								// l'affichage s'actualise à 120 FPS
-
-		}
-		Keyboard.destroy();
-		Display.destroy();
 	}
+
+	public void clear(){
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // On vide le buffer
+	}
+	
+	public void update() {
+
+			Display.update(); // On actualise la fenêtre pour afficher les							// nouveaux rendus
+		}
+	
+	public void close(){
+		Display.destroy();
+		Keyboard.destroy();
+	}
+
 
 	/**
 	 * Création de la fenêtre
@@ -122,7 +114,5 @@ public class GLBaseModule {
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	}
 
-	public static void main(String[] args) {
-		new GLBaseModule();
-	}
+	
 }

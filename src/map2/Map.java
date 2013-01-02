@@ -94,6 +94,8 @@ public class Map implements Observer {
 
 	}
 
+	
+	
 	/**
 	 * Copie d'une arraylist de murs
 	 * 

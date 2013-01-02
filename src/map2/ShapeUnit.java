@@ -15,8 +15,8 @@ import org.lwjgl.util.ReadableColor;
  */
 public class ShapeUnit extends Unit {
 
-	public ShapeUnit(Point position, ReadableColor color) {
-		super(position, color);
+	public ShapeUnit(Point position, ReadableColor color,Map map) {
+		super(position, color,map);
 
 	}
 

@@ -1,15 +1,13 @@
 package map2;
 
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.glClear;
-
 import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.Color;
+
+import OpenGL.GLBaseModule;
 
 
 public class MapCreator extends Observable {
@@ -23,12 +21,26 @@ public class MapCreator extends Observable {
 	private boolean rightClicked =true;
 	private boolean leftClicked =true;
 	private Map map;
+	private GLBaseModule affichage;
+	private boolean do_run=true;
 	
 	public MapCreator(int display_width,int display_height){
 		this.display_height=display_height;
 		this.display_width=display_width;
 		map=new Map(walls, units, bases, display_width, display_height);
+		affichage=new GLBaseModule(display_width,display_height);
 		addObserver(map);
+	
+		while(do_run){
+			if (Display.isCloseRequested())
+				do_run = false;
+			checkInput();
+			affichage.clear();
+			render();
+			affichage.update();
+			Display.sync(120);
+		}
+		affichage.close();
 		
 		
 	}
@@ -70,12 +82,12 @@ public class MapCreator extends Observable {
 		
 		if(Mouse.isButtonDown(0) && leftClicked){
 			if (Keyboard.isKeyDown(Keyboard.KEY_C)){
-				units.add(new SquareUnit(new Point(x,y),Color.BLUE));
+				units.add(new SquareUnit(new Point(x,y),Color.BLUE,map));
 				setChangedU();
 			}
 				
 			else if (Keyboard.isKeyDown(Keyboard.KEY_T)){
-				units.add(new ShapeUnit(new Point(x,y),Color.GREEN));
+				units.add(new ShapeUnit(new Point(x,y),Color.GREEN,map));
 				setChangedU();
 			}
 			else if (Keyboard.isKeyDown(Keyboard.KEY_B)){
@@ -88,7 +100,6 @@ public class MapCreator extends Observable {
 				int iy=y;
 				walls.add(new Wall(new Point(ix,iy), new Point(x+20,y+30),20,Wall.NORMAL));
 				while(Mouse.isButtonDown(0)){
-					if(Math.hypot(Mouse.getDX(),Mouse.getDY())>1){
 					x=Mouse.getX();
 					y=display_height-Mouse.getY();	
 					walls.remove(size);
@@ -101,11 +112,11 @@ public class MapCreator extends Observable {
 					}
 					setChangedW();
 					notifyObserversW(walls);
-					}
-					glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+					affichage.clear();
 					render();
-					Display.update();
+					affichage.update();
 					Display.sync(120);
+					Mouse.poll();
 				}
 				setChangedW();
 			}

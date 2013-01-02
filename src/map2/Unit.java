@@ -6,9 +6,7 @@ import static org.lwjgl.opengl.GL11.glVertex3d;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
-
 import org.lwjgl.util.ReadableColor;
-import org.lwjgl.util.ReadablePoint;
 
 /**
  * Une unité d'un joueur ou un monstre
@@ -20,10 +18,12 @@ public abstract class Unit {
 	protected static final double size= 10.0;
 	protected static final int height = 10;
 	private Point position;
+	private Map map;
 	private ReadableColor color;
 	protected ReadableColor actualColor;
 
-	public Unit(Point position, ReadableColor color) {
+	public Unit(Point position, ReadableColor color,Map map) {
+		this.map=map;
 		this.position = position;
 		this.color = color;
 		actualColor = color;
@@ -88,5 +88,7 @@ public abstract class Unit {
 		glVertex3d(power*Math.sin(direction+angle)+position.getX(),power*Math.cos(direction+angle)+position.getY(),height/2);
 		glVertex3d(power*Math.sin(-(angle-direction))+position.getX(),power*Math.cos(-(angle-direction))+position.getY(),height/2);
 		GL11.glEnd();
+		
+		map.paint();
 	}
 }

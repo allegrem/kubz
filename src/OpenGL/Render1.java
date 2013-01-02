@@ -9,11 +9,11 @@ import map2.Point;
 import map2.ShapeUnit;
 import map2.SquareUnit;
 import map2.Wall;
-
+import map2.Map;
 import org.lwjgl.util.Color;
 
 
-import Map.Map;
+
 
 /**
  * Rendu numero1
@@ -24,7 +24,7 @@ import Map.Map;
 public class Render1 {
 	private int display_width;
 	private int display_height;
-	private Map map;
+	private  Map map;
 	private int l;
 	private int h;
 
@@ -40,7 +40,7 @@ public class Render1 {
 		this.display_width = display_width;
 		this.display_height = display_height;
 
-		try {
+	/*	try {
 			map = new Map("map.txt");
 			l = map.getWidth();
 			h = map.getHeight();
@@ -48,7 +48,8 @@ public class Render1 {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.exit(0);
-		}
+		
+		}*/
 
 	}
 
@@ -75,8 +76,8 @@ public class Render1 {
 			} */
 			new Path(100,100).paint();
 			new Wall(new Point(10, 10), new Point(50, 50), 20,Wall.NORMAL).paint();
-			new SquareUnit(new Point(30,10), Color.BLUE).paint();
-			new ShapeUnit(new Point(10,30),Color.GREEN).paint();
+			new SquareUnit(new Point(30,10), Color.BLUE,map).paint();
+			new ShapeUnit(new Point(10,30),Color.GREEN,map).paint();
 	}
 
 	public double getl() {
