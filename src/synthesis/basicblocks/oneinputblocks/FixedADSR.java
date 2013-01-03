@@ -9,7 +9,7 @@ import synthesis.exceptions.RequireAudioBlocksException;
 
 public class FixedADSR extends OneInputBlock {
 	
-	private final float a,d,s,r,duration,slevel; //slevel is a fraction of the plugged in signal
+	private final float a,d,s,r,duration; //slevel is a fraction of the plugged in signal
 	
 	/**
 	 * @param duration The total amount of time during which the envelop will be applied on the signal.
@@ -19,9 +19,9 @@ public class FixedADSR extends OneInputBlock {
 	 * @param r The fraction of duration corresponding to the Release.
 	 * @param slevel The fraction of the signal corresponding to the level during Sustain.
 	 */
-	public FixedADSR(float a, float d, float s,float r, float duration, float slevel) /*throws nonValidproportionException, nonValidslevelException */{  //check in adsr are a partition of duration
+	public FixedADSR(float a, float d, float s,float r, float duration) /*throws nonValidproportionException, nonValidslevelException */{  //check in adsr are a partition of duration
 																								  //and also check if slevel<=in.getMax()			
-		this.slevel = slevel;
+		
 		this.a = a;
 		this.d = d;
 		this.s = s;
@@ -33,9 +33,9 @@ public class FixedADSR extends OneInputBlock {
 		super.play(t);
 		
 		float previous = in.play(t).floatValue();
-		float sPrevious = slevel*previous;
+		float sPrevious = s*previous;
 		float tfloat = t.floatValue();
-		float aDur=a*duration, dDur=aDur+d*duration,sDur=dDur+s*duration,rDur=sDur+r*duration;
+		float aDur=a*duration, dDur=aDur+d*duration,rDur=duration-r*duration,sDur=duration-(aDur+dDur+rDur);
 		
 		float aExpr = ( previous/aDur )*tfloat;
 		float dExpr = ( (sPrevious-previous)/(d*duration) )*(tfloat-dDur) + sPrevious;
