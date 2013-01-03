@@ -35,7 +35,7 @@ public class FixedADSR extends OneInputBlock {
 		float previous = in.play(t).floatValue();
 		float sPrevious = s*previous;
 		float tfloat = t.floatValue();
-		float aDur=a*duration, dDur=aDur+d*duration,rDur=duration-r*duration,sDur=duration-(aDur+dDur+rDur);
+		float aDur=a*duration, dDur=aDur+d*duration,sDur=duration-r*duration,rDur=duration;
 		
 		float aExpr = ( previous/aDur )*tfloat;
 		float dExpr = ( (sPrevious-previous)/(d*duration) )*(tfloat-dDur) + sPrevious;
@@ -48,8 +48,10 @@ public class FixedADSR extends OneInputBlock {
 			return new Float( previous*dExpr );
 		if (tfloat>dDur && tfloat<=sDur)
 			return new Float( previous*sExpr );
+		if (tfloat>sDur && tfloat<=rDur)
+			return new Float( previous*rExpr );
 		
-		return new Float( previous*rExpr );
+			return new Float(0);
 			
 		
 	
