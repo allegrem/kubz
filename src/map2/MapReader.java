@@ -152,7 +152,7 @@ public class MapReader {
 											  //des int pour l'instant
 				//System.out.println(xCenter);
 				int yCenter = sc.nextInt();
-				baseList.add( new Base( new Point(xCenter,yCenter) ) );
+				//baseList.add( new Base( new Point(xCenter,yCenter) ) );
 				sc.close();
 			}
 			
