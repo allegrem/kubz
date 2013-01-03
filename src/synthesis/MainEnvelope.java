@@ -1,7 +1,9 @@
+/**
+ * 
+ */
 package synthesis;
 
-import java.util.ArrayList;
-
+import java.io.IOException;
 import synthesis.audiooutput.SpeakersOutput;
 import synthesis.audiooutput.WavFileOutput;
 import synthesis.basicblocks.noinputblocks.Constant;
@@ -10,24 +12,24 @@ import synthesis.basicblocks.noinputblocks.Noise;
 import synthesis.basicblocks.oneinputblocks.FixedADSR;
 import synthesis.basicblocks.oneinputblocks.Offset;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
-import synthesis.basicblocks.severalinputsblocks.Adder;
+import synthesis.exceptions.AudioException;
 import synthesis.exceptions.RequireAudioBlocksException;
-import synthesis.filters.Filter;
+import synthesis.exceptions.TooManyInputsException;
 
 /**
- * This main is used to test the synthesis engine. This should not be used
- * in the final project.
  * @author allegrem
+ *
  */
-public class MainSynthesis {
+public class MainEnvelope {
 
 	/**
-	 * WARNING! This main should not be used in the final project!!
 	 * @param args
-	 * @throws Exception 
+	 * @throws TooManyInputsException 
+	 * @throws IOException 
+	 * @throws RequireAudioBlocksException 
+	 * @throws AudioException 
 	 */
-	public static void main(String[] args) throws Exception {
-		
+	public static void main(String[] args) throws TooManyInputsException, IOException, AudioException, RequireAudioBlocksException {
 		//playground
 		FixedSineWaveOscillator osc = new FixedSineWaveOscillator(100f, 10*100f);
 		Offset off = new Offset(1000f);
@@ -36,50 +38,21 @@ public class MainSynthesis {
 		
 		AudioBlock out = osc2; //this (i.e. out) should have a reference to the bottom AudioBlock
 		
-		
 		Noise noise = new Noise();
 		out = noise;
 		
-/* one zero filter	*/
-		ArrayList<Float> feedback = new ArrayList<Float>();
-		feedback.add(0.25f);
+		//testing adsr envelope
+		Constant c = new Constant(120f);
+		FixedADSR env = new FixedADSR(0.1f, 0.1f, 0.5f, 0.3f, 1f);
+		env.plugin(c);
+		out = env;
 		
-		ArrayList<Float> feedforward = new ArrayList<Float>();
-		feedforward.add(1f);
-		feedforward.add(-1f);
-		
-		
-		
-/* two pole filter
- 		ArrayList<Float> feedback = new ArrayList<Float>();
-		feedback.add(1f);
-		feedback.add(-0.6f);
-		feedback.add(0.99f);
-		
-		ArrayList<Float> feedforward = new ArrayList<Float>();
-		feedforward.add(1f); */
-		
-		Filter filter = new Filter(feedback, feedforward);
-		filter.plugin(noise);
-		
-		AudioBlock out2 = filter;
-		
-		//*****test code for adder*********
-		FixedSineWaveOscillator osc3 = new FixedSineWaveOscillator(200f, 25f);
-		FixedSineWaveOscillator osc4 = new FixedSineWaveOscillator(400f, 25f);
-		Adder add = new Adder(new ArrayList<AudioBlock>());
-		//FixedADSR envelop = new FixedADSR (0.25f,0.25f, 0.25f, 0.25f, 10f, 0.5f );
-		add.plugin(osc3);
-		add.plugin(osc4);
-		//envelop.plugin(add);
-		out = add;
-
 		
 		//playing sound
 		SpeakersOutput speakersOutput = new SpeakersOutput();
 		speakersOutput.open();
 		speakersOutput.play(computeSound(0f, 1f, out));
-		speakersOutput.play(computeSound(0f, 1f, out2));
+//		speakersOutput.play(computeSound(0f, 1f, out2));
 		speakersOutput.close();
 		
 		
@@ -90,10 +63,10 @@ public class MainSynthesis {
 		wavFileOutput.close();
 		
 		//save to wav
-		WavFileOutput wavFileOutput2 = new WavFileOutput("fmout2.wav");
+		/*WavFileOutput wavFileOutput2 = new WavFileOutput("fmout2.wav");
 		wavFileOutput2.open();
 		wavFileOutput2.play(computeSound(0f, 10f, out2));
-		wavFileOutput2.close();
+		wavFileOutput2.close();*/
 	}
 	
 	
@@ -108,5 +81,5 @@ public class MainSynthesis {
 		
 		return arr;
 	}
-	
+
 }
