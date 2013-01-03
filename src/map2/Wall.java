@@ -144,8 +144,9 @@ public class Wall {
 
 		glBegin(GL_QUADS); // Définition du type de liaison entre les points
 		// Chargement de la couleur du mur
-		glColor3ub((byte) color.getRed(), (byte) color.getGreen(),
-				(byte) color.getBlue());
+		//glColor3ub((byte) color.getRed(), (byte) color.getGreen(),
+				//(byte) color.getBlue());
+		GL11.glColor3f(1.0f,0.0f,1.0f);
 
 		glVertex3d(sommets[0].getX(), sommets[0].getY(), 0);
 		glVertex3d(sommets[1].getX(), sommets[1].getY(), 0);
