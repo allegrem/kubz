@@ -1,7 +1,8 @@
 package map2;
 
 /**
- * Chargement de la carte du jeu,avec les murs et les bases.
+ * Chargement de la carte du jeu a partir d'une lecture de fichier contenant
+ * les infos sur les murs et les bases.
  * 
  * @author valeh
  * 
