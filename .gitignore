@@ -5,4 +5,4 @@ bin/
 *.wav
 doc/
 .DS_Store
-
+lib/
