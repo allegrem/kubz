@@ -1,9 +1,13 @@
 package map2;
 
 
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glClearColor;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.glu.Disk;
+import org.newdawn.slick.Color;
 
 public class CircleUnit extends Unit {
 
@@ -15,6 +19,7 @@ public class CircleUnit extends Unit {
 
 	@Override
 	public void paint() {
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
 				/*GL11.glBegin(GL11.GL_LINE_LOOP);
 				GL11.glColor3ub((byte)actualColor.getRed(),(byte)actualColor.getGreen(),(byte)actualColor.getBlue());	
 				for(int r=0;r<=size;r++){
@@ -31,8 +36,7 @@ public class CircleUnit extends Unit {
 				}
 				GL11.glEnd();*/
 		Disk disk=new Disk();
-		
-		GL11.glColor3ub((byte)actualColor.getRed(),(byte)actualColor.getGreen(),(byte)actualColor.getBlue());	
+		GL11.glColor3ub((byte)actualColor.getRed(),(byte)actualColor.getGreen(),(byte)actualColor.getBlue());
 		GL11.glTranslated(getX(), getY(), 0);
 		disk.draw(0f, (float)size, 50, 1);
 		GL11.glTranslated(-getX(), -getY(), 0);

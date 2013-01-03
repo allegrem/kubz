@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 
 import OpenGL.GLBaseModule;
+import OpenGL.Textures;
 
 
 public class MapCreator extends Observable {
@@ -27,10 +29,10 @@ public class MapCreator extends Observable {
 	public MapCreator(int display_width,int display_height){
 		this.display_height=display_height;
 		this.display_width=display_width;
-		map=new Map(walls, units, bases, display_width, display_height);
 		affichage=new GLBaseModule(display_width,display_height);
+		map=new Map(walls, units, bases, display_width, display_height);
 		addObserver(map);
-	
+		
 		while(do_run){
 			if (Display.isCloseRequested())
 				do_run = false;

@@ -3,6 +3,7 @@ package map2;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3ub;
+import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
 import org.lwjgl.opengl.GL11;
@@ -22,6 +23,7 @@ public class SquareUnit extends Unit {
 
 	@Override
 	public void paint() {
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		glBegin(GL_QUADS);
 		glColor3ub((byte) actualColor.getRed(), (byte) actualColor.getGreen() , (byte) actualColor.getBlue()); // face marron
 		

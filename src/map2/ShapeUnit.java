@@ -22,7 +22,7 @@ public class ShapeUnit extends Unit {
 
 	@Override
 	public void paint() {
-		
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		glBegin(GL11.GL_TRIANGLES);
 		glColor3ub((byte) actualColor.getRed(), (byte) actualColor.getGreen() , (byte) actualColor.getBlue()); // face marron
 		
