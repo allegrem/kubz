@@ -155,6 +155,9 @@ public class Wall {
 	}
 
 	public void paint() {
+		float normev = (float)Math.hypot(vect.getX(),vect.getY());
+		int nbre= Math.round(normev/50)+1;
+		
 		GL11.glColor3f(1.0f,1.0f,1.0f);
 		glEnable(GL11.GL_TEXTURE_2D);
 		if (Textures.textureWall==null)
@@ -179,11 +182,11 @@ public class Wall {
 
 		GL11.glTexCoord2f(0,0);
 		glVertex3d(sommets[0].getX(), sommets[0].getY(), height);
-		GL11.glTexCoord2f(1,0);
+		GL11.glTexCoord2f(nbre,0);
 		glVertex3d(sommets[1].getX(), sommets[1].getY(), height);
-		GL11.glTexCoord2f(1,1);
+		GL11.glTexCoord2f(nbre,nbre);
 		glVertex3d(sommets[2].getX(), sommets[2].getY(), height);
-		GL11.glTexCoord2f(0,1);
+		GL11.glTexCoord2f(0,nbre);
 		glVertex3d(sommets[3].getX(), sommets[3].getY(), height);
 
 		GL11.glTexCoord2f(0,0);
@@ -197,11 +200,11 @@ public class Wall {
 
 		GL11.glTexCoord2f(0,0);
 		glVertex3d(sommets[3].getX(), sommets[3].getY(), 0);
-		GL11.glTexCoord2f(0,1);
+		GL11.glTexCoord2f(0,nbre);
 		glVertex3d(sommets[2].getX(), sommets[2].getY(), 0);
-		GL11.glTexCoord2f(1,1);
+		GL11.glTexCoord2f(nbre,nbre);
 		glVertex3d(sommets[0].getX(), sommets[0].getY(), 0);
-		GL11.glTexCoord2f(0,1);
+		GL11.glTexCoord2f(0,nbre);
 		glVertex3d(sommets[1].getX(), sommets[1].getY(), 0);
 
 		GL11.glTexCoord2f(0,0);
