@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL11;
 
 public class Base {
 	
-	private static float radius = 5.0f;   //On code le rayon des bases "en dur".
+	private static float radius = 15.0f;   //On code le rayon des bases "en dur".
 	private Point center;
 	
 	public Base(Point center){
@@ -19,6 +19,8 @@ public class Base {
 	
 	public void paint(){
 		
+		GL11.glPushMatrix();
+		GL11.glScalef(1.0f,1.5f,1.0f);
 		GL11.glBegin(GL11.GL_LINE_LOOP);
 		GL11.glColor3f(0.0f,0.0f,1.0f);		
 		for (int n=0 ; n<100 ; n ++) {
@@ -32,6 +34,7 @@ public class Base {
 			GL11.glVertex3f(xn,yn,0.0f);
 		}
 		GL11.glEnd();
+		GL11.glPopMatrix();
 	}
 
 }
