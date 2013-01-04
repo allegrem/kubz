@@ -25,9 +25,7 @@ public class Base {
 		this.color=color;
 	}
 	
-	public void paint(){
-
-		
+	public void paint(){	
 		/*GL11.glPushMatrix();
 		GL11.glScalef(1.0f,1.5f,1.0f);
 		GL11.glBegin(GL11.GL_LINE_LOOP);
@@ -54,6 +52,9 @@ public class Base {
 		disk1.draw(radius-5, radius, 50, 1);
 		GL11.glTranslated(-center.getX(), -center.getY(), 0);
 
+	}
+	public String getCharac(){
+		return center.getX()+" "+center.getY();
 	}
 
 }
