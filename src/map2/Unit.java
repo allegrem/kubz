@@ -91,4 +91,8 @@ public abstract class Unit {
 		
 		map.paint();
 	}
+	
+	public String getCharac(){
+		return position.getX()+" "+position.getY();
+	}
 }
