@@ -317,4 +317,8 @@ public class Wall {
 	
 	}
 
+	public String getCharac(){
+		return extremity1.getX()+" "+extremity1.getY()+" "+extremity2.getX()+" "+extremity2.getY()+" "+thickness;
+	}
+	
 }

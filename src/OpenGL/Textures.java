@@ -13,6 +13,7 @@ public class Textures {
 	public static void initTexturePath(){
 		texturePath=null;
 		try {
+
 			texturePath = TextureLoader.getTexture("JPG",ResourceLoader.getResourceAsStream("metal091b.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();

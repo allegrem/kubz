@@ -30,6 +30,7 @@ public abstract class Unit {
 	}
 
 	public abstract void paint();
+	public abstract String getType();
 
 	public void translate(int dx, int dy) {
 		position.translate(dx, dy);
@@ -90,5 +91,9 @@ public abstract class Unit {
 		GL11.glEnd();
 		
 		map.paint();
+	}
+	
+	public String getCharac(){
+		return this.getType()+" "+position.getX()+" "+position.getY();
 	}
 }

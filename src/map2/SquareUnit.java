@@ -59,5 +59,11 @@ public class SquareUnit extends Unit {
 		
 		GL11.glEnd();
 	}
+	
+	@Override
+	public String getType() {
+		return "S";
+	}
+
 
 }

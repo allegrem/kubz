@@ -4,6 +4,7 @@ import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -68,12 +69,13 @@ public class MapCreator extends Observable {
 			
 			affichage.clear();
 			render();
-			affichage.update();			
+
+			saveToFile();
+			affichage.update();
 			Display.sync(120);
 		}
 		affichage.close();
-		
-		
+	
 	}
 	
 	public void checkInput(){
@@ -196,4 +198,56 @@ public class MapCreator extends Observable {
 		map.paint();
 		
 	}
+	private void saveWallsToFile(String wFileName){
+		PrintWriter pw = null;
+		try{
+			pw = new PrintWriter(wFileName);
+			pw.print(walls.size());
+			pw.println();   
+			for (Wall wall : walls){
+				pw.print( wall.getCharac() );		
+				pw.println();
+			}
+		} catch (Exception e) {System.out.println("ERROR");}
+	finally {
+		if (pw!=null) { try {pw.close();} catch (Exception e){} } 
+	}
+	}
+	private void saveBasesToFile(String bFileName){
+		PrintWriter pw = null;
+		try{
+			pw = new PrintWriter(bFileName);
+			pw.print(bases.size());
+			pw.println();        
+			for (Base base : bases){
+				pw.print( base.getCharac() );		
+				pw.println();
+			}
+		} catch (Exception e) {System.out.println("ERROR");}
+	finally {
+		if (pw!=null) { try {pw.close();} catch (Exception e){} } 
+		}
+	}
+	private void saveUnitsToFile(String bFileName){
+		PrintWriter pw = null;
+		try{
+			pw = new PrintWriter(bFileName);        
+			for (Unit unit : units){
+				pw.print( unit.getCharac() );		
+				pw.println();
+			}
+		} catch (Exception e) {System.out.println("ERROR");}
+	finally {
+		if (pw!=null) { try {pw.close();} catch (Exception e){} } 
+		}
+	}
+	private void saveToFile(){
+		saveWallsToFile("wFile.txt");
+		saveBasesToFile("bFile.txt");
+		saveUnitsToFile("uFile.txt");
+	}
+	
+	
+	
+	
 }
