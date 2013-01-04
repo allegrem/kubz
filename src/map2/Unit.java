@@ -15,8 +15,8 @@ import org.lwjgl.util.ReadableColor;
  * 
  */
 public abstract class Unit {
-	protected static final double size= 10.0;
-	protected static final int height = 10;
+	protected static final double size= 15.0;
+	protected static final int height = 15;
 	private Point position;
 	private Map map;
 	private ReadableColor color;

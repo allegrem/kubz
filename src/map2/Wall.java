@@ -3,12 +3,21 @@ package map2;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3ub;
+import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
+import java.io.IOException;
+
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.Color;
+
 
 import org.lwjgl.util.ReadableColor;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
+import org.newdawn.slick.util.ResourceLoader;
+
+import OpenGL.Textures;
 
 /**
  * Les murs de la map
@@ -20,7 +29,6 @@ public class Wall {
 	public static final int NORMAL = 0;
 	public static final int HORIZONTAL = 1;
 	public static final int VERTICAL = 2;
-	private ReadableColor color = Color.GREY;
 	private Point extremity1;
 	private Point extremity2;
 	private Point vect;
@@ -29,6 +37,7 @@ public class Wall {
 	private double invNorme;
 	private int thickness;
 	private final int height = 20;
+	
 	private Point[] sommets = new Point[4];
 
 	/**
@@ -42,10 +51,11 @@ public class Wall {
 	 *            Epaisseur du mur
 	 */
 
-	public Wall(Point point, Point point2, int thickness, int type) {
+	public Wall(Point point, Point point2, int thickness, int type){
 		this.extremity1 = point;
 		this.extremity2 = point2;
 		this.thickness=thickness;
+		
 	
 		switch (type) {
 		case NORMAL: {
@@ -65,7 +75,11 @@ public class Wall {
 		}
 
 	}
-
+	
+		
+	
+	
+	
 	private void computeHorizontal() {
 		extremity2.setY(extremity1.getY());
 		initializeSommets();
@@ -141,44 +155,85 @@ public class Wall {
 	}
 
 	public void paint() {
-
+		float normev = (float)Math.hypot(vect.getX(),vect.getY());
+		int nbre= Math.round(normev/50)+1;
+		
+		GL11.glColor3f(1.0f,1.0f,1.0f);
+		glEnable(GL11.GL_TEXTURE_2D);
+		if (Textures.textureWall==null)
+			Textures.initTextureWall();
+		Color.white.bind();
+		Textures.textureWall.bind();
 		glBegin(GL_QUADS); // Définition du type de liaison entre les points
 		// Chargement de la couleur du mur
+
 		//glColor3ub((byte) color.getRed(), (byte) color.getGreen(),
 				//(byte) color.getBlue());
 		GL11.glColor3f(1.0f,0.0f,1.0f);
 
+		
+		//glColor3ub((byte) color.getRed(), (byte) color.getGreen(),
+				//(byte) color.getBlue());
+
+
+	
+		GL11.glTexCoord2f(0,0);
 		glVertex3d(sommets[0].getX(), sommets[0].getY(), 0);
+		GL11.glTexCoord2f(1,0);
 		glVertex3d(sommets[1].getX(), sommets[1].getY(), 0);
+		GL11.glTexCoord2f(1,1);
 		glVertex3d(sommets[1].getX(), sommets[1].getY(), height);
+		GL11.glTexCoord2f(0,1);
 		glVertex3d(sommets[0].getX(), sommets[0].getY(), height);
 
+		GL11.glTexCoord2f(0,0);
 		glVertex3d(sommets[0].getX(), sommets[0].getY(), height);
+		GL11.glTexCoord2f(nbre,0);
 		glVertex3d(sommets[1].getX(), sommets[1].getY(), height);
+		GL11.glTexCoord2f(nbre,nbre);
 		glVertex3d(sommets[2].getX(), sommets[2].getY(), height);
+		GL11.glTexCoord2f(0,nbre);
 		glVertex3d(sommets[3].getX(), sommets[3].getY(), height);
 
+		GL11.glTexCoord2f(0,0);
 		glVertex3d(sommets[3].getX(), sommets[3].getY(), height);
+		GL11.glTexCoord2f(1,0);
 		glVertex3d(sommets[2].getX(), sommets[2].getY(), height);
+		GL11.glTexCoord2f(1,1);
 		glVertex3d(sommets[2].getX(), sommets[2].getY(), 0);
+		GL11.glTexCoord2f(0,1);
 		glVertex3d(sommets[3].getX(), sommets[3].getY(), 0);
 
+		GL11.glTexCoord2f(0,0);
 		glVertex3d(sommets[3].getX(), sommets[3].getY(), 0);
+		GL11.glTexCoord2f(0,nbre);
 		glVertex3d(sommets[2].getX(), sommets[2].getY(), 0);
+		GL11.glTexCoord2f(nbre,nbre);
 		glVertex3d(sommets[0].getX(), sommets[0].getY(), 0);
+		GL11.glTexCoord2f(0,nbre);
 		glVertex3d(sommets[1].getX(), sommets[1].getY(), 0);
 
+		GL11.glTexCoord2f(0,0);
 		glVertex3d(sommets[1].getX(), sommets[1].getY(), 0);
+		GL11.glTexCoord2f(0,1);
 		glVertex3d(sommets[1].getX(), sommets[1].getY(), height);
+		GL11.glTexCoord2f(1,1);
 		glVertex3d(sommets[3].getX(), sommets[3].getY(), height);
+		GL11.glTexCoord2f(0,1);
 		glVertex3d(sommets[3].getX(), sommets[3].getY(), 0);
 
+		GL11.glTexCoord2f(0,0);
 		glVertex3d(sommets[0].getX(), sommets[0].getY(), 0);
+		GL11.glTexCoord2f(0,1);
 		glVertex3d(sommets[0].getX(), sommets[0].getY(), height);
+		GL11.glTexCoord2f(1,1);
 		glVertex3d(sommets[2].getX(), sommets[2].getY(), height);
+		GL11.glTexCoord2f(0,1);
 		glVertex3d(sommets[2].getX(), sommets[2].getY(), 0);
 
 		GL11.glEnd();
+		
+	
 	}
 
 }

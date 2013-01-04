@@ -19,14 +19,11 @@ import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.opengl.GL11.glShadeModel;
 
-import map2.MapCreator;
-
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.opengl.GLContext;
+import org.lwjgl.opengl.GL11;
 
 /**
  * Instructions OpenGL
@@ -83,7 +80,9 @@ public class GLBaseModule {
 			// Creation d'une fenetre permettant de dessiner avec OpenGL
 			Display.setDisplayModeAndFullscreen(new DisplayMode(display_width,
 					display_height));
+			
 			Display.create();
+			Display.setVSyncEnabled(true);
 
 		} catch (Exception e) {
 			System.out.println("Error setting up display: " + e.getMessage());
@@ -112,6 +111,8 @@ public class GLBaseModule {
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 	}
 
 	

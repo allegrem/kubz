@@ -89,8 +89,9 @@ public class Map implements Observer {
 	public void paint() {
 		paintPath();
 		paintWalls();
-		paintUnits();
 		paintBases();
+		paintUnits();
+		
 
 	}
 
