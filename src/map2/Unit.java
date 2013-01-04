@@ -96,4 +96,12 @@ public abstract class Unit {
 	public String getCharac(){
 		return this.getType()+" "+position.getX()+" "+position.getY();
 	}
+	
+	public boolean isInZone(int n){
+		double x1 = position.getX()-this.size/2, x2 = position.getX()+this.size/2;
+		double y1 = position.getY()-this.size/2, y2 = position.getY()+this.size/2;
+		if (n>=x1 && n<=x2 && n>=y1 && n<=y2)
+			return true;
+		return false;
+	}
 }
