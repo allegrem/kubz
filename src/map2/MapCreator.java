@@ -1,5 +1,9 @@
 package map2;
 
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
+import static org.lwjgl.opengl.GL11.glLoadIdentity;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -9,6 +13,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
+import org.lwjgl.util.glu.GLU;
 
 import OpenGL.GLBaseModule;
 import OpenGL.Textures;
@@ -27,6 +32,7 @@ public class MapCreator extends Observable {
 	private Map map;
 	private GLBaseModule affichage;
 	private boolean do_run=true;
+	public static final boolean MODE3D=true;
 	
 	
 	public MapCreator(int display_width,int display_height){
@@ -37,14 +43,25 @@ public class MapCreator extends Observable {
 		addObserver(map);
 		RandomPerso.initialize();
 		
+		if (MODE3D){
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		GLU.gluLookAt((float)display_width/2, (float)display_height,(float)500,(float)display_width/2,(float)display_height/2,(float)0, 0, 0, 1); // Positionnement de la caméra
+		walls.add(new Wall(new Point(display_width/2-100,display_height/2),new Point(display_width/2+100,display_height/2), 15, 1));
+		setChangedW();
+		notifyObserversW(walls);
+		}
+		
 		while(do_run){
 			if (Display.isCloseRequested())
 				do_run = false;
-			checkInput();
-
+			//checkInput();
+			
 			for (Wall wall:walls){
-				//wall.aleaMove();
-				wall.rotate(1);
+				wall.aleaMove();
+				GL11.glTranslatef((float)display_width/2,(float) display_height/2, 0);
+				GL11.glRotated(-0.1, 0, 0, 1);
+				GL11.glTranslatef(-(float)display_width/2, (float)-display_height/2, 0);
 				setChangedW();
 				notifyObserversW(walls);
 			}

@@ -33,11 +33,14 @@ public class Wall {
 	private Point extremity1;
 	private Point extremity2;
 	private Point vect;
+	private float normev;
 	private int thickness;
-	private final int height = 20;
+	private final int height = 50;
 	private double px=0.5;
 	private double py=0.5;
+	private double pr=0.5;
 	private final double probParam=80.0;
+	private double angle;
 	
 	private Point[] sommets = new Point[4];
 
@@ -60,12 +63,12 @@ public class Wall {
 	
 		switch (type) {
 		case NORMAL: {
-			initializeSommets();
+			init();
 			computeSommets();
 			break;
 		}
 		case HORIZONTAL: {
-				computeHorizontal();	
+			computeHorizontal();	
 			break;
 		}
 		case VERTICAL: {
@@ -78,19 +81,27 @@ public class Wall {
 	}
 	
 		
-	
+	private void init (){
+		vect = new Point(extremity2.getX() - extremity1.getX(),extremity2.getY() - extremity1.getY());
+		normev = (float)Math.hypot(vect.getX(),vect.getY());
+		if(vect.getX()>0)
+			angle=Math.asin(vect.getY()/normev);
+		else
+			angle=Math.PI-Math.asin(vect.getY()/normev);
+		initializeSommets();
+	}
 	
 	
 	private void computeHorizontal() {
 		extremity2.setY(extremity1.getY());
-		initializeSommets();
+		init();
 		computeSommets();
 		
 	}
 
 	private void computeVertical() {
 		extremity2.setX(extremity1.getX());
-		initializeSommets();
+		init();
 		computeSommets();
 	}
  
@@ -121,7 +132,7 @@ public class Wall {
 		this.extremity1 = extremity1;
 		this.extremity2 = extremity2;
 		this.thickness = thickness;
-		initializeSommets();
+		init();
 		computeSommets();
 
 	}
@@ -135,8 +146,7 @@ public class Wall {
 		double rapport;
 		double norme;
 		double invNorme;
-			vect = new Point(extremity2.getX() - extremity1.getX(),
-					extremity2.getY() - extremity1.getY());
+		vect = new Point(extremity2.getX() - extremity1.getX(),extremity2.getY() - extremity1.getY());
 			if(vect.getY()!=0){
 			rapport = vect.getX() / vect.getY();
 			norme = Math.hypot(1, rapport);
@@ -159,7 +169,6 @@ public class Wall {
 	}
 
 	public void paint() {
-		float normev = (float)Math.hypot(vect.getX(),vect.getY());
 		int nbre= Math.round(normev/50)+1;
 		
 		GL11.glColor3f(1.0f,1.0f,1.0f);
@@ -244,11 +253,9 @@ public class Wall {
 		extremity2.setY(extremity2.getY()+longueur);
 	}
 	
-	public void rotate(double angle){
+	public void rotate(double inc){
 		Point centre=new Point(extremity1.getX()+vect.getX()/2,extremity1.getY()+vect.getY()/2);
-		float normev = (float)Math.hypot(vect.getX(),vect.getY());
-		angle=angle*Math.PI/180+Math.asin(vect.getY()/normev);
-		System.out.println(angle);
+		angle+=inc*Math.PI/180;
 		extremity1.setX(normev/2*Math.cos(angle+Math.PI)+centre.getX());
 		extremity1.setY(normev/2*Math.sin(angle+Math.PI)+centre.getY());
 		extremity2.setX(normev/2*Math.cos(angle)+centre.getX());
@@ -261,6 +268,16 @@ public class Wall {
 	public void aleaMove(){
 		boolean incx1 = RandomPerso.bernoulli(px);
 		boolean incy1 = RandomPerso.bernoulli(py);
+		boolean sensd= RandomPerso.bernoulli(pr);
+		
+		if (sensd){
+			rotate(1);
+			pr=(probParam-1.0)/probParam;
+			
+		}else{
+				rotate(-1);
+			pr=1.0/probParam;
+		}
 		
 		if (incx1){
 			if(extremity1.getX()<Map.width && extremity2.getX()<Map.width) {
