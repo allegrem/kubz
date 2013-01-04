@@ -13,8 +13,8 @@ public class Map implements Observer {
 	private ArrayList<Wall> walls;
 	private ArrayList<Base> bases;
 	private ArrayList<Unit> units;
-	private int width;
-	private int length;
+	public static  int width;
+	public static int length;
 	private Path path ;
 
 	public Map(ArrayList<Wall> walls, ArrayList<Unit> units,ArrayList<Base> bases, int width,

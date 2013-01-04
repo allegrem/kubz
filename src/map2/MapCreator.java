@@ -1,6 +1,8 @@
 package map2;
 
 import java.util.ArrayList;
+import java.util.Random;
+
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -26,20 +28,30 @@ public class MapCreator extends Observable {
 	private GLBaseModule affichage;
 	private boolean do_run=true;
 	
+	
 	public MapCreator(int display_width,int display_height){
 		this.display_height=display_height;
 		this.display_width=display_width;
 		affichage=new GLBaseModule(display_width,display_height);
 		map=new Map(walls, units, bases, display_width, display_height);
 		addObserver(map);
+		RandomPerso.initialize();
 		
 		while(do_run){
 			if (Display.isCloseRequested())
 				do_run = false;
 			checkInput();
+
+			for (Wall wall:walls){
+				//wall.aleaMove();
+				wall.rotate(1);
+				setChangedW();
+				notifyObserversW(walls);
+			}
+			
 			affichage.clear();
 			render();
-			affichage.update();
+			affichage.update();			
 			Display.sync(120);
 		}
 		affichage.close();

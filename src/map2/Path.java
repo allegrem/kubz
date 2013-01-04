@@ -19,7 +19,7 @@ public class Path {
 	private int width;
 	private int length;
 	//private final ReadableColor color=new Color(200,150,50);
-	private int nbre=5;
+	private int nbre=7;
 
 	public Path(int width, int length) {
 		this.width=width;

@@ -13,9 +13,8 @@ public class Textures {
 	public static void initTexturePath(){
 		texturePath=null;
 		try {
-			texturePath = TextureLoader.getTexture("JPG",ResourceLoader.getResourceAsStream("/home/paul/git/projet-2012-11/herringbone21.jpg"));
+			texturePath = TextureLoader.getTexture("JPG",ResourceLoader.getResourceAsStream("metal091b.jpg"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -24,7 +23,7 @@ public class Textures {
 	public static void initTextureWall(){
 		textureWall=null;
 		try {
-			textureWall = TextureLoader.getTexture("JPG",ResourceLoader.getResourceAsStream("/home/paul/git/projet-2012-11/wall049.jpg"));
+			textureWall = TextureLoader.getTexture("JPG",ResourceLoader.getResourceAsStream("metal021.jpg"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

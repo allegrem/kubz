@@ -8,6 +8,7 @@ import static org.lwjgl.opengl.GL11.glVertex3d;
 
 import java.io.IOException;
 
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 
@@ -32,11 +33,11 @@ public class Wall {
 	private Point extremity1;
 	private Point extremity2;
 	private Point vect;
-	private double rapport;
-	private double norme;
-	private double invNorme;
 	private int thickness;
 	private final int height = 20;
+	private double px=0.5;
+	private double py=0.5;
+	private final double probParam=80.0;
 	
 	private Point[] sommets = new Point[4];
 
@@ -120,6 +121,7 @@ public class Wall {
 		this.extremity1 = extremity1;
 		this.extremity2 = extremity2;
 		this.thickness = thickness;
+		initializeSommets();
 		computeSommets();
 
 	}
@@ -130,7 +132,9 @@ public class Wall {
 	 * 
 	 */
 	private void computeSommets() {
-		
+		double rapport;
+		double norme;
+		double invNorme;
 			vect = new Point(extremity2.getX() - extremity1.getX(),
 					extremity2.getY() - extremity1.getY());
 			if(vect.getY()!=0){
@@ -227,6 +231,72 @@ public class Wall {
 
 		GL11.glEnd();
 		
+	
+	}
+	
+	public void translateX(double longueur){
+		extremity1.setX(extremity1.getX()+longueur);
+		extremity2.setX(extremity2.getX()+longueur);
+	}
+	
+	public void translateY(double longueur){
+		extremity1.setY(extremity1.getY()+longueur);
+		extremity2.setY(extremity2.getY()+longueur);
+	}
+	
+	public void rotate(double angle){
+		Point centre=new Point(extremity1.getX()+vect.getX()/2,extremity1.getY()+vect.getY()/2);
+		float normev = (float)Math.hypot(vect.getX(),vect.getY());
+		angle=angle*Math.PI/180+Math.asin(vect.getY()/normev);
+		System.out.println(angle);
+		extremity1.setX(normev/2*Math.cos(angle+Math.PI)+centre.getX());
+		extremity1.setY(normev/2*Math.sin(angle+Math.PI)+centre.getY());
+		extremity2.setX(normev/2*Math.cos(angle)+centre.getX());
+		extremity2.setY(normev/2*Math.sin(angle)+centre.getY());
+		initializeSommets();
+		computeSommets();
+	
+	}
+	
+	public void aleaMove(){
+		boolean incx1 = RandomPerso.bernoulli(px);
+		boolean incy1 = RandomPerso.bernoulli(py);
+		
+		if (incx1){
+			if(extremity1.getX()<Map.width && extremity2.getX()<Map.width) {
+			translateX(1);
+			px=(probParam-1.0)/probParam;
+			}
+			else
+				px=0.0;
+			
+		}else{
+			if(extremity1.getX()>0 && extremity2.getX()>0) {
+				translateX(-1);
+			px=1.0/probParam;
+			}
+			else
+				px=1.0;
+		}
+		
+		if (incy1){
+			if(extremity1.getY()<Map.length && extremity2.getY()<Map.length) {
+				translateY(1);
+			py=(probParam-1.0)/probParam;
+			}
+			else
+				py=0.0;
+		}else{
+			if(extremity1.getY()>0 && extremity2.getY()>0) {
+				translateY(-1);
+			py=1.0/probParam;;
+			}
+			else
+				py=1.0;
+		}
+	
+		initializeSommets();
+		computeSommets();
 	
 	}
 
