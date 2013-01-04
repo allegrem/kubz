@@ -97,10 +97,13 @@ public abstract class Unit {
 		return this.getType()+" "+position.getX()+" "+position.getY();
 	}
 	
-	public boolean isInZone(int n){
-		double x1 = position.getX()-this.size/2, x2 = position.getX()+this.size/2;
-		double y1 = position.getY()-this.size/2, y2 = position.getY()+this.size/2;
-		if (n>=x1 && n<=x2 && n>=y1 && n<=y2)
+	public boolean isInZone(Point p){
+		double x1 = position.getX()-size/2, x2 = position.getX()+size/2;
+		double y1 = position.getY()-size/2, y2 = position.getY()+size/2;
+		double pX = p.getX();
+		double pY = p.getY();
+		
+		if (pX>=x1 && pX<=x2 && pY>=y1 && pY<=y2)
 			return true;
 		return false;
 	}

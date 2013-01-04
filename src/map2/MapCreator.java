@@ -3,6 +3,8 @@ package map2;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -23,6 +25,7 @@ public class MapCreator extends Observable {
 	private ArrayList<Wall> walls=new ArrayList<Wall>();
 	private boolean rightClicked =true;
 	private boolean leftClicked =true;
+	private boolean scrollPressed=true;
 	private Map map;
 	private GLBaseModule affichage;
 	private boolean do_run=true;
@@ -59,6 +62,9 @@ public class MapCreator extends Observable {
 		if(!Mouse.isButtonDown(1))
 			rightClicked=true;
 		
+		if (!Mouse.isButtonDown(2))
+			scrollPressed=true;
+		
 		if(Mouse.isButtonDown(1) && rightClicked ){
 			
 			if (Keyboard.isKeyDown(Keyboard.KEY_U)&& units.size()>0){
@@ -79,6 +85,25 @@ public class MapCreator extends Observable {
 			notifyObserversU(units);
 			notifyObserversB(bases);
 			notifyObserversW(walls);
+			
+			
+		}
+		
+		if (Mouse.isButtonDown(2) && scrollPressed){
+			
+			int mouseX = Mouse.getX();
+			int mouseY = Mouse.getY();
+			Point mousePoint = new Point(mouseX,mouseY);
+			for (Base base : bases){
+				if (base.isInZone(mousePoint))
+					System.out.println("jff");
+			for (Unit unit : units){
+				if (unit.isInZone(mousePoint))
+					System.out.println("kjdhfjdh");
+				}
+			}
+			JOptionPane.showMessageDialog(null, "Hi",
+					"cases missing", JOptionPane.ERROR_MESSAGE);
 			
 			
 		}

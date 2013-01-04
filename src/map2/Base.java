@@ -42,10 +42,13 @@ public class Base {
 		return center.getX()+" "+center.getY();
 	}
 	
-	public boolean isInZone(int n){
+	public boolean isInZone(Point p){
 		double x1 = center.getX()-radius/2, x2 = center.getX()+radius/2;
 		double y1 = center.getY()-radius/2, y2 = center.getY()+radius/2;
-		if (n>=x1 && n<=x2 && n>=y1 && n<=y2)
+		double pX = p.getX();
+		double pY = p.getY();
+		
+		if (pX>=x1 && pX<=x2 && pY>=y1 && pY<=y2)
 			return true;
 		return false;
 	}
