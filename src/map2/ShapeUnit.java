@@ -57,4 +57,9 @@ public class ShapeUnit extends Unit {
 		GL11.glEnd();
 	}
 
+	@Override
+	public String getType() {
+		return "T";
+	}
+
 }

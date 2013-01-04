@@ -30,6 +30,7 @@ public abstract class Unit {
 	}
 
 	public abstract void paint();
+	public abstract String getType();
 
 	public void translate(int dx, int dy) {
 		position.translate(dx, dy);
@@ -93,6 +94,6 @@ public abstract class Unit {
 	}
 	
 	public String getCharac(){
-		return position.getX()+" "+position.getY();
+		return this.getType()+" "+position.getX()+" "+position.getY();
 	}
 }

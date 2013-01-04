@@ -68,5 +68,10 @@ public class CircleUnit extends Unit {
 
 	}
 
+	@Override
+	public String getType() {
+		return "C";
+	}
+
 
 }
