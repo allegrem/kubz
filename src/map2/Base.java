@@ -38,9 +38,6 @@ public class Base {
 		GL11.glTranslated(-center.getX(), -center.getY(), 0);
 
 	}
-	public String getCharac(){
-		return center.getX()+" "+center.getY();
-	}
 	
 	public boolean isInZone(Point p){
 		double x1 = center.getX()-radius/2, x2 = center.getX()+radius/2;
@@ -49,8 +46,21 @@ public class Base {
 		double pY = p.getY();
 		
 		if (pX>=x1 && pX<=x2 && pY>=y1 && pY<=y2)
-			return true;
+			{return true;}
 		return false;
 	}
+	public ReadableColor getColor(){
+		return color;
+	}
+	public void setColor(ReadableColor color){
+		this.color = color;
+	}
+	public String getCharac(){
+		ReadableColor color = this.getColor();
+		return center.getX()+" "+center.getY()+
+				"  "+color.getRed()+" "+color.getGreen()+" "+color.getBlue();
+		
+	}
+	
 
 }

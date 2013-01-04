@@ -80,21 +80,14 @@ public abstract class Unit {
 	public void attaque(double angle, double direction, double power){
 		angle*=2*Math.PI/360;
 		direction*=2*Math.PI/360;
-		
-		
-		
 		glBegin(GL11.GL_TRIANGLES);
 		glColor3ub((byte)Color.RED.getRed(),(byte)Color.RED.getGreen(),(byte)Color.RED.getBlue());
 		glVertex3d(position.getX(),position.getY(),height/2);
 		glVertex3d(power*Math.sin(direction+angle)+position.getX(),power*Math.cos(direction+angle)+position.getY(),height/2);
 		glVertex3d(power*Math.sin(-(angle-direction))+position.getX(),power*Math.cos(-(angle-direction))+position.getY(),height/2);
 		GL11.glEnd();
-		
+
 		map.paint();
-	}
-	
-	public String getCharac(){
-		return this.getType()+" "+position.getX()+" "+position.getY();
 	}
 	
 	public boolean isInZone(Point p){
@@ -106,5 +99,16 @@ public abstract class Unit {
 		if (pX>=x1 && pX<=x2 && pY>=y1 && pY<=y2)
 			return true;
 		return false;
+	}
+	public ReadableColor getColor(){
+		return color;
+	}
+	public void setColor(ReadableColor color){
+		this.actualColor = color;
+	}
+	public String getCharac(){
+		ReadableColor color = this.getColor();
+		return this.getType()+" "+position.getX()+" "+position.getY()+
+				" "+color.getRed()+" "+color.getGreen()+" "+color.getBlue();
 	}
 }

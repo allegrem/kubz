@@ -3,6 +3,7 @@ package map2;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
 
 import org.lwjgl.input.Keyboard;
@@ -79,14 +80,12 @@ public class MapCreator extends Observable {
 				bases.remove(bases.size()-1);
 				setChangedB();
 			}
-				
-			
+
 			rightClicked=false;
 			notifyObserversU(units);
 			notifyObserversB(bases);
 			notifyObserversW(walls);
-			
-			
+
 		}
 		
 		if (Mouse.isButtonDown(2) && scrollPressed){
@@ -95,17 +94,29 @@ public class MapCreator extends Observable {
 			int mouseY = Mouse.getY();
 			Point mousePoint = new Point(mouseX,mouseY);
 			for (Base base : bases){
-				if (base.isInZone(mousePoint))
-					System.out.println("jff");
+				if (base.isInZone(mousePoint)){
+					JOptionPane.showMessageDialog(null, "Hti",
+							"cases missing", JOptionPane.ERROR_MESSAGE);
+				java.awt.Color color = JColorChooser.showDialog(null, "Base color choose", null);
+				int r = color.getRed(),g=color.getGreen(),b=color.getBlue();
+				base.setColor(new Color(r,g,b));
+				}
+								
+			}
+			
 			for (Unit unit : units){
-				if (unit.isInZone(mousePoint))
-					System.out.println("kjdhfjdh");
+				if (unit.isInZone(mousePoint)){
+					JOptionPane.showMessageDialog(null, "Hti",
+							"cases missing", JOptionPane.ERROR_MESSAGE);
+				java.awt.Color color = JColorChooser.showDialog(null, "Unit color choose", null);
+				int r = color.getRed(),g=color.getGreen(),b=color.getBlue();
+				unit.setColor(new Color(r,g,b));
 				}
 			}
+			
 			JOptionPane.showMessageDialog(null, "Hi",
 					"cases missing", JOptionPane.ERROR_MESSAGE);
-			
-			
+			scrollPressed=false;
 		}
 		
 		if(Mouse.isButtonDown(0) && leftClicked){
