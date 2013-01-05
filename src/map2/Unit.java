@@ -94,7 +94,7 @@ public abstract class Unit {
 		double x1 = position.getX()-size/2, x2 = position.getX()+size/2;
 		double y1 = position.getY()-size/2, y2 = position.getY()+size/2;
 		double pX = p.getX();
-		double pY = p.getY();
+		double pY = MapCreator.display_height-p.getY();
 		
 		if (pX>=x1 && pX<=x2 && pY>=y1 && pY<=y2)
 			return true;

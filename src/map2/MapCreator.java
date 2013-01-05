@@ -24,8 +24,8 @@ import OpenGL.Textures;
 
 
 public class MapCreator extends Observable {
-	private int display_width;
-	private int display_height;
+	public static final int display_width = 640;
+	public static final int display_height = 480;
 	private int x;
 	private int y;
 	private ArrayList<Unit> units=new ArrayList<Unit>();
@@ -40,9 +40,7 @@ public class MapCreator extends Observable {
 	public static final boolean MODE3D=true;
 	
 	
-	public MapCreator(int display_width,int display_height){
-		this.display_height=display_height;
-		this.display_width=display_width;
+	public MapCreator(){
 		affichage=new GLBaseModule(display_width,display_height);
 		map=new Map(walls, units, bases, display_width, display_height);
 		addObserver(map);
@@ -122,6 +120,7 @@ public class MapCreator extends Observable {
 			
 			int mouseX = Mouse.getX();
 			int mouseY = Mouse.getY();
+			System.out.println(mouseX+","+mouseY);
 			Point mousePoint = new Point(mouseX,mouseY);
 			for (Base base : bases){
 				if (base.isInZone(mousePoint)){
@@ -129,8 +128,8 @@ public class MapCreator extends Observable {
 							"cases missing", JOptionPane.ERROR_MESSAGE);
 				java.awt.Color color = JColorChooser.showDialog(null, "Base color choose", null);
 				int r = color.getRed(),g=color.getGreen(),b=color.getBlue();
-				base.setColor(new Color(r,g,b));}
-			
+				base.setColor(new Color(r,g,b));
+				}
 			}
 			
 			for (Unit unit : units){
