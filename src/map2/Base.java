@@ -43,9 +43,9 @@ public class Base {
 		double x1 = center.getX()-radius/2, x2 = center.getX()+radius/2;
 		double y1 = center.getY()-radius/2, y2 = center.getY()+radius/2;
 		double pX = p.getX();
-		double pY = p.getY();
+		double pY = MapCreator.display_height-p.getY();
 		
-		if (pX>=x1 && pX<=x2 && pY>=y1 && pY<=y2)
+		if (pX>x1 && pX<x2 && pY>y1 && pY<y2)
 			return true;
 		return false;
 	}
