@@ -102,9 +102,7 @@ public class MapCreator extends Observable {
 				}
 			}
 			
-			
-			
-			/*for (Unit unit : units){
+			for (Unit unit : units){
 				if (unit.isInZone(mousePoint)){
 					JOptionPane.showMessageDialog(null, "Hti",
 							"cases missing", JOptionPane.ERROR_MESSAGE);
@@ -112,7 +110,7 @@ public class MapCreator extends Observable {
 				int r = color.getRed(),g=color.getGreen(),b=color.getBlue();
 				unit.setColor(new Color(r,g,b));
 				}
-			}*/
+			}
 			
 			JOptionPane.showMessageDialog(null, "Hi",
 					"cases missing", JOptionPane.ERROR_MESSAGE);
