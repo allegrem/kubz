@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 
+import javax.swing.JColorChooser;
+import javax.swing.JOptionPane;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -30,6 +33,7 @@ public class MapCreator extends Observable {
 	private ArrayList<Wall> walls=new ArrayList<Wall>();
 	private boolean rightClicked =true;
 	private boolean leftClicked =true;
+	private boolean scrollPressed=true;
 	private Map map;
 	private GLBaseModule affichage;
 	private boolean do_run=true;
@@ -89,6 +93,9 @@ public class MapCreator extends Observable {
 		if(!Mouse.isButtonDown(1))
 			rightClicked=true;
 		
+		if (!Mouse.isButtonDown(2))
+			scrollPressed=true;
+		
 		if(Mouse.isButtonDown(1) && rightClicked ){
 			
 			if (Keyboard.isKeyDown(Keyboard.KEY_U)&& units.size()>0){
@@ -103,14 +110,42 @@ public class MapCreator extends Observable {
 				bases.remove(bases.size()-1);
 				setChangedB();
 			}
-				
-			
+
 			rightClicked=false;
 			notifyObserversU(units);
 			notifyObserversB(bases);
 			notifyObserversW(walls);
+
+		}
+		
+		if (Mouse.isButtonDown(2) && scrollPressed){
 			
+			int mouseX = Mouse.getX();
+			int mouseY = Mouse.getY();
+			Point mousePoint = new Point(mouseX,mouseY);
+			for (Base base : bases){
+				if (base.isInZone(mousePoint)){
+					JOptionPane.showMessageDialog(null, "Hti",
+							"cases missing", JOptionPane.ERROR_MESSAGE);
+				java.awt.Color color = JColorChooser.showDialog(null, "Base color choose", null);
+				int r = color.getRed(),g=color.getGreen(),b=color.getBlue();
+				base.setColor(new Color(r,g,b));}
 			
+			}
+			
+			for (Unit unit : units){
+				if (unit.isInZone(mousePoint)){
+					JOptionPane.showMessageDialog(null, "Hti",
+							"cases missing", JOptionPane.ERROR_MESSAGE);
+				java.awt.Color color = JColorChooser.showDialog(null, "Unit color choose", null);
+				int r = color.getRed(),g=color.getGreen(),b=color.getBlue();
+				unit.setColor(new Color(r,g,b));
+				}
+			}
+			
+			JOptionPane.showMessageDialog(null, "Hi",
+					"cases missing", JOptionPane.ERROR_MESSAGE);
+			scrollPressed=false;
 		}
 		
 		if(Mouse.isButtonDown(0) && leftClicked){
