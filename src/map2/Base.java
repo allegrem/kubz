@@ -46,7 +46,7 @@ public class Base {
 		double pY = p.getY();
 		
 		if (pX>=x1 && pX<=x2 && pY>=y1 && pY<=y2)
-			{return true;}
+			return true;
 		return false;
 	}
 	public ReadableColor getColor(){

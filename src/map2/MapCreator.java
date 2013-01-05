@@ -99,9 +99,8 @@ public class MapCreator extends Observable {
 							"cases missing", JOptionPane.ERROR_MESSAGE);
 				java.awt.Color color = JColorChooser.showDialog(null, "Base color choose", null);
 				int r = color.getRed(),g=color.getGreen(),b=color.getBlue();
-				base.setColor(new Color(r,g,b));
-				}
-								
+				base.setColor(new Color(r,g,b));}
+			
 			}
 			
 			for (Unit unit : units){
