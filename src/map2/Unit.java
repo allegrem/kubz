@@ -15,8 +15,8 @@ import org.lwjgl.util.ReadableColor;
  * 
  */
 public abstract class Unit {
-	protected static final double size= 15.0;
-	protected static final int height = 15;
+	protected static final double size= 30;
+	protected static final int height = 30;
 	private Point position;
 	private Map map;
 	private ReadableColor color;
@@ -95,6 +95,7 @@ public abstract class Unit {
 		double y1 = position.getY()-size/2, y2 = position.getY()+size/2;
 		double pX = p.getX();
 		double pY = MapCreator.display_height-p.getY();
+		
 		
 		if (pX>=x1 && pX<=x2 && pY>=y1 && pY<=y2)
 			return true;

@@ -30,29 +30,17 @@ public class ShapeUnit extends Unit {
 		glVertex3d(super.getX()-Unit.size/2, super.getY()+Unit.size/2, 0);
 		glVertex3d(super.getX()+Unit.size/2, super.getY()+Unit.size/2, 0);
 		
-		glVertex3d(super.getX(),super.getY()-Unit.size/2, 0);
-		glVertex3d(super.getX()-Unit.size/2, super.getY()+Unit.size/2, Unit.height);
-		glVertex3d(super.getX()+Unit.size/2, super.getY()+Unit.size/2, Unit.height);
+		glVertex3d(super.getX(),super.getY(),height);
+		glVertex3d(super.getX()-Unit.size/2, super.getY()+Unit.size/2, 0);
+		glVertex3d(super.getX()+Unit.size/2, super.getY()+Unit.size/2, 0);
 		
-		GL11.glEnd();
+		glVertex3d(super.getX(),super.getY(),height);
+		glVertex3d(super.getX()-Unit.size/2, super.getY()+Unit.size/2, 0);
+		glVertex3d(super.getX(), super.getY()-Unit.size/2, 0);
 		
-		glBegin(GL11.GL_QUADS);
-		glColor3ub((byte) actualColor.getRed(), (byte) actualColor.getGreen() , (byte) actualColor.getBlue()); // face marron
-		
-		glVertex3d(super.getX(),super.getY()-Unit.size/2, 0);
-		glVertex3d(super.getX(),super.getY()-Unit.size/2, Unit.height);
-		glVertex3d(super.getX()+Unit.size/2, super.getY()-Unit.size/2, Unit.height);
-		glVertex3d(super.getX()+Unit.size/2, super.getY()-Unit.size/2,0);
-		
-		glVertex3d(super.getX()+Unit.size/2, super.getY()-Unit.size/2, Unit.height);
-		glVertex3d(super.getX()+Unit.size/2, super.getY()-Unit.size/2,0);
-		glVertex3d(super.getX()+Unit.size/2, super.getY()+Unit.size/2,0);
-		glVertex3d(super.getX()+Unit.size/2, super.getY()+Unit.size/2, Unit.height);
-		
-		glVertex3d(super.getX()+Unit.size/2, super.getY()+Unit.size/2,0);
-		glVertex3d(super.getX()+Unit.size/2, super.getY()+Unit.size/2, Unit.height);
-		glVertex3d(super.getX(),super.getY()-Unit.size/2, Unit.height);
-		glVertex3d(super.getX(),super.getY()-Unit.size/2, 0);
+		glVertex3d(super.getX(),super.getY(),height);
+		glVertex3d(super.getX()+Unit.size/2, super.getY()+Unit.size/2, 0);
+		glVertex3d(super.getX(), super.getY()-Unit.size/2, 0);
 		
 		GL11.glEnd();
 	}

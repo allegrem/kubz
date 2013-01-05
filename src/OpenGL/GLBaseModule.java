@@ -99,16 +99,6 @@ public class GLBaseModule {
 	 * Initialisation de la librairie
 	 */
 	private void initGL() {
-		/*
-		 * Matrice de projection (3D vers 2D): utilisation d'une projection
-		 * perspective
-		 */
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		if(MapCreator.MODE3D)
-			GLU.gluPerspective(70.0f, display_width / display_height, 1.0f,10000.0f);
-		else
-			glOrtho(0, display_width, display_height, 0, 1, -1);
 		/* Diverses options OpenGL */
 		glShadeModel(GL_SMOOTH);
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);

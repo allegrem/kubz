@@ -40,12 +40,14 @@ public class Base {
 	}
 	
 	public boolean isInZone(Point p){
-		double x1 = center.getX()-radius/2, x2 = center.getX()+radius/2;
-		double y1 = center.getY()-radius/2, y2 = center.getY()+radius/2;
 		double pX = p.getX();
 		double pY = MapCreator.display_height-p.getY();
+		/*
+		 * On calcule la distance du centre au point
+		 */
+		double d=Math.hypot(center.getX()-pX,center.getY()-pY);
 		
-		if (pX>x1 && pX<x2 && pY>y1 && pY<y2)
+		if(d<=radius)
 			return true;
 		return false;
 	}
