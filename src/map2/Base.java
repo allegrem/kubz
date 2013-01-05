@@ -9,9 +9,16 @@ package map2;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.glu.Disk;
+import org.lwjgl.util.glu.PartialDisk;
 
 public class Base {
+	private PartialDisk disk1 =new PartialDisk();
+	private PartialDisk disk2=new PartialDisk();
 	
+	public static final int HAUT=3;
+	public static final int BAS=1;
+	public static final int GAUCHE=0;
+	public static final int DROITE=2;
 
 	private static float radius = 80.0f;   //On code le rayon des bases "en dur".
 
@@ -19,23 +26,23 @@ public class Base {
 
 	private Point center;
 	private ReadableColor color;
+	private int sens;
 	
-	public Base(Point center,ReadableColor color){
+	public Base(Point center,ReadableColor color,int sens){
 		this.center = center;
 		this.color=color;
+		this.sens=sens;
 	}
 	
 	public void paint(){	
 
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
-		Disk disk1 =new Disk();
-		Disk disk2=new Disk();
 		GL11.glColor3ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue());		
-		GL11.glTranslated(center.getX(), center.getY(), 0);
-		disk2.draw(0f, radius, 50, 1);
+		GL11.glTranslated(center.getX(), center.getY(), 0.1);
+		disk2.draw(0f, radius, 50, 1,sens*90,180);
 		GL11.glColor3ub((byte)(color.getRed()*90/100),(byte)(color.getGreen()*90/100),(byte)(color.getBlue()*90/100));
-		disk1.draw(radius-5, radius, 50, 1);
-		GL11.glTranslated(-center.getX(), -center.getY(), 0);
+		disk1.draw(radius-5, radius, 50, 1,sens*90,180);
+		GL11.glTranslated(-center.getX(), -center.getY(), -0.1);
 
 	}
 	

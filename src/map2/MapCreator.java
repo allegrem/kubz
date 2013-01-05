@@ -2,11 +2,16 @@ package map2;
 
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_PROJECTION;
+import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
 
 import java.io.PrintWriter;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import java.util.ArrayList;
 
 import javax.swing.JColorChooser;
@@ -39,6 +44,13 @@ public class MapCreator extends Observable {
 	 */
 	private int mouseX;
 	private int mouseY;
+	/*
+	 * La position de l'éclairage
+	 */
+	private int LightPos[] = { 0,0, 20, 1 };
+	private float Light1Dir[] = { display_width / 2, display_height / 2, 0.0f,
+			0.0f };
+	private int angle = 0;
 
 	/*
 	 * Les ArrayLists d'objets à afficher dans la map
@@ -56,6 +68,7 @@ public class MapCreator extends Observable {
 	private boolean tabClicked = true;
 	private boolean aClicked = true;
 	private boolean rClicked = true;
+	private boolean lClicked = true;
 
 	/*
 	 * map et module d'affichage créés
@@ -72,16 +85,21 @@ public class MapCreator extends Observable {
 	 * Choix du mode d'affichage: 3D ou non
 	 */
 	public static boolean MODE3D = false;
-	
+
 	/*
 	 * Mode avec déplacement aléatoire des murs
 	 */
-	private boolean wAlea=false;
-	
+	private boolean wAlea = false;
+
 	/*
 	 * Mode avec rotation de la carte de jeu
 	 */
-	private boolean rotate=false;
+	private boolean rotate = false;
+
+	/*
+	 * Active la lumière spot
+	 */
+	private boolean light = false;
 
 	public MapCreator() {
 
@@ -99,6 +117,7 @@ public class MapCreator extends Observable {
 		RandomPerso.initialize();
 
 		while (do_run) {
+
 			if (Display.isCloseRequested())
 				do_run = false;
 
@@ -112,17 +131,23 @@ public class MapCreator extends Observable {
 			 */
 			if (wAlea)
 				wAlea();
-				
+
 			/*
 			 * Si mode avec rotation de la carte activé, on la fait bouger
 			 */
-			if(rotate)
+			if (rotate)
 				rotate();
 
 			/*
 			 * On nettoie l'ancien affichage puis on rend et affiche le nouveau
 			 */
 			affichage.clear();
+
+			/*
+			 * On lance l'éclairage
+			 */
+			eclairage();
+
 			render();
 			affichage.update();
 
@@ -170,11 +195,13 @@ public class MapCreator extends Observable {
 
 		if (!Keyboard.isKeyDown(Keyboard.KEY_R))
 			rClicked = true;
-		
+
 		if (!Keyboard.isKeyDown(Keyboard.KEY_A))
 			aClicked = true;
-		
-		
+
+		if (!Keyboard.isKeyDown(Keyboard.KEY_L))
+			lClicked = true;
+
 		/*
 		 * Changement de MODE3D
 		 */
@@ -185,21 +212,29 @@ public class MapCreator extends Observable {
 		}
 
 		/*
-		 * Changement de MODE3D
+		 * Rotation de la map
 		 */
 		if (Keyboard.isKeyDown(Keyboard.KEY_R) && rClicked) {
 			rotate = !rotate;
 			rClicked = false;
 		}
-		
+
 		/*
-		 * Changement de MODE3D
+		 * Mouvement aléatoire des murs
 		 */
 		if (Keyboard.isKeyDown(Keyboard.KEY_A) && aClicked) {
 			wAlea = !wAlea;
 			aClicked = false;
 		}
-		
+
+		/*
+		 * Eclairage
+		 */
+		if (Keyboard.isKeyDown(Keyboard.KEY_L) && lClicked) {
+			light = !light;
+			lClicked = false;
+		}
+
 		/*
 		 * Si on effectue un click droit à la souris, on supprime le dernier
 		 * objet créé du type sélectionné par le clavier: U pour Unit, W pour
@@ -233,7 +268,6 @@ public class MapCreator extends Observable {
 
 			int mouseX = Mouse.getX();
 			int mouseY = Mouse.getY();
-			System.out.println(mouseX + "," + mouseY);
 			/*
 			 * Déjà fait plus haut mais avecmouseY=display_height-Mouse.getY();
 			 * C'est pas ca qu'il faut ?
@@ -282,24 +316,24 @@ public class MapCreator extends Observable {
 				setChangedU();
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_B)) {
 				int size = bases.size();
-				bases.add(new Base(new Point(mouseX, mouseY), Color.PURPLE));
+				bases.add(new Base(new Point(mouseX, mouseY), Color.PURPLE,Base.HAUT));
 				while (Mouse.isButtonDown(0)) {
 					mouseX = Mouse.getX();
 					mouseY = display_height - Mouse.getY();
 					bases.remove(size);
 					if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
-						bases.add(new Base(new Point(mouseX, 0), Color.PURPLE));
+						bases.add(new Base(new Point(mouseX, 0), Color.PURPLE,Base.HAUT));
 					} else if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
 						bases.add(new Base(new Point(mouseX, display_height),
-								Color.PURPLE));
+								Color.PURPLE,Base.BAS));
 					} else if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
 						bases.add(new Base(new Point(display_width, mouseY),
-								Color.PURPLE));
+								Color.PURPLE,Base.DROITE));
 					} else if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
-						bases.add(new Base(new Point(0, mouseY), Color.PURPLE));
+						bases.add(new Base(new Point(0, mouseY), Color.PURPLE,Base.GAUCHE));
 					} else {
 						bases.add(new Base(new Point(mouseX, mouseY),
-								Color.PURPLE));
+								Color.PURPLE,Base.HAUT));
 					}
 					setChangedB();
 					notifyObserversB(bases);
@@ -459,37 +493,36 @@ public class MapCreator extends Observable {
 			GLU.gluPerspective(70.0f, display_width / display_height, 1.0f,
 					10000.0f);
 		else
-			glOrtho(0, display_width, display_height, 0, 1, -1);
-
+			glOrtho(0, display_width, display_height, 0, -100, 0);
+		
 		/*
 		 * Si on est en mode 3D, on initialise la 3D
 		 */
-		
+
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-		
+
 		if (MODE3D) {
-			
+
 			/*
 			 * Position de la caméra
 			 */
-			GLU.gluLookAt((float) display_width / 2, (float) display_height,
-					(float) 500, (float) display_width / 2,
+			GLU.gluLookAt(0, 0,
+					(float) 50, (float) display_width / 2,
 					(float) display_height / 2, (float) 0, 0, 0, 1);
-			
-		} 
+
+		}
 	}
-	
+
 	public void rotate() {
 		/*
 		 * Sert à faire tourner la carte sur elle-même
-		 * 
 		 */
-		GL11.glTranslatef(display_width/2, display_height/2, 0);
+		GL11.glTranslatef(display_width / 2, display_height / 2, 0);
 		GL11.glRotated(0.1, 0, 0, 1);
-		GL11.glTranslatef(-display_width/2, -display_height/2, 0);
+		GL11.glTranslatef(-display_width / 2, -display_height / 2, 0);
 	}
-	
+
 	public void wAlea() {
 		/*
 		 * Sert à faire bouger les murs créés aléatoirement
@@ -497,6 +530,38 @@ public class MapCreator extends Observable {
 		for (Wall wall : walls) {
 			wall.aleaMove();
 			notifyObserversW(walls);
+		}
+	}
+
+	private void eclairage() {
+		if (light) {
+
+			/*
+			 * Réglages de l'éclairage
+			 */
+			glEnable(GL11.GL_LIGHTING);
+			glEnable(GL11.GL_LIGHT0);
+			glMatrixMode(GL_MODELVIEW);
+			GL11.glTranslated(display_width / 2, display_height / 2, 0);
+			GL11.glRotated(angle, 0, 0, 1);
+			GL11.glTranslated(-display_width / 2, -display_height / 2, 0);
+			ByteBuffer temp1 = ByteBuffer.allocateDirect(16);
+			temp1.order(ByteOrder.nativeOrder());
+			GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, (IntBuffer) temp1
+					.asIntBuffer().put(LightPos).flip());
+			GL11.glLighti(GL11.GL_LIGHT0, GL11.GL_SPOT_CUTOFF, 120);
+			ByteBuffer temp2 = ByteBuffer.allocateDirect(16);
+			temp2.order(ByteOrder.nativeOrder());
+			GL11.glLight(GL11.GL_LIGHT0, GL11.GL_SPOT_DIRECTION,
+					(FloatBuffer) temp2.asFloatBuffer().put(Light1Dir).flip());
+			GL11.glTranslated(display_width / 2, display_height / 2, 0);
+			GL11.glRotated(-angle, 0, 0, 1);
+			GL11.glTranslated(-display_width / 2, -display_height / 2, 0);
+
+			//angle++;
+		} else {
+			 GL11.glDisable(GL11.GL_LIGHTING);
+			 GL11.glDisable(GL11.GL_LIGHT0);
 		}
 	}
 

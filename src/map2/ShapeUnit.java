@@ -4,6 +4,10 @@ import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3ub;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.IntBuffer;
+
 import org.lwjgl.opengl.GL11;
 
 import org.lwjgl.util.ReadableColor;
@@ -22,9 +26,8 @@ public class ShapeUnit extends Unit {
 
 	@Override
 	public void paint() {
-		GL11.glDisable(GL11.GL_TEXTURE_2D);
-		glBegin(GL11.GL_TRIANGLES);
 		glColor3ub((byte) actualColor.getRed(), (byte) actualColor.getGreen() , (byte) actualColor.getBlue()); // face marron
+		glBegin(GL11.GL_TRIANGLES);
 		
 		glVertex3d(super.getX(),super.getY()-Unit.size/2, 0);
 		glVertex3d(super.getX()-Unit.size/2, super.getY()+Unit.size/2, 0);
