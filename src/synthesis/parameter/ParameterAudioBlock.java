@@ -1,7 +1,7 @@
 /**
  * 
  */
-package parameter;
+package synthesis.parameter;
 
 import java.util.Observer;
 

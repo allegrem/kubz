@@ -2,13 +2,13 @@ package synthesis.fmInstruments;
 
 import java.util.ArrayList;
 
-import parameter.ParamBlock;
-import parameter.ParameterAudioBlock;
 import synthesis.AudioBlock;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
 import synthesis.basicblocks.severalinputsblocks.Adder;
 import synthesis.basicblocks.severalinputsblocks.Multiplier;
 import synthesis.exceptions.RequireAudioBlocksException;
+import synthesis.parameter.ParamBlock;
+import synthesis.parameter.ParameterAudioBlock;
 
 /**
  * @author allegrem
@@ -32,10 +32,10 @@ public class TwoOscFmInstrument implements FmInstrument {
 	public TwoOscFmInstrument() {
 		super();
 		
-		fm = new ParamBlock("fm", 20, 10000, 5332);
-		fp = new ParamBlock("fp", 20, 10000, 7478);
+		fm = new ParamBlock("fm", 20, 10000, 440);
+		fp = new ParamBlock("fp", 20, 10000, 600);
 		amp = new ParamBlock("amp", 0, 120, 100);
-		mod = new ParamBlock("mod", 0, 100, 3);
+		mod = new ParamBlock("mod", 0, 100, 10);
 		
 		out = buildInstrument();
 		paramList = generateParamList();

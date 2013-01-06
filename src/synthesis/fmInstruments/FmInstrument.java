@@ -2,8 +2,8 @@ package synthesis.fmInstruments;
 
 import java.util.ArrayList;
 
-import parameter.ParameterAudioBlock;
 import synthesis.AudioBlock;
+import synthesis.parameter.ParameterAudioBlock;
 
 public interface FmInstrument extends AudioBlock {
 

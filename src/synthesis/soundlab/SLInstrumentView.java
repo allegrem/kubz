@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.swing.JPanel;
 
-import parameter.ParameterAudioBlock;
 
 import synthesis.SynthesisUtilities;
 import synthesis.audiooutput.SpeakersOutput;
@@ -12,6 +11,7 @@ import synthesis.audiooutput.WavFileOutput;
 import synthesis.exceptions.AudioException;
 import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.fmInstruments.FmInstrument;
+import synthesis.parameter.ParameterAudioBlock;
 
 /**
  * @author allegrem

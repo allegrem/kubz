@@ -17,24 +17,14 @@ import javax.swing.JLabel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
-import javax.swing.JSplitPane;
-
 import synthesis.AudioBlock;
 import synthesis.fmInstruments.TwoOscFmInstrument;
 import javax.swing.BoxLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.image.SampleModel;
 import java.awt.Component;
 import javax.swing.Box;
-import java.awt.Color;
-import javax.swing.SwingConstants;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.CardLayout;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import java.awt.event.MouseMotionAdapter;
 
 public class SLWindow {
@@ -81,7 +71,7 @@ public class SLWindow {
 	private void initialize() {
 		frmSoundlab = new JFrame();
 		frmSoundlab.setTitle("Kubz SoundLab");
-		frmSoundlab.setBounds(100, 100, 560, 599);
+		frmSoundlab.setBounds(100, 100, 605, 640);
 		frmSoundlab.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JMenuBar menuBar = new JMenuBar();
@@ -189,10 +179,6 @@ public class SLWindow {
 		instrumentView
 				.setLayout(new BoxLayout(instrumentView, BoxLayout.Y_AXIS));
 
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setForeground(Color.BLACK);
-		panel.add(separator_1);
-
 		soundView = new SLSoundView(this);
 		soundView.setMinimumSize(new Dimension(600, 220));
 		soundView.setSize(new Dimension(600, 220));
@@ -240,11 +226,6 @@ public class SLWindow {
 
 		JLabel lblSignalView = new JLabel("Signal View");
 		toolBar_2.add(lblSignalView);
-
-		JSeparator separator_2 = new JSeparator();
-		panel.add(separator_2);
-		separator_2.setForeground(Color.BLACK);
-		separator_2.setOrientation(SwingConstants.VERTICAL);
 
 		spectrumView = new SLSpectrumView(this);
 		spectrumView.addMouseMotionListener(new MouseMotionAdapter() {

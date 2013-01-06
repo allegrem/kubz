@@ -2,7 +2,6 @@ package synthesis.fmInstruments;
 
 import java.util.ArrayList;
 
-import parameter.ParameterAudioBlock;
 
 
 import synthesis.AudioBlock;
@@ -13,6 +12,7 @@ import synthesis.basicblocks.severalinputsblocks.Adder;
 import synthesis.basicblocks.severalinputsblocks.Multiplier;
 import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.exceptions.TooManyInputsException;
+import synthesis.parameter.ParameterAudioBlock;
 
 /**
  * @author allegrem

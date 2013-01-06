@@ -9,7 +9,7 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import parameter.ParameterAudioBlock;
+import synthesis.parameter.ParameterAudioBlock;
 
 
 
