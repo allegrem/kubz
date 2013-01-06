@@ -56,8 +56,7 @@ public class Multiplier extends SeveralInputBlock {
 	public Float phi(Float t) throws RequireAudioBlocksException {
 		
 		Float phi = super.phi(t);    
-		for (AudioBlock e : entries)
-			phi += e.phi(t);
+		System.out.println("ERROR.Not yet implemented.");
 		return phi;
 		
 	}

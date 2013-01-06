@@ -41,6 +41,9 @@ public class MainSynthesis {
 		AudioBlock vibrato = new FixedSineWaveOscillator(vibratoFreq, 
 				frequency*vibratoFactor);
 		
+/* one zero filter	*/
+		ArrayList<Float> feedback = new ArrayList<Float>();
+		feedback.add(0.25f);
 		Gain lowFreqNoise = new Gain(jitterFactor*frequency);
 		lowFreqNoise.plugin(new WhiteNoise()); //WARNING! Mising low pass filter
 		
@@ -88,10 +91,27 @@ public class MainSynthesis {
 		off.plugin(o1);
 		SineWaveOscillator o2 = new SineWaveOscillator(off, new Constant(120f));
 		
+<<<<<<< HEAD
+		Filter filter = new Filter(feedback, feedforward);
+		filter.plugin(noise);
+		
+		AudioBlock out2 = filter;
+		
+		//*****test code for adder*********
+		FixedSineWaveOscillator osc3 = new FixedSineWaveOscillator(200f, 25f);
+		FixedSineWaveOscillator osc4 = new FixedSineWaveOscillator(400f, 25f);
+		Adder add = new Adder(new ArrayList<AudioBlock>());
+		//FixedADSR envelop = new FixedADSR (0.25f,0.25f, 0.25f, 0.25f, 10f, 0.5f );
+		add.plugin(osc3);
+		add.plugin(osc4);
+		//envelop.plugin(add);
+		out = add;
+=======
 		SineWaveOscillator o1_ = new SineWaveOscillator(new Constant(440f), new Constant(440f));
 		Offset off_ = new Offset(440f);
 		off_.plugin(o1_);
 		SineWaveOscillator o2_ = new SineWaveOscillator(off_, new Constant(120f));
+>>>>>>> refs/heads/synthesis
 
 		
 		byte[] output = computeSound(0f, 1f, o2);
@@ -110,7 +130,7 @@ public class MainSynthesis {
 		wavFileOutput1.open();
 		wavFileOutput1.play(output);
 		wavFileOutput1.close();
-		
+				
 		//save to wav 2
 		WavFileOutput wavFileOutput2 = new WavFileOutput("fmout2.wav");
 		wavFileOutput2.open();
