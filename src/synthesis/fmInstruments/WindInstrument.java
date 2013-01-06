@@ -6,8 +6,6 @@ import parameter.ParameterAudioBlock;
 
 
 import synthesis.AudioBlock;
-import synthesis.basicblocks.noinputblocks.Constant;
-import synthesis.basicblocks.noinputblocks.FixedSineWaveOscillator;
 import synthesis.basicblocks.noinputblocks.WhiteNoise;
 import synthesis.basicblocks.oneinputblocks.Gain;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;

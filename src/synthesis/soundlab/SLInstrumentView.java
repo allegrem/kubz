@@ -22,6 +22,8 @@ public class SLInstrumentView extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private FmInstrument instrument;
+	
+	private byte[] lastSound = new byte[0];
 
 	/**
 	 * @param instrument
@@ -33,17 +35,15 @@ public class SLInstrumentView extends JPanel {
 	
 	public void setInstrument(FmInstrument instrument) {
 		this.instrument = instrument;
-		for(ParameterAudioBlock p : instrument.getParameters()) {
+		for(ParameterAudioBlock p : instrument.getParameters())
 			add(new SLParameterView(p));
-		}
 	}
 
 
 	public void play() {
 		//compute sound
-		byte[] output = null;
 		try {
-			output = SynthesisUtilities.computeSound(0f, 1f, instrument);
+			lastSound = SynthesisUtilities.computeSound(0f, 1f, instrument);
 		} catch (RequireAudioBlocksException e) {
 			e.printStackTrace();
 		}
@@ -56,7 +56,7 @@ public class SLInstrumentView extends JPanel {
 			e.printStackTrace();
 		}
 		try {
-			speakersOutput.play(output);
+			speakersOutput.play(lastSound);
 		} catch (AudioException e) {
 			e.printStackTrace();
 		}
@@ -65,12 +65,20 @@ public class SLInstrumentView extends JPanel {
 		//save to wav 1
 		WavFileOutput wavFileOutput1 = new WavFileOutput("fmout.wav");
 		wavFileOutput1.open();
-		wavFileOutput1.play(output);
+		wavFileOutput1.play(lastSound);
 		try {
 			wavFileOutput1.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+
+	/**
+	 * @return the lastSound
+	 */
+	public byte[] getLastSound() {
+		return lastSound;
 	}
 	
 }

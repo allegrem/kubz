@@ -31,6 +31,7 @@ public class SLWindow {
 	private JFrame frmSoundlab;
 	private JLabel lblSoundlab;
 	private SLInstrumentView instrumentView;
+	private SLSoundView soundView;
 
 	/**
 	 * Launch the application.
@@ -65,7 +66,7 @@ public class SLWindow {
 	 */
 	private void initialize() {
 		frmSoundlab = new JFrame();
-		frmSoundlab.setTitle("SoundLab");
+		frmSoundlab.setTitle("Kubz SoundLab");
 		frmSoundlab.setBounds(100, 100, 450, 300);
 		frmSoundlab.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -115,7 +116,7 @@ public class SLWindow {
 		JMenuItem mntmPlay = new JMenuItem("Play");
 		mntmPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				instrumentView.play();
+				play();
 			}
 		});
 		mntmPlay.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0));
@@ -141,7 +142,7 @@ public class SLWindow {
 		JButton btnPlay = new JButton("Play");
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				instrumentView.play();
+				play();
 			}
 		});
 		toolBar.add(btnPlay);
@@ -164,8 +165,45 @@ public class SLWindow {
 		JSplitPane splitPane_1 = new JSplitPane();
 		splitPane.setRightComponent(splitPane_1);
 		
-		JPanel signal_analysis = new JPanel();
-		splitPane_1.setLeftComponent(signal_analysis);
+		soundView = new SLSoundView(this);
+		splitPane_1.setLeftComponent(soundView);
+		soundView.setLayout(new BorderLayout(0, 0));
+		
+		JToolBar toolBar_2 = new JToolBar();
+		toolBar_2.setFloatable(false);
+		soundView.add(toolBar_2, BorderLayout.NORTH);
+		
+		JButton btnZoomIn = new JButton("Zoom in");
+		btnZoomIn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				soundView.zoomIn();
+			}
+		});
+		toolBar_2.add(btnZoomIn);
+		
+		JButton btnZoomOut = new JButton("Zoom out");
+		btnZoomOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				soundView.zoomOut();
+			}
+		});
+		toolBar_2.add(btnZoomOut);
+		
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				soundView.toLeft();
+			}
+		});
+		toolBar_2.add(button);
+		
+		JButton button_1 = new JButton(">");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				soundView.toRight();
+			}
+		});
+		toolBar_2.add(button_1);
 		
 		JPanel signal_spectrum = new JPanel();
 		splitPane_1.setRightComponent(signal_spectrum);
@@ -173,6 +211,14 @@ public class SLWindow {
 		instrumentView = new SLInstrumentView();
 		splitPane.setLeftComponent(instrumentView);
 		instrumentView.setLayout(new BoxLayout(instrumentView, BoxLayout.Y_AXIS));
+		
+		frmSoundlab.pack();
+	}
+
+	protected void play() {
+		instrumentView.play();
+		soundView.zoomAll(instrumentView.getLastSound().length);
+		soundView.updateUI();
 	}
 
 	private void addStatusBarListeners(final JMenuItem menuItem, final String message) {
@@ -190,6 +236,13 @@ public class SLWindow {
 
 	protected void setStatusBarText(final String text) {
 		lblSoundlab.setText(text);
+	}
+
+	public byte[] getLastSound() {
+		if (instrumentView != null)
+			return instrumentView.getLastSound();
+		else
+			return new byte[0];
 	}
 
 }
