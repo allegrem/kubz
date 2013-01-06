@@ -38,13 +38,12 @@ public class SLSoundView extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		System.out.println("refresh;" + zoomX + ";" + offsetX);
 		if (window != null) {
 			byte[] sound = window.getLastSound();
 			for (int x = 0; x < zoomX - 1; x++) {
 				g.drawLine(x * X_SIZE / zoomX, (sound[offsetX + x] + 127)
-						* Y_SIZE / 255, (x + 1) * X_SIZE / zoomX,
-						(sound[offsetX + x + 1] + 127) * Y_SIZE / 255);
+						* Y_SIZE / 255 + 25, (x + 1) * X_SIZE / zoomX,
+						(sound[offsetX + x + 1] + 127) * Y_SIZE / 255 + 25);
 			}
 		}
 	}
@@ -60,7 +59,7 @@ public class SLSoundView extends JPanel {
 	}
 
 	private void zoom(double d) {
-		zoomX = (int) (zoomX * d);
+		zoomX *= d;
 		if (zoomX > currentSoundLength) // cant zoom larger than sound length
 			zoomX = currentSoundLength;
 		if (offsetX + zoomX > currentSoundLength) // move to left if we zoom out
@@ -83,9 +82,9 @@ public class SLSoundView extends JPanel {
 	}
 
 	private void offset(int i) {
-		offsetX = offsetX + i;
+		offsetX += i;
 		if (offsetX + zoomX > currentSoundLength)
-			offsetX = currentSoundLength - zoomX; //dont go out of range
+			offsetX = currentSoundLength - zoomX; // dont go out of range
 		if (offsetX < 0)
 			offsetX = 0;
 		updateUI();

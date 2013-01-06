@@ -23,6 +23,16 @@ import synthesis.fmInstruments.TwoOscFmInstrument;
 import javax.swing.BoxLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Component;
+import javax.swing.Box;
+import java.awt.Color;
+import javax.swing.SwingConstants;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.CardLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 
 public class SLWindow {
@@ -32,6 +42,7 @@ public class SLWindow {
 	private JLabel lblSoundlab;
 	private SLInstrumentView instrumentView;
 	private SLSoundView soundView;
+	private SLSpectrumView spectrumView;
 
 	/**
 	 * Launch the application.
@@ -67,7 +78,7 @@ public class SLWindow {
 	private void initialize() {
 		frmSoundlab = new JFrame();
 		frmSoundlab.setTitle("Kubz SoundLab");
-		frmSoundlab.setBounds(100, 100, 450, 300);
+		frmSoundlab.setBounds(100, 100, 560, 599);
 		frmSoundlab.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -147,6 +158,12 @@ public class SLWindow {
 		});
 		toolBar.add(btnPlay);
 		
+		Component horizontalGlue_2 = Box.createHorizontalGlue();
+		toolBar.add(horizontalGlue_2);
+		
+		JLabel lblParameters = new JLabel("Parameters");
+		toolBar.add(lblParameters);
+		
 		JToolBar toolBar_1 = new JToolBar();
 		toolBar_1.setToolTipText("");
 		toolBar_1.setFloatable(false);
@@ -157,16 +174,20 @@ public class SLWindow {
 		
 		JPanel panel = new JPanel();
 		frmSoundlab.getContentPane().add(panel, BorderLayout.CENTER);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
-		JSplitPane splitPane = new JSplitPane();
-		splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
-		panel.add(splitPane);
+		instrumentView = new SLInstrumentView();
+		panel.add(instrumentView);
+		instrumentView.setLayout(new BoxLayout(instrumentView, BoxLayout.Y_AXIS));
 		
-		JSplitPane splitPane_1 = new JSplitPane();
-		splitPane.setRightComponent(splitPane_1);
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setForeground(Color.BLACK);
+		panel.add(separator_1);
 		
 		soundView = new SLSoundView(this);
-		splitPane_1.setLeftComponent(soundView);
+		soundView.setMinimumSize(new Dimension(600, 220));
+		soundView.setSize(new Dimension(600, 220));
+		panel.add(soundView);
 		soundView.setLayout(new BorderLayout(0, 0));
 		
 		JToolBar toolBar_2 = new JToolBar();
@@ -205,20 +226,38 @@ public class SLWindow {
 		});
 		toolBar_2.add(button_1);
 		
-		JPanel signal_spectrum = new JPanel();
-		splitPane_1.setRightComponent(signal_spectrum);
+		Component horizontalGlue = Box.createHorizontalGlue();
+		toolBar_2.add(horizontalGlue);
 		
-		instrumentView = new SLInstrumentView();
-		splitPane.setLeftComponent(instrumentView);
-		instrumentView.setLayout(new BoxLayout(instrumentView, BoxLayout.Y_AXIS));
+		JLabel lblSignalView = new JLabel("Signal View");
+		toolBar_2.add(lblSignalView);
 		
-		frmSoundlab.pack();
+		JSeparator separator_2 = new JSeparator();
+		panel.add(separator_2);
+		separator_2.setForeground(Color.BLACK);
+		separator_2.setOrientation(SwingConstants.VERTICAL);
+		
+		spectrumView = new SLSpectrumView(this);
+		spectrumView.setMinimumSize(new Dimension(600, 200));
+		panel.add(spectrumView);
+		spectrumView.setLayout(new BorderLayout(0, 0));
+		
+		JToolBar toolBar_3 = new JToolBar();
+		toolBar_3.setFloatable(false);
+		spectrumView.add(toolBar_3, BorderLayout.NORTH);
+		
+		Component horizontalGlue_1 = Box.createHorizontalGlue();
+		toolBar_3.add(horizontalGlue_1);
+		
+		JLabel lblSpectrumView = new JLabel("Spectrum View");
+		toolBar_3.add(lblSpectrumView);
 	}
 
 	protected void play() {
 		instrumentView.play();
 		soundView.zoomAll(instrumentView.getLastSound().length);
 		soundView.updateUI();
+		spectrumView.updateUI();
 	}
 
 	private void addStatusBarListeners(final JMenuItem menuItem, final String message) {
