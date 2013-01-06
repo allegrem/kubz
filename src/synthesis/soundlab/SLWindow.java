@@ -5,6 +5,8 @@ import java.awt.HeadlessException;
 
 import javax.swing.JFrame;
 
+import synthesis.soundlab2.SLParameterView;
+
 /**
  * @author allegrem
  *
@@ -31,8 +33,8 @@ public class SLWindow extends JFrame {
 	}
 	
 	
-	public SLControl addControl(String name, int min, int max) {
-		SLControl control = slControlsPanel.addControl(name, min, max);
+	public SLParameterView addControl(String name, int min, int max) {
+		SLParameterView control = slControlsPanel.addControl(name, min, max);
 		pack();
 		return control;
 	}

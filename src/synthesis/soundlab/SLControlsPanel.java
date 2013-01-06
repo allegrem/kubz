@@ -3,6 +3,8 @@ package synthesis.soundlab;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+import synthesis.soundlab2.SLParameterView;
+
 
 /**
  * @author allegrem
@@ -21,8 +23,8 @@ public class SLControlsPanel extends JPanel {
 	}
 	
 	
-	public SLControl addControl(String name, int min, int max) {
-		SLControl slControl = new SLControl(name, min, max);
+	public SLParameterView addControl(String name, int min, int max) {
+		SLParameterView slControl = new SLParameterView(name, min, max);
 		add(slControl);
 		return slControl;
 	}

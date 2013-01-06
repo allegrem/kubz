@@ -21,16 +21,13 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JSplitPane;
 
-import synthesis.soundlab.SLControl;
 
 public class SLWindow {
 
 	protected static final String DEFAULT_STATUS_BAR_TEXT = "SoundLab 0.1";
 	private JFrame frmSoundlab;
 	private JLabel lblSoundlab;
-	private Component frequency;
-	private SLControl vibrato;
-	private SLControl amplitude;
+	private SLInstrumentView instrumentView;
 
 	/**
 	 * Launch the application.
@@ -146,17 +143,6 @@ public class SLWindow {
 		splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		panel.add(splitPane);
 		
-		JPanel controls = new JPanel();
-		splitPane.setLeftComponent(controls);
-		controls.setLayout(new BoxLayout(controls, BoxLayout.Y_AXIS));
-		
-		frequency = new SLControl("Frequency", 0, 10000);
-		controls.add(frequency);
-		vibrato = new SLControl("Vibrato", 0, 10);
-		controls.add(vibrato);
-		amplitude = new SLControl("Amplitude", 0, 120);
-		controls.add(amplitude);
-		
 		JSplitPane splitPane_1 = new JSplitPane();
 		splitPane.setRightComponent(splitPane_1);
 		
@@ -165,6 +151,9 @@ public class SLWindow {
 		
 		JPanel signal_spectrum = new JPanel();
 		splitPane_1.setRightComponent(signal_spectrum);
+		
+		instrumentView = new SLInstrumentView();
+		splitPane.setLeftComponent(instrumentView);
 	}
 
 	private void addStatusBarListeners(final JMenuItem menuItem, final String message) {
