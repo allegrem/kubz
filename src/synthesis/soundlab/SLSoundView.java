@@ -41,9 +41,9 @@ public class SLSoundView extends JPanel {
 		if (window != null) {
 			byte[] sound = window.getLastSound();
 			for (int x = 0; x < zoomX - 2; x++) {
-				g.drawLine(x * X_SIZE / zoomX, (sound[offsetX + x] + 127)
+				g.drawLine(x * X_SIZE / zoomX, Y_SIZE - (sound[offsetX + x] + 127)
 						* Y_SIZE / 255 + 25, (x + 1) * X_SIZE / zoomX,
-						(sound[offsetX + x + 1] + 127) * Y_SIZE / 255 + 25);
+						Y_SIZE - (sound[offsetX + x + 1] + 127) * Y_SIZE / 255 + 25);
 			}
 		}
 	}
