@@ -19,7 +19,7 @@ import org.apache.commons.math3.transform.TransformType;
  */
 public class SLSpectrumView extends JPanel {
 	
-	private static final int Y_SIZE = 200;
+	public static final int Y_SIZE = 200;
 
 	private static final int X_SIZE = 600;
 
@@ -36,18 +36,6 @@ public class SLSpectrumView extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
-//		System.out.println("refresh;" + zoomX + ";" + offsetX);
-//		if (window != null) {
-//			byte[] sound = window.getLastSound();
-//			for (int x = 0; x < zoomX - 1; x++) {
-//				g.drawLine(x * X_SIZE / zoomX, (sound[offsetX + x] + 127)
-//						* Y_SIZE / 255 + 15, (x + 1) * X_SIZE / zoomX,
-//						(sound[offsetX + x + 1] + 127) * Y_SIZE / 255 + 15);
-//			}
-//		}
-		
-		System.out.println("refresh");
 
 		if (window != null) {
 			byte[] soundBytes = window.getLastSound();
@@ -67,10 +55,13 @@ public class SLSpectrumView extends JPanel {
 			//compute fourier transform
 			FastFourierTransformer fourier = new FastFourierTransformer(DftNormalization.STANDARD);
 			Complex[] result = fourier.transform(sound, TransformType.FORWARD);
-			for (int x = 0; x < result.length / 2; x++) {
-				int x_coord = x * X_SIZE * 2 / result.length;
+			//never ask me why it works, i dont know!!
+			for (int x = 0; x < result.length / 4; x++) {
+				int x_coord = x * X_SIZE * 4 / result.length;
 				g.drawLine(x_coord, Y_SIZE, x_coord,
-						(int) (Y_SIZE - Math.abs(Math.log10(0.0001 + Math.abs(result[x].getReal()))) * Y_SIZE / 7));
+						(int) (Y_SIZE - Math.abs(Math.log10(0.0001 + result[x].abs())) * Y_SIZE / 7));
+				g.drawLine(x_coord, Y_SIZE, x_coord,
+						(int) (Y_SIZE - Math.abs(Math.log10(0.0001 + result[result.length/2 + x].abs())) * Y_SIZE / 7));
 			}
 		}
 	}

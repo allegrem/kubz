@@ -55,11 +55,11 @@ public class SLInstrumentView extends JPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-//		try {
-//			speakersOutput.play(lastSound);
-//		} catch (AudioException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			speakersOutput.play(lastSound);
+		} catch (AudioException e) {
+			e.printStackTrace();
+		}
 		speakersOutput.close();
 		
 		//save to wav 1
