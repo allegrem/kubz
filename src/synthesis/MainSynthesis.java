@@ -5,8 +5,6 @@ import synthesis.audiooutput.SpeakersOutput;
 import synthesis.audiooutput.WavFileOutput;
 import synthesis.basicblocks.noinputblocks.Constant;
 import synthesis.basicblocks.noinputblocks.FixedSineWaveOscillator;
-import synthesis.basicblocks.oneinputblocks.FixedADSR;
-import synthesis.basicblocks.oneinputblocks.Offset;
 import synthesis.basicblocks.noinputblocks.WhiteNoise;
 import synthesis.basicblocks.oneinputblocks.Gain;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
@@ -29,13 +27,6 @@ public class MainSynthesis {
 	 */
 	public static void main(String[] args) throws Exception {
 		
-		//playground
-		FixedSineWaveOscillator osc = new FixedSineWaveOscillator(100f, 10*100f);
-		Offset off = new Offset(1000f);
-		off.plugin(osc);
-		SineWaveOscillator osc2 = new SineWaveOscillator(off, new Constant(60f));
-		
-		AudioBlock out = osc2; //this (i.e. out) should have a reference to the bottom AudioBlock
 		//windInstrument tests
 		final Float vibratoFreq = 5f;  //f_v
 		final Float vibratoFactor = 0.01f;  //alpha
