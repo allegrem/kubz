@@ -33,8 +33,7 @@ public class FixedADSR extends OneInputBlock {
 	
 
 	public Float compute(Float t) throws RequireAudioBlocksException {
-		super.play(t);
-
+		//super.play(t); 
 		float previous = in.play(t).floatValue();
 		float sPrevious = s*previous;
 		float tfloat = t.floatValue();
