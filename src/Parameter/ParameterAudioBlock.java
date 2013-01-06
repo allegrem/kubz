@@ -1,7 +1,11 @@
 /**
  * 
  */
-package synthesis;
+package Parameter;
+
+import java.util.Observer;
+
+import synthesis.AudioBlock;
 
 /**
  * @author allegrem
@@ -17,4 +21,8 @@ public interface ParameterAudioBlock extends AudioBlock {
 	
 	public void setValue(int value);
 	
+	public void addObserver(Observer o);
+
+	public int getValue();
+
 }

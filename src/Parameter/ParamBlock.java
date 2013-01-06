@@ -1,15 +1,15 @@
-package synthesis.basicblocks.noinputblocks;
+package Parameter;
 
 import java.util.Observable;
 
-import synthesis.ParameterAudioBlock;
+
 import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
  * @author allegrem
  * 
  */
-public class Parameter extends Observable implements ParameterAudioBlock {
+public class ParamBlock extends Observable implements ParameterAudioBlock {
 
 	private final String label;
 
@@ -25,7 +25,7 @@ public class Parameter extends Observable implements ParameterAudioBlock {
 	 * @param min
 	 * @param max
 	 */
-	public Parameter(String label, int min, int max, int defaultValue) {
+	public ParamBlock(String label, int min, int max, int defaultValue) {
 		super();
 		this.label = label;
 		this.min = min;
@@ -90,6 +90,7 @@ public class Parameter extends Observable implements ParameterAudioBlock {
 		notifyObservers();
 	}
 	
+	@Override
 	public int getValue() {
 		return value;
 	}

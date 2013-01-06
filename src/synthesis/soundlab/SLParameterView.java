@@ -1,4 +1,4 @@
-package synthesis.soundlab2;
+package synthesis.soundlab;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -9,7 +9,9 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import synthesis.basicblocks.noinputblocks.Parameter;
+import Parameter.ParamBlock;
+import Parameter.ParameterAudioBlock;
+
 
 /**
  * @author allegrem
@@ -23,33 +25,33 @@ public class SLParameterView extends JPanel implements Observer {
 
 	private JLabel valueLabel;
 
-	private Parameter parameter;
+	private ParameterAudioBlock paramBlock;
 
 	/**
 	 * @param name
 	 * @param min
 	 * @param max
 	 */
-	public SLParameterView(Parameter parameter) {
+	public SLParameterView(ParameterAudioBlock p) {
 		super();
 
-		this.parameter = parameter;
-		parameter.addObserver(this);
+		this.paramBlock = p;
+		p.addObserver(this);
 		buildControl();
 	}
 
 	private void buildControl() {
-		int defaultValue = (parameter.getMax() - parameter.getMin()) / 2;
+		int defaultValue = (paramBlock.getMax() - paramBlock.getMin()) / 2;
 
-		add(new JLabel(parameter.getLabel()));
+		add(new JLabel(paramBlock.getLabel()));
 
-		this.slider = new JSlider(parameter.getMin(), parameter.getMax(),
+		this.slider = new JSlider(paramBlock.getMin(), paramBlock.getMax(),
 				defaultValue);
 		slider.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				valueLabel.setText(String.valueOf(slider.getValue()));
-				parameter.setValue(slider.getValue());
+				paramBlock.setValue(slider.getValue());
 			}
 		});
 		add(slider);
@@ -60,8 +62,8 @@ public class SLParameterView extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		slider.setValue(parameter.getValue());
-		valueLabel.setText(String.valueOf(parameter.getValue()));
+		slider.setValue(paramBlock.getValue());
+		valueLabel.setText(String.valueOf(paramBlock.getValue()));
 	}
 
 }

@@ -2,6 +2,8 @@ package synthesis.fmInstruments;
 
 import java.util.ArrayList;
 
+import Parameter.ParameterAudioBlock;
+
 import synthesis.AudioBlock;
 import synthesis.basicblocks.noinputblocks.Constant;
 import synthesis.basicblocks.noinputblocks.FixedSineWaveOscillator;
@@ -17,7 +19,7 @@ import synthesis.exceptions.TooManyInputsException;
  * @author allegrem
  * 
  */
-public class WindInstrument implements AudioBlock {
+public class WindInstrument implements FmInstrument {
 
 	private AudioBlock vibratoFreq; // f_v
 
@@ -110,6 +112,12 @@ public class WindInstrument implements AudioBlock {
 	@Override
 	public Float phi(Float t) throws RequireAudioBlocksException {
 		return out.play(t);
+	}
+
+	@Override
+	public ArrayList<ParameterAudioBlock> getParameters() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
