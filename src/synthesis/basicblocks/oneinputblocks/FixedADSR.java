@@ -20,19 +20,21 @@ public class FixedADSR extends OneInputBlock {
 	 * @param r The fraction of duration corresponding to the Release.
 	 * @param slevel The fraction of the signal corresponding to the level during Sustain.
 	 */
-	public FixedADSR(float a, float d, float s,float r, float duration) {  
-																								  			
+
+	public FixedADSR(float a, float d, float s,float r, float duration) {  		
+
 		this.a = a;
 		this.d = d;
 		this.s = s;
 		this.r = r;
 		this.duration = duration;
-		
+
 	}
 	
+
 	public Float compute(Float t) throws RequireAudioBlocksException {
 		super.play(t);
-		
+
 		float previous = in.play(t).floatValue();
 		float sPrevious = s*previous;
 		float tfloat = t.floatValue();
@@ -52,13 +54,12 @@ public class FixedADSR extends OneInputBlock {
 		if (tfloat>sDur && tfloat<=rDur)
 			return new Float( rExpr );
 		
+
 			return new Float(0);
-			
-		
+
 	
 	}
 
-	
 
 	@Override
 	protected Float computePhi(Float t) throws RequireAudioBlocksException {
@@ -66,5 +67,7 @@ public class FixedADSR extends OneInputBlock {
 		return null;
 	}
 	
+
+
 
 }

@@ -18,7 +18,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import synthesis.AudioBlock;
+import synthesis.fmInstruments.FmInstrument;
+import synthesis.fmInstruments.TestInstrument;
 import synthesis.fmInstruments.TwoOscFmInstrument;
+
 import javax.swing.BoxLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -46,7 +49,8 @@ public class SLWindow {
 				try {
 					SLWindow window = new SLWindow();
 					window.frmSoundlab.setVisible(true);
-					window.setInstrument(new TwoOscFmInstrument());
+//					window.setInstrument(new TwoOscFmInstrument());
+					window.setInstrument(new TestInstrument());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -54,7 +58,7 @@ public class SLWindow {
 		});
 	}
 
-	protected void setInstrument(TwoOscFmInstrument instrument) {
+	protected void setInstrument(FmInstrument instrument) {
 		instrumentView.setInstrument(instrument);
 	}
 
