@@ -8,7 +8,7 @@ import synthesis.audiooutput.SpeakersOutput;
 import synthesis.audiooutput.WavFileOutput;
 import synthesis.basicblocks.noinputblocks.Constant;
 import synthesis.basicblocks.noinputblocks.FixedSineWaveOscillator;
-import synthesis.basicblocks.noinputblocks.Noise;
+import synthesis.basicblocks.noinputblocks.WhiteNoise;
 import synthesis.basicblocks.oneinputblocks.FixedADSR;
 import synthesis.basicblocks.oneinputblocks.Offset;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
@@ -38,7 +38,7 @@ public class MainEnvelope {
 		
 		AudioBlock out = osc2; //this (i.e. out) should have a reference to the bottom AudioBlock
 		
-		Noise noise = new Noise();
+		WhiteNoise noise = new WhiteNoise();
 		out = noise;
 		
 		//testing adsr envelope

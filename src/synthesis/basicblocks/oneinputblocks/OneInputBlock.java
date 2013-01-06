@@ -54,27 +54,52 @@ public abstract class OneInputBlock implements AudioBlock {
 	
 	/**
 	 * This method defines the default behavior for a OneInputBlock. It throws 
-	 * an exception if no input is plugged in.
+	 * an exception if no input is plugged in. The output signal computing is 
+	 * implemented in {@link OneInputBlock#compute(Float)}. 
 	 * @see synthesis.AudioBlock#play(Float)
 	 */
 	@Override
-	public Float play(Float t) throws RequireAudioBlocksException {
+	public final Float play(Float t) throws RequireAudioBlocksException {
 		if (in == null)
 			throw new RequireAudioBlocksException(this);
-		return null;
+		return compute(t);
 	}
 	
 	
 	/**
+	 * Computes the output signal.
+	 * @param t the time
+	 * @return the output signal
+	 * @throws RequireAudioBlocksException if the input block is not able to 
+	 * compute a sound.
+	 */
+	protected abstract Float compute(Float t) 
+			throws RequireAudioBlocksException; 
+	
+	
+	/**
 	 * This method defines the default behavior for a OneInputBlock. It throws 
-	 * an exception if no input is plugged in.
+	 * an exception if no input is plugged in. The output phi signal computing 
+	 * is implemented in {@link OneInputBlock#computePhi(Float)}. 
 	 * @see synthesis.AudioBlock#phi(Float)
 	 */
 	@Override
-	public Float phi(Float t) throws RequireAudioBlocksException {
+	public final Float phi(Float t) throws RequireAudioBlocksException {
 		if (in == null)
 			throw new RequireAudioBlocksException(this);
-		return null;
+		return computePhi(t);
 	}
+	
+	
+	/**
+	 * Computes the output phi signal.
+	 * @param t the time
+	 * @return the output phi signal
+	 * @throws RequireAudioBlocksException if the input block is not able to 
+	 * compute the phi function. 
+	 */
+	protected abstract Float computePhi(Float t) 
+			throws RequireAudioBlocksException; 
+	
 	
 }

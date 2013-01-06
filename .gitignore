@@ -6,3 +6,6 @@ bin/
 doc/
 .DS_Store
 lib/
+.directory
+lib_sources/
+stats/

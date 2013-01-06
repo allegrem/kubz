@@ -26,18 +26,16 @@ public class Offset extends OneInputBlock {
 	 * The sound produced is given by : out(t) = offset + in(t).
 	 */
 	@Override
-	public Float play(Float t) throws RequireAudioBlocksException {
-		super.play(t);
+	public Float compute(Float t) throws RequireAudioBlocksException {
 		return in.play(t) + offset;
 	}
 
+	
 	/**
 	 * @return out(t) = 2 * Pi * offset * t + in.phi(t)
-	 * @see OneInputBlock#phi(Float)
 	 */
 	@Override
-	public Float phi(Float t) throws RequireAudioBlocksException {
-		super.phi(t);
+	public Float computePhi(Float t) throws RequireAudioBlocksException {
 		return (float) (2 * Math.PI * offset * t + in.phi(t));
 	}
 

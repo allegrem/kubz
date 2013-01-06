@@ -29,9 +29,8 @@ public class FixedADSR extends OneInputBlock {
 		this.duration = duration;
 	}
 	
-	public Float play(Float t) throws RequireAudioBlocksException {
-		super.play(t);
-		
+	@Override
+	protected Float compute(Float t) throws RequireAudioBlocksException {
 		float previous = in.play(t).floatValue();
 		float sPrevious = s*previous;
 		float tfloat = t.floatValue();
@@ -50,9 +49,12 @@ public class FixedADSR extends OneInputBlock {
 			return new Float( previous*sExpr );
 		
 		return new Float( previous*rExpr );
-			
-		
-	
+	}
+
+	@Override
+	protected Float computePhi(Float t) throws RequireAudioBlocksException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 

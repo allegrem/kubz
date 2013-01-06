@@ -3,7 +3,6 @@ package synthesis.basicblocks.severalinputsblocks;
 import java.util.ArrayList;
 
 import synthesis.AudioBlock;
-import synthesis.basicblocks.oneinputblocks.OneInputBlock;
 import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
@@ -43,7 +42,8 @@ public class Adder extends SeveralInputBlock {
 	 * @see SeveralInputBlock#phi(Float)
 	 */
 	public Float phi(Float t) throws RequireAudioBlocksException {
-		Float phi = super.phi(t);    
+		super.phi(t);
+		Float phi = 0f;
 		for (AudioBlock e : entries)
 			phi += e.phi(t);
 		return phi;
