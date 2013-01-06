@@ -40,11 +40,13 @@ public class SLSoundView extends JPanel {
 
 		if (window != null) {
 			byte[] sound = window.getLastSound();
+			int manualOffset = 25; //offsetting y axis because of toolbar
 			for (int x = 0; x < zoomX - 2; x++) {
 				g.drawLine(x * X_SIZE / zoomX, Y_SIZE - (sound[offsetX + x] + 127)
-						* Y_SIZE / 255 + 25, (x + 1) * X_SIZE / zoomX,
-						Y_SIZE - (sound[offsetX + x + 1] + 127) * Y_SIZE / 255 + 25);
+						* Y_SIZE / 255 + manualOffset, (x + 1) * X_SIZE / zoomX,
+						Y_SIZE - (sound[offsetX + x + 1] + 127) * Y_SIZE / 255 + manualOffset);
 			}
+			g.drawLine(0, manualOffset + Y_SIZE/2, X_SIZE, manualOffset + Y_SIZE/2);
 		}
 	}
 
