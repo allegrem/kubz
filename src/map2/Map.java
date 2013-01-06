@@ -43,22 +43,6 @@ public class Map implements Observer {
 
 	}
 	
-	public ArrayList<Wall> getInitialWalls(){
-		return copyOfW(walls);
-		
-	}
-	
-	public ArrayList<Unit> getInitialUnits(){
-		return copyOfU(units);
-		
-		
-	}
-	
-	public ArrayList<Base> getInitialBases(){
-		return copyOfB(bases);
-		
-		
-	}
 
 	private void paintPath() {
 		path.paint();
