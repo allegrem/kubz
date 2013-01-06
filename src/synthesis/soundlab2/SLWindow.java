@@ -16,14 +16,10 @@ import java.awt.event.InputEvent;
 import javax.swing.JSeparator;
 import javax.swing.JToolBar;
 import javax.swing.JLabel;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JSplitPane;
-import javax.swing.JScrollBar;
-import javax.swing.JSlider;
 
 import synthesis.soundlab.SLControl;
 

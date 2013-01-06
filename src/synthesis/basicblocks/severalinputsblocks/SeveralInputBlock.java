@@ -23,6 +23,11 @@ public abstract class SeveralInputBlock implements AudioBlock {
 		this.entries = entries;
 	}
 	
+	
+	public SeveralInputBlock() {
+		this.entries = new ArrayList<AudioBlock>();
+	}
+	
 	/**
 	 * Plugs out the specified AudioBlock by 
 	 * removing it from the entries if it already was in the list.
