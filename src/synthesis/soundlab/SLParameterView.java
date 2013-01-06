@@ -9,8 +9,9 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import Parameter.ParamBlock;
-import Parameter.ParameterAudioBlock;
+import parameter.ParamBlock;
+import parameter.ParameterAudioBlock;
+
 
 
 /**
@@ -41,12 +42,10 @@ public class SLParameterView extends JPanel implements Observer {
 	}
 
 	private void buildControl() {
-		int defaultValue = (paramBlock.getMax() - paramBlock.getMin()) / 2;
-
 		add(new JLabel(paramBlock.getLabel()));
 
 		this.slider = new JSlider(paramBlock.getMin(), paramBlock.getMax(),
-				defaultValue);
+				paramBlock.getValue());
 		slider.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
@@ -56,7 +55,7 @@ public class SLParameterView extends JPanel implements Observer {
 		});
 		add(slider);
 
-		this.valueLabel = new JLabel(String.valueOf(defaultValue));
+		this.valueLabel = new JLabel(String.valueOf(paramBlock.getValue()));
 		add(valueLabel);
 	}
 

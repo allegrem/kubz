@@ -2,7 +2,8 @@ package synthesis.fmInstruments;
 
 import java.util.ArrayList;
 
-import Parameter.ParameterAudioBlock;
+import parameter.ParameterAudioBlock;
+
 
 import synthesis.AudioBlock;
 import synthesis.basicblocks.noinputblocks.Constant;

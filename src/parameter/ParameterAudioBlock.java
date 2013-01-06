@@ -1,7 +1,7 @@
 /**
  * 
  */
-package Parameter;
+package parameter;
 
 import java.util.Observer;
 

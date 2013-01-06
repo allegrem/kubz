@@ -1,12 +1,10 @@
 package synthesis.soundlab;
 
-import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.BoxLayout;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -20,6 +18,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JSplitPane;
+
+import synthesis.fmInstruments.TwoOscFmInstrument;
+import javax.swing.BoxLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class SLWindow {
@@ -38,11 +41,16 @@ public class SLWindow {
 				try {
 					SLWindow window = new SLWindow();
 					window.frmSoundlab.setVisible(true);
+					window.setInstrument(new TwoOscFmInstrument());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+	}
+
+	protected void setInstrument(TwoOscFmInstrument instrument) {
+		instrumentView.setInstrument(instrument);
 	}
 
 	/**
@@ -105,6 +113,11 @@ public class SLWindow {
 		menuBar.add(mnPlay);
 		
 		JMenuItem mntmPlay = new JMenuItem("Play");
+		mntmPlay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				instrumentView.play();
+			}
+		});
 		mntmPlay.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0));
 		mnPlay.add(mntmPlay);
 		
@@ -126,6 +139,11 @@ public class SLWindow {
 		frmSoundlab.getContentPane().add(toolBar, BorderLayout.NORTH);
 		
 		JButton btnPlay = new JButton("Play");
+		btnPlay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				instrumentView.play();
+			}
+		});
 		toolBar.add(btnPlay);
 		
 		JToolBar toolBar_1 = new JToolBar();
@@ -154,6 +172,7 @@ public class SLWindow {
 		
 		instrumentView = new SLInstrumentView();
 		splitPane.setLeftComponent(instrumentView);
+		instrumentView.setLayout(new BoxLayout(instrumentView, BoxLayout.Y_AXIS));
 	}
 
 	private void addStatusBarListeners(final JMenuItem menuItem, final String message) {

@@ -1,11 +1,13 @@
 package synthesis.fmInstruments;
 
 import java.util.ArrayList;
-import Parameter.ParamBlock;
-import Parameter.ParameterAudioBlock;
+
+import parameter.ParamBlock;
+import parameter.ParameterAudioBlock;
 import synthesis.AudioBlock;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
 import synthesis.basicblocks.severalinputsblocks.Adder;
+import synthesis.basicblocks.severalinputsblocks.Multiplier;
 import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
@@ -49,7 +51,7 @@ public class TwoOscFmInstrument implements FmInstrument {
 	}
 
 	private AudioBlock buildInstrument() {
-		SineWaveOscillator osc1 = new SineWaveOscillator(fm, mod);
+		SineWaveOscillator osc1 = new SineWaveOscillator(fm, new Multiplier(mod, fm));
 		Adder add = new Adder(fp, osc1);
 		return out = new SineWaveOscillator(add, amp);
 	}
