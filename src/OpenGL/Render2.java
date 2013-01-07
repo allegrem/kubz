@@ -14,7 +14,7 @@ import static org.lwjgl.opengl.GL11.glViewport;
 
 import java.util.ArrayList;
 
-import map2.Base;
+import map2.BaseView;
 import map2.MapReader;
 
 import org.lwjgl.opengl.GL11;
@@ -29,7 +29,7 @@ public class Render2 {
 	private int display_width;
 	private int display_height;
 	private MapReader mapReader;
-	private ArrayList<Base> baseRender = new ArrayList<Base>();
+	private ArrayList<BaseView> baseRender = new ArrayList<BaseView>();
 
 	/**
 	 * Effectue le rendu numero 2
@@ -66,7 +66,7 @@ public class Render2 {
 		GL11.glScalef(1.0f, GLDisplay.ratio, 1.0f);  //marche p� :'(  on a une ellipse,pas un cercle...
 		GL11.glTranslatef(4.0f,1.0f,0.0f);  //juste un test
 		
-		for (Base base : baseRender)
+		for (BaseView base : baseRender)
 			base.paint();
 	}
 		

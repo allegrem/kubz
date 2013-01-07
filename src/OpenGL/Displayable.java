@@ -12,7 +12,8 @@ public interface Displayable {
 	public void setIndex();
 	public int getTimeOut();
 	public void setTimeOut(int time);
+	
 	public boolean isInZone(Point mousePoint);
 	public void setColor(Color color);
-	public char[] getCharac();
+	public String getCharac();
 }

@@ -4,11 +4,11 @@ import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glViewport;
-import map2.Path;
+import map2.BackgroundView;
 import map2.Point;
-import map2.ShapeUnit;
-import map2.SquareUnit;
-import map2.Wall;
+import map2.ShapeMonsterView;
+import map2.SquareMonsterView;
+import map2.WallView;
 import map2.Map;
 import org.lwjgl.util.Color;
 
@@ -74,10 +74,10 @@ public class Render1 {
 			
 			 * for (int j = 0; j < h; j++) { map.returnCase(i, j).paint(); }
 			} */
-			new Path(100,100).paint();
-			new Wall(new Point(10, 10), new Point(50, 50), 20,Wall.NORMAL).paint();
-			new SquareUnit(new Point(30,10), Color.BLUE,map).paint();
-			new ShapeUnit(new Point(10,30),Color.GREEN,map).paint();
+			new BackgroundView(100,100).paint();
+			new WallView(new Point(10, 10), new Point(50, 50), 20,WallView.NORMAL).paint();
+			new SquareMonsterView(new Point(30,10), Color.BLUE,map).paint();
+			new ShapeMonsterView(new Point(10,30),Color.GREEN,map).paint();
 	}
 
 	public double getl() {

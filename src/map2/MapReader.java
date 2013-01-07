@@ -16,8 +16,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import map2.Base;
-import map2.Wall;
+import map2.BaseView;
+import map2.WallView;
 import Map.MBox;
 
 public class MapReader {
@@ -25,8 +25,8 @@ public class MapReader {
 	private int height;
 	private int width;
 	private MBox[][] tab;
-	private ArrayList<Wall> wallList = new ArrayList<Wall>();
-	private ArrayList<Base> baseList = new ArrayList<Base>();
+	private ArrayList<WallView> wallList = new ArrayList<WallView>();
+	private ArrayList<BaseView> baseList = new ArrayList<BaseView>();
 	private Map mapRead;
 	
 	
@@ -44,7 +44,7 @@ public class MapReader {
 			findDimensions(file);
 			tab = new MBox[width][height];
 			initFromFile(file);
-			mapRead = new Map( wallList,new ArrayList<Unit>(), baseList,width,height);
+			mapRead = new Map( wallList,new ArrayList<MonsterView>(), baseList,width,height);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -158,7 +158,7 @@ public class MapReader {
 			}
 			
 			int sWall = Integer.parseInt( br.readLine() );			
-			wallList = new ArrayList<Wall> (sWall);
+			wallList = new ArrayList<WallView> (sWall);
 			for (int i=0 ; i<sWall ; i++){
 				Scanner sc = new Scanner(br.readLine());  
 				float xWall = sc.nextFloat();   
@@ -169,7 +169,7 @@ public class MapReader {
 				Point arrival = new Point(xWallEnd,yWallEnd);
 				
 				int tWall = sc.nextInt();
-				wallList.add( new Wall(departure,arrival,tWall,Wall.NORMAL) );
+				wallList.add( new WallView(departure,arrival,tWall,WallView.NORMAL) );
 				sc.close();
 			}
 					
@@ -189,10 +189,10 @@ public class MapReader {
 			
 		}
 	}
-	public ArrayList<Base> getBaseList(){
+	public ArrayList<BaseView> getBaseList(){
 		return this.baseList;
 	}
-	public ArrayList<Wall> getWallList(){
+	public ArrayList<WallView> getWallList(){
 		return this.wallList;
 	}
 	

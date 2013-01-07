@@ -258,39 +258,39 @@ public class MapCreator {
 		 */
 		if (Mouse.isButtonDown(0) && leftClicked) {
 			if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
-				map.add(new SquareUnit(new Point(mouseX, mouseY), Color.BLUE,
+				map.add(new SquareMonsterView(new Point(mouseX, mouseY), Color.BLUE,
 						map));
 				
 			}
 
 			else if (Keyboard.isKeyDown(Keyboard.KEY_T)) {
-				map.add(new ShapeUnit(new Point(mouseX, mouseY), Color.GREEN,
+				map.add(new ShapeMonsterView(new Point(mouseX, mouseY), Color.GREEN,
 						map));
 		
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_C)) {
-				map.add(new CircleUnit(new Point(mouseX, mouseY),
+				map.add(new CircleMonsterView(new Point(mouseX, mouseY),
 						Color.YELLOW, map));
 				
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_B)) {
 				Displayable base;
-				base=map.add(new Base(new Point(mouseX, mouseY), Color.PURPLE,Base.HAUT));
+				base=map.add(new BaseView(new Point(mouseX, mouseY), Color.PURPLE,BaseView.HAUT));
 				while (Mouse.isButtonDown(0)) {
 					mouseX = Mouse.getX();
 					mouseY = display_height - Mouse.getY();
 					map.remove(base);
 					if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
-						base=map.add(new Base(new Point(mouseX, 0), Color.PURPLE,Base.HAUT));
+						base=map.add(new BaseView(new Point(mouseX, 0), Color.PURPLE,BaseView.HAUT));
 					} else if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
-						base=map.add(new Base(new Point(mouseX, display_height),
-								Color.PURPLE,Base.BAS));
+						base=map.add(new BaseView(new Point(mouseX, display_height),
+								Color.PURPLE,BaseView.BAS));
 					} else if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
-						base=map.add(new Base(new Point(display_width, mouseY),
-								Color.PURPLE,Base.DROITE));
+						base=map.add(new BaseView(new Point(display_width, mouseY),
+								Color.PURPLE,BaseView.DROITE));
 					} else if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
-						base=map.add(new Base(new Point(0, mouseY), Color.PURPLE,Base.GAUCHE));
+						base=map.add(new BaseView(new Point(0, mouseY), Color.PURPLE,BaseView.GAUCHE));
 					} else {
-						base=map.add(new Base(new Point(mouseX, mouseY),
-								Color.PURPLE,Base.HAUT));
+						base=map.add(new BaseView(new Point(mouseX, mouseY),
+								Color.PURPLE,BaseView.HAUT));
 					}
 					affichage.clear();
 					render();
@@ -302,21 +302,21 @@ public class MapCreator {
 				Displayable keyboard;
 				int imouseX = mouseX;
 				int iy = mouseY;
-				keyboard=map.add(new Wall(new Point(imouseX, iy), new Point(
-						mouseX + 1, mouseY + 1), 15, Wall.NORMAL));
+				keyboard=map.add(new WallView(new Point(imouseX, iy), new Point(
+						mouseX + 1, mouseY + 1), 15, WallView.NORMAL));
 				while (Mouse.isButtonDown(0)) {
 					mouseX = Mouse.getX();
 					mouseY = display_height - Mouse.getY();
 					map.remove(keyboard);
 					if (Keyboard.isKeyDown(Keyboard.KEY_H)) {
-						keyboard=map.add(new Wall(new Point(imouseX, iy),
-								new Point(mouseX, mouseY), 15, Wall.HORIZONTAL));
+						keyboard=map.add(new WallView(new Point(imouseX, iy),
+								new Point(mouseX, mouseY), 15, WallView.HORIZONTAL));
 					} else if (Keyboard.isKeyDown(Keyboard.KEY_V)) {
-						keyboard=map.add( new Wall(new Point(imouseX, iy),
-								new Point(mouseX, mouseY), 15, Wall.VERTICAL));
+						keyboard=map.add( new WallView(new Point(imouseX, iy),
+								new Point(mouseX, mouseY), 15, WallView.VERTICAL));
 					} else {
-						keyboard=map.add(new Wall(new Point(imouseX, iy),
-								new Point(mouseX, mouseY), 15, Wall.NORMAL));
+						keyboard=map.add(new WallView(new Point(imouseX, iy),
+								new Point(mouseX, mouseY), 15, WallView.NORMAL));
 					}
 					affichage.clear();
 					render();
@@ -350,7 +350,7 @@ public class MapCreator {
 			pw = new PrintWriter(wFileName);
 			pw.print(walls.size());
 			pw.println();
-			for (Wall wall : walls) {
+			for (WallView wall : walls) {
 				pw.print(wall.getCharac());
 				pw.println();
 			}
@@ -378,7 +378,7 @@ public class MapCreator {
 			pw = new PrintWriter(bFileName);
 			pw.print(bases.size());
 			pw.println();
-			for (Base base : bases) {
+			for (BaseView base : bases) {
 				pw.print(base.getCharac());
 				pw.println();
 			}
@@ -404,7 +404,7 @@ public class MapCreator {
 		PrintWriter pw = null;
 		try {
 			pw = new PrintWriter(bFileName);
-			for (Displayable object : map.getObjects()) {
+			for (Displayable object : units.getObjects()) {
 				pw.print(object.getCharac());
 				pw.println();
 			}
@@ -475,9 +475,8 @@ public class MapCreator {
 		 * Sert à faire bouger les murs créés aléatoirement
 		 */
 		for (Displayable object : map.getObjects()) {
-			if(object instanceof Wall )
-			object.aleaMove();
-			notifyObserversW(walls);
+			if(object instanceof WallView )
+			((WallView) object).aleaMove();
 		}
 	}
 
