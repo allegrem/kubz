@@ -24,7 +24,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.glu.GLU;
 
-import OpenGL.GLBaseModule;
+import OpenGL.GLDisplay;
 
 /**
  * Sert à créer une nouvelle map
@@ -74,7 +74,7 @@ public class MapCreator extends Observable {
 	 * map et module d'affichage créés
 	 */
 	private Map map;
-	private GLBaseModule affichage;
+	private GLDisplay affichage;
 
 	/*
 	 * Booleen servant à quiter le programme lors de la fermeture de la fenêtre
@@ -106,7 +106,7 @@ public class MapCreator extends Observable {
 		/*
 		 * Création du module d'affichage et de la map
 		 */
-		affichage = new GLBaseModule(display_width, display_height);
+		affichage = new GLDisplay(display_width, display_height);
 		map = new Map(walls, units, bases, display_width, display_height);
 		addObserver(map);
 		changementMode3D();
@@ -169,6 +169,7 @@ public class MapCreator extends Observable {
 		saveToFile();
 
 	}
+
 
 	/*
 	 * VCérification des actions de l'utilisateur

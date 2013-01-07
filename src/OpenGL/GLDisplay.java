@@ -27,12 +27,13 @@ import org.lwjgl.opengl.GL11;
  * @author paul
  * 
  */
-public class GLBaseModule {
+public class GLDisplay extends Thread{
 
 	
 	private final int display_width;
 	private final int display_height; 
-	public static float ratio;
+	private float ratio;
+	private boolean do_run=true;
 	
 	
 	/**
@@ -40,7 +41,7 @@ public class GLBaseModule {
 	 * 
 	 * 
 	 */
-	public GLBaseModule(int display_width,int display_height){
+	public GLDisplay(int display_width,int display_height){
 		this.display_width=display_width;
 		this.display_height=display_height;
 		ratio = display_width/display_height;
@@ -54,6 +55,16 @@ public class GLBaseModule {
 		}
 	}
 
+	public void run(){
+		while(do_run){
+		updateMouse();
+		updateKeyboard();
+		clear();
+		render();
+		update();
+		}
+		
+	}
 	public void clear(){
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // On vide le buffer
 	}

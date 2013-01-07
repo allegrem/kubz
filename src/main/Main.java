@@ -1,7 +1,7 @@
 package main;
 
 import map2.MapCreator;
-import OpenGL.GLBaseModule;
+import OpenGL.GLDisplay;
 /*
  * Lancement du créateur de maps
  * 
