@@ -22,6 +22,18 @@ public class Adder extends SeveralInputBlock {
 		super(entries);
 	}
 	
+	
+	public Adder() {
+		super();
+	}
+	
+	
+	public Adder(AudioBlock block1, AudioBlock block2) {
+		super();
+		plugin(block1);
+		plugin(block2);
+	}
+	
 	/**
 	 * Returns the sum of the entries s(t)=e1(t)+e2(t)+...
 	 * @param t the specified instant

@@ -22,6 +22,18 @@ public class Multiplier extends SeveralInputBlock {
 		super(entries);
 	}
 	
+	
+	public Multiplier() {
+		super();
+	}
+	
+	
+	public Multiplier(AudioBlock block1, AudioBlock block2) {
+		super();
+		plugin(block1);
+		plugin(block2);
+	}
+	
 
 	/**
 	 * Returns the product of the entries s(t)=e1(t)*e2(t)*...

@@ -9,7 +9,6 @@ import synthesis.basicblocks.noinputblocks.WhiteNoise;
 import synthesis.basicblocks.oneinputblocks.Gain;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
 import synthesis.basicblocks.severalinputsblocks.Adder;
-import synthesis.exceptions.RequireAudioBlocksException;
 
 
 
@@ -81,7 +80,7 @@ public class MainSynthesis {
 		
 		AudioBlock windy = new SineWaveOscillator(freqInput2, ampInput2);
 		
-		byte[] output = computeSound(0f, 1f, windy);
+		byte[] output = SynthesisUtilities.computeSound(0f, 1f, windy);
 		
 		
 		
@@ -136,21 +135,6 @@ public class MainSynthesis {
 		WavFileOutput wavFileOutput2 = new WavFileOutput("fmout2.wav");
 		wavFileOutput2.open();
 		wavFileOutput2.close();
-	}
-	
-	
-	public static byte[] computeSound(Float start, Float length, AudioBlock a) 
-			throws RequireAudioBlocksException {
-		byte[] arr = new byte[(int) (length*AudioBlock.SAMPLE_RATE)];
-		
-		for(int i = 0; i<length*AudioBlock.SAMPLE_RATE ; i++) {
-			float f = a.play((start + i)/AudioBlock.SAMPLE_RATE);
-			arr[i] = (byte) f;
-			if(i % 1000 == 0)
-				System.out.println(((int) (i / (length*AudioBlock.SAMPLE_RATE) * 100)) + "%");
-		}
-		
-		return arr;
 	}
 	
 }

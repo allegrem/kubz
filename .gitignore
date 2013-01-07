@@ -5,7 +5,6 @@ bin/
 *.wav
 doc/
 .DS_Store
-lib/
-.directory
 lib_sources/
+.directory
 stats/
