@@ -8,13 +8,15 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 
+import OpenGL.Displayable;
+
 /**
  * Une unité d'un joueur ou un monstre
  * 
  * @author paul
  * 
  */
-public abstract class Unit {
+public abstract class Unit implements Displayable{
 	protected static final double size= 30;
 	protected static final int height = 30;
 	private Point position;

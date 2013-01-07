@@ -24,6 +24,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.glu.GLU;
 
+import OpenGL.Displayable;
 import OpenGL.GLDisplay;
 
 /**
@@ -32,7 +33,7 @@ import OpenGL.GLDisplay;
  * @author paul
  * 
  */
-public class MapCreator extends Observable {
+public class MapCreator {
 	/*
 	 * Les dimensions de la fenêtre
 	 */
@@ -52,13 +53,7 @@ public class MapCreator extends Observable {
 			0.0f };
 	private int angle = 0;
 
-	/*
-	 * Les ArrayLists d'objets à afficher dans la map
-	 */
-	private ArrayList<Unit> units = new ArrayList<Unit>();
-	private ArrayList<Base> bases = new ArrayList<Base>();
-	private ArrayList<Wall> walls = new ArrayList<Wall>();
-
+	
 	/*
 	 * Les actions correspondant à la souris et au clavier
 	 */
@@ -106,55 +101,17 @@ public class MapCreator extends Observable {
 		/*
 		 * Création du module d'affichage et de la map
 		 */
-		affichage = new GLDisplay(display_width, display_height);
-		map = new Map(walls, units, bases, display_width, display_height);
-		addObserver(map);
-		changementMode3D();
+		map = new Map(display_width, display_height);
+		affichage = new GLDisplay(display_width, display_height,map,this);
+		affichage.run();
 
 		/*
 		 * Initilaisation du générateur de nombres aléatoires
 		 */
 		RandomPerso.initialize();
 
-		while (do_run) {
+		while (affichage.isAlive()) {
 
-			if (Display.isCloseRequested())
-				do_run = false;
-
-			/*
-			 * On regarde si l'utilisateur a fait une action
-			 */
-			checkInput();
-
-			/*
-			 * Si mode aléatoire activé, on fait bouger les murs
-			 */
-			if (wAlea)
-				wAlea();
-
-			/*
-			 * Si mode avec rotation de la carte activé, on la fait bouger
-			 */
-			if (rotate)
-				rotate();
-
-			/*
-			 * On nettoie l'ancien affichage puis on rend et affiche le nouveau
-			 */
-			affichage.clear();
-
-			/*
-			 * On lance l'éclairage
-			 */
-			eclairage();
-
-			render();
-			affichage.update();
-
-			/*
-			 * Pause pour actualiser la fenêtre à 120 FPS
-			 */
-			Display.sync(120);
 
 		}
 
@@ -168,6 +125,28 @@ public class MapCreator extends Observable {
 		 */
 		saveToFile();
 
+	}
+	
+	public void compute(){
+		
+		/*
+		 * On regarde si l'utilisateur a fait une action
+		 */
+		checkInput();
+
+		/*
+		 * Si mode aléatoire activé, on fait bouger les murs
+		 */
+		if (wAlea)
+			wAlea();
+
+		/*
+		 * Si mode avec rotation de la carte activé, on la fait bouger
+		 */
+		if (rotate)
+			rotate();
+
+		eclairage();
 	}
 
 
@@ -242,23 +221,9 @@ public class MapCreator extends Observable {
 		 * Wall ou B pour Base
 		 */
 		if (Mouse.isButtonDown(1) && rightClicked) {
-
-			if (Keyboard.isKeyDown(Keyboard.KEY_U) && units.size() > 0) {
-				units.remove(units.size() - 1);
-				setChangedU();
-			} else if (Keyboard.isKeyDown(Keyboard.KEY_W) && walls.size() > 0) {
-				walls.remove(walls.size() - 1);
-				setChangedW();
-			} else if (Keyboard.isKeyDown(Keyboard.KEY_B) && bases.size() > 0) {
-				bases.remove(bases.size() - 1);
-				setChangedB();
-			}
-
+			map.removeLast();
 			rightClicked = false;
-			notifyObserversU(units);
-			notifyObserversB(bases);
-			notifyObserversW(walls);
-
+		
 		}
 
 		/*
@@ -274,25 +239,16 @@ public class MapCreator extends Observable {
 			 * C'est pas ca qu'il faut ?
 			 */
 			Point mousePoint = new Point(mouseX, mouseY);
-			for (Base base : bases) {
-				if (base.isInZone(mousePoint)) {
+			for (Displayable object : map.getObjects()) {
+				if (object.isInZone(mousePoint)) {
 					java.awt.Color color = JColorChooser.showDialog(null,
-							"Base color choose", null);
+							"Object color choose", null);
 					int r = color.getRed(), g = color.getGreen(), b = color
 							.getBlue();
-					base.setColor(new Color(r, g, b));
+					object.setColor(new Color(r, g, b));
 				}
 			}
 
-			for (Unit unit : units) {
-				if (unit.isInZone(mousePoint)) {
-					java.awt.Color color = JColorChooser.showDialog(null,
-							"Unit color choose", null);
-					int r = color.getRed(), g = color.getGreen(), b = color
-							.getBlue();
-					unit.setColor(new Color(r, g, b));
-				}
-			}
 		}
 
 		/*
@@ -302,83 +258,73 @@ public class MapCreator extends Observable {
 		 */
 		if (Mouse.isButtonDown(0) && leftClicked) {
 			if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
-				units.add(new SquareUnit(new Point(mouseX, mouseY), Color.BLUE,
+				map.add(new SquareUnit(new Point(mouseX, mouseY), Color.BLUE,
 						map));
-				setChangedU();
+				
 			}
 
 			else if (Keyboard.isKeyDown(Keyboard.KEY_T)) {
-				units.add(new ShapeUnit(new Point(mouseX, mouseY), Color.GREEN,
+				map.add(new ShapeUnit(new Point(mouseX, mouseY), Color.GREEN,
 						map));
-				setChangedU();
+		
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_C)) {
-				units.add(new CircleUnit(new Point(mouseX, mouseY),
+				map.add(new CircleUnit(new Point(mouseX, mouseY),
 						Color.YELLOW, map));
-				setChangedU();
+				
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_B)) {
-				int size = bases.size();
-				bases.add(new Base(new Point(mouseX, mouseY), Color.PURPLE,Base.HAUT));
+				Displayable base;
+				base=map.add(new Base(new Point(mouseX, mouseY), Color.PURPLE,Base.HAUT));
 				while (Mouse.isButtonDown(0)) {
 					mouseX = Mouse.getX();
 					mouseY = display_height - Mouse.getY();
-					bases.remove(size);
+					map.remove(base);
 					if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
-						bases.add(new Base(new Point(mouseX, 0), Color.PURPLE,Base.HAUT));
+						base=map.add(new Base(new Point(mouseX, 0), Color.PURPLE,Base.HAUT));
 					} else if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
-						bases.add(new Base(new Point(mouseX, display_height),
+						base=map.add(new Base(new Point(mouseX, display_height),
 								Color.PURPLE,Base.BAS));
 					} else if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
-						bases.add(new Base(new Point(display_width, mouseY),
+						base=map.add(new Base(new Point(display_width, mouseY),
 								Color.PURPLE,Base.DROITE));
 					} else if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
-						bases.add(new Base(new Point(0, mouseY), Color.PURPLE,Base.GAUCHE));
+						base=map.add(new Base(new Point(0, mouseY), Color.PURPLE,Base.GAUCHE));
 					} else {
-						bases.add(new Base(new Point(mouseX, mouseY),
+						base=map.add(new Base(new Point(mouseX, mouseY),
 								Color.PURPLE,Base.HAUT));
 					}
-					setChangedB();
-					notifyObserversB(bases);
 					affichage.clear();
 					render();
 					affichage.update();
 					Display.sync(120);
 					Mouse.poll();
 				}
-				setChangedB();
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
-				int size = walls.size();
+				Displayable keyboard;
 				int imouseX = mouseX;
 				int iy = mouseY;
-				walls.add(new Wall(new Point(imouseX, iy), new Point(
+				keyboard=map.add(new Wall(new Point(imouseX, iy), new Point(
 						mouseX + 1, mouseY + 1), 15, Wall.NORMAL));
 				while (Mouse.isButtonDown(0)) {
 					mouseX = Mouse.getX();
 					mouseY = display_height - Mouse.getY();
-					walls.remove(size);
+					map.remove(keyboard);
 					if (Keyboard.isKeyDown(Keyboard.KEY_H)) {
-						walls.add(size, new Wall(new Point(imouseX, iy),
+						keyboard=map.add(new Wall(new Point(imouseX, iy),
 								new Point(mouseX, mouseY), 15, Wall.HORIZONTAL));
 					} else if (Keyboard.isKeyDown(Keyboard.KEY_V)) {
-						walls.add(size, new Wall(new Point(imouseX, iy),
+						keyboard=map.add( new Wall(new Point(imouseX, iy),
 								new Point(mouseX, mouseY), 15, Wall.VERTICAL));
 					} else {
-						walls.add(size, new Wall(new Point(imouseX, iy),
+						keyboard=map.add(new Wall(new Point(imouseX, iy),
 								new Point(mouseX, mouseY), 15, Wall.NORMAL));
 					}
-					setChangedW();
-					notifyObserversW(walls);
 					affichage.clear();
 					render();
 					affichage.update();
 					Display.sync(120);
 					Mouse.poll();
 				}
-				setChangedW();
 			}
-
-			notifyObserversU(units);
-			notifyObserversB(bases);
-			notifyObserversW(walls);
 			leftClicked = false;
 		}
 
@@ -458,8 +404,8 @@ public class MapCreator extends Observable {
 		PrintWriter pw = null;
 		try {
 			pw = new PrintWriter(bFileName);
-			for (Unit unit : units) {
-				pw.print(unit.getCharac());
+			for (Displayable object : map.getObjects()) {
+				pw.print(object.getCharac());
 				pw.println();
 			}
 		} catch (Exception e) {
@@ -528,8 +474,9 @@ public class MapCreator extends Observable {
 		/*
 		 * Sert à faire bouger les murs créés aléatoirement
 		 */
-		for (Wall wall : walls) {
-			wall.aleaMove();
+		for (Displayable object : map.getObjects()) {
+			if(object instanceof Wall )
+			object.aleaMove();
 			notifyObserversW(walls);
 		}
 	}

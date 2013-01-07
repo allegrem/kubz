@@ -40,6 +40,22 @@ public class Map {
 		
 	}
 
+	public Displayable add(Displayable object){
+		listObjects.add(object);
+		return object;
+	}
+	
+	public void remove(Displayable object){
+		listObjects.remove(object);
+	}
 
+	public void removeLast(){
+		listObjects.remove(listObjects.size()-1);
+	}
+	
+	public ArrayList<Displayable> getObjects(){
+		
+		return listObjects;
+	}
 }
 

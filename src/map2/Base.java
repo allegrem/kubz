@@ -11,7 +11,9 @@ import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.glu.Disk;
 import org.lwjgl.util.glu.PartialDisk;
 
-public class Base {
+import OpenGL.Displayable;
+
+public class Base implements Displayable{
 	private PartialDisk disk1 =new PartialDisk();
 	private PartialDisk disk2=new PartialDisk();
 	

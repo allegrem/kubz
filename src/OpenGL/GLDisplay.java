@@ -15,11 +15,15 @@ import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glHint;
 import static org.lwjgl.opengl.GL11.glShadeModel;
 
+import map2.MapCreator;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+
+import map2.Map;
 
 /**
  * Instructions OpenGL
@@ -34,19 +38,23 @@ public class GLDisplay extends Thread{
 	private final int display_height; 
 	public static float ratio;
 	private boolean do_run=true;
-	
+	private Map map;
+	private MapCreator mapCreator;
 	
 	/**
 	 * Lancement de l'affichage
 	 * 
 	 * 
 	 */
-	public GLDisplay(int display_width,int display_height){
+	public GLDisplay(int display_width,int display_height,Map map,MapCreator mapCreator){
 		this.display_width=display_width;
 		this.display_height=display_height;
+		this.map=map;
+		this.mapCreator=mapCreator;
 		ratio = display_width/display_height;
 		initDisplay();
 		initGL();
+		mapCreator.changementMode3D();
 		try {
 			Keyboard.create();
 		} catch (LWJGLException e) {
@@ -57,14 +65,26 @@ public class GLDisplay extends Thread{
 
 	public void run(){
 		while(do_run){
-		updateMouse();
-		updateKeyboard();
+			
+		if (Display.isCloseRequested())
+				do_run = false;
+		
+		//updateMouse();
+		//updateKeyboard();
 		clear();
 		render();
 		update();
+		Display.sync(120);
 		}
 		
+		
 	}
+	
+	public void render(){
+		map.paint();
+		
+	}
+	
 	public void clear(){
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // On vide le buffer
 	}

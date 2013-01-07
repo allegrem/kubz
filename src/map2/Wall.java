@@ -8,6 +8,7 @@ import static org.lwjgl.opengl.GL11.glVertex3d;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 
+import OpenGL.Displayable;
 import OpenGL.Textures;
 
 /**
@@ -16,7 +17,7 @@ import OpenGL.Textures;
  * @author paul
  * 
  */
-public class Wall {
+public class Wall implements Displayable {
 
 	/*
 	 * Constantes de classe. Servent à définir comment seront tracés les murs:

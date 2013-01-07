@@ -1,5 +1,9 @@
 package OpenGL;
 
+import org.lwjgl.util.Color;
+
+import map2.Point;
+
 public interface Displayable {
 	public void paint();
 	public Displayable getChildren();
@@ -7,5 +11,8 @@ public interface Displayable {
 	public int getIndex();
 	public void setIndex();
 	public int getTimeOut();
-	public void setTimeOut(Int time);
+	public void setTimeOut(int time);
+	public boolean isInZone(Point mousePoint);
+	public void setColor(Color color);
+	public char[] getCharac();
 }
