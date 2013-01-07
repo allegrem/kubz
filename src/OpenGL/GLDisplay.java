@@ -32,7 +32,7 @@ public class GLDisplay extends Thread{
 	
 	private final int display_width;
 	private final int display_height; 
-	private float ratio;
+	public static float ratio;
 	private boolean do_run=true;
 	
 	
