@@ -28,10 +28,11 @@ public class Multiplier extends SeveralInputBlock {
 	 * @param t the specified instant
 	 */
 	public Float play(Float t) throws RequireAudioBlocksException{
-		Float s = super.play(t);
+		super.play(t);
+		float s = 1f;
 		for (AudioBlock a : entries)		
 				s *= a.play(t);
-		return s;
+		return new Float(s);
 	}
 
 	/**
@@ -42,8 +43,10 @@ public class Multiplier extends SeveralInputBlock {
 	 */
 	public Float phi(Float t) throws RequireAudioBlocksException {
 		
-		System.out.println("Not yet implemented.");
-		return null;
+		Float phi = super.phi(t);    
+		System.out.println("ERROR.Not yet implemented.");
+		return phi;
+		
 	}
 
 

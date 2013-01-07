@@ -4,7 +4,8 @@ import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
  * Cette interface définit toutes les méthodes qui devront être implémentées 
- * par les AudioBlock. La action qu’effectue un AudioBlock est de jouer un son. 
+ * par les AudioBlock. La seule action qu’effectue un AudioBlock est de jouer 
+ * un son. 
  * @author allegrem
  */
 public interface AudioBlock {
@@ -36,9 +37,9 @@ public interface AudioBlock {
 	 * @param t The time where to compute the phi function.
 	 * @return phi(t) = 2 * Pi * int(f(u), u=0..t) where f is the 
 	 * signal produced.
-	 * @throws RequireAudioBlocksException  si l’AudioBlock n’a pas toutes les 
+	 * @throws RequireAudioBlsocksException  si l’AudioBlock n’a pas toutes les 
 	 * entrées nécessaires pour calculer le son.
 	 */
-	public Float phi(Float t) throws RequireAudioBlocksException;
+	public Float phi(Float t) throws RequireAudioBlocksException; 
 	
 }

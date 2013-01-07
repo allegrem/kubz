@@ -2,7 +2,10 @@
 #.project
 .settings/
 bin/
-fmout.wav
+*.wav
 doc/
 .DS_Store
-
+lib/
+.directory
+lib_sources/
+stats/
