@@ -11,7 +11,7 @@ import synthesis.exceptions.RequireAudioBlocksException;
 /**
  * This main is used to test the synthesis engine. This should not be used
  * in the final project.
- * @author allegrem
+ * @author allegrem)))
  */
 public class MainSynthesis {
 
