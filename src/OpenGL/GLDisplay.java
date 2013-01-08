@@ -52,6 +52,33 @@ public class GLDisplay extends Thread{
 		this.map=map;
 		this.mapCreator=mapCreator;
 		ratio = display_width/display_height;
+	}
+
+	@Override
+	public void run(){
+		initialize();
+		while(do_run){
+			
+		if (Display.isCloseRequested())
+				do_run = false;
+		
+		//updateMouse();
+		//updateKeyboard();
+		clear();
+		mapCreator.compute();
+		render();
+		update();
+		Display.sync(120);
+		
+		}
+		/*
+		 * Fermeture de la fenêtre
+		 */
+		close();
+		
+	}
+	
+	private void initialize() {
 		initDisplay();
 		initGL();
 		mapCreator.changementMode3D();
@@ -61,25 +88,9 @@ public class GLDisplay extends Thread{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 
-	public void run(){
-		while(do_run){
-			
-		if (Display.isCloseRequested())
-				do_run = false;
-		
-		//updateMouse();
-		//updateKeyboard();
-		clear();
-		render();
-		update();
-		Display.sync(120);
-		}
-		
-		
-	}
-	
 	public void render(){
 		map.paint();
 		
@@ -91,7 +102,7 @@ public class GLDisplay extends Thread{
 	
 	public void update() {
 
-			Display.update(); // On actualise la fenêtre pour afficher les							// nouveaux rendus
+			Display.update(); // On actualise la fenêtre pour afficher les nouveaux rendus
 		}
 	
 	public void close(){
@@ -125,7 +136,6 @@ public class GLDisplay extends Thread{
 	 * Initialisation de la librairie
 	 */
 	private void initGL() {
-		int tab[]={0,0,0,1};
 		/* Diverses options OpenGL */
 		glShadeModel(GL_SMOOTH);
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);

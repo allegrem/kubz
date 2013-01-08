@@ -6,8 +6,10 @@ import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.ReadableColor;
 import org.newdawn.slick.Color;
 
+import OpenGL.Displayable;
 import OpenGL.Textures;
 /**
  * Le sol (chemin)
@@ -15,10 +17,10 @@ import OpenGL.Textures;
  * @author paul
  *
  */
-public class BackgroundView {
+public class BackgroundView implements Displayable{
 	private int width;
 	private int length;
-	//private final ReadableColor color=new Color(200,150,50);
+	//private final ReadableColor color= new Color(200,150,50);
 	private int nbre=7;
 
 	public BackgroundView(int width, int length) {
@@ -54,6 +56,87 @@ public class BackgroundView {
 	
 		
 
+	}
+
+
+
+
+	@Override
+	public Displayable getChildren() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+	@Override
+	public void addChild(Displayable object) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	@Override
+	public int getIndex() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
+
+	@Override
+	public void setIndex() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	@Override
+	public int getTimeOut() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
+
+	@Override
+	public void setTimeOut(int time) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	@Override
+	public boolean isInZone(Point mousePoint) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+
+	@Override
+	public void setColor(org.lwjgl.util.Color color) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	@Override
+	public String getCharac() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

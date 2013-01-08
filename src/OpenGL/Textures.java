@@ -14,7 +14,7 @@ public class Textures {
 		texturePath=null;
 		try {
 
-			texturePath = TextureLoader.getTexture("JPG",ResourceLoader.getResourceAsStream("metal091b.jpg"));
+			texturePath = TextureLoader.getTexture("JPG",ResourceLoader.getResourceAsStream("Textures/metal091b.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -24,7 +24,7 @@ public class Textures {
 	public static void initTextureWall(){
 		textureWall=null;
 		try {
-			textureWall = TextureLoader.getTexture("JPG",ResourceLoader.getResourceAsStream("metal021.jpg"));
+			textureWall = TextureLoader.getTexture("JPG",ResourceLoader.getResourceAsStream("Textures/metal021.jpg"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

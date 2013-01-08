@@ -71,11 +71,7 @@ public class MapCreator {
 	private Map map;
 	private GLDisplay affichage;
 
-	/*
-	 * Booleen servant à quiter le programme lors de la fermeture de la fenêtre
-	 */
-	private boolean do_run = true;
-
+	
 	/*
 	 * Choix du mode d'affichage: 3D ou non
 	 */
@@ -103,22 +99,25 @@ public class MapCreator {
 		 */
 		map = new Map(display_width, display_height);
 		affichage = new GLDisplay(display_width, display_height,map,this);
-		affichage.run();
+		RandomPerso.initialize();
+		map.add(new BackgroundView(display_width, display_height));
+		affichage.start();
 
 		/*
 		 * Initilaisation du générateur de nombres aléatoires
 		 */
-		RandomPerso.initialize();
-
+	
 		while (affichage.isAlive()) {
-
+			System.out.println("coucou");
+			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				
+			}
 
 		}
 
-		/*
-		 * Fermeture de la fenêtre
-		 */
-		affichage.close();
 
 		/*
 		 * Enregistrement de la map dans un fichier
@@ -127,7 +126,7 @@ public class MapCreator {
 
 	}
 	
-	public void compute(){
+	public  void compute(){
 		
 		/*
 		 * On regarde si l'utilisateur a fait une action
@@ -153,7 +152,7 @@ public class MapCreator {
 	/*
 	 * VCérification des actions de l'utilisateur
 	 */
-	public void checkInput() {
+	public  void checkInput() {
 
 		/*
 		 * Enregistrement des coordonnées de la souris
@@ -333,7 +332,7 @@ public class MapCreator {
 	/**
 	 * Effectue le rendu de la map
 	 */
-	public void render() {
+	public  void render() {
 		map.paint();
 
 	}
@@ -344,7 +343,7 @@ public class MapCreator {
 	 * @param wFileName
 	 *            fichier d'enregistrement
 	 */
-	private void saveWallsToFile(String wFileName) {
+	private  void saveWallsToFile(String wFileName) {
 		PrintWriter pw = null;
 		try {
 			pw = new PrintWriter(wFileName);
@@ -372,7 +371,7 @@ public class MapCreator {
 	 * @param wFileName
 	 *            fichier d'enregistrement
 	 */
-	private void saveBasesToFile(String bFileName) {
+	private  void saveBasesToFile(String bFileName) {
 		PrintWriter pw = null;
 		try {
 			pw = new PrintWriter(bFileName);
@@ -400,7 +399,7 @@ public class MapCreator {
 	 * @param wFileName
 	 *            fichier d'enregistrement
 	 */
-	private void saveUnitsToFile(String bFileName) {
+	private  void saveUnitsToFile(String bFileName) {
 		PrintWriter pw = null;
 		try {
 			pw = new PrintWriter(bFileName);
@@ -423,13 +422,13 @@ public class MapCreator {
 	/*
 	 * Sauvegarde toutes les Arraylists d'objets dans leur fichier respectif
 	 */
-	private void saveToFile() {
+	private  void saveToFile() {
 		saveWallsToFile("wFile.txt");
 		saveBasesToFile("bFile.txt");
 		saveUnitsToFile("uFile.txt");
 	}
 
-	public void changementMode3D() {
+	public  void changementMode3D() {
 		/*
 		 * Matrice de projection (3D vers 2D): utilisation d'une projection
 		 * perspective
@@ -461,7 +460,7 @@ public class MapCreator {
 		}
 	}
 
-	public void rotate() {
+	public  void rotate() {
 		/*
 		 * Sert à faire tourner la carte sur elle-même
 		 */
@@ -470,7 +469,7 @@ public class MapCreator {
 		GL11.glTranslatef(-display_width / 2, -display_height / 2, 0);
 	}
 
-	public void wAlea() {
+	public  void wAlea() {
 		/*
 		 * Sert à faire bouger les murs créés aléatoirement
 		 */
@@ -480,7 +479,7 @@ public class MapCreator {
 		}
 	}
 
-	private void eclairage() {
+	private  void eclairage() {
 		if (light) {
 
 			/*
