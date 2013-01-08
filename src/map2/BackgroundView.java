@@ -28,8 +28,6 @@ public class BackgroundView implements Displayable{
 		this.length=length;
 	}
 
-		
-
 
 	public void paint() {
 		glEnable(GL11.GL_TEXTURE_2D);

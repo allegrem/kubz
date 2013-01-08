@@ -1,5 +1,5 @@
 /**
- * Classe correspondant a la Base d'un joueur, repr�sent�e par un cercle.
+ * Classe correspondant a la Base d'un joueur, represente par un demi-disque.
  * @author valeh
  */
 package map2;
