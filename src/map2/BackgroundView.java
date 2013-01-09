@@ -30,22 +30,30 @@ public class BackgroundView implements Displayable{
 
 
 	public void paint() {
-		glEnable(GL11.GL_TEXTURE_2D);
+		/*glEnable(GL11.GL_TEXTURE_2D);
 		if (Textures.texturePath==null)
-			Textures.initTexturePath();
+			Textures.initTexturePath();   
 		GL11.glColor3f(1.0f,1.0f,1.0f);
 		Color.white.bind();
-		Textures.texturePath.bind();
+		Textures.texturePath.bind();*/
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		
-		//glColor3ub((byte) color.getRed(), (byte) color.getGreen() , (byte) color.getBlue()); // face marron
+		 // face marron
 		glBegin(GL_QUADS);
 		
+		GL11.glColor3ub((byte) 200, (byte) 233 , (byte) 256);
 		GL11.glTexCoord2f(0,0);
 		glVertex3d(0, 0, 0);
+		
+		GL11.glColor3ub((byte) 200, (byte) 200 , (byte) 256);
 		GL11.glTexCoord2f(nbre,0);
 		glVertex3d(width, 0, 0);
+		
+		GL11.glColor3ub((byte) 200, (byte) 233 , (byte) 300);
 		GL11.glTexCoord2f(nbre,nbre);
 		glVertex3d(width, length, 0);
+		
+		GL11.glColor3ub((byte) 200, (byte) 133 , (byte) 256);
 		GL11.glTexCoord2f(0,nbre);
 		glVertex3d(0,length, 0);
 	
