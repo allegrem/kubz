@@ -23,9 +23,7 @@ public class BaseView implements Displayable{
 	public static final int GAUCHE=0;
 	public static final int DROITE=2;
 
-	private static float radius = 80.0f;   //On code le rayon des bases "en dur".
-
-	
+	private static final float radius = 80.0f;   //On code le rayon des bases "en dur".
 
 	private Point center;
 	private ReadableColor color;
@@ -36,6 +34,7 @@ public class BaseView implements Displayable{
 		this.color=color;
 		this.sens=sens;
 	}
+	
 	
 	public void paint(){	
 
@@ -51,7 +50,7 @@ public class BaseView implements Displayable{
 	
 	public boolean isInZone(Point p){
 		double pX = p.getX();
-		double pY = MapCreator.display_height-p.getY();
+		double pY = p.getY();
 		/*
 		 * On calcule la distance du centre au point
 		 */
@@ -64,9 +63,12 @@ public class BaseView implements Displayable{
 	public ReadableColor getColor(){
 		return color;
 	}
-	public void setColor(ReadableColor color){
+	@Override
+	public void setColor(Color color) {
 		this.color = color;
+		
 	}
+
 	public String getCharac(){
 		ReadableColor color = this.getColor();
 		return center.getX()+" "+center.getY()+
@@ -110,11 +112,10 @@ public class BaseView implements Displayable{
 		
 	}
 
-	@Override
-	public void setColor(Color color) {
-		// TODO Auto-generated method stub
-		
-	}
+
+	
+
+	
 	
 
 }

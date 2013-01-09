@@ -17,20 +17,18 @@ import OpenGL.Displayable;
 
 public class CircleMonsterView extends MonsterView {
 	private Cylinder cylinder=new Cylinder();
+	private ReadableColor color; 
 
 
-	public CircleMonsterView(Point position, ReadableColor color,Map map) {
-		super(position, color,map);
-
+	public CircleMonsterView(Point position,ReadableColor color,Map map) {
+		super(position,color,map);
 	}
 
 	@Override
 	public void paint() {
 
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
-	
-		GL11.glColor3ub((byte)actualColor.getRed(),(byte)actualColor.getGreen(),(byte)actualColor.getBlue());
-	
+		GL11.glColor3ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue());
 		GL11.glTranslated(getX(), getY(), 0);
 		cylinder.draw((float)(size/2),0 ,height, 50, 1);
 		GL11.glTranslated(-getX(), -getY(), 0);
@@ -39,7 +37,7 @@ public class CircleMonsterView extends MonsterView {
 	
 	public boolean isInZone(Point p){
 		double pX = p.getX();
-		double pY = MapCreator.display_height-p.getY();
+		double pY = p.getY();
 		/*
 		 * On calcule la distance du centre au point
 		 */
@@ -48,6 +46,17 @@ public class CircleMonsterView extends MonsterView {
 		if(d<=size/2)
 			return true;
 		return false;
+	}
+	
+
+	
+	public ReadableColor getColor(){
+		return color;
+	}
+	@Override
+	public void setColor(Color color) {
+		this.color = color;
+		
 	}
 
 	@Override
@@ -91,11 +100,6 @@ public class CircleMonsterView extends MonsterView {
 		
 	}
 
-	@Override
-	public void setColor(Color color) {
-		// TODO Auto-generated method stub
-		
-	}
 
 
 }
