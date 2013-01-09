@@ -12,6 +12,7 @@ import org.lwjgl.opengl.GL11;
 
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
+import org.lwjgl.util.glu.Cylinder;
 
 import OpenGL.Displayable;
 /**
@@ -21,15 +22,16 @@ import OpenGL.Displayable;
  *
  */
 public class ShapeMonsterView extends MonsterView {
+	
+
 
 	public ShapeMonsterView(Point position, ReadableColor color,Map map) {
 		super(position, color,map);
-
 	}
 
 	@Override
 	public void paint() {
-		glColor3ub((byte) actualColor.getRed(), (byte) actualColor.getGreen() , (byte) actualColor.getBlue()); // face marron
+		glColor3ub((byte) actualColor.getRed(), (byte) actualColor.getGreen() , (byte) actualColor.getBlue()); 
 		glBegin(GL11.GL_TRIANGLES);
 		
 		glVertex3d(super.getX(),super.getY()-MonsterView.size/2, 0);
@@ -92,10 +94,6 @@ public class ShapeMonsterView extends MonsterView {
 		
 	}
 
-	@Override
-	public void setColor(Color color) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 }

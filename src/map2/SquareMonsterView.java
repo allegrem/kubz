@@ -28,7 +28,7 @@ public class SquareMonsterView extends MonsterView {
 	public void paint() {
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		glBegin(GL_QUADS);
-		glColor3ub((byte) actualColor.getRed(), (byte) actualColor.getGreen() , (byte) actualColor.getBlue()); // face marron
+		glColor3ub((byte) actualColor.getRed(), (byte) actualColor.getGreen() , (byte) actualColor.getBlue()); 
 		
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()-MonsterView.size/2, 0);
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()-MonsterView.size/2, 0);
@@ -104,11 +104,6 @@ public class SquareMonsterView extends MonsterView {
 		
 	}
 
-	@Override
-	public void setColor(Color color) {
-		// TODO Auto-generated method stub
-		
-	}
 
 
 }
