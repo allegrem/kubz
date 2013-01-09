@@ -436,10 +436,11 @@ public class MapCreator {
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		if (MODE3D)
-			GLU.gluPerspective(70.0f, display_width / display_height, 1.0f,
+			GLU.gluPerspective(45.0f, display_width / display_height, 0.1f,
 					10000.0f);
 		else
 			glOrtho(0, display_width, display_height, 0, -100, 0);
+		
 		
 		/*
 		 * Si on est en mode 3D, on initialise la 3D
@@ -449,15 +450,12 @@ public class MapCreator {
 		glLoadIdentity();
 
 		if (MODE3D) {
-
-			/*
-			 * Position de la caméra
-			 */
+			//positionnement de la camera
 			GLU.gluLookAt(0, 0,
 					(float) 50, (float) display_width / 2,
-					(float) display_height / 2, (float) 0, 0, 0, 1);
-
+					(float) display_height / 2, (float) 0, 0, 0	, 1);
 		}
+		
 	}
 
 	public  void rotate() {
