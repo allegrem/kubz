@@ -95,8 +95,9 @@ public abstract class MonsterView implements Displayable{
 	public boolean isInZone(Point p){
 		double x1 = position.getX()-size/2, x2 = position.getX()+size/2;
 		double y1 = position.getY()-size/2, y2 = position.getY()+size/2;
+		
 		double pX = p.getX();
-		double pY = MapCreator.display_height-p.getY();
+		double pY = p.getY();
 		
 		
 		if (pX>=x1 && pX<=x2 && pY>=y1 && pY<=y2)
@@ -106,7 +107,7 @@ public abstract class MonsterView implements Displayable{
 	public ReadableColor getColor(){
 		return color;
 	}
-	public void setColor(ReadableColor color){
+	public void setColor(Color color){
 		this.actualColor = color;
 	}
 	public String getCharac(){
