@@ -14,10 +14,11 @@ import static org.lwjgl.opengl.GL11.glViewport;
 
 import java.util.ArrayList;
 
-import map2.BaseView;
 import map2.MapReader;
 
 import org.lwjgl.opengl.GL11;
+
+import views.BaseView;
 
 /**
  * Rendu numero2

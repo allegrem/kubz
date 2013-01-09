@@ -13,7 +13,7 @@ import OpenGL.Displayable;
  */
 public class Map {
 	private ArrayList<Displayable> listObjects;
-	public static  int width;
+	public static int width;
 	public static int length;
 	
 	public Map(int width,int length) {

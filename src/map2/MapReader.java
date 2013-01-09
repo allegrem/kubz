@@ -16,8 +16,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import map2.BaseView;
-import map2.WallView;
+import views.BaseView;
+import views.MonsterView;
+import views.WallView;
+
 import Map.MBox;
 
 public class MapReader {

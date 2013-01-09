@@ -24,6 +24,12 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.glu.GLU;
 
+import views.BaseView;
+import views.CircleMonsterView;
+import views.ShapeMonsterView;
+import views.SquareMonsterView;
+import views.WallView;
+
 import OpenGL.Displayable;
 import OpenGL.GLDisplay;
 
@@ -230,13 +236,6 @@ public class MapCreator {
 		 * créée, permet de changer sa couleur
 		 */
 		if (Mouse.isButtonDown(2) && scrollPressed) {
-
-			int mouseX = Mouse.getX();
-			int mouseY = Mouse.getY();
-			/*
-			 * Déjà fait plus haut mais avecmouseY=display_height-Mouse.getY();
-			 * C'est pas ca qu'il faut ?
-			 */
 			Point mousePoint = new Point(mouseX, mouseY);
 			for (Displayable object : map.getObjects()) {
 				if (object.isInZone(mousePoint)) {
@@ -246,8 +245,9 @@ public class MapCreator {
 							.getBlue();
 					object.setColor(new Color(r, g, b));
 				}
+				
 			}
-
+			scrollPressed = false;
 		}
 
 		/*

@@ -6,11 +6,12 @@ import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glViewport;
 import map2.BackgroundView;
 import map2.Point;
-import map2.ShapeMonsterView;
-import map2.SquareMonsterView;
-import map2.WallView;
 import map2.Map;
 import org.lwjgl.util.Color;
+
+import views.ShapeMonsterView;
+import views.SquareMonsterView;
+import views.WallView;
 
 
 

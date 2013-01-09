@@ -3,9 +3,12 @@
  * @author valeh
  */
 
-package map2;
+package views;
 
 
+
+import map2.Map;
+import map2.Point;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;

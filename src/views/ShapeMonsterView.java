@@ -1,4 +1,4 @@
-package map2;
+package views;
 
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3ub;
@@ -7,6 +7,9 @@ import static org.lwjgl.opengl.GL11.glVertex3d;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
+
+import map2.Map;
+import map2.Point;
 
 import org.lwjgl.opengl.GL11;
 

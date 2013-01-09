@@ -2,9 +2,11 @@
  * Classe correspondant a la Base d'un joueur, represente par un demi-disque.
  * @author valeh
  */
-package map2;
+package views;
 
 
+
+import map2.Point;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;

@@ -1,4 +1,6 @@
-package map2;
+package views;
+
+import map2.Point;
 
 import org.lwjgl.util.Color;
 

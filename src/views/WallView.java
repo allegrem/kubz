@@ -1,9 +1,13 @@
-package map2;
+package views;
 
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glVertex3d;
+
+import map2.Map;
+import map2.Point;
+import map2.RandomPerso;
 
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
@@ -276,9 +280,9 @@ public class WallView implements Displayable {
 			if (Textures.textureWall == null)
 				Textures.initTextureWall();
 			/*
-			 * On colorie le fond en blanc avant d'appliquer la texture
+			 * On colorie le fond en gris (;p) avant d'appliquer la texture
 			 */
-			Color.white.bind();
+			Color.gray.bind();
 
 			Textures.textureWall.bind();// On applique la texture
 
