@@ -23,6 +23,7 @@ public class MapSaver {
 	public MapSaver(String bFileName, String mFileName, String wFileName){
 		this.bFileName = bFileName;
 		this.mFileName = mFileName;
+		this.wFileName = wFileName;
 	}
 	
 	public void saveToFile(Map map){
