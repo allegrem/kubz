@@ -119,7 +119,6 @@ public class MapCreator {
 		 */
 	
 		while (affichage.isAlive()) {
-			System.out.println("coucou");
 			
 			try {
 				Thread.sleep(1000);
