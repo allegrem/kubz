@@ -34,17 +34,51 @@ public class MapSaver {
 				monsters.add((MonsterView) disp);
 		}
 		saveBases(bases);
-		//saveMonsters(monsters); a comppleter... pas le temps la tout de suite!!
+		saveMonsters(monsters); 
 	}
 	
 	private void saveBases(ArrayList<BaseView> bases){
-		/*PrintWriter pw = null;
-		try{
-			pw = new PrintWriter(bfileName);
-			
-		} idem que ci-dessus!!
-	}*/
+		PrintWriter pw = null;
+		try {
+			pw = new PrintWriter(bFileName);
+			pw.print(bases.size());
+			pw.println();
+			for (BaseView base : bases) {
+				pw.print(base.getCharac());
+				pw.println();
+			}
+		} catch (Exception e) {
+			System.out.println("ERROR");
+		} finally {
+			if (pw != null) {
+				try {
+					pw.close();
+				} catch (Exception e) {
+				}
+			}
+		}	
+	}
+	private void saveMonsters(ArrayList<MonsterView> monsters){
+		PrintWriter pw = null;
+		try {
+			pw = new PrintWriter(mFileName);
+			pw.print(monsters.size());
+			pw.println();
+			for (MonsterView monsterView : monsters) {
+				pw.print(monsterView.getCharac());
+				pw.println();
+			}
+		} catch (Exception e) {
+			System.out.println("ERROR");
+		} finally {
+			if (pw != null) {
+				try {
+					pw.close();
+				} catch (Exception e) {
+				}
+			}
+		}	
+	}
 	
-}
 }
 	
