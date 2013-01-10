@@ -18,9 +18,9 @@ public class MapSaver {
 	private ArrayList<BaseView> bases = new ArrayList<BaseView>();
 	private ArrayList<WallView> walls = new ArrayList<WallView>();
 	private ArrayList<MonsterView> monsters = new ArrayList<MonsterView>();
-	private String bFileName,mFileName; //pour bases et monstres resp.
+	private String bFileName,mFileName,wFileName; //pour bases et monstres et murs resp.
 
-	public MapSaver(String bFileName, String mFileName){
+	public MapSaver(String bFileName, String mFileName, String wFileName){
 		this.bFileName = bFileName;
 		this.mFileName = mFileName;
 	}
@@ -29,12 +29,15 @@ public class MapSaver {
 		ArrayList<Displayable> displayables = map.getObjects();
 		for (Displayable disp : displayables){
 			if (disp instanceof BaseView)
-				bases.add((BaseView) disp);
+				bases.add( (BaseView) disp );
 			else if (disp instanceof MonsterView)
-				monsters.add((MonsterView) disp);
+				monsters.add( (MonsterView) disp );
+			else if (disp instanceof WallView)
+				walls.add( (WallView)disp );
 		}
 		saveBases(bases);
 		saveMonsters(monsters); 
+		saveWalls(walls);
 	}
 	
 	private void saveBases(ArrayList<BaseView> bases){
@@ -79,6 +82,26 @@ public class MapSaver {
 			}
 		}	
 	}
-	
+	private  void saveWalls(ArrayList<WallView> walls) {
+		PrintWriter pw = null;
+		try {
+			pw = new PrintWriter(wFileName);
+			pw.print(walls.size());
+			pw.println();
+			for (WallView wall : walls) {
+				pw.print(wall.getCharac());
+				pw.println();
+			}
+		} catch (Exception e) {
+			System.out.println("ERROR");
+		} finally {
+			if (pw != null) {
+				try {
+					pw.close();
+				} catch (Exception e) {
+				}
+			}
+		}
+	}
 }
 	
