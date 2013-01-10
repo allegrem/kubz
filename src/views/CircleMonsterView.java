@@ -8,7 +8,6 @@ package views;
 
 
 import map2.Map;
-import map2.Point;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
@@ -16,7 +15,8 @@ import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.glu.Cylinder;
 import org.lwjgl.util.glu.Disk;
 
-import OpenGL.Displayable;
+import utilities.Point;
+
 
 public class CircleMonsterView extends MonsterView {
 	private Cylinder cylinder = new Cylinder();

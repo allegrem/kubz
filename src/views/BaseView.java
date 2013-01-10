@@ -6,7 +6,6 @@ package views;
 
 
 
-import map2.Point;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
@@ -14,7 +13,8 @@ import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.glu.Disk;
 import org.lwjgl.util.glu.PartialDisk;
 
-import OpenGL.Displayable;
+import utilities.Point;
+
 
 public class BaseView implements Displayable{
 	private PartialDisk disk1 =new PartialDisk();

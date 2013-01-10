@@ -1,4 +1,4 @@
-package map2;
+package utilities;
 
 import java.util.Random;
 

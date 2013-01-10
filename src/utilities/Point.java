@@ -1,4 +1,4 @@
-package map2;
+package utilities;
 
 /**
  * Objet Point représentant un point en 2D

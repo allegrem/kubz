@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import utilities.Point;
 import views.BaseView;
 import views.MonsterView;
 import views.WallView;

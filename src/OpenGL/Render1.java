@@ -4,11 +4,11 @@ import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glViewport;
-import map2.BackgroundView;
-import map2.Point;
 import map2.Map;
 import org.lwjgl.util.Color;
 
+import utilities.BackgroundView;
+import utilities.Point;
 import views.ShapeMonsterView;
 import views.SquareMonsterView;
 import views.WallView;

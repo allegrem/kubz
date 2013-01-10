@@ -6,13 +6,13 @@ import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
 import map2.Map;
-import map2.Point;
-import map2.RandomPerso;
 
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 
-import OpenGL.Displayable;
+import utilities.Point;
+import utilities.RandomPerso;
+
 import OpenGL.Textures;
 
 /**

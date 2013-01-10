@@ -9,7 +9,6 @@ import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 
 import map2.Map;
-import map2.Point;
 
 import org.lwjgl.opengl.GL11;
 
@@ -17,7 +16,8 @@ import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.glu.Cylinder;
 
-import OpenGL.Displayable;
+import utilities.Point;
+
 /**
  * Une unité en forme de triangle
  * 

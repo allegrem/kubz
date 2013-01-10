@@ -24,19 +24,23 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.glu.GLU;
 
+import utilities.BackgroundView;
+import utilities.Point;
+import utilities.RandomPerso;
 import views.BaseView;
 import views.CircleMonsterView;
+import views.Displayable;
+import views.MonsterView;
 import views.ShapeMonsterView;
 import views.SquareMonsterView;
 import views.WallView;
 
-import OpenGL.Displayable;
 import OpenGL.GLDisplay;
 
 /**
  * Sert à créer une nouvelle map
  * 
- * @author paul
+ * @author paul&valeh
  * 
  */
 public class MapCreator {
@@ -45,7 +49,12 @@ public class MapCreator {
 	 */
 	public static final int display_width = 640;
 	public static final int display_height = 480;
-	private float eyeX =0,eyeY = 0,eyeZ=50;
+	private ArrayList<BaseView> bases = new ArrayList<BaseView>();
+	private ArrayList<MonsterView> monsters = new ArrayList<MonsterView>();
+	private ArrayList<WallView> walls = new ArrayList<WallView>();
+	
+	private float eyeX =0,eyeY = 0,eyeZ=50; 
+	private float atX=(float)(display_width/2),atY=(float)(display_height/2),atZ=0;
 
 	/*
 	 * La position de la souris dans la fenêtre
@@ -482,15 +491,15 @@ public class MapCreator {
 		if (MODE3D) {
 			//positionnement de la camera
 			GLU.gluLookAt(eyeX, eyeY,
-					(float) eyeZ, (float) display_width / 2,
-					(float) display_height / 2, (float) 0, 0, 0	, 1);
+					(float) eyeZ, atX,
+					atY, atZ, 0, 0	, 1);
 		}
 		
 	}
 
 	public  void rotate() {
 		/*
-		 * Sert à faire tourner la carte sur elle-même
+		 * Sert à faire tourner la carte sur elle-même 
 		 */
 		GL11.glTranslatef(display_width / 2, display_height / 2, 0);
 		GL11.glRotated(0.1, 0, 0, 1);

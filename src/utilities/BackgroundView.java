@@ -1,4 +1,4 @@
-package map2;
+package utilities;
 
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
@@ -9,7 +9,9 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.ReadableColor;
 import org.newdawn.slick.Color;
 
-import OpenGL.Displayable;
+import views.Displayable;
+
+
 import OpenGL.Textures;
 /**
  * Le sol (chemin)

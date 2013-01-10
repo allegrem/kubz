@@ -1,8 +1,9 @@
-package OpenGL;
+package views;
 
 import org.lwjgl.util.Color;
 
-import map2.Point;
+import utilities.Point;
+
 
 public interface Displayable {
 	public void paint();

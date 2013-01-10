@@ -1,10 +1,10 @@
 package views;
 
-import map2.Point;
 
 import org.lwjgl.util.Color;
 
-import OpenGL.Displayable;
+import utilities.Point;
+
 
 public class CubeControlledView implements Displayable{
 
