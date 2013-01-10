@@ -72,6 +72,9 @@ public class MapCreator {
 	private boolean rClicked = true;
 	private boolean lClicked = true;
 	private boolean rightKey = true;
+	private boolean leftKey = true;
+	private boolean upKey = true;
+	private boolean downKey = true;
 
 	/*
 	 * map et module d'affichage créés
@@ -190,6 +193,12 @@ public class MapCreator {
 		
 		if (!Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
 			rightKey = true;
+		if (!Keyboard.isKeyDown(Keyboard.KEY_LEFT))
+			leftKey = true;
+		if (!Keyboard.isKeyDown(Keyboard.KEY_UP))
+			upKey = true;
+		if (!Keyboard.isKeyDown(Keyboard.KEY_DOWN))
+			downKey =  true;
 
 		/*
 		 * Changement de MODE3D
@@ -200,13 +209,21 @@ public class MapCreator {
 			tabClicked = false;
 		}
 		
-		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_RIGHT) && rightKey) {
+		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_LEFT) && leftKey) {
 			eyeX -= 5;
 			changementMode3D();
-			/*GLU.gluLookAt((float) (-1), eyeY,
-					(float) eyeZ, (float) display_width / 2,
-					(float) display_height / 2, (float) 0, 0, 0	, 1);*/
-			rightKey = false;
+		}
+		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_RIGHT) && rightKey) {
+			eyeX += 5;
+			changementMode3D();
+		}
+		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_DOWN) && downKey) {
+			eyeY -= 5;
+			changementMode3D();
+		}
+		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_UP) && upKey) {
+			eyeY += 5;
+			changementMode3D();
 		}
 
 		/*
