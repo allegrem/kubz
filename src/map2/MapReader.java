@@ -1,14 +1,5 @@
 package map2;
 
-/**
- * Chargement de la carte du jeu a partir d'une lecture de fichier contenant
- * les infos sur les murs et les bases.
- * 
- * @author valeh
- * 
- */
-
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -23,6 +14,13 @@ import views.WallView;
 
 import Map.MBox;
 
+/**
+ * Chargement de la carte du jeu a partir d'une lecture de fichier contenant
+ * les infos sur les murs et les bases.
+ * 
+ * @author valeh
+ * 
+ */
 public class MapReader {
 
 	private int height;
