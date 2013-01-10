@@ -45,6 +45,7 @@ public class MapCreator {
 	 */
 	public static final int display_width = 640;
 	public static final int display_height = 480;
+	private float eyeX =0,eyeY = 0,eyeZ=50;
 
 	/*
 	 * La position de la souris dans la fenêtre
@@ -70,6 +71,7 @@ public class MapCreator {
 	private boolean aClicked = true;
 	private boolean rClicked = true;
 	private boolean lClicked = true;
+	private boolean rightKey = true;
 
 	/*
 	 * map et module d'affichage créés
@@ -121,7 +123,6 @@ public class MapCreator {
 			} catch (InterruptedException e) {
 				
 			}
-
 		}
 
 
@@ -186,6 +187,9 @@ public class MapCreator {
 
 		if (!Keyboard.isKeyDown(Keyboard.KEY_L))
 			lClicked = true;
+		
+		if (!Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
+			rightKey = true;
 
 		/*
 		 * Changement de MODE3D
@@ -194,6 +198,15 @@ public class MapCreator {
 			MODE3D = !MODE3D;
 			changementMode3D();
 			tabClicked = false;
+		}
+		
+		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_RIGHT) && rightKey) {
+			eyeX -= 5;
+			changementMode3D();
+			/*GLU.gluLookAt((float) (-1), eyeY,
+					(float) eyeZ, (float) display_width / 2,
+					(float) display_height / 2, (float) 0, 0, 0	, 1);*/
+			rightKey = false;
 		}
 
 		/*
@@ -436,7 +449,7 @@ public class MapCreator {
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		if (MODE3D)
-			GLU.gluPerspective(45.0f, display_width / display_height, 0.1f,
+			GLU.gluPerspective(45.0f, display_width / display_height, 1.0f,
 					10000.0f);
 		else
 			glOrtho(0, display_width, display_height, 0, -100, 0);
@@ -451,8 +464,8 @@ public class MapCreator {
 
 		if (MODE3D) {
 			//positionnement de la camera
-			GLU.gluLookAt(0, 0,
-					(float) 50, (float) display_width / 2,
+			GLU.gluLookAt(eyeX, eyeY,
+					(float) eyeZ, (float) display_width / 2,
 					(float) display_height / 2, (float) 0, 0, 0	, 1);
 		}
 		
