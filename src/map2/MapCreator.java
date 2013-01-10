@@ -49,9 +49,12 @@ public class MapCreator {
 	 */
 	public static final int display_width = 640;
 	public static final int display_height = 480;
-	private ArrayList<BaseView> bases = new ArrayList<BaseView>();
-	private ArrayList<MonsterView> monsters = new ArrayList<MonsterView>();
-	private ArrayList<WallView> walls = new ArrayList<WallView>();
+	
+	public static String bFileName = "bFile.txt";
+	public static String mFileName = "mFile.txt";
+	public static String wFileName = "WFileName";
+	
+	private MapSaver mapSaver = new MapSaver(bFileName,mFileName,wFileName); 
 	
 	private float eyeX =0,eyeY = 0,eyeZ=50; 
 	private float atX=(float)(display_width/2),atY=(float)(display_height/2),atZ=0;
@@ -112,13 +115,15 @@ public class MapCreator {
 	 */
 	private boolean light = false;
 
-	public MapCreator() {
+	public MapCreator(boolean b) {
 
 		/*
 		 * Création du module d'affichage et de la map
 		 */
+		if (b){
 		map = new Map(display_width, display_height);
 		affichage = new GLDisplay(display_width, display_height,map,this);
+		
 		RandomPerso.initialize();
 		map.add(new BackgroundView(display_width, display_height));
 		affichage.start();
@@ -141,9 +146,16 @@ public class MapCreator {
 		/*
 		 * Enregistrement de la map dans un fichier
 		 */
-		saveToFile();
+		mapSaver.saveToFile(map);
 
 	}
+		else {
+			MapReader mapReader = new MapReader(map);
+			MapCreator mapCreator = new MapCreator(1);
+	}
+		
+}
+	
 	
 	public  void compute(){
 		
@@ -376,97 +388,9 @@ public class MapCreator {
 
 	}
 
-	/**
-	 * Effectue l'enregistrement des murs dans un fichier
-	 * 
-	 * @param wFileName
-	 *            fichier d'enregistrement
-	 */
-	private  void saveWallsToFile(String wFileName) {
-		PrintWriter pw = null;
-		try {
-			pw = new PrintWriter(wFileName);
-			pw.print(walls.size());
-			pw.println();
-			for (WallView wall : walls) {
-				pw.print(wall.getCharac());
-				pw.println();
-			}
-		} catch (Exception e) {
-			System.out.println("ERROR");
-		} finally {
-			if (pw != null) {
-				try {
-					pw.close();
-				} catch (Exception e) {
-				}
-			}
-		}
-	}
-
-	/**
-	 * Effectue l'enregistrement des Bases dans un fichier
-	 * 
-	 * @param wFileName
-	 *            fichier d'enregistrement
-	 */
-	private  void saveBasesToFile(String bFileName) {
-		PrintWriter pw = null;
-		try {
-			pw = new PrintWriter(bFileName);
-			pw.print(bases.size());
-			pw.println();
-			for (BaseView base : bases) {
-				pw.print(base.getCharac());
-				pw.println();
-			}
-		} catch (Exception e) {
-			System.out.println("ERROR");
-		} finally {
-			if (pw != null) {
-				try {
-					pw.close();
-				} catch (Exception e) {
-				}
-			}
-		}
-	}
-
-	/**
-	 * Effectue l'enregistrement des Unités dans un fichier
-	 * 
-	 * @param wFileName
-	 *            fichier d'enregistrement
-	 */
-	private  void saveUnitsToFile(String bFileName) {
-		PrintWriter pw = null;
-		try {
-			pw = new PrintWriter(bFileName);
-			for (Displayable object : units.getObjects()) {
-				pw.print(object.getCharac());
-				pw.println();
-			}
-		} catch (Exception e) {
-			System.out.println("ERROR");
-		} finally {
-			if (pw != null) {
-				try {
-					pw.close();
-				} catch (Exception e) {
-				}
-			}
-		}
-	}
-
-	/*
-	 * Sauvegarde toutes les Arraylists d'objets dans leur fichier respectif
-	 */
-	private  void saveToFile() {
-		saveWallsToFile("wFile.txt");
-		saveBasesToFile("bFile.txt");
-		saveUnitsToFile("uFile.txt");
-	}
-
+	//ici
+	 
+	
 	public  void changementMode3D() {
 		/*
 		 * Matrice de projection (3D vers 2D): utilisation d'une projection

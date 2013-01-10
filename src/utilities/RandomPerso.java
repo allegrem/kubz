@@ -7,7 +7,7 @@ public class RandomPerso{
 	
 	private static Random alea;
 	
-	static void initialize(){
+	public static void initialize(){
 		alea=new Random();
 	}
 	

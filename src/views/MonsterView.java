@@ -108,14 +108,13 @@ public abstract class MonsterView implements Displayable{
 		return false;
 	}
 	public ReadableColor getColor(){
-		return color;
+		return actualColor;
 	}
 	public void setColor(Color color){
 		this.actualColor = color;
 	}
 	public String getCharac(){
-		ReadableColor color = this.getColor();
 		return this.getType()+" "+position.getX()+" "+position.getY()+
-				" "+color.getRed()+" "+color.getGreen()+" "+color.getBlue();
+				" "+actualColor.getRed()+" "+actualColor.getGreen()+" "+actualColor.getBlue();
 	}
 }

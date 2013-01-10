@@ -72,7 +72,7 @@ public class BaseView implements Displayable{
 	}
 
 	public String getCharac(){
-		ReadableColor color = this.getColor();
+		
 		return center.getX()+" "+center.getY()+
 				"  "+color.getRed()+" "+color.getGreen()+" "+color.getBlue();
 		
