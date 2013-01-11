@@ -1,5 +1,6 @@
 package map2;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -29,13 +30,25 @@ public class MapReader {
 	private String mFileName = MapCreator.mFileName;
 	private String wFileName = MapCreator.wFileName;
 	
-	public void readBases(){
+	private void readBases(){
 		FileReader fr = null;
 		BufferedReader br = null;
 		try{
 			fr = new FileReader(bFileName);
 			br = new BufferedReader(fr);
-			//A faire (pas le temps la!!)
+			int sBase = Integer.parseInt( br.readLine() );
+			for (int line=0;line<sBase;line++){
+				Scanner sc = new Scanner(br.readLine());
+				int xCenter = sc.nextInt();
+				int yCenter = sc.nextInt();
+				byte baseRed = sc.nextByte();
+				byte baseGreen = sc.nextByte();
+				byte baseBlue = sc.nextByte();
+				BaseView base = new BaseView( new Point(xCenter,yCenter) );
+				base.setColor( new Color(baseRed,baseGreen,baseBlue) );
+				map.add(base)
+			}
+		
 		}
 	}
 	
