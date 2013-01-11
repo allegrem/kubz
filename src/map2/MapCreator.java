@@ -50,6 +50,8 @@ public class MapCreator {
 	public static final int display_width = 640;
 	public static final int display_height = 480;
 	
+	
+	
 	public static String bFileName = "bFile.txt";
 	public static String mFileName = "mFile.txt";
 	public static String wFileName = "WFileName";
@@ -91,7 +93,7 @@ public class MapCreator {
 	/*
 	 * map et module d'affichage créés
 	 */
-	private Map map;
+	private Map map = map = new Map(display_width, display_height);
 	private GLDisplay affichage;
 
 	
@@ -121,9 +123,9 @@ public class MapCreator {
 		 * Création du module d'affichage et de la map
 		 */
 		if (b){
-		map = new Map(display_width, display_height);
-		affichage = new GLDisplay(display_width, display_height,map,this);
 		
+		affichage = new GLDisplay(display_width, display_height,map,this); //on initilaise avec un map par defaut et
+																		   //pour le MapReader on remplace le par d�faut				
 		RandomPerso.initialize();
 		map.add(new BackgroundView(display_width, display_height));
 		affichage.start();
@@ -150,8 +152,9 @@ public class MapCreator {
 
 	}
 		else {
-			MapReader mapReader = new MapReader(map);
-			MapCreator mapCreator = new MapCreator(1);
+			MapReader mapReader = new MapReader();
+			map = mapReader.read(map);
+			MapCreator mapCreator = new MapCreator(true);
 	}
 		
 }
