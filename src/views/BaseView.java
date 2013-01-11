@@ -74,7 +74,7 @@ public class BaseView implements Displayable{
 	public String getCharac(){
 		
 		return center.getX()+" "+center.getY()+
-				"  "+color.getRed()+" "+color.getGreen()+" "+color.getBlue();
+				"  "+color.getRed()+" "+color.getGreen()+" "+color.getBlue()+" "+sens;
 		
 	}
 
