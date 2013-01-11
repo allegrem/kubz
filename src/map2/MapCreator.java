@@ -55,7 +55,7 @@ public class MapCreator {
 	
 	public static String bFileName = "bFile.txt";
 	public static String mFileName = "mFile.txt";
-	public static String wFileName = "WFileName";
+	public static String wFileName = "WFile.txt";
 	
 	private MapSaver mapSaver = new MapSaver(bFileName,mFileName,wFileName); 
 	
@@ -94,7 +94,7 @@ public class MapCreator {
 	/*
 	 * map et module d'affichage créés
 	 */
-	private Map map = map = new Map(display_width, display_height);
+	private Map map  = new Map(display_width, display_height);
 	private GLDisplay affichage;
 
 	
@@ -144,18 +144,32 @@ public class MapCreator {
 				
 			}
 		}
-
-
-		/*
-		 * Enregistrement de la map dans un fichier
-		 */
-		mapSaver.saveToFile(map);
-
+		mapSaver.saveToFile(map); //save Map
 	}
 		else {
-			MapReader mapReader = new MapReader();
-			map = mapReader.read(map);
-			MapCreator mapCreator = new MapCreator(create_mode);
+			affichage = new GLDisplay(display_width, display_height,map,this); 			
+			RandomPerso.initialize();
+			map.add(new BackgroundView(display_width, display_height));
+			MapReader mapReader = new MapReader("bRead.txt",mFileName,wFileName);
+			try {
+				map = mapReader.read(map);
+			}catch(Exception e){e.printStackTrace();}
+			affichage.start();
+
+			/*
+			* Initilaisation du générateur de nombres aléatoires
+			*/
+
+			while (affichage.isAlive()) {
+			System.out.println("coucou");
+
+			try {
+				Thread.sleep(1000);
+				} catch (InterruptedException e) {}
+			
+			}
+			mapSaver.saveToFile(map); //save Map
+
 	}
 		
 }
