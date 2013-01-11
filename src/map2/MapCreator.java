@@ -49,7 +49,8 @@ public class MapCreator {
 	 */
 	public static final int display_width = 640;
 	public static final int display_height = 480;
-	
+	public static final int create_mode = 0;
+	public static final int read_mode = 1;
 	
 	
 	public static String bFileName = "bFile.txt";
@@ -117,12 +118,12 @@ public class MapCreator {
 	 */
 	private boolean light = false;
 
-	public MapCreator(boolean b) {
+	public MapCreator(int mode) {
 
 		/*
 		 * CrÃ©ation du module d'affichage et de la map
 		 */
-		if (b){
+		if (mode == 0){
 		
 		affichage = new GLDisplay(display_width, display_height,map,this); //on initilaise avec un map par defaut et
 																		   //pour le MapReader on remplace le par défaut				
@@ -154,7 +155,7 @@ public class MapCreator {
 		else {
 			MapReader mapReader = new MapReader();
 			map = mapReader.read(map);
-			MapCreator mapCreator = new MapCreator(true);
+			MapCreator mapCreator = new MapCreator(create_mode);
 	}
 		
 }
