@@ -41,9 +41,8 @@ public class Map {
 		
 	}
 
-	public Displayable add(Displayable object){
+	public void add(Displayable object){
 		listObjects.add(object);
-		return object;
 	}
 	
 	public void remove(Displayable object){
