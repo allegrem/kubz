@@ -16,21 +16,21 @@ public class MainFmInstrTest {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception{
-		FixedADSR env0 = new FixedADSR(0.1f, 0.7f, 0.1f, 0.1f, 1f);
-		FixedSineWaveOscillator osc0 = new FixedSineWaveOscillator(100f, 10*100f); 
-		env0.plugin(osc0); //this will be by default
+		FixedADSR env0 = new FixedADSR(0.000000001f, 0.7f, 0.09f, 0.0001f, 1f);
+		//FixedSineWaveOscillator osc0 = new FixedSineWaveOscillator(100f, 10*100f); 
+		env0.plugin(new Constant(320f)); //this will be by default
 		//AudioBlock input0 = env0;
-		Float freq0 = 200.0f;
+		Float freq0 = 90.0f;
 		SineWaveOscillator swo = new SineWaveOscillator(new Constant(freq0),env0);
 		
-		Float freq1 = (float) (1.4*freq0);
+		Float freq1 = (float) (freq0);
 		Adder adder = new Adder( new Constant(freq1),swo );
 		//adder.plugin(new Constant(freq1));
 		//adder.plugin(swo);
 		
-		FixedADSR env1 = new FixedADSR(0.1f, 0.7f, 0.09f, 0.1f, 1f);
-		FixedSineWaveOscillator osc1 = new FixedSineWaveOscillator(100f, 10*100f); 
-		env1.plugin(osc1); //this will be by default
+		FixedADSR env1 = new FixedADSR(0.000000001f, 0.7f, 0.09f, 0.0001f, 1f);
+		//FixedSineWaveOscillator osc1 = new FixedSineWaveOscillator(100f, 10*100f); 
+		env1.plugin(new Constant(520f)); //this will be by default
 		
 		SineWaveOscillator swoOut = new SineWaveOscillator(adder,env1);
 		AudioBlock out = swoOut;
