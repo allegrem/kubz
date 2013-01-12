@@ -42,9 +42,10 @@ public class MainEnvelope {
 		out = noise;
 		
 		//testing adsr envelope
-		Constant c = new Constant(120f);
+		//Constant c = new Constant(120f);
+		FixedSineWaveOscillator osc0 = new FixedSineWaveOscillator(100f, 10*100f);
 		FixedADSR env = new FixedADSR(0.1f, 0.1f, 0.5f, 0.3f, 1f);
-		env.plugin(c);
+		env.plugin(osc0);
 		out = env;
 		
 		
