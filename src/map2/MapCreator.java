@@ -24,9 +24,9 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.glu.GLU;
 
-import utilities.BackgroundView;
 import utilities.Point;
 import utilities.RandomPerso;
+import views.BackgroundView;
 import views.BaseView;
 import views.CircleMonsterView;
 import views.Displayable;
@@ -128,18 +128,19 @@ public class MapCreator {
 		affichage = new GLDisplay(display_width, display_height,map,this); //on initilaise avec un map par defaut et
 																		   //pour le MapReader on remplace le par d�faut				
 		RandomPerso.initialize();
-		map.add(new BackgroundView(display_width, display_height));
+		BackgroundView background = new BackgroundView(display_width, display_height); 
+		map.add(background);
 		affichage.start();
-
 		/*
 		 * Initilaisation du générateur de nombres aléatoires
 		 */
 	
 		while (affichage.isAlive()) {
-			System.out.println("coucou");
+			System.out.println(affichage.isAlive());
+			background.change();
 			
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				
 			}
