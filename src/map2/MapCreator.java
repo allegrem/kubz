@@ -150,7 +150,7 @@ public class MapCreator {
 			affichage = new GLDisplay(display_width, display_height,map,this); 			
 			RandomPerso.initialize();
 			map.add(new BackgroundView(display_width, display_height));
-			MapReader mapReader = new MapReader("bRead.txt","mRead.txt","wRead.txt");
+			MapReader mapReader = new MapReader(bFileName,mFileName,wFileName);
 			try {
 				map = mapReader.read(map);
 			}catch(Exception e){e.printStackTrace();}
