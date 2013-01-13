@@ -16,7 +16,7 @@ public class RandomPerso{
 	   * @return variable aleatoire uniforme sur [0,1]
 	   */
 
-	  static double uniform(){
+	  public static double uniform(){
 	    return alea.nextDouble();
 	  }
 
@@ -25,7 +25,7 @@ public class RandomPerso{
 	   * @return variable aleatoire de Bernoulli 
 	   */
 
-	  static boolean bernoulli(double p){
+	  public static boolean bernoulli(double p){
 	    
 		  return uniform()<=p;
 	    
