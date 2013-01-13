@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 import org.lwjgl.util.Color;
@@ -48,8 +49,8 @@ public class MapReader {
 			int sBase = Integer.parseInt( br.readLine() );
 			for (int line=0;line<sBase;line++){
 				Scanner sc = new Scanner(br.readLine());
+				sc.useLocale(Locale.US);   //sinon il reconnait pas 12.3 mais 12,3!!!
 				float xCenter = sc.nextFloat();
-				System.out.println(xCenter);
 				float yCenter = sc.nextFloat();
 				int baseRed = sc.nextInt(), baseGreen = sc.nextInt(), baseBlue = sc.nextInt();
 				int sens = sc.nextInt();			
@@ -82,6 +83,7 @@ public class MapReader {
 			int sMonster = Integer.parseInt( br.readLine() );
 			for (int line=0;line<sMonster;line++){
 				Scanner sc = new Scanner(br.readLine());
+				sc.useLocale(Locale.US);
 				char type = sc.next().charAt(0); //"convert" to char 
 				float xCenter = sc.nextFloat(), yCenter = sc.nextFloat();
 				System.out.println(xCenter);
