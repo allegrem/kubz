@@ -119,11 +119,42 @@ public class MapReader {
 		}
 	}
 	
+	private void readWalls() throws Exception {
+		FileReader fr = null;
+		BufferedReader br = null;
+		try{
+			fr = new FileReader(wFileName);
+			br = new BufferedReader(fr);
+			int sWall = Integer.parseInt( br.readLine() );
+			for (int line=0;line<sWall;line++){
+				Scanner sc = new Scanner(br.readLine());
+				sc.useLocale(Locale.US);				
+				float xExtr1 = sc.nextFloat(), yExtr1 = sc.nextFloat();
+				float xExtr2 = sc.nextFloat(), yExtr2 = sc.nextFloat();				
+				int thickness = sc.nextInt();
+				map.add(new WallView( new Point(xExtr1,yExtr1) , new Point(xExtr2,yExtr2), thickness,0));
+				sc.close();
+			}
+		}catch(Exception e){e.printStackTrace();}
+		finally {
+			if (br != null)
+				try {
+					fr.close();
+				} catch (Exception e) {
+					throw new Exception("Erreur lors de la fermeture du fichier...");}
+			if (fr != null)
+				try {
+					br.close();
+				} catch (Exception e) {
+					throw new Exception("Erreur lors de la fermeture du buffer...");}
+		}
+	}
 	
 	public Map read(Map map) throws Exception{
 		this.map = map;
 		readBases();
 		readMonsters();
+		readWalls();
 		return map;
 		
 	}
