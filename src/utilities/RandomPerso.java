@@ -31,4 +31,8 @@ public class RandomPerso{
 	    
 	    
 	  }
+	  
+	  public static int entier(int max){
+		  return (int)(uniform()*max);
+	  }
 }
