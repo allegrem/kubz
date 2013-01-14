@@ -27,34 +27,40 @@ public class SquareMonsterView extends MonsterView {
 	@Override
 	public void paint() {
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
-		glBegin(GL_QUADS);
-		glColor3ub((byte) actualColor.getRed(), (byte) actualColor.getGreen() , (byte) actualColor.getBlue()); // face marron
 		
+		glColor3ub((byte) actualColor.getRed(), (byte) actualColor.getGreen() , (byte) actualColor.getBlue()); // face marron
+		glBegin(GL_QUADS);
+		GL11.glNormal3i(0,0,-1); 
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()-MonsterView.size/2, 0);
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()-MonsterView.size/2, 0);
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
 		
+		GL11.glNormal3i(-1,0,0); 
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()-MonsterView.size/2, 0);
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()-MonsterView.size/2, MonsterView.height);
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, MonsterView.height);
 		
+		GL11.glNormal3i(0,1,0); 
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, MonsterView.height);
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, MonsterView.height);
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
 		
+		GL11.glNormal3i(1,0,0); 
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, MonsterView.height);
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()-MonsterView.size/2, 0);
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()-MonsterView.size/2, MonsterView.height);
 		
+		GL11.glNormal3i(0,0,1); 
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()-MonsterView.size/2, 0);
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()-MonsterView.size/2, MonsterView.height);
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()-MonsterView.size/2, MonsterView.height);
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()-MonsterView.size/2, 0);
 
+		GL11.glNormal3i(0,-1,0); 
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()-MonsterView.size/2, MonsterView.height);
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()-MonsterView.size/2, MonsterView.height);
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, MonsterView.height);

@@ -35,13 +35,12 @@ public class BackgroundView implements Displayable{
 		glEnable(GL11.GL_TEXTURE_2D);
 		if (Textures.texturePath==null)
 			Textures.initTexturePath();
-		GL11.glColor3f(1.0f,1.0f,1.0f);
 		Color.white.bind();
 		Textures.texturePath.bind();
 		
 		//glColor3ub((byte) color.getRed(), (byte) color.getGreen() , (byte) color.getBlue()); // face marron
 		glBegin(GL_QUADS);
-		
+		GL11.glNormal3i(0,0,1);
 		GL11.glTexCoord2f(0,0);
 		glVertex3d(0, 0, 0);
 		GL11.glTexCoord2f(nbre,0);
@@ -52,7 +51,7 @@ public class BackgroundView implements Displayable{
 		glVertex3d(0,length, 0);
 	
 		GL11.glEnd();
-		
+	
 	
 		
 

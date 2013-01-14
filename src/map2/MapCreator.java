@@ -26,6 +26,7 @@ import org.lwjgl.util.glu.GLU;
 
 import OpenGL.Displayable;
 import OpenGL.GLDisplay;
+import OpenGL.MyFloatBuffer;
 
 /**
  * Sert à créer une nouvelle map
@@ -45,12 +46,8 @@ public class MapCreator {
 	 */
 	private int mouseX;
 	private int mouseY;
-	/*
-	 * La position de l'éclairage
-	 */
-	private int LightPos[] = { 0,0, 20, 1 };
-	private float Light1Dir[] = { display_width / 2, display_height / 2, 0.0f,
-			0.0f };
+
+
 	private int angle = 0;
 
 	
@@ -108,8 +105,6 @@ public class MapCreator {
 		 */
 	
 		while (affichage.isAlive()) {
-			System.out.println("coucou");
-			
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -220,7 +215,7 @@ public class MapCreator {
 		 * Wall ou B pour Base
 		 */
 		if (Mouse.isButtonDown(1) && rightClicked) {
-			map.removeLast();
+				map.removeLast();
 			rightClicked = false;
 		
 		}
@@ -479,7 +474,7 @@ public class MapCreator {
 		}
 	}
 
-	private  void eclairage() {
+	public  void eclairage() {
 		if (light) {
 
 			/*
@@ -487,19 +482,15 @@ public class MapCreator {
 			 */
 			glEnable(GL11.GL_LIGHTING);
 			glEnable(GL11.GL_LIGHT0);
+			GL11.glColorMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_AMBIENT_AND_DIFFUSE);
 			glMatrixMode(GL_MODELVIEW);
 			GL11.glTranslated(display_width / 2, display_height / 2, 0);
 			GL11.glRotated(angle, 0, 0, 1);
 			GL11.glTranslated(-display_width / 2, -display_height / 2, 0);
 			ByteBuffer temp1 = ByteBuffer.allocateDirect(16);
 			temp1.order(ByteOrder.nativeOrder());
-			GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, (IntBuffer) temp1
-					.asIntBuffer().put(LightPos).flip());
-			GL11.glLighti(GL11.GL_LIGHT0, GL11.GL_SPOT_CUTOFF, 120);
-			ByteBuffer temp2 = ByteBuffer.allocateDirect(16);
-			temp2.order(ByteOrder.nativeOrder());
-			GL11.glLight(GL11.GL_LIGHT0, GL11.GL_SPOT_DIRECTION,
-					(FloatBuffer) temp2.asFloatBuffer().put(Light1Dir).flip());
+			GL11.glLight(GL11.GL_LIGHT0,GL11.GL_POSITION,MyFloatBuffer.newFloatBuffer(0,0,1,0));
+			//GL11.glLight(GL11.GL_LIGHT0,GL11.GL_SPOT_DIRECTION,MyFloatBuffer.newFloatBuffer(0,0,-1,0));
 			GL11.glTranslated(display_width / 2, display_height / 2, 0);
 			GL11.glRotated(-angle, 0, 0, 1);
 			GL11.glTranslated(-display_width / 2, -display_height / 2, 0);

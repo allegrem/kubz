@@ -65,6 +65,7 @@ public class GLDisplay extends Thread{
 		//updateMouse();
 		//updateKeyboard();
 		clear();
+		mapCreator.eclairage();
 		mapCreator.compute();
 		render();
 		update();
