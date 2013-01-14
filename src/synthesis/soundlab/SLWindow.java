@@ -22,6 +22,8 @@ import synthesis.fmInstruments.BellInstrument;
 import synthesis.fmInstruments.FmInstrument;
 import synthesis.fmInstruments.TestInstrument;
 import synthesis.fmInstruments.TwoOscFmInstrument;
+import synthesis.fmInstruments.WindInstrument;
+import synthesis.fmInstruments.WoodInstrument;
 
 import javax.swing.BoxLayout;
 import java.awt.event.ActionListener;
@@ -49,9 +51,10 @@ public class SLWindow {
 			public void run() {
 				try {
 					SLWindow window = new SLWindow();
+/************************ TESTING ****************************/
 					window.frmSoundlab.setVisible(true);
 					//window.setInstrument(new TwoOscFmInstrument());
-					window.setInstrument(new BellInstrument());
+					window.setInstrument(new WoodInstrument());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

@@ -55,13 +55,13 @@ public class WoodInstrument implements FmInstrument {
 		}
 		SineWaveOscillator osc1 = new SineWaveOscillator(fm, env);
 		Adder add = new Adder(fp, osc1);
-		//FixedADSR env = new FixedADSR(0.3f,0.0f,1.0f,0.1f,1f);
+		FixedADSR env1 = new FixedADSR(0.3f,0.0f,1.0f,0.1f,1f);
 		try {
-			env.plugin(amp);
+			env1.plugin(amp);
 		} catch (TooManyInputsException e) {
 			e.printStackTrace();
 		}
-		return out = new SineWaveOscillator(add, env);
+		return out = new SineWaveOscillator(add, env1);
 	}
 
 	/* (non-Javadoc)
