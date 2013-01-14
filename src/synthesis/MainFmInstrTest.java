@@ -7,6 +7,7 @@ import synthesis.basicblocks.noinputblocks.FixedSineWaveOscillator;
 import synthesis.basicblocks.oneinputblocks.FixedADSR;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
 import synthesis.basicblocks.severalinputsblocks.Adder;
+import synthesis.exceptions.TooManyInputsException;
 import synthesis.fmInstruments.WindInstrument;
 
 public class MainFmInstrTest {
@@ -16,7 +17,7 @@ public class MainFmInstrTest {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception{
-		FixedADSR env0 = new FixedADSR(0.000000001f, 0.7f, 0.09f, 0.0001f, 1f);
+		/*FixedADSR env0 = new FixedADSR(0.000000001f, 0.7f, 0.09f, 0.0001f, 1f);
 		//FixedSineWaveOscillator osc0 = new FixedSineWaveOscillator(100f, 10*100f); 
 		env0.plugin(new Constant(320f)); //this will be by default
 		//AudioBlock input0 = env0;
@@ -31,9 +32,18 @@ public class MainFmInstrTest {
 		FixedADSR env1 = new FixedADSR(0.000000001f, 0.7f, 0.09f, 0.0001f, 1f);
 		//FixedSineWaveOscillator osc1 = new FixedSineWaveOscillator(100f, 10*100f); 
 		env1.plugin(new Constant(520f)); //this will be by default
-		
+
 		SineWaveOscillator swoOut = new SineWaveOscillator(adder,env1);
-		AudioBlock out = swoOut;
+		AudioBlock out = swoOut;*/
+		FixedADSR env = new FixedADSR(0.002f,0.998f,0.0f,0.0f,1f);
+		try {
+			env.plugin(new Constant((float) 100));
+		} catch (TooManyInputsException e) {
+			e.printStackTrace();
+		}
+		SineWaveOscillator osc1 = new SineWaveOscillator(new Constant(200f), new Constant((float) 190));
+		Adder add = new Adder(new Constant( (float) (200/(Math.sqrt(2)))), osc1);
+		AudioBlock out = new SineWaveOscillator(add, env);
 		
 		//computing sound
 		byte[] output = SynthesisUtilities.computeSound(0f, 1f, out);
