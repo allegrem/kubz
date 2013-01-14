@@ -51,7 +51,7 @@ public class BackgroundView implements Displayable{
 		
 		 // face marron
 		glBegin(GL_QUADS);
-		
+		//GL11.glNormal3f(0, 0, 1.0f);
 		GL11.glColor3ub(red, green , blue);
 		//GL11.glColor3ub((byte) 200, (byte) 233 , (byte) 256);
 		GL11.glTexCoord2f(0,0);

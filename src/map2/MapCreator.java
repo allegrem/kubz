@@ -134,7 +134,7 @@ public class MapCreator {
 	
 		while (affichage.isAlive()) {
 
-			background.change();
+			//background.change();
 			
 			try {
 				Thread.sleep(100);
@@ -463,13 +463,14 @@ public class MapCreator {
 			glEnable(GL11.GL_LIGHTING);
 			glEnable(GL11.GL_LIGHT0);
 			GL11.glColorMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_AMBIENT_AND_DIFFUSE);
+			GL11.glLightModeli(GL11.GL_LIGHT_MODEL_TWO_SIDE,GL11.GL_TRUE);
 			glMatrixMode(GL_MODELVIEW);
 			GL11.glTranslated(display_width / 2, display_height / 2, 0);
 			GL11.glRotated(angle, 0, 0, 1);
 			GL11.glTranslated(-display_width / 2, -display_height / 2, 0);
 			ByteBuffer temp1 = ByteBuffer.allocateDirect(16);
 			temp1.order(ByteOrder.nativeOrder());
-			GL11.glLight(GL11.GL_LIGHT0,GL11.GL_POSITION,MyFloatBuffer.newFloatBuffer(0,0,1,0));
+			GL11.glLight(GL11.GL_LIGHT0,GL11.GL_POSITION,MyFloatBuffer.newFloatBuffer(1,1/2,1/2,0));
 			//GL11.glLight(GL11.GL_LIGHT0,GL11.GL_SPOT_DIRECTION,MyFloatBuffer.newFloatBuffer(0,0,-1,0));
 			GL11.glTranslated(display_width / 2, display_height / 2, 0);
 			GL11.glRotated(-angle, 0, 0, 1);
