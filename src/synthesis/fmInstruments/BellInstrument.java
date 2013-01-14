@@ -26,7 +26,7 @@ public class BellInstrument implements FmInstrument{
 	private ArrayList<ParameterAudioBlock> paramList;
 
 	public BellInstrument() {
-		//super();
+		super();
 		
 		fm = new ParamBlock("fm", 200, 700, 280);
 		//fp = new ParamBlock("fp", (int) (1.4*fm.getValue()), 1.410000, 600);
@@ -49,7 +49,7 @@ public class BellInstrument implements FmInstrument{
 	}
 
 	private AudioBlock buildInstrument()  {
-		FixedADSR env = new FixedADSR(a.getValue(),d.getValue(),0.0f,0.0f,1f);
+		FixedADSR env = new FixedADSR(a.getValue()/STEPS,d.getValue()/STEPS,0.0f,0.0f,1f);
 		
 		try{
 			env.plugin(new Constant((float) 190));
@@ -70,14 +70,13 @@ public class BellInstrument implements FmInstrument{
 
 	@Override
 	public Float phi(Float t) throws RequireAudioBlocksException {
-		// TODO Auto-generated method stub
-		return null;
+		return out.phi(t);
 	}
 
 	@Override
 	public ArrayList<ParameterAudioBlock> getParameters() {
-		// TODO Auto-generated method stub
-		return null;
+		return paramList;
+		
 	}
 	
 
