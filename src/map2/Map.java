@@ -2,7 +2,8 @@ package map2;
 
 import java.util.ArrayList;
 
-import OpenGL.Displayable;
+import views.Displayable;
+
 
 /**
  * Contient toutes les données concernant la map de jeu: map en elle même et
@@ -13,7 +14,7 @@ import OpenGL.Displayable;
  */
 public class Map {
 	private ArrayList<Displayable> listObjects;
-	public static  int width;
+	public static int width;
 	public static int length;
 	
 	public Map(int width,int length) {
@@ -68,5 +69,6 @@ public class Map {
 		
 		return listObjects;
 	}
+
 }
 

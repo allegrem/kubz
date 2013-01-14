@@ -1,181 +1,65 @@
 package map2;
 
-/**
- * Chargement de la carte du jeu a partir d'une lecture de fichier contenant
- * les infos sur les murs et les bases.
- * 
- * @author valeh
- * 
- */
-
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
-import map2.BaseView;
-import map2.WallView;
-import Map.MBox;
+import org.lwjgl.util.Color;
 
+import utilities.Point;
+import views.BaseView;
+import views.CircleMonsterView;
+import views.MonsterView;
+import views.ShapeMonsterView;
+import views.SquareMonsterView;
+import views.WallView;
+
+
+
+/**
+ * Chargement de la carte du jeu a partir d'une lecture de fichier contenant
+ * les infos sur les murs et les bases et les monstres. A partir de la,la MapCreator 
+ * charge son Map avec ces elements et affiche la carte.
+ * 
+ * @author valeh
+ * 
+ */
 public class MapReader {
 
-	private int height;
-	private int width;
-	private MBox[][] tab;
-	private ArrayList<WallView> wallList = new ArrayList<WallView>();
-	private ArrayList<BaseView> baseList = new ArrayList<BaseView>();
-	private Map mapRead;
+	private Map map;
+	private String bFileName,mFileName,wFileName;
 	
-	
-	/**
-	 * Chargement de la carte de jeu
-	 * 
-	 * @param file
-	 *            fichier de jeu a charger
-	 * @throws Exception
-	 *             Erreur lors de la lecture de la carte
-	 */
-	public MapReader(String file) throws Exception {
-		try {
-			
-			findDimensions(file);
-			tab = new MBox[width][height];
-			initFromFile(file);
-			mapRead = new Map( wallList,new ArrayList<MonsterView>(), baseList,width,height);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+	public MapReader(String bFileName, String mFileName, String wFileName){
+		this.bFileName = bFileName;
+		this.mFileName = mFileName;
+		this.wFileName = wFileName;
 	}
-
-
-	/**
-	 * Chargement des dimensions de la map
-	 * 
-	 * @param file
-	 *            fichier de jeu
-	 * @throws Exception
-	 *             Erreur de lecture du fichier
-	 */
-	private void findDimensions(String file) throws Exception {
+	
+	private void readBases() throws Exception {
 		FileReader fr = null;
 		BufferedReader br = null;
-		String sHeight;
-		String sWidth;
-		try {
-			fr = new FileReader(file);
+		try{
+			fr = new FileReader(bFileName);
 			br = new BufferedReader(fr);
-			sWidth = br.readLine();
-			sHeight = br.readLine();
-			width = Integer.parseInt(sWidth);
-			height = Integer.parseInt(sHeight);
-		} catch (FileNotFoundException e) {
-			throw new FileNotFoundException("Fichier introuvable...");
-		} catch (NumberFormatException e) {
-			throw new NumberFormatException("Format du labyrinthe invalide...");
-		} catch (IOException e) {
-			throw new IOException(
-					"Erreur inconnue lors de la lecture du fichier...");
-		} catch (Exception e) {
-			throw new Exception(
-					"Une erreur inconnue est survenue lors de l'ouverture du fichier...");
-		} finally {
-			if (br != null)
-				try {
-					fr.close();
-				} catch (Exception e) {
-				}
-			
-			if (fr != null)
-				try {
-					br.close();
-				} catch (Exception e) {
-				}
-			
-		}
-
-	}
-
-	/**
-	 * @return hauteur de la map
-	 */
-	public int getHeight() {
-
-		return height;
-	}
-
-	/** 
-	 * @return largeur de la map
-	 */
-	public int getWidth() {
-		return width;
-	}
-
-
-	/**
-	 * 
-	 * 
-	 * @param i
-	 *            position en hauteur
-	 * @param j
-	 *            position en largeur
-	 * @return La case a la position donnee
-	 */
-	public final MBox returnCase(int i, int j) {
-		return tab[i][j];
-
-	}
-
-	/**
-	 * 
-	 * 
-	 * @param fileName1
-	 *            fichier a charger
-	 * @throws Exception 
-	 */
-	public final void initFromFile(String fileName1) throws Exception {
-		FileReader fr = null;
-		BufferedReader br = null;
-		try {
-			fr = new FileReader(fileName1);
-			br = new BufferedReader(fr);
-			br.readLine();
-			br.readLine();  
+			int sBase = Integer.parseInt( br.readLine() );
+			for (int line=0;line<sBase;line++){
+				Scanner sc = new Scanner(br.readLine());
+				sc.useLocale(Locale.US);   //sinon il reconnait pas 12.3 mais 12,3!!!
+				float xCenter = sc.nextFloat();
+				float yCenter = sc.nextFloat();
+				int baseRed = sc.nextInt(), baseGreen = sc.nextInt(), baseBlue = sc.nextInt();
+				int sens = sc.nextInt();			
+				map.add(new BaseView( new Point(xCenter,yCenter) , new Color(baseRed,baseGreen,baseBlue), sens));
+				sc.close();
+			}
 		
-			int sBase = Integer.parseInt( br.readLine() );	
-			//System.out.println(sBase);
-			for (int i=0 ; i<sBase ; i++){
-				Scanner sc = new Scanner(br.readLine());  
-				int xCenter = sc.nextInt();   //On mettra probabalement des floats pour les coords,pour les tests on essaie avec 
-											  //des int pour l'instant
-				//System.out.println(xCenter);
-				int yCenter = sc.nextInt();
-				//baseList.add( new Base( new Point(xCenter,yCenter) ) );
-				sc.close();
-			}
-			
-			int sWall = Integer.parseInt( br.readLine() );			
-			wallList = new ArrayList<WallView> (sWall);
-			for (int i=0 ; i<sWall ; i++){
-				Scanner sc = new Scanner(br.readLine());  
-				float xWall = sc.nextFloat();   
-				float yWall = sc.nextFloat();
-				Point departure = new Point(xWall,yWall);
-				float xWallEnd = sc.nextFloat();
-				float yWallEnd = sc.nextFloat();
-				Point arrival = new Point(xWallEnd,yWallEnd);
-				
-				int tWall = sc.nextInt();
-				wallList.add( new WallView(departure,arrival,tWall,WallView.NORMAL) );
-				sc.close();
-			}
-					
-	} catch (Exception e) { 
-		e.printStackTrace(); 
-	} finally {
+		}catch(Exception e){e.printStackTrace();}
+		finally {
 			if (br != null)
 				try {
 					fr.close();
@@ -189,29 +73,91 @@ public class MapReader {
 			
 		}
 	}
-	public ArrayList<BaseView> getBaseList(){
-		return this.baseList;
-	}
-	public ArrayList<WallView> getWallList(){
-		return this.wallList;
+	
+	private void readMonsters() throws Exception {
+		FileReader fr = null;
+		BufferedReader br = null;
+		try{
+			fr = new FileReader(mFileName);
+			br = new BufferedReader(fr);
+			int sMonster = Integer.parseInt( br.readLine() );
+			for (int line=0;line<sMonster;line++){
+				Scanner sc = new Scanner(br.readLine());
+				sc.useLocale(Locale.US);
+				char type = sc.next().charAt(0); //"convert" to char 
+				float xCenter = sc.nextFloat(), yCenter = sc.nextFloat();
+				System.out.println(xCenter);
+				int red = sc.nextInt(), green = sc.nextInt(), blue = sc.nextInt();
+				switch(type){
+				case 'C':
+					map.add(new CircleMonsterView( new Point(xCenter,yCenter) , new Color(red,green,blue) , map ) );
+				break;
+				case 'T':
+					map.add(new ShapeMonsterView( new Point(xCenter,yCenter) , new Color(red,green,blue) , map ) );
+				break;
+				case 'S':
+					map.add(new SquareMonsterView( new Point(xCenter,yCenter) , new Color(red,green,blue) , map ) );
+				break;
+				default:
+				break;
+				}
+				sc.close();
+			}
+		
+		}catch(Exception e){e.printStackTrace();}
+		finally {
+			if (br != null)
+				try {
+					fr.close();
+				} catch (Exception e) {
+					throw new Exception("Erreur lors de la fermeture du fichier...");}
+			if (fr != null)
+				try {
+					br.close();
+				} catch (Exception e) {
+					throw new Exception("Erreur lors de la fermeture du buffer...");}
+		}
 	}
 	
-
-	/**
-	 * 
-	 * 
-	 * @param newBox
-	 *            Nouvelle case
-	 * @param i
-	 *            position en hauteur de la case à changer
-	 * @param j
-	 *            position en largeur de la case a changer
-	 */
-	public void changeCase(MBox newBox, int i, int j) {
-		tab[i][j] = newBox;
+	private void readWalls() throws Exception {
+		FileReader fr = null;
+		BufferedReader br = null;
+		try{
+			fr = new FileReader(wFileName);
+			br = new BufferedReader(fr);
+			int sWall = Integer.parseInt( br.readLine() );
+			for (int line=0;line<sWall;line++){
+				Scanner sc = new Scanner(br.readLine());
+				sc.useLocale(Locale.US);				
+				float xExtr1 = sc.nextFloat(), yExtr1 = sc.nextFloat();
+				float xExtr2 = sc.nextFloat(), yExtr2 = sc.nextFloat();				
+				int thickness = sc.nextInt();
+				map.add(new WallView( new Point(xExtr1,yExtr1) , new Point(xExtr2,yExtr2), thickness,0));
+				sc.close();
+			}
+		}catch(Exception e){e.printStackTrace();}
+		finally {
+			if (br != null)
+				try {
+					fr.close();
+				} catch (Exception e) {
+					throw new Exception("Erreur lors de la fermeture du fichier...");}
+			if (fr != null)
+				try {
+					br.close();
+				} catch (Exception e) {
+					throw new Exception("Erreur lors de la fermeture du buffer...");}
+		}
 	}
-	public void render(){
-		mapRead.paint();
+	
+	public Map read(Map map) throws Exception{
+		this.map = map;
+		readBases();
+		readMonsters();
+		readWalls();
+		return map;
+		
 	}
+	
 
 }
