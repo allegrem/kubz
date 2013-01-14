@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 import synthesis.AudioBlock;
 import synthesis.basicblocks.noinputblocks.Constant;
+import synthesis.basicblocks.oneinputblocks.FixedADSR;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
 import synthesis.basicblocks.severalinputsblocks.Adder;
 import synthesis.basicblocks.severalinputsblocks.Multiplier;
 import synthesis.exceptions.RequireAudioBlocksException;
+import synthesis.exceptions.TooManyInputsException;
 import synthesis.parameter.ParamBlock;
 import synthesis.parameter.ParameterAudioBlock;
 
@@ -40,23 +42,30 @@ public class BellInstrument implements FmInstrument{
 		ArrayList<ParameterAudioBlock> list = new ArrayList<ParameterAudioBlock>();
 		list.add(fm);
 		//list.add(fp);
-		list.add(amp);
+		list.add(a);
+		list.add(d);
 		
 		return list;
 	}
 
-	private AudioBlock buildInstrument() {
-		SineWaveOscillator osc1 = new SineWaveOscillator(fm, new Multiplier(mod, fm));
+	private AudioBlock buildInstrument()  {
+		FixedADSR env = new FixedADSR(a.getValue(),d.getValue(),0.0f,0.0f,1f);
+		
+		try{
+			env.plugin(new Constant((float) 190));
+		}catch(Exception e){e.printStackTrace();}
+		
+		SineWaveOscillator osc1 = new SineWaveOscillator(fm, env);
 		Adder add = new Adder(fp, osc1);
-		return out = new SineWaveOscillator(add, amp);
+		return out = new SineWaveOscillator(add, env);
 	}
 
 	
 	
 	@Override
 	public Float play(Float t) throws RequireAudioBlocksException {
-		// TODO Auto-generated method stub
-		return null;
+		AudioBlock out = buildInstrument();
+		return out.play(t);
 	}
 
 	@Override
