@@ -523,17 +523,6 @@ public class WallView implements Displayable {
 		
 	}
 
-	@Override
-	public int getIndex() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setIndex() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public int getTimeOut() {

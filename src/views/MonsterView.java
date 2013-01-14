@@ -54,7 +54,6 @@ public abstract class MonsterView implements Displayable{
 	}
 
 	public double getX() {
-
 		return position.getX();
 	}
 

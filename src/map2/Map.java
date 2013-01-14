@@ -32,14 +32,6 @@ public class Map {
 
 	}
 	
-	/*
-	 * Classe les objets affichables selon leur index 
-	 * (profondeur d'affichage);
-	 */
-	public void Sort(){
-		
-		
-	}
 
 	public Displayable add(Displayable object){
 		listObjects.add(object);
