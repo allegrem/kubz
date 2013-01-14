@@ -42,8 +42,9 @@ public class SquareMonsterView extends MonsterView {
 		GL11.glNormal3f(-1.0f, 0, 0);
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()-MonsterView.size/2, 0);
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()-MonsterView.size/2, MonsterView.height);
-		glVertex3d(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, MonsterView.height);
+		glVertex3d(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
+		
 		
 		GL11.glNormal3f(0, 1.0f, 0);
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
@@ -63,7 +64,7 @@ public class SquareMonsterView extends MonsterView {
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()-MonsterView.size/2, MonsterView.height);
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()-MonsterView.size/2, 0);
 
-		GL11.glNormal3f(0, 0, -1.0f);
+		GL11.glNormal3f(0, 0, 1.0f);
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()-MonsterView.size/2, MonsterView.height);
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()-MonsterView.size/2, MonsterView.height);
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, MonsterView.height);

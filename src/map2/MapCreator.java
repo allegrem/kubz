@@ -416,7 +416,7 @@ public class MapCreator {
 			GLU.gluPerspective(45.0f, display_width / display_height, 1.0f,
 					10000.0f);
 		else
-			glOrtho(0, display_width, display_height, 0, -100, 0);
+			glOrtho(0, display_width, display_height, 0, -1000, 1000);
 		
 		
 		/*
@@ -463,15 +463,16 @@ public class MapCreator {
 			glEnable(GL11.GL_LIGHTING);
 			glEnable(GL11.GL_LIGHT0);
 			GL11.glColorMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_AMBIENT_AND_DIFFUSE);
-			GL11.glLightModeli(GL11.GL_LIGHT_MODEL_TWO_SIDE,GL11.GL_TRUE);
+			GL11.glLightModel(GL11.GL_LIGHT_MODEL_AMBIENT,MyFloatBuffer.newFloatBuffer4(0.6f,0.6f,0.6f,1.0f));
+			//GL11.glLightModeli(GL11.GL_LIGHT_MODEL_TWO_SIDE,GL11.GL_TRUE);
 			glMatrixMode(GL_MODELVIEW);
 			GL11.glTranslated(display_width / 2, display_height / 2, 0);
 			GL11.glRotated(angle, 0, 0, 1);
 			GL11.glTranslated(-display_width / 2, -display_height / 2, 0);
 			ByteBuffer temp1 = ByteBuffer.allocateDirect(16);
 			temp1.order(ByteOrder.nativeOrder());
-			GL11.glLight(GL11.GL_LIGHT0,GL11.GL_POSITION,MyFloatBuffer.newFloatBuffer(1,1/2,1/2,0));
-			//GL11.glLight(GL11.GL_LIGHT0,GL11.GL_SPOT_DIRECTION,MyFloatBuffer.newFloatBuffer(0,0,-1,0));
+			GL11.glLight(GL11.GL_LIGHT0,GL11.GL_POSITION,MyFloatBuffer.newFloatBuffer4(0.0f,0.0f,50.0f,1.0f));
+			GL11.glLight(GL11.GL_LIGHT0,GL11.GL_SPOT_DIRECTION,MyFloatBuffer.newFloatBuffer4(display_width/2,display_height/2,0,0));
 			GL11.glTranslated(display_width / 2, display_height / 2, 0);
 			GL11.glRotated(-angle, 0, 0, 1);
 			GL11.glTranslated(-display_width / 2, -display_height / 2, 0);
