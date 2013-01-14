@@ -29,7 +29,7 @@ public class BellInstrument implements FmInstrument{
 	public BellInstrument() {
 		//super();
 		
-		fm = new ParamBlock("fm", 200, 700, 280);
+		fm = new ParamBlock("fm", 70, 500, 280);
 		//fp = new ParamBlock("fp", (int) (1.4*fm.getValue()), 1.410000, 600);
 		fp = new Constant((float) ((1/Math.sqrt(2))*fm.getValue()));
 		a = new ParamBlock("a", 0, 50, 2);

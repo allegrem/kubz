@@ -37,7 +37,7 @@ public class MainFmInstrTest {
 		AudioBlock out = swoOut;*/
 		FixedADSR env = new FixedADSR(0.002f,0.998f,0.0f,0.0f,1f);
 		try {
-			env.plugin(new Constant((float) 100));
+			env.plugin(new Constant((float) 190));
 		} catch (TooManyInputsException e) {
 			e.printStackTrace();
 		}

@@ -50,8 +50,8 @@ public class SLWindow {
 				try {
 					SLWindow window = new SLWindow();
 					window.frmSoundlab.setVisible(true);
-					window.setInstrument(new TwoOscFmInstrument());
-					//window.setInstrument(new BellInstrument());
+					//window.setInstrument(new TwoOscFmInstrument());
+					window.setInstrument(new BellInstrument());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

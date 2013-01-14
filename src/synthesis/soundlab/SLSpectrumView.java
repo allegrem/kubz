@@ -59,7 +59,7 @@ public class SLSpectrumView extends JPanel {
 			FastFourierTransformer fourier = new FastFourierTransformer();
 			Complex[] result = fourier.transform(sound);
 			//never ask me why it works, i dont know!!
-			for (int x = 0; x < result.length; x++) {
+			for (int x = 0; x < result.length/4; x++) {
 				int x_coord = x * X_SIZE *4 / result.length;
 				g.drawLine(x_coord, Y_SIZE, x_coord,
 						(int) (Y_SIZE - Math.abs(Math.log10(0.0001 + result[x].abs())) * Y_SIZE / 7));
