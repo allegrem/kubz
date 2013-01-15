@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import map2.Map;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.ReadableColor;
 import org.newdawn.slick.Color;
 
 import utilities.Point;
@@ -23,7 +24,7 @@ import OpenGL.Textures;
  * @author paul
  * 
  */
-public class WallView implements DisplayableFather{
+public class WallView implements Displayable{
 
 	/*
 	 * Constantes de classe. Servent à définir comment seront tracés les murs:
@@ -513,17 +514,6 @@ public class WallView implements DisplayableFather{
 				+ extremity2.getX() + " " + extremity2.getY() + " " + thickness;
 	}
 
-	@Override
-	public ArrayList<DisplayableChild> getChildren() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void addChild(DisplayableChild object) {
-		// TODO Auto-generated method stub
-		
-	}
 
 
 	@Override
@@ -545,21 +535,9 @@ public class WallView implements DisplayableFather{
 	}
 
 	@Override
-	public void setColor(org.lwjgl.util.Color color) {
+	public void setColor(ReadableColor color) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public double getX() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double getY() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	

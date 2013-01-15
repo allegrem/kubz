@@ -34,6 +34,7 @@ public class CircleMonsterView extends MonsterView {
 		GL11.glTranslated(getX(), getY(), 0);
 		cylinder.draw((float)(size/2),0,height, 50, 1);
 		GL11.glTranslated(-getX(), -getY(), 0);
+		paintChildren();
 	
 	}
 	

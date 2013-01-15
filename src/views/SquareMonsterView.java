@@ -25,6 +25,7 @@ public class SquareMonsterView extends MonsterView {
 
 	public SquareMonsterView(Point position, ReadableColor color,Map map) {
 		super(position, color,map);
+		this.addChild(new AttackCone(30,0,150));
 	}
 
 	@Override
@@ -65,12 +66,17 @@ public class SquareMonsterView extends MonsterView {
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()-MonsterView.size/2, 0);
 
 		GL11.glNormal3f(0, 0, 1.0f);
+		glColor3ub((byte) actualColor.getRed(), (byte) actualColor.getGreen() , (byte) actualColor.getBlue());
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()-MonsterView.size/2, MonsterView.height);
+		glColor3ub((byte) (actualColor.getRed()+50), (byte) (actualColor.getGreen()+50) , (byte) (actualColor.getBlue()+50));
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()-MonsterView.size/2, MonsterView.height);
+		glColor3ub((byte) 255, (byte) 255, (byte) 255);
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, MonsterView.height);
+		glColor3ub((byte) (actualColor.getRed()+50), (byte) (actualColor.getGreen()+50) , (byte) (actualColor.getBlue()+50));
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, MonsterView.height);
 		
 		GL11.glEnd();
+		paintChildren();
 	}
 	
 	@Override
