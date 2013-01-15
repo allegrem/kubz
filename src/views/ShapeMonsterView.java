@@ -84,31 +84,6 @@ public class ShapeMonsterView extends MonsterView {
 		return "T";
 	}
 
-	@Override
-	public Displayable getChildren() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void addChild(Displayable object) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public int getTimeOut() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setTimeOut(int time) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	
 
 }

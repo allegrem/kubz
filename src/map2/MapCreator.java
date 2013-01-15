@@ -48,8 +48,8 @@ public class MapCreator {
 	/*
 	 * Les dimensions de la fenêtre
 	 */
-	public static final int display_width = 640;
-	public static final int display_height = 480;
+	public static final int display_width = 950;
+	public static final int display_height = 700;
 	public static final int create_mode = 0;
 	public static final int read_mode = 1;
 	
@@ -471,7 +471,7 @@ public class MapCreator {
 			GL11.glTranslated(-display_width / 2, -display_height / 2, 0);
 			ByteBuffer temp1 = ByteBuffer.allocateDirect(16);
 			temp1.order(ByteOrder.nativeOrder());
-			GL11.glLight(GL11.GL_LIGHT0,GL11.GL_POSITION,MyFloatBuffer.newFloatBuffer4(0.0f,0.0f,50.0f,1.0f));
+			GL11.glLight(GL11.GL_LIGHT0,GL11.GL_POSITION,MyFloatBuffer.newFloatBuffer4(0.0f,0.0f,20.0f,1.0f));
 			GL11.glLight(GL11.GL_LIGHT0,GL11.GL_SPOT_DIRECTION,MyFloatBuffer.newFloatBuffer4(display_width/2,display_height/2,0,0));
 			GL11.glTranslated(display_width / 2, display_height / 2, 0);
 			GL11.glRotated(-angle, 0, 0, 1);

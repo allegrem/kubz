@@ -5,6 +5,8 @@ import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
+import java.util.ArrayList;
+
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.ReadableColor;
@@ -21,7 +23,7 @@ import OpenGL.Textures;
  * @author paul
  *
  */
-public class BackgroundView implements Displayable{
+public class BackgroundView implements DisplayableFather{
 	private int width;
 	private int length;
 	//private final ReadableColor color= new Color(200,150,50);
@@ -139,7 +141,7 @@ public class BackgroundView implements Displayable{
 
 
 	@Override
-	public Displayable getChildren() {
+	public ArrayList<DisplayableChild> getChildren() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -148,7 +150,7 @@ public class BackgroundView implements Displayable{
 
 
 	@Override
-	public void addChild(Displayable object) {
+	public void addChild(DisplayableChild object) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -196,6 +198,18 @@ public class BackgroundView implements Displayable{
 	public String getCharac() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public double getX() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getY() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 

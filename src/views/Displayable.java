@@ -1,5 +1,7 @@
 package views;
 
+import java.util.ArrayList;
+
 import org.lwjgl.util.Color;
 
 import utilities.Point;
@@ -7,8 +9,6 @@ import utilities.Point;
 
 public interface Displayable {
 	public void paint();
-	public Displayable getChildren();
-	public void addChild(Displayable object);
 	public int getTimeOut();
 	public void setTimeOut(int time);
 	

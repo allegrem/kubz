@@ -4,6 +4,8 @@ import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3ub;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
+import java.util.ArrayList;
+
 import map2.Map;
 
 import org.lwjgl.opengl.GL11;
@@ -19,13 +21,15 @@ import utilities.Point;
  * @author paul
  * 
  */
-public abstract class MonsterView implements Displayable{
+public abstract class MonsterView implements DisplayableFather{
 	protected static final double size= 30;
 	protected static final int height = 30;
 	private Point position;
 	private Map map;
 	private ReadableColor color;
 	protected ReadableColor actualColor;
+	protected ArrayList<DisplayableChild> children= new ArrayList<DisplayableChild>();
+	protected int duration=0;
 
 	public MonsterView(Point position, ReadableColor color,Map map) {
 		this.map=map;
@@ -67,10 +71,7 @@ public abstract class MonsterView implements Displayable{
 	 * affiche l'unité en rouge
 	 * 
 	 */
-	public void unitUntracked() {
-		actualColor = Color.RED;
-
-	}
+	
 
 	/**
 	 * Si le cube est reposé sur la tabe, l'unité reprend sa couleur normale
@@ -79,19 +80,6 @@ public abstract class MonsterView implements Displayable{
 	public void unitTracked() {
 		actualColor = color;
 
-	}
-
-	public void attaque(double angle, double direction, double power){
-		angle*=2*Math.PI/360;
-		direction*=2*Math.PI/360;
-		glBegin(GL11.GL_TRIANGLES);
-		glColor3ub((byte)Color.RED.getRed(),(byte)Color.RED.getGreen(),(byte)Color.RED.getBlue());
-		glVertex3d(position.getX(),position.getY(),height/2);
-		glVertex3d(power*Math.sin(direction+angle)+position.getX(),power*Math.cos(direction+angle)+position.getY(),height/2);
-		glVertex3d(power*Math.sin(-(angle-direction))+position.getX(),power*Math.cos(-(angle-direction))+position.getY(),height/2);
-		GL11.glEnd();
-
-		map.paint();
 	}
 	
 	public boolean isInZone(Point p){
@@ -116,4 +104,28 @@ public abstract class MonsterView implements Displayable{
 		return this.getType()+" "+position.getX()+" "+position.getY()+
 				" "+actualColor.getRed()+" "+actualColor.getGreen()+" "+actualColor.getBlue();
 	}
+
+	@Override
+	public ArrayList<DisplayableChild> getChildren() {
+		return children;
+	}
+
+	@Override
+	public void addChild(DisplayableChild object) {
+		children.add(object);
+		
+	}
+
+	@Override
+	public int getTimeOut() {
+		return duration;
+	}
+
+	@Override
+	public void setTimeOut(int time) {
+		this.duration=time;
+		
+	}
+	
+	
 }

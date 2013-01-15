@@ -5,6 +5,8 @@ import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
+import java.util.ArrayList;
+
 import map2.Map;
 
 import org.lwjgl.opengl.GL11;
@@ -21,7 +23,7 @@ import OpenGL.Textures;
  * @author paul
  * 
  */
-public class WallView implements Displayable {
+public class WallView implements DisplayableFather{
 
 	/*
 	 * Constantes de classe. Servent à définir comment seront tracés les murs:
@@ -512,13 +514,13 @@ public class WallView implements Displayable {
 	}
 
 	@Override
-	public Displayable getChildren() {
+	public ArrayList<DisplayableChild> getChildren() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void addChild(Displayable object) {
+	public void addChild(DisplayableChild object) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -546,6 +548,18 @@ public class WallView implements Displayable {
 	public void setColor(org.lwjgl.util.Color color) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public double getX() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getY() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	

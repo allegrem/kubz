@@ -1,12 +1,14 @@
 package views;
 
 
+import java.util.ArrayList;
+
 import org.lwjgl.util.Color;
 
 import utilities.Point;
 
 
-public class CubeControlledView implements Displayable{
+public class CubeControlledView implements DisplayableFather{
 
 	@Override
 	public void paint() {
@@ -15,16 +17,12 @@ public class CubeControlledView implements Displayable{
 	}
 
 	@Override
-	public Displayable getChildren() {
+	public ArrayList<DisplayableChild> getChildren() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public void addChild(Displayable object) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 
 	@Override
@@ -55,6 +53,24 @@ public class CubeControlledView implements Displayable{
 	public String getCharac() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void addChild(DisplayableChild object) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public double getX() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getY() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

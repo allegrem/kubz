@@ -7,6 +7,8 @@ package views;
 
 
 
+import java.util.ArrayList;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
@@ -16,7 +18,7 @@ import org.lwjgl.util.glu.PartialDisk;
 import utilities.Point;
 
 
-public class BaseView implements Displayable{
+public class BaseView implements DisplayableFather{
 	private PartialDisk disk1 =new PartialDisk();
 	private PartialDisk disk2=new PartialDisk();
 	
@@ -79,13 +81,13 @@ public class BaseView implements Displayable{
 	}
 
 	@Override
-	public Displayable getChildren() {
+	public ArrayList<DisplayableChild> getChildren() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void addChild(Displayable object) {
+	public void addChild(DisplayableChild object) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -101,6 +103,20 @@ public class BaseView implements Displayable{
 	public void setTimeOut(int time) {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+	@Override
+	public double getX() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public double getY() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 
