@@ -21,6 +21,7 @@ public class AttackCone implements DisplayableChild {
 	private double direction;
 	private int power;
 	private int start=0;
+	public ReadableColor color=Color.GREY;
 	
 	public AttackCone(double angle, double direction, int power){
 		this.angle=angle;
@@ -37,14 +38,13 @@ public class AttackCone implements DisplayableChild {
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		int alpha;
 		
-		GL11.glEnable (GL11.GL_BLEND); 
-		GL11.glDepthMask(false);
+		GL11.glEnable (GL11.GL_BLEND);
 		GL11.glEnable(GL11.GL_ALPHA_TEST);    
 		GL11.glBlendFunc (GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glAlphaFunc(GL11.GL_ALWAYS, 1.0f);
+		
 		for(float i=start;i<=(power-5);i+=10){
-		alpha=Math.round((power-i)/power*100);
-		GL11.glColor4b((byte)Color.RED.getRed(),(byte)Color.RED.getGreen(),(byte)Color.RED.getBlue(),(byte)alpha);
+		alpha=Math.round((power-i)/power*255);
+		GL11.glColor4ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue(),(byte)alpha);
 		GL11.glTranslated(father.getX(), father.getY(),MonsterView.height/2 );
 		new PartialDisk().draw((float) i,(float) (i+5), 50,1,(float)(direction-angle/2),(float) angle);
 		GL11.glTranslated(-father.getX(), -father.getY(),-MonsterView.height/2 );
@@ -54,8 +54,6 @@ public class AttackCone implements DisplayableChild {
 		
 		GL11.glDisable (GL11.GL_BLEND); 
 		GL11.glDisable(GL11.GL_ALPHA_TEST);  
-		GL11.glAlphaFunc(GL11.GL_EQUAL, 1.0f);
-		GL11.glDepthMask(true); 
 	}
 
 	public void setDirection( long direction){
@@ -91,7 +89,7 @@ public class AttackCone implements DisplayableChild {
 
 	@Override
 	public void setColor(ReadableColor color) {
-		// TODO Auto-generated method stub
+	this.color=color;
 		
 	}
 
