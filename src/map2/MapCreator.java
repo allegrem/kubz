@@ -83,10 +83,8 @@ public class MapCreator {
 	private boolean aClicked = true;
 	private boolean rClicked = true;
 	private boolean lClicked = true;
-	private boolean rightKey = true;
-	private boolean leftKey = true;
-	private boolean upKey = true;
-	private boolean downKey = true;
+
+
 
 	/*
 	 * map et module d'affichage créés
@@ -226,14 +224,7 @@ public class MapCreator {
 		if (!Keyboard.isKeyDown(Keyboard.KEY_L))
 			lClicked = true;
 		
-		if (!Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
-			rightKey = true;
-		if (!Keyboard.isKeyDown(Keyboard.KEY_LEFT))
-			leftKey = true;
-		if (!Keyboard.isKeyDown(Keyboard.KEY_UP))
-			upKey = true;
-		if (!Keyboard.isKeyDown(Keyboard.KEY_DOWN))
-			downKey =  true;
+
 
 		/*
 		 * Changement de MODE3D
@@ -244,19 +235,19 @@ public class MapCreator {
 			tabClicked = false;
 		}
 		
-		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_LEFT) && leftKey) {
+		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
 			eyeX -= 5;
 			changementMode3D();
 		}
-		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_RIGHT) && rightKey) {
+		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
 			eyeX += 5;
 			changementMode3D();
 		}
-		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_DOWN) && downKey) {
+		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
 			eyeY -= 5;
 			changementMode3D();
 		}
-		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_UP) && upKey) {
+		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_UP)) {
 			eyeY += 5;
 			changementMode3D();
 		}
