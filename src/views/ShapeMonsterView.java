@@ -77,6 +77,7 @@ public class ShapeMonsterView extends MonsterView {
 		glVertex3d(super.getX(), super.getY()-MonsterView.size/2, 0);
 		
 		GL11.glEnd();
+		paintChildren();
 	}
 
 	@Override

@@ -23,7 +23,7 @@ import OpenGL.Textures;
  * @author paul
  *
  */
-public class BackgroundView implements DisplayableFather{
+public class BackgroundView implements Displayable{
 	private int width;
 	private int length;
 	//private final ReadableColor color= new Color(200,150,50);
@@ -136,27 +136,6 @@ public class BackgroundView implements DisplayableFather{
 	
 
 
-
-
-
-	@Override
-	public ArrayList<DisplayableChild> getChildren() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
-
-	@Override
-	public void addChild(DisplayableChild object) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-
 	@Override
 	public int getTimeOut() {
 		// TODO Auto-generated method stub
@@ -185,7 +164,7 @@ public class BackgroundView implements DisplayableFather{
 
 
 	@Override
-	public void setColor(org.lwjgl.util.Color color) {
+	public void setColor(ReadableColor color) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -199,18 +178,7 @@ public class BackgroundView implements DisplayableFather{
 		return null;
 	}
 
-	@Override
-	public double getX() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double getY() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	
 
 
 

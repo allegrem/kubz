@@ -66,21 +66,7 @@ public abstract class MonsterView implements DisplayableFather{
 		return position.getY();
 	}
 
-	/**
-	 * Si le cube n'est plus sur la table et n'est plus repéré par la caméra, on
-	 * affiche l'unité en rouge
-	 * 
-	 */
-	
 
-	/**
-	 * Si le cube est reposé sur la tabe, l'unité reprend sa couleur normale
-	 * 
-	 */
-	public void unitTracked() {
-		actualColor = color;
-
-	}
 	
 	public boolean isInZone(Point p){
 		double x1 = position.getX()-size/2, x2 = position.getX()+size/2;
@@ -97,7 +83,7 @@ public abstract class MonsterView implements DisplayableFather{
 	public ReadableColor getColor(){
 		return actualColor;
 	}
-	public void setColor(Color color){
+	public void setColor(ReadableColor color){
 		this.actualColor = color;
 	}
 	public String getCharac(){
@@ -111,9 +97,14 @@ public abstract class MonsterView implements DisplayableFather{
 	}
 
 	@Override
-	public void addChild(DisplayableChild object) {
-		children.add(object);
+	public void addChild(DisplayableChild child) {
+		children.add(child);
+		child.setFather(this);
 		
+	}
+	
+	public void removeChild(DisplayableChild child){
+		children.remove(child);
 	}
 
 	@Override
@@ -127,5 +118,11 @@ public abstract class MonsterView implements DisplayableFather{
 		
 	}
 	
+	public void paintChildren(){
+		for(DisplayableChild child:children){
+			child.paint();
+			
+		}
+	}
 	
 }
