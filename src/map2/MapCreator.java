@@ -337,24 +337,24 @@ public class MapCreator {
 				
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_B)) {
 				Displayable base;
-				base=map.add(new BaseView(new Point(mouseX, mouseY), Color.PURPLE,BaseView.HAUT));
+				base=map.add(new BaseView(new Point(mouseX, mouseY), Color.LTGREY,BaseView.HAUT));
 				while (Mouse.isButtonDown(0)) {
 					mouseX = Mouse.getX();
 					mouseY = display_height - Mouse.getY();
 					map.remove(base);
 					if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
-						base=map.add(new BaseView(new Point(mouseX, 0), Color.PURPLE,BaseView.HAUT));
+						base=map.add(new BaseView(new Point(mouseX, 0), Color.LTGREY,BaseView.HAUT));
 					} else if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
 						base=map.add(new BaseView(new Point(mouseX, display_height),
-								Color.PURPLE,BaseView.BAS));
+								Color.GREY,BaseView.BAS));
 					} else if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
 						base=map.add(new BaseView(new Point(display_width, mouseY),
-								Color.PURPLE,BaseView.DROITE));
+								Color.LTGREY,BaseView.DROITE));
 					} else if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
-						base=map.add(new BaseView(new Point(0, mouseY), Color.PURPLE,BaseView.GAUCHE));
+						base=map.add(new BaseView(new Point(0, mouseY), Color.LTGREY,BaseView.GAUCHE));
 					} else {
 						base=map.add(new BaseView(new Point(mouseX, mouseY),
-								Color.PURPLE,BaseView.HAUT));
+								Color.LTGREY,BaseView.HAUT));
 					}
 					affichage.clear();
 					render();
@@ -460,16 +460,17 @@ public class MapCreator {
 			/*
 			 * Réglages de l'éclairage
 			 */
+			//reminder : diffuse,specular,ambient,emissive
 			glEnable(GL11.GL_LIGHTING);
-			glEnable(GL11.GL_LIGHT0);
-			GL11.glColorMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_AMBIENT_AND_DIFFUSE);
-			GL11.glLightModel(GL11.GL_LIGHT_MODEL_AMBIENT,MyFloatBuffer.newFloatBuffer4(0.8f,0.8f,0.8f,1.0f));
+			glEnable(GL11.GL_LIGHT0);  //one source of light only
+			GL11.glColorMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_AMBIENT_AND_DIFFUSE);  //which face will reflect light+ambient(lOff) and diffuse(lOn) preferred to have same value
+			GL11.glLightModel(GL11.GL_LIGHT_MODEL_AMBIENT,MyFloatBuffer.newFloatBuffer4(0.6f,0.6f,0.6f,1.0f)); //the amount of global light emitted
 			//GL11.glLightModeli(GL11.GL_LIGHT_MODEL_TWO_SIDE,GL11.GL_TRUE);
 			glMatrixMode(GL_MODELVIEW);
 			GL11.glTranslated(display_width / 2, display_height / 2, 0);
 			GL11.glRotated(angle, 0, 0, 1);
 			GL11.glTranslated(-display_width / 2, -display_height / 2, 0);
-			ByteBuffer temp1 = ByteBuffer.allocateDirect(16);
+			ByteBuffer temp1 = ByteBuffer.allocateDirect(16);  //??the use??
 			temp1.order(ByteOrder.nativeOrder());
 			GL11.glLight(GL11.GL_LIGHT0,GL11.GL_POSITION,MyFloatBuffer.newFloatBuffer4(0.0f,0.0f,20.0f,1.0f));
 			GL11.glLight(GL11.GL_LIGHT0,GL11.GL_SPOT_DIRECTION,MyFloatBuffer.newFloatBuffer4(display_width/2,display_height/2,0,0));
