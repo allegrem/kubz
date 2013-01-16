@@ -6,7 +6,8 @@ package views;
 
 
 
-import map2.Point;
+
+import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
@@ -14,7 +15,8 @@ import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.glu.Disk;
 import org.lwjgl.util.glu.PartialDisk;
 
-import OpenGL.Displayable;
+import utilities.Point;
+
 
 public class BaseView implements Displayable{
 	private PartialDisk disk1 =new PartialDisk();
@@ -66,41 +68,19 @@ public class BaseView implements Displayable{
 		return color;
 	}
 	@Override
-	public void setColor(Color color) {
+	public void setColor(ReadableColor color) {
 		this.color = color;
 		
 	}
 
 	public String getCharac(){
-		ReadableColor color = this.getColor();
+		
 		return center.getX()+" "+center.getY()+
-				"  "+color.getRed()+" "+color.getGreen()+" "+color.getBlue();
+				"  "+color.getRed()+" "+color.getGreen()+" "+color.getBlue()+" "+sens;
 		
 	}
 
-	@Override
-	public Displayable getChildren() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public void addChild(Displayable object) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int getIndex() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setIndex() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public int getTimeOut() {
@@ -113,6 +93,8 @@ public class BaseView implements Displayable{
 		// TODO Auto-generated method stub
 		
 	}
+
+
 
 
 	

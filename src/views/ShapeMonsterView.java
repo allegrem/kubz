@@ -9,7 +9,6 @@ import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 
 import map2.Map;
-import map2.Point;
 
 import org.lwjgl.opengl.GL11;
 
@@ -17,7 +16,10 @@ import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.glu.Cylinder;
 
-import OpenGL.Displayable;
+import utilities.Maths;
+import utilities.Point;
+import utilities.Vector;
+
 /**
  * Une unité en forme de triangle
  * 
@@ -37,23 +39,45 @@ public class ShapeMonsterView extends MonsterView {
 		glColor3ub((byte) actualColor.getRed(), (byte) actualColor.getGreen() , (byte) actualColor.getBlue()); 
 		glBegin(GL11.GL_TRIANGLES);
 		
+		GL11.glNormal3f(0, 0, -1.0f);
 		glVertex3d(super.getX(),super.getY()-MonsterView.size/2, 0);
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
 		
+		
+		Vector vect1= Maths.makeVector(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0.0f,
+				super.getX(), super.getY(), (float)height);
+		Vector vect2= Maths.makeVector(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0.0f,
+				super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2,0.0f);
+		Vector normal=Maths.vect(vect1,vect2);
+		GL11.glNormal3f((float)(normal.getX()), (float)(normal.getY()),(float)( normal.getZ()));
 		glVertex3d(super.getX(),super.getY(),height);
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
 		
+		
+		vect1= Maths.makeVector(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0.0f,
+				super.getX(), super.getY(), (float)height);
+		vect2= Maths.makeVector(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0.0f,
+				super.getX(), super.getY()-MonsterView.size/2,0.0f);
+		normal=Maths.vect(vect2,vect1);
+		GL11.glNormal3f((float)(normal.getX()), (float)(normal.getY()),(float)( normal.getZ()));
 		glVertex3d(super.getX(),super.getY(),height);
 		glVertex3d(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
 		glVertex3d(super.getX(), super.getY()-MonsterView.size/2, 0);
 		
+		
+		vect1= Maths.makeVector(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, 0.0f,
+				super.getX(), super.getY(), (float)height);
+		vect2= Maths.makeVector(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, 0.0f,
+				super.getX(), super.getY()-MonsterView.size/2,0.0f);
+		normal=Maths.vect(vect1,vect2);
 		glVertex3d(super.getX(),super.getY(),height);
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
 		glVertex3d(super.getX(), super.getY()-MonsterView.size/2, 0);
 		
 		GL11.glEnd();
+		paintChildren();
 	}
 
 	@Override
@@ -61,42 +85,8 @@ public class ShapeMonsterView extends MonsterView {
 		return "T";
 	}
 
-	@Override
-	public Displayable getChildren() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void addChild(Displayable object) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int getIndex() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setIndex() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int getTimeOut() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setTimeOut(int time) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
+	//There's a need to have normals (/!\ normalized vectors) for each side to let OpenGL know which direction each side is facing and 
+	//knowing the position of the light, deduce their relative positions (light and face) and render the right 
+	//effect of light on the surface
 
 }

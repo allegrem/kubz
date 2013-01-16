@@ -24,40 +24,52 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.glu.GLU;
 
+import utilities.MyFloatBuffer;
+import utilities.Point;
+import utilities.RandomPerso;
+import views.BackgroundView;
 import views.BaseView;
 import views.CircleMonsterView;
+import views.Displayable;
+import views.MonsterView;
 import views.ShapeMonsterView;
 import views.SquareMonsterView;
 import views.WallView;
 
-import OpenGL.Displayable;
 import OpenGL.GLDisplay;
 
 /**
  * Sert à créer une nouvelle map
  * 
- * @author paul
+ * @author paul&valeh
  * 
  */
 public class MapCreator {
 	/*
 	 * Les dimensions de la fenêtre
 	 */
-	public static final int display_width = 640;
-	public static final int display_height = 480;
-	private float eyeX =0,eyeY = 0,eyeZ=50;
+	public static final int display_width = 950;
+	public static final int display_height = 700;
+	public static final int create_mode = 0;
+	public static final int read_mode = 1;
+	
+	
+	public static String bFileName = "bFile.txt";
+	public static String mFileName = "mFile.txt";
+	public static String wFileName = "WFile.txt";
+	
+	private MapSaver mapSaver = new MapSaver(bFileName,mFileName,wFileName); 
+	
+	private float eyeX =0,eyeY = 0,eyeZ=50; 
+	private float atX=(float)(display_width/2),atY=(float)(display_height/2),atZ=0;
 
 	/*
 	 * La position de la souris dans la fenêtre
 	 */
 	private int mouseX;
 	private int mouseY;
-	/*
-	 * La position de l'éclairage
-	 */
-	private int LightPos[] = { 0,0, 20, 1 };
-	private float Light1Dir[] = { display_width / 2, display_height / 2, 0.0f,
-			0.0f };
+
+
 	private int angle = 0;
 
 	
@@ -79,7 +91,7 @@ public class MapCreator {
 	/*
 	 * map et module d'affichage créés
 	 */
-	private Map map;
+	private Map map  = new Map(display_width, display_height);
 	private GLDisplay affichage;
 
 	
@@ -103,37 +115,63 @@ public class MapCreator {
 	 */
 	private boolean light = false;
 
-	public MapCreator() {
+	public MapCreator(int mode) {
 
 		/*
 		 * Création du module d'affichage et de la map
 		 */
-		map = new Map(display_width, display_height);
-		affichage = new GLDisplay(display_width, display_height,map,this);
+		if (mode == 0){
+		
+		affichage = new GLDisplay(display_width, display_height,map,this); //on initilaise avec un map par defaut et
+																		   //pour le MapReader on remplace le par d�faut				
 		RandomPerso.initialize();
-		map.add(new BackgroundView(display_width, display_height));
+		BackgroundView background = new BackgroundView(display_width, display_height); 
+		map.add(background);
 		affichage.start();
-
 		/*
 		 * Initilaisation du générateur de nombres aléatoires
 		 */
 	
 		while (affichage.isAlive()) {
+
+
+			background.change();
+
 			
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				
 			}
 		}
+		mapSaver.saveToFile(map); //save Map
+	}
+		else {
+			affichage = new GLDisplay(display_width, display_height,map,this); 			
+			RandomPerso.initialize();
+			map.add(new BackgroundView(display_width, display_height));
+			MapReader mapReader = new MapReader(bFileName,mFileName,wFileName);
+			try {
+				map = mapReader.read(map);
+			}catch(Exception e){e.printStackTrace();}
+			affichage.start();
 
+			/*
+			* Initilaisation du générateur de nombres aléatoires
+			*/
 
-		/*
-		 * Enregistrement de la map dans un fichier
-		 */
-		saveToFile();
+			while (affichage.isAlive()) {
+			try {
+				Thread.sleep(1000);
+				} catch (InterruptedException e) {}
+			
+			}
+			mapSaver.saveToFile(map); //save Map
 
 	}
+		
+}
+	
 	
 	public  void compute(){
 		
@@ -255,7 +293,16 @@ public class MapCreator {
 		 * Wall ou B pour Base
 		 */
 		if (Mouse.isButtonDown(1) && rightClicked) {
-			map.removeLast();
+			Point mousePoint1 = new Point(mouseX, mouseY);
+			ArrayList<Displayable> removables=new ArrayList<Displayable>();
+			for (Displayable object : map.getObjects()) {
+				if (object.isInZone(mousePoint1)) {
+					removables.add(object);
+				}
+			}
+			for(Displayable object: removables){
+				map.remove(object);
+			}
 			rightClicked = false;
 		
 		}
@@ -301,24 +348,24 @@ public class MapCreator {
 				
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_B)) {
 				Displayable base;
-				base=map.add(new BaseView(new Point(mouseX, mouseY), Color.PURPLE,BaseView.HAUT));
+				base=map.add(new BaseView(new Point(mouseX, mouseY), Color.LTGREY,BaseView.HAUT));
 				while (Mouse.isButtonDown(0)) {
 					mouseX = Mouse.getX();
 					mouseY = display_height - Mouse.getY();
 					map.remove(base);
 					if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
-						base=map.add(new BaseView(new Point(mouseX, 0), Color.PURPLE,BaseView.HAUT));
+						base=map.add(new BaseView(new Point(mouseX, 0), Color.LTGREY,BaseView.HAUT));
 					} else if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
 						base=map.add(new BaseView(new Point(mouseX, display_height),
-								Color.PURPLE,BaseView.BAS));
+								Color.GREY,BaseView.BAS));
 					} else if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
 						base=map.add(new BaseView(new Point(display_width, mouseY),
-								Color.PURPLE,BaseView.DROITE));
+								Color.LTGREY,BaseView.DROITE));
 					} else if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
-						base=map.add(new BaseView(new Point(0, mouseY), Color.PURPLE,BaseView.GAUCHE));
+						base=map.add(new BaseView(new Point(0, mouseY), Color.LTGREY,BaseView.GAUCHE));
 					} else {
 						base=map.add(new BaseView(new Point(mouseX, mouseY),
-								Color.PURPLE,BaseView.HAUT));
+								Color.LTGREY,BaseView.HAUT));
 					}
 					affichage.clear();
 					render();
@@ -366,97 +413,9 @@ public class MapCreator {
 
 	}
 
-	/**
-	 * Effectue l'enregistrement des murs dans un fichier
-	 * 
-	 * @param wFileName
-	 *            fichier d'enregistrement
-	 */
-	private  void saveWallsToFile(String wFileName) {
-		PrintWriter pw = null;
-		try {
-			pw = new PrintWriter(wFileName);
-			pw.print(walls.size());
-			pw.println();
-			for (WallView wall : walls) {
-				pw.print(wall.getCharac());
-				pw.println();
-			}
-		} catch (Exception e) {
-			System.out.println("ERROR");
-		} finally {
-			if (pw != null) {
-				try {
-					pw.close();
-				} catch (Exception e) {
-				}
-			}
-		}
-	}
-
-	/**
-	 * Effectue l'enregistrement des Bases dans un fichier
-	 * 
-	 * @param wFileName
-	 *            fichier d'enregistrement
-	 */
-	private  void saveBasesToFile(String bFileName) {
-		PrintWriter pw = null;
-		try {
-			pw = new PrintWriter(bFileName);
-			pw.print(bases.size());
-			pw.println();
-			for (BaseView base : bases) {
-				pw.print(base.getCharac());
-				pw.println();
-			}
-		} catch (Exception e) {
-			System.out.println("ERROR");
-		} finally {
-			if (pw != null) {
-				try {
-					pw.close();
-				} catch (Exception e) {
-				}
-			}
-		}
-	}
-
-	/**
-	 * Effectue l'enregistrement des Unités dans un fichier
-	 * 
-	 * @param wFileName
-	 *            fichier d'enregistrement
-	 */
-	private  void saveUnitsToFile(String bFileName) {
-		PrintWriter pw = null;
-		try {
-			pw = new PrintWriter(bFileName);
-			for (Displayable object : units.getObjects()) {
-				pw.print(object.getCharac());
-				pw.println();
-			}
-		} catch (Exception e) {
-			System.out.println("ERROR");
-		} finally {
-			if (pw != null) {
-				try {
-					pw.close();
-				} catch (Exception e) {
-				}
-			}
-		}
-	}
-
-	/*
-	 * Sauvegarde toutes les Arraylists d'objets dans leur fichier respectif
-	 */
-	private  void saveToFile() {
-		saveWallsToFile("wFile.txt");
-		saveBasesToFile("bFile.txt");
-		saveUnitsToFile("uFile.txt");
-	}
-
+	//ici
+	 
+	
 	public  void changementMode3D() {
 		/*
 		 * Matrice de projection (3D vers 2D): utilisation d'une projection
@@ -468,7 +427,7 @@ public class MapCreator {
 			GLU.gluPerspective(45.0f, display_width / display_height, 1.0f,
 					10000.0f);
 		else
-			glOrtho(0, display_width, display_height, 0, -100, 0);
+			glOrtho(0, display_width, display_height, 0, -1000, 1000);
 		
 		
 		/*
@@ -481,15 +440,15 @@ public class MapCreator {
 		if (MODE3D) {
 			//positionnement de la camera
 			GLU.gluLookAt(eyeX, eyeY,
-					(float) eyeZ, (float) display_width / 2,
-					(float) display_height / 2, (float) 0, 0, 0	, 1);
+					(float) eyeZ, atX,
+					atY, atZ, 0, 0	, 1);
 		}
 		
 	}
 
 	public  void rotate() {
 		/*
-		 * Sert à faire tourner la carte sur elle-même
+		 * Sert à faire tourner la carte sur elle-même 
 		 */
 		GL11.glTranslatef(display_width / 2, display_height / 2, 0);
 		GL11.glRotated(0.1, 0, 0, 1);
@@ -506,27 +465,26 @@ public class MapCreator {
 		}
 	}
 
-	private  void eclairage() {
+	public  void eclairage() {
 		if (light) {
 
 			/*
 			 * Réglages de l'éclairage
 			 */
+			//reminder : diffuse,specular,ambient,emissive
 			glEnable(GL11.GL_LIGHTING);
-			glEnable(GL11.GL_LIGHT0);
+			glEnable(GL11.GL_LIGHT0);  //one source of light only
+			GL11.glColorMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_AMBIENT_AND_DIFFUSE);  //which face will reflect light+ambient(lOff) and diffuse(lOn) preferred to have same value
+			GL11.glLightModel(GL11.GL_LIGHT_MODEL_AMBIENT,MyFloatBuffer.newFloatBuffer4(0.6f,0.6f,0.6f,1.0f)); //the amount of global light emitted
+			//GL11.glLightModeli(GL11.GL_LIGHT_MODEL_TWO_SIDE,GL11.GL_TRUE);
 			glMatrixMode(GL_MODELVIEW);
 			GL11.glTranslated(display_width / 2, display_height / 2, 0);
 			GL11.glRotated(angle, 0, 0, 1);
 			GL11.glTranslated(-display_width / 2, -display_height / 2, 0);
-			ByteBuffer temp1 = ByteBuffer.allocateDirect(16);
+			ByteBuffer temp1 = ByteBuffer.allocateDirect(16);  //??the use??
 			temp1.order(ByteOrder.nativeOrder());
-			GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, (IntBuffer) temp1
-					.asIntBuffer().put(LightPos).flip());
-			GL11.glLighti(GL11.GL_LIGHT0, GL11.GL_SPOT_CUTOFF, 120);
-			ByteBuffer temp2 = ByteBuffer.allocateDirect(16);
-			temp2.order(ByteOrder.nativeOrder());
-			GL11.glLight(GL11.GL_LIGHT0, GL11.GL_SPOT_DIRECTION,
-					(FloatBuffer) temp2.asFloatBuffer().put(Light1Dir).flip());
+			GL11.glLight(GL11.GL_LIGHT0,GL11.GL_POSITION,MyFloatBuffer.newFloatBuffer4(0.0f,0.0f,20.0f,1.0f));
+			GL11.glLight(GL11.GL_LIGHT0,GL11.GL_SPOT_DIRECTION,MyFloatBuffer.newFloatBuffer4(display_width/2,display_height/2,0,0));
 			GL11.glTranslated(display_width / 2, display_height / 2, 0);
 			GL11.glRotated(-angle, 0, 0, 1);
 			GL11.glTranslated(-display_width / 2, -display_height / 2, 0);

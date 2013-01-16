@@ -5,14 +5,19 @@ import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
+import java.util.ArrayList;
+
 import map2.Map;
-import map2.Point;
-import map2.RandomPerso;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.ReadableColor;
 import org.newdawn.slick.Color;
 
-import OpenGL.Displayable;
+import utilities.Maths;
+import utilities.Point;
+import utilities.RandomPerso;
+import utilities.Vector;
+
 import OpenGL.Textures;
 
 /**
@@ -21,7 +26,7 @@ import OpenGL.Textures;
  * @author paul
  * 
  */
-public class WallView implements Displayable {
+public class WallView implements Displayable{
 
 	/*
 	 * Constantes de classe. Servent à définir comment seront tracés les murs:
@@ -299,6 +304,12 @@ public class WallView implements Displayable {
 		/*
 		 * Tracé d'une extrémité du mur
 		 */
+		Vector vect1= Maths.makeVector(sommets[0].getX(), sommets[0].getY(), height,
+				sommets[0].getX(), sommets[0].getY(), 0);
+		Vector vect2= Maths.makeVector(sommets[1].getX(), sommets[1].getY(), 0,
+				sommets[1].getX(), sommets[1].getY(), 0);   //CCW/CW??
+		Vector normal=Maths.vect(vect1,vect2);
+		GL11.glNormal3f((float)(normal.getX()), (float)(normal.getY()),(float)( normal.getZ()));  //set the normal vector for this face
 		glVertex3d(sommets[0].getX(), sommets[0].getY(), 0);
 		GL11.glTexCoord2f(1, 0);
 		glVertex3d(sommets[1].getX(), sommets[1].getY(), 0);
@@ -306,7 +317,8 @@ public class WallView implements Displayable {
 		glVertex3d(sommets[1].getX(), sommets[1].getY(), height);
 		GL11.glTexCoord2f(0, 1);
 		glVertex3d(sommets[0].getX(), sommets[0].getY(), height);
-
+		
+		GL11.glNormal3f(0.0f, 0.0f, 1.0f);
 		GL11.glTexCoord2f(0, 0);
 		glVertex3d(sommets[0].getX(), sommets[0].getY(), height);
 		GL11.glTexCoord2f(nbre, 0);
@@ -315,7 +327,13 @@ public class WallView implements Displayable {
 		glVertex3d(sommets[2].getX(), sommets[2].getY(), height);
 		GL11.glTexCoord2f(0, nbre);
 		glVertex3d(sommets[3].getX(), sommets[3].getY(), height);
-
+		
+		vect1= Maths.makeVector(sommets[3].getX(), sommets[3].getY(), height,
+				sommets[3].getX(), sommets[3].getY(), 0);
+		vect2= Maths.makeVector(sommets[2].getX(), sommets[2].getY(), 0,
+				sommets[3].getX(), sommets[3].getY(), 0);
+		normal=Maths.vect(vect1,vect2);
+		GL11.glNormal3f((float)(normal.getX()), (float)(normal.getY()),(float)( normal.getZ())); 
 		GL11.glTexCoord2f(0, 0);
 		glVertex3d(sommets[3].getX(), sommets[3].getY(), height);
 		GL11.glTexCoord2f(1, 0);
@@ -324,7 +342,8 @@ public class WallView implements Displayable {
 		glVertex3d(sommets[2].getX(), sommets[2].getY(), 0);
 		GL11.glTexCoord2f(0, 1);
 		glVertex3d(sommets[3].getX(), sommets[3].getY(), 0);
-
+		
+		GL11.glNormal3f(0.0f, 0.0f, -1.0f);
 		GL11.glTexCoord2f(0, 0);
 		glVertex3d(sommets[3].getX(), sommets[3].getY(), 0);
 		GL11.glTexCoord2f(0, nbre);
@@ -334,6 +353,12 @@ public class WallView implements Displayable {
 		GL11.glTexCoord2f(0, nbre);
 		glVertex3d(sommets[1].getX(), sommets[1].getY(), 0);
 
+		vect1= Maths.makeVector(sommets[1].getX(), sommets[1].getY(), height,
+				sommets[1].getX(), sommets[1].getY(), 0);
+		vect2= Maths.makeVector(sommets[3].getX(), sommets[3].getY(), 0,
+				sommets[1].getX(), sommets[1].getY(), 0);
+		normal=Maths.vect(vect1,vect2);
+		GL11.glNormal3f((float)(normal.getX()), (float)(normal.getY()),(float)( normal.getZ())); 
 		GL11.glTexCoord2f(0, 0);
 		glVertex3d(sommets[1].getX(), sommets[1].getY(), 0);
 		GL11.glTexCoord2f(0, 1);
@@ -342,7 +367,13 @@ public class WallView implements Displayable {
 		glVertex3d(sommets[3].getX(), sommets[3].getY(), height);
 		GL11.glTexCoord2f(0, 1);
 		glVertex3d(sommets[3].getX(), sommets[3].getY(), 0);
-
+		
+		vect1= Maths.makeVector(sommets[0].getX(), sommets[0].getY(), height,
+				sommets[0].getX(), sommets[0].getY(), 0);
+		vect2= Maths.makeVector(sommets[2].getX(), sommets[2].getY(), 0,
+				sommets[0].getX(), sommets[0].getY(), 0);
+		normal=Maths.vect(vect1,vect2);
+		GL11.glNormal3f((float)(normal.getX()), (float)(normal.getY()),(float)( normal.getZ())); 
 		GL11.glTexCoord2f(0, 0);
 		glVertex3d(sommets[0].getX(), sommets[0].getY(), 0);
 		GL11.glTexCoord2f(0, 1);
@@ -511,29 +542,7 @@ public class WallView implements Displayable {
 				+ extremity2.getX() + " " + extremity2.getY() + " " + thickness;
 	}
 
-	@Override
-	public Displayable getChildren() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public void addChild(Displayable object) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int getIndex() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setIndex() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public int getTimeOut() {
@@ -549,12 +558,12 @@ public class WallView implements Displayable {
 
 	@Override
 	public boolean isInZone(Point mousePoint) {
-		// TODO Auto-generated method stub
+		// Valeh le fait !
 		return false;
 	}
 
 	@Override
-	public void setColor(org.lwjgl.util.Color color) {
+	public void setColor(ReadableColor color) {
 		// TODO Auto-generated method stub
 		
 	}

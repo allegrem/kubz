@@ -2,7 +2,8 @@ package map2;
 
 import java.util.ArrayList;
 
-import OpenGL.Displayable;
+import views.Displayable;
+
 
 /**
  * Contient toutes les données concernant la map de jeu: map en elle même et
@@ -31,31 +32,35 @@ public class Map {
 
 	}
 	
-	/*
-	 * Classe les objets affichables selon leur index 
-	 * (profondeur d'affichage);
-	 */
-	public void Sort(){
-		
-		
-	}
 
 	public Displayable add(Displayable object){
 		listObjects.add(object);
 		return object;
 	}
 	
-	public void remove(Displayable object){
+	public Displayable remove(Displayable object){
+		if (listObjects.size()>1){
 		listObjects.remove(object);
+		return object;
+		}else{
+			return null;
+		}
 	}
 
-	public void removeLast(){
-		listObjects.remove(listObjects.size()-1);
+	public int removeLast(){
+		
+		if (listObjects.size()>1){
+			listObjects.remove(listObjects.size()-1);
+			return listObjects.size();
+			}else{
+				return -1;
+			}
 	}
 	
 	public ArrayList<Displayable> getObjects(){
 		
 		return listObjects;
 	}
+
 }
 
