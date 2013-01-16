@@ -558,7 +558,7 @@ public class WallView implements Displayable{
 
 	@Override
 	public boolean isInZone(Point mousePoint) {
-		// TODO Auto-generated method stub
+		// Valeh le fait !
 		return false;
 	}
 

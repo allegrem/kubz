@@ -132,7 +132,9 @@ public class MapCreator {
 	
 		while (affichage.isAlive()) {
 
+
 			background.change();
+
 			
 			try {
 				Thread.sleep(100);
@@ -282,7 +284,16 @@ public class MapCreator {
 		 * Wall ou B pour Base
 		 */
 		if (Mouse.isButtonDown(1) && rightClicked) {
-				map.removeLast();
+			Point mousePoint1 = new Point(mouseX, mouseY);
+			ArrayList<Displayable> removables=new ArrayList<Displayable>();
+			for (Displayable object : map.getObjects()) {
+				if (object.isInZone(mousePoint1)) {
+					removables.add(object);
+				}
+			}
+			for(Displayable object: removables){
+				map.remove(object);
+			}
 			rightClicked = false;
 		
 		}

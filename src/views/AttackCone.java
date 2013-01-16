@@ -21,7 +21,9 @@ public class AttackCone implements DisplayableChild {
 	private double direction;
 	private int power;
 	private int start=0;
-	public ReadableColor color=Color.GREY;
+	private ReadableColor color=Color.GREY;
+	private long pause=30;
+	private long startingTime=0;
 	
 	public AttackCone(double angle, double direction, int power){
 		this.angle=angle;
@@ -49,9 +51,12 @@ public class AttackCone implements DisplayableChild {
 		new PartialDisk().draw((float) i,(float) (i+5), 50,1,(float)(direction-angle/2),(float) angle);
 		GL11.glTranslated(-father.getX(), -father.getY(),-MonsterView.height/2 );
 		}
+		
+		if(System.currentTimeMillis()-startingTime>pause){
 		start++;
 		start %=10;
-		
+		startingTime=System.currentTimeMillis();
+		}
 		GL11.glDisable (GL11.GL_BLEND); 
 		GL11.glDisable(GL11.GL_ALPHA_TEST);  
 	}
