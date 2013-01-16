@@ -13,6 +13,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.ReadableColor;
 import org.newdawn.slick.Color;
 
+import utilities.Distance;
 import utilities.Maths;
 import utilities.Point;
 import utilities.RandomPerso;
@@ -558,11 +559,23 @@ public class WallView implements Displayable{
 
 	@Override
 	public boolean isInZone(Point mousePoint) {
-		// Valeh le fait !
+		Point extremity1invthick = new Point(extremity1.getX()+thickness/2,extremity1.getY()+thickness/2);
+		Point extremity1thick = new Point(extremity1.getX()-thickness/2,extremity1.getY()-thickness/2);
+		
+		Point extremity2thick = new Point(extremity2.getX()+thickness,extremity2.getY()+thickness);
+		Point extremity2invthick = new Point(extremity2.getX()-thickness/2,extremity2.getY()-thickness/2);
+		
+		if (Distance.distanceToLine(mousePoint, extremity1invthick, extremity2invthick)<= thickness && 
+				Distance.distanceToLine(mousePoint, extremity1thick, extremity2thick) <= thickness)
+			{
+			System.out.println("sehgj");
+			return true;
+			}
+		
 		return false;
 	}
 
-	@Override
+ 	@Override
 	public void setColor(ReadableColor color) {
 		// TODO Auto-generated method stub
 		

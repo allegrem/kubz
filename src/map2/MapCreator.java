@@ -369,20 +369,20 @@ public class MapCreator {
 				int imouseX = mouseX;
 				int iy = mouseY;
 				keyboard=map.add(new WallView(new Point(imouseX, iy), new Point(
-						mouseX + 1, mouseY + 1), 15, WallView.NORMAL));
+						mouseX + 1, mouseY + 1), 75, WallView.NORMAL));
 				while (Mouse.isButtonDown(0)) {
 					mouseX = Mouse.getX();
 					mouseY = display_height - Mouse.getY();
 					map.remove(keyboard);
 					if (Keyboard.isKeyDown(Keyboard.KEY_H)) {
 						keyboard=map.add(new WallView(new Point(imouseX, iy),
-								new Point(mouseX, mouseY), 15, WallView.HORIZONTAL));
+								new Point(mouseX, mouseY), 75, WallView.HORIZONTAL));
 					} else if (Keyboard.isKeyDown(Keyboard.KEY_V)) {
 						keyboard=map.add( new WallView(new Point(imouseX, iy),
-								new Point(mouseX, mouseY), 15, WallView.VERTICAL));
+								new Point(mouseX, mouseY), 75, WallView.VERTICAL));
 					} else {
 						keyboard=map.add(new WallView(new Point(imouseX, iy),
-								new Point(mouseX, mouseY), 15, WallView.NORMAL));
+								new Point(mouseX, mouseY), 75, WallView.NORMAL));
 					}
 					affichage.clear();
 					render();
