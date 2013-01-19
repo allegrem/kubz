@@ -3,6 +3,7 @@ package map2;
 import java.util.ArrayList;
 
 import views.Displayable;
+import views.DisplayableFather;
 
 
 /**
@@ -13,19 +14,21 @@ import views.Displayable;
  * 
  */
 public class Map {
-	private ArrayList<Displayable> listObjects;
+	private ArrayList<DisplayableFather> listObjects;
 	public static int width;
 	public static int length;
+	private static Map map=null;
 	
 	public Map(int width,int length) {
-		listObjects=new ArrayList<Displayable>();
+		listObjects=new ArrayList<DisplayableFather>();
 		this.width = width;
 		this.length = length;
+		map=this;
 	}
 
 
 	public void paint() {
-		for(Displayable object: listObjects){
+		for(DisplayableFather object: listObjects){
 			object.paint();
 			
 		}
@@ -33,12 +36,12 @@ public class Map {
 	}
 	
 
-	public Displayable add(Displayable object){
+	public DisplayableFather add(DisplayableFather object){
 		listObjects.add(object);
 		return object;
 	}
 	
-	public Displayable remove(Displayable object){
+	public DisplayableFather remove(DisplayableFather object){
 		if (listObjects.size()>1){
 		listObjects.remove(object);
 		return object;
@@ -57,9 +60,12 @@ public class Map {
 			}
 	}
 	
-	public ArrayList<Displayable> getObjects(){
-		
+	public ArrayList<DisplayableFather> getObjects(){
 		return listObjects;
+	}
+	
+	public static Map getMap(){
+		return map;
 	}
 
 }

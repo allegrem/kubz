@@ -118,4 +118,10 @@ public class CubeControlledView implements DisplayableFather{
 			child.paint();
 		}
 	}
+
+	@Override
+	public boolean collisionCanOccure(Point point, float taille) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

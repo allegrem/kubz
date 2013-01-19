@@ -31,6 +31,7 @@ import views.BackgroundView;
 import views.BaseView;
 import views.CircleMonsterView;
 import views.Displayable;
+import views.DisplayableFather;
 import views.MonsterView;
 import views.ShapeMonsterView;
 import views.SquareMonsterView;
@@ -322,21 +323,19 @@ public class MapCreator {
 		 */
 		if (Mouse.isButtonDown(0) && leftClicked) {
 			if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
-				map.add(new SquareMonsterView(new Point(mouseX, mouseY), Color.BLUE,
-						map));
+				map.add(new SquareMonsterView(new Point(mouseX, mouseY), Color.BLUE));
 				
 			}
 
 			else if (Keyboard.isKeyDown(Keyboard.KEY_T)) {
-				map.add(new ShapeMonsterView(new Point(mouseX, mouseY), Color.GREEN,
-						map));
+				map.add(new ShapeMonsterView(new Point(mouseX, mouseY), Color.GREEN));
 		
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_C)) {
 				map.add(new CircleMonsterView(new Point(mouseX, mouseY),
-						Color.YELLOW, map));
+						Color.YELLOW));
 				
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_B)) {
-				Displayable base;
+				DisplayableFather base;
 				base=map.add(new BaseView(new Point(mouseX, mouseY), Color.PURPLE,BaseView.HAUT));
 				while (Mouse.isButtonDown(0)) {
 					mouseX = Mouse.getX();
@@ -363,7 +362,7 @@ public class MapCreator {
 					Mouse.poll();
 				}
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
-				Displayable keyboard;
+				DisplayableFather keyboard;
 				int imouseX = mouseX;
 				int iy = mouseY;
 				keyboard=map.add(new WallView(new Point(imouseX, iy), new Point(

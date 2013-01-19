@@ -90,13 +90,13 @@ public class MapReader {
 				int red = sc.nextInt(), green = sc.nextInt(), blue = sc.nextInt();
 				switch(type){
 				case 'C':
-					map.add(new CircleMonsterView( new Point(xCenter,yCenter) , new Color(red,green,blue) , map ) );
+					map.add(new CircleMonsterView( new Point(xCenter,yCenter) , new Color(red,green,blue) ) );
 				break;
 				case 'T':
-					map.add(new ShapeMonsterView( new Point(xCenter,yCenter) , new Color(red,green,blue) , map ) );
+					map.add(new ShapeMonsterView( new Point(xCenter,yCenter) , new Color(red,green,blue)) );
 				break;
 				case 'S':
-					map.add(new SquareMonsterView( new Point(xCenter,yCenter) , new Color(red,green,blue) , map ) );
+					map.add(new SquareMonsterView( new Point(xCenter,yCenter) , new Color(red,green,blue) ) );
 				break;
 				default:
 				break;

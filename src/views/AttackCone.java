@@ -6,6 +6,8 @@ import static org.lwjgl.opengl.GL11.glVertex3d;
 
 import java.util.ArrayList;
 
+import map2.Map;
+
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
@@ -14,6 +16,7 @@ import org.lwjgl.util.glu.Disk;
 import org.lwjgl.util.glu.PartialDisk;
 
 import utilities.Point;
+import utilities.Vector;
 
 public class AttackCone implements DisplayableChild {
 	private DisplayableFather father;
@@ -37,18 +40,44 @@ public class AttackCone implements DisplayableChild {
 	public void paint(){
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		int alpha;
-		
+		boolean reflected =false;
+		double beta=0;
+		double x=0;
+		double y=0;
+		int fin=power-5;
 		GL11.glEnable (GL11.GL_BLEND);
 		GL11.glEnable(GL11.GL_ALPHA_TEST);    
 		GL11.glBlendFunc (GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		
 		for(float i=start;i<=(power-5);i+=10){
 		alpha=Math.round((power-i)/power*255);
+		
+		if(!reflected){
+		collision : for (DisplayableFather object: Map.getMap().getObjects()){
+			if (object !=father && object.collisionCanOccure(new Point(father.getX(),father.getY()),i+5)){
+				beta=direction-angle/2;
+			while(beta<=angle ){	
+				y=father.getY()+(i+5)*Math.cos(Math.PI/180*beta);
+				x=father.getX()+(i+5)*Math.sin(Math.PI/180*beta);
+				if (object.isInZone(new Point(x,y))){
+					reflected=true;
+					fin=Math.round(i-5);
+					break collision;
+				}
+				beta+=10;	
+			}
+			}
+		}
+		}
+		}
+		
+		for(float i=start;i<=fin;i+=10){
+			alpha=Math.round((fin-i)/fin*255);
 		GL11.glColor4ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue(),(byte)alpha);
 		GL11.glTranslated(father.getX(), father.getY(),MonsterView.height/2 );
-		new PartialDisk().draw((float) i,(float) (i+5), 50,1,(float)(direction-angle/2),(float) angle);
+		new PartialDisk().draw((float) i,(float) (i+5), 50,1,(float)(direction+-angle/2),(float) angle);
 		GL11.glTranslated(-father.getX(), -father.getY(),-MonsterView.height/2 );
 		}
+		
 		start++;
 		start %=10;
 		

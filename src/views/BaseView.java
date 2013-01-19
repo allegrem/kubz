@@ -18,7 +18,7 @@ import org.lwjgl.util.glu.PartialDisk;
 import utilities.Point;
 
 
-public class BaseView implements Displayable{
+public class BaseView implements DisplayableFather{
 	private PartialDisk disk1 =new PartialDisk();
 	private PartialDisk disk2=new PartialDisk();
 	
@@ -92,6 +92,48 @@ public class BaseView implements Displayable{
 	public void setTimeOut(int time) {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+	@Override
+	public double getX() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public double getY() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public ArrayList<DisplayableChild> getChildren() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void addChild(DisplayableChild object) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void removeChild(DisplayableChild child) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public boolean collisionCanOccure(Point point, float taille) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 
