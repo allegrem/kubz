@@ -94,6 +94,10 @@ public class ShapeMonsterView extends MonsterView {
 		return false;
 	}
 
-	
+
+	//There's a need to have normals (/!\ normalized vectors) for each side to let OpenGL know which direction each side is facing and 
+	//knowing the position of the light, deduce their relative positions (light and face) and render the right 
+	//effect of light on the surface
+
 
 }
