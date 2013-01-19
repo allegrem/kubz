@@ -312,12 +312,14 @@ public class MapCreator {
 		 * Si on clique avec la molette du milieu sur une base ou une unité déjà
 		 * créée, permet de changer sa couleur
 		 */
-		if (Mouse.isButtonDown(2) && scrollPressed) {
+		annuler : if (Mouse.isButtonDown(2) && scrollPressed) {
 			Point mousePoint = new Point(mouseX, mouseY);
 			for (Displayable object : map.getObjects()) {
 				if (object.isInZone(mousePoint)) {
 					java.awt.Color color = JColorChooser.showDialog(null,
 							"Object color choose", null);
+					if (color==null)
+						break annuler;
 					int r = color.getRed(), g = color.getGreen(), b = color
 							.getBlue();
 					object.setColor(new Color(r, g, b));

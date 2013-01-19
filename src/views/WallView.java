@@ -570,14 +570,13 @@ public class WallView implements DisplayableFather{
 
 	@Override
 	public double getX() {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return (extremity1.getX()+extremity2.getX())/2;
 	}
 
 	@Override
 	public double getY() {
-		// TODO Auto-generated method stub
-		return 0;
+		return (extremity1.getY()+extremity2.getY())/2;
 	}
 
 	@Override
@@ -600,7 +599,11 @@ public class WallView implements DisplayableFather{
 
 	@Override
 	public boolean collisionCanOccure(Point point, float taille) {
-		// TODO Auto-generated method stub
+		Vector vect1=Maths.makeVector(getX(), getY(), 0, sommets[1].getX(), sommets[1].getY(), 0);
+		double dist=vect1.norme();
+		Vector vect2= Maths.makeVector(point.getX(), point.getY(), 0, getX(), getY(), 0);
+		if(dist+taille>=vect2.norme())
+			return true;
 		return false;
 	}
 

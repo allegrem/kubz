@@ -24,7 +24,7 @@ public class AttackCone implements DisplayableChild {
 	private double direction;
 	private int power;
 	private int start=0;
-	private ReadableColor color=Color.GREY;
+	private ReadableColor color=Color.DKGREY;
 	private long pause=30;
 	private long startingTime=0;
 	
@@ -50,19 +50,22 @@ public class AttackCone implements DisplayableChild {
 		GL11.glEnable (GL11.GL_BLEND);
 		GL11.glEnable(GL11.GL_ALPHA_TEST);    
 		GL11.glBlendFunc (GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		for(float i=start;i<=(power-5);i+=10){
-		alpha=Math.round((power-i)/power*255);
 		
+		/*
+		 * Gère les "collisions" entre le cône et les autres objets
+		 * 
+		 */
+		collision : for(float i=15;i<=power;i+=10){
 		if(!reflected){
-		collision : for (DisplayableFather object: Map.getMap().getObjects()){
+		 for (DisplayableFather object: Map.getMap().getObjects()){
 			if (object !=father && object.collisionCanOccure(new Point(father.getX(),father.getY()),i+5)){
 				beta=direction-angle/2;
-			while(beta<=angle ){	
-				y=father.getY()+(i+5)*Math.cos(Math.PI/180*beta);
-				x=father.getX()+(i+5)*Math.sin(Math.PI/180*beta);
+			while(beta<=angle/2 ){	
+				y=father.getY()+i*Math.cos(Math.PI/180*beta);
+				x=father.getX()+i*Math.sin(Math.PI/180*beta);
 				if (object.isInZone(new Point(x,y))){
 					reflected=true;
-					fin=Math.round(i-5);
+					fin=Math.round(i-10);
 					break collision;
 				}
 				beta+=10;	
@@ -71,6 +74,8 @@ public class AttackCone implements DisplayableChild {
 		}
 		}
 		}
+		
+		
 		
 		for(float i=start;i<=fin;i+=10){
 			alpha=Math.round((fin-i)/fin*255);
