@@ -60,7 +60,7 @@ public class AttackCone implements DisplayableChild {
 		 for (DisplayableFather object: Map.getMap().getObjects()){
 			if (object !=father && object.collisionCanOccure(new Point(father.getX(),father.getY()),i+5)){
 				beta=direction-angle/2;
-			while(beta<=angle/2 ){	
+			while(beta<=direction+angle/2 ){	
 				y=father.getY()+i*Math.cos(Math.PI/180*beta);
 				x=father.getX()+i*Math.sin(Math.PI/180*beta);
 				if (object.isInZone(new Point(x,y))){

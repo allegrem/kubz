@@ -24,7 +24,8 @@ import utilities.Vector;
  *
  */
 public class SquareMonsterView extends MonsterView {
-
+	private long direction=0;
+	
 	public SquareMonsterView(Point position, ReadableColor color) {
 		super(position, color);
 		this.addChild(new AttackCone(30,0,150));
@@ -79,6 +80,10 @@ public class SquareMonsterView extends MonsterView {
 		
 		GL11.glEnd();
 		paintChildren();
+		direction++;
+		for(DisplayableChild child:getChildren()){
+			((AttackCone) (child)).setDirection(direction);
+		}
 	}
 	
 	@Override
