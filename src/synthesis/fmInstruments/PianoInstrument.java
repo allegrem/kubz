@@ -84,8 +84,9 @@ public class PianoInstrument implements FmInstrument{
 		} catch (TooManyInputsException e) {
 			e.printStackTrace();
 		}
-		SineWaveOscillator osc1 = new SineWaveOscillator(env2,new Constant((float) (f0.getValue()+epsilon.getValue())));
-		SineWaveOscillator osc2 = new SineWaveOscillator(env2,new Constant((float) (4*f0.getValue()+epsilon.getValue())));
+		SineWaveOscillator osc1 = new SineWaveOscillator(new Constant((float) (f0.getValue()+epsilon.getValue())),env2);
+		SineWaveOscillator osc2 = new SineWaveOscillator(new Constant((float) (4*f0.getValue()+epsilon.getValue())),env2);
+	
 		Adder adder = new Adder(osc1,osc2);
 		adder.plugin(new Constant((float) f0.getValue()));
 		
