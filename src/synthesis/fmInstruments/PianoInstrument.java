@@ -27,11 +27,6 @@ public class PianoInstrument implements FmInstrument{
 	private final ParameterAudioBlock amp;
 	
 	
-	private final AudioBlock noise;
-	private final AudioBlock env1;
-	private final AudioBlock env2;
-	private final AudioBlock sigma;
-	
 	
 	private AudioBlock out; 
 	private ArrayList<ParameterAudioBlock> paramList;
@@ -46,12 +41,9 @@ public class PianoInstrument implements FmInstrument{
 		d2 = new ParamBlock("d", 800, 1000, 998);
 		
 		amp = new ParamBlock("amp", 0, 120, 100);
-		sigma = new Gain(10.0f);
 		
-		noise = new WhiteNoise();
-		env1 = new FixedADSR(a1.getValue()/STEPS,d1.getValue()/STEPS,0,23/STEPS,1f);
-		env2 = new FixedADSR(a2.getValue()/STEPS,d2.getValue()/STEPS,0.0f,0.0f,1f); 
 		out = buildInstrument();
+		paramList = generateParamList();
 	}
 	
 	private ArrayList<ParameterAudioBlock> generateParamList(){
@@ -70,20 +62,25 @@ public class PianoInstrument implements FmInstrument{
 	}
 	
 	private AudioBlock buildInstrument(){
-		try {
-			((OneInputBlock) env1).plugin((AudioBlock)amp);
-		} catch (TooManyInputsException e) {
-			e.printStackTrace();
-		}
-		try {
-			((OneInputBlock) sigma).plugin(noise);
-		} catch (TooManyInputsException e) {
-			e.printStackTrace();
-		}
-		AudioBlock plugin1 = new Multiplier(env1,sigma);
+		WhiteNoise noise = new WhiteNoise();
+		FixedADSR env1 = new FixedADSR(a1.getValue()/STEPS,d1.getValue()/STEPS,0,23/STEPS,1f);
+		FixedADSR env2 = new FixedADSR(a2.getValue()/STEPS,d2.getValue()/STEPS,0.0f,0.0f,1f); 
+		Gain sigma = new Gain(10.0f);
 		
 		try {
-			((OneInputBlock) env2).plugin(amp);
+			env1.plugin(new Constant((float) amp.getValue()));
+		} catch (TooManyInputsException e) {
+			e.printStackTrace();
+		}
+		try {
+			sigma.plugin(noise);
+		} catch (TooManyInputsException e) {
+			e.printStackTrace();
+		}
+		Multiplier plugin1 = new Multiplier(env1,sigma);
+		
+		try {
+			env2.plugin(new Constant((float) amp.getValue()));
 		} catch (TooManyInputsException e) {
 			e.printStackTrace();
 		}
@@ -92,9 +89,11 @@ public class PianoInstrument implements FmInstrument{
 		Adder adder = new Adder(osc1,osc2);
 		adder.plugin(new Constant((float) f0.getValue()));
 		
+		
 		SineWaveOscillator osc3 = new SineWaveOscillator(adder,env2);
 		
-		return new Adder(osc3,plugin1);
+		
+		return out = new Adder(osc3,plugin1);
 	
 	}
 	
