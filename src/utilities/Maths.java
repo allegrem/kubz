@@ -10,7 +10,9 @@ public class Maths {
 		return vect3;
 	}
 	
-	public static Vector makeVector(double x1, double y1, double z1, double x2, double y2, double z2){  //make normalized vector 
+
+	public static Vector makeNormalizedVector(double x1, double y1, double z1, double x2, double y2, double z2){
+
 		Vector vect=new Vector(0,0,0);
 		Double norme=Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)+(z2-z1)*(z2-z1));
 		vect.setX((x2-x1)/norme);
@@ -19,4 +21,14 @@ public class Maths {
 		return vect;
 	
 	}
+	
+	public static Vector makeVector(double x1, double y1, double z1, double x2, double y2, double z2){
+		Vector vect=new Vector(0,0,0);
+		vect.setX((x2-x1));
+		vect.setY((y2-y1));
+		vect.setZ((z2-z1));
+		return vect;
+	
+	}
+
 }

@@ -31,6 +31,7 @@ import views.BackgroundView;
 import views.BaseView;
 import views.CircleMonsterView;
 import views.Displayable;
+import views.DisplayableFather;
 import views.MonsterView;
 import views.ShapeMonsterView;
 import views.SquareMonsterView;
@@ -285,13 +286,13 @@ public class MapCreator {
 		 */
 		if (Mouse.isButtonDown(1) && rightClicked) {
 			Point mousePoint1 = new Point(mouseX, mouseY);
-			ArrayList<Displayable> removables=new ArrayList<Displayable>();
-			for (Displayable object : map.getObjects()) {
+			ArrayList<DisplayableFather> removables=new ArrayList<DisplayableFather>();
+			for (DisplayableFather object : map.getObjects()) {
 				if (object.isInZone(mousePoint1)) {
 					removables.add(object);
 				}
 			}
-			for(Displayable object: removables){
+			for(DisplayableFather object: removables){
 				map.remove(object);
 			}
 			rightClicked = false;
@@ -302,12 +303,14 @@ public class MapCreator {
 		 * Si on clique avec la molette du milieu sur une base ou une unité déjà
 		 * créée, permet de changer sa couleur
 		 */
-		if (Mouse.isButtonDown(2) && scrollPressed) {
+		annuler : if (Mouse.isButtonDown(2) && scrollPressed) {
 			Point mousePoint = new Point(mouseX, mouseY);
 			for (Displayable object : map.getObjects()) {
 				if (object.isInZone(mousePoint)) {
 					java.awt.Color color = JColorChooser.showDialog(null,
 							"Object color choose", null);
+					if (color==null)
+						break annuler;
 					int r = color.getRed(), g = color.getGreen(), b = color
 							.getBlue();
 					object.setColor(new Color(r, g, b));
@@ -324,22 +327,21 @@ public class MapCreator {
 		 */
 		if (Mouse.isButtonDown(0) && leftClicked) {
 			if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
-				map.add(new SquareMonsterView(new Point(mouseX, mouseY), Color.BLUE,
-						map));
+				map.add(new SquareMonsterView(new Point(mouseX, mouseY), Color.BLUE));
 				
 			}
 
 			else if (Keyboard.isKeyDown(Keyboard.KEY_T)) {
-				map.add(new ShapeMonsterView(new Point(mouseX, mouseY), Color.GREEN,
-						map));
+				map.add(new ShapeMonsterView(new Point(mouseX, mouseY), Color.GREEN));
 		
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_C)) {
 				map.add(new CircleMonsterView(new Point(mouseX, mouseY),
-						Color.YELLOW, map));
+						Color.YELLOW));
 				
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_B)) {
-				Displayable base;
-				base=map.add(new BaseView(new Point(mouseX, mouseY), Color.LTGREY,BaseView.HAUT));
+				DisplayableFather base;
+				base=map.add(new BaseView(new Point(mouseX, mouseY), Color.PURPLE,BaseView.HAUT));
+
 				while (Mouse.isButtonDown(0)) {
 					mouseX = Mouse.getX();
 					mouseY = display_height - Mouse.getY();
@@ -365,7 +367,7 @@ public class MapCreator {
 					Mouse.poll();
 				}
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
-				Displayable keyboard;
+				DisplayableFather keyboard;
 				int imouseX = mouseX;
 				int iy = mouseY;
 				keyboard=map.add(new WallView(new Point(imouseX, iy), new Point(

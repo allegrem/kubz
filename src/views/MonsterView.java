@@ -31,8 +31,8 @@ public abstract class MonsterView implements DisplayableFather{
 	protected ArrayList<DisplayableChild> children= new ArrayList<DisplayableChild>();
 	protected int duration=0;
 
-	public MonsterView(Point position, ReadableColor color,Map map) {
-		this.map=map;
+	public MonsterView(Point position, ReadableColor color) {
+		this.map=Map.getMap();
 		this.position = position;
 		this.color = color;
 		actualColor = color;

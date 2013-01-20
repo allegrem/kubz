@@ -27,7 +27,7 @@ import OpenGL.Textures;
  * @author paul
  * 
  */
-public class WallView implements Displayable{
+public class WallView implements DisplayableFather{
 
 	/*
 	 * Constantes de classe. Servent à définir comment seront tracés les murs:
@@ -579,6 +579,45 @@ public class WallView implements Displayable{
 	public void setColor(ReadableColor color) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public double getX() {
+		
+		return (extremity1.getX()+extremity2.getX())/2;
+	}
+
+	@Override
+	public double getY() {
+		return (extremity1.getY()+extremity2.getY())/2;
+	}
+
+	@Override
+	public ArrayList<DisplayableChild> getChildren() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addChild(DisplayableChild object) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeChild(DisplayableChild child) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean collisionCanOccure(Point point, float taille) {
+		Vector vect1=Maths.makeVector(getX(), getY(), 0, sommets[1].getX(), sommets[1].getY(), 0);
+		double dist=vect1.norme();
+		Vector vect2= Maths.makeVector(point.getX(), point.getY(), 0, getX(), getY(), 0);
+		if(dist+taille>=vect2.norme())
+			return true;
+		return false;
 	}
 
 	

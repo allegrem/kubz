@@ -42,4 +42,8 @@ public class Vector {
 		this.z=z;
 		
 	}
+	
+	public  double norme(){
+		return Math.hypot(getX(),getY());
+	}
 }

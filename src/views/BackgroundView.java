@@ -23,7 +23,7 @@ import OpenGL.Textures;
  * @author paul
  *
  */
-public class BackgroundView implements Displayable{
+public class BackgroundView implements DisplayableFather{
 	private int width;
 	private int length;
 	//private final ReadableColor color= new Color(200,150,50);
@@ -176,6 +176,42 @@ public class BackgroundView implements Displayable{
 	public String getCharac() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public double getX() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getY() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public ArrayList<DisplayableChild> getChildren() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addChild(DisplayableChild object) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeChild(DisplayableChild child) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean collisionCanOccure(Point point, float taille) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	

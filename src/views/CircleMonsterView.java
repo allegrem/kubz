@@ -15,15 +15,17 @@ import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.glu.Cylinder;
 import org.lwjgl.util.glu.Disk;
 
+import utilities.Maths;
 import utilities.Point;
+import utilities.Vector;
 
 
 public class CircleMonsterView extends MonsterView {
 	private Cylinder cylinder = new Cylinder();
 
 
-	public CircleMonsterView(Point position,ReadableColor color,Map map) {
-		super(position,color,map);
+	public CircleMonsterView(Point position,ReadableColor color) {
+		super(position,color);
 	}
 
 	@Override
@@ -45,7 +47,6 @@ public class CircleMonsterView extends MonsterView {
 		 * On calcule la distance du centre au point
 		 */
 		double d=Math.hypot(getX()-pX,getY()-pY);
-		
 		if(d<=size/2)
 			return true;
 		return false;
@@ -55,6 +56,15 @@ public class CircleMonsterView extends MonsterView {
 	@Override
 	public String getType() {
 		return "C";
+	}
+
+	@Override
+	public boolean collisionCanOccure(Point point, float taille) {
+		double dist=size/2;
+		Vector vect= Maths.makeVector(point.getX(), point.getY(), 0, getX(), getY(), 0);
+		if(dist+taille>=vect.norme())
+			return true;
+		return false;
 	}
 
 

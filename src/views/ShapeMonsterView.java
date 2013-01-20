@@ -30,8 +30,8 @@ public class ShapeMonsterView extends MonsterView {
 	
 
 
-	public ShapeMonsterView(Point position, ReadableColor color,Map map) {
-		super(position, color,map);
+	public ShapeMonsterView(Point position, ReadableColor color) {
+		super(position, color);
 	}
 
 	@Override
@@ -45,9 +45,9 @@ public class ShapeMonsterView extends MonsterView {
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
 		
 		
-		Vector vect1= Maths.makeVector(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0.0f,
+		Vector vect1= Maths.makeNormalizedVector(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0.0f,
 				super.getX(), super.getY(), (float)height);
-		Vector vect2= Maths.makeVector(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0.0f,
+		Vector vect2= Maths.makeNormalizedVector(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0.0f,
 				super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2,0.0f);
 		Vector normal=Maths.vect(vect1,vect2);
 		GL11.glNormal3f((float)(normal.getX()), (float)(normal.getY()),(float)( normal.getZ()));
@@ -56,9 +56,9 @@ public class ShapeMonsterView extends MonsterView {
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
 		
 		
-		vect1= Maths.makeVector(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0.0f,
+		vect1= Maths.makeNormalizedVector(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0.0f,
 				super.getX(), super.getY(), (float)height);
-		vect2= Maths.makeVector(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0.0f,
+		vect2= Maths.makeNormalizedVector(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0.0f,
 				super.getX(), super.getY()-MonsterView.size/2,0.0f);
 		normal=Maths.vect(vect2,vect1);
 		GL11.glNormal3f((float)(normal.getX()), (float)(normal.getY()),(float)( normal.getZ()));
@@ -67,9 +67,9 @@ public class ShapeMonsterView extends MonsterView {
 		glVertex3d(super.getX(), super.getY()-MonsterView.size/2, 0);
 		
 		
-		vect1= Maths.makeVector(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, 0.0f,
+		vect1= Maths.makeNormalizedVector(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, 0.0f,
 				super.getX(), super.getY(), (float)height);
-		vect2= Maths.makeVector(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, 0.0f,
+		vect2= Maths.makeNormalizedVector(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, 0.0f,
 				super.getX(), super.getY()-MonsterView.size/2,0.0f);
 		normal=Maths.vect(vect1,vect2);
 		glVertex3d(super.getX(),super.getY(),height);
@@ -85,8 +85,19 @@ public class ShapeMonsterView extends MonsterView {
 		return "T";
 	}
 
+	@Override
+	public boolean collisionCanOccure(Point point, float taille) {
+		double dist=size*Math.sqrt(2)/2;
+		Vector vect= Maths.makeVector(point.getX(), point.getY(), 0, getX(), getY(), 0);
+		if(dist+taille>=vect.norme())
+			return true;
+		return false;
+	}
+
+
 	//There's a need to have normals (/!\ normalized vectors) for each side to let OpenGL know which direction each side is facing and 
 	//knowing the position of the light, deduce their relative positions (light and face) and render the right 
 	//effect of light on the surface
+
 
 }

@@ -16,4 +16,5 @@ public interface Displayable {
 	public boolean isInZone(Point mousePoint);
 	public void setColor(ReadableColor color);
 	public String getCharac();
+
 }

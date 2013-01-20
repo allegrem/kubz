@@ -13,7 +13,9 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 
+import utilities.Maths;
 import utilities.Point;
+import utilities.Vector;
 
 /**
  * Une unité en forme de carré
@@ -22,9 +24,10 @@ import utilities.Point;
  *
  */
 public class SquareMonsterView extends MonsterView {
-
-	public SquareMonsterView(Point position, ReadableColor color,Map map) {
-		super(position, color,map);
+	private long direction=0;
+	
+	public SquareMonsterView(Point position, ReadableColor color) {
+		super(position, color);
 		this.addChild(new AttackCone(30,0,150));
 	}
 
@@ -77,11 +80,24 @@ public class SquareMonsterView extends MonsterView {
 		
 		GL11.glEnd();
 		paintChildren();
+		direction++;
+		for(DisplayableChild child:getChildren()){
+			((AttackCone) (child)).setDirection(direction);
+		}
 	}
 	
 	@Override
 	public String getType() {
 		return "S";
+	}
+
+	@Override
+	public boolean collisionCanOccure(Point point, float taille) {
+		double dist=size*Math.sqrt(2)/2;
+		Vector vect= Maths.makeVector(point.getX(), point.getY(), 0, getX(), getY(), 0);
+		if(dist+taille>=vect.norme())
+			return true;
+		return false;
 	}
 
 

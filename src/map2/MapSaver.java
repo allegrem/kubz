@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import views.BaseView;
 import views.Displayable;
+import views.DisplayableFather;
 import views.MonsterView;
 import views.WallView;
 
@@ -27,7 +28,7 @@ public class MapSaver {
 	}
 	
 	public void saveToFile(Map map){
-		ArrayList<Displayable> displayables = map.getObjects();
+		ArrayList<DisplayableFather> displayables = map.getObjects();
 		for (Displayable disp : displayables){
 			if (disp instanceof BaseView)
 				bases.add( (BaseView) disp );
