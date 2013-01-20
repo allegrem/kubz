@@ -1,0 +1,13 @@
+.classpath
+
+#.project
+
+.settings/
+
+bin/
+
+doc/
+
+fmout.wav
+
+.DS_Store
