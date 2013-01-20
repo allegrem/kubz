@@ -20,6 +20,7 @@ import javax.swing.JButton;
 import synthesis.AudioBlock;
 import synthesis.fmInstruments.BellInstrument;
 import synthesis.fmInstruments.FmInstrument;
+import synthesis.fmInstruments.PianoInstrument;
 import synthesis.fmInstruments.TestInstrument;
 import synthesis.fmInstruments.TwoOscFmInstrument;
 import synthesis.fmInstruments.WindInstrument;
@@ -53,8 +54,8 @@ public class SLWindow {
 					SLWindow window = new SLWindow();
 /************************ TESTING ****************************/
 					window.frmSoundlab.setVisible(true);
-					//window.setInstrument(new TwoOscFmInstrument());
-					window.setInstrument(new WoodInstrument());
+					//window.setInstrument(new BellInstrument());
+					window.setInstrument(new PianoInstrument());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
