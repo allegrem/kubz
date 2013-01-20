@@ -8,13 +8,13 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-import org.apache.commons.math.complex.Complex;
-import org.apache.commons.math.transform.FastFourierTransformer;
+//import org.apache.commons.math.complex.Complex;
+//import org.apache.commons.math.transform.FastFourierTransformer;
 
-/*import org.apache.commons.math3.complex.Complex;
+import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.transform.DftNormalization;
 import org.apache.commons.math3.transform.FastFourierTransformer;
-import org.apache.commons.math3.transform.TransformType;*/
+import org.apache.commons.math3.transform.TransformType;
 
 /**
  * @author allegrem
@@ -56,15 +56,15 @@ public class SLSpectrumView extends JPanel {
 				sound[i] = 0;  //add zeros at the end
 			
 			//compute fourier transform
-			FastFourierTransformer fourier = new FastFourierTransformer();
-			Complex[] result = fourier.transform(sound);
+			FastFourierTransformer fourier = new FastFourierTransformer(DftNormalization.STANDARD);
+			Complex[] result = fourier.transform(sound, TransformType.FORWARD);
 			//never ask me why it works, i dont know!!
 			for (int x = 0; x < result.length/4; x++) {
 				int x_coord = x * X_SIZE *4 / result.length;
 				g.drawLine(x_coord, Y_SIZE, x_coord,
 						(int) (Y_SIZE - Math.abs(Math.log10(0.0001 + result[x].abs())) * Y_SIZE / 7));
 				g.drawLine(x_coord, Y_SIZE, x_coord,
-						(int) (Y_SIZE - Math.abs(Math.log10(0.0001 + result[result.length/2 + x].abs())) * Y_SIZE / 7));
+						(int) (Y_SIZE - Math.abs(Math.log10(0.0001 + result[result.length/4 + x].abs())) * Y_SIZE / 7));
 			}
 		}
 	}
