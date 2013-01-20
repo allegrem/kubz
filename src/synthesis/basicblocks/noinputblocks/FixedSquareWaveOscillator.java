@@ -27,7 +27,10 @@ public class FixedSquareWaveOscillator implements AudioBlock {
 
 
 	/**
-	 * 
+	 * Returns a square function with the given amplitude.
+	 * @return s(t) = a  if 0 < t < 1/2f <br />
+	 * 	s(t) = -a  if 1/2f < t < 1/f
+	 *  where a is the amplitude and f the frequency
 	 */
 	@Override
 	public Float play(Float t) throws RequireAudioBlocksException {
