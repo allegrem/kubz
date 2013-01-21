@@ -4,35 +4,53 @@ import java.util.ArrayList;
 
 import synthesis.AudioBlock;
 import synthesis.basicblocks.noinputblocks.Constant;
+import synthesis.basicblocks.noinputblocks.FixedSineWaveOscillator;
 import synthesis.basicblocks.oneinputblocks.FixedADSR;
+import synthesis.basicblocks.oneinputblocks.Gain;
+import synthesis.basicblocks.orderedinputsblocks.ADSR;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
 import synthesis.basicblocks.severalinputsblocks.Adder;
 import synthesis.basicblocks.severalinputsblocks.Multiplier;
 import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.exceptions.TooManyInputsException;
+import synthesis.parameter.GainParamBlock;
 import synthesis.parameter.ParamBlock;
 import synthesis.parameter.ParameterAudioBlock;
 
 public class WoodInstrument implements FmInstrument {
+
 	private final ParameterAudioBlock fm;
-	//private final AudioBlock fp;
+
 	private final ParameterAudioBlock amp;
-	private final ParameterAudioBlock mod; 
-	
+
+	private final ParameterAudioBlock mod;
+
+	private final ParameterAudioBlock vibrGainFactor;
+
+	private final ParameterAudioBlock vibrFreq;
+
+	private final ParameterAudioBlock a;
+
 	private AudioBlock out;
 
 	private ArrayList<ParameterAudioBlock> paramList;
-	
-	
+
 	public WoodInstrument() {
-		//super();
-		
-		fm = new ParamBlock("fm", 290, 400, 300); //recommended value:300Hz
-		//fp = new Constant((float) (3*fm.getValue())); 
+		super();
+
+		fm = new ParamBlock("fm", 20, 1500, 440);
 		amp = new ParamBlock("amp", 0, 120, 100);
-		mod = new ParamBlock("mod", 1, 3, 2);  //recommended value:2
-		
-		out = buildInstrument();
+		mod = new ParamBlock("mod", 1, 10, 2); // recommended value:2
+		vibrGainFactor = new GainParamBlock("vibr amp", 0, 30, 5, 0.001f);
+		vibrFreq = new ParamBlock("vibr freq", 0, 10, 5);
+		a = new GainParamBlock("attack", 0, 100, 30, 0.01f);
+
+		try {
+			out = buildInstrument();
+		} catch (TooManyInputsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		paramList = generateParamList();
 	}
 
@@ -41,30 +59,25 @@ public class WoodInstrument implements FmInstrument {
 		list.add(fm);
 		list.add(amp);
 		list.add(mod);
+		list.add(vibrGainFactor);
+		list.add(vibrFreq);
+		list.add(a);
 		return list;
 	}
 
-	private AudioBlock buildInstrument() {
-		AudioBlock fp = new Constant((float) (3*fm.getValue())); 
-		
-		FixedADSR env = new FixedADSR(0.3f,0.0f,1.0f,0.1f,1f);
-		try {
-			env.plugin(new Multiplier(mod, fm));
-		} catch (TooManyInputsException e) {
-			e.printStackTrace();
-		}
-		SineWaveOscillator osc1 = new SineWaveOscillator(fm, env);
-		Adder add = new Adder(fp, osc1);
-		FixedADSR env1 = new FixedADSR(0.3f,0.0f,1.0f,0.1f,1f);
-		try {
-			env1.plugin(amp);
-		} catch (TooManyInputsException e) {
-			e.printStackTrace();
-		}
-		return out = new SineWaveOscillator(add, env1);
+	private AudioBlock buildInstrument() throws TooManyInputsException {
+		Adder vibrato = new Adder(fm, new SineWaveOscillator(vibrFreq,
+				new Multiplier(fm, vibrGainFactor)));
+		Gain fp = new Gain(3f, vibrato);
+		SineWaveOscillator osc1 = new SineWaveOscillator(vibrato,
+				new Multiplier(mod, fm));
+		ADSR env1 = new ADSR(a, new Constant(0.0f), new Constant(1.0f), new Constant(0.1f), 1f, amp);
+		return out = new SineWaveOscillator(new Adder(fp, osc1), env1);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see synthesis.AudioBlock#play(java.lang.Float)
 	 */
 	@Override
@@ -72,7 +85,9 @@ public class WoodInstrument implements FmInstrument {
 		return out.play(t);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see synthesis.AudioBlock#phi(java.lang.Float)
 	 */
 	@Override
@@ -84,6 +99,5 @@ public class WoodInstrument implements FmInstrument {
 	public ArrayList<ParameterAudioBlock> getParameters() {
 		return paramList;
 	}
-
 
 }

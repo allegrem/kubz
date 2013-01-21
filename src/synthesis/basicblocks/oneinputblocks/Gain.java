@@ -1,6 +1,8 @@
 package synthesis.basicblocks.oneinputblocks;
 
+import synthesis.AudioBlock;
 import synthesis.exceptions.RequireAudioBlocksException;
+import synthesis.exceptions.TooManyInputsException;
 
 /**
  * This class handles a gain block which multiplies the input signal by a 
@@ -21,7 +23,24 @@ public class Gain extends OneInputBlock {
 		super();
 		this.gain = gain;
 	}
+	
+	
+	/**
+	 * Create a Gain block and plug in the given block.
+	 * @param gain the gain of the input signal.
+	 * @param block the block to plug in
+	 */
+	public Gain(Float gain, AudioBlock block) {
+		super();
+		this.gain = gain;
+		try {
+			plugin(block);
+		} catch (TooManyInputsException e) {
+			e.printStackTrace();
+		}
+	}
 
+	
 	/**
 	 * The sound produced is given by : out(t) = gain * in(t).
 	 */
