@@ -559,14 +559,14 @@ public class WallView implements DisplayableFather{
 
 	@Override
 	public boolean isInZone(Point mousePoint) {
-		Point extremity1invthick = new Point(extremity1.getX()+thickness/2,extremity1.getY()+thickness/2);
-		Point extremity1thick = new Point(extremity1.getX()-thickness/2,extremity1.getY()-thickness/2);
+		Point extremity1thick = new Point(extremity1.getX()+thickness/2,extremity1.getY()+thickness/2);
+		Point extremity1invthick = new Point(extremity1.getX()-thickness/2,extremity1.getY()-thickness/2);
 		
-		Point extremity2thick = new Point(extremity2.getX()+thickness,extremity2.getY()+thickness);
+		Point extremity2thick = new Point(extremity2.getX()+thickness/2,extremity2.getY()+thickness/2);
 		Point extremity2invthick = new Point(extremity2.getX()-thickness/2,extremity2.getY()-thickness/2);
 		
-		if (Distance.distanceToLine(mousePoint, extremity1invthick, extremity2invthick)<= thickness && 
-				Distance.distanceToLine(mousePoint, extremity1thick, extremity2thick) <= thickness)
+		if (Distance.distanceToLine(extremity1invthick, extremity2invthick, mousePoint)<= thickness && 
+				Distance.distanceToLine(extremity1thick, extremity2thick,mousePoint) <= thickness)
 			{
 			System.out.println("sehgj");
 			return true;
