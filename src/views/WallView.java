@@ -65,7 +65,7 @@ public class WallView implements DisplayableFather{
 	private Point extremity2;
 	private int thickness;// Epaisseur du mur
 
-	private Point vect; // Vecteur extremity1->extremity2
+	private Vector vect; // Vecteur extremity1->extremity2
 	private float normev;// Norme du vecteur
 	private double angle;// Angle du vecteur avec l'horizontale
 
@@ -125,7 +125,7 @@ public class WallView implements DisplayableFather{
 	 * 
 	 */
 	private void init() {
-		vect = new Point(extremity2.getX() - extremity1.getX(),
+		vect = new Vector(extremity2.getX() - extremity1.getX(),
 				extremity2.getY() - extremity1.getY());
 		normev = (float) Math.hypot(vect.getX(), vect.getY());
 
@@ -559,19 +559,15 @@ public class WallView implements DisplayableFather{
 
 	@Override
 	public boolean isInZone(Point mousePoint) {
-		Point extremity1invthick = new Point(extremity1.getX()+thickness/2,extremity1.getY()+thickness/2);
-		Point extremity1thick = new Point(extremity1.getX()-thickness/2,extremity1.getY()-thickness/2);
 		
-		Point extremity2thick = new Point(extremity2.getX()+thickness,extremity2.getY()+thickness);
-		Point extremity2invthick = new Point(extremity2.getX()-thickness/2,extremity2.getY()-thickness/2);
 		
-		if (Distance.distanceToLine(mousePoint, extremity1invthick, extremity2invthick)<= thickness && 
-				Distance.distanceToLine(mousePoint, extremity1thick, extremity2thick) <= thickness)
+		if (Distance.distanceToLine(sommets[0], sommets[2],mousePoint)<= thickness && 
+				Distance.distanceToLine(sommets[1], sommets[3],mousePoint) <= thickness &&
+				Distance.distanceToLine(sommets[0],sommets[1],mousePoint)<=vect.norme() &&
+				Distance.distanceToLine(sommets[2],sommets[3],mousePoint)<=vect.norme())
 			{
-			System.out.println("sehgj");
 			return true;
 			}
-		
 		return false;
 	}
 
