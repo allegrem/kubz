@@ -606,6 +606,7 @@ public class WallView implements DisplayableFather{
 		
 	}
 
+	
 	@Override
 	public boolean collisionCanOccure(Point point, float taille) {
 		Vector vect1=Maths.makeVector(getX(), getY(), 0, sommets[1].getX(), sommets[1].getY(), 0);
