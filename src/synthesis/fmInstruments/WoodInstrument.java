@@ -71,7 +71,7 @@ public class WoodInstrument implements FmInstrument {
 		Gain fp = new Gain(3f, vibrato);
 		SineWaveOscillator osc1 = new SineWaveOscillator(vibrato,
 				new Multiplier(mod, fm));
-		ADSR env1 = new ADSR(a, new Constant(0.0f), new Constant(1.0f), new Constant(0.1f), 1f, amp);
+		ADSR env1 = new ADSR(a, new Constant(0.2f), new Constant(0.8f), new Constant(0.1f), 1f, amp);
 		return out = new SineWaveOscillator(new Adder(fp, osc1), env1);
 	}
 
