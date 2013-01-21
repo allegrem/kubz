@@ -84,8 +84,10 @@ public class MapCreator {
 	private boolean aClicked = true;
 	private boolean rClicked = true;
 	private boolean lClicked = true;
-
-
+	private boolean rightKey = true;
+	private boolean leftKey = true;
+	private boolean upKey = true;
+	private boolean downKey = true;
 
 	/*
 	 * map et module d'affichage créés
@@ -227,7 +229,14 @@ public class MapCreator {
 		if (!Keyboard.isKeyDown(Keyboard.KEY_L))
 			lClicked = true;
 		
-
+		if (!Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
+			rightKey = true;
+		if (!Keyboard.isKeyDown(Keyboard.KEY_LEFT))
+			leftKey = true;
+		if (!Keyboard.isKeyDown(Keyboard.KEY_UP))
+			upKey = true;
+		if (!Keyboard.isKeyDown(Keyboard.KEY_DOWN))
+			downKey =  true;
 
 		/*
 		 * Changement de MODE3D
@@ -238,19 +247,19 @@ public class MapCreator {
 			tabClicked = false;
 		}
 		
-		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
+		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_LEFT) && leftKey) {
 			eyeX -= 5;
 			changementMode3D();
 		}
-		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
+		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_RIGHT) && rightKey) {
 			eyeX += 5;
 			changementMode3D();
 		}
-		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
+		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_DOWN) && downKey) {
 			eyeY -= 5;
 			changementMode3D();
 		}
-		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_UP)) {
+		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_UP) && upKey) {
 			eyeY += 5;
 			changementMode3D();
 		}
@@ -280,9 +289,7 @@ public class MapCreator {
 		}
 
 		/*
-		 * Si on effectue un click droit à la souris, on supprime le dernier
-		 * objet créé du type sélectionné par le clavier: U pour Unit, W pour
-		 * Wall ou B pour Base
+		 * Si on effectue un click droit à la souris, on supprime le ou les objets sur lesquels on clique
 		 */
 		if (Mouse.isButtonDown(1) && rightClicked) {
 			Point mousePoint1 = new Point(mouseX, mouseY);
@@ -371,20 +378,20 @@ public class MapCreator {
 				int imouseX = mouseX;
 				int iy = mouseY;
 				keyboard=map.add(new WallView(new Point(imouseX, iy), new Point(
-						mouseX + 1, mouseY + 1), 75, WallView.NORMAL));
+						mouseX + 1, mouseY + 1), 15, WallView.NORMAL));
 				while (Mouse.isButtonDown(0)) {
 					mouseX = Mouse.getX();
 					mouseY = display_height - Mouse.getY();
 					map.remove(keyboard);
 					if (Keyboard.isKeyDown(Keyboard.KEY_H)) {
 						keyboard=map.add(new WallView(new Point(imouseX, iy),
-								new Point(mouseX, mouseY), 75, WallView.HORIZONTAL));
+								new Point(mouseX, mouseY), 15, WallView.HORIZONTAL));
 					} else if (Keyboard.isKeyDown(Keyboard.KEY_V)) {
 						keyboard=map.add( new WallView(new Point(imouseX, iy),
-								new Point(mouseX, mouseY), 75, WallView.VERTICAL));
+								new Point(mouseX, mouseY), 15, WallView.VERTICAL));
 					} else {
 						keyboard=map.add(new WallView(new Point(imouseX, iy),
-								new Point(mouseX, mouseY), 75, WallView.NORMAL));
+								new Point(mouseX, mouseY), 15, WallView.NORMAL));
 					}
 					affichage.clear();
 					render();
@@ -468,21 +475,19 @@ public class MapCreator {
 			glEnable(GL11.GL_LIGHTING);
 			glEnable(GL11.GL_LIGHT0);  //one source of light only
 			GL11.glColorMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_AMBIENT_AND_DIFFUSE);  //which face will reflect light+ambient(lOff) and diffuse(lOn) preferred to have same value
-			GL11.glLightModel(GL11.GL_LIGHT_MODEL_AMBIENT,MyFloatBuffer.newFloatBuffer4(0.6f,0.6f,0.6f,1.0f)); //the amount of global light emitted
+			GL11.glLightModel(GL11.GL_LIGHT_MODEL_AMBIENT,MyFloatBuffer.newFloatBuffer4(0.8f,0.8f,0.8f,1.0f)); //the amount of global light emitted
 			//GL11.glLightModeli(GL11.GL_LIGHT_MODEL_TWO_SIDE,GL11.GL_TRUE);
 			glMatrixMode(GL_MODELVIEW);
 			GL11.glTranslated(display_width / 2, display_height / 2, 0);
-			GL11.glRotated(angle, 0, 0, 1);
+			GL11.glRotated(Math.round(angle/10), 0, 0, 1);
 			GL11.glTranslated(-display_width / 2, -display_height / 2, 0);
-			ByteBuffer temp1 = ByteBuffer.allocateDirect(16);  //??the use??
-			temp1.order(ByteOrder.nativeOrder());
-			GL11.glLight(GL11.GL_LIGHT0,GL11.GL_POSITION,MyFloatBuffer.newFloatBuffer4(0.0f,0.0f,20.0f,1.0f));
-			GL11.glLight(GL11.GL_LIGHT0,GL11.GL_SPOT_DIRECTION,MyFloatBuffer.newFloatBuffer4(display_width/2,display_height/2,0,0));
+			GL11.glLight(GL11.GL_LIGHT0,GL11.GL_POSITION,MyFloatBuffer.newFloatBuffer4(-20.0f,-20.0f,20.0f,1.0f));//Position et type de l'éclairage
+			GL11.glLight(GL11.GL_LIGHT0,GL11.GL_SPOT_DIRECTION,MyFloatBuffer.newFloatBuffer4(display_width/2,display_height/2,0,0));//Direction de l'éclairage
 			GL11.glTranslated(display_width / 2, display_height / 2, 0);
-			GL11.glRotated(-angle, 0, 0, 1);
+			GL11.glRotated(-Math.round(angle/10), 0, 0, 1);
 			GL11.glTranslated(-display_width / 2, -display_height / 2, 0);
 
-			//angle++;
+			angle++;
 		} else {
 			 GL11.glDisable(GL11.GL_LIGHTING);
 			 GL11.glDisable(GL11.GL_LIGHT0);

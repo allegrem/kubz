@@ -72,10 +72,10 @@ public class ShapeMonsterView extends MonsterView {
 		vect2= Maths.makeNormalizedVector(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, 0.0f,
 				super.getX(), super.getY()-MonsterView.size/2,0.0f);
 		normal=Maths.vect(vect1,vect2);
+		GL11.glNormal3f((float)(normal.getX()), (float)(normal.getY()),(float)( normal.getZ()));
 		glVertex3d(super.getX(),super.getY(),height);
 		glVertex3d(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
 		glVertex3d(super.getX(), super.getY()-MonsterView.size/2, 0);
-		
 		GL11.glEnd();
 		paintChildren();
 	}

@@ -13,7 +13,6 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.ReadableColor;
 import org.newdawn.slick.Color;
 
-import utilities.Distance;
 import utilities.Maths;
 import utilities.Point;
 import utilities.RandomPerso;
@@ -303,13 +302,13 @@ public class WallView implements DisplayableFather{
 		 */
 		GL11.glTexCoord2f(0, 0);
 		/*
-		 * Tracé d'une extrémité du mur
+		 * Tracé d'une extrémité du murSystem.out.println(normal.getX()+" "+normal.getY()+" "+normal.getZ());
 		 */
 		Vector vect1= Maths.makeVector(sommets[0].getX(), sommets[0].getY(), height,
 				sommets[0].getX(), sommets[0].getY(), 0);
 		Vector vect2= Maths.makeVector(sommets[1].getX(), sommets[1].getY(), 0,
-				sommets[1].getX(), sommets[1].getY(), 0);   //CCW/CW??
-		Vector normal=Maths.vect(vect1,vect2);
+				sommets[0].getX(), sommets[0].getY(), 0);   //CCW/CW??
+		Vector normal=Maths.vect(vect2,vect1);
 		GL11.glNormal3f((float)(normal.getX()), (float)(normal.getY()),(float)( normal.getZ()));  //set the normal vector for this face
 		glVertex3d(sommets[0].getX(), sommets[0].getY(), 0);
 		GL11.glTexCoord2f(1, 0);
@@ -333,7 +332,7 @@ public class WallView implements DisplayableFather{
 				sommets[3].getX(), sommets[3].getY(), 0);
 		vect2= Maths.makeVector(sommets[2].getX(), sommets[2].getY(), 0,
 				sommets[3].getX(), sommets[3].getY(), 0);
-		normal=Maths.vect(vect1,vect2);
+		normal=Maths.vect(vect2,vect1);
 		GL11.glNormal3f((float)(normal.getX()), (float)(normal.getY()),(float)( normal.getZ())); 
 		GL11.glTexCoord2f(0, 0);
 		glVertex3d(sommets[3].getX(), sommets[3].getY(), height);
@@ -358,7 +357,7 @@ public class WallView implements DisplayableFather{
 				sommets[1].getX(), sommets[1].getY(), 0);
 		vect2= Maths.makeVector(sommets[3].getX(), sommets[3].getY(), 0,
 				sommets[1].getX(), sommets[1].getY(), 0);
-		normal=Maths.vect(vect1,vect2);
+		normal=Maths.vect(vect2,vect1);
 		GL11.glNormal3f((float)(normal.getX()), (float)(normal.getY()),(float)( normal.getZ())); 
 		GL11.glTexCoord2f(0, 0);
 		glVertex3d(sommets[1].getX(), sommets[1].getY(), 0);
@@ -559,23 +558,11 @@ public class WallView implements DisplayableFather{
 
 	@Override
 	public boolean isInZone(Point mousePoint) {
-		Point extremity1invthick = new Point(extremity1.getX()+thickness/2,extremity1.getY()+thickness/2);
-		Point extremity1thick = new Point(extremity1.getX()-thickness/2,extremity1.getY()-thickness/2);
-		
-		Point extremity2thick = new Point(extremity2.getX()+thickness,extremity2.getY()+thickness);
-		Point extremity2invthick = new Point(extremity2.getX()-thickness/2,extremity2.getY()-thickness/2);
-		
-		if (Distance.distanceToLine(mousePoint, extremity1invthick, extremity2invthick)<= thickness && 
-				Distance.distanceToLine(mousePoint, extremity1thick, extremity2thick) <= thickness)
-			{
-			System.out.println("sehgj");
-			return true;
-			}
-		
+		// Valeh le fait !
 		return false;
 	}
 
- 	@Override
+	@Override
 	public void setColor(ReadableColor color) {
 		// TODO Auto-generated method stub
 		

@@ -65,7 +65,7 @@ public class AttackCone implements DisplayableChild {
 				x=father.getX()+i*Math.sin(Math.PI/180*beta);
 				if (object.isInZone(new Point(x,y))){
 					reflected=true;
-					fin=Math.round(i-10);
+					fin=Math.round(i-15);
 					break collision;
 				}
 				beta+=10;	
