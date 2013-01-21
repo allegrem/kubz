@@ -35,8 +35,10 @@ public class SLInstrumentView extends JPanel {
 	
 	public void setInstrument(FmInstrument instrument) {
 		this.instrument = instrument;
+		removeAll();
 		for(ParameterAudioBlock p : instrument.getParameters())
 			add(new SLParameterView(p));
+		updateUI();
 	}
 
 

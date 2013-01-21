@@ -33,6 +33,8 @@ import java.awt.Component;
 import javax.swing.Box;
 import java.awt.Dimension;
 import java.awt.event.MouseMotionAdapter;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.ButtonGroup;
 
 public class SLWindow {
 
@@ -43,6 +45,7 @@ public class SLWindow {
 	private SLSoundView soundView;
 	private SLSpectrumView spectrumView;
 	private JLabel lblHz;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
 	 * Launch the application.
@@ -54,8 +57,8 @@ public class SLWindow {
 					SLWindow window = new SLWindow();
 /************************ TESTING ****************************/
 					window.frmSoundlab.setVisible(true);
-					//window.setInstrument(new BellInstrument());
-					window.setInstrument(new PianoInstrument());
+					window.setInstrument(new WoodInstrument());
+//					window.setInstrument(new PianoInstrument());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -139,6 +142,46 @@ public class SLWindow {
 		});
 		mntmPlay.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0));
 		mnPlay.add(mntmPlay);
+		
+		JMenu mnInstrument = new JMenu("Instrument");
+		menuBar.add(mnInstrument);
+		
+		JRadioButtonMenuItem rdbtnmntmBell = new JRadioButtonMenuItem("Bell");
+		buttonGroup.add(rdbtnmntmBell);
+		rdbtnmntmBell.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setInstrument(new BellInstrument());
+			}
+		});
+		rdbtnmntmBell.setSelected(true);
+		mnInstrument.add(rdbtnmntmBell);
+		
+		JRadioButtonMenuItem rdbtnmntmPiano = new JRadioButtonMenuItem("Piano");
+		buttonGroup.add(rdbtnmntmPiano);
+		rdbtnmntmPiano.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setInstrument(new PianoInstrument());
+			}
+		});
+		
+		JRadioButtonMenuItem rdbtnmntmTwooscfm = new JRadioButtonMenuItem("TwoOscFM");
+		rdbtnmntmTwooscfm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setInstrument(new TwoOscFmInstrument());
+			}
+		});
+		buttonGroup.add(rdbtnmntmTwooscfm);
+		mnInstrument.add(rdbtnmntmTwooscfm);
+		
+		JRadioButtonMenuItem rdbtnmntmWood = new JRadioButtonMenuItem("Wood");
+		rdbtnmntmWood.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setInstrument(new WoodInstrument());
+			}
+		});
+		buttonGroup.add(rdbtnmntmWood);
+		mnInstrument.add(rdbtnmntmWood);
+		mnInstrument.add(rdbtnmntmPiano);
 
 		JMenu menu = new JMenu("?");
 		menuBar.add(menu);
