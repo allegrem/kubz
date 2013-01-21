@@ -32,8 +32,8 @@ public class PianoInstrument implements FmInstrument{
 	private ArrayList<ParameterAudioBlock> paramList;
 	
 	public PianoInstrument(){
-		f0 = new ParamBlock("f0", 100, 300, 110);
-		epsilon = new ParamBlock("epsilon",35,50,48);
+		f0 = new ParamBlock("f0", 100, 500, 440);
+		epsilon = new ParamBlock("epsilon",5,50,10);
 		a1 = new ParamBlock("a1", 0,100,0);
 		d1 = new ParamBlock("d1",560,1000,580);
 		
@@ -64,7 +64,7 @@ public class PianoInstrument implements FmInstrument{
 	private AudioBlock buildInstrument(){
 		WhiteNoise noise = new WhiteNoise();
 		FixedADSR env1 = new FixedADSR(a1.getValue()/STEPS,d1.getValue()/STEPS,0,23/STEPS,1f);
-		FixedADSR env2 = new FixedADSR(a2.getValue()/STEPS,d2.getValue()/STEPS,0.0f,0.0f,1f); 
+		FixedADSR env2 = new FixedADSR(a2.getValue()/STEPS,d2.getValue()/STEPS,0.09f,0.0f,1f); 
 		Gain sigma = new Gain(10.0f);
 		
 		try {
