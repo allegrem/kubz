@@ -4,10 +4,13 @@ import java.util.ArrayList;
 
 import synthesis.AudioBlock;
 import synthesis.basicblocks.noinputblocks.Constant;
+import synthesis.basicblocks.noinputblocks.FixedSineWaveOscillator;
+import synthesis.basicblocks.oneinputblocks.FixedADSR;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
 import synthesis.basicblocks.severalinputsblocks.Adder;
 import synthesis.basicblocks.severalinputsblocks.Multiplier;
 import synthesis.exceptions.RequireAudioBlocksException;
+import synthesis.exceptions.TooManyInputsException;
 import synthesis.parameter.ParamBlock;
 import synthesis.parameter.ParameterAudioBlock;
 
@@ -26,9 +29,9 @@ public class BellInstrument implements FmInstrument{
 	public BellInstrument() {
 		//super();
 		
-		fm = new ParamBlock("fm", 200, 700, 280);
+		fm = new ParamBlock("fm", 70, 500, 280);
 		//fp = new ParamBlock("fp", (int) (1.4*fm.getValue()), 1.410000, 600);
-		fp = new Constant((float) fm.getValue());
+		fp = new Constant((float) ((1/Math.sqrt(2))*fm.getValue()));
 		a = new ParamBlock("a", 0, 50, 2);
 		d = new ParamBlock("d", 800, 1000, 998);
 		
@@ -40,35 +43,41 @@ public class BellInstrument implements FmInstrument{
 		ArrayList<ParameterAudioBlock> list = new ArrayList<ParameterAudioBlock>();
 		list.add(fm);
 		//list.add(fp);
-		list.add(amp);
-		
+		list.add(a);
+		list.add(d);
+
 		return list;
 	}
 
 	private AudioBlock buildInstrument() {
-		SineWaveOscillator osc1 = new SineWaveOscillator(fm, new Multiplier(mod, fm));
+		FixedADSR env = new FixedADSR(a.getValue()/STEPS,d.getValue()/STEPS,0.0f,0.0f,1f);
+		try {
+			env.plugin(new Constant((float) 100));
+		} catch (TooManyInputsException e) {
+			e.printStackTrace();
+		}
+		SineWaveOscillator osc1 = new SineWaveOscillator(fm, new Constant((float) 190));
 		Adder add = new Adder(fp, osc1);
-		return out = new SineWaveOscillator(add, amp);
+		return out = new SineWaveOscillator(add, env);
 	}
 
 	
 	
 	@Override
 	public Float play(Float t) throws RequireAudioBlocksException {
-		// TODO Auto-generated method stub
-		return null;
+		AudioBlock out = buildInstrument();
+		return out.play(t);
 	}
 
 	@Override
 	public Float phi(Float t) throws RequireAudioBlocksException {
-		// TODO Auto-generated method stub
-		return null;
+		AudioBlock out = buildInstrument();
+		return out.phi(t);
 	}
 
 	@Override
 	public ArrayList<ParameterAudioBlock> getParameters() {
-		// TODO Auto-generated method stub
-		return null;
+		return paramList;
 	}
 	
 
