@@ -2,12 +2,13 @@ package synthesis.parameter;
 
 import java.util.Observable;
 
-
 import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
- * @author allegrem
+ * This class handles a basic parameter block. The value set by the user and the
+ * value played are the same.
  * 
+ * @author allegrem
  */
 public class ParamBlock extends Observable implements ParameterAudioBlock {
 
@@ -16,14 +17,20 @@ public class ParamBlock extends Observable implements ParameterAudioBlock {
 	private final int min;
 
 	private final int max;
-	
+
 	private int value;
 
 	/**
-	 * @param audioBlock
+	 * Create a new ParamBlock.
+	 * 
 	 * @param label
+	 *            the name of the parameter
 	 * @param min
+	 *            the minimal value of the parameter
 	 * @param max
+	 *            the maximal value of the parameter
+	 * @param defaultValue
+	 *            the default value of the parameter
 	 */
 	public ParamBlock(String label, int min, int max, int defaultValue) {
 		super();
@@ -33,8 +40,8 @@ public class ParamBlock extends Observable implements ParameterAudioBlock {
 		this.value = defaultValue;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Return the value given by the user with no processing.
 	 * 
 	 * @see synthesis.AudioBlock#play(java.lang.Float)
 	 */
@@ -43,8 +50,9 @@ public class ParamBlock extends Observable implements ParameterAudioBlock {
 		return (float) value;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Return s(t) = 2 * Pi * value * t where value is the value given by the
+	 * user.
 	 * 
 	 * @see synthesis.AudioBlock#phi(java.lang.Float)
 	 */
@@ -53,8 +61,8 @@ public class ParamBlock extends Observable implements ParameterAudioBlock {
 		return (float) (2 * Math.PI * value * t);
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Return the label of the parameter.
 	 * 
 	 * @see synthesis.ParameterAudioBlock#getLabel()
 	 */
@@ -63,8 +71,8 @@ public class ParamBlock extends Observable implements ParameterAudioBlock {
 		return label;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Return the minimal value of the parameter.
 	 * 
 	 * @see synthesis.ParameterAudioBlock#getMin()
 	 */
@@ -73,8 +81,8 @@ public class ParamBlock extends Observable implements ParameterAudioBlock {
 		return min;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Return the maximal value of the parameter.
 	 * 
 	 * @see synthesis.ParameterAudioBlock#getMax()
 	 */
@@ -83,13 +91,20 @@ public class ParamBlock extends Observable implements ParameterAudioBlock {
 		return max;
 	}
 
+	/**
+	 * Modify the value of the parameter. This value is not processed when
+	 * {@link ParamBlock#play(Float)} is called.
+	 */
 	@Override
 	public void setValue(int value) {
 		this.value = value;
 		setChanged();
 		notifyObservers();
 	}
-	
+
+	/**
+	 * Return the value given by the user.
+	 */
 	@Override
 	public int getValue() {
 		return value;
