@@ -57,7 +57,7 @@ public class SLSpectrumView extends JPanel {
 			
 			//compute fourier transform
 			FastFourierTransformer fourier = new FastFourierTransformer(DftNormalization.STANDARD);
-			Complex[] result = fourier.transform(sound, TransformType.FORWARD);
+			Complex[] result = fourier.transform(sound, TransformType.FORWARD); //PRENDRE fft(double) !!!!! (protected??)
 			//never ask me why it works, i dont know!!
 			for (int x = 0; x < result.length/4; x++) {
 				int x_coord = x * X_SIZE *4 / result.length;

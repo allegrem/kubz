@@ -52,7 +52,7 @@ public class MainEnvelope {
 		//playing sound
 		SpeakersOutput speakersOutput = new SpeakersOutput();
 		speakersOutput.open();
-		speakersOutput.play(computeSound(0f, 1f, out));
+		speakersOutput.play(SynthesisUtilities.computeSound(0f, 1f, out));
 //		speakersOutput.play(computeSound(0f, 1f, out2));
 		speakersOutput.close();
 		
@@ -60,7 +60,7 @@ public class MainEnvelope {
 		//save to wav
 		WavFileOutput wavFileOutput = new WavFileOutput("fmout.wav");
 		wavFileOutput.open();
-		wavFileOutput.play(computeSound(0f, 10f, out));
+		wavFileOutput.play(SynthesisUtilities.computeSound(0f, 10f, out));
 		wavFileOutput.close();
 		
 		//save to wav
@@ -68,19 +68,6 @@ public class MainEnvelope {
 		wavFileOutput2.open();
 		wavFileOutput2.play(computeSound(0f, 10f, out2));
 		wavFileOutput2.close();*/
-	}
-	
-	
-	public static byte[] computeSound(Float start, Float length, AudioBlock a) 
-			throws RequireAudioBlocksException {
-		byte[] arr = new byte[(int) (length*AudioBlock.SAMPLE_RATE)];
-		
-		for(int i = 0; i<length*AudioBlock.SAMPLE_RATE ; i++) {
-			float f = a.play((start + i)/AudioBlock.SAMPLE_RATE);
-			arr[i] = (byte) f;
-		}
-		
-		return arr;
 	}
 
 }

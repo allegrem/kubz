@@ -13,8 +13,8 @@ import synthesis.parameter.ParamBlock;
 import synthesis.parameter.ParameterAudioBlock;
 
 /**
+ * A sandbox instrument.
  * @author allegrem
- * 
  */
 public class TestInstrument implements FmInstrument {
 
