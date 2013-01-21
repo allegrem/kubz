@@ -55,10 +55,7 @@ public class SLWindow {
 			public void run() {
 				try {
 					SLWindow window = new SLWindow();
-/************************ TESTING ****************************/
 					window.frmSoundlab.setVisible(true);
-					window.setInstrument(new WoodInstrument());
-//					window.setInstrument(new PianoInstrument());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -75,6 +72,7 @@ public class SLWindow {
 	 */
 	public SLWindow() {
 		initialize();
+		setInstrument(new BellInstrument());
 	}
 
 	/**
@@ -126,6 +124,11 @@ public class SLWindow {
 		mnFile.add(separator);
 
 		JMenuItem mntmQuit = new JMenuItem("Quit");
+		mntmQuit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frmSoundlab.dispose();
+			}
+		});
 		addStatusBarListeners(mntmQuit, "Quit SoundLab");
 		mntmQuit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,
 				InputEvent.CTRL_MASK));
