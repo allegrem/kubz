@@ -56,6 +56,8 @@ public class SLWindow {
 					window.frmSoundlab.setVisible(true);
 					//window.setInstrument(new BellInstrument());
 					window.setInstrument(new PianoInstrument());
+					//window.setInstrument(new WoodInstrument());
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

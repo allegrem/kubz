@@ -28,10 +28,9 @@ public class BellInstrument implements FmInstrument{
 	private ArrayList<ParameterAudioBlock> paramList;
 
 	public BellInstrument() {
-		//super();
+		super();
 		
 		fm = new ParamBlock("fm", 70, 500, 280);
-		//fp = new ParamBlock("fp", (int) (1.4*fm.getValue()), 1.410000, 600);
 		a = new ParamBlock("a", 0, 50, 2);
 		d = new ParamBlock("d", 800, 1000, 998);
 		
@@ -42,7 +41,6 @@ public class BellInstrument implements FmInstrument{
 	private ArrayList<ParameterAudioBlock> generateParamList() {
 		ArrayList<ParameterAudioBlock> list = new ArrayList<ParameterAudioBlock>();
 		list.add(fm);
-		//list.add(fp);
 		list.add(a);
 		list.add(d);
 
@@ -55,7 +53,6 @@ public class BellInstrument implements FmInstrument{
 		try {
 			fp.plugin(fm);
 		} catch (TooManyInputsException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try {
