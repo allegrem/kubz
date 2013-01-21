@@ -6,6 +6,7 @@ import synthesis.AudioBlock;
 import synthesis.basicblocks.noinputblocks.Constant;
 import synthesis.basicblocks.noinputblocks.FixedSineWaveOscillator;
 import synthesis.basicblocks.oneinputblocks.FixedADSR;
+import synthesis.basicblocks.oneinputblocks.Gain;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
 import synthesis.basicblocks.severalinputsblocks.Adder;
 import synthesis.basicblocks.severalinputsblocks.Multiplier;
@@ -19,7 +20,7 @@ public class BellInstrument implements FmInstrument{
 	private final float STEPS = 1000;
 	
 	private final ParameterAudioBlock fm;
-	private final AudioBlock fp; //=1.4*fm
+	private final Gain fp; //=1.4*fm
 	private final ParameterAudioBlock a; 
 	private final ParameterAudioBlock d;
 	
@@ -31,7 +32,12 @@ public class BellInstrument implements FmInstrument{
 		
 		fm = new ParamBlock("fm", 70, 500, 280);
 		//fp = new ParamBlock("fp", (int) (1.4*fm.getValue()), 1.410000, 600);
-		fp = new Constant((float) ((1/Math.sqrt(2))*fm.getValue()));
+		fp = new Gain((float) (1/Math.sqrt(2)));  
+		try {
+			fp.plugin(fm);
+		} catch (TooManyInputsException e) {
+			e.printStackTrace();
+		}
 		a = new ParamBlock("a", 0, 50, 2);
 		d = new ParamBlock("d", 800, 1000, 998);
 		
