@@ -1,5 +1,6 @@
 package main;
 
+import gameEngine.GameEngine;
 import map2.MapCreator;
 import OpenGL.GLDisplay;
 /**
@@ -13,8 +14,7 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		new MapCreator(MapCreator.create_mode);
-		//new MapCreator(MapCreator.read_mode);
+		new GameEngine();
 	}
 
 }
