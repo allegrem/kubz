@@ -1,8 +1,8 @@
 package utilities;
 
 /**
- * Objet Point représentant un point en 2D
- * par ses coordonnées x et y
+ * Objet representant un point en 2D
+ * par ses coordonnees x et y
  * 
  * @author paul
  *

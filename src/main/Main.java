@@ -3,7 +3,7 @@ package main;
 import map2.MapCreator;
 import OpenGL.GLDisplay;
 /**
- * Lancement du createur de maps ou de lecteur de maps
+ * Lancement du createur de maps ou de lecteur de maps.
  * A n'utiliser que pour les tests
  * 
  */

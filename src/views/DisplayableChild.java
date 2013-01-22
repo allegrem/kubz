@@ -2,7 +2,7 @@ package views;
 
 /**
  * Objet affichable de type "Fils":
- * il est attaché a un pere
+ * il est attache a un pere
  * @author paul
  *
  */

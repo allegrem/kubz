@@ -40,7 +40,7 @@ import views.WallView;
 import OpenGL.GLDisplay;
 
 /**
- * Sert à creer une nouvelle map
+ * Sert a creer une nouvelle map
  * 
  * @author paul&valeh
  * 
