@@ -33,7 +33,7 @@ public class MainWoodTest {
 			e.printStackTrace();
 		}
 
-		// compute sound
+		// playing some nice music
 		byte[] sound = null;
 		try {
 			 note.setValue(440);
