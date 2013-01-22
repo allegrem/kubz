@@ -1,11 +1,15 @@
 package gameEngine;
 import java.util.ArrayList;
+
+import monster.Monster;
 import player.*;
 import cubeManager.*;
 
 public class GameEngine {
 	
-	private ArrayList<Player> playerList; //utile ?
+	private ArrayList<Monster> monsters;
+	private ArrayList<Wall> walls;
+	private ArrayList<Base> bases;
 	private CubeManager cubeManager;
 	
 
