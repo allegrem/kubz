@@ -37,7 +37,6 @@ public class CubeControlledView implements DisplayableFather{
 	 * Nouveau cubeControlled
 	 * @param position Sa position (centre)
 	 * @param color Sa couleur
-	 * @param map
 	 */
 	public CubeControlledView(Point position, ReadableColor color) {
 		this.position = position;
