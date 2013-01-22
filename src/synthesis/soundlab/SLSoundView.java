@@ -28,7 +28,7 @@ public class SLSoundView extends JPanel {
 
 	private int offsetX = 0;
 
-	SLSoundView(SLWindow window) {
+	public SLSoundView(SLWindow window) {
 		super();
 		this.window = window;
 		setPreferredSize(new Dimension(X_SIZE, Y_SIZE));
