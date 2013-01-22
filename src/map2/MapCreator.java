@@ -375,7 +375,7 @@ public class MapCreator {
 				
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_B)) {
 				DisplayableFather base;
-				base=map.add(new BaseView(new Point(mouseX, mouseY), Color.PURPLE,BaseView.HAUT));
+				base=map.add(new BaseView(new Point(mouseX, mouseY), Color.LTGREY,BaseView.HAUT));
 
 				while (Mouse.isButtonDown(0)) {
 					mouseX = Mouse.getX();
@@ -385,7 +385,7 @@ public class MapCreator {
 						base=map.add(new BaseView(new Point(mouseX, 0), Color.LTGREY,BaseView.HAUT));
 					} else if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
 						base=map.add(new BaseView(new Point(mouseX, display_height),
-								Color.GREY,BaseView.BAS));
+								Color.LTGREY,BaseView.BAS));
 					} else if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
 						base=map.add(new BaseView(new Point(display_width, mouseY),
 								Color.LTGREY,BaseView.DROITE));
