@@ -58,9 +58,9 @@ public class MapCreator {
 	 * Les fichiers dans lesquels seront 
 	 * effectuees les sauvegardes
 	 */
-	public static String bFileName = "bFile.txt";
-	public static String mFileName = "mFile.txt";
-	public static String wFileName = "WFile.txt";
+	public static String bFileName = "Maps/bFile.txt";
+	public static String mFileName = "Maps/mFile.txt";
+	public static String wFileName = "Maps/WFile.txt";
 	
 	/*
 	 * Creation du saver de map
