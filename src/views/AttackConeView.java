@@ -18,17 +18,31 @@ import org.lwjgl.util.glu.PartialDisk;
 import utilities.Point;
 import utilities.Vector;
 
-public class AttackCone implements DisplayableChild {
+/**
+ * Affiche le cone d'attaque servant a
+ * definir la direction et l'ouverture de l'attaque
+ * @author paul
+ *
+ */
+public class AttackConeView implements DisplayableChild {
 	private DisplayableFather father;
 	private double angle;
 	private double direction;
 	private int power;
 	private int start=0;
 	private ReadableColor color=Color.DKGREY;
-	private long pause=30;
+	private long pause=30;// Temps de pause pour le deplacement du signal
 	private long startingTime=0;
 	
-	public AttackCone(double angle, double direction, int power){
+	/**
+	 * Creation d'un cone d'atatque
+	 * @param angle L'angle d'ouverture du cone
+	 * @param direction La direction du cone autour de z
+	 * Le 0 correspond a l'axe y (vers le bas)
+	 * @param power La "puissance" du cone
+	 * Plus power est grand, plus la longueur du cone sera importante
+	 */
+	public AttackConeView(double angle, double direction, int power){
 		this.angle=angle;
 		this.direction=direction;
 		this.power=power;
@@ -39,6 +53,7 @@ public class AttackCone implements DisplayableChild {
 		this.father=father;
 	}
 	
+	@Override
 	public void paint(){
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		int alpha;
@@ -47,6 +62,9 @@ public class AttackCone implements DisplayableChild {
 		double x=0;
 		double y=0;
 		int fin=power-5;
+		/*
+		 * Activation de la transparence
+		 */
 		GL11.glEnable (GL11.GL_BLEND);
 		GL11.glEnable(GL11.GL_ALPHA_TEST);    
 		GL11.glBlendFunc (GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -76,7 +94,9 @@ public class AttackCone implements DisplayableChild {
 		}
 		
 		
-		
+		/*
+		 * Affichage du cone
+		 */
 		for(float i=start;i<=fin;i+=10){
 			alpha=Math.round((fin-i)/fin*255);
 		GL11.glColor4ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue(),(byte)alpha);
@@ -85,24 +105,43 @@ public class AttackCone implements DisplayableChild {
 		GL11.glTranslated(-father.getX(), -father.getY(),-MonsterView.height/2 );
 		}
 		
-
+		/*
+		 * Pause pour que le signal ne se deplace
+		 * pas trop vite
+		 */
 		if(System.currentTimeMillis()-startingTime>pause){
 		start++;
 		start %=10;
 		startingTime=System.currentTimeMillis();
 		}
+		
+		/*
+		 * Desactivation de la transparence
+		 */
 		GL11.glDisable (GL11.GL_BLEND); 
 		GL11.glDisable(GL11.GL_ALPHA_TEST);  
 	}
 
+	/**
+	 * Modification de la direction du cone
+	 * @param direction
+	 */
 	public void setDirection( long direction){
 		this.direction=direction;
 	}
 	
+	/**
+	 * Modification de l'angle d'ouverture du cone
+	 * @param Angle
+	 */
 	public void setAngle(double Angle){
 		this.angle=angle;
 	}
 	
+	/**
+	 * Modification de la puissance du cone
+	 * @param power
+	 */
 	public void setPower(int power){
 		this.power=power;
 	}
@@ -134,8 +173,8 @@ public class AttackCone implements DisplayableChild {
 
 	@Override
 	public String getCharac() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return "AttackCone";
 	}
 
 	

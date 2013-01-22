@@ -1,41 +1,72 @@
 package views;
 
 
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glVertex3d;
+
 import java.util.ArrayList;
 
 import map2.Map;
 
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 
+import utilities.Maths;
 import utilities.Point;
+import utilities.Vector;
 
-
+/**
+ * Un objet controlle par un cube.
+ * Cela peut etre l'unite d'un joueur
+ * ou un cube servant de parametre
+ * @author paul
+ *
+ */
 public class CubeControlledView implements DisplayableFather{
 	private double size= 30;
 	private int height = 30;
 	private Point position;
-	private Map map;
 	private ArrayList<DisplayableChild> children= new ArrayList<DisplayableChild>();
 	private int duration=0;
 	private ReadableColor color=Color.RED;
+	private boolean untracked=false; //L'unite est-elle sur la table ?
 	
-	public CubeControlledView(Point position, ReadableColor color,Map map) {
-		this.map=map;
+	/**
+	 * Nouveau cubeControlled
+	 * @param position Sa position (centre)
+	 * @param color Sa couleur
+	 * @param map
+	 */
+	public CubeControlledView(Point position, ReadableColor color) {
 		this.position = position;
 	}
 	
+	/**
+	 * Deplacement relatif du monstre
+	 * @param dx Deplacement selon x
+	 * @param dy Deplacement selon y
+	 */
 	public void translate(int dx, int dy) {
 		position.translate(dx, dy);
 	}
 
-	
-
+/**
+ * Nouvelle position a partir des 
+ * nouvelles coordonnes
+ * @param x
+ * @param y
+ */
 	public void setLocation(int x, int y) {
 		position.move(x, y);
 
 	}
 
+	/**
+	 * Nouvelle position a partir de l'emplacement d'un point
+	 * @param p
+	 */
 	public void setLocation(Point p) {
 		position.setLocation(p);
 
@@ -69,7 +100,22 @@ public class CubeControlledView implements DisplayableFather{
 	
 	@Override
 	public void paint() {
-		// TODO Auto-generated method stub
+		
+		/**
+		 * Si l'unite n'est plus sur la table, on affiche un carre rouge
+		 */
+		if (untracked){
+			glBegin(GL_QUADS);
+			GL11.glDisable(GL11.GL_TEXTURE_2D);
+			GL11.glNormal3f(0, 0, -1.0f);
+			GL11.glColor3ub((byte) (color.getRed()), (byte) (color.getGreen()) , (byte) (color.getBlue()));
+			
+			glVertex3d(position.getX()-MonsterView.size/2, position.getY()-MonsterView.size/2, 0);
+			glVertex3d(position.getX()+MonsterView.size/2, position.getY()-MonsterView.size/2, 0);
+			glVertex3d(position.getX()+MonsterView.size/2, position.getY()+MonsterView.size/2, 0);
+			glVertex3d(position.getX()-MonsterView.size/2, position.getY()+MonsterView.size/2, 0);
+			GL11.glEnd();
+		}
 		
 	}
 
@@ -109,8 +155,7 @@ public class CubeControlledView implements DisplayableFather{
 
 	@Override
 	public String getCharac() {
-		// TODO Auto-generated method stub
-		return null;
+		return "CubeControlled";
 	}
 	
 	public void paintChildren(){
@@ -121,7 +166,10 @@ public class CubeControlledView implements DisplayableFather{
 
 	@Override
 	public boolean collisionCanOccure(Point point, float taille) {
-		// TODO Auto-generated method stub
+		double dist=size*Math.sqrt(2)/2;
+		Vector vect= Maths.makeVector(point.getX(), point.getY(), 0, getX(), getY(), 0);
+		if(dist+taille>=vect.norme())
+			return true;
 		return false;
 	}
 }

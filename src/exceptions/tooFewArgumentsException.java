@@ -1,6 +1,6 @@
 package exceptions;
 /**
- * Exception levée quand il n'y a pas les arguments nécessaires pour la création de Base et Wall lors 
+ * Exception levee quand il n'y a pas les arguments necessaires pour la creation de Base et Wall lors 
  * la lecture du fichier dans initFromFile.
  * @author valeh 
  */

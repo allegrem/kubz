@@ -5,11 +5,34 @@ import java.util.ArrayList;
 import utilities.Point;
 
 public interface DisplayableFather extends Displayable {
-
+	/**
+	 * 
+	 * @return La coordonnee x du centre de l'objet
+	 */
 	public double getX();
+	
+	/**
+	 * 
+	 * @return  La coordonnee y du centre de l'objet
+	 */
 	public double getY();
+	
+	/**
+	 * 
+	 * @return La liste des "fils" de l'objet "pere"
+	 */
 	public ArrayList<DisplayableChild> getChildren();
+	
+	/**
+	 * Ajouter un fils a l'objet
+	 * @param object Le fils a ajouter
+	 */
 	public void addChild(DisplayableChild object);
+	
+	/**
+	 * Retirer un fils a l'objet
+	 * @param child Le fils a retirer
+	 */
 	public void removeChild(DisplayableChild child);
 	
 	/**

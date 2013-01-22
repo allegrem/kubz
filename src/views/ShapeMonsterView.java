@@ -29,7 +29,11 @@ import utilities.Vector;
 public class ShapeMonsterView extends MonsterView {
 	
 
-
+/**
+ * Noueau monstre triangle
+ * @param position Sa position (centre)
+ * @param color Sa couleur
+ */
 	public ShapeMonsterView(Point position, ReadableColor color) {
 		super(position, color);
 	}
@@ -81,7 +85,7 @@ public class ShapeMonsterView extends MonsterView {
 	}
 
 	@Override
-	public String getType() {
+	public String getCharac() {
 		return "T";
 	}
 

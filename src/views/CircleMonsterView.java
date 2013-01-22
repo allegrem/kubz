@@ -1,11 +1,5 @@
-/**
- * Unit� Monstre de type cercle.
- * @author valeh
- */
 
 package views;
-
-
 
 import map2.Map;
 
@@ -19,11 +13,18 @@ import utilities.Maths;
 import utilities.Point;
 import utilities.Vector;
 
-
+/**
+ * Unite Monstre de type cercle.
+ * @author valeh
+ */
 public class CircleMonsterView extends MonsterView {
 	private Cylinder cylinder = new Cylinder();
 
-
+/**
+ * Nouveau monstre de type cercle
+ * @param position Le centre du monstre
+ * @param color La couleur du monstre
+ */
 	public CircleMonsterView(Point position,ReadableColor color) {
 		super(position,color);
 	}
@@ -40,6 +41,7 @@ public class CircleMonsterView extends MonsterView {
 	
 	}
 	
+	@Override
 	public boolean isInZone(Point p){
 		double pX = p.getX();
 		double pY = p.getY();
@@ -54,7 +56,7 @@ public class CircleMonsterView extends MonsterView {
 	
 
 	@Override
-	public String getType() {
+	public String getCharac() {
 		return "C";
 	}
 

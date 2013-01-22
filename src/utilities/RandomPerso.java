@@ -2,11 +2,19 @@ package utilities;
 
 import java.util.Random;
 
+/**
+ * Classe servant a generer des nombres aleatoires
+ * @author paul
+ *
+ */
 public class RandomPerso{
 
 	
 	private static Random alea;
 	
+	/**
+	 * Initilalise la graine du generateur
+	 */
 	public static void initialize(){
 		alea=new Random();
 	}
@@ -32,6 +40,11 @@ public class RandomPerso{
 	    
 	  }
 	  
+	  /**
+	   * 
+	   * @param max
+	   * @return Un entier entre 0 et max-1
+	   */
 	  public static int entier(int max){
 		  return (int)(uniform()*max);
 	  }

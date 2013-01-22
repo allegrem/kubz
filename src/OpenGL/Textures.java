@@ -6,10 +6,18 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
+/**
+ * Chargement des differentes textures utilisees
+ * @author paul
+ *
+ */
 public class Textures {
 	public static Texture texturePath;
 	public static Texture textureWall;
 	
+	/**
+	 * Initilaisation de la texture du sol
+	 */
 	public static void initTexturePath(){
 		texturePath=null;
 		try {
@@ -21,6 +29,9 @@ public class Textures {
 		
 	}
 	
+	/**
+	 * Initialisation de la texture des murs
+	 */
 	public static void initTextureWall(){
 		textureWall=null;
 		try {

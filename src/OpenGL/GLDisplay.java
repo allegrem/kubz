@@ -26,8 +26,9 @@ import org.lwjgl.opengl.GL11;
 import map2.Map;
 
 /**
- * Instructions OpenGL
- * 
+ * Instructions OpenGL:
+ * Sert a charger la librairie
+ * et a gerer l'affichage
  * @author paul
  * 
  */
@@ -36,7 +37,7 @@ public class GLDisplay extends Thread{
 	
 	private final int display_width;
 	private final int display_height; 
-	public static float ratio;
+	public static float ratio; // display_width/display_height
 	private boolean do_run=true;
 	private Map map;
 	private MapCreator mapCreator;
@@ -54,31 +55,33 @@ public class GLDisplay extends Thread{
 		ratio = display_width/display_height;
 	}
 
+	/**
+	 *Methode tournant en continu pendant l'execution
+	 *du thread 
+	 */
 	@Override
 	public void run(){
 		initialize();
 		while(do_run){
 			
 		if (Display.isCloseRequested())
-				do_run = false;
-		
-		//updateMouse();
-		//updateKeyboard();
-		clear();
-		mapCreator.eclairage();
-		mapCreator.compute();
-		render();
-		update();
-		Display.sync(120);
+				do_run = false; // On arrete le programme
+		clear(); //On nettoie la fenetre
+		mapCreator.eclairage(); //On regenere l'eclairage
+		mapCreator.compute(); // On s'oocupe des actions de l'utilisateur
+		render(); //Rendu de la map
+		update(); //On actualise la fenetre avec le nouveau rendu
+		Display.sync(120); //On synchronise l'affichage sur le bon FPS
 		
 		}
-		/*
-		 * Fermeture de la fenêtre
-		 */
-		close();
+		
+		close();//Fermeture de la fenêtre
 		
 	}
 	
+	/**
+	 * Initialisation de l'OpenGL
+	 */
 	private void initialize() {
 		initDisplay();
 		initGL();
@@ -92,20 +95,32 @@ public class GLDisplay extends Thread{
 		
 	}
 
+	/**
+	 * Rendu de la map
+	 */
 	public void render(){
 		map.paint();
 		
 	}
 	
+	/**
+	 * Nettoyage de l'affichage
+	 */
 	public void clear(){
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // On vide le buffer
 	}
 	
+	/**
+	 * Mise a jour de l'affichage
+	 */
 	public void update() {
 
 			Display.update(); // On actualise la fenêtre pour afficher les nouveaux rendus
 		}
 	
+	/**
+	 * Fermeture de la fenetre
+	 */
 	public void close(){
 		Display.destroy();
 		Keyboard.destroy();

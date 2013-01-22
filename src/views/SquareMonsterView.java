@@ -26,9 +26,14 @@ import utilities.Vector;
 public class SquareMonsterView extends MonsterView {
 	private long direction=0;
 	
+	/**
+	 * Nouveau monstre carre
+	 * @param position Sa position (centre)
+	 * @param color Sa couleur
+	 */
 	public SquareMonsterView(Point position, ReadableColor color) {
 		super(position, color);
-		this.addChild(new AttackCone(30,0,150));
+		this.addChild(new AttackConeView(30,0,150));
 	}
 
 	@Override
@@ -111,13 +116,13 @@ public class SquareMonsterView extends MonsterView {
 
 		direction++;
 		for(DisplayableChild child:getChildren()){
-			((AttackCone) (child)).setDirection(direction);
+			((AttackConeView) (child)).setDirection(direction);
 		}
 
 	}
 	
 	@Override
-	public String getType() {
+	public String getCharac() {
 		return "S";
 	}
 

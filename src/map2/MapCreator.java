@@ -40,7 +40,7 @@ import views.WallView;
 import OpenGL.GLDisplay;
 
 /**
- * Sert à créer une nouvelle map
+ * Sert à creer une nouvelle map
  * 
  * @author paul&valeh
  * 
@@ -54,13 +54,22 @@ public class MapCreator {
 	public static final int create_mode = 0;
 	public static final int read_mode = 1;
 	
-	
+	/*
+	 * Les fichiers dans lesquels seront 
+	 * effectuees les sauvegardes
+	 */
 	public static String bFileName = "bFile.txt";
 	public static String mFileName = "mFile.txt";
 	public static String wFileName = "WFile.txt";
 	
+	/*
+	 * Creation du saver de map
+	 */
 	private MapSaver mapSaver = new MapSaver(bFileName,mFileName,wFileName); 
 	
+	/*
+	 * Position et direction de la camera
+	 */
 	private float eyeX =0,eyeY = 0,eyeZ=50; 
 	private float atX=(float)(display_width/2),atY=(float)(display_height/2),atZ=0;
 
@@ -70,9 +79,11 @@ public class MapCreator {
 	private int mouseX;
 	private int mouseY;
 
-
+/*
+ * Angle de l'eclairage par rapport
+ * a l'axe z
+ */
 	private int angle = 0;
-
 	
 	/*
 	 * Les actions correspondant à la souris et au clavier
@@ -116,29 +127,30 @@ public class MapCreator {
 	 */
 	private boolean light = false;
 
+	/**
+	 * Initialisation du createur de map
+	 * @param mode Lecture ou creation de map
+	 */
 	public MapCreator(int mode) {
 
 		/*
-		 * Création du module d'affichage et de la map
+		 * Creation du module d'affichage et de la map
 		 */
 		if (mode == 0){
-		
-		affichage = new GLDisplay(display_width, display_height,map,this); //on initilaise avec un map par defaut et
-																		   //pour le MapReader on remplace le par d�faut				
-		RandomPerso.initialize();
+		/*	
+		*On initialise avec un map par defaut
+		*/	
+		affichage = new GLDisplay(display_width, display_height,map,this); 			
+		RandomPerso.initialize();//Initilaisation du générateur de nombres aléatoires
 		BackgroundView background = new BackgroundView(display_width, display_height); 
 		map.add(background);
 		affichage.start();
-		/*
-		 * Initilaisation du générateur de nombres aléatoires
-		 */
 	
 		while (affichage.isAlive()) {
-
-
+			/*
+			 * On modifie le background toutes les 100 ms
+			 */
 			background.change();
-
-			
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
@@ -149,20 +161,25 @@ public class MapCreator {
 	}
 		else {
 			affichage = new GLDisplay(display_width, display_height,map,this); 			
-			RandomPerso.initialize();
+			RandomPerso.initialize();//Initilaisation du générateur de nombres aléatoires
 			map.add(new BackgroundView(display_width, display_height));
 			MapReader mapReader = new MapReader(bFileName,mFileName,wFileName);
 			try {
+				/*
+				 * Lecture de la map precedemment enregistree
+				 */
 				map = mapReader.read(map);
 			}catch(Exception e){e.printStackTrace();}
+			
 			affichage.start();
-
-			/*
-			* Initilaisation du générateur de nombres aléatoires
-			*/
-
+			
 			while (affichage.isAlive()) {
 			try {
+				/*
+				 * On fait une pause pour ne pas
+				 * monopoliser le processeur avec une
+				 * boucle vide
+				 */
 				Thread.sleep(1000);
 				} catch (InterruptedException e) {}
 			
@@ -173,7 +190,10 @@ public class MapCreator {
 		
 }
 	
-	
+	/**
+	 * Recuperation et traitement des actions
+	 * de l'utilisateur
+	 */
 	public  void compute(){
 		
 		/*
@@ -208,6 +228,9 @@ public class MapCreator {
 		mouseX = Mouse.getX();
 		mouseY = display_height - Mouse.getY();
 
+		/*
+		 * Traitement des clicks de la souris
+		 */
 		if (!Mouse.isButtonDown(0))
 			leftClicked = true;
 
@@ -247,6 +270,10 @@ public class MapCreator {
 			tabClicked = false;
 		}
 		
+		/*
+		 * Deplacement de la camera en
+		 * mode 3D
+		 */
 		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_LEFT) && leftKey) {
 			eyeX -= 5;
 			changementMode3D();
@@ -264,6 +291,7 @@ public class MapCreator {
 			changementMode3D();
 		}
 
+		
 		/*
 		 * Rotation de la map
 		 */
@@ -413,9 +441,10 @@ public class MapCreator {
 
 	}
 
-	//ici
-	 
-	
+	/**
+	 * Passage du mode 2D vers le mode 3D
+	 * (cf MODE3D)
+	 */
 	public  void changementMode3D() {
 		/*
 		 * Matrice de projection (3D vers 2D): utilisation d'une projection
@@ -445,26 +474,29 @@ public class MapCreator {
 		}
 		
 	}
-
+	
+/**
+ * Rotation de la carte sur elle-meme
+ */
 	public  void rotate() {
-		/*
-		 * Sert à faire tourner la carte sur elle-même 
-		 */
 		GL11.glTranslatef(display_width / 2, display_height / 2, 0);
 		GL11.glRotated(0.1, 0, 0, 1);
 		GL11.glTranslatef(-display_width / 2, -display_height / 2, 0);
 	}
 
+	/**
+	 * Fait bouger les murs créés aléatoirement
+	 */
 	public  void wAlea() {
-		/*
-		 * Sert à faire bouger les murs créés aléatoirement
-		 */
 		for (Displayable object : map.getObjects()) {
 			if(object instanceof WallView )
 			((WallView) object).aleaMove();
 		}
 	}
 
+	/**
+	 * Gere l'eclairage
+	 */
 	public  void eclairage() {
 		if (light) {
 
@@ -475,8 +507,6 @@ public class MapCreator {
 			glEnable(GL11.GL_LIGHTING);
 			glEnable(GL11.GL_LIGHT0);  //one source of light only
 			GL11.glColorMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_AMBIENT_AND_DIFFUSE);  //which face will reflect light+ambient(lOff) and diffuse(lOn) preferred to have same value
-			GL11.glLightModel(GL11.GL_LIGHT_MODEL_AMBIENT,MyFloatBuffer.newFloatBuffer4(0.8f,0.8f,0.8f,1.0f)); //the amount of global light emitted
-			//GL11.glLightModeli(GL11.GL_LIGHT_MODEL_TWO_SIDE,GL11.GL_TRUE);
 			glMatrixMode(GL_MODELVIEW);
 			GL11.glTranslated(display_width / 2, display_height / 2, 0);
 			GL11.glRotated(Math.round(angle/10), 0, 0, 1);
@@ -487,7 +517,7 @@ public class MapCreator {
 			GL11.glRotated(-Math.round(angle/10), 0, 0, 1);
 			GL11.glTranslated(-display_width / 2, -display_height / 2, 0);
 
-			angle++;
+			angle++; //fait tourner l'eclairage
 		} else {
 			 GL11.glDisable(GL11.GL_LIGHTING);
 			 GL11.glDisable(GL11.GL_LIGHT0);

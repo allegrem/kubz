@@ -1,11 +1,5 @@
-/**
- * Classe correspondant a la Base d'un joueur, represente par un demi-disque.
- * @author valeh
- */
+
 package views;
-
-
-
 
 import java.util.ArrayList;
 
@@ -17,7 +11,10 @@ import org.lwjgl.util.glu.PartialDisk;
 
 import utilities.Point;
 
-
+/**
+ * Classe correspondant a la Base d'un joueur, represente par un demi-disque.
+ * @author valeh
+ */
 public class BaseView implements DisplayableFather{
 	private PartialDisk disk1 =new PartialDisk();
 	private PartialDisk disk2=new PartialDisk();
@@ -33,13 +30,19 @@ public class BaseView implements DisplayableFather{
 	private ReadableColor color;
 	private int sens;
 	
+	/**
+	 * Nouvelle base
+	 * @param center Centre de la base
+	 * @param color Couleur de la abse
+	 * @param sens Emplacement de la base (Haut, Bas, Gauche ou Droite)
+	 */
 	public BaseView(Point center,ReadableColor color,int sens){
 		this.center = center;
 		this.color=color;
 		this.sens=sens;
 	}
 	
-	
+	@Override
 	public void paint(){	
 
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
@@ -52,6 +55,7 @@ public class BaseView implements DisplayableFather{
 
 	}
 	
+	@Override
 	public boolean isInZone(Point p){
 		double pX = p.getX();
 		double pY = p.getY();
@@ -64,15 +68,22 @@ public class BaseView implements DisplayableFather{
 			return true;
 		return false;
 	}
+	
+	/**
+	 * 
+	 * @return La couleur de la base
+	 */
 	public ReadableColor getColor(){
 		return color;
 	}
+	
 	@Override
 	public void setColor(ReadableColor color) {
 		this.color = color;
 		
 	}
 
+	@Override
 	public String getCharac(){
 		
 		return center.getX()+" "+center.getY()+
@@ -97,15 +108,15 @@ public class BaseView implements DisplayableFather{
 
 	@Override
 	public double getX() {
-		// TODO Auto-generated method stub
-		return 0;
+	
+		return center.getX();
 	}
 
 
 	@Override
 	public double getY() {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return center.getY();
 	}
 
 

@@ -7,8 +7,8 @@ import views.DisplayableFather;
 
 
 /**
- * Contient toutes les données concernant la map de jeu: map en elle même et
- * unités à afficher
+ * Contient toutes les donnees concernant la map de jeu: map en elle meme et
+ * unites a afficher
  * 
  * @author paul
  * 
@@ -26,7 +26,9 @@ public class Map {
 		map=this;
 	}
 
-
+/**
+ * Genere le rendu de la map en affichant chaque objet 
+ */
 	public void paint() {
 		for(DisplayableFather object: listObjects){
 			object.paint();
@@ -35,12 +37,22 @@ public class Map {
 
 	}
 	
-
+/**
+ * Ajout d'un objet pere a la map
+ * @param object L'objet a ajouter
+ * @return L'objet ajoute
+ */
 	public DisplayableFather add(DisplayableFather object){
 		listObjects.add(object);
 		return object;
 	}
 	
+	/**
+	 * Retrait d'un objet de la map
+	 * 
+	 * @param object Objet a retirer
+	 * @return L'objet retire si cela a marche
+	 */
 	public DisplayableFather remove(DisplayableFather object){
 		if (listObjects.size()>1){
 		listObjects.remove(object);
@@ -50,6 +62,10 @@ public class Map {
 		}
 	}
 
+	/**
+	 * Retirer le dernier objet ajoute
+	 * 
+	 */
 	public int removeLast(){
 		
 		if (listObjects.size()>1){
@@ -60,10 +76,18 @@ public class Map {
 			}
 	}
 	
+	/**
+	 * 
+	 * @return La liste des objets ajoutes a la map
+	 */
 	public ArrayList<DisplayableFather> getObjects(){
 		return listObjects;
 	}
 	
+	/**
+	 * 
+	 * @return La map
+	 */
 	public static Map getMap(){
 		return map;
 	}

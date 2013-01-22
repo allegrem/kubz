@@ -18,7 +18,7 @@ import utilities.RandomPerso;
 
 import OpenGL.Textures;
 /**
- * Le sol (chemin)
+ * Le background
  * 
  * @author paul
  *
@@ -26,11 +26,18 @@ import OpenGL.Textures;
 public class BackgroundView implements DisplayableFather{
 	private int width;
 	private int length;
-	//private final ReadableColor color= new Color(200,150,50);
-	//private int nbre=7;
+	
+	/*
+	 * Les couleurs de depart du background
+	 * (a l'ouverture de la fenetre)
+	 */
 	private int red1 = 197,blue1 = 226, green1 = 197;
 	private int red2 = 197,blue2 = 226, green2 = 197;
-	private boolean do_run = true;
+	
+	/*
+	 * Sens de variation des differentes
+	 * composantes des couleurs
+	 */
 	private int sRed1=1;
 	private int sGreen1=1;
 	private int sBlue1=1;
@@ -38,12 +45,21 @@ public class BackgroundView implements DisplayableFather{
 	private int sGreen2=-1;
 	private int sBlue2=-1;
 	
+	/**
+	 * Nouveau background
+	 * @param width Largeur
+	 * @param length Longueur
+	 */
 	public BackgroundView(int width, int length) {
 		this.width=width;
 		this.length=length;
 
 	}
 
+	/**
+	 * Changement de la couleur du background
+	 * de facon aleatoire et avec un degrade
+	 */
 	public void change(){
 		int alea=RandomPerso.entier(5);
 		switch(RandomPerso.entier(3)){
@@ -98,20 +114,25 @@ public class BackgroundView implements DisplayableFather{
 		
 		
 	}
+	
 	public void paint() {
-		/*glEnable(GL11.GL_TEXTURE_2D);
-		if (Textures.texturePath==null)
-			Textures.initTexturePath();   
-		GL11.glColor3f(1.0f,1.0f,1.0f);
-		Color.white.bind();
-		Textures.texturePath.bind();*/
-		GL11.glDisable(GL11.GL_TEXTURE_2D);
+		/*
+		 * Sert dans le cas ou l'on utilise une texture pour le background
+		 * 
+		 * glEnable(GL11.GL_TEXTURE_2D);
+		 *if (Textures.texturePath==null)
+		 *	Textures.initTexturePath();   
+		 *GL11.glColor3f(1.0f,1.0f,1.0f);
+		 *Color.white.bind();
+		 *Textures.texturePath.bind();
+		 */
 		
-		 // face marron
+		
+		 GL11.glDisable(GL11.GL_TEXTURE_2D);
+		
 		glBegin(GL_QUADS);
 		GL11.glNormal3f(0,0, 1.0f);
 		GL11.glColor3ub((byte)red1,(byte) green1 ,(byte) blue1);
-		//GL11.glColor3ub((byte) 200, (byte) 233 , (byte) 256);
 		//GL11.glTexCoord2f(0,0);
 		glVertex3d(0, 0, 0);
 		
@@ -174,8 +195,8 @@ public class BackgroundView implements DisplayableFather{
 
 	@Override
 	public String getCharac() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return "Background";
 	}
 
 	@Override

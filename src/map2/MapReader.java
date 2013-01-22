@@ -40,6 +40,10 @@ public class MapReader {
 		this.wFileName = wFileName;
 	}
 	
+	/**
+	 * Lecture du fichier "Bases"
+	 * @throws Exception
+	 */
 	private void readBases() throws Exception {
 		FileReader fr = null;
 		BufferedReader br = null;
@@ -74,6 +78,10 @@ public class MapReader {
 		}
 	}
 	
+	/**
+	 * Lecture du fichier "Monsters"
+	 * @throws Exception
+	 */
 	private void readMonsters() throws Exception {
 		FileReader fr = null;
 		BufferedReader br = null;
@@ -119,6 +127,10 @@ public class MapReader {
 		}
 	}
 	
+	/**
+	 * Lecture du fichier "Walls"
+	 * @throws Exception
+	 */
 	private void readWalls() throws Exception {
 		FileReader fr = null;
 		BufferedReader br = null;
@@ -150,6 +162,12 @@ public class MapReader {
 		}
 	}
 	
+	/**
+	 * Lecture de tous les fichiers
+	 * @param map
+	 * @return
+	 * @throws Exception
+	 */
 	public Map read(Map map) throws Exception{
 		this.map = map;
 		readBases();

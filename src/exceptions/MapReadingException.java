@@ -1,7 +1,7 @@
 package exceptions;
 
 /**
- * Erreur de lecture du labyrinthe depuis le fichier
+ * Erreur de lecture de la map depuis le fichier
  * 
  * @author paul
  * 

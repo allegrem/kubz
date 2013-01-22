@@ -27,6 +27,10 @@ public class MapSaver {
 		this.wFileName = wFileName;
 	}
 	
+	/**
+	 * Enregistre tous les objets crees dans des fichiers
+	 * @param map
+	 */
 	public void saveToFile(Map map){
 		ArrayList<DisplayableFather> displayables = map.getObjects();
 		for (Displayable disp : displayables){
@@ -42,6 +46,10 @@ public class MapSaver {
 		saveWalls(walls);
 	}
 	
+	/**
+	 * Enregistrement des bases
+	 * @param bases
+	 */
 	private void saveBases(ArrayList<BaseView> bases){
 		PrintWriter pw = null;
 		try {
@@ -63,6 +71,11 @@ public class MapSaver {
 			}
 		}	
 	}
+	
+	/**
+	 * Enregistrement des monstres
+	 * @param monsters
+	 */
 	private void saveMonsters(ArrayList<MonsterView> monsters){
 		PrintWriter pw = null;
 		try {
@@ -84,6 +97,11 @@ public class MapSaver {
 			}
 		}	
 	}
+	
+	/**
+	 * Enregistrement des murs
+	 * @param walls
+	 */
 	private  void saveWalls(ArrayList<WallView> walls) {
 		PrintWriter pw = null;
 		try {
