@@ -21,7 +21,7 @@ import utilities.Point;
 import utilities.Vector;
 
 /**
- * Une unité en forme de triangle
+ * Une unite en forme de triangle
  * 
  * @author paul
  *

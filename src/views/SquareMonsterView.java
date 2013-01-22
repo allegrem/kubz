@@ -18,7 +18,7 @@ import utilities.Point;
 import utilities.Vector;
 
 /**
- * Une unité en forme de carré
+ * Une unite en forme de carre
  * 
  * @author paul
  *

@@ -4,6 +4,12 @@ import java.util.ArrayList;
 
 import utilities.Point;
 
+/**
+ * Objet affichable de type "Pere":
+ * on peut lui attacher des fils
+ * @author paul
+ *
+ */
 public interface DisplayableFather extends Displayable {
 	/**
 	 * 
@@ -38,7 +44,7 @@ public interface DisplayableFather extends Displayable {
 	/**
 	 * Renvoie si oui ou non une collision peut se produire
 	 * 
-	 * @param point Centre de l'objet à analyser
+	 * @param point Centre de l'objet a analyser
 	 * @param taille taille de l'objet dont le centre est point
 	 * @return
 	 */

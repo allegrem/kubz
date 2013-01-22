@@ -16,7 +16,7 @@ import utilities.Point;
 
 
 /**
- * Une unité d'un joueur ou un monstre
+ * Une unite d'un joueur ou un monstre
  * 
  * @author paul
  * 

@@ -7,7 +7,11 @@ import org.lwjgl.util.ReadableColor;
 
 import utilities.Point;
 
-
+/**
+ * Objet affichable
+ * @author paul
+ *
+ */
 public interface Displayable {
 	/**
 	 * Genere le rendu de l'objet
