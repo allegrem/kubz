@@ -507,6 +507,7 @@ public class MapCreator {
 			glEnable(GL11.GL_LIGHTING);
 			glEnable(GL11.GL_LIGHT0);  //one source of light only
 			GL11.glColorMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_AMBIENT_AND_DIFFUSE);  //which face will reflect light+ambient(lOff) and diffuse(lOn) preferred to have same value
+			GL11.glLightModel(GL11.GL_LIGHT_MODEL_AMBIENT,MyFloatBuffer.newFloatBuffer4(0.8f,0.8f,0.8f,1.0f)); //Type de l'éclairage
 			glMatrixMode(GL_MODELVIEW);
 			GL11.glTranslated(display_width / 2, display_height / 2, 0);
 			GL11.glRotated(Math.round(angle/10), 0, 0, 1);
