@@ -95,6 +95,6 @@ public class Vector {
 	 * @return La norme du vecteur
 	 */
 	public  double norme(){
-		return Math.hypot(getX(),getY());
+		return Math.sqrt(getX()*getX()+getY()*getY()+getZ()*getZ());
 	}
 }

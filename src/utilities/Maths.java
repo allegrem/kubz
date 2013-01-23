@@ -63,5 +63,57 @@ public class Maths {
 		return vect;
 	
 	}
+	
+	/**
+	 * Retourne un vecteur a partir de ses 2 extremites
+	 * @param p1
+	 * @param p2
+	 * @return
+	 */
+	public static Vector makeVector(Point p1, Point p2){
+		Vector vect=new Vector(0,0,0);
+		vect.setX(p2.getX()-p1.getX());
+		vect.setY(p2.getY()-p1.getY());
+		return vect;
+	}
+
+	/**
+	 * Retourne un vecteur normal a un autre vector
+	 * @param vector
+	 * @return
+	 */
+	public static Vector getNormalvector(Vector vector) {
+		Vector vect= new Vector(0,0,0);
+		vect.setX(1);
+		vect.setY(-vector.getX()/vector.getY());
+		normalize(vect);
+		return vect;
+	}
+	
+	/**
+	 * Normalise un vecteur
+	 * @param vect
+	 * @return
+	 */
+	public static void normalize(Vector vect){
+		double norme=vect.norme();
+		vect.setX(vect.getX()/norme);
+		vect.setY(vect.getY()/norme);
+		vect.setZ(vect.getZ()/norme);
+		
+	}
+
+	/**
+	 * Change le sens du vector
+	 * @param normalvector
+	 * @return
+	 */
+	public static Vector opposite(Vector vect) {
+		Vector vector =new Vector(0,0,0);
+		vector.setX(-vect.getX());
+		vector.setY(-vect.getY());
+		vector.setZ(-vect.getZ());
+		return vector;
+	}
 
 }

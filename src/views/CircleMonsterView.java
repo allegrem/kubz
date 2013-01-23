@@ -9,6 +9,7 @@ import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.glu.Cylinder;
 import org.lwjgl.util.glu.Disk;
 
+import utilities.Lines;
 import utilities.Maths;
 import utilities.Point;
 import utilities.Vector;
@@ -27,6 +28,7 @@ public class CircleMonsterView extends MonsterView {
  */
 	public CircleMonsterView(Point position,ReadableColor color) {
 		super(position,color);
+		this.addChild(new SinusoidalAttackView(90,0,150));
 	}
 
 	@Override
