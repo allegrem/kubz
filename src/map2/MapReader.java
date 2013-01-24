@@ -12,12 +12,12 @@ import java.util.Scanner;
 import org.lwjgl.util.Color;
 
 import utilities.Point;
-import views.BaseView;
-import views.CircleMonsterView;
-import views.MonsterView;
-import views.ShapeMonsterView;
-import views.SquareMonsterView;
-import views.WallView;
+import views.monsters.CircleMonsterView;
+import views.monsters.MonsterView;
+import views.monsters.ShapeMonsterView;
+import views.monsters.SquareMonsterView;
+import views.staticViews.BaseView;
+import views.staticViews.WallView;
 
 
 

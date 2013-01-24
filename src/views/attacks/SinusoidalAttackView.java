@@ -1,4 +1,4 @@
-package views;
+package views.attacks;
 
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3ub;
@@ -15,16 +15,19 @@ import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.glu.Disk;
 import org.lwjgl.util.glu.PartialDisk;
 
+import utilities.Lines;
 import utilities.Point;
 import utilities.Vector;
+import views.interfaces.DisplayableChild;
+import views.interfaces.DisplayableFather;
+import views.monsters.MonsterView;
 
 /**
- * Affiche le cone d'attaque servant a
- * definir la direction et l'ouverture de l'attaque
+ * Affiche une attaque de forme sinusoidale
  * @author paul
  *
  */
-public class AttackConeView implements DisplayableChild {
+public class SinusoidalAttackView implements DisplayableChild {
 	private DisplayableFather father;
 	private double angle;
 	private double direction;
@@ -42,7 +45,7 @@ public class AttackConeView implements DisplayableChild {
 	 * @param power La "puissance" du cone
 	 * Plus power est grand, plus la longueur du cone sera importante
 	 */
-	public AttackConeView(double angle, double direction, int power){
+	public SinusoidalAttackView(double angle, double direction, int power){
 		this.angle=angle;
 		this.direction=direction;
 		this.power=power;
@@ -73,17 +76,17 @@ public class AttackConeView implements DisplayableChild {
 		 * Gère les "collisions" entre le cône et les autres objets
 		 * 
 		 */
-		collision : for(float i=15;i<=power;i+=10){
+		collision : for(float i=11;i<=power;i+=10){
 		if(!reflected){
 		 for (DisplayableFather object: Map.getMap().getObjects()){
-			if (object !=father && object.collisionCanOccure(new Point(father.getX(),father.getY()),i+5)){
+			if (object !=father && object.collisionCanOccure(new Point(father.getX(),father.getY()),11.0f/10.0f*i)){
 				beta=direction-angle/2;
 			while(beta<=direction+angle/2 ){	
-				y=father.getY()+i*Math.cos(Math.PI/180*beta);
-				x=father.getX()+i*Math.sin(Math.PI/180*beta);
+				y=father.getY()+11.0/10.0*i*Math.cos(Math.PI/180*beta);
+				x=father.getX()+11.0/10.0*i*Math.sin(Math.PI/180*beta);
 				if (object.isInZone(new Point(x,y))){
 					reflected=true;
-					fin=Math.round(i-15);
+					fin=Math.round(i);
 					break collision;
 				}
 				beta+=10;	
@@ -100,9 +103,9 @@ public class AttackConeView implements DisplayableChild {
 		for(float i=start;i<=fin;i+=10){
 			alpha=Math.round((fin-i)/fin*255);
 		GL11.glColor4ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue(),(byte)alpha);
-		GL11.glTranslated(father.getX(), father.getY(),MonsterView.height/2 );
-		new PartialDisk().draw((float) i,(float) (i+5), 50,1,(float)(direction+-angle/2),(float) angle);
-		GL11.glTranslated(-father.getX(), -father.getY(),-MonsterView.height/2 );
+		GL11.glTranslated(father.getX(), father.getY(),MonsterView.getHeight()/2 );
+		Lines.sinusoide((float) angle, i, 10, 0.1f);
+		GL11.glTranslated(-father.getX(), -father.getY(),-MonsterView.getHeight()/2 );
 		}
 		
 		/*

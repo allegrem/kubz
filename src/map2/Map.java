@@ -2,8 +2,8 @@ package map2;
 
 import java.util.ArrayList;
 
-import views.Displayable;
-import views.DisplayableFather;
+import views.interfaces.Displayable;
+import views.interfaces.DisplayableFather;
 
 
 /**

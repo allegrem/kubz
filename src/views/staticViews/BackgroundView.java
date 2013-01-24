@@ -1,4 +1,4 @@
-package views;
+package views.staticViews;
 
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
@@ -14,6 +14,8 @@ import org.newdawn.slick.Color;
 
 import utilities.Point;
 import utilities.RandomPerso;
+import views.interfaces.DisplayableChild;
+import views.interfaces.DisplayableFather;
 
 
 import OpenGL.Textures;

@@ -1,4 +1,4 @@
-package views;
+package views.monsters;
 
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3ub;
@@ -13,6 +13,8 @@ import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 
 import utilities.Point;
+import views.interfaces.DisplayableChild;
+import views.interfaces.DisplayableFather;
 
 
 /**
@@ -155,4 +157,11 @@ public abstract class MonsterView implements DisplayableFather{
 		}
 	}
 	
+	public static double getSize(){
+		return size;
+	}
+	
+	public static int getHeight(){
+		return height;
+	}
 }

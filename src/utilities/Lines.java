@@ -6,8 +6,14 @@ import static org.lwjgl.opengl.GL11.glVertex3d;
 
 import org.lwjgl.opengl.GL11;
 
-import views.MonsterView;
+import views.monsters.MonsterView;
 
+/**
+ * Dessin de différentes courbes
+ * a utiliser pour les attaques
+ * @author berthier
+ *
+ */
 public class Lines {
 	/**
 	 * Dessine une sinusoide dans le cone d'attaque

@@ -3,11 +3,11 @@ package map2;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import views.BaseView;
-import views.Displayable;
-import views.DisplayableFather;
-import views.MonsterView;
-import views.WallView;
+import views.interfaces.Displayable;
+import views.interfaces.DisplayableFather;
+import views.monsters.MonsterView;
+import views.staticViews.BaseView;
+import views.staticViews.WallView;
 
 /**
  * Cette classe permet d'enregistrer l'etat des Bases et des Unites des monstres,

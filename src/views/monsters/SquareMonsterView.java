@@ -1,4 +1,4 @@
-package views;
+package views.monsters;
 
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
@@ -16,6 +16,8 @@ import org.lwjgl.util.ReadableColor;
 import utilities.Maths;
 import utilities.Point;
 import utilities.Vector;
+import views.attacks.AttackConeView;
+import views.interfaces.DisplayableChild;
 
 /**
  * Une unite en forme de carre

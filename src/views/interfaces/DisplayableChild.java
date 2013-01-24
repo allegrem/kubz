@@ -1,4 +1,4 @@
-package views;
+package views.interfaces;
 
 /**
  * Objet affichable de type "Fils":

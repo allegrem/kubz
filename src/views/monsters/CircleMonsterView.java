@@ -1,5 +1,5 @@
 
-package views;
+package views.monsters;
 
 import map2.Map;
 
@@ -13,6 +13,7 @@ import utilities.Lines;
 import utilities.Maths;
 import utilities.Point;
 import utilities.Vector;
+import views.attacks.SinusoidalAttackView;
 
 /**
  * Unite Monstre de type cercle.
@@ -28,7 +29,7 @@ public class CircleMonsterView extends MonsterView {
  */
 	public CircleMonsterView(Point position,ReadableColor color) {
 		super(position,color);
-		this.addChild(new SinusoidalAttackView(90,0,150));
+		this.addChild(new SinusoidalAttackView(45,0,150));
 	}
 
 	@Override

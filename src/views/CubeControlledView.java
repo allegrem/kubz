@@ -16,6 +16,9 @@ import org.lwjgl.util.ReadableColor;
 import utilities.Maths;
 import utilities.Point;
 import utilities.Vector;
+import views.interfaces.DisplayableChild;
+import views.interfaces.DisplayableFather;
+import views.monsters.MonsterView;
 
 /**
  * Un objet controlle par un cube.
@@ -109,10 +112,10 @@ public class CubeControlledView implements DisplayableFather{
 			GL11.glNormal3f(0, 0, -1.0f);
 			GL11.glColor3ub((byte) (color.getRed()), (byte) (color.getGreen()) , (byte) (color.getBlue()));
 			
-			glVertex3d(position.getX()-MonsterView.size/2, position.getY()-MonsterView.size/2, 0);
-			glVertex3d(position.getX()+MonsterView.size/2, position.getY()-MonsterView.size/2, 0);
-			glVertex3d(position.getX()+MonsterView.size/2, position.getY()+MonsterView.size/2, 0);
-			glVertex3d(position.getX()-MonsterView.size/2, position.getY()+MonsterView.size/2, 0);
+			glVertex3d(position.getX()-MonsterView.getSize()/2, position.getY()-MonsterView.getSize()/2, 0);
+			glVertex3d(position.getX()+MonsterView.getSize()/2, position.getY()-MonsterView.getSize()/2, 0);
+			glVertex3d(position.getX()+MonsterView.getSize()/2, position.getY()+MonsterView.getSize()/2, 0);
+			glVertex3d(position.getX()-MonsterView.getSize()/2, position.getY()+MonsterView.getSize()/2, 0);
 			GL11.glEnd();
 		}
 		

@@ -1,5 +1,5 @@
 
-package views;
+package views.staticViews;
 
 import java.util.ArrayList;
 
@@ -10,6 +10,8 @@ import org.lwjgl.util.glu.Disk;
 import org.lwjgl.util.glu.PartialDisk;
 
 import utilities.Point;
+import views.interfaces.DisplayableChild;
+import views.interfaces.DisplayableFather;
 
 /**
  * Classe correspondant a la Base d'un joueur, represente par un demi-disque.

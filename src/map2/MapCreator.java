@@ -27,15 +27,15 @@ import org.lwjgl.util.glu.GLU;
 import utilities.MyFloatBuffer;
 import utilities.Point;
 import utilities.RandomPerso;
-import views.BackgroundView;
-import views.BaseView;
-import views.CircleMonsterView;
-import views.Displayable;
-import views.DisplayableFather;
-import views.MonsterView;
-import views.ShapeMonsterView;
-import views.SquareMonsterView;
-import views.WallView;
+import views.interfaces.Displayable;
+import views.interfaces.DisplayableFather;
+import views.monsters.CircleMonsterView;
+import views.monsters.MonsterView;
+import views.monsters.ShapeMonsterView;
+import views.monsters.SquareMonsterView;
+import views.staticViews.BackgroundView;
+import views.staticViews.BaseView;
+import views.staticViews.WallView;
 
 import OpenGL.GLDisplay;
 
