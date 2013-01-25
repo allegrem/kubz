@@ -142,7 +142,7 @@ public class Lines {
 	
 	
 	/**
-	 * renvoit un creneau de periode 2*PI
+	 * Renvoit un creneau de periode 2*PI
 	 * @param x
 	 * @return
 	 */
