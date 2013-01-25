@@ -74,5 +74,4 @@ public class CircleMonsterView extends MonsterView {
 
 
 
-
 }

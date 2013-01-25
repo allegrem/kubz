@@ -104,7 +104,7 @@ public class SinusoidalAttackView implements DisplayableChild {
 			alpha=Math.round((fin-i)/fin*255);
 		GL11.glColor4ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue(),(byte)alpha);
 		GL11.glTranslated(father.getX(), father.getY(),MonsterView.getHeight()/2 );
-		Lines.sinusoide((float) angle, i, 10, 0.1f);
+		Lines.drawSinus((float) angle, i, 10, 0.1f);
 		GL11.glTranslated(-father.getX(), -father.getY(),-MonsterView.getHeight()/2 );
 		}
 		
