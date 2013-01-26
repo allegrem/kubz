@@ -207,18 +207,17 @@ public class SLWindow {
 		instrumentView
 				.setLayout(new BoxLayout(instrumentView, BoxLayout.Y_AXIS));
 
-		soundView = new SLSoundView(this);
+		soundView = new SLSoundView();
 		panel.add(soundView);
 
-		spectrumView = new SLSpectrumView(this);
+		spectrumView = new SLSpectrumView();
 		panel.add(spectrumView);
 	}
 
 	protected void play() {
-		instrumentView.play();
-		soundView.zoomAll(instrumentView.getLastSound().length);
-		soundView.updateUI();
-		spectrumView.updateUI();
+		byte[] sound = instrumentView.computeSound();
+		soundView.setSound(sound);
+		spectrumView.computeSpectrum(sound);
 	}
 
 	private void addStatusBarListeners(final JMenuItem menuItem,
@@ -240,14 +239,7 @@ public class SLWindow {
 		lblSoundlab.setText(text);
 	}
 
-	public byte[] getLastSound() {
-		if (instrumentView != null)
-			return instrumentView.getLastSound();
-		else
-			return new byte[0];
-	}
-	
-	protected void setInstrument(FmInstrument instrument) {
+	private void setInstrument(FmInstrument instrument) {
 		instrumentView.setInstrument(instrument);
 	}
 

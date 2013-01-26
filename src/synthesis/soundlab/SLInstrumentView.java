@@ -23,8 +23,6 @@ public class SLInstrumentView extends JPanel {
 
 	private FmInstrument instrument;
 	
-	private byte[] lastSound = new byte[0];
-
 	/**
 	 * @param instrument
 	 */
@@ -42,15 +40,35 @@ public class SLInstrumentView extends JPanel {
 	}
 
 
-	public void play() {
-		//compute sound
+	public byte[] computeSound() {
+		byte[] lastSound = null;
+		
 		try {
-			lastSound = SynthesisUtilities.computeSound(0f, 1f, instrument);
+			lastSound  = SynthesisUtilities.computeSound(0f, 1f, instrument);
 		} catch (RequireAudioBlocksException e) {
 			e.printStackTrace();
 		}
 		
-		//playing sound
+		sendToSpeakers(lastSound);
+		saveInWavFile(lastSound);
+		
+		return lastSound;
+	}
+
+
+	private void saveInWavFile(byte[] lastSound) {
+		WavFileOutput wavFileOutput1 = new WavFileOutput("fmout.wav");
+		wavFileOutput1.open();
+		wavFileOutput1.play(lastSound);
+		try {
+			wavFileOutput1.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	private void sendToSpeakers(byte[] lastSound) {
 		SpeakersOutput speakersOutput = new SpeakersOutput();
 		try {
 			speakersOutput.open();
@@ -63,24 +81,6 @@ public class SLInstrumentView extends JPanel {
 			e.printStackTrace();
 		}
 		speakersOutput.close();
-		
-		//save to wav 1
-		WavFileOutput wavFileOutput1 = new WavFileOutput("fmout.wav");
-		wavFileOutput1.open();
-		wavFileOutput1.play(lastSound);
-		try {
-			wavFileOutput1.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
-
-	/**
-	 * @return the lastSound
-	 */
-	public byte[] getLastSound() {
-		return lastSound;
-	}
-	
 }

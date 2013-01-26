@@ -5,8 +5,6 @@ package synthesis.soundlab;
 
 import java.awt.EventQueue;
 
-import synthesis.fmInstruments.BellInstrument;
-
 /**
  * @author allegrem
  *
@@ -22,7 +20,6 @@ public class SLMain {
 				try {
 					SLWindow window = new SLWindow();
 					window.setVisible(true);
-					window.setInstrument(new BellInstrument());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

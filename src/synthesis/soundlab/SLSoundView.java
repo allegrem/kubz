@@ -28,17 +28,18 @@ public class SLSoundView extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private SLWindow window;
-
 	private int zoomX = 0;
 
 	private int currentSoundLength = 0;
 
 	private int offsetX = 0;
 
-	public SLSoundView(SLWindow window) {
+	private static final int MANUAL_OFFSET = 25;
+	
+	private byte[] sound;
+
+	public SLSoundView() {
 		super();
-		this.window = window;
 		setPreferredSize(new Dimension(X_SIZE, Y_SIZE+20));
 		setMinimumSize(new Dimension(X_SIZE, Y_SIZE+20));
 		setLayout(new BorderLayout(0, 0));
@@ -93,16 +94,18 @@ public class SLSoundView extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
-		if (window != null) {
-			byte[] sound = window.getLastSound();
-			int manualOffset = 25; //offsetting y axis because of toolbar
-			for (int x = 0; x < zoomX - 2; x++) {
-				g.drawLine(x * X_SIZE / zoomX, Y_SIZE - (sound[offsetX + x] + 127)
-						* Y_SIZE / 255 + manualOffset, (x + 1) * X_SIZE / zoomX,
-						Y_SIZE - (sound[offsetX + x + 1] + 127) * Y_SIZE / 255 + manualOffset);
+		
+		if (sound != null && sound.length > 0) {
+			int maxX = zoomX - 2;
+			int xCoord1 = 0, yCoord1 = 0, xCoord2 = 0, yCoord2 = 0;
+			for (int x = 0; x < maxX-1; x++) {
+				xCoord2 = x * X_SIZE / zoomX;
+				yCoord2 = Y_SIZE - (sound[offsetX + x] + 127) * Y_SIZE / 255 + MANUAL_OFFSET;
+				g.drawLine(xCoord1, yCoord1, xCoord2, yCoord2);
+				xCoord1 = xCoord2;
+				yCoord1 = yCoord2;
 			}
-			g.drawLine(0, manualOffset + Y_SIZE/2, X_SIZE, manualOffset + Y_SIZE/2);
+			g.drawLine(0, MANUAL_OFFSET + Y_SIZE/2, X_SIZE, MANUAL_OFFSET + Y_SIZE/2);
 		}
 	}
 
@@ -142,9 +145,15 @@ public class SLSoundView extends JPanel {
 	private void offset(int i) {
 		offsetX += i;
 		if (offsetX + zoomX > currentSoundLength)
-			offsetX = currentSoundLength - zoomX; // dont go out of range
+			offsetX = currentSoundLength - zoomX; // don't go out of range
 		if (offsetX < 0)
 			offsetX = 0;
+		updateUI();
+	}
+
+	public void setSound(byte[] sound) {
+		zoomAll(sound.length); //zoom out when we have a new sound
+		this.sound = sound;
 		updateUI();
 	}
 

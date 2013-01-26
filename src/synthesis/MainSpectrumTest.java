@@ -12,15 +12,11 @@ import org.apache.commons.math3.transform.DftNormalization;
 import org.apache.commons.math3.transform.FastFourierTransformer;
 import org.apache.commons.math3.transform.TransformType;
 
-import com.jgoodies.forms.util.Utilities;
-
 import synthesis.audiooutput.SpeakersOutput;
 import synthesis.exceptions.AudioException;
 import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.fmInstruments.FmInstrument;
-import synthesis.fmInstruments.WindInstrument;
 import synthesis.fmInstruments.WoodInstrument;
-import synthesis.soundlab.SLInstrumentView;
 import synthesis.soundlab.SLSoundView;
 import synthesis.soundlab.SLSpectrumView;
 import synthesis.soundlab.SLWindow;
@@ -131,10 +127,10 @@ public class MainSpectrumTest extends SLWindow {
 		frmTestSpectrum.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmTestSpectrum.getContentPane().setLayout(new BoxLayout(frmTestSpectrum.getContentPane(), BoxLayout.Y_AXIS));
 		
-		JPanel panel = new SLSpectrumView(this);
+		JPanel panel = new SLSpectrumView();
 		frmTestSpectrum.getContentPane().add(panel);
 		
-		SLSoundView panel_1 = new SLSoundView(this);
+		SLSoundView panel_1 = new SLSoundView();
 		frmTestSpectrum.getContentPane().add(panel_1);
 		panel_1.zoomAll(44100);
 		
@@ -143,7 +139,6 @@ public class MainSpectrumTest extends SLWindow {
 	/* (non-Javadoc)
 	 * @see synthesis.soundlab.SLWindow#getLastSound()
 	 */
-	@Override
 	public byte[] getLastSound() {
 		return result3s;
 	}
