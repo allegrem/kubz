@@ -68,65 +68,34 @@ public class SLWindow {
 		mnFile.setMnemonic('f');
 		menuBar.add(mnFile);
 
-		JMenuItem mntmNew = new JMenuItem("New");
-		addStatusBarListeners(mntmNew, "New instrument");
-		mntmNew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
-				InputEvent.CTRL_MASK));
-		mnFile.add(mntmNew);
-
-		JMenuItem mntmSave = new JMenuItem("Save");
-		addStatusBarListeners(mntmSave, "Save instrument");
-		mntmSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
-				InputEvent.CTRL_MASK));
-		mnFile.add(mntmSave);
-
-		JMenuItem mntmSaveAs = new JMenuItem("Save As");
-		addStatusBarListeners(mntmSaveAs, "Save instrument as");
-		mntmSaveAs.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-		});
-		mntmSaveAs.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
-				InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
-		mnFile.add(mntmSaveAs);
-
-		JMenuItem mntmLoad = new JMenuItem("Load");
-		addStatusBarListeners(mntmLoad, "Load instrument");
-		mntmLoad.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
-				InputEvent.CTRL_MASK));
-		mnFile.add(mntmLoad);
-
-		JSeparator separator = new JSeparator();
-		mnFile.add(separator);
-
 		JMenuItem mntmQuit = new JMenuItem("Quit");
 		mntmQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				frmSoundlab.dispose();
 			}
 		});
+		
+				JMenuItem mntmPlay = new JMenuItem("Play");
+				mnFile.add(mntmPlay);
+				mntmPlay.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						play();
+					}
+				});
+				mntmPlay.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
+		
+		JSeparator separator = new JSeparator();
+		mnFile.add(separator);
 		addStatusBarListeners(mntmQuit, "Quit SoundLab");
 		mntmQuit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,
 				InputEvent.CTRL_MASK));
 		mnFile.add(mntmQuit);
 
-		JMenu mnPlay = new JMenu("Play");
-		menuBar.add(mnPlay);
-
-		JMenuItem mntmPlay = new JMenuItem("Play");
-		mntmPlay.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				play();
-			}
-		});
-		mntmPlay.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0));
-		mnPlay.add(mntmPlay);
-
 		JMenu mnInstrument = new JMenu("Instrument");
 		menuBar.add(mnInstrument);
 
 		JRadioButtonMenuItem rdbtnmntmBell = new JRadioButtonMenuItem("Bell");
+		rdbtnmntmBell.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD1, 0));
 		buttonGroup.add(rdbtnmntmBell);
 		rdbtnmntmBell.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -137,6 +106,7 @@ public class SLWindow {
 		mnInstrument.add(rdbtnmntmBell);
 
 		JRadioButtonMenuItem rdbtnmntmPiano = new JRadioButtonMenuItem("Piano");
+		rdbtnmntmPiano.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD4, 0));
 		buttonGroup.add(rdbtnmntmPiano);
 		rdbtnmntmPiano.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -146,6 +116,7 @@ public class SLWindow {
 
 		JRadioButtonMenuItem rdbtnmntmTwooscfm = new JRadioButtonMenuItem(
 				"TwoOscFM");
+		rdbtnmntmTwooscfm.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD2, 0));
 		rdbtnmntmTwooscfm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setInstrument(new TwoOscFmInstrument());
@@ -155,6 +126,7 @@ public class SLWindow {
 		mnInstrument.add(rdbtnmntmTwooscfm);
 
 		JRadioButtonMenuItem rdbtnmntmWood = new JRadioButtonMenuItem("Wood");
+		rdbtnmntmWood.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD3, 0));
 		rdbtnmntmWood.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setInstrument(new WoodInstrument());
@@ -166,11 +138,6 @@ public class SLWindow {
 
 		JMenu menu = new JMenu("?");
 		menuBar.add(menu);
-
-		JMenuItem mntmHel = new JMenuItem("Help");
-		addStatusBarListeners(mntmHel, "Show help for SoundLab");
-		mntmHel.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
-		menu.add(mntmHel);
 
 		JMenuItem mntmAbout = new JMenuItem("About");
 		addStatusBarListeners(mntmAbout, "About SoundLab");
@@ -209,21 +176,6 @@ public class SLWindow {
 
 	private void addStatusBarListeners(final JMenuItem menuItem,
 			final String message) {
-		menuItem.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				setStatusBarText(message);
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				setStatusBarText(DEFAULT_STATUS_BAR_TEXT);
-			}
-		});
-	}
-
-	protected void setStatusBarText(final String text) {
-		lblSoundlab.setText(text);
 	}
 
 	private void setInstrument(FmInstrument instrument) {
