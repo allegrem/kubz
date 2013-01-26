@@ -28,6 +28,10 @@ import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.ButtonGroup;
+import javax.swing.JTabbedPane;
+import java.awt.GridLayout;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class SLWindow {
 
@@ -38,7 +42,6 @@ public class SLWindow {
 	private SLSoundView soundView;
 	private SLSpectrumView spectrumView;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-
 
 	/**
 	 * Create the application.
@@ -53,8 +56,9 @@ public class SLWindow {
 	 */
 	private void initialize() {
 		frmSoundlab = new JFrame();
+		frmSoundlab.setResizable(false);
 		frmSoundlab.setTitle("Kubz SoundLab");
-		frmSoundlab.setBounds(100, 100, 605, 640);
+		frmSoundlab.setBounds(100, 100, 1208, 497);
 		frmSoundlab.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JMenuBar menuBar = new JMenuBar();
@@ -118,10 +122,10 @@ public class SLWindow {
 		});
 		mntmPlay.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0));
 		mnPlay.add(mntmPlay);
-		
+
 		JMenu mnInstrument = new JMenu("Instrument");
 		menuBar.add(mnInstrument);
-		
+
 		JRadioButtonMenuItem rdbtnmntmBell = new JRadioButtonMenuItem("Bell");
 		buttonGroup.add(rdbtnmntmBell);
 		rdbtnmntmBell.addActionListener(new ActionListener() {
@@ -131,7 +135,7 @@ public class SLWindow {
 		});
 		rdbtnmntmBell.setSelected(true);
 		mnInstrument.add(rdbtnmntmBell);
-		
+
 		JRadioButtonMenuItem rdbtnmntmPiano = new JRadioButtonMenuItem("Piano");
 		buttonGroup.add(rdbtnmntmPiano);
 		rdbtnmntmPiano.addActionListener(new ActionListener() {
@@ -139,8 +143,9 @@ public class SLWindow {
 				setInstrument(new PianoInstrument());
 			}
 		});
-		
-		JRadioButtonMenuItem rdbtnmntmTwooscfm = new JRadioButtonMenuItem("TwoOscFM");
+
+		JRadioButtonMenuItem rdbtnmntmTwooscfm = new JRadioButtonMenuItem(
+				"TwoOscFM");
 		rdbtnmntmTwooscfm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setInstrument(new TwoOscFmInstrument());
@@ -148,7 +153,7 @@ public class SLWindow {
 		});
 		buttonGroup.add(rdbtnmntmTwooscfm);
 		mnInstrument.add(rdbtnmntmTwooscfm);
-		
+
 		JRadioButtonMenuItem rdbtnmntmWood = new JRadioButtonMenuItem("Wood");
 		rdbtnmntmWood.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -172,24 +177,6 @@ public class SLWindow {
 		menu.add(mntmAbout);
 		frmSoundlab.getContentPane().setLayout(new BorderLayout(0, 0));
 
-		JToolBar toolBar = new JToolBar();
-		toolBar.setFloatable(false);
-		frmSoundlab.getContentPane().add(toolBar, BorderLayout.NORTH);
-
-		JButton btnPlay = new JButton("Play");
-		btnPlay.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				play();
-			}
-		});
-		toolBar.add(btnPlay);
-
-		Component horizontalGlue_2 = Box.createHorizontalGlue();
-		toolBar.add(horizontalGlue_2);
-
-		JLabel lblParameters = new JLabel("Parameters");
-		toolBar.add(lblParameters);
-
 		JToolBar toolBar_1 = new JToolBar();
 		toolBar_1.setToolTipText("");
 		toolBar_1.setFloatable(false);
@@ -199,16 +186,18 @@ public class SLWindow {
 		toolBar_1.add(lblSoundlab);
 
 		JPanel panel = new JPanel();
-		frmSoundlab.getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		frmSoundlab.getContentPane().add(panel, BorderLayout.NORTH);
+		panel.setLayout(new GridLayout(2, 2, 0, 0));
 
 		instrumentView = new SLInstrumentView(this);
 		panel.add(instrumentView);
-		instrumentView
-				.setLayout(new BoxLayout(instrumentView, BoxLayout.Y_AXIS));
 
 		soundView = new SLSoundView();
 		panel.add(soundView);
+
+		JPanel filterView = new SLFilterView();
+		panel.add(filterView);
 
 		spectrumView = new SLSpectrumView();
 		panel.add(spectrumView);
