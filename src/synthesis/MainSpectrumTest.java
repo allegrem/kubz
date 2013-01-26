@@ -85,14 +85,15 @@ public class MainSpectrumTest extends SLWindow {
 		Complex[] result = fourier.transform(sound, TransformType.FORWARD); //PRENDRE fft(double) !!!!! (protected??)
 		//never ask me why it works, i dont know!!
 //		for (int x = 0; x < result.length/4; x++) {
+		System.out.println(result.length);
 		for (int x = 0; x < result.length/4; x++) {
-			int y1 = (int) (Y_SIZE - Math.abs(Math.log10(0.0001 + result[x].abs())) * Y_SIZE / 7);
+//			int y1 = (int) (Y_SIZE - Math.abs(Math.log10(0.0001 + result[x].abs())) * Y_SIZE / 7);
 //			int y2 = (int) (Y_SIZE - Math.abs(Math.log10(0.0001 + result[result.length/4 + x].abs())) * Y_SIZE / 7);
-			if (x < 2000) {
+			if (x < 600 || (x > 1500 && x < 3000)) {
 				result[x] = new Complex(0);
 				result[result.length/4 + x] = new Complex(0);
-				result[2*result.length/4 + x] = new Complex(0);
-				result[3*result.length/4 + x] = new Complex(0);
+				result[result.length - 1 - result.length/4 - x] = new Complex(0);
+				result[result.length - x - 1] = new Complex(0);
 			}
 //			if (y2 > 60)
 //				result[result.length/4 + x] = 0;

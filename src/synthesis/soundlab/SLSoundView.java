@@ -3,10 +3,18 @@
  */
 package synthesis.soundlab;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JToolBar;
 
 /**
  * @author allegrem
@@ -31,7 +39,55 @@ public class SLSoundView extends JPanel {
 	public SLSoundView(SLWindow window) {
 		super();
 		this.window = window;
-		setPreferredSize(new Dimension(X_SIZE, Y_SIZE));
+		setPreferredSize(new Dimension(X_SIZE, Y_SIZE+20));
+		setMinimumSize(new Dimension(X_SIZE, Y_SIZE+20));
+		setLayout(new BorderLayout(0, 0));
+		
+		createToolbar();
+	}
+
+	private void createToolbar() {
+		JToolBar toolBar_2 = new JToolBar();
+		toolBar_2.setFloatable(false);
+		add(toolBar_2, BorderLayout.NORTH);
+
+		JButton btnZoomIn = new JButton("Zoom in");
+		btnZoomIn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				zoomIn();
+			}
+		});
+		toolBar_2.add(btnZoomIn);
+
+		JButton btnZoomOut = new JButton("Zoom out");
+		btnZoomOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				zoomOut();
+			}
+		});
+		toolBar_2.add(btnZoomOut);
+
+		JButton button = new JButton("<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				toLeft();
+			}
+		});
+		toolBar_2.add(button);
+
+		JButton button_1 = new JButton(">");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				toRight();
+			}
+		});
+		toolBar_2.add(button_1);
+
+		Component horizontalGlue = Box.createHorizontalGlue();
+		toolBar_2.add(horizontalGlue);
+
+		JLabel lblSignalView = new JLabel("Signal View");
+		toolBar_2.add(lblSignalView);
 	}
 
 	@Override
