@@ -77,11 +77,11 @@ public class SLInstrumentView extends JPanel implements Observer {
 			p.addObserver(this);
 		}
 		updateUI();
-		window.updateSound(computeSound());
+		window.updateSound();
 	}
 
 
-	private byte[] computeSound() {
+	public byte[] computeSound() {
 		byte[] sound = null;
 		try {
 			sound  = SynthesisUtilities.computeSound(0f, 1f, instrument);
@@ -91,38 +91,10 @@ public class SLInstrumentView extends JPanel implements Observer {
 		return sound;
 	}
 
-
-	private void saveInWavFile() {
-		WavFileOutput wavFileOutput1 = new WavFileOutput("fmout.wav");
-		wavFileOutput1.open();
-		wavFileOutput1.play(computeSound());
-		try {
-			wavFileOutput1.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-
-	public void playSound() {
-		SpeakersOutput speakersOutput = new SpeakersOutput();
-		try {
-			speakersOutput.open();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			speakersOutput.play(computeSound());
-		} catch (AudioException e) {
-			e.printStackTrace();
-		}
-		speakersOutput.close();
-	}
-
-
+	
 	@Override
 	public void update(Observable o, Object arg) {
-		window.updateSound(computeSound());
+		window.updateSound();
 	}
 
 }

@@ -15,6 +15,10 @@ import javax.swing.JLabel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
+
+import synthesis.audiooutput.SpeakersOutput;
+import synthesis.audiooutput.WavFileOutput;
+import synthesis.exceptions.AudioException;
 import synthesis.fmInstruments.BellInstrument;
 import synthesis.fmInstruments.FmInstrument;
 import synthesis.fmInstruments.PianoInstrument;
@@ -32,6 +36,7 @@ import javax.swing.JTabbedPane;
 import java.awt.GridLayout;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import java.io.IOException;
 
 public class SLWindow {
 
@@ -42,6 +47,7 @@ public class SLWindow {
 	private SLSoundView soundView;
 	private SLSpectrumView spectrumView;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private SLFilterView filterView;
 
 	/**
 	 * Create the application.
@@ -163,15 +169,11 @@ public class SLWindow {
 		soundView = new SLSoundView();
 		panel.add(soundView);
 
-		JPanel filterView = new SLFilterView();
+		filterView = new SLFilterView(this);
 		panel.add(filterView);
 
 		spectrumView = new SLSpectrumView();
 		panel.add(spectrumView);
-	}
-
-	protected void play() {
-		instrumentView.playSound();
 	}
 
 	private void addStatusBarListeners(final JMenuItem menuItem,
@@ -186,9 +188,40 @@ public class SLWindow {
 		frmSoundlab.setVisible(b);
 	}
 
-	public void updateSound(byte[] sound) {
+	public void updateSound() {
+		byte[] sound = computeSound();
 		soundView.setSound(sound);
 		spectrumView.computeSpectrum(sound);
+	}
+	
+	private byte[] computeSound() {
+		return filterView.filter(instrumentView.computeSound());
+	}
+	
+	private void saveInWavFile() {
+		WavFileOutput wavFileOutput1 = new WavFileOutput("fmout.wav");
+		wavFileOutput1.open();
+		wavFileOutput1.play(computeSound());
+		try {
+			wavFileOutput1.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	protected void play() {
+		SpeakersOutput speakersOutput = new SpeakersOutput();
+		try {
+			speakersOutput.open();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			speakersOutput.play(computeSound());
+		} catch (AudioException e) {
+			e.printStackTrace();
+		}
+		speakersOutput.close();
 	}
 
 }
