@@ -32,7 +32,7 @@ public class PianoInstrument implements FmInstrument{
 	private ArrayList<ParameterAudioBlock> paramList;
 	
 	public PianoInstrument(){
-		f0 = new ParamBlock("f0", 100, 500, 440);
+		f0 = new ParamBlock("f0", 100, 1000, 440);
 		epsilon = new ParamBlock("epsilon",1,10,2);
 		a1 = new ParamBlock("a1", 0,100,0);
 		d1 = new ParamBlock("d1",560,1000,580);
