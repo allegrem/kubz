@@ -1,6 +1,8 @@
 package synthesis.soundlab;
 
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JPanel;
 
@@ -17,49 +19,50 @@ import synthesis.parameter.ParameterAudioBlock;
  * @author allegrem
  *
  */
-public class SLInstrumentView extends JPanel {
+public class SLInstrumentView extends JPanel implements Observer {
 	
 	private static final long serialVersionUID = 1L;
 
 	private FmInstrument instrument;
+
+	private SLWindow window;
 	
 	/**
 	 * @param instrument
 	 */
-	public SLInstrumentView() {
+	public SLInstrumentView(SLWindow window) {
 		super();
+		this.window = window;
 	}
 	
 	
 	public void setInstrument(FmInstrument instrument) {
 		this.instrument = instrument;
 		removeAll();
-		for(ParameterAudioBlock p : instrument.getParameters())
+		for(ParameterAudioBlock p : instrument.getParameters()) {
 			add(new SLParameterView(p));
+			p.addObserver(this);
+		}
 		updateUI();
+		window.updateSound(computeSound());
 	}
 
 
-	public byte[] computeSound() {
-		byte[] lastSound = null;
-		
+	private byte[] computeSound() {
+		byte[] sound = null;
 		try {
-			lastSound  = SynthesisUtilities.computeSound(0f, 1f, instrument);
+			sound  = SynthesisUtilities.computeSound(0f, 1f, instrument);
 		} catch (RequireAudioBlocksException e) {
 			e.printStackTrace();
 		}
-		
-		sendToSpeakers(lastSound);
-		saveInWavFile(lastSound);
-		
-		return lastSound;
+		return sound;
 	}
 
 
-	private void saveInWavFile(byte[] lastSound) {
+	private void saveInWavFile() {
 		WavFileOutput wavFileOutput1 = new WavFileOutput("fmout.wav");
 		wavFileOutput1.open();
-		wavFileOutput1.play(lastSound);
+		wavFileOutput1.play(computeSound());
 		try {
 			wavFileOutput1.close();
 		} catch (IOException e) {
@@ -68,7 +71,7 @@ public class SLInstrumentView extends JPanel {
 	}
 
 
-	private void sendToSpeakers(byte[] lastSound) {
+	public void playSound() {
 		SpeakersOutput speakersOutput = new SpeakersOutput();
 		try {
 			speakersOutput.open();
@@ -76,11 +79,17 @@ public class SLInstrumentView extends JPanel {
 			e.printStackTrace();
 		}
 		try {
-			speakersOutput.play(lastSound);
+			speakersOutput.play(computeSound());
 		} catch (AudioException e) {
 			e.printStackTrace();
 		}
 		speakersOutput.close();
+	}
+
+
+	@Override
+	public void update(Observable o, Object arg) {
+		window.updateSound(computeSound());
 	}
 
 }
