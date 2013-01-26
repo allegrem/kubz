@@ -28,7 +28,7 @@ public class SLFilterView extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	
-	private static final int BARS = 10;
+	private static final int BARS = 11;
 	
 	private Equalizer equalizer;
 
@@ -102,15 +102,16 @@ public class SLFilterView extends JPanel {
 			
 			setLayout(new BorderLayout());
 			
-			slider = new JSlider(1, 100, 100);
+			slider = new JSlider(1, 100, (int) (Math.random()*100));
+			eq.setBar(num, slider.getValue());
 			slider.setOrientation(JSlider.VERTICAL);
 			slider.setPreferredSize(new Dimension(30,150));
 			add(slider, BorderLayout.CENTER);
 			
-			JLabel label = new JLabel("FIXME");
+			JLabel label = new JLabel(String.valueOf(num));
 			add(label, BorderLayout.SOUTH);
 			
-			valueLabel = new JLabel("100");
+			valueLabel = new JLabel(String.valueOf(slider.getValue()));
 			add(valueLabel, BorderLayout.NORTH);
 			
 			slider.addChangeListener(this);
