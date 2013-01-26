@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.JLabel;
@@ -42,6 +43,8 @@ public class SLSpectrumView extends JPanel {
 
 	private JLabel lblHz;
 
+	private int[] spectrumCache;
+
 	public SLSpectrumView(SLWindow window) {
 		super();
 		this.window = window;
@@ -54,15 +57,19 @@ public class SLSpectrumView extends JPanel {
 		addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				lblHz.setText(String.valueOf(e.getX() * AudioBlock.SAMPLE_RATE
-						/ 12 / SLSpectrumView.Y_SIZE)
-						+ " Hz");
+				int x = (int) (e.getX() * AudioBlock.SAMPLE_RATE / 12 / SLSpectrumView.Y_SIZE); //empirique...
+				String text = String.valueOf(x) + " Hz ; ";
+				if(e.getX() > spectrumCache.length)
+					text += "- dB";
+				else
+					text += String.valueOf(55 - spectrumCache[e.getX()]) + " dB"; //empirique...
+				lblHz.setText(text);
 			}
 		});
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseExited(MouseEvent e) {
-				lblHz.setText("- Hz");
+				lblHz.setText("- Hz ; - dB");
 			}
 		});
 		
@@ -106,12 +113,16 @@ public class SLSpectrumView extends JPanel {
 			FastFourierTransformer fourier = new FastFourierTransformer(DftNormalization.STANDARD);
 			Complex[] result = fourier.transform(sound, TransformType.FORWARD); //PRENDRE fft(double) !!!!! (protected??)
 			//never ask me why it works, i dont know!!
+			spectrumCache = new int[X_SIZE+2];
 			for (int x = 0; x < result.length/4; x++) {
-				int x_coord = x * X_SIZE *4 / result.length;
-				g.drawLine(x_coord, Y_SIZE, x_coord,
-						(int) (Y_SIZE - Math.abs(Math.log10(0.0001 + result[x].abs())) * Y_SIZE / 7));
-				g.drawLine(x_coord, Y_SIZE, x_coord,
-						(int) (Y_SIZE - Math.abs(Math.log10(0.0001 + result[result.length/4 + x].abs())) * Y_SIZE / 7));
+				int x_coord = x * X_SIZE * 4 / result.length;
+				int y1 = (int) (Y_SIZE - Math.abs(Math.log10(0.0001 + result[x].abs())) * Y_SIZE / 7);
+				int y2 = (int) (Y_SIZE - Math.abs(Math.log10(0.0001 + result[result.length/4 + x].abs())) * Y_SIZE / 7);
+				int max = y1;
+				if (y2 < y1)
+					max = y2;
+				g.drawLine(x_coord, Y_SIZE, x_coord, max);
+				spectrumCache[x_coord] = max; //save the result in cache
 			}
 		}
 	}
