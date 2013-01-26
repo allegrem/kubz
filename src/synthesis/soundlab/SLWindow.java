@@ -40,7 +40,7 @@ import java.io.IOException;
 
 public class SLWindow {
 
-	protected static final String DEFAULT_STATUS_BAR_TEXT = "SoundLab 0.1";
+	protected static final String DEFAULT_STATUS_BAR_TEXT = "SoundLab 0.2";
 	private JFrame frmSoundlab;
 	private JLabel lblSoundlab;
 	private SLInstrumentView instrumentView;
