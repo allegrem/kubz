@@ -81,10 +81,10 @@ public class Equalizer extends Observable {
 		// inverse transform
 		Complex[] complexResult = fourierTransform.transform(spectrum,
 				TransformType.INVERSE);
-		byte[] realResult = new byte[complexResult.length];
+		byte[] realResult = new byte[soundBytes.length];
 
 		// keep real part
-		for (int i = 0; i < complexResult.length; i++)
+		for (int i = 0; i < soundBytes.length; i++)
 			realResult[i] = (byte) complexResult[i].getReal();
 
 		return realResult;
