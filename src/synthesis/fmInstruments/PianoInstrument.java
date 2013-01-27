@@ -16,8 +16,14 @@ import synthesis.exceptions.TooManyInputsException;
 import synthesis.parameter.ParamBlock;
 import synthesis.parameter.ParameterAudioBlock;
 
+/**
+ * This class creates the sound of piano.
+ * @author valeh
+ *
+ */
 public class PianoInstrument implements FmInstrument{
-	private static final int STEPS = 1000;
+	private static final int STEPS = 1000; //lets define the parameters on a scale of 1 to 1000
+	//different params
 	private final ParameterAudioBlock f0;
 	private final ParameterAudioBlock epsilon;
 	private final ParameterAudioBlock a1;
@@ -26,11 +32,14 @@ public class PianoInstrument implements FmInstrument{
 	private final ParameterAudioBlock d2;
 	private final ParameterAudioBlock amp;
 	
-	
-	
+
 	private AudioBlock out; 
 	private ArrayList<ParameterAudioBlock> paramList;
 	
+	/**
+	 * Constructs a bell with the different 
+	 * controllable parameters.
+	 */
 	public PianoInstrument(){
 		f0 = new ParamBlock("f0", 100, 1000, 440);
 		epsilon = new ParamBlock("epsilon",1,10,2);
@@ -61,6 +70,11 @@ public class PianoInstrument implements FmInstrument{
 		
 	}
 	
+	/**
+	 * Creates the instrument out of the values of the
+	 * different parameters.
+	 * @return the resulting AudioBlock	
+	 */
 	private AudioBlock buildInstrument(){
 		WhiteNoise noise = new WhiteNoise();
 		FixedADSR env1 = new FixedADSR(a1.getValue()/STEPS,d1.getValue()/STEPS,0,0,1f);
@@ -98,19 +112,27 @@ public class PianoInstrument implements FmInstrument{
 	
 	}
 	
-
+	/**
+	 * @see synthesis.AudioBlock#play(java.lang.Float)
+	 */	 
 	@Override
 	public Float play(Float t) throws RequireAudioBlocksException {
 		AudioBlock out = buildInstrument();
 		return out.play(t);
 	}
-
+	
+	/**
+	 * @see synthesis.AudioBlock#phi(java.lang.Float)
+	 */	 
 	@Override
 	public Float phi(Float t) throws RequireAudioBlocksException {
 		AudioBlock out = buildInstrument();
 		return out.phi(t);
 	}
-
+	
+	/**
+	 * @see synthesis.FmInstrument#getParameters
+	 */	 
 	@Override
 	public ArrayList<ParameterAudioBlock> getParameters() {
 		return paramList;
