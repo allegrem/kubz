@@ -38,9 +38,9 @@ public class SLSpectrumView extends JPanel {
 	private JLabel lblHz;
 
 	private int[] spectrumCache;
-	
+
 	private int mouseX = -1;
-	
+
 	public SLSpectrumView() {
 		super();
 		setPreferredSize(new Dimension(X_SIZE, Y_SIZE));
@@ -57,11 +57,11 @@ public class SLSpectrumView extends JPanel {
 				if (spectrumCache == null || e.getX() > spectrumCache.length)
 					text += "- dB";
 				else
-					text += String.valueOf((int) (11 - 0.61 * spectrumCache[e.getX()]))
-							+ " dB"; // empirique...
+					text += String.valueOf((int) (11 - 0.61 * spectrumCache[e
+							.getX()])) + " dB"; // empirique...
 				lblHz.setText(text);
-				
-				//update UI to show the two lines
+
+				// update UI to show the two lines
 				mouseX = e.getX();
 				updateUI();
 			}
@@ -70,8 +70,8 @@ public class SLSpectrumView extends JPanel {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				lblHz.setText("- Hz ; - dB");
-				
-				//update UI to hide the two lines
+
+				// update UI to hide the two lines
 				mouseX = -1;
 				updateUI();
 			}
@@ -99,12 +99,13 @@ public class SLSpectrumView extends JPanel {
 		super.paintComponent(g);
 
 		if (spectrumCache != null && spectrumCache.length > 0) {
-			for(int x=0; x<X_SIZE; x++)
+			for (int x = 0; x < X_SIZE; x++)
 				g.drawLine(x, Y_SIZE, x, spectrumCache[x]);
-			
-			//display the two lines
-			if (mouseX != -1  &&  mouseX < spectrumCache.length) {
-				g.drawLine(0, spectrumCache[mouseX], X_SIZE, spectrumCache[mouseX]);
+
+			// display the two lines
+			if (mouseX != -1 && mouseX < spectrumCache.length) {
+				g.drawLine(0, spectrumCache[mouseX], X_SIZE,
+						spectrumCache[mouseX]);
 				g.drawLine(mouseX, 0, mouseX, Y_SIZE);
 			}
 		}
@@ -128,25 +129,25 @@ public class SLSpectrumView extends JPanel {
 				DftNormalization.STANDARD);
 		Complex[] result = fourier.transform(sound, TransformType.FORWARD);
 		spectrumCache = new int[X_SIZE];
-		for (int x = 0; x < result.length/4; x++) {
+		for (int x = 0; x < result.length / 4; x++) {
 			int x_coord = x * X_SIZE * 4 / result.length;
-			int y1 = (int) (Y_SIZE - Math.abs(Math.log10(0.0001 + result[x]
-					.abs())) * Y_SIZE / 7);
-			int y2 = (int) (Y_SIZE - Math.abs(Math
+			int y1 = (int) (Y_SIZE + 75 - Math.abs(Math.log10(0.0001 + result[x]
+					.abs())) * Y_SIZE / 5);
+			int y2 = (int) (Y_SIZE + 75 - Math.abs(Math
 					.log10(0.0001 + result[result.length / 4 + x].abs()))
-					* Y_SIZE / 7);
-			if (y2 < y1) //keep the higher value
+					* Y_SIZE / 5);
+			if (y2 < y1) // keep the higher value
 				y1 = y2;
-			if(spectrumCache[x_coord] == 0 || y1 < spectrumCache[x_coord])
+			if (spectrumCache[x_coord] == 0 || y1 < spectrumCache[x_coord])
 				spectrumCache[x_coord] = y1; // save the result in cache
-			
-//			int x_coord = x * X_SIZE / result.length;
-//			int y1 = (int) (Y_SIZE - Math.abs(Math.log10(0.0001 + result[x]
-//					.abs())) * Y_SIZE / 7);
-//			if(spectrumCache[x_coord] == 0 || y1 < spectrumCache[x_coord])
-//				spectrumCache[x_coord] = y1; // save the result in cache
+
+			// int x_coord = x * X_SIZE / result.length;
+			// int y1 = (int) (Y_SIZE - Math.abs(Math.log10(0.0001 + result[x]
+			// .abs())) * Y_SIZE / 7);
+			// if(spectrumCache[x_coord] == 0 || y1 < spectrumCache[x_coord])
+			// spectrumCache[x_coord] = y1; // save the result in cache
 		}
-		
+
 		updateUI();
 	}
 
