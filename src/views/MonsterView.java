@@ -61,7 +61,7 @@ public abstract class MonsterView implements DisplayableFather{
 	 * @param x
 	 * @param y
 	 */
-	public void setLocation(int x, int y) {
+	public void setLocation(int x, int y) { // à mettre dans Monster
 		position.move(x, y);
 
 	}
@@ -71,7 +71,7 @@ public abstract class MonsterView implements DisplayableFather{
 	 * celle d'un point
 	 * @param p
 	 */
-	public void setLocation(Point p) {
+	public void setLocation(Point p) {// à mettre dans Monster
 		position.setLocation(p);
 
 	}
@@ -86,7 +86,6 @@ public abstract class MonsterView implements DisplayableFather{
 
 		return position.getY();
 	}
-
 
 	@Override
 	public boolean isInZone(Point p){
@@ -106,7 +105,7 @@ public abstract class MonsterView implements DisplayableFather{
 	 * 
 	 * @return La couleur du monstre
 	 */
-	public ReadableColor getColor(){
+	public ReadableColor getColor(){ // à mettre dans Monster
 		return actualColor;
 	}
 	

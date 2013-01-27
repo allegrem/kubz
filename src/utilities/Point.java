@@ -18,28 +18,22 @@ public class Point {
 	 */
 	public Point(double x, double y){
 		this.x=x;
-		this.y=y;
-		
+		this.y=y;		
 	}
-
 	/**
 	 * 
 	 * @return La coordonnee x du point
 	 */
-	public double getX(){
-		
+	public double getX(){		
 		return x;
 	}
-	
 	/**
 	 * 
 	 * @return La coordonne y du point
 	 */
-	public double getY(){
-		
+	public double getY(){	
 		return y;
 	}
-	
 	/**
 	 * Deplace le point en un autre point
 	 * @param x nouvelle coordonnee x
@@ -49,7 +43,6 @@ public class Point {
 		this.x=x;
 		this.y=y;
 	}
-	
 	/**
 	 * Deplace le point de dx et dy
 	 * @param dx le deplacement relatif dx
@@ -57,35 +50,28 @@ public class Point {
 	 */
 	public void translate(double dx, double dy){
 		x+=dx;
-		y+=dy;
-		
-	}
-	
+		y+=dy;		
+	}	
 	/**
 	 * Placer le point a l'emplacement d'un autre point
 	 * @param p L'endroit ou doit etre place le point
 	 */
 	public void setLocation(Point p){
 		x=p.getX();
-		y=p.getY();
-		
+		y=p.getY();		
 	}
-	
 	/**
 	 * Definit la coordonnee x du point
 	 * @param x
 	 */
 	public void setX(double x){
-		this.x=x;
-		
-	}
-	
+		this.x=x;		
+	}	
 	/**
 	 * Definit la coordonnee y du point
 	 * @param y
 	 */
 	public void setY(double y){
-		this.y=y;
-		
+		this.y=y;		
 	}
 }

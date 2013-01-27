@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import monster.Monster;
 import player.*;
 import cubeManager.*;
+import wall.*;
+import base.*;
+
 
 public class GameEngine {
 	
