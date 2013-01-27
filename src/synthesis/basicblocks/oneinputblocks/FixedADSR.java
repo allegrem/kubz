@@ -4,7 +4,7 @@ package synthesis.basicblocks.oneinputblocks;
 import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
- * 
+ * This class produces an ADSR envelop with fixed parameters.
  * @author valeh
  */
 
@@ -16,9 +16,8 @@ public class FixedADSR extends OneInputBlock {
 	 * @param duration The total amount of time during which the envelop will be applied on the signal.
 	 * @param a The fraction of duration corresponding to the Attack.
 	 * @param d	The fraction of duration corresponding to the Decay.
-	 * @param s The fraction of duration corresponding to the Sustain.
-	 * @param r The fraction of duration corresponding to the Release.
-	 * @param slevel The fraction of the signal corresponding to the level during Sustain.
+	 * @param s The fraction of the input signal corresponding to the Sustain level.
+	 * @param r The fraction of duration corresponding to the Release.	
 	 */
 
 	public FixedADSR(float a, float d, float s,float r, float duration) {  		
@@ -31,14 +30,15 @@ public class FixedADSR extends OneInputBlock {
 
 	}
 	
-
+	
 	public Float compute(Float t) throws RequireAudioBlocksException {
 		//super.play(t); 
 		float previous = in.play(t).floatValue();
 		float sPrevious = s*previous;
 		float tfloat = t.floatValue();
-		float aDur=a*duration, dDur=aDur+d*duration,sDur=duration-r*duration,rDur=duration;
-		
+		//define the floats corresponding to the duration of each section
+		float aDur=a*duration, dDur=aDur+d*duration,sDur=duration-r*duration,rDur=duration;  
+				
 		float aExpr = ( previous/aDur )*tfloat;
 		float dExpr = ( (sPrevious-previous)/(d*duration) )*(tfloat-dDur) + sPrevious;
 		float sExpr = sPrevious;
