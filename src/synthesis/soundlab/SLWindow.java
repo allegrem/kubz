@@ -73,13 +73,6 @@ public class SLWindow {
 		JMenu mnFile = new JMenu("File");
 		mnFile.setMnemonic('f');
 		menuBar.add(mnFile);
-
-		JMenuItem mntmQuit = new JMenuItem("Quit");
-		mntmQuit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				frmSoundlab.dispose();
-			}
-		});
 		
 				JMenuItem mntmPlay = new JMenuItem("Play");
 				mnFile.add(mntmPlay);
@@ -90,12 +83,28 @@ public class SLWindow {
 				});
 				mntmPlay.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
 		
-		JSeparator separator = new JSeparator();
-		mnFile.add(separator);
-		addStatusBarListeners(mntmQuit, "Quit SoundLab");
-		mntmQuit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,
-				InputEvent.CTRL_MASK));
-		mnFile.add(mntmQuit);
+				JMenuItem mntmQuit = new JMenuItem("Quit");
+				mntmQuit.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						frmSoundlab.dispose();
+					}
+				});
+				
+				JMenuItem mntmExportAswav = new JMenuItem("Export as .wav");
+				mntmExportAswav.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						saveInWavFile();
+					}
+				});
+				mntmExportAswav.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
+				mnFile.add(mntmExportAswav);
+				
+				JSeparator separator = new JSeparator();
+				mnFile.add(separator);
+				addStatusBarListeners(mntmQuit, "Quit SoundLab");
+				mntmQuit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,
+						InputEvent.CTRL_MASK));
+				mnFile.add(mntmQuit);
 
 		JMenu mnInstrument = new JMenu("Instrument");
 		menuBar.add(mnInstrument);

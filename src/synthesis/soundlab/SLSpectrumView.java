@@ -128,7 +128,7 @@ public class SLSpectrumView extends JPanel {
 				DftNormalization.STANDARD);
 		Complex[] result = fourier.transform(sound, TransformType.FORWARD);
 		spectrumCache = new int[X_SIZE];
-		for (int x = 0; x < result.length / 4; x++) {
+		for (int x = 0; x < result.length/4; x++) {
 			int x_coord = x * X_SIZE * 4 / result.length;
 			int y1 = (int) (Y_SIZE - Math.abs(Math.log10(0.0001 + result[x]
 					.abs())) * Y_SIZE / 7);
@@ -139,6 +139,12 @@ public class SLSpectrumView extends JPanel {
 				y1 = y2;
 			if(spectrumCache[x_coord] == 0 || y1 < spectrumCache[x_coord])
 				spectrumCache[x_coord] = y1; // save the result in cache
+			
+//			int x_coord = x * X_SIZE / result.length;
+//			int y1 = (int) (Y_SIZE - Math.abs(Math.log10(0.0001 + result[x]
+//					.abs())) * Y_SIZE / 7);
+//			if(spectrumCache[x_coord] == 0 || y1 < spectrumCache[x_coord])
+//				spectrumCache[x_coord] = y1; // save the result in cache
 		}
 		
 		updateUI();

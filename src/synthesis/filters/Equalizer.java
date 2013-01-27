@@ -16,6 +16,8 @@ import org.apache.commons.math3.transform.TransformType;
 public class Equalizer extends Observable {
 
 	private int[] bars;
+	
+	private boolean bypass = false;
 
 	public Equalizer(int barNumber) {
 		bars = new int[barNumber];
@@ -32,6 +34,9 @@ public class Equalizer extends Observable {
 	}
 
 	public byte[] filter(byte[] soundBytes) {
+		if (bypass)
+			return soundBytes;
+		
 		// looking for the smallest power of two above sound length
 		int power2Length = 1;
 		while (power2Length < soundBytes.length)
@@ -102,6 +107,12 @@ public class Equalizer extends Observable {
 	public void random(int max) {
 		for (int i = 0; i < bars.length; i++)
 			bars[i] = (int) (Math.random() * 100);
+		setChanged();
+		notifyObservers();
+	}
+
+	public void toogleBypass() {
+		bypass = !bypass;
 		setChanged();
 		notifyObservers();
 	}

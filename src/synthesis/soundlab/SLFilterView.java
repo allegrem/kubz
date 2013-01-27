@@ -4,6 +4,7 @@
 package synthesis.soundlab;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -35,6 +36,8 @@ public class SLFilterView extends JPanel implements Observer {
 	private Equalizer equalizer;
 
 	private SLWindow window;
+
+	private JButton btnBypass;
 
 	public SLFilterView(SLWindow window) {
 		super();
@@ -74,6 +77,18 @@ public class SLFilterView extends JPanel implements Observer {
 			}
 		});
 		toolBar_2.add(btnRandom);
+		
+		btnBypass = new JButton("Bypass");
+		btnBypass.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				equalizer.toogleBypass();
+				if (btnBypass.getBackground() != Color.GRAY)
+					btnBypass.setBackground(Color.GRAY);
+				else
+					btnBypass.setBackground(null);
+			}
+		});
+		toolBar_2.add(btnBypass);
 
 		Component horizontalGlue = Box.createHorizontalGlue();
 		toolBar_2.add(horizontalGlue);
