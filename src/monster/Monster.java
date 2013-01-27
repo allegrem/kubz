@@ -84,7 +84,7 @@ public class Monster {
 		
 	}
 	
-	public void attacks(){
+	public void attack(){
 		
 		if(cible != null){
 			attack.attack(cible);
@@ -141,5 +141,10 @@ public class Monster {
 	}
 	public Point getPos(){
 		return pos;
+	}
+	
+	public void act(){
+		move();
+		attack();
 	}
 }

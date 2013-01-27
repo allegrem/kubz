@@ -1,5 +1,6 @@
 package gameEngine;
 
+import monster.Monster;
 import monster.MonsterManager;
 import player.*;
 
@@ -15,4 +16,16 @@ public class GameEngine{
 	 */
 	private MonsterManager monsterManager;
 	private Player player;
+	
+	/**
+	 * nom à revoir
+	 * Méthode qui met 
+	 */
+	public void monsterTurn(){
+		for(Monster m: monsterManager.getMonsterList()){
+			m.act();
+		}
+	}
+	
+	
 }

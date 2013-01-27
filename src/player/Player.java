@@ -94,4 +94,56 @@ public abstract class Player {
 	public UnitState getState(){
 		return unit.getState();
 	}
+	
+	/**
+	 * A present on va utiliser les méthode du haut pour les différentes phases de jeu
+	 */
+	public void WaitingTurn(){
+		setPStatesToWaiting();
+		setUStateToWaiting();
+	}
+	
+	/**
+	 * Méthode qui declenche le choix de l'Unit à utiliser
+	 */
+	public void choosingUTurn(){
+		setPStatesToWaiting();
+		setUStateToSelect();
+	}
+	/**
+	 * Méthode qui déclenche le mouvement de Unit
+	 */
+	public void movingUTurn(){
+		setPStatesToWaiting();
+		setUStateToMoving();
+	}
+	/**
+	 * Méthode qui déclenche la création du son via les Parameter
+	 */
+	public void soundEditPTurn(){
+		setPStatesToSoundEdit();
+		setUStateToWaiting();
+	}	
+	/**
+	 * Méthode qui déclenche le choix de l'angle ou de l'ouverture d'attque de Unit
+	 */
+	public void UTurn(){
+		setPStatesToWaiting();
+		setUStateToDirection();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
