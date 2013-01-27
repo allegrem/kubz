@@ -4,6 +4,7 @@
 package synthesis.soundlab;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -40,6 +41,7 @@ public class SLSpectrumView extends JPanel {
 	private int[] spectrumCache;
 	
 	private int mouseX = -1;
+	private int mouseY;
 	
 	public SLSpectrumView() {
 		super();
@@ -63,6 +65,7 @@ public class SLSpectrumView extends JPanel {
 				
 				//update UI to show the two lines
 				mouseX = e.getX();
+				mouseY = e.getY();
 				updateUI();
 			}
 		});
@@ -104,7 +107,9 @@ public class SLSpectrumView extends JPanel {
 			
 			//display the two lines
 			if (mouseX != -1  &&  mouseX < spectrumCache.length) {
-				g.drawLine(0, spectrumCache[mouseX], X_SIZE, spectrumCache[mouseX]);
+				g.setColor(Color.RED);
+				g.drawLine(0, mouseY, X_SIZE, mouseY); //why isn't it rather this one??
+				//g.drawLine(0, spectrumCache[mouseX], X_SIZE, spectrumCache[mouseX]);
 				g.drawLine(mouseX, 0, mouseX, Y_SIZE);
 			}
 		}
