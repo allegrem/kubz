@@ -31,7 +31,7 @@ public class SLInstrumentView extends JPanel implements Observer {
 	
 	private static final long serialVersionUID = 1L;
 
-	private FmInstrument instrument;
+	private FmInstrument instrument = null;
 
 	private SLWindow window;
 	
@@ -83,10 +83,12 @@ public class SLInstrumentView extends JPanel implements Observer {
 
 	public byte[] computeSound() {
 		byte[] sound = null;
-		try {
-			sound  = SynthesisUtilities.computeSound(0f, 1f, instrument);
-		} catch (RequireAudioBlocksException e) {
-			e.printStackTrace();
+		if (instrument != null) {
+			try {
+				sound  = SynthesisUtilities.computeSound(0f, 1f, instrument);
+			} catch (RequireAudioBlocksException e) {
+				e.printStackTrace();
+			}
 		}
 		return sound;
 	}

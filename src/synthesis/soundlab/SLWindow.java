@@ -190,12 +190,18 @@ public class SLWindow {
 
 	public void updateSound() {
 		byte[] sound = computeSound();
-		soundView.setSound(sound);
-		spectrumView.computeSpectrum(sound);
+		if (sound != null) {
+			soundView.setSound(sound);
+			spectrumView.computeSpectrum(sound);
+		}
 	}
 	
 	private byte[] computeSound() {
-		return filterView.filter(instrumentView.computeSound());
+		byte[] sound = instrumentView.computeSound();
+		if (sound != null)
+			return filterView.filter(sound);
+		else
+			return null;
 	}
 	
 	private void saveInWavFile() {

@@ -1,5 +1,6 @@
 package synthesis.filters;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -69,8 +70,7 @@ public class Equalizer extends Observable {
 							.abs() + spectrum[spectrum.length - x - 1].abs();
 		}
 
-		System.out.println("before:" + counterBefore + "; after:"
-				+ counterAfter + "; ratio:"
+		System.out.println("ratio:"
 				+ (int) (counterAfter / counterBefore * 100));
 
 		// inverse transform
@@ -83,6 +83,27 @@ public class Equalizer extends Observable {
 			realResult[i] = (byte) complexResult[i].getReal();
 
 		return realResult;
+	}
+
+	public int getBar(int i) {
+		if (i >= 0 && i < bars.length)
+			return bars[i];
+		else
+			throw new InvalidParameterException("Bar index out of range");
+	}
+
+	public void resetBars(int value) {
+		for (int i = 0; i < bars.length; i++)
+			bars[i] = value;
+		setChanged();
+		notifyObservers();
+	}
+
+	public void random(int max) {
+		for (int i = 0; i < bars.length; i++)
+			bars[i] = (int) (Math.random() * 100);
+		setChanged();
+		notifyObservers();
 	}
 
 }
