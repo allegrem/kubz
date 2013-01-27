@@ -61,7 +61,7 @@ public class MapCreator {
 	
 	private MapSaver mapSaver = new MapSaver(bFileName,mFileName,wFileName); 
 	
-	private float eyeX =0,eyeY = 0,eyeZ=50; 
+	private float eyeX =0,eyeY=(float)(display_height/2),eyeZ=50;
 	private float atX=(float)(display_width/2),atY=(float)(display_height/2),atZ=0;
 
 	/*
@@ -229,15 +229,6 @@ public class MapCreator {
 		if (!Keyboard.isKeyDown(Keyboard.KEY_L))
 			lClicked = true;
 		
-		if (!Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
-			rightKey = true;
-		if (!Keyboard.isKeyDown(Keyboard.KEY_LEFT))
-			leftKey = true;
-		if (!Keyboard.isKeyDown(Keyboard.KEY_UP))
-			upKey = true;
-		if (!Keyboard.isKeyDown(Keyboard.KEY_DOWN))
-			downKey =  true;
-
 		/*
 		 * Changement de MODE3D
 		 */
@@ -247,22 +238,38 @@ public class MapCreator {
 			tabClicked = false;
 		}
 		
-		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_LEFT) && leftKey) {
-			eyeX -= 5;
-			changementMode3D();
-		}
-		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_RIGHT) && rightKey) {
-			eyeX += 5;
-			changementMode3D();
-		}
-		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_DOWN) && downKey) {
-			eyeY -= 5;
-			changementMode3D();
-		}
-		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_UP) && upKey) {
+		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
 			eyeY += 5;
+			atY += 5;
 			changementMode3D();
 		}
+		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
+			eyeY -= 5;
+			atY -= 5;
+			changementMode3D();
+		}
+		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
+			eyeX -= 5;
+			atX -= 5;
+			changementMode3D();
+		}
+		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_UP)) {
+			eyeX += 5;
+			atX += 5;
+			changementMode3D();
+		}
+		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_X)) {
+			eyeZ += 5;
+			atZ += 5;
+			changementMode3D();
+		}
+		if (MODE3D && Keyboard.isKeyDown(Keyboard.KEY_Y)) {
+			eyeZ -= 5;
+			atZ -= 5;
+			changementMode3D();
+		}
+		
+		
 
 		/*
 		 * Rotation de la map
@@ -471,12 +478,12 @@ public class MapCreator {
 			/*
 			 * Réglages de l'éclairage
 			 */
-			//reminder : diffuse,specular,ambient,emissive
+			//reminder : diffuse,specular,ambient(,emissive)
 			glEnable(GL11.GL_LIGHTING);
 			glEnable(GL11.GL_LIGHT0);  //one source of light only
 			GL11.glColorMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_AMBIENT_AND_DIFFUSE);  //which face will reflect light+ambient(lOff) and diffuse(lOn) preferred to have same value
 			GL11.glLightModel(GL11.GL_LIGHT_MODEL_AMBIENT,MyFloatBuffer.newFloatBuffer4(0.8f,0.8f,0.8f,1.0f)); //the amount of global light emitted
-			//GL11.glLightModeli(GL11.GL_LIGHT_MODEL_TWO_SIDE,GL11.GL_TRUE);
+			//GL11.glLightModeli(GL11.GL_LIGHT_MODEL_TWO_SIDE,GL11.GL_TRUE);  //not necessary since we don't need to see the back of the faces
 			glMatrixMode(GL_MODELVIEW);
 			GL11.glTranslated(display_width / 2, display_height / 2, 0);
 			GL11.glRotated(Math.round(angle/10), 0, 0, 1);
