@@ -21,7 +21,7 @@ import utilities.Vector;
  * Un objet controlle par un cube.
  * Cela peut etre l'unite d'un joueur
  * ou un cube servant de parametre
- * @author paul
+ * @author paul + 2-3 modifs de Felix
  *
  */
 public class CubeControlledView implements DisplayableFather{
@@ -32,6 +32,7 @@ public class CubeControlledView implements DisplayableFather{
 	private int duration=0;
 	private ReadableColor color=Color.RED;
 	private boolean untracked=false; //L'unite est-elle sur la table ?
+	private double angle = 0;
 	
 	/**
 	 * Nouveau cubeControlled
@@ -80,6 +81,22 @@ public class CubeControlledView implements DisplayableFather{
 	public double getY() {
 
 		return position.getY();
+	}
+	
+	/**
+	 * méthodes relatives à l'angle du cube
+	 * @param theta
+	 * @param dTheta
+	 * @author Felix
+	 */
+	public void setAngle(double theta){
+		angle = theta;
+	}
+	public void rotate(double dTheta){
+		angle = angle + dTheta;
+	}
+	private double getAngle(){
+		return angle;
 	}
 
 

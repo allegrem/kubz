@@ -1,13 +1,15 @@
 package unit;
 
 import utilities.Point;
-import views.MonsterView;
+import views.CubeControlledView;
+
 
 public class Unit {
 	
 	private Point pos;
+	private double angle;
 	private UnitState state;
-	private MonsterView view;
+	private CubeControlledView view;
 	
 	
 	public Unit(){
@@ -55,6 +57,22 @@ public class Unit {
 		return pos;
 	}
 
+	/**
+	 * méthodes relatives à l'angle du cube
+	 * @param theta
+	 * @param dTheta
+	 */
+	public void setAngle(double theta){
+		angle = theta;
+		view.setAngle(theta);
+	}
+	public void rotate(double dTheta){
+		angle = angle + dTheta;
+		view.rotate(dTheta);
+	}
+	private double getAngle(){
+		return angle;
+	}
 	
 	/**
 	 * setters et getter de UnitState

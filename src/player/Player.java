@@ -5,14 +5,29 @@ package player;
  * @author Felix
  */
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import org.lwjgl.input.Keyboard;
+
 import parameter.*;
 import unit.*;
 
 
-public abstract class Player {
+public abstract class Player implements ActionListener,KeyListener{
 	
 	private Unit unit;
 	private Parameter[] parameters ;
+	
+	private boolean zKey = false;
+	private boolean qKey = false;
+	private boolean sKey = false;
+	private boolean dKey = false;
+	private boolean wKey = false;
+	private boolean xKey = false;
+	private boolean tap = false;
 	
 	/**
 	 * Création d'un joueur avec une Unit et deux Parameter
@@ -22,6 +37,7 @@ public abstract class Player {
 		this.parameters = new Parameter[2];
 		parameters[0]= new Parameter();
 		parameters[1]= new Parameter();
+		//this.add
 		
 	}
 	
@@ -109,6 +125,8 @@ public abstract class Player {
 	public void choosingUTurn(){
 		setPStatesToWaiting();
 		setUStateToSelect();
+		while(!tap) {
+		}
 	}
 	/**
 	 * Méthode qui déclenche le mouvement de Unit
@@ -116,6 +134,14 @@ public abstract class Player {
 	public void movingUTurn(){
 		setPStatesToWaiting();
 		setUStateToMoving();
+		while (!tap){
+			if(zKey) unit.translate(0,1);
+			if(sKey) unit.translate(0, -1);
+			if(qKey) unit.translate(-1, 0);
+			if(dKey) unit.translate(0, 1);
+			if(wKey) unit.rotate(1);
+			if(xKey) unit.rotate(-1);
+		}
 	}
 	/**
 	 * Méthode qui déclenche la création du son via les Parameter
@@ -133,6 +159,70 @@ public abstract class Player {
 	}
 	
 	
+	
+	public void act(){
+		choosingUTurn();
+		
+		
+	}
+	
+	
+	/**
+	 * on controle les déplacements via "ZQSD"
+	 * on controle la rotation avec "WX"
+	 * on passe à l'étape suivante avec "!"
+	 * 
+	 */
+
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {	
+		if (arg0.getSource().equals(Keyboard.KEY_Z))
+			zKey = true;
+		if (arg0.getSource().equals(Keyboard.KEY_Q))
+			qKey = true;
+		if (arg0.getSource().equals(Keyboard.KEY_S))
+			sKey = true;
+		if (arg0.getSource().equals(Keyboard.KEY_D))
+			dKey =  true;
+		if (arg0.getSource().equals(Keyboard.KEY_W))
+			wKey =  true;
+		if (arg0.getSource().equals(Keyboard.KEY_X))
+			xKey =  true;
+		
+	}
+
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		if (arg0.getSource().equals(Keyboard.KEY_Z))
+			sKey = false;
+		if (arg0.getSource().equals(Keyboard.KEY_Q))
+			qKey = false;
+		if (arg0.getSource().equals(Keyboard.KEY_S))
+			sKey = false;
+		if (arg0.getSource().equals(Keyboard.KEY_D))
+			dKey =  false;
+		if (arg0.getSource().equals(Keyboard.KEY_W))
+			wKey =  false;
+		if (arg0.getSource().equals(Keyboard.KEY_X))
+			xKey =  false;
+		
+	}
+
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	
