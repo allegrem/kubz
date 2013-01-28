@@ -17,6 +17,10 @@ import synthesis.parameter.GainParamBlock;
 import synthesis.parameter.ParamBlock;
 import synthesis.parameter.ParameterAudioBlock;
 
+/**
+ * This class creates a WoodInstrument (typically violin).
+ * @author : valeh 
+ */
 public class WoodInstrument implements FmInstrument {
 
 	private final ParameterAudioBlock fm;
@@ -34,7 +38,11 @@ public class WoodInstrument implements FmInstrument {
 	private AudioBlock out;
 
 	private ArrayList<ParameterAudioBlock> paramList;
-
+	
+	/**
+	 * Constructs a wood instrument with the 
+	 * different controllable parameters.
+	 */
 	public WoodInstrument() {
 		super();
 
@@ -47,8 +55,7 @@ public class WoodInstrument implements FmInstrument {
 
 		try {
 			out = buildInstrument();
-		} catch (TooManyInputsException e) {
-			// TODO Auto-generated catch block
+		} catch (TooManyInputsException e) {			
 			e.printStackTrace();
 		}
 		paramList = generateParamList();
@@ -65,7 +72,13 @@ public class WoodInstrument implements FmInstrument {
 		return list;
 	}
 
+	/**
+	 * Creates the instrument out of the values of the
+	 * different parameters.
+	 * @return the resulting AudioBlock
+	 */
 	private AudioBlock buildInstrument() throws TooManyInputsException {
+		//Add vibrato factor
 		Adder vibrato = new Adder(fm, new SineWaveOscillator(vibrFreq,
 				new Multiplier(fm, vibrGainFactor)));
 		Gain fp = new Gain(3f, vibrato);
@@ -75,26 +88,25 @@ public class WoodInstrument implements FmInstrument {
 		return out = new SineWaveOscillator(new Adder(fp, osc1), env1);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see synthesis.AudioBlock#play(java.lang.Float)
-	 */
+	 */	
 	@Override
 	public Float play(Float t) throws RequireAudioBlocksException {
 		return out.play(t);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see synthesis.AudioBlock#phi(java.lang.Float)
-	 */
+	 */	
 	@Override
 	public Float phi(Float t) throws RequireAudioBlocksException {
 		return out.phi(t);
 	}
-
+	
+	/**
+	 * @see synthesis.FmInstrument#getParameters
+	 */
 	@Override
 	public ArrayList<ParameterAudioBlock> getParameters() {
 		return paramList;
