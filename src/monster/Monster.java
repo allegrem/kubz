@@ -7,6 +7,8 @@ package monster;
 import utilities.Point;
 import views.*;
 
+import gameEngine.GameEngine;
+
 import java.util.*;
 import unit.Unit;
 
@@ -16,6 +18,8 @@ public class Monster {
 	 * Différents xxxxType qui permettent de générer différents types
 	 * de monstres de façon modulaire 
 	 */
+	
+	private GameEngine gameEngine;
 	private AttackType attack;
 	private DefenceType defence;
 	private MoveType move;
@@ -34,7 +38,7 @@ public class Monster {
 	 * @param xStart
 	 * @param yStart
 	 */
-	public Monster(int xStart, int yStart){
+	public Monster(int xStart, int yStart, GameEngine gameEngine){
 		
 		this.pos = new Point(xStart, yStart);
 		this.cible = null;
@@ -84,10 +88,21 @@ public class Monster {
 		
 	}
 	
-	public void attack(){
+	/**
+	 * La composante attack va fournir une ArrayList de fréquence et d'intensités qui vont 
+	 * arriver sur le filtre de l'Unit
+	 * @param attackTable
+	 */
+	
+	private void attack(ArrayList<int[]> attackTable){
+		setSeenUnits(gameEngine.getUnitList());
+		setPotList();
+		setCible();
 		
 		if(cible != null){
-			attack.attack(cible);
+			for(int i=0; i<attackTable.size();i++){
+				cible.decreaseLife(cible.getValue(attackTable.get(i)[0])*attackTable.get(i)[1]);
+			}
 		}
 		else return;
 		
@@ -145,6 +160,6 @@ public class Monster {
 	
 	public void act(){
 		move();
-		attack();
+		attack(attack.result());
 	}
 }

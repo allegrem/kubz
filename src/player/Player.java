@@ -11,7 +11,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import org.lwjgl.input.Keyboard;
-
 import parameter.*;
 import unit.*;
 
@@ -20,6 +19,7 @@ public abstract class Player implements ActionListener,KeyListener{
 	
 	private Unit unit;
 	private Parameter[] parameters ;
+	private int nParams =2;
 	
 	private boolean zKey = false;
 	private boolean qKey = false;
@@ -28,6 +28,7 @@ public abstract class Player implements ActionListener,KeyListener{
 	private boolean wKey = false;
 	private boolean xKey = false;
 	private boolean tap = false;
+	private int choice;
 	
 	/**
 	 * Création d'un joueur avec une Unit et deux Parameter
@@ -37,9 +38,13 @@ public abstract class Player implements ActionListener,KeyListener{
 		this.parameters = new Parameter[2];
 		parameters[0]= new Parameter();
 		parameters[1]= new Parameter();
-		//this.add
-		
 	}
+	
+	public Unit getUnit(){
+		return unit;
+	}
+	
+	
 	
 	
 	/**
@@ -139,9 +144,8 @@ public abstract class Player implements ActionListener,KeyListener{
 			if(sKey) unit.translate(0, -1);
 			if(qKey) unit.translate(-1, 0);
 			if(dKey) unit.translate(0, 1);
-			if(wKey) unit.rotate(1);
-			if(xKey) unit.rotate(-1);
 		}
+		return;
 	}
 	/**
 	 * Méthode qui déclenche la création du son via les Parameter
@@ -149,13 +153,37 @@ public abstract class Player implements ActionListener,KeyListener{
 	public void soundEditPTurn(){
 		setPStatesToSoundEdit();
 		setUStateToWaiting();
+		while (!tap){
+				if(zKey) parameters[choice].translate(0,1);
+				if(sKey) parameters[choice].translate(0, -1);
+				if(qKey) parameters[choice].translate(-1, 0);
+				if(dKey) parameters[choice].translate(0, 1);
+				if(wKey) parameters[choice].rotate(1);
+				if(xKey) parameters[choice].rotate(-1);						
+		}
+		tap = false;
 	}	
 	/**
 	 * Méthode qui déclenche le choix de l'angle ou de l'ouverture d'attque de Unit
 	 */
-	public void UTurn(){
+	public void UDirection(){
 		setPStatesToWaiting();
 		setUStateToDirection();
+		while (!tap){
+			if(wKey) unit.rotateDirection(1);
+			if(xKey) unit.rotateDirection(-1);						
+	}
+		tap = false;
+	}
+	
+	public void UAperture(){
+		setPStatesToWaiting();
+		setUStateToDirection();
+		while (!tap){
+			if(wKey) unit.rotateAperture(1);
+			if(xKey) unit.rotateAperture(-1);						
+	}
+		tap = false;
 	}
 	
 	
@@ -170,7 +198,8 @@ public abstract class Player implements ActionListener,KeyListener{
 	/**
 	 * on controle les déplacements via "ZQSD"
 	 * on controle la rotation avec "WX"
-	 * on passe à l'étape suivante avec "!"
+	 * on passe à l'étape suivante avec "P"
+	 * on change le Parameter sur lequel on agis via "TAB"
 	 * 
 	 */
 
@@ -213,8 +242,12 @@ public abstract class Player implements ActionListener,KeyListener{
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		if (arg0.getSource().equals(Keyboard.KEY_P	))
+			tap = true;	
+		if (arg0.getSource().equals(Keyboard.KEY_TAB)){
+			choice = (choice + 1)%nParams;
+		}
+			
 	}
 
 
@@ -223,17 +256,5 @@ public abstract class Player implements ActionListener,KeyListener{
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

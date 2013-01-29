@@ -119,6 +119,25 @@ public class BaseView implements DisplayableFather{
 		return center.getY();
 	}
 
+	/**
+	 * Méthodes générées automatiquement pour pouvoir toucher aux paramètres...
+	 * @return
+	 */
+	public Point getCenter() {
+		return center;
+	}
+
+	public void setCenter(Point center) {
+		this.center = center;
+	}
+
+	public int getSens() {
+		return sens;
+	}
+
+	public void setSens(int sens) {
+		this.sens = sens;
+	}
 
 	@Override
 	public ArrayList<DisplayableChild> getChildren() {

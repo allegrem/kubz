@@ -1,5 +1,10 @@
 package wall;
 
+/**
+ * Classe qui permet de représenter les murs dans le modèle
+ * @author Felix
+ */
+
 import utilities.Point;
 import utilities.Vector;
 import views.WallView;
@@ -7,7 +12,7 @@ import views.WallView;
 public class Wall {
 	private Point extremity1;
 	private Point extremity2;
-	private int thickness;
+	//private int thickness;                 Ce paramètre est utilisé ?
 	private Vector vect; 
 	private float normev;
 	private double angle;
@@ -17,7 +22,7 @@ public class Wall {
 		super();
 		this.extremity1 = extremity1;
 		this.extremity2 = extremity2;
-		this.thickness = thickness;
+		//this.thickness = thickness;
 		this.vect = new Vector(extremity2.getX()-extremity1.getX(),extremity2.getY()-extremity1.getY());
 		this.normev = (float) Math.sqrt(vect.getX()*vect.getX()+vect.getY()*vect.getY());
 	}
@@ -25,7 +30,7 @@ public class Wall {
 	public void ChangeWall(Point extremity1, Point extremity2, int thickness) {
 		this.extremity1 = extremity1;
 		this.extremity2 = extremity2;
-		this.thickness = thickness;
+		//this.thickness = thickness;
 		view.ChangeWall(extremity1, extremity2, thickness);
 	}
 	public void translateX(double longueur) {

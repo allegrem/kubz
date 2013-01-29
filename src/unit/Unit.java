@@ -6,14 +6,52 @@ import views.CubeControlledView;
 
 public class Unit {
 	
+	private float[] shield;
+	private double life;
 	private Point pos;
-	private double angle;
+	private double aperture;
+	private double direction;
 	private UnitState state;
 	private CubeControlledView view;
 	
 	
 	public Unit(){
 		this.state = new WaitingUState();
+		this.shield = new float[1000];
+		for(int i=0; i<1000;i++)
+			shield[i]=1f;
+	}
+	
+	/**
+	 * Méthodes relatives au shield de l'Unit
+	 */
+	public void setValues(int l, int r, float value){
+		for(int i = l; i<=r; i++)
+			shield[i]=value;
+	}
+	public float getValue(int index){
+		return shield[index];
+	}
+	/*private float[] getValues(int l, int r){
+		return shield[l,r];
+	}*/
+	
+	
+	
+	/**
+	 * Méthodes relatives à la vie de Unit
+	 */
+	public void increaseLife(double inc){
+		life = life + inc;
+	}
+	public void decreaseLife(double dec){
+		life = life - dec;
+	}
+	public void setLife(double newLife){
+		life = newLife;
+	}
+	public double getLife(){
+		return life;
 	}
 
 	
@@ -58,20 +96,37 @@ public class Unit {
 	}
 
 	/**
-	 * méthodes relatives à l'angle du cube
+	 * Méthode relatives à l'angle d'ouverture de l'attaque 
 	 * @param theta
 	 * @param dTheta
 	 */
-	public void setAngle(double theta){
-		angle = theta;
-		view.setAngle(theta);
+	public void setAperture(double theta){
+		aperture = theta;
+		view.setAperture(theta);
 	}
-	public void rotate(double dTheta){
-		angle = angle + dTheta;
-		view.rotate(dTheta);
+	public void rotateAperture(double dTheta){
+		aperture = aperture + dTheta;
+		view.rotateAperture(dTheta);
 	}
-	private double getAngle(){
-		return angle;
+	public double getAperture(){
+		return aperture;
+	}
+	
+	/**
+	 * Méthode relatives à la direction de l'attaque 
+	 * @param theta
+	 * @param dTheta
+	 */
+	public void setDirection(double theta){
+		direction = theta;
+		view.setDirection(theta);
+	}
+	public void rotateDirection(double dTheta){
+		direction = direction + dTheta;
+		view.rotateDirection(dTheta);
+	}
+	public double getDirection(){
+		return direction;
 	}
 	
 	/**

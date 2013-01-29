@@ -33,6 +33,8 @@ public class CubeControlledView implements DisplayableFather{
 	private ReadableColor color=Color.RED;
 	private boolean untracked=false; //L'unite est-elle sur la table ?
 	private double angle = 0;
+	private double aperture;
+	private double direction;
 	
 	/**
 	 * Nouveau cubeControlled
@@ -84,7 +86,7 @@ public class CubeControlledView implements DisplayableFather{
 	}
 	
 	/**
-	 * méthodes relatives à l'angle du cube
+	 * méthodes relatives à l'angle du cube, pour le Parameter ...
 	 * @param theta
 	 * @param dTheta
 	 * @author Felix
@@ -95,8 +97,40 @@ public class CubeControlledView implements DisplayableFather{
 	public void rotate(double dTheta){
 		angle = angle + dTheta;
 	}
-	private double getAngle(){
+	public double getAngle(){
 		return angle;
+	}
+	
+	/**
+	 * Méthode relatives à l'angle d'ouverture de l'attaque 
+	 * @param theta
+	 * @param dTheta
+	 * @author Felix
+	 */
+	public void setAperture(double theta){
+		aperture = theta;
+	}
+	public void rotateAperture(double dTheta){
+		aperture = aperture + dTheta;;
+	}
+	public double getAperture(){
+		return aperture;
+	}
+	
+	/**
+	 * Méthode relatives à la direction de l'attaque 
+	 * @param theta
+	 * @param dTheta
+	 * @author Felix
+	 */
+	public void setDirection(double theta){
+		direction = theta;
+	}
+	public void rotateDirection(double dTheta){
+		direction = direction + dTheta;;
+	}
+	public double getDirection(){
+		return direction;
 	}
 
 

@@ -12,7 +12,13 @@ public class Base {
 	private static final float radius = 80.0f; // on code le rayon des bases "en dur"
 	private BaseView view;
 	
-	
+	/**
+	 * Constructeur à partir de la vue ...
+	 * @param center
+	 * @param sens
+	 * @param color
+	 * @param view
+	 */
 	public Base(Point center, int sens, ReadableColor color, BaseView view) {
 		super();
 		this.center = center;
@@ -20,11 +26,25 @@ public class Base {
 		this.color = color;
 		this.view = view;
 	}
+	/**
+	 * Constructuer à partir du modèle, qui va créer la vue associée
+	 * @param center
+	 * @param sens
+	 * @param color
+	 */
+	public Base(Point center, int sens, ReadableColor color) {
+		super();
+		this.center = center;
+		this.sens = sens;
+		this.color = color;
+		view = new BaseView(center, color, sens);
+	}
 	public Point getCenter() {
 		return center;
 	}
 	public void setCenter(Point center) {
 		this.center = center;
+		view.setCenter(center);
 	}
 	public int getSens() {
 		return sens;
