@@ -13,6 +13,7 @@ import utilities.Lines;
 import utilities.Maths;
 import utilities.Point;
 import utilities.Vector;
+import views.attacks.SineAttackV;
 import views.attacks.SinusoidalAttackView;
 
 /**
@@ -29,7 +30,7 @@ public class CircleMonsterView extends MonsterView {
  */
 	public CircleMonsterView(Point position,ReadableColor color) {
 		super(position,color);
-		this.addChild(new SinusoidalAttackView(45,0,150));
+		this.addChild(new SineAttackV(0,this));
 	}
 
 	@Override
