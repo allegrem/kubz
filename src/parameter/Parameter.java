@@ -64,7 +64,7 @@ public class Parameter {
 		angle = angle + dTheta;
 		view.rotate(dTheta);
 	}
-	private double getAngle(){
+	public double getAngle(){
 		return angle;
 	}
 	

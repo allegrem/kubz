@@ -47,7 +47,7 @@ public class GameEngine{
 	}
 	
 	/**
-	 * Méthode qui freeze le jeu, condition de relance sur le mode normal à revoir
+	 * Méthode qui freeze le jeu, condition de relance sur le mode normal à revoir, à lancer quand un cube disparait
 	 */
 	public void frozen(){
 	}

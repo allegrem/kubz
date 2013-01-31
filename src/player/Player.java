@@ -20,6 +20,7 @@ public abstract class Player implements ActionListener,KeyListener{
 	private Unit unit;
 	private Parameter[] parameters ;
 	private int nParams =2;
+	private float[] shield;
 	
 	private boolean zKey = false;
 	private boolean qKey = false;
@@ -34,10 +35,25 @@ public abstract class Player implements ActionListener,KeyListener{
 	 * Création d'un joueur avec une Unit et deux Parameter
 	 */
 	public Player(){
-		this.unit = new Unit();
+		this.unit = new Unit(this);
 		this.parameters = new Parameter[2];
 		parameters[0]= new Parameter();
 		parameters[1]= new Parameter();
+		this.shield = new float[1000];
+		for(int i=0; i<11;i++)
+			shield[i]=1f;
+		
+	}
+	
+	/**
+	 * Méthodes relatives au shield de l'Unit
+	 */
+	public void setValues(int l, int r, float value){
+		for(int i = l; i<=r; i++)
+			shield[i]=value;
+	}
+	public float getValue(int index){
+		return shield[index];
 	}
 	
 	public Unit getUnit(){

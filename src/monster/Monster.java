@@ -101,7 +101,7 @@ public class Monster {
 		
 		if(cible != null){
 			for(int i=0; i<attackTable.size();i++){
-				cible.decreaseLife(cible.getValue(attackTable.get(i)[0])*attackTable.get(i)[1]);
+				cible.decreaseLife(cible.getOwner().getValue(attackTable.get(i)[0])*attackTable.get(i)[1]);
 			}
 		}
 		else return;

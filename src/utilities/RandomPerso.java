@@ -40,8 +40,7 @@ public class RandomPerso{
 	    
 	  }
 	  
-	  /**
-	   * 
+	  /** 
 	   * @param max
 	   * @return Un entier entre 0 et max-1
 	   */

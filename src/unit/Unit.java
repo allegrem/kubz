@@ -2,42 +2,31 @@ package unit;
 
 import utilities.Point;
 import views.CubeControlledView;
+import player.*;
 
 
 public class Unit {
 	
-	private float[] shield;
 	private double life;
 	private Point pos;
 	private double aperture;
 	private double direction;
 	private UnitState state;
 	private CubeControlledView view;
+	private Player owner;
 	
 	
-	public Unit(){
+	public Unit(Player owner){
 		this.state = new WaitingUState();
-		this.shield = new float[1000];
-		for(int i=0; i<1000;i++)
-			shield[i]=1f;
+		this.owner = owner;
 	}
 	
-	/**
-	 * Méthodes relatives au shield de l'Unit
-	 */
-	public void setValues(int l, int r, float value){
-		for(int i = l; i<=r; i++)
-			shield[i]=value;
+	
+	public Player getOwner() {
+		return owner;
 	}
-	public float getValue(int index){
-		return shield[index];
-	}
-	/*private float[] getValues(int l, int r){
-		return shield[l,r];
-	}*/
-	
-	
-	
+
+
 	/**
 	 * Méthodes relatives à la vie de Unit
 	 */

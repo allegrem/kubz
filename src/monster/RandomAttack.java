@@ -1,7 +1,6 @@
 package monster;
 
 import java.util.ArrayList;
-
 import utilities.RandomPerso;
 
 /**
@@ -12,12 +11,17 @@ import utilities.RandomPerso;
 public class RandomAttack extends AttackType{
 	private int strenght;
 	
+	public RandomAttack(int strenght){
+		this.strenght = strenght;
+	}
+	
+	/**
+	 * Génère une attaque à une fréquence aléatoire.
+	 */
 	public ArrayList<int[]> result(){
 		ArrayList<int[]> attackTable = new ArrayList<int[]>();
-		int[] attack = {RandomPerso.entier(1000),strenght};
+		int[] attack = {RandomPerso.entier(11),strenght};
 		attackTable.add(attack);
 		return attackTable;
 	}
-	
-
 }
