@@ -1,6 +1,8 @@
 package map2;
 
 
+import gameEngine.GameEngine;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -9,7 +11,14 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
+import monster.CircleMonster;
+import monster.Monster;
+import monster.ShapeMonster;
+import monster.SquareMonster;
+
 import org.lwjgl.util.Color;
+
+import base.Base;
 
 import utilities.Point;
 import views.monsters.CircleMonsterView;
@@ -18,6 +27,7 @@ import views.monsters.ShapeMonsterView;
 import views.monsters.SquareMonsterView;
 import views.staticViews.BaseView;
 import views.staticViews.WallView;
+import wall.Wall;
 
 
 
@@ -33,18 +43,21 @@ public class MapReader {
 
 	private Map map;
 	private String bFileName,mFileName,wFileName;
+	private GameEngine gameEngine;
 	
-	public MapReader(String bFileName, String mFileName, String wFileName){
+	public MapReader(String bFileName, String mFileName, String wFileName, GameEngine gameEngine){
 		this.bFileName = bFileName;
 		this.mFileName = mFileName;
 		this.wFileName = wFileName;
+		this.gameEngine=gameEngine;
 	}
 	
 	/**
 	 * Lecture du fichier "Bases"
 	 * @throws Exception
 	 */
-	private void readBases() throws Exception {
+	public ArrayList<Base> readBases() throws Exception {
+		ArrayList<Base> bases= new ArrayList<Base>();
 		FileReader fr = null;
 		BufferedReader br = null;
 		try{
@@ -58,7 +71,7 @@ public class MapReader {
 				float yCenter = sc.nextFloat();
 				int baseRed = sc.nextInt(), baseGreen = sc.nextInt(), baseBlue = sc.nextInt();
 				int sens = sc.nextInt();			
-				map.add(new BaseView( new Point(xCenter,yCenter) , new Color(baseRed,baseGreen,baseBlue), sens));
+				bases.add(new Base( new Point(xCenter,yCenter) , new Color(baseRed,baseGreen,baseBlue), sens,gameEngine));
 				sc.close();
 			}
 		
@@ -76,13 +89,15 @@ public class MapReader {
 					throw new Exception("Erreur lors de la fermeture du buffer...");}
 			
 		}
+		return bases;
 	}
 	
 	/**
 	 * Lecture du fichier "Monsters"
 	 * @throws Exception
 	 */
-	private void readMonsters() throws Exception {
+	public ArrayList<Monster> readMonsters() throws Exception {
+		ArrayList<Monster> monsters= new ArrayList<Monster>();
 		FileReader fr = null;
 		BufferedReader br = null;
 		try{
@@ -98,13 +113,13 @@ public class MapReader {
 				int red = sc.nextInt(), green = sc.nextInt(), blue = sc.nextInt();
 				switch(type){
 				case 'C':
-					map.add(new CircleMonsterView( new Point(xCenter,yCenter) , new Color(red,green,blue) ) );
+					monsters.add(new CircleMonster( xCenter,yCenter , new Color(red,green,blue) ,gameEngine) );
 				break;
 				case 'T':
-					map.add(new ShapeMonsterView( new Point(xCenter,yCenter) , new Color(red,green,blue)) );
+					monsters.add(new ShapeMonster( xCenter,yCenter, new Color(red,green,blue),gameEngine) );
 				break;
 				case 'S':
-					map.add(new SquareMonsterView( new Point(xCenter,yCenter) , new Color(red,green,blue) ) );
+					monsters.add(new SquareMonster(xCenter,yCenter , new Color(red,green,blue),gameEngine ) );
 				break;
 				default:
 				break;
@@ -125,13 +140,15 @@ public class MapReader {
 				} catch (Exception e) {
 					throw new Exception("Erreur lors de la fermeture du buffer...");}
 		}
+		return monsters;
 	}
 	
 	/**
 	 * Lecture du fichier "Walls"
 	 * @throws Exception
 	 */
-	private void readWalls() throws Exception {
+	public ArrayList<Wall> readWalls() throws Exception {
+		ArrayList<Wall> walls=new ArrayList<Wall>();
 		FileReader fr = null;
 		BufferedReader br = null;
 		try{
@@ -144,7 +161,7 @@ public class MapReader {
 				float xExtr1 = sc.nextFloat(), yExtr1 = sc.nextFloat();
 				float xExtr2 = sc.nextFloat(), yExtr2 = sc.nextFloat();				
 				int thickness = sc.nextInt();
-				map.add(new WallView( new Point(xExtr1,yExtr1) , new Point(xExtr2,yExtr2), thickness,0));
+				walls.add(new Wall( new Point(xExtr1,yExtr1) , new Point(xExtr2,yExtr2), thickness,0,gameEngine));
 				sc.close();
 			}
 		}catch(Exception e){e.printStackTrace();}
@@ -160,6 +177,7 @@ public class MapReader {
 				} catch (Exception e) {
 					throw new Exception("Erreur lors de la fermeture du buffer...");}
 		}
+		return walls;
 	}
 	
 	/**

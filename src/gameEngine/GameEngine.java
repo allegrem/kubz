@@ -23,7 +23,7 @@ public class GameEngine {
 	private CubeManager cubeManager;
 	private GLDisplay display;
 	private Map map;
-	private MapReader reader=new MapReader("map/bases","map/monsters","map/walls");
+	private MapReader reader=new MapReader("map/bases","map/monsters","map/walls",this);
 	private boolean quit;
 	
 	public GameEngine(){
@@ -31,11 +31,15 @@ public class GameEngine {
 		display=new GLDisplay(width,height,map);
 		display.start();
 		map.add(new BackgroundView(width,height));
-		/* Valeh doit modifier MapReader pour que ca marche
-		monsterList=reader.readMonsters();
-		bases=reader.readBases();
-		walls=reader.readWalls();
-		*/
+		
+		try {
+			monsterList=reader.readMonsters();
+			bases=reader.readBases();
+			walls=reader.readWalls();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -84,5 +88,9 @@ public class GameEngine {
 		}
 	}
 	
+	public Map getMap(){
+		return map;
+		
+	}
 
 }

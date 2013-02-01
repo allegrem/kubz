@@ -1,5 +1,7 @@
 package base;
 
+import gameEngine.GameEngine;
+
 import org.lwjgl.util.ReadableColor;
 
 import utilities.Point;
@@ -11,33 +13,23 @@ public class Base {
 	private ReadableColor color;
 	private static final float radius = 80.0f; // on code le rayon des bases "en dur"
 	private BaseView view;
-	
-	/**
-	 * Constructeur � partir de la vue ...
-	 * @param center
-	 * @param sens
-	 * @param color
-	 * @param view
-	 */
-	public Base(Point center, int sens, ReadableColor color, BaseView view) {
-		super();
-		this.center = center;
-		this.sens = sens;
-		this.color = color;
-		this.view = view;
-	}
+	private GameEngine gameEngine;
+
 	/**
 	 * Constructuer � partir du mod�le, qui va cr�er la vue associ�e
 	 * @param center
 	 * @param sens
 	 * @param color
+	 * @param gameEngine 
 	 */
-	public Base(Point center, int sens, ReadableColor color) {
+	public Base(Point center, ReadableColor color, int sens, GameEngine gameEngine) {
 		super();
 		this.center = center;
 		this.sens = sens;
 		this.color = color;
+		this.gameEngine=gameEngine;
 		view = new BaseView(center, color, sens);
+		gameEngine.getMap().add(view);
 	}
 	public Point getCenter() {
 		return center;

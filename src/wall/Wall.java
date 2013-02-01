@@ -5,6 +5,7 @@ package wall;
  * @author Felix
  */
 
+import gameEngine.GameEngine;
 import utilities.Point;
 import utilities.Vector;
 import views.staticViews.WallView;
@@ -17,12 +18,16 @@ public class Wall {
 	private float normev;
 	private double angle;
 	private WallView view;
+	private GameEngine gameEngine;
 	
-	public Wall(Point extremity1, Point extremity2, int thickness) {
+	public Wall(Point extremity1, Point extremity2, int thickness,int type, GameEngine gameEngine) {
 		super();
 		this.extremity1 = extremity1;
 		this.extremity2 = extremity2;
 		//this.thickness = thickness;
+		this.gameEngine=gameEngine;
+		view=new WallView(extremity1,extremity2,thickness,type);
+		gameEngine.getMap().add(view);
 		this.vect = new Vector(extremity2.getX()-extremity1.getX(),extremity2.getY()-extremity1.getY());
 		this.normev = (float) Math.sqrt(vect.getX()*vect.getX()+vect.getY()*vect.getY());
 	}

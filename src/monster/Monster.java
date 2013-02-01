@@ -20,7 +20,7 @@ public class Monster {
 	 * de monstres de fa�on modulaire 
 	 */
 	
-	private GameEngine gameEngine;
+	protected GameEngine gameEngine;
 	private AttackType attack;
 	private DefenceType defence;
 	private MoveType move;
@@ -32,18 +32,19 @@ public class Monster {
 	/**
 	 * r�f�rence vers la vue du monstre pour pouvoir transmettre les modifications n�cessaires 
 	 */
-	private MonsterView view;
+	protected MonsterView view;
 	
 	/**
 	 * cr�e un nouveau monstre � la position (xStart,yStart)
 	 * @param xStart
 	 * @param yStart
 	 */
-	public Monster(int xStart, int yStart, GameEngine gameEngine){
+	public Monster(float xStart, float yStart, GameEngine gameEngine){
 		
 		this.pos = new Point(xStart, yStart);
 		this.cible = null;
 		this.seenUnits = new ArrayList<Unit>();
+		this.gameEngine=gameEngine;
 		
 	}
 	
