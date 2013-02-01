@@ -86,7 +86,7 @@ public class ShapeMonsterView extends MonsterView {
 
 	@Override
 	public String getCharac() {
-		return "T";
+		return "T"+super.getCharac();
 	}
 
 	@Override

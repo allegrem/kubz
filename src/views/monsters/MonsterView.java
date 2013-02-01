@@ -119,7 +119,7 @@ public abstract class MonsterView implements DisplayableFather{
 	
 	@Override
 	public String getCharac(){
-		return "Monster "+" "+position.getX()+" "+position.getY()+
+		return " "+position.getX()+" "+position.getY()+
 				" "+actualColor.getRed()+" "+actualColor.getGreen()+" "+actualColor.getBlue();
 	}
 

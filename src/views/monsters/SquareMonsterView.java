@@ -35,7 +35,7 @@ public class SquareMonsterView extends MonsterView {
 	 */
 	public SquareMonsterView(Point position, ReadableColor color) {
 		super(position, color);
-		this.addChild(new AttackConeView(30,0,150));
+		
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class SquareMonsterView extends MonsterView {
 	
 	@Override
 	public String getCharac() {
-		return "S";
+		return "S"+super.getCharac();
 	}
 
 	@Override

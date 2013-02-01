@@ -30,7 +30,6 @@ public class CircleMonsterView extends MonsterView {
  */
 	public CircleMonsterView(Point position,ReadableColor color) {
 		super(position,color);
-		this.addChild(new SineAttackV(0,this));
 	}
 
 	@Override
@@ -61,7 +60,7 @@ public class CircleMonsterView extends MonsterView {
 
 	@Override
 	public String getCharac() {
-		return "C";
+		return "C"+super.getCharac();
 	}
 
 	@Override
