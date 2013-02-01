@@ -49,6 +49,22 @@ public class CubeControlledView implements DisplayableFather{
 	}
 	
 	/**
+	 * m�thodes relatives � l'angle du cube, pour le Parameter ...
+	 * @param theta
+	 * @param dTheta
+	 * @author Felix
+	 */
+	public void setAngle(double theta){
+		angle = theta;
+	}
+	public void rotate(double dTheta){
+		angle = angle + dTheta;
+	}
+	public double getAngle(){
+		return angle;
+	}
+	
+	/**
 	 * M�thode relatives � l'angle d'ouverture de l'attaque 
 	 * @param theta
 	 * @param dTheta
