@@ -109,7 +109,6 @@ public class MapReader {
 				sc.useLocale(Locale.US);
 				char type = sc.next().charAt(0); //"convert" to char 
 				float xCenter = sc.nextFloat(), yCenter = sc.nextFloat();
-				System.out.println(xCenter);
 				int red = sc.nextInt(), green = sc.nextInt(), blue = sc.nextInt();
 				switch(type){
 				case 'C':

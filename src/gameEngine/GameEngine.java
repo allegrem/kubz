@@ -14,8 +14,8 @@ import wall.Wall;
 import cubeManager.*;
 
 public class GameEngine {
-	private final int width=500;
-	private final int height=500;
+	private final int width=950;
+	private final int height=700;
 	private ArrayList<Monster> monsterList;
 	private ArrayList<Player> playerList;
 	private ArrayList<Wall> walls;
