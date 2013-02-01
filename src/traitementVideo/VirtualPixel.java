@@ -1,6 +1,6 @@
 package traitementVideo;
 
-import generalite.*;
+import utilities.*;
 
 public class VirtualPixel {
 	

@@ -1,7 +1,7 @@
 package traitementVideo;
 
 import java.util.*;
-import generalite.*;
+import utilities.*;
 
 public class Connexe {
 	
@@ -117,8 +117,8 @@ public class Connexe {
 	public static ArrayList<Point> getGroupesPos(ArrayList<ArrayList<VirtualPixel>> groupesConnexes){
 		ArrayList<Point> groupesConnexesPos = new ArrayList<Point>();
 		for(ArrayList<VirtualPixel> array : groupesConnexes){
-			int xMoy = 0;
-			int yMoy = 0;
+			double xMoy = 0;
+			double yMoy = 0;
 			for(VirtualPixel vp : array){
 				xMoy = xMoy + vp.getPos().getX();
 				yMoy = yMoy + vp.getPos().getY(); 
