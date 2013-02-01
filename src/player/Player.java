@@ -147,7 +147,7 @@ public  class Player {
 		setPStatesToWaiting();
 		setUStateToSelect();
 		while(!GLDisplay.tap) {
-			movingUTurn();
+			
 		}
 	}
 	/**
@@ -157,10 +157,11 @@ public  class Player {
 		setPStatesToWaiting();
 		setUStateToMoving();
 		while (!GLDisplay.tap){
-			if(GLDisplay.zKey) unit.translate(0,1);
-			if(GLDisplay.sKey) unit.translate(0, -1);
+			if(GLDisplay.zKey) unit.translate(0,-1);
+			if(GLDisplay.sKey) unit.translate(0, 1);
 			if(GLDisplay.qKey) unit.translate(-1, 0);
-			if(GLDisplay.dKey) unit.translate(0, 1);
+			if(GLDisplay.dKey) unit.translate(1, 0);
+			System.wait(100);
 		}
 		return;
 	}
@@ -206,8 +207,8 @@ public  class Player {
 	
 	
 	public void act(){
-		choosingUTurn();
-		
+		//choosingUTurn();
+		movingUTurn();
 		
 	}
 	

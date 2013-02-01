@@ -198,7 +198,6 @@ public static void checkKeyboard(){
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_Z)){
 			zKey = true;
-			System.out.println("z");
 		}else{
 			zKey = false;
 		}
@@ -228,7 +227,7 @@ public static void checkKeyboard(){
 		}else
 			xKey =  false;
 		
-		if (Keyboard.isKeyDown(Keyboard.KEY_X))
+		if (Keyboard.isKeyDown(Keyboard.KEY_P))
 				tap = true;	
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_TAB)){

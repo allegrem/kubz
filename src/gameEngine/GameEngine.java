@@ -38,15 +38,14 @@ public class GameEngine {
 			monsterList=reader.readMonsters();
 			bases=reader.readBases();
 			walls=reader.readWalls();
+			playerList=new ArrayList<Player>();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		playerList.add(new Player(this));
-		while(display.isAlive()){
 			playerTurn();
-		}
 	}
 	
 	/**
