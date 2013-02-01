@@ -38,10 +38,10 @@ public class TwoOscFmInstrument implements FmInstrument {
 	public TwoOscFmInstrument() {
 		super();
 
-		fm = new ParamBlock("fm", 20, 10000, 440);
+		fm = new ParamBlock("fm", 1, 10000, 440);
 		fp = new ParamBlock("fp", 20, 10000, 600);
 		amp = new ParamBlock("amp", 0, 120, 100);
-		mod = new ParamBlock("mod", 0, 100, 10);
+		mod = new ParamBlock("mod", 0, 500, 10);
 
 		out = buildInstrument();
 		paramList = generateParamList();

@@ -23,6 +23,9 @@ import synthesis.fmInstruments.BellInstrument;
 import synthesis.fmInstruments.FmInstrument;
 import synthesis.fmInstruments.PianoInstrument;
 import synthesis.fmInstruments.TwoOscFmInstrument;
+import synthesis.fmInstruments.TwoOscFmInstrumentBis;
+import synthesis.fmInstruments.WindInstrument;
+import synthesis.fmInstruments.WindInstrument2;
 import synthesis.fmInstruments.WoodInstrument;
 
 import javax.swing.BoxLayout;
@@ -99,7 +102,8 @@ public class SLWindow {
 
 		JMenu mnInstrument = new JMenu("Instrument");
 		menuBar.add(mnInstrument);
-
+		
+/*********************************BELL*******************************************************************/
 		JRadioButtonMenuItem rdbtnmntmBell = new JRadioButtonMenuItem("Bell");
 		rdbtnmntmBell.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD1, 0));
 		buttonGroup.add(rdbtnmntmBell);
@@ -110,16 +114,31 @@ public class SLWindow {
 		});
 		rdbtnmntmBell.setSelected(true);
 		mnInstrument.add(rdbtnmntmBell);
-
+		
+/*********************************PIANO*******************************************************************/
 		JRadioButtonMenuItem rdbtnmntmPiano = new JRadioButtonMenuItem("Piano");
-		rdbtnmntmPiano.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD4, 0));
-		buttonGroup.add(rdbtnmntmPiano);
+		rdbtnmntmPiano.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD4, 0));		
 		rdbtnmntmPiano.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setInstrument(new PianoInstrument());
 			}
 		});
-
+		buttonGroup.add(rdbtnmntmPiano);
+		mnInstrument.add(rdbtnmntmPiano);
+		
+/*************************************WINDINSTRUMENT***************************************************************/
+		JRadioButtonMenuItem rdbtnmntmWindInstr = new JRadioButtonMenuItem(
+				"WindInstrument");
+		rdbtnmntmWindInstr.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD8, 0));
+		rdbtnmntmWindInstr.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setInstrument(new WindInstrument2());
+			}
+		});
+		buttonGroup.add(rdbtnmntmWindInstr);
+		mnInstrument.add(rdbtnmntmWindInstr);	
+				
+/*****************************************TWOOSCFMINSTRUMENT***********************************************************/
 		JRadioButtonMenuItem rdbtnmntmTwooscfm = new JRadioButtonMenuItem(
 				"TwoOscFM");
 		rdbtnmntmTwooscfm.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD2, 0));
@@ -130,8 +149,21 @@ public class SLWindow {
 		});
 		buttonGroup.add(rdbtnmntmTwooscfm);
 		mnInstrument.add(rdbtnmntmTwooscfm);
-
-		JRadioButtonMenuItem rdbtnmntmWood = new JRadioButtonMenuItem("Wood");
+		
+		/*****************************************TWOOSCFMINSTRUMENTBIS***********************************************************/	
+		JRadioButtonMenuItem rdbtnmntmTwooscfmBis = new JRadioButtonMenuItem(
+				"TwoOscFM2");
+		rdbtnmntmTwooscfmBis.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD5, 0));
+		rdbtnmntmTwooscfmBis.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setInstrument(new TwoOscFmInstrumentBis());
+			}
+		});
+		buttonGroup.add(rdbtnmntmTwooscfmBis);
+		mnInstrument.add(rdbtnmntmTwooscfmBis);
+					
+/****************************************************************************************************/
+		JRadioButtonMenuItem rdbtnmntmWood = new JRadioButtonMenuItem("WoodInstrument");
 		rdbtnmntmWood.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD3, 0));
 		rdbtnmntmWood.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -140,12 +172,12 @@ public class SLWindow {
 		});
 		buttonGroup.add(rdbtnmntmWood);
 		mnInstrument.add(rdbtnmntmWood);
-		mnInstrument.add(rdbtnmntmPiano);
-
+		
+/****************************************************************************************************/
 		JMenu menu = new JMenu("?");
 		menuBar.add(menu);
 
-		JMenuItem mntmAbout = new JMenuItem("About");
+		JMenuItem mntmAbout = new JMenuItem("About");  
 		addStatusBarListeners(mntmAbout, "About SoundLab");
 		menu.add(mntmAbout);
 		frmSoundlab.getContentPane().setLayout(new BorderLayout(0, 0));
@@ -195,7 +227,8 @@ public class SLWindow {
 	}
 	
 	private byte[] computeSound() {
-		return filterView.filter(instrumentView.computeSound());
+		//return filterView.filter(instrumentView.computeSound());
+		return instrumentView.computeSound();
 	}
 	
 	private void saveInWavFile() {

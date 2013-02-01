@@ -7,6 +7,7 @@ import synthesis.basicblocks.noinputblocks.Constant;
 import synthesis.basicblocks.noinputblocks.FixedSineWaveOscillator;
 import synthesis.basicblocks.oneinputblocks.FixedADSR;
 import synthesis.basicblocks.oneinputblocks.Gain;
+import synthesis.basicblocks.oneinputblocks.Vibrato;
 import synthesis.basicblocks.orderedinputsblocks.ADSR;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
 import synthesis.basicblocks.severalinputsblocks.Adder;
@@ -46,11 +47,11 @@ public class WoodInstrument implements FmInstrument {
 	public WoodInstrument() {
 		super();
 
-		fm = new ParamBlock("fm", 20, 1500, 440);
+		fm = new ParamBlock("fm", 20, 1500, 600);
 		amp = new ParamBlock("amp", 0, 120, 100);
 		mod = new ParamBlock("mod", 1, 10, 2); // recommended value:2
-		vibrGainFactor = new GainParamBlock("vibr amp", 0, 30, 5, 0.001f);
-		vibrFreq = new ParamBlock("vibr freq", 0, 10, 5);
+		vibrGainFactor = new GainParamBlock("vibr amp", 0, 30, 5, 0.001f);  //the gain factor (0.001 here) lets you
+		vibrFreq = new ParamBlock("vibr freq", 0, 10, 5);					//vary the param on a scale of 1 to 1/the gain factor (1000 here)
 		a = new GainParamBlock("attack", 0, 100, 30, 0.01f);
 
 		try {
@@ -80,8 +81,10 @@ public class WoodInstrument implements FmInstrument {
 	private AudioBlock buildInstrument() throws TooManyInputsException {
 		//Add vibrato factor
 		Adder vibrato = new Adder(fm, new SineWaveOscillator(vibrFreq,
-				new Multiplier(fm, vibrGainFactor)));
-		Gain fp = new Gain(3f, vibrato);
+			new Multiplier(fm, vibrGainFactor)));
+		//Vibrato vibrato = new Vibrato((float) (vibrGainFactor.getValue()*0.001),vibrFreq.getValue());
+		//vibrato.plugin(fm);
+		Gain fp = new Gain(3f, fm);
 		SineWaveOscillator osc1 = new SineWaveOscillator(vibrato,
 				new Multiplier(mod, fm));
 		ADSR env1 = new ADSR(a, new Constant(0.2f), new Constant(0.8f), new Constant(0.1f), 1f, amp);
