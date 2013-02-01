@@ -10,7 +10,7 @@ public class Parameter {
 	private ParameterState state;
 	private CubeControlledView view;
 	
-	
+
 	/**
 	 * deplacement relatif de unit
 	 * @param dx
@@ -87,7 +87,4 @@ public class Parameter {
 		return state;
 	}
 	
-	
-	
-
 }
