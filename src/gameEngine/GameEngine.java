@@ -9,6 +9,7 @@ import map2.MapReader;
 import monster.Monster;
 import player.*;
 import unit.Unit;
+import utilities.RandomPerso;
 import views.staticViews.BackgroundView;
 import wall.Wall;
 import cubeManager.*;
@@ -27,10 +28,11 @@ public class GameEngine {
 	private boolean quit;
 	
 	public GameEngine(){
+		RandomPerso.initialize();
 		map= new Map(width,height);
 		display=new GLDisplay(width,height,map);
 		display.start();
-		map.add(new BackgroundView(width,height));
+		map.add(new BackgroundView(width,height,100));
 		
 		try {
 			monsterList=reader.readMonsters();
@@ -39,6 +41,11 @@ public class GameEngine {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		
+		playerList.add(new Player(this));
+		while(display.isAlive()){
+			playerTurn();
 		}
 	}
 	
@@ -69,7 +76,7 @@ public class GameEngine {
 	public void playerTurn(){
 		for(Player player: playerList){
 			player.act();
-		}	
+		}	 
 	}
 	
 	/**

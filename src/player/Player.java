@@ -1,9 +1,11 @@
 package player;
 
 /**
- * Classe qui représente un joueur, a des référence vers ses unités et paramètres
+ * Classe qui reprï¿½sente un joueur, a des rï¿½fï¿½rence vers ses unitï¿½s et paramï¿½tres
  * @author Felix
  */
+
+import gameEngine.GameEngine;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,14 +15,16 @@ import java.awt.event.KeyListener;
 import org.lwjgl.input.Keyboard;
 import parameter.*;
 import unit.*;
+import views.CubeControlledView;
 
 
-public abstract class Player implements ActionListener,KeyListener{
+public  class Player implements ActionListener,KeyListener{
 	
 	private Unit unit;
 	private Parameter[] parameters ;
 	private int nParams =2;
 	private float[] shield;
+
 	
 	private boolean zKey = false;
 	private boolean qKey = false;
@@ -30,12 +34,14 @@ public abstract class Player implements ActionListener,KeyListener{
 	private boolean xKey = false;
 	private boolean tap = false;
 	private int choice;
+	private GameEngine gameEngine;
 	
 	/**
-	 * Création d'un joueur avec une Unit et deux Parameter
+	 * Crï¿½ation d'un joueur avec une Unit et deux Parameter
 	 */
-	public Player(){
+	public Player(GameEngine gameEngine){
 		this.unit = new Unit(this);
+		this.gameEngine=gameEngine;
 		this.parameters = new Parameter[2];
 		parameters[0]= new Parameter();
 		parameters[1]= new Parameter();
@@ -46,7 +52,7 @@ public abstract class Player implements ActionListener,KeyListener{
 	}
 	
 	/**
-	 * Méthodes relatives au shield de l'Unit
+	 * Mï¿½thodes relatives au shield de l'Unit
 	 */
 	public void setValues(int l, int r, float value){
 		for(int i = l; i<=r; i++)
@@ -64,7 +70,7 @@ public abstract class Player implements ActionListener,KeyListener{
 	
 	
 	/**
-	 * Méthodes qui gèrent l'état des paramètres
+	 * Mï¿½thodes qui gï¿½rent l'ï¿½tat des paramï¿½tres
 	 */
 	
 	public void setPStatesToFrozen(){
@@ -97,7 +103,7 @@ public abstract class Player implements ActionListener,KeyListener{
 	}
 	
 	/**
-	 * Bloc des méthodes où on choisit l'état de l'unité 
+	 * Bloc des mï¿½thodes oï¿½ on choisit l'ï¿½tat de l'unitï¿½ 
 	 */	
 	
 	public void setUStateToAngle(){
@@ -133,7 +139,7 @@ public abstract class Player implements ActionListener,KeyListener{
 	}
 	
 	/**
-	 * A present on va utiliser les méthode du haut pour les différentes phases de jeu
+	 * A present on va utiliser les mï¿½thode du haut pour les diffï¿½rentes phases de jeu
 	 */
 	public void WaitingTurn(){
 		setPStatesToWaiting();
@@ -141,16 +147,17 @@ public abstract class Player implements ActionListener,KeyListener{
 	}
 	
 	/**
-	 * Méthode qui declenche le choix de l'Unit à utiliser
+	 * Mï¿½thode qui declenche le choix de l'Unit ï¿½ utiliser
 	 */
 	public void choosingUTurn(){
 		setPStatesToWaiting();
 		setUStateToSelect();
 		while(!tap) {
+			movingUTurn();
 		}
 	}
 	/**
-	 * Méthode qui déclenche le mouvement de Unit
+	 * Mï¿½thode qui dï¿½clenche le mouvement de Unit
 	 */
 	public void movingUTurn(){
 		setPStatesToWaiting();
@@ -164,7 +171,7 @@ public abstract class Player implements ActionListener,KeyListener{
 		return;
 	}
 	/**
-	 * Méthode qui déclenche la création du son via les Parameter
+	 * Mï¿½thode qui dï¿½clenche la crï¿½ation du son via les Parameter
 	 */
 	public void soundEditPTurn(){
 		setPStatesToSoundEdit();
@@ -180,7 +187,7 @@ public abstract class Player implements ActionListener,KeyListener{
 		tap = false;
 	}	
 	/**
-	 * Méthode qui déclenche le choix de l'angle ou de l'ouverture d'attque de Unit
+	 * Mï¿½thode qui dï¿½clenche le choix de l'angle ou de l'ouverture d'attque de Unit
 	 */
 	public void UDirection(){
 		setPStatesToWaiting();
@@ -212,9 +219,9 @@ public abstract class Player implements ActionListener,KeyListener{
 	
 	
 	/**
-	 * on controle les déplacements via "ZQSD"
+	 * on controle les dï¿½placements via "ZQSD"
 	 * on controle la rotation avec "WX"
-	 * on passe à l'étape suivante avec "P"
+	 * on passe ï¿½ l'ï¿½tape suivante avec "P"
 	 * on change le Parameter sur lequel on agis via "TAB"
 	 * 
 	 */
@@ -271,6 +278,11 @@ public abstract class Player implements ActionListener,KeyListener{
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public GameEngine getGameEngine() {
+		
+		return gameEngine;
 	}
 	
 }

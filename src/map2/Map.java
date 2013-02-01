@@ -32,6 +32,7 @@ public class Map {
 	public void paint() {
 		for(DisplayableFather object: listObjects){
 			object.paint();
+			System.out.println(object);
 			
 		}
 
@@ -82,6 +83,15 @@ public class Map {
 	 */
 	public ArrayList<DisplayableFather> getObjects(){
 		return listObjects;
+	}
+	
+	/**
+	 * Retourne l'objet d'indice i
+	 * @param i
+	 * @return
+	 */
+	public DisplayableFather getObject(int i){
+		return listObjects.get(i);
 	}
 	
 	/**

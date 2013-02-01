@@ -25,6 +25,8 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 
+import views.staticViews.BackgroundView;
+
 import map2.Map;
 
 /**

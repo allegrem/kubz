@@ -34,7 +34,7 @@ public class CubeControlledView implements DisplayableFather{
 	private ArrayList<DisplayableChild> children= new ArrayList<DisplayableChild>();
 	private int duration=0;
 	private ReadableColor color=Color.RED;
-	private boolean untracked=false; //L'unite est-elle sur la table ?
+	private boolean untracked=true; //L'unite est-elle sur la table ?
 	private double angle = 0;
 	private double aperture;
 	private double direction;
@@ -44,7 +44,7 @@ public class CubeControlledView implements DisplayableFather{
 	 * @param position Sa position (centre)
 	 * @param color Sa couleur
 	 */
-	public CubeControlledView(Point position, ReadableColor color) {
+	public CubeControlledView(Point position) {
 		this.position = position;
 	}
 	
@@ -158,6 +158,7 @@ public class CubeControlledView implements DisplayableFather{
 		/**
 		 * Si l'unite n'est plus sur la table, on affiche un carre rouge
 		 */
+		System.out.println("workspaint");
 		if (untracked){
 			glBegin(GL_QUADS);
 			GL11.glDisable(GL11.GL_TEXTURE_2D);
@@ -225,5 +226,9 @@ public class CubeControlledView implements DisplayableFather{
 		if(dist+taille>=vect.norme())
 			return true;
 		return false;
+	}
+	
+	public void setUnTracked(boolean bool){
+		untracked=bool;
 	}
 }

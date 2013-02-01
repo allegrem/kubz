@@ -28,6 +28,8 @@ import OpenGL.Textures;
 public class BackgroundView implements DisplayableFather{
 	private int width;
 	private int length;
+	private long time;
+	private long startTime=0;
 	
 	/*
 	 * Les couleurs de depart du background
@@ -52,9 +54,11 @@ public class BackgroundView implements DisplayableFather{
 	 * @param width Largeur
 	 * @param length Longueur
 	 */
-	public BackgroundView(int width, int length) {
+	public BackgroundView(int width, int length,long time) {
 		this.width=width;
 		this.length=length;
+		this.time=time;
+		startTime=System.currentTimeMillis();
 
 	}
 
@@ -63,6 +67,10 @@ public class BackgroundView implements DisplayableFather{
 	 * de facon aleatoire et avec un degrade
 	 */
 	public void change(){
+		if(System.currentTimeMillis()-startTime>=time){
+			
+		
+		startTime=System.currentTimeMillis();
 		int alea=RandomPerso.entier(5);
 		switch(RandomPerso.entier(3)){
 		case 0:
@@ -113,7 +121,7 @@ public class BackgroundView implements DisplayableFather{
 				break;
 		}
 		}
-		
+		}
 		
 	}
 	
@@ -129,8 +137,8 @@ public class BackgroundView implements DisplayableFather{
 		 *Textures.texturePath.bind();
 		 */
 		
-		
-		 GL11.glDisable(GL11.GL_TEXTURE_2D);
+		change();
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		
 		glBegin(GL_QUADS);
 		GL11.glNormal3f(0,0, 1.0f);
