@@ -35,6 +35,9 @@ public class CubeControlledView implements DisplayableFather{
 	private int duration=0;
 	private ReadableColor color=Color.RED;
 	private boolean untracked=false; //L'unite est-elle sur la table ?
+	private double angle = 0;
+	private double aperture;
+	private double direction;
 	
 	/**
 	 * Nouveau cubeControlled
