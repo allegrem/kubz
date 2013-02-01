@@ -1,25 +1,126 @@
 package unit;
 
-import generalite.Point;
+import utilities.Point;
+import views.CubeControlledView;
+import player.*;
+
 
 public class Unit {
 	
+	private double life;
 	private Point pos;
+	private double aperture;
+	private double direction;
 	private UnitState state;
+	private CubeControlledView view;
+	private Player owner;
 	
 	
-	public Unit(){
+	public Unit(Player owner){
 		this.state = new WaitingUState();
+		this.owner = owner;
+	}
+	
+	
+	public Player getOwner() {
+		return owner;
 	}
 
-	//setters et getter de la position
-	public Point getPos() {
+
+	/**
+	 * Méthodes relatives à la vie de Unit
+	 */
+	public void increaseLife(double inc){
+		life = life + inc;
+	}
+	public void decreaseLife(double dec){
+		life = life - dec;
+	}
+	public void setLife(double newLife){
+		life = newLife;
+	}
+	public double getLife(){
+		return life;
+	}
+
+	
+	/**
+	 * deplacement relatif de unit
+	 * @param dx
+	 * @param dy
+	 */	
+	public void translate(int dx, int dy) { 
+		pos.translate(dx, dy);
+		view.translate(dx, dy);
+	}
+	
+	/**
+	 * deplacement absolu de unit
+	 * @param x
+	 * @param y
+	 */	
+	public void setLocation(int x, int y) {		
+		pos.move(x, y);
+		view.setLocation(x,y);
+	}
+		
+	/**
+	 * deplacement absolu de unit
+	 * @param p
+	 */
+	public void setLocation(Point p) {
+		pos.setLocation(p);
+		view.setLocation(p);
+	}
+	
+	/** retourne la position en x,y ou Point**/
+	public double getX(){
+		return pos.getX();
+	}
+	public double getY(){
+		return pos.getY();
+	}
+	public Point getPos(){
 		return pos;
 	}
-	public void setPos(Point pos) {
-		this.pos = pos;
+
+	/**
+	 * Méthode relatives à l'angle d'ouverture de l'attaque 
+	 * @param theta
+	 * @param dTheta
+	 */
+	public void setAperture(double theta){
+		aperture = theta;
+		view.setAperture(theta);
 	}
-	//setters et getter de l'état
+	public void rotateAperture(double dTheta){
+		aperture = aperture + dTheta;
+		view.rotateAperture(dTheta);
+	}
+	public double getAperture(){
+		return aperture;
+	}
+	
+	/**
+	 * Méthode relatives à la direction de l'attaque 
+	 * @param theta
+	 * @param dTheta
+	 */
+	public void setDirection(double theta){
+		direction = theta;
+		view.setDirection(theta);
+	}
+	public void rotateDirection(double dTheta){
+		direction = direction + dTheta;
+		view.rotateDirection(dTheta);
+	}
+	public double getDirection(){
+		return direction;
+	}
+	
+	/**
+	 * setters et getter de UnitState
+	 */
 	public void setUStateToAngle(){
 		this.state = new AngleUState();
 	}

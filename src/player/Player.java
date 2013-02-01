@@ -1,7 +1,7 @@
 package player;
 
 /**
- * Classe qui reprï¿½sente un joueur, a des rï¿½fï¿½rence vers ses unitï¿½s et paramï¿½tres
+ * Classe qui représente un joueur, a des référence vers ses unités et paramètres
  * @author Felix
  */
 
@@ -32,7 +32,7 @@ public abstract class Player implements ActionListener,KeyListener{
 	private int choice;
 	
 	/**
-	 * Crï¿½ation d'un joueur avec une Unit et deux Parameter
+	 * Création d'un joueur avec une Unit et deux Parameter
 	 */
 	public Player(){
 		this.unit = new Unit(this);
@@ -46,7 +46,7 @@ public abstract class Player implements ActionListener,KeyListener{
 	}
 	
 	/**
-	 * Mï¿½thodes relatives au shield de l'Unit
+	 * Méthodes relatives au shield de l'Unit
 	 */
 	public void setValues(int l, int r, float value){
 		for(int i = l; i<=r; i++)
@@ -64,7 +64,7 @@ public abstract class Player implements ActionListener,KeyListener{
 	
 	
 	/**
-	 * Mï¿½thodes qui gï¿½rent l'ï¿½tat des paramï¿½tres
+	 * Méthodes qui gèrent l'état des paramètres
 	 */
 	
 	public void setPStatesToFrozen(){
@@ -97,7 +97,7 @@ public abstract class Player implements ActionListener,KeyListener{
 	}
 	
 	/**
-	 * Bloc des mï¿½thodes oï¿½ on choisit l'ï¿½tat de l'unitï¿½ 
+	 * Bloc des méthodes où on choisit l'état de l'unité 
 	 */	
 	
 	public void setUStateToAngle(){
@@ -133,7 +133,7 @@ public abstract class Player implements ActionListener,KeyListener{
 	}
 	
 	/**
-	 * A present on va utiliser les mï¿½thode du haut pour les diffï¿½rentes phases de jeu
+	 * A present on va utiliser les méthode du haut pour les différentes phases de jeu
 	 */
 	public void WaitingTurn(){
 		setPStatesToWaiting();
@@ -141,7 +141,7 @@ public abstract class Player implements ActionListener,KeyListener{
 	}
 	
 	/**
-	 * Mï¿½thode qui declenche le choix de l'Unit ï¿½ utiliser
+	 * Méthode qui declenche le choix de l'Unit à utiliser
 	 */
 	public void choosingUTurn(){
 		setPStatesToWaiting();
@@ -150,7 +150,7 @@ public abstract class Player implements ActionListener,KeyListener{
 		}
 	}
 	/**
-	 * Mï¿½thode qui dï¿½clenche le mouvement de Unit
+	 * Méthode qui déclenche le mouvement de Unit
 	 */
 	public void movingUTurn(){
 		setPStatesToWaiting();
@@ -164,7 +164,7 @@ public abstract class Player implements ActionListener,KeyListener{
 		return;
 	}
 	/**
-	 * Mï¿½thode qui dï¿½clenche la crï¿½ation du son via les Parameter
+	 * Méthode qui déclenche la création du son via les Parameter
 	 */
 	public void soundEditPTurn(){
 		setPStatesToSoundEdit();
@@ -180,7 +180,7 @@ public abstract class Player implements ActionListener,KeyListener{
 		tap = false;
 	}	
 	/**
-	 * Mï¿½thode qui dï¿½clenche le choix de l'angle ou de l'ouverture d'attque de Unit
+	 * Méthode qui déclenche le choix de l'angle ou de l'ouverture d'attque de Unit
 	 */
 	public void UDirection(){
 		setPStatesToWaiting();
@@ -212,9 +212,9 @@ public abstract class Player implements ActionListener,KeyListener{
 	
 	
 	/**
-	 * on controle les dï¿½placements via "ZQSD"
+	 * on controle les déplacements via "ZQSD"
 	 * on controle la rotation avec "WX"
-	 * on passe ï¿½ l'ï¿½tape suivante avec "P"
+	 * on passe à l'étape suivante avec "P"
 	 * on change le Parameter sur lequel on agis via "TAB"
 	 * 
 	 */

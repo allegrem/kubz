@@ -6,6 +6,7 @@ package monster;
 
 import utilities.Point;
 import views.*;
+import views.monsters.MonsterView;
 
 import gameEngine.GameEngine;
 

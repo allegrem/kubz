@@ -1,16 +1,16 @@
 package gameEngine;
 import java.util.ArrayList;
 
-import Base.Base;
-import OpenGL.GLDisplay;
-import Wall.Wall;
+import base.Base;
 
+import OpenGL.GLDisplay;
 import map2.Map;
 import map2.MapReader;
 import monster.Monster;
 import player.*;
 import unit.Unit;
 import views.staticViews.BackgroundView;
+import wall.Wall;
 import cubeManager.*;
 
 public class GameEngine {

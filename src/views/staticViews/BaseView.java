@@ -149,6 +149,11 @@ public class BaseView implements DisplayableFather{
 		return false;
 	}
 
+	public void setCenter(Point center2) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 
