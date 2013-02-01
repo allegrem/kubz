@@ -32,7 +32,6 @@ public class Map {
 	public void paint() {
 		for(DisplayableFather object: listObjects){
 			object.paint();
-			System.out.println(object);
 			
 		}
 

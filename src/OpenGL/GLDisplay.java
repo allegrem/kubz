@@ -18,6 +18,9 @@ import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.opengl.GL11.glShadeModel;
+
+import java.awt.event.KeyEvent;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -44,6 +47,16 @@ public class GLDisplay extends Thread{
 	public static float ratio; // display_width/display_height
 	private boolean do_run=true;
 	private Map map;
+	
+	
+	private static boolean zKey = false;
+	private static boolean qKey = false;
+	private static boolean sKey = false;
+	private static boolean dKey = false;
+	private static boolean wKey = false;
+	private static boolean xKey = false;
+	private static boolean tap = false;
+	
 	
 	/**
 	 * Lancement de l'affichage
@@ -166,6 +179,55 @@ public class GLDisplay extends Thread{
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		
 	}
+
+
+	/**
+	 * on controle les d�placements via "ZQSD"
+	 * on controle la rotation avec "WX"
+	 * on passe � l'�tape suivante avec "P"
+	 * on change le Parameter sur lequel on agis via "TAB"
+	 * 
+	 */
+
+public static void checkKeyboard{
+	@Override
+	public void keyPressed(KeyEvent arg0) {	
+		if (arg0.getSource().equals(Keyboard.KEY_Z)){
+			zKey = true;
+			System.out.println("z");
+		}
+			
+		if (arg0.getSource().equals(Keyboard.KEY_Q))
+			qKey = true;
+		if (arg0.getSource().equals(Keyboard.KEY_S))
+			sKey = true;
+		if (arg0.getSource().equals(Keyboard.KEY_D))
+			dKey =  true;
+		if (arg0.getSource().equals(Keyboard.KEY_W))
+			wKey =  true;
+		if (arg0.getSource().equals(Keyboard.KEY_X))
+			xKey =  true;
+		
+	}
+
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		if (arg0.getSource().equals(Keyboard.KEY_Z))
+			sKey = false;
+		if (arg0.getSource().equals(Keyboard.KEY_Q))
+			qKey = false;
+		if (arg0.getSource().equals(Keyboard.KEY_S))
+			sKey = false;
+		if (arg0.getSource().equals(Keyboard.KEY_D))
+			dKey =  false;
+		if (arg0.getSource().equals(Keyboard.KEY_W))
+			wKey =  false;
+		if (arg0.getSource().equals(Keyboard.KEY_X))
+			xKey =  false;
+		
+	}
+}
 
 	
 }

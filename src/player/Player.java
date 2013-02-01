@@ -18,21 +18,13 @@ import unit.*;
 import views.CubeControlledView;
 
 
-public  class Player implements ActionListener,KeyListener{
+public  class Player {
 	
 	private Unit unit;
 	private Parameter[] parameters ;
 	private int nParams =2;
 	private float[] shield;
 
-	
-	private boolean zKey = false;
-	private boolean qKey = false;
-	private boolean sKey = false;
-	private boolean dKey = false;
-	private boolean wKey = false;
-	private boolean xKey = false;
-	private boolean tap = false;
 	private int choice;
 	private GameEngine gameEngine;
 	
@@ -40,8 +32,9 @@ public  class Player implements ActionListener,KeyListener{
 	 * Cr�ation d'un joueur avec une Unit et deux Parameter
 	 */
 	public Player(GameEngine gameEngine){
-		this.unit = new Unit(this);
+
 		this.gameEngine=gameEngine;
+		this.unit = new Unit(this);
 		this.parameters = new Parameter[2];
 		parameters[0]= new Parameter();
 		parameters[1]= new Parameter();
@@ -218,50 +211,6 @@ public  class Player implements ActionListener,KeyListener{
 	}
 	
 	
-	/**
-	 * on controle les d�placements via "ZQSD"
-	 * on controle la rotation avec "WX"
-	 * on passe � l'�tape suivante avec "P"
-	 * on change le Parameter sur lequel on agis via "TAB"
-	 * 
-	 */
-
-
-	@Override
-	public void keyPressed(KeyEvent arg0) {	
-		if (arg0.getSource().equals(Keyboard.KEY_Z))
-			zKey = true;
-		if (arg0.getSource().equals(Keyboard.KEY_Q))
-			qKey = true;
-		if (arg0.getSource().equals(Keyboard.KEY_S))
-			sKey = true;
-		if (arg0.getSource().equals(Keyboard.KEY_D))
-			dKey =  true;
-		if (arg0.getSource().equals(Keyboard.KEY_W))
-			wKey =  true;
-		if (arg0.getSource().equals(Keyboard.KEY_X))
-			xKey =  true;
-		
-	}
-
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		if (arg0.getSource().equals(Keyboard.KEY_Z))
-			sKey = false;
-		if (arg0.getSource().equals(Keyboard.KEY_Q))
-			qKey = false;
-		if (arg0.getSource().equals(Keyboard.KEY_S))
-			sKey = false;
-		if (arg0.getSource().equals(Keyboard.KEY_D))
-			dKey =  false;
-		if (arg0.getSource().equals(Keyboard.KEY_W))
-			wKey =  false;
-		if (arg0.getSource().equals(Keyboard.KEY_X))
-			xKey =  false;
-		
-	}
-
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
@@ -281,7 +230,6 @@ public  class Player implements ActionListener,KeyListener{
 	}
 
 	public GameEngine getGameEngine() {
-		
 		return gameEngine;
 	}
 	

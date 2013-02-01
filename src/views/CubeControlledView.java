@@ -158,7 +158,6 @@ public class CubeControlledView implements DisplayableFather{
 		/**
 		 * Si l'unite n'est plus sur la table, on affiche un carre rouge
 		 */
-		System.out.println("workspaint");
 		if (untracked){
 			glBegin(GL_QUADS);
 			GL11.glDisable(GL11.GL_TEXTURE_2D);
