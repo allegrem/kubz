@@ -23,7 +23,7 @@ public class GameEngine {
 	private CubeManager cubeManager;
 	private GLDisplay display;
 	private Map map;
-	private MapReader reader=new MapReader("map/bases","map/monsters","map/walls",this);
+	private MapReader reader=new MapReader("Maps/bFile.txt","Maps/mFile.txt","Maps/WFile.txt",this);
 	private boolean quit;
 	
 	public GameEngine(){
