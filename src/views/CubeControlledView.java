@@ -46,6 +46,39 @@ public class CubeControlledView implements DisplayableFather{
 	}
 	
 	/**
+	 * M�thode relatives � l'angle d'ouverture de l'attaque 
+	 * @param theta
+	 * @param dTheta
+	 * @author Felix
+	 */
+	public void setAperture(double theta){
+		aperture = theta;
+	}
+	public void rotateAperture(double dTheta){
+		aperture = aperture + dTheta;;
+	}
+	public double getAperture(){
+		return aperture;
+	}
+	
+	/**
+	 * M�thode relatives � la direction de l'attaque 
+	 * @param theta
+	 * @param dTheta
+	 * @author Felix
+	 */
+	public void setDirection(double theta){
+		direction = theta;
+	}
+	public void rotateDirection(double dTheta){
+		direction = direction + dTheta;;
+	}
+	public double getDirection(){
+		return direction;
+	}
+	
+	
+	/**
 	 * Deplacement relatif du monstre
 	 * @param dx Deplacement selon x
 	 * @param dy Deplacement selon y
