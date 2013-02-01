@@ -1,7 +1,8 @@
-package synthesis;
+package synthesis.main;
 
 import java.io.IOException;
 
+import synthesis.SynthesisUtilities;
 import synthesis.audiooutput.SpeakersOutput;
 import synthesis.basicblocks.oneinputblocks.Gain;
 import synthesis.basicblocks.severalinputsblocks.Adder;
