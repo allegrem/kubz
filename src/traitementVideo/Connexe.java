@@ -11,20 +11,23 @@ public class Connexe {
 	// A optimiser aussi au nivau du choix de la liste à transférer
 	// A optimiser au niveau des variables souvent appelées 
 	
-	public static ArrayList<ArrayList<VirtualPixel>> setConnexe(VirtualScreen vs){
+	/**
+	 * Cette méthode permet de parcourir l'image pour en déterminer les groupes connexes (ici les taches lumineueses
+	 * @param screen
+	 * @return
+	 */
+	
+	public static ArrayList<ArrayList<VirtualPixel>> setConnexe(VirtualPixel[][] screen){
 		
-		VirtualPixel[][] vi = vs.getVirtualImage();
+		VirtualPixel[][] vi = screen;
 		int compteurComposantes = 0;
 		ArrayList<ArrayList<VirtualPixel>> groupesConnexes = new ArrayList<ArrayList<VirtualPixel>>();
 		ArrayList<ArrayList<VirtualPixel>> retour = new ArrayList<ArrayList<VirtualPixel>>();
-		//ArrayList<ArrayList<Integer>> tableEq = new ArrayList<ArrayList<Integer>>();
 		
 		if (vi[0][0].isBrightness()==true){
 			compteurComposantes++;
 			groupesConnexes.add(compteurComposantes, new ArrayList<VirtualPixel>());
-			//tableEq.add(compteurComposantes, new ArrayList<Integer>());
 			groupesConnexes.get(compteurComposantes).add(vi[0][0]);
-			//tableEq.get(compteurComposantes).add(new Integer(compteurComposantes));
 			vi[0][0].setGroupeConnexe(compteurComposantes);
 		}
 		for(int j=1; j<240;j++){
@@ -36,7 +39,6 @@ public class Connexe {
 				else{
 					compteurComposantes++;
 					groupesConnexes.add(compteurComposantes, new ArrayList<VirtualPixel>());
-					//tableEq.add(compteurComposantes, new ArrayList<Integer>());
 					groupesConnexes.get(compteurComposantes).add(vi[0][j]);
 					vi[0][j].setGroupeConnexe(compteurComposantes);
 				}
@@ -51,7 +53,6 @@ public class Connexe {
 				else{
 					compteurComposantes++;
 					groupesConnexes.add(compteurComposantes, new ArrayList<VirtualPixel>());
-					//tableEq.add(compteurComposantes, new ArrayList<Integer>());
 					groupesConnexes.get(compteurComposantes).add(vi[i][0]);
 					vi[i][0].setGroupeConnexe(compteurComposantes);
 				}
@@ -67,10 +68,9 @@ public class Connexe {
 						groupesConnexes.get(vi[i][j].getGroupeConnexe()).add(vi[i][j]);
 					}
 					if ((vi[i-1][j].isBrightness()==true)&&(vi[i][j-1].isBrightness()==true)){
-						//on commence par agir sur le pixel courrant
+						//on commence par agir sur le pixel courant
 						vi[i][j].setGroupeConnexe(vi[i-1][j].getGroupeConnexe());
 						groupesConnexes.get(vi[i][j].getGroupeConnexe()).add(vi[i][j]);
-						//on met à jour la liste d'quivalence, car le pixel du haut et de gauche font en fait parti d'une même classe d'équivalence
 						int gr = vi[i-1][j].getGroupeConnexe(); //groupe vers leuel changer
 						ArrayList<VirtualPixel> nouveau = groupesConnexes.get(vi[i-1][j].getGroupeConnexe());
 						/* La partie suivante permet de transférer tous les pixels de la composante de gauche vers 
@@ -93,7 +93,9 @@ public class Connexe {
 			}
 		}
 		
-		// on remet les groupes dans l'ordre dans une ArrayList pour le retour
+		/**
+		 *  on remet les groupes dans l'ordre dans une ArrayList pour le retour
+		 */
 		int taille = groupesConnexes.size();
 		int compteurRetour = 0; 
 		for(int groupe = 1; groupe < taille; groupe++){
