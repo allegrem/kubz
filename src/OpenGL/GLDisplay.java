@@ -28,6 +28,8 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 
+import player.Player;
+
 import views.staticViews.BackgroundView;
 
 import map2.Map;
@@ -49,13 +51,14 @@ public class GLDisplay extends Thread{
 	private Map map;
 	
 	
-	private static boolean zKey = false;
-	private static boolean qKey = false;
-	private static boolean sKey = false;
-	private static boolean dKey = false;
-	private static boolean wKey = false;
-	private static boolean xKey = false;
-	private static boolean tap = false;
+	public static boolean zKey = false;
+	public static boolean qKey = false;
+	public static boolean sKey = false;
+	public static boolean dKey = false;
+	public static boolean wKey = false;
+	public static boolean xKey = false;
+	public static boolean tap = false;
+	public static int choice=0;
 	
 	
 	/**
@@ -82,6 +85,7 @@ public class GLDisplay extends Thread{
 		if (Display.isCloseRequested())
 				do_run = false; // On arrete le programme
 		clear(); //On nettoie la fenetre
+		checkKeyboard();
 		render(); //Rendu de la map
 		update(); //On actualise la fenetre avec le nouveau rendu
 		Display.sync(120); //On synchronise l'affichage sur le bon FPS
@@ -189,45 +193,49 @@ public class GLDisplay extends Thread{
 	 * 
 	 */
 
-public static void checkKeyboard{
-	@Override
-	public void keyPressed(KeyEvent arg0) {	
-		if (arg0.getSource().equals(Keyboard.KEY_Z)){
+public static void checkKeyboard(){
+
+
+		if (Keyboard.isKeyDown(Keyboard.KEY_Z)){
 			zKey = true;
 			System.out.println("z");
+		}else{
+			zKey = false;
 		}
 			
-		if (arg0.getSource().equals(Keyboard.KEY_Q))
+		if (Keyboard.isKeyDown(Keyboard.KEY_Q)){
 			qKey = true;
-		if (arg0.getSource().equals(Keyboard.KEY_S))
-			sKey = true;
-		if (arg0.getSource().equals(Keyboard.KEY_D))
-			dKey =  true;
-		if (arg0.getSource().equals(Keyboard.KEY_W))
-			wKey =  true;
-		if (arg0.getSource().equals(Keyboard.KEY_X))
-			xKey =  true;
-		
-	}
-
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		if (arg0.getSource().equals(Keyboard.KEY_Z))
-			sKey = false;
-		if (arg0.getSource().equals(Keyboard.KEY_Q))
+		}else
 			qKey = false;
-		if (arg0.getSource().equals(Keyboard.KEY_S))
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_S)){
+			sKey = true;
+		}else
 			sKey = false;
-		if (arg0.getSource().equals(Keyboard.KEY_D))
+			
+		if (Keyboard.isKeyDown(Keyboard.KEY_D)){
+			dKey =  true;
+		}else
 			dKey =  false;
-		if (arg0.getSource().equals(Keyboard.KEY_W))
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_W)){
+			wKey =  true;
+		}else
 			wKey =  false;
-		if (arg0.getSource().equals(Keyboard.KEY_X))
+			
+		if (Keyboard.isKeyDown(Keyboard.KEY_X)){
+			xKey =  true;
+		}else
 			xKey =  false;
 		
+		if (Keyboard.isKeyDown(Keyboard.KEY_X))
+				tap = true;	
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_TAB)){
+				choice = (choice + 1)%Player.nParams;
 	}
+}
 }
 
 	
-}
+

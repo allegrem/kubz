@@ -13,6 +13,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import org.lwjgl.input.Keyboard;
+
+import OpenGL.GLDisplay;
 import parameter.*;
 import unit.*;
 import views.CubeControlledView;
@@ -22,10 +24,9 @@ public  class Player {
 	
 	private Unit unit;
 	private Parameter[] parameters ;
-	private int nParams =2;
+	public static int nParams =2;
 	private float[] shield;
 
-	private int choice;
 	private GameEngine gameEngine;
 	
 	/**
@@ -145,7 +146,7 @@ public  class Player {
 	public void choosingUTurn(){
 		setPStatesToWaiting();
 		setUStateToSelect();
-		while(!tap) {
+		while(!GLDisplay.tap) {
 			movingUTurn();
 		}
 	}
@@ -155,11 +156,11 @@ public  class Player {
 	public void movingUTurn(){
 		setPStatesToWaiting();
 		setUStateToMoving();
-		while (!tap){
-			if(zKey) unit.translate(0,1);
-			if(sKey) unit.translate(0, -1);
-			if(qKey) unit.translate(-1, 0);
-			if(dKey) unit.translate(0, 1);
+		while (!GLDisplay.tap){
+			if(GLDisplay.zKey) unit.translate(0,1);
+			if(GLDisplay.sKey) unit.translate(0, -1);
+			if(GLDisplay.qKey) unit.translate(-1, 0);
+			if(GLDisplay.dKey) unit.translate(0, 1);
 		}
 		return;
 	}
@@ -169,15 +170,15 @@ public  class Player {
 	public void soundEditPTurn(){
 		setPStatesToSoundEdit();
 		setUStateToWaiting();
-		while (!tap){
-				if(zKey) parameters[choice].translate(0,1);
-				if(sKey) parameters[choice].translate(0, -1);
-				if(qKey) parameters[choice].translate(-1, 0);
-				if(dKey) parameters[choice].translate(0, 1);
-				if(wKey) parameters[choice].rotate(1);
-				if(xKey) parameters[choice].rotate(-1);						
+		while (!GLDisplay.tap){
+				if(GLDisplay.zKey) parameters[GLDisplay.choice].translate(0,1);
+				if(GLDisplay.sKey) parameters[GLDisplay.choice].translate(0, -1);
+				if(GLDisplay.qKey) parameters[GLDisplay.choice].translate(-1, 0);
+				if(GLDisplay.dKey) parameters[GLDisplay.choice].translate(0, 1);
+				if(GLDisplay.wKey) parameters[GLDisplay.choice].rotate(1);
+				if(GLDisplay.xKey) parameters[GLDisplay.choice].rotate(-1);						
 		}
-		tap = false;
+		GLDisplay.tap = false;
 	}	
 	/**
 	 * M�thode qui d�clenche le choix de l'angle ou de l'ouverture d'attque de Unit
@@ -185,21 +186,21 @@ public  class Player {
 	public void UDirection(){
 		setPStatesToWaiting();
 		setUStateToDirection();
-		while (!tap){
-			if(wKey) unit.rotateDirection(1);
-			if(xKey) unit.rotateDirection(-1);						
+		while (!GLDisplay.tap){
+			if(GLDisplay.wKey) unit.rotateDirection(1);
+			if(GLDisplay.xKey) unit.rotateDirection(-1);						
 	}
-		tap = false;
+		GLDisplay.tap = false;
 	}
 	
 	public void UAperture(){
 		setPStatesToWaiting();
 		setUStateToDirection();
-		while (!tap){
-			if(wKey) unit.rotateAperture(1);
-			if(xKey) unit.rotateAperture(-1);						
+		while (!GLDisplay.tap){
+			if(GLDisplay.wKey) unit.rotateAperture(1);
+			if(GLDisplay.xKey) unit.rotateAperture(-1);						
 	}
-		tap = false;
+		GLDisplay.tap = false;
 	}
 	
 	
@@ -210,24 +211,8 @@ public  class Player {
 		
 	}
 	
-	
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		if (arg0.getSource().equals(Keyboard.KEY_P	))
-			tap = true;	
-		if (arg0.getSource().equals(Keyboard.KEY_TAB)){
-			choice = (choice + 1)%nParams;
-		}
-			
-	}
 
 
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	public GameEngine getGameEngine() {
 		return gameEngine;
