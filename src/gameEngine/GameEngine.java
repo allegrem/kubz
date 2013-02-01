@@ -9,19 +9,22 @@ import map2.Map;
 import map2.MapReader;
 import monster.Monster;
 import player.*;
+import unit.Unit;
 import views.staticViews.BackgroundView;
 import cubeManager.*;
 
 public class GameEngine {
 	private final int width=500;
 	private final int height=500;
-	private ArrayList<Monster> monsters;
+	private ArrayList<Monster> monsterList;
+	private ArrayList<Player> playerList;
 	private ArrayList<Wall> walls;
 	private ArrayList<Base> bases;
 	private CubeManager cubeManager;
 	private GLDisplay display;
 	private Map map;
 	private MapReader reader=new MapReader("map/bases","map/monsters","map/walls");
+	private boolean quit;
 	
 	public GameEngine(){
 		map= new Map(width,height);
@@ -29,10 +32,57 @@ public class GameEngine {
 		display.start();
 		map.add(new BackgroundView(width,height));
 		/* Valeh doit modifier MapReader pour que ca marche
-		monsters=reader.readMonsters();
+		monsterList=reader.readMonsters();
 		bases=reader.readBases();
 		walls=reader.readWalls();
 		*/
 	}
+	
+	/**
+	 * pas de liste de joueurs car un seul joueur pour le moment,
+	 * de m�me une seule unit� (Que 3 cubes pour le moment
+	 */
+	
+	public ArrayList<Unit> getUnitList(){
+		ArrayList<Unit> unitList= new ArrayList<Unit>();
+		for (Player player : playerList)
+			unitList.add(player.getUnit());
+		return unitList;
+	}
+	
+	/**
+	 * M�thode qui lance les actions des joueurs 
+	 */
+	public void monsterTurn(){
+		for(Monster m: monsterList){
+			m.act();
+		}
+	}
+	
+	/**
+	 * M�thode qui lance les actions du(des) joueur(s)
+	 */
+	public void playerTurn(){
+		for(Player player: playerList){
+			player.act();
+		}	
+	}
+	
+	/**
+	 * M�thode qui freeze le jeu, condition de relance sur le mode normal � revoir, � lancer quand un cube disparait
+	 */
+	public void frozen(){
+	}
+	
+	/**
+	 * M�thode principale du gameEngine
+	 */
+	public void act(){
+		while(!quit){
+			playerTurn();
+			monsterTurn();
+		}
+	}
+	
 
 }
