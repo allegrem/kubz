@@ -6,6 +6,7 @@ import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
 import static org.lwjgl.opengl.GL11.GL_LEQUAL;
 import static org.lwjgl.opengl.GL11.GL_NICEST;
 import static org.lwjgl.opengl.GL11.GL_PERSPECTIVE_CORRECTION_HINT;
+import static org.lwjgl.opengl.GL11.GL_PROJECTION;
 import static org.lwjgl.opengl.GL11.GL_SMOOTH;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glClearColor;
@@ -13,15 +14,16 @@ import static org.lwjgl.opengl.GL11.glClearDepth;
 import static org.lwjgl.opengl.GL11.glDepthFunc;
 import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glHint;
+import static org.lwjgl.opengl.GL11.glLoadIdentity;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
+import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.opengl.GL11.glShadeModel;
-
-import map2.MapCreator;
-
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.glu.GLU;
 
 import map2.Map;
 
@@ -40,18 +42,16 @@ public class GLDisplay extends Thread{
 	public static float ratio; // display_width/display_height
 	private boolean do_run=true;
 	private Map map;
-	private MapCreator mapCreator;
 	
 	/**
 	 * Lancement de l'affichage
 	 * 
 	 * 
 	 */
-	public GLDisplay(int display_width,int display_height,Map map,MapCreator mapCreator){
+	public GLDisplay(int display_width,int display_height,Map map){
 		this.display_width=display_width;
 		this.display_height=display_height;
 		this.map=map;
-		this.mapCreator=mapCreator;
 		ratio = display_width/display_height;
 	}
 
@@ -67,8 +67,6 @@ public class GLDisplay extends Thread{
 		if (Display.isCloseRequested())
 				do_run = false; // On arrete le programme
 		clear(); //On nettoie la fenetre
-		mapCreator.eclairage(); //On regenere l'eclairage
-		mapCreator.compute(); // On s'oocupe des actions de l'utilisateur
 		render(); //Rendu de la map
 		update(); //On actualise la fenetre avec le nouveau rendu
 		Display.sync(120); //On synchronise l'affichage sur le bon FPS
@@ -85,7 +83,6 @@ public class GLDisplay extends Thread{
 	private void initialize() {
 		initDisplay();
 		initGL();
-		mapCreator.changementMode3D();
 		try {
 			Keyboard.create();
 		} catch (LWJGLException e) {
@@ -144,6 +141,9 @@ public class GLDisplay extends Thread{
 			System.out.println("Error setting up display: " + e.getMessage());
 			System.exit(0);
 		}
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(0, display_width, display_height, 0, -1000, 1000);
 
 	}
 
@@ -162,6 +162,7 @@ public class GLDisplay extends Thread{
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		
 	}
 
 	

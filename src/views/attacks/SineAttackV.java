@@ -1,7 +1,4 @@
 package views.attacks;
-
-import map2.MapCreator;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.glu.GLU;
