@@ -1,6 +1,9 @@
-package synthesis;
+package synthesis.main;
 
 import java.util.ArrayList;
+
+import synthesis.AudioBlock;
+import synthesis.SynthesisUtilities;
 import synthesis.audiooutput.SpeakersOutput;
 import synthesis.audiooutput.WavFileOutput;
 import synthesis.basicblocks.noinputblocks.Constant;
