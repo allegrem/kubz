@@ -328,9 +328,9 @@ public class WallView implements DisplayableFather{
 		GL11.glTexCoord2f(nbre, 0);
 		glVertex3d(sommets[1].getX(), sommets[1].getY(), height);
 		GL11.glTexCoord2f(nbre, nbre);
-		glVertex3d(sommets[2].getX(), sommets[2].getY(), height);
-		GL11.glTexCoord2f(0, nbre);
 		glVertex3d(sommets[3].getX(), sommets[3].getY(), height);
+		GL11.glTexCoord2f(0, nbre);
+		glVertex3d(sommets[2].getX(), sommets[2].getY(), height);
 		
 		vect1= Maths.makeNormalizedVector(sommets[3].getX(), sommets[3].getY(), height,
 				sommets[3].getX(), sommets[3].getY(), 0);
