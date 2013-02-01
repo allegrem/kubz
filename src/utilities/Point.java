@@ -74,4 +74,12 @@ public class Point {
 	public void setY(double y){
 		this.y=y;		
 	}
+	/**
+	 * renvoie la distance entre deux points
+	 * @param p
+	 * @return
+	 */
+	public double distanceTo(Point p){
+		return Math.sqrt((this.x-p.getX())*(this.x-p.getX())+(this.y-p.getY())*(this.y-p.getY()));
+	}
 }

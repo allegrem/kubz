@@ -91,6 +91,9 @@ public class Monster {
 	/**
 	 * La composante attack va fournir une ArrayList de fréquence et d'intensités qui vont 
 	 * arriver sur le filtre de l'Unit
+	 * 
+	 * Cette méthode prend en compte la distance du monstre au joueur et les dégats décroient en 1/r
+	 * 
 	 * @param attackTable
 	 */
 	
@@ -101,7 +104,8 @@ public class Monster {
 		
 		if(cible != null){
 			for(int i=0; i<attackTable.size();i++){
-				cible.decreaseLife(cible.getOwner().getValue(attackTable.get(i)[0])*attackTable.get(i)[1]);
+				double distance = this.pos.distanceTo(cible.getPos());
+				cible.decreaseLife(cible.getOwner().getValue(attackTable.get(i)[0])*attackTable.get(i)[1]/distance);
 			}
 		}
 		else return;
