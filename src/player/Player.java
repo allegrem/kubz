@@ -161,7 +161,14 @@ public  class Player {
 			if(GLDisplay.sKey) unit.translate(0, 1);
 			if(GLDisplay.qKey) unit.translate(-1, 0);
 			if(GLDisplay.dKey) unit.translate(1, 0);
-			System.wait(100);
+			
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		return;
 	}
