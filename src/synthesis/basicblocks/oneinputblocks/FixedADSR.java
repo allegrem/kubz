@@ -42,7 +42,7 @@ public class FixedADSR extends OneInputBlock {
 		float aExpr = ( previous/aDur )*tfloat;
 		float dExpr = ( (sPrevious-previous)/(d*duration) )*(tfloat-dDur) + sPrevious;
 		float sExpr = sPrevious;
-		float rExpr = ( (-sPrevious)/r*duration )*(tfloat-sDur) + sPrevious;
+		float rExpr = ( (-sPrevious)/(r*duration) )*(tfloat-sDur) + sPrevious;
 
 		if (tfloat <= aDur )
 			return new Float( aExpr );
@@ -53,8 +53,9 @@ public class FixedADSR extends OneInputBlock {
 		if (tfloat>sDur && tfloat<=rDur)
 			return new Float( rExpr );
 		
-
+	
 			return new Float(0);
+		
 
 	
 	}

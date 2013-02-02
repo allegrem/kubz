@@ -84,7 +84,7 @@ public class SLInstrumentView extends JPanel implements Observer {
 	public byte[] computeSound() {
 		byte[] sound = null;
 		try {
-			sound  = SynthesisUtilities.computeSound(0f, 1f, instrument);
+			sound  = SynthesisUtilities.computeSound(0f, 3f, instrument);
 		} catch (RequireAudioBlocksException e) {
 			e.printStackTrace();
 		}

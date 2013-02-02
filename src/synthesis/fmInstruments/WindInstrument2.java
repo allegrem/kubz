@@ -32,7 +32,7 @@ public class WindInstrument2 implements FmInstrument{
 	}	
 
 	private AudioBlock buildInstrument(){
-		ADSR env1 = new ADSR(new Constant(0.3f), new Constant(0.2f), new Constant(0.8f), new Constant(0.1f), 1f, amp);		
+		ADSR env1 = new ADSR(new Constant(0.3f), new Constant(0.2f), new Constant(0.8f), new Constant(0.1f), 3f, amp);		
 		Gain fp = new Gain(1.5f, fm);
 		Adder adder1 = new Adder(new Gain((float) mod.getValue(),fm),env1);
 		SineWaveOscillator osc1 = new SineWaveOscillator(fm,adder1);
