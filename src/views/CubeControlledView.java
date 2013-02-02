@@ -63,6 +63,7 @@ public class CubeControlledView implements DisplayableFather{
 	}
 	public void rotate(double dTheta){
 		angle = angle + dTheta;
+		angle %=360;
 	}
 	public double getAngle(){
 		return angle;
@@ -158,17 +159,21 @@ public class CubeControlledView implements DisplayableFather{
 	
 	@Override
 	public void paint() {
+		int x=(int) Math.round(position.getX());
+		int y=(int) Math.round(position.getY());
+		int iangle=(int) Math.round(angle);
+		
 		
 		/**
 		 * Si l'unite n'est plus sur la table, on affiche un carre rouge
 		 */
 		if (untracked){
+			glMatrixMode(GL_MODELVIEW);
+			GL11.glTranslated(x,y,0);
+			GL11.glRotated(iangle,0,0,1);
+			GL11.glTranslated(-x,-y,0);
 			glBegin(GL_QUADS);
 			GL11.glDisable(GL11.GL_TEXTURE_2D);
-			glMatrixMode(GL_MODELVIEW);
-			GL11.glTranslated(position.getX(),position.getY(),0);
-			GL11.glRotated(angle,0,0,1);
-			GL11.glTranslated(-position.getX(),-position.getY(),0);
 			GL11.glNormal3f(0, 0, -1.0f);
 			GL11.glColor3ub((byte) (color.getRed()), (byte) (color.getGreen()) , (byte) (color.getBlue()));
 			
@@ -176,11 +181,11 @@ public class CubeControlledView implements DisplayableFather{
 			glVertex3d(position.getX()+MonsterView.getSize()/2, position.getY()-MonsterView.getSize()/2, 0.2);
 			glVertex3d(position.getX()+MonsterView.getSize()/2, position.getY()+MonsterView.getSize()/2, 0.2);
 			glVertex3d(position.getX()-MonsterView.getSize()/2, position.getY()+MonsterView.getSize()/2, 0.2);
-			GL11.glTranslated(position.getX(),position.getY(),0);
-			GL11.glRotated(-angle,0,0,1);
-			GL11.glTranslated(-position.getX(),-position.getY(),0);
 			
 			GL11.glEnd();
+			GL11.glTranslated(x,y,0);
+			GL11.glRotated(-iangle,0,0,1);
+			GL11.glTranslated(-x,-y,0);
 		}
 		
 	}
