@@ -1,8 +1,10 @@
 package views;
 
 
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
 import java.util.ArrayList;
@@ -163,6 +165,7 @@ public class CubeControlledView implements DisplayableFather{
 		if (untracked){
 			glBegin(GL_QUADS);
 			GL11.glDisable(GL11.GL_TEXTURE_2D);
+			glMatrixMode(GL_MODELVIEW);
 			GL11.glTranslated(position.getX(),position.getY(),0);
 			GL11.glRotated(angle,0,0,1);
 			GL11.glTranslated(-position.getX(),-position.getY(),0);
