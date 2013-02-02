@@ -41,8 +41,7 @@ public class Sound extends Observable implements Observer {
 	public Sound(FmInstrument instrument, BandsFilter bandsFilter, float length) {
 		super();
 
-		this.instrument = instrument;
-		instrument.addObserver(this);
+		setInstrument(instrument);
 		
 		this.bandsFilter = bandsFilter;
 		bandsFilter.addObserver(this);
@@ -157,6 +156,8 @@ public class Sound extends Observable implements Observer {
 
 	public void setInstrument(FmInstrument instrument2) {
 		this.instrument = instrument2;
+		instrument2.addObserver(this);
+		updateOriginalSound();
 	}
 
 }
