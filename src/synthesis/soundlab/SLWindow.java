@@ -16,9 +16,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 
+import synthesis.Sound;
 import synthesis.audiooutput.SpeakersOutput;
 import synthesis.audiooutput.WavFileOutput;
 import synthesis.exceptions.AudioException;
+import synthesis.filters.BandsFilter;
 import synthesis.fmInstruments.BellInstrument;
 import synthesis.fmInstruments.FmInstrument;
 import synthesis.fmInstruments.PianoInstrument;
@@ -48,13 +50,14 @@ public class SLWindow {
 	private SLSpectrumView spectrumView;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private SLBandsFilterView filterView;
+	private Sound sound;
 
 	/**
 	 * Create the application.
 	 */
 	public SLWindow() {
+		sound = new Sound(new BellInstrument(), new BandsFilter(11), 1f);
 		initialize();
-		setInstrument(new BellInstrument());
 	}
 
 	/**
@@ -172,16 +175,16 @@ public class SLWindow {
 		frmSoundlab.getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(new GridLayout(2, 2, 0, 0));
 
-		instrumentView = new SLInstrumentView(this);
+		instrumentView = new SLInstrumentView(this, sound.getInstrument());
 		panel.add(instrumentView);
 
-		soundView = new SLSoundView();
+		soundView = new SLSoundView(sound);
 		panel.add(soundView);
 
-		filterView = new SLBandsFilterView(this);
+		filterView = new SLBandsFilterView(this, sound.getBandsFilter());
 		panel.add(filterView);
 
-		spectrumView = new SLSpectrumView();
+		spectrumView = new SLSpectrumView(sound);
 		panel.add(spectrumView);
 	}
 
@@ -190,33 +193,18 @@ public class SLWindow {
 	}
 
 	private void setInstrument(FmInstrument instrument) {
+		sound.setInstrument(instrument);
 		instrumentView.setInstrument(instrument);
 	}
 
 	public void setVisible(boolean b) {
 		frmSoundlab.setVisible(b);
 	}
-
-	public void updateSound() {
-		byte[] sound = computeSound();
-		if (sound != null) {
-			soundView.setSound(sound);
-			spectrumView.computeSpectrum(sound);
-		}
-	}
-	
-	private byte[] computeSound() {
-		byte[] sound = instrumentView.computeSound();
-		if (sound != null)
-			return filterView.filter(sound);
-		else
-			return null;
-	}
 	
 	private void saveInWavFile() {
 		WavFileOutput wavFileOutput1 = new WavFileOutput("fmout.wav");
 		wavFileOutput1.open();
-		wavFileOutput1.play(computeSound());
+		wavFileOutput1.play(sound.getSound());
 		try {
 			wavFileOutput1.close();
 		} catch (IOException e) {
@@ -232,7 +220,7 @@ public class SLWindow {
 			e.printStackTrace();
 		}
 		try {
-			speakersOutput.play(computeSound());
+			speakersOutput.play(sound.getSound());
 		} catch (AudioException e) {
 			e.printStackTrace();
 		}

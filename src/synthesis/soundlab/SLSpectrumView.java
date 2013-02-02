@@ -10,6 +10,8 @@ import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.Box;
 import javax.swing.JLabel;
@@ -22,12 +24,15 @@ import org.apache.commons.math3.transform.FastFourierTransformer;
 import org.apache.commons.math3.transform.TransformType;
 
 import synthesis.AudioBlock;
+import synthesis.Sound;
 
 /**
  * @author allegrem
  * 
  */
-public class SLSpectrumView extends JPanel {
+public class SLSpectrumView extends JPanel implements Observer {
+
+	private static final String DEFAULT_TOOLBAR_TEXT = "- Hz ; - dB";
 
 	public static final int Y_SIZE = 200;
 
@@ -37,12 +42,18 @@ public class SLSpectrumView extends JPanel {
 
 	private JLabel lblHz;
 
-	private int[] spectrumCache;
-
 	private int mouseX = -1;
 
-	public SLSpectrumView() {
+	private Sound sound;
+
+	private int[] spectrumCache;
+
+	public SLSpectrumView(Sound sound) {
 		super();
+		
+		this.sound = sound;
+		sound.addObserver(this);
+		
 		setPreferredSize(new Dimension(X_SIZE, Y_SIZE));
 		setMinimumSize(new Dimension(X_SIZE, Y_SIZE));
 		setLayout(new BorderLayout(0, 0));
@@ -69,14 +80,14 @@ public class SLSpectrumView extends JPanel {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseExited(MouseEvent e) {
-				lblHz.setText("- Hz ; - dB");
+				lblHz.setText(DEFAULT_TOOLBAR_TEXT);
 
 				// update UI to hide the two lines
 				mouseX = -1;
 				updateUI();
 			}
 		});
-
+		
 	}
 
 	private void createToolbar() {
@@ -84,7 +95,7 @@ public class SLSpectrumView extends JPanel {
 		toolBar_3.setFloatable(false);
 		add(toolBar_3, BorderLayout.NORTH);
 
-		lblHz = new JLabel("- Hz");
+		lblHz = new JLabel(DEFAULT_TOOLBAR_TEXT);
 		toolBar_3.add(lblHz);
 
 		Component horizontalGlue_1 = Box.createHorizontalGlue();
@@ -97,7 +108,7 @@ public class SLSpectrumView extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
+		
 		if (spectrumCache != null && spectrumCache.length > 0) {
 			for (int x = 0; x < X_SIZE; x++)
 				g.drawLine(x, Y_SIZE, x, spectrumCache[x]);
@@ -111,23 +122,9 @@ public class SLSpectrumView extends JPanel {
 		}
 	}
 
-	public void computeSpectrum(byte[] soundBytes) {
-		// looking for the smallest power of two above sound length
-		int power2Length = 1;
-		while (power2Length < soundBytes.length)
-			power2Length *= 2;
-
-		// converting byte array to double array
-		double[] sound = new double[power2Length];
-		for (int i = 0; i < soundBytes.length; i++)
-			sound[i] = soundBytes[i];
-		for (int i = soundBytes.length; i < power2Length; i++)
-			sound[i] = 0; // add zeros at the end
-
-		// compute fourier transform (never ask me why it works, i dont know!!)
-		FastFourierTransformer fourier = new FastFourierTransformer(
-				DftNormalization.STANDARD);
-		Complex[] result = fourier.transform(sound, TransformType.FORWARD);
+	@Override
+	public void update(Observable o, Object arg) {
+		Complex[] result = sound.getSpectrum();
 		spectrumCache = new int[X_SIZE];
 		for (int x = 0; x < result.length / 4; x++) {
 			int x_coord = x * X_SIZE * 4 / result.length;
@@ -140,15 +137,10 @@ public class SLSpectrumView extends JPanel {
 				y1 = y2;
 			if (spectrumCache[x_coord] == 0 || y1 < spectrumCache[x_coord])
 				spectrumCache[x_coord] = y1; // save the result in cache
-
-			// int x_coord = x * X_SIZE / result.length;
-			// int y1 = (int) (Y_SIZE - Math.abs(Math.log10(0.0001 + result[x]
-			// .abs())) * Y_SIZE / 7);
-			// if(spectrumCache[x_coord] == 0 || y1 < spectrumCache[x_coord])
-			// spectrumCache[x_coord] = y1; // save the result in cache
 		}
-
 		updateUI();
+		
+		System.out.println("spectrum view updated");
 	}
 
 }

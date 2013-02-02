@@ -1,6 +1,8 @@
 package synthesis;
 
 import java.security.InvalidParameterException;
+import java.util.Observable;
+import java.util.Observer;
 
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.transform.DftNormalization;
@@ -15,7 +17,7 @@ import synthesis.fmInstruments.FmInstrument;
  * @author allegrem
  * 
  */
-public class Sound {
+public class Sound extends Observable implements Observer {
 
 	private float length;
 
@@ -27,9 +29,11 @@ public class Sound {
 
 	private Complex[] originalSpectrum = null;
 
-	private final FmInstrument instrument;
+	private FmInstrument instrument;
 
-	private final BandsFilter bandsFilter;
+	private BandsFilter bandsFilter;
+	
+	private boolean bypassFilter = false;
 
 	/**
 	 * 
@@ -38,7 +42,11 @@ public class Sound {
 		super();
 
 		this.instrument = instrument;
+		instrument.addObserver(this);
+		
 		this.bandsFilter = bandsFilter;
+		bandsFilter.addObserver(this);
+		
 		setLength(length);
 	}
 
@@ -51,7 +59,11 @@ public class Sound {
 
 	private void updateOriginalSound() {
 		try {
-			sound = SynthesisUtilities.computeSound(0f, length, instrument);
+			originalSound = new byte[(int) (length*AudioBlock.SAMPLE_RATE)];
+			for(int i = 0; i<length*AudioBlock.SAMPLE_RATE ; i++) {
+				float f = instrument.play((i)/AudioBlock.SAMPLE_RATE);
+				originalSound[i] = (byte) f;
+			}
 		} catch (RequireAudioBlocksException e) {
 			e.printStackTrace();
 		}
@@ -61,26 +73,26 @@ public class Sound {
 	private void updateOriginalSpectrum() {
 		// looking for the smallest power of two above sound length
 		int power2Length = 1;
-		while (power2Length < sound.length)
+		while (power2Length < originalSound.length)
 			power2Length *= 2;
 
 		// converting byte array to double array
-		double[] sound = new double[power2Length];
-		for (int i = 0; i < sound.length; i++)
-			sound[i] = sound[i];
-		for (int i = sound.length; i < power2Length; i++)
-			sound[i] = 0; // add zeros at the end
+		double[] originalSoundDouble = new double[power2Length];
+		for (int i = 0; i < originalSound.length; i++)
+			originalSoundDouble[i] = originalSound[i];
+		for (int i = originalSound.length; i < power2Length; i++)
+			originalSoundDouble[i] = 0; // add zeros at the end
 
 		// compute fourier transform (never ask me why it works, i dont know!!)
 		FastFourierTransformer fourier = new FastFourierTransformer(
 				DftNormalization.STANDARD);
-		originalSpectrum = fourier.transform(sound, TransformType.FORWARD);
+		originalSpectrum = fourier.transform(originalSoundDouble, TransformType.FORWARD);
 
 		updateSpectrum();
 	}
 
 	private void updateSpectrum() {
-		//TODO
+		//TODO currently no filtering
 		spectrum = originalSpectrum.clone();
 		
 		updateSound();
@@ -97,14 +109,23 @@ public class Sound {
 		// keep real part
 		for (int i = 0; i < sound.length; i++)
 			sound[i] = (byte) complexResult[i].getReal();
+		
+		setChanged();
+		notifyObservers();
 	}
 
 	public byte[] getSound() {
-		return sound;
+		if (bypassFilter)
+			return originalSound;
+		else
+			return sound;
 	}
 
 	public Complex[] getSpectrum() {
-		return spectrum;
+		if (bypassFilter)
+			return originalSpectrum;
+		else
+			return spectrum;
 	}
 
 	public byte[] getOriginalSound() {
@@ -113,6 +134,29 @@ public class Sound {
 
 	public Complex[] getOriginalSpectrum() {
 		return originalSpectrum;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		updateOriginalSound();
+		
+		System.out.println("sound updated");
+	}
+	
+	public void toogleBypass() {
+		bypassFilter = !bypassFilter;
+	}
+
+	public BandsFilter getBandsFilter() {
+		return bandsFilter;
+	}
+
+	public FmInstrument getInstrument() {
+		return instrument;
+	}
+
+	public void setInstrument(FmInstrument instrument2) {
+		this.instrument = instrument2;
 	}
 
 }

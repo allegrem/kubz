@@ -92,6 +92,8 @@ public abstract class FmInstrument extends Observable implements AudioBlock,
 	public void update(Observable o, Object arg) {
 		setChanged();
 		notifyObservers();
+		
+		System.out.println("fm instrument updated");
 	}
 
 }

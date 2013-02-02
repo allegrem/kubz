@@ -9,6 +9,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -16,11 +18,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
+import synthesis.Sound;
+
 /**
  * @author allegrem
  * 
  */
-public class SLSoundView extends JPanel {
+public class SLSoundView extends JPanel implements Observer {
 
 	private static final int Y_SIZE = 200;
 
@@ -35,15 +39,19 @@ public class SLSoundView extends JPanel {
 	private int offsetX = 0;
 
 	private static final int MANUAL_OFFSET = 25;
-	
-	private byte[] sound;
 
-	public SLSoundView() {
+	private Sound sound;
+
+	public SLSoundView(Sound sound) {
 		super();
-		setPreferredSize(new Dimension(X_SIZE, Y_SIZE+20));
-		setMinimumSize(new Dimension(X_SIZE, Y_SIZE+20));
+
+		this.sound = sound;
+		sound.addObserver(this);
+
+		setPreferredSize(new Dimension(X_SIZE, Y_SIZE + 20));
+		setMinimumSize(new Dimension(X_SIZE, Y_SIZE + 20));
 		setLayout(new BorderLayout(0, 0));
-		
+
 		createToolbar();
 	}
 
@@ -55,7 +63,7 @@ public class SLSoundView extends JPanel {
 		JButton btnZoomIn = new JButton("Zoom in");
 		btnZoomIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				zoomIn();
+				zoom(0.5);
 			}
 		});
 		toolBar_2.add(btnZoomIn);
@@ -63,7 +71,9 @@ public class SLSoundView extends JPanel {
 		JButton btnZoomOut = new JButton("Zoom out");
 		btnZoomOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				zoomOut();
+				zoom(2);
+				if (zoomX == 0 && currentSoundLength > 0)
+					zoomX = 2;
 			}
 		});
 		toolBar_2.add(btnZoomOut);
@@ -71,7 +81,7 @@ public class SLSoundView extends JPanel {
 		JButton button = new JButton("<");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				toLeft();
+				offset(-1 * zoomX / 10);
 			}
 		});
 		toolBar_2.add(button);
@@ -79,7 +89,7 @@ public class SLSoundView extends JPanel {
 		JButton button_1 = new JButton(">");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				toRight();
+				offset(zoomX / 10);
 			}
 		});
 		toolBar_2.add(button_1);
@@ -94,29 +104,22 @@ public class SLSoundView extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
-		if (sound != null && sound.length > 0) {
+
+		if (sound != null) {
+			byte[] soundBytes = sound.getSound();
 			int maxX = zoomX - 2;
 			int xCoord1 = 0, yCoord1 = 0, xCoord2 = 0, yCoord2 = 0;
-			for (int x = 0; x < maxX-1; x++) {
+			for (int x = 0; x < maxX - 1; x++) {
 				xCoord2 = x * X_SIZE / zoomX;
-				yCoord2 = Y_SIZE - (sound[offsetX + x] + 127) * Y_SIZE / 255 + MANUAL_OFFSET;
+				yCoord2 = Y_SIZE - (soundBytes[offsetX + x] + 127) * Y_SIZE
+						/ 255 + MANUAL_OFFSET;
 				g.drawLine(xCoord1, yCoord1, xCoord2, yCoord2);
 				xCoord1 = xCoord2;
 				yCoord1 = yCoord2;
 			}
-			g.drawLine(0, MANUAL_OFFSET + Y_SIZE/2, X_SIZE, MANUAL_OFFSET + Y_SIZE/2);
+			g.drawLine(0, MANUAL_OFFSET + Y_SIZE / 2, X_SIZE, MANUAL_OFFSET
+					+ Y_SIZE / 2);
 		}
-	}
-
-	public void zoomIn() {
-		zoom(0.5);
-	}
-
-	public void zoomOut() {
-		zoom(2);
-		if (zoomX == 0 && currentSoundLength > 0)
-			zoomX = 2;
 	}
 
 	private void zoom(double d) {
@@ -129,19 +132,6 @@ public class SLSoundView extends JPanel {
 		updateUI();
 	}
 
-	public void zoomAll(int soundLength) {
-		currentSoundLength = soundLength;
-		zoomX = soundLength;
-	}
-
-	public void toRight() {
-		offset(zoomX / 10);
-	}
-
-	public void toLeft() {
-		offset(-1 * zoomX / 10);
-	}
-
 	private void offset(int i) {
 		offsetX += i;
 		if (offsetX + zoomX > currentSoundLength)
@@ -151,10 +141,13 @@ public class SLSoundView extends JPanel {
 		updateUI();
 	}
 
-	public void setSound(byte[] sound) {
-		zoomAll(sound.length); //zoom out when we have a new sound
-		this.sound = sound;
+	@Override
+	public void update(Observable o, Object arg) {
+		currentSoundLength = sound.getSound().length;
+		zoomX = currentSoundLength;
 		updateUI();
+		
+		System.out.println("sound view updated");
 	}
 
 }

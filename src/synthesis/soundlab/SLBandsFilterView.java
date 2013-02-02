@@ -84,8 +84,8 @@ public class SLBandsFilterView extends JPanel {
 		btnBypass.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// window.toogleBypass(); TODO
-				if (btnBypass.getBackground() != Color.GRAY)
-					btnBypass.setBackground(Color.GRAY);
+				if (btnBypass.getBackground() != Color.LIGHT_GRAY)
+					btnBypass.setBackground(Color.LIGHT_GRAY);
 				else
 					btnBypass.setBackground(null);
 			}
