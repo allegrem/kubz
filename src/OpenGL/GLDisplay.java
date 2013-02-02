@@ -19,7 +19,13 @@ import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.opengl.GL11.glShadeModel;
 
+import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.nio.ByteBuffer;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -30,6 +36,7 @@ import org.lwjgl.util.glu.GLU;
 
 import player.Player;
 
+import utilities.MyBuffer;
 import views.staticViews.BackgroundView;
 
 import map2.Map;
@@ -153,10 +160,14 @@ public class GLDisplay extends Thread{
 			// Creation d'une fenetre permettant de dessiner avec OpenGL
 			Display.setDisplayModeAndFullscreen(new DisplayMode(display_width,
 					display_height));
-			
+			Display.setTitle("Kubz");
+			ByteBuffer[] list = new ByteBuffer[2];
+			list[0] = MyBuffer.convertImageData(ImageIO.read(new File("Icone/Kubz32.jpeg")));
+			list[1] = MyBuffer.convertImageData(ImageIO.read(new File("Icone/Kubz16.gif")));
+			Display.setIcon(list);
 			Display.create();
 			Display.setVSyncEnabled(true);
-
+			
 		} catch (Exception e) {
 			System.out.println("Error setting up display: " + e.getMessage());
 			System.exit(0);
