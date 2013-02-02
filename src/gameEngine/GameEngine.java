@@ -45,7 +45,11 @@ public class GameEngine {
 		}
 		
 		playerList.add(new Player(this));
+		playerList.add(new Player(this));
+		playerList.add(new Player(this));
+		while(display.isAlive()){
 			playerTurn();
+		}
 	}
 	
 	/**

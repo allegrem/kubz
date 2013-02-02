@@ -58,6 +58,7 @@ public class GLDisplay extends Thread{
 	public static boolean wKey = false;
 	public static boolean xKey = false;
 	public static boolean tap = false;
+	private static boolean tapTyped=false;
 	public static int choice=0;
 	
 	
@@ -227,8 +228,14 @@ public static void checkKeyboard(){
 		}else
 			xKey =  false;
 		
-		if (Keyboard.isKeyDown(Keyboard.KEY_P))
-				tap = true;	
+		if (Keyboard.isKeyDown(Keyboard.KEY_P)){
+			tapTyped = true;	
+		}else if(tapTyped){
+			tap=true;
+			tapTyped=false;
+		}
+			
+				
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_TAB)){
 				choice = (choice + 1)%Player.nParams;

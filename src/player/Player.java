@@ -216,7 +216,7 @@ public  class Player {
 	public void act(){
 		//choosingUTurn();
 		movingUTurn();
-		
+		GLDisplay.tap=false;
 	}
 	
 
