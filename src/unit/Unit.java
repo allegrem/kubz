@@ -9,8 +9,6 @@ public class Unit {
 	
 	private double life;
 	private Point pos;
-	private double xSpeed;
-	private double ySpeed;
 	private double aperture;
 	private double direction;
 	private UnitState state;
@@ -118,24 +116,6 @@ public class Unit {
 	}
 	public double getDirection(){
 		return direction;
-	}
-	
-	
-	
-	public double getxSpeed() {
-		return xSpeed;
-	}
-
-	public void setxSpeed(double xSpeed) {
-		this.xSpeed = xSpeed;
-	}
-
-	public double getySpeed() {
-		return ySpeed;
-	}
-
-	public void setySpeed(double ySpeed) {
-		this.ySpeed = ySpeed;
 	}
 
 

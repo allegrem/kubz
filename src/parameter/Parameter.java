@@ -7,8 +7,6 @@ public class Parameter {
 	
 	private Point pos;
 	private double angle;
-	private double xSpeed;
-	private double ySpeed;
 	private ParameterState state;
 	private CubeControlledView view;
 	
@@ -70,18 +68,6 @@ public class Parameter {
 		return angle;
 	}
 	
-	public double getxSpeed() {
-		return xSpeed;
-	}
-	public void setxSpeed(double xSpeed) {
-		this.xSpeed = xSpeed;
-	}
-	public double getySpeed() {
-		return ySpeed;
-	}
-	public void setySpeed(double ySpeed) {
-		this.ySpeed = ySpeed;
-	}
 	
 	/**
 	 * Setters et getters relatifs à l'état du paramètre

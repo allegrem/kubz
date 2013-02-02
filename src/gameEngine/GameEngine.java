@@ -11,6 +11,7 @@ import player.*;
 import unit.Unit;
 import views.staticViews.BackgroundView;
 import wall.Wall;
+import cube.Cube;
 import cubeManager.*;
 
 public class GameEngine {
@@ -90,6 +91,11 @@ public class GameEngine {
 	
 	public Map getMap(){
 		return map;
+		
+	}
+
+	public void setFrozen(Cube owner) {
+		// TODO Auto-generated method stub
 		
 	}
 

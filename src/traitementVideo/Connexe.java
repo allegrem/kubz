@@ -1,5 +1,7 @@
 package traitementVideo;
 
+import gameEngine.GameEngine;
+
 import java.util.*;
 import utilities.*;
 
@@ -11,30 +13,34 @@ public class Connexe {
 	 * @param screen
 	 * @return
 	 */
+	private int fps;
+	private VirtualPixel[][] vi;
+	private ArrayList<ArrayList<VirtualPixel>> groupesConnexes;
+	private GameEngine gameEngine;
 	
-	public static ArrayList<ArrayList<VirtualPixel>> setConnexe(VirtualPixel[][] screen){
+	public void  updateConnexe(VirtualPixel[][] screen){
 		
-		VirtualPixel[][] vi = screen;
+		vi = screen;
 		int compteurComposantes = 0;
-		ArrayList<ArrayList<VirtualPixel>> groupesConnexes = new ArrayList<ArrayList<VirtualPixel>>();
+		ArrayList<ArrayList<VirtualPixel>> groupesConnexeIntermediare = new ArrayList<ArrayList<VirtualPixel>>();
 		ArrayList<ArrayList<VirtualPixel>> retour = new ArrayList<ArrayList<VirtualPixel>>();
 		
 		if (vi[0][0].isBrightness()==true){
 			compteurComposantes++;
-			groupesConnexes.add(compteurComposantes, new ArrayList<VirtualPixel>());
-			groupesConnexes.get(compteurComposantes).add(vi[0][0]);
+			groupesConnexeIntermediare.add(compteurComposantes, new ArrayList<VirtualPixel>());
+			groupesConnexeIntermediare.get(compteurComposantes).add(vi[0][0]);
 			vi[0][0].setGroupeConnexe(compteurComposantes);
 		}
 		for(int j=1; j<240;j++){
 			if (vi[0][j].isBrightness()==true){
 				if((vi[0][j-1].isBrightness()==true)){;
-					groupesConnexes.get(vi[0][j-1].getGroupeConnexe()).add(vi[0][j]);
+					groupesConnexeIntermediare.get(vi[0][j-1].getGroupeConnexe()).add(vi[0][j]);
 					vi[0][j].setGroupeConnexe(vi[0][j-1].getGroupeConnexe());
 				}
 				else{
 					compteurComposantes++;
-					groupesConnexes.add(compteurComposantes, new ArrayList<VirtualPixel>());
-					groupesConnexes.get(compteurComposantes).add(vi[0][j]);
+					groupesConnexeIntermediare.add(compteurComposantes, new ArrayList<VirtualPixel>());
+					groupesConnexeIntermediare.get(compteurComposantes).add(vi[0][j]);
 					vi[0][j].setGroupeConnexe(compteurComposantes);
 				}
 			}			
@@ -43,12 +49,12 @@ public class Connexe {
 			if (vi[i][0].isBrightness()==true){
 				if((vi[i-1][0].isBrightness()==true)){
 					vi[i][0].setGroupeConnexe(vi[i-1][0].getGroupeConnexe());
-					groupesConnexes.get(vi[i][0].getGroupeConnexe()).add(vi[i][0]);
+					groupesConnexeIntermediare.get(vi[i][0].getGroupeConnexe()).add(vi[i][0]);
 				}
 				else{
 					compteurComposantes++;
-					groupesConnexes.add(compteurComposantes, new ArrayList<VirtualPixel>());
-					groupesConnexes.get(compteurComposantes).add(vi[i][0]);
+					groupesConnexeIntermediare.add(compteurComposantes, new ArrayList<VirtualPixel>());
+					groupesConnexeIntermediare.get(compteurComposantes).add(vi[i][0]);
 					vi[i][0].setGroupeConnexe(compteurComposantes);
 				}
 			}
@@ -56,21 +62,21 @@ public class Connexe {
 				if (vi[i][j].isBrightness()==true){
 					if ((vi[i][j-1].isBrightness()==true)&&(vi[i-1][j].isBrightness()==false)){
 						vi[i][j].setGroupeConnexe(vi[i][j-1].getGroupeConnexe());
-						groupesConnexes.get(vi[i][j].getGroupeConnexe()).add(vi[i][j]);
+						groupesConnexeIntermediare.get(vi[i][j].getGroupeConnexe()).add(vi[i][j]);
 					}
 					if ((vi[i-1][j].isBrightness()==true)&&(vi[i][j-1].isBrightness()==false)){
 						vi[i][j].setGroupeConnexe(vi[i-1][j].getGroupeConnexe());
-						groupesConnexes.get(vi[i][j].getGroupeConnexe()).add(vi[i][j]);
+						groupesConnexeIntermediare.get(vi[i][j].getGroupeConnexe()).add(vi[i][j]);
 					}
 					if ((vi[i-1][j].isBrightness()==true)&&(vi[i][j-1].isBrightness()==true)){
 						vi[i][j].setGroupeConnexe(vi[i-1][j].getGroupeConnexe());
-						groupesConnexes.get(vi[i][j].getGroupeConnexe()).add(vi[i][j]);
-						unionGroupesConnexes(groupesConnexes,vi[i-1][j].getGroupeConnexe(),vi[i][j-1].getGroupeConnexe()); 
+						groupesConnexeIntermediare.get(vi[i][j].getGroupeConnexe()).add(vi[i][j]);
+						uniongroupesConnexeIntermediare(groupesConnexeIntermediare,vi[i-1][j].getGroupeConnexe(),vi[i][j-1].getGroupeConnexe()); 
 					}	
 					else{
 						compteurComposantes++; 
-						groupesConnexes.add(compteurComposantes, new ArrayList<VirtualPixel>());
-						groupesConnexes.get(compteurComposantes).add(vi[i][j]);
+						groupesConnexeIntermediare.add(compteurComposantes, new ArrayList<VirtualPixel>());
+						groupesConnexeIntermediare.get(compteurComposantes).add(vi[i][j]);
 						vi[i][j].setGroupeConnexe(compteurComposantes);
 					}										
 				}
@@ -80,11 +86,11 @@ public class Connexe {
 		/**
 		 *  Cette sous méthode permet de mettre à jour la straucture (les groupes vides sont effaces)
 		 */
-		int taille = groupesConnexes.size();
+		int taille = groupesConnexeIntermediare.size();
 		int compteurRetour = 0; 
 		for(int groupe = 1; groupe < taille; groupe++){
-			if (groupesConnexes.get(groupe)!=null){
-				for(VirtualPixel vp: groupesConnexes.get(groupe)){
+			if (groupesConnexeIntermediare.get(groupe)!=null){
+				for(VirtualPixel vp: groupesConnexeIntermediare.get(groupe)){
 					compteurRetour++;
 					vp.setGroupeConnexe(compteurRetour);
 					retour.add(new ArrayList<VirtualPixel>());
@@ -93,49 +99,202 @@ public class Connexe {
 			}
 		}	
 		
-		return retour;
+		groupesConnexes = retour;
 		
 	}
 	
 	/**
 	 * Renvoie la position de tous les groupes connexes
-	 * @param groupesConnexes
+	 * @param groupesConnexeIntermediare
 	 * @return
 	 */
-	public static ArrayList<Point> getGroupesPos(ArrayList<ArrayList<VirtualPixel>> groupesConnexes){
-		ArrayList<Point> groupesConnexesPos = new ArrayList<Point>();
-		for(ArrayList<VirtualPixel> array : groupesConnexes){
+	public static ArrayList<Point> getGroupesPos(ArrayList<ArrayList<VirtualPixel>> groupesConnexeIntermediare){
+		ArrayList<Point> groupesConnexeIntermediarePos = new ArrayList<Point>();
+		for(ArrayList<VirtualPixel> array : groupesConnexeIntermediare){
 			double xMoy = 0;
 			double yMoy = 0;
 			for(VirtualPixel vp : array){
 				xMoy = xMoy + vp.getPos().getX();
 				yMoy = yMoy + vp.getPos().getY(); 
 			}
-			groupesConnexesPos.add(new Point((int)(xMoy/array.size()),(int)(yMoy/array.size())));
+			groupesConnexeIntermediarePos.add(new Point((int)(xMoy/array.size()),(int)(yMoy/array.size())));
 		}
-		return groupesConnexesPos;
+		return groupesConnexeIntermediarePos;
 	}
 	
 	/**
 	 * Methode qui permet de mettre à jour la structure Union-Find mise en place (si j'ai du courage j'implémenterai celle de Tarjan ou de Hopcroft-Ullman mais je promets rien)
-	 * @param groupesConnexes
+	 * @param groupesConnexeIntermediare
 	 * @param groupe1
 	 * @param groupe2
 	 */
-	private static void unionGroupesConnexes(ArrayList<ArrayList<VirtualPixel>> groupesConnexes,int groupe1 ,int groupe2){
+	private static void uniongroupesConnexeIntermediare(ArrayList<ArrayList<VirtualPixel>> groupesConnexeIntermediare,int groupe1 ,int groupe2){
 		if (groupe1<groupe2){
-			for(VirtualPixel vp: groupesConnexes.get(groupe1)){
-				groupesConnexes.get(groupe2).add(vp);
+			for(VirtualPixel vp: groupesConnexeIntermediare.get(groupe1)){
+				groupesConnexeIntermediare.get(groupe2).add(vp);
 			}
-			groupesConnexes.get(groupe1).clear();		
+			groupesConnexeIntermediare.get(groupe1).clear();		
 		}
 		else{
-			for(VirtualPixel vp: groupesConnexes.get(groupe2)){
-				groupesConnexes.get(groupe1).add(vp);
+			for(VirtualPixel vp: groupesConnexeIntermediare.get(groupe2)){
+				groupesConnexeIntermediare.get(groupe1).add(vp);
 			}
-			groupesConnexes.get(groupe2).clear();
+			groupesConnexeIntermediare.get(groupe2).clear();
 		}
 		
+	}
+	/**
+	 * Methode qui renvoie la position moyenne d'une composante connexe
+	 * @param groupe
+	 * @return
+	 */
+	public Point getGroupePos(int groupe){
+		double xMoy = 0;
+		double yMoy = 0;
+		for(VirtualPixel vp: groupesConnexes.get(groupe)){
+			xMoy = xMoy + vp.getPos().getX();
+			yMoy = yMoy + vp.getPos().getY();
+		}
+		xMoy = xMoy/groupesConnexes.size();
+		yMoy = yMoy/groupesConnexes.size();
+		return new Point(xMoy,yMoy);
+	}
+	
+	/**
+	 * Methode qui permet d'actualisar la position et la vitesse des cubes
+	 * Elle utilise une recherche locale en partant de la position attendue du cube
+	 * Methode un peu dégueu mais je vois pas trop comment la faire avec un joli boucle
+	 * @param vc
+	 */
+	public void localSearch(VirtualCube vc){
+		int expectedX1 = (int) (vc.getPos1().getX() + vc.getX1Speed());
+		int expectedX2 = (int) (vc.getPos2().getX() + vc.getX2Speed());
+		int expectedX3 = (int) (vc.getPos3().getX() + vc.getX3Speed());
+		int expectedY1 = (int) (vc.getPos1().getY() + vc.getY1Speed());
+		int expectedY2 = (int) (vc.getPos2().getY() + vc.getY2Speed());
+		int expectedY3 = (int) (vc.getPos3().getY() + vc.getY3Speed());
+		/**
+		 * Bon là c'est hyper HYPER dégueu mais j'ai pas trouvé comment faire joli :/
+		 * (enfin si mais ça prend trois plombes...(la seule boucle que j'ai trouvé fait 50 lignes ...))
+		 */
+		if (vi[expectedX1][expectedY1].isBrightness()==true) updatePosSpeed1(vc,expectedX1,expectedY1);
+		else if (vi[expectedX1+1][expectedY1].isBrightness()==true) updatePosSpeed1(vc,expectedX1+1,expectedY1);
+		else if (vi[expectedX1+1][expectedY1+1].isBrightness()==true) updatePosSpeed1(vc,expectedX1+1,expectedY1+1);
+		else if (vi[expectedX1][expectedY1+1].isBrightness()==true) updatePosSpeed1(vc,expectedX1,expectedY1+1);
+		else if (vi[expectedX1-1][expectedY1+1].isBrightness()==true) updatePosSpeed1(vc,expectedX1-1,expectedY1+1);
+		else if (vi[expectedX1-1][expectedY1].isBrightness()==true) updatePosSpeed1(vc,expectedX1-1,expectedY1);
+		else if (vi[expectedX1-1][expectedY1-1].isBrightness()==true) updatePosSpeed1(vc,expectedX1-1,expectedY1-1);
+		else if (vi[expectedX1][expectedY1-1].isBrightness()==true) updatePosSpeed1(vc,expectedX1,expectedY1-1);
+		else if (vi[expectedX1+1][expectedY1-1].isBrightness()==true) updatePosSpeed1(vc,expectedX1+1,expectedY1-1);
+		else if (vi[expectedX1+2][expectedY1-1].isBrightness()==true) updatePosSpeed1(vc,expectedX1+2,expectedY1-1);
+		else if (vi[expectedX1+2][expectedY1].isBrightness()==true) updatePosSpeed1(vc,expectedX1+2,expectedY1);
+		else if (vi[expectedX1+2][expectedY1+1].isBrightness()==true) updatePosSpeed1(vc,expectedX1+2,expectedY1+1);
+		else if (vi[expectedX1+2][expectedY1+2].isBrightness()==true) updatePosSpeed1(vc,expectedX1+2,expectedY1+2);
+		else if (vi[expectedX1+1][expectedY1+2].isBrightness()==true) updatePosSpeed1(vc,expectedX1+1,expectedY1+2);
+		else if (vi[expectedX1][expectedY1+2].isBrightness()==true) updatePosSpeed1(vc,expectedX1,expectedY1+2);
+		else if (vi[expectedX1-1][expectedY1+2].isBrightness()==true) updatePosSpeed1(vc,expectedX1-1,expectedY1+2);
+		else if (vi[expectedX1-2][expectedY1+2].isBrightness()==true) updatePosSpeed1(vc,expectedX1-2,expectedY1+2);
+		else if (vi[expectedX1-2][expectedY1+1].isBrightness()==true) updatePosSpeed1(vc,expectedX1-2,expectedY1+1);
+		else if (vi[expectedX1-2][expectedY1].isBrightness()==true) updatePosSpeed1(vc,expectedX1-2,expectedY1);
+		else if (vi[expectedX1-2][expectedY1-1].isBrightness()==true) updatePosSpeed1(vc,expectedX1-2,expectedY1-1);
+		else if (vi[expectedX1-2][expectedY1-2].isBrightness()==true) updatePosSpeed1(vc,expectedX1-2,expectedY1-2);
+		else if (vi[expectedX1-1][expectedY1-2].isBrightness()==true) updatePosSpeed1(vc,expectedX1-1,expectedY1-2);
+		else if (vi[expectedX1][expectedY1-2].isBrightness()==true) updatePosSpeed1(vc,expectedX1,expectedY1-2);
+		else if (vi[expectedX1+1][expectedY1-2].isBrightness()==true) updatePosSpeed1(vc,expectedX1+1,expectedY1-2);
+		else if (vi[expectedX1+2][expectedY1-2].isBrightness()==true) updatePosSpeed1(vc,expectedX1+2,expectedY1-2);
+		else gameEngine.setFrozen(vc.getOwner());
+		
+		if (vi[expectedX2][expectedY2].isBrightness()==true) updatePosSpeed2(vc,expectedX2,expectedY2);
+		else if (vi[expectedX2+1][expectedY2].isBrightness()==true) updatePosSpeed2(vc,expectedX2+1,expectedY2);
+		else if (vi[expectedX2+1][expectedY2+1].isBrightness()==true) updatePosSpeed2(vc,expectedX2+1,expectedY2+1);
+		else if (vi[expectedX2][expectedY2+1].isBrightness()==true) updatePosSpeed2(vc,expectedX2,expectedY2+1);
+		else if (vi[expectedX2-1][expectedY2+1].isBrightness()==true) updatePosSpeed2(vc,expectedX2-1,expectedY2+1);
+		else if (vi[expectedX2-1][expectedY2].isBrightness()==true) updatePosSpeed2(vc,expectedX2-1,expectedY2);
+		else if (vi[expectedX2-1][expectedY2-1].isBrightness()==true) updatePosSpeed2(vc,expectedX2-1,expectedY2-1);
+		else if (vi[expectedX2][expectedY2-1].isBrightness()==true) updatePosSpeed2(vc,expectedX2,expectedY2-1);
+		else if (vi[expectedX2+1][expectedY2-1].isBrightness()==true) updatePosSpeed2(vc,expectedX2+1,expectedY2-1);
+		else if (vi[expectedX2+2][expectedY2-1].isBrightness()==true) updatePosSpeed2(vc,expectedX2+2,expectedY2-1);
+		else if (vi[expectedX2+2][expectedY2].isBrightness()==true) updatePosSpeed2(vc,expectedX2+2,expectedY2);
+		else if (vi[expectedX2+2][expectedY2+1].isBrightness()==true) updatePosSpeed2(vc,expectedX2+2,expectedY2+1);
+		else if (vi[expectedX2+2][expectedY2+2].isBrightness()==true) updatePosSpeed2(vc,expectedX2+2,expectedY2+2);
+		else if (vi[expectedX2+1][expectedY2+2].isBrightness()==true) updatePosSpeed2(vc,expectedX2+1,expectedY2+2);
+		else if (vi[expectedX2][expectedY2+2].isBrightness()==true) updatePosSpeed2(vc,expectedX2,expectedY2+2);
+		else if (vi[expectedX2-1][expectedY2+2].isBrightness()==true) updatePosSpeed2(vc,expectedX2-1,expectedY2+2);
+		else if (vi[expectedX2-2][expectedY2+2].isBrightness()==true) updatePosSpeed2(vc,expectedX2-2,expectedY2+2);
+		else if (vi[expectedX2-2][expectedY2+1].isBrightness()==true) updatePosSpeed2(vc,expectedX2-2,expectedY2+1);
+		else if (vi[expectedX2-2][expectedY2].isBrightness()==true) updatePosSpeed2(vc,expectedX2-2,expectedY2);
+		else if (vi[expectedX2-2][expectedY2-1].isBrightness()==true) updatePosSpeed2(vc,expectedX2-2,expectedY2-1);
+		else if (vi[expectedX2-2][expectedY2-2].isBrightness()==true) updatePosSpeed2(vc,expectedX2-2,expectedY2-2);
+		else if (vi[expectedX2-1][expectedY2-2].isBrightness()==true) updatePosSpeed2(vc,expectedX2-1,expectedY2-2);
+		else if (vi[expectedX2][expectedY2-2].isBrightness()==true) updatePosSpeed2(vc,expectedX2,expectedY2-2);
+		else if (vi[expectedX2+1][expectedY2-2].isBrightness()==true) updatePosSpeed2(vc,expectedX2+1,expectedY2-2);
+		else if (vi[expectedX2+2][expectedY2-2].isBrightness()==true) updatePosSpeed2(vc,expectedX2+2,expectedY2-2);
+		else gameEngine.setFrozen(vc.getOwner());
+		
+		if (vi[expectedX3][expectedY3].isBrightness()==true) updatePosSpeed3(vc,expectedX3,expectedY3);
+		else if (vi[expectedX3+1][expectedY3].isBrightness()==true) updatePosSpeed3(vc,expectedX3+1,expectedY3);
+		else if (vi[expectedX3+1][expectedY3+1].isBrightness()==true) updatePosSpeed3(vc,expectedX3+1,expectedY3+1);
+		else if (vi[expectedX3][expectedY3+1].isBrightness()==true) updatePosSpeed3(vc,expectedX3,expectedY3+1);
+		else if (vi[expectedX3-1][expectedY3+1].isBrightness()==true) updatePosSpeed3(vc,expectedX3-1,expectedY3+1);
+		else if (vi[expectedX3-1][expectedY3].isBrightness()==true) updatePosSpeed3(vc,expectedX3-1,expectedY3);
+		else if (vi[expectedX3-1][expectedY3-1].isBrightness()==true) updatePosSpeed3(vc,expectedX3-1,expectedY3-1);
+		else if (vi[expectedX3][expectedY3-1].isBrightness()==true) updatePosSpeed3(vc,expectedX3,expectedY3-1);
+		else if (vi[expectedX3+1][expectedY3-1].isBrightness()==true) updatePosSpeed3(vc,expectedX3+1,expectedY3-1);
+		else if (vi[expectedX3+2][expectedY3-1].isBrightness()==true) updatePosSpeed3(vc,expectedX3+2,expectedY3-1);
+		else if (vi[expectedX3+2][expectedY3].isBrightness()==true) updatePosSpeed3(vc,expectedX3+2,expectedY3);
+		else if (vi[expectedX3+2][expectedY3+1].isBrightness()==true) updatePosSpeed3(vc,expectedX3+2,expectedY3+1);
+		else if (vi[expectedX3+2][expectedY3+2].isBrightness()==true) updatePosSpeed3(vc,expectedX3+2,expectedY3+2);
+		else if (vi[expectedX3+1][expectedY3+2].isBrightness()==true) updatePosSpeed3(vc,expectedX3+1,expectedY3+2);
+		else if (vi[expectedX3][expectedY3+2].isBrightness()==true) updatePosSpeed3(vc,expectedX3,expectedY3+2);
+		else if (vi[expectedX3-1][expectedY3+2].isBrightness()==true) updatePosSpeed3(vc,expectedX3-1,expectedY3+2);
+		else if (vi[expectedX3-2][expectedY3+2].isBrightness()==true) updatePosSpeed3(vc,expectedX3-2,expectedY3+2);
+		else if (vi[expectedX3-2][expectedY3+1].isBrightness()==true) updatePosSpeed3(vc,expectedX3-2,expectedY3+1);
+		else if (vi[expectedX3-2][expectedY3].isBrightness()==true) updatePosSpeed3(vc,expectedX3-2,expectedY3);
+		else if (vi[expectedX3-2][expectedY3-1].isBrightness()==true) updatePosSpeed3(vc,expectedX3-2,expectedY3-1);
+		else if (vi[expectedX3-2][expectedY3-2].isBrightness()==true) updatePosSpeed3(vc,expectedX3-2,expectedY3-2);
+		else if (vi[expectedX3-1][expectedY3-2].isBrightness()==true) updatePosSpeed3(vc,expectedX3-1,expectedY3-2);
+		else if (vi[expectedX3][expectedY3-2].isBrightness()==true) updatePosSpeed3(vc,expectedX3,expectedY3-2);
+		else if (vi[expectedX3+1][expectedY3-2].isBrightness()==true) updatePosSpeed3(vc,expectedX3+1,expectedY3-2);
+		else if (vi[expectedX3+2][expectedY3-2].isBrightness()==true) updatePosSpeed3(vc,expectedX3+2,expectedY3-2);
+		else gameEngine.setFrozen(vc.getOwner());
+	}
+	
+	
+	/**
+	 * Methode qui met a jour la position et la vitesse de la premiere diode d'un cube
+	 * @param vc
+	 * @param newXPos
+	 * @param newYPos
+	 */
+	private void updatePosSpeed1(VirtualCube vc, double newXPos, double newYPos){
+		vc.setX1Speed((newXPos-vc.getPos1().getX())/fps);
+		vc.setY1Speed((newYPos-vc.getPos1().getX())/fps);
+		vc.getPos1().setX(newXPos);
+		vc.getPos1().setY(newYPos);
+	}
+	/**
+	 * Methode qui met a jour la position et la vitesse de la seconde diode d'un cube
+	 * @param vc
+	 * @param newXPos
+	 * @param newYPos
+	 */
+	private void updatePosSpeed2(VirtualCube vc, double newXPos, double newYPos){
+		vc.setX2Speed((newXPos-vc.getPos2().getX())/fps);
+		vc.setY2Speed((newYPos-vc.getPos2().getX())/fps);
+		vc.getPos2().setX(newXPos);
+		vc.getPos2().setY(newYPos);
+	}
+	/**
+	 * Methode qui met a jour la position et la vitesse de la troisième diode d'un cube
+	 * @param vc
+	 * @param newXPos
+	 * @param newYPos
+	 */
+	private void updatePosSpeed3(VirtualCube vc, double newXPos, double newYPos){
+		vc.setX3Speed((newXPos-vc.getPos3().getX())/fps);
+		vc.setY3Speed((newYPos-vc.getPos3().getX())/fps);
+		vc.getPos3().setX(newXPos);
+		vc.getPos3().setY(newYPos);
 	}
 }
 

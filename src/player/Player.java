@@ -2,7 +2,6 @@ package player;
 
 /**
  * Classe qui représente un joueur, a des référence vers ses unités et paramètres
- * @author Felix
  */
 
 import java.awt.event.ActionEvent;
