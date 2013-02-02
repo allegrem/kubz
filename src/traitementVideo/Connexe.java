@@ -5,14 +5,9 @@ import utilities.*;
 
 public class Connexe {
 	
-	
-	//ce code pourrait être plus modulaire, mais il n'y en a pas vraiment besoin ...
-	
-	// A optimiser aussi au nivau du choix de la liste à transférer
-	// A optimiser au niveau des variables souvent appelées 
-	
 	/**
-	 * Cette méthode permet de parcourir l'image pour en déterminer les groupes connexes (ici les taches lumineueses
+	 * Cette méthode permet de parcourir l'image pour en déterminer les composantes connexes (ici les taches lumineueses)
+	 * La structure de données employée ici est une structure Union-Find basique (tourne en O(n*ln(n)) ou n nombre de pixels)
 	 * @param screen
 	 * @return
 	 */
@@ -68,33 +63,22 @@ public class Connexe {
 						groupesConnexes.get(vi[i][j].getGroupeConnexe()).add(vi[i][j]);
 					}
 					if ((vi[i-1][j].isBrightness()==true)&&(vi[i][j-1].isBrightness()==true)){
-						//on commence par agir sur le pixel courant
 						vi[i][j].setGroupeConnexe(vi[i-1][j].getGroupeConnexe());
 						groupesConnexes.get(vi[i][j].getGroupeConnexe()).add(vi[i][j]);
-						int gr = vi[i-1][j].getGroupeConnexe(); //groupe vers leuel changer
-						ArrayList<VirtualPixel> nouveau = groupesConnexes.get(vi[i-1][j].getGroupeConnexe());
-						/* La partie suivante permet de transférer tous les pixels de la composante de gauche vers 
-						 * celle du haut
-						 */					
-						for(VirtualPixel vp: groupesConnexes.get(vi[i][j-1].getGroupeConnexe())){
-							nouveau.add(vp);
-							vp.setGroupeConnexe(gr);
-						}
-						groupesConnexes.get(vi[i][j-1].getGroupeConnexe()).clear(); //on vide la liste
+						unionGroupesConnexes(groupesConnexes,vi[i-1][j].getGroupeConnexe(),vi[i][j-1].getGroupeConnexe()); 
 					}	
 					else{
-						compteurComposantes++; //on passe à une nouvelle composante
-						groupesConnexes.add(compteurComposantes, new ArrayList<VirtualPixel>());//on crée la liste des pixels associés à cette composante
-						//tableEq.add(compteurComposantes, new ArrayList<Integer>());//on ajoute une classe d'équivalenc dans la table
-						groupesConnexes.get(compteurComposantes).add(vi[i][j]);//on ajoute ce pixel à la liste des pixels associés à cette composante
-						vi[i][j].setGroupeConnexe(compteurComposantes);// on donne au pixel le groupe  qui convient
+						compteurComposantes++; 
+						groupesConnexes.add(compteurComposantes, new ArrayList<VirtualPixel>());
+						groupesConnexes.get(compteurComposantes).add(vi[i][j]);
+						vi[i][j].setGroupeConnexe(compteurComposantes);
 					}										
 				}
 			}
 		}
 		
 		/**
-		 *  on remet les groupes dans l'ordre dans une ArrayList pour le retour
+		 *  Cette sous méthode permet de mettre à jour la straucture (les groupes vides sont effaces)
 		 */
 		int taille = groupesConnexes.size();
 		int compteurRetour = 0; 
@@ -107,15 +91,17 @@ public class Connexe {
 					retour.get(compteurRetour).add(vp);
 				}
 			}
-		}			
-		//on gère à présent les équivalences
-		//for(int i=tableEq.size();i<0;i--)	
+		}	
 		
 		return retour;
 		
 	}
 	
-	
+	/**
+	 * Renvoie la position de tous les groupes connexes
+	 * @param groupesConnexes
+	 * @return
+	 */
 	public static ArrayList<Point> getGroupesPos(ArrayList<ArrayList<VirtualPixel>> groupesConnexes){
 		ArrayList<Point> groupesConnexesPos = new ArrayList<Point>();
 		for(ArrayList<VirtualPixel> array : groupesConnexes){
@@ -128,6 +114,28 @@ public class Connexe {
 			groupesConnexesPos.add(new Point((int)(xMoy/array.size()),(int)(yMoy/array.size())));
 		}
 		return groupesConnexesPos;
+	}
+	
+	/**
+	 * Methode qui permet de mettre à jour la structure Union-Find mise en place (si j'ai du courage j'implémenterai celle de Tarjan ou de Hopcroft-Ullman mais je promets rien)
+	 * @param groupesConnexes
+	 * @param groupe1
+	 * @param groupe2
+	 */
+	private static void unionGroupesConnexes(ArrayList<ArrayList<VirtualPixel>> groupesConnexes,int groupe1 ,int groupe2){
+		if (groupe1<groupe2){
+			for(VirtualPixel vp: groupesConnexes.get(groupe1)){
+				groupesConnexes.get(groupe2).add(vp);
+			}
+			groupesConnexes.get(groupe1).clear();		
+		}
+		else{
+			for(VirtualPixel vp: groupesConnexes.get(groupe2)){
+				groupesConnexes.get(groupe1).add(vp);
+			}
+			groupesConnexes.get(groupe2).clear();
+		}
+		
 	}
 }
 
