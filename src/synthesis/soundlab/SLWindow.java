@@ -12,9 +12,6 @@ import java.awt.event.InputEvent;
 import javax.swing.JSeparator;
 import javax.swing.JToolBar;
 import javax.swing.JLabel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JButton;
 
 import synthesis.Sound;
 import synthesis.audiooutput.SpeakersOutput;
@@ -27,14 +24,10 @@ import synthesis.fmInstruments.PianoInstrument;
 import synthesis.fmInstruments.TwoOscFmInstrument;
 import synthesis.fmInstruments.WoodInstrument;
 
-import javax.swing.BoxLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Component;
-import javax.swing.Box;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.ButtonGroup;
-import javax.swing.JTabbedPane;
 import java.awt.GridLayout;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
