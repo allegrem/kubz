@@ -174,7 +174,7 @@ public class CubeControlledView implements DisplayableFather{
 			glVertex3d(position.getX()+MonsterView.getSize()/2, position.getY()+MonsterView.getSize()/2, 0.2);
 			glVertex3d(position.getX()-MonsterView.getSize()/2, position.getY()+MonsterView.getSize()/2, 0.2);
 			GL11.glTranslated(position.getX(),position.getY(),0);
-			GL11.glRotated(-angle,0,0,0);
+			GL11.glRotated(-angle,0,0,1);
 			GL11.glTranslated(-position.getX(),-position.getY(),0);
 			
 			GL11.glEnd();
