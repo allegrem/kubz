@@ -113,7 +113,7 @@ public class SLWindow {
 		menuBar.add(mnInstrument);
 
 		JRadioButtonMenuItem rdbtnmntmBell = new JRadioButtonMenuItem("Bell");
-		rdbtnmntmBell.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD1, 0));
+//		rdbtnmntmBell.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD1, 0));
 		buttonGroup.add(rdbtnmntmBell);
 		rdbtnmntmBell.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -124,7 +124,7 @@ public class SLWindow {
 		mnInstrument.add(rdbtnmntmBell);
 
 		JRadioButtonMenuItem rdbtnmntmPiano = new JRadioButtonMenuItem("Piano");
-		rdbtnmntmPiano.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD4, 0));
+//		rdbtnmntmPiano.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD4, 0));
 		buttonGroup.add(rdbtnmntmPiano);
 		rdbtnmntmPiano.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -134,7 +134,7 @@ public class SLWindow {
 
 		JRadioButtonMenuItem rdbtnmntmTwooscfm = new JRadioButtonMenuItem(
 				"TwoOscFM");
-		rdbtnmntmTwooscfm.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD2, 0));
+//		rdbtnmntmTwooscfm.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD2, 0));
 		rdbtnmntmTwooscfm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setInstrument(new TwoOscFmInstrument());
@@ -144,7 +144,7 @@ public class SLWindow {
 		mnInstrument.add(rdbtnmntmTwooscfm);
 
 		JRadioButtonMenuItem rdbtnmntmWood = new JRadioButtonMenuItem("Wood");
-		rdbtnmntmWood.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD3, 0));
+//		rdbtnmntmWood.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD3, 0));
 		rdbtnmntmWood.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setInstrument(new WoodInstrument());

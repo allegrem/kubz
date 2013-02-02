@@ -1,8 +1,20 @@
 package synthesis.soundlab;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.ContainerEvent;
+import java.awt.event.ContainerListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import synthesis.parameter.ParameterAudioBlock;
@@ -56,6 +68,29 @@ public class SLParameterView extends JPanel {
 		add(slider);
 
 		this.valueLabel = new JLabel(String.valueOf(paramBlock.getValue()));
+		valueLabel.addMouseListener(new MouseListener() {
+			@Override public void mouseReleased(MouseEvent arg0) {}
+			@Override public void mousePressed(MouseEvent arg0) {}
+			@Override public void mouseExited(MouseEvent arg0) {}
+			@Override public void mouseEntered(MouseEvent arg0) {}
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				final JTextField valueTextField = new JTextField(String.valueOf(paramBlock.getValue()), 5);
+				valueTextField.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						slider.setValue(Integer.parseInt(valueTextField.getText()));
+						remove(valueTextField);
+						add(valueLabel);
+						updateUI();
+					}
+				});
+				add(valueTextField);
+				
+				remove(valueLabel);
+				updateUI();
+			}
+		});
 		add(valueLabel);
 	}
 }
