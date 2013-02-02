@@ -13,6 +13,8 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 
+import OpenGL.GLDisplay;
+
 import utilities.Maths;
 import utilities.Point;
 import utilities.Vector;
@@ -161,6 +163,9 @@ public class CubeControlledView implements DisplayableFather{
 		if (untracked){
 			glBegin(GL_QUADS);
 			GL11.glDisable(GL11.GL_TEXTURE_2D);
+			GL11.glTranslated(position.getX(),position.getY(),0);
+			GL11.glRotated(angle,0,0,1);
+			GL11.glTranslated(-position.getX(),-position.getY(),0);
 			GL11.glNormal3f(0, 0, -1.0f);
 			GL11.glColor3ub((byte) (color.getRed()), (byte) (color.getGreen()) , (byte) (color.getBlue()));
 			
@@ -168,6 +173,10 @@ public class CubeControlledView implements DisplayableFather{
 			glVertex3d(position.getX()+MonsterView.getSize()/2, position.getY()-MonsterView.getSize()/2, 0.2);
 			glVertex3d(position.getX()+MonsterView.getSize()/2, position.getY()+MonsterView.getSize()/2, 0.2);
 			glVertex3d(position.getX()-MonsterView.getSize()/2, position.getY()+MonsterView.getSize()/2, 0.2);
+			GL11.glTranslated(position.getX(),position.getY(),0);
+			GL11.glRotated(-angle,0,0,0);
+			GL11.glTranslated(-position.getX(),-position.getY(),0);
+			
 			GL11.glEnd();
 		}
 		

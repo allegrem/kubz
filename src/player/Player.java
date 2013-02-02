@@ -161,6 +161,8 @@ public  class Player {
 			if(GLDisplay.sKey) unit.translate(0, 1);
 			if(GLDisplay.qKey) unit.translate(-1, 0);
 			if(GLDisplay.dKey) unit.translate(1, 0);
+			if(GLDisplay.wKey) unit.rotateAngle(1);
+			if(GLDisplay.xKey) unit.rotateAngle(-1);
 			
 			try {
 				Thread.sleep(10);
@@ -170,7 +172,7 @@ public  class Player {
 			}
 			
 		}
-		return;
+		GLDisplay.tap=false;
 	}
 	/**
 	 * M�thode qui d�clenche la cr�ation du son via les Parameter
@@ -196,11 +198,19 @@ public  class Player {
 		setUStateToDirection();
 		while (!GLDisplay.tap){
 			if(GLDisplay.wKey) unit.rotateDirection(1);
-			if(GLDisplay.xKey) unit.rotateDirection(-1);						
+			if(GLDisplay.xKey) unit.rotateDirection(-1);	
 	}
 		GLDisplay.tap = false;
 	}
 	
+	/*
+	 * En fait c'est pas l'unit dont tu changes l'ouverture.
+	 * C'est le cone de choix d'attaque, que tu utilises en faisant
+	 * unit.addChildren(new attackConeView()), et apres tu fais
+	 * attackConeView.setAngle()
+	 * 
+	 * 
+	 */
 	public void UAperture(){
 		setPStatesToWaiting();
 		setUStateToDirection();
@@ -216,7 +226,6 @@ public  class Player {
 	public void act(){
 		//choosingUTurn();
 		movingUTurn();
-		GLDisplay.tap=false;
 	}
 	
 

@@ -12,6 +12,7 @@ public class Unit {
 	private Point pos=new Point(10,10);
 	private double aperture;
 	private double direction;
+	private double angle=0;
 	private UnitState state;
 	private CubeControlledView view;
 	private Player owner;
@@ -122,6 +123,23 @@ public class Unit {
 	}
 	public double getDirection(){
 		return direction;
+	}
+	
+	/**
+	 * M�thode relatives � l'angle du cube 
+	 * @param theta
+	 * @param dTheta
+	 */
+	public void setAngle(double theta){
+		angle = theta;
+		view.setAngle(theta);
+	}
+	public void rotateAngle(double dTheta){
+		angle = angle + dTheta;
+		view.rotate(dTheta);
+	}
+	public double getAngle(){
+		return angle;
 	}
 	
 	/**
