@@ -69,44 +69,44 @@ public class SLWindow {
 		JMenu mnFile = new JMenu("File");
 		mnFile.setMnemonic('f');
 		menuBar.add(mnFile);
-		
-				JMenuItem mntmPlay = new JMenuItem("Play");
-				mnFile.add(mntmPlay);
-				mntmPlay.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						play();
-					}
-				});
-				mntmPlay.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
-		
-				JMenuItem mntmQuit = new JMenuItem("Quit");
-				mntmQuit.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						frmSoundlab.dispose();
-					}
-				});
-				
-				JMenuItem mntmExportAswav = new JMenuItem("Export as .wav");
-				mntmExportAswav.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						saveInWavFile();
-					}
-				});
-				mntmExportAswav.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
-				mnFile.add(mntmExportAswav);
-				
-				JSeparator separator = new JSeparator();
-				mnFile.add(separator);
-				addStatusBarListeners(mntmQuit, "Quit SoundLab");
-				mntmQuit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,
-						InputEvent.CTRL_MASK));
-				mnFile.add(mntmQuit);
+
+		JMenuItem mntmPlay = new JMenuItem("Play");
+		mnFile.add(mntmPlay);
+		mntmPlay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				play();
+			}
+		});
+		mntmPlay.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
+
+		JMenuItem mntmQuit = new JMenuItem("Quit");
+		mntmQuit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frmSoundlab.dispose();
+			}
+		});
+
+		JMenuItem mntmExportAswav = new JMenuItem("Export as .wav");
+		mntmExportAswav.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				saveInWavFile();
+			}
+		});
+		mntmExportAswav.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
+				InputEvent.CTRL_MASK));
+		mnFile.add(mntmExportAswav);
+
+		JSeparator separator = new JSeparator();
+		mnFile.add(separator);
+		addStatusBarListeners(mntmQuit, "Quit SoundLab");
+		mntmQuit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,
+				InputEvent.CTRL_MASK));
+		mnFile.add(mntmQuit);
 
 		JMenu mnInstrument = new JMenu("Instrument");
 		menuBar.add(mnInstrument);
 
 		JRadioButtonMenuItem rdbtnmntmBell = new JRadioButtonMenuItem("Bell");
-//		rdbtnmntmBell.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD1, 0));
 		buttonGroup.add(rdbtnmntmBell);
 		rdbtnmntmBell.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -117,7 +117,6 @@ public class SLWindow {
 		mnInstrument.add(rdbtnmntmBell);
 
 		JRadioButtonMenuItem rdbtnmntmPiano = new JRadioButtonMenuItem("Piano");
-//		rdbtnmntmPiano.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD4, 0));
 		buttonGroup.add(rdbtnmntmPiano);
 		rdbtnmntmPiano.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -127,7 +126,6 @@ public class SLWindow {
 
 		JRadioButtonMenuItem rdbtnmntmTwooscfm = new JRadioButtonMenuItem(
 				"TwoOscFM");
-//		rdbtnmntmTwooscfm.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD2, 0));
 		rdbtnmntmTwooscfm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setInstrument(new TwoOscFmInstrument());
@@ -137,7 +135,6 @@ public class SLWindow {
 		mnInstrument.add(rdbtnmntmTwooscfm);
 
 		JRadioButtonMenuItem rdbtnmntmWood = new JRadioButtonMenuItem("Wood");
-//		rdbtnmntmWood.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD3, 0));
 		rdbtnmntmWood.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setInstrument(new WoodInstrument());
@@ -193,7 +190,7 @@ public class SLWindow {
 	public void setVisible(boolean b) {
 		frmSoundlab.setVisible(b);
 	}
-	
+
 	private void saveInWavFile() {
 		WavFileOutput wavFileOutput1 = new WavFileOutput("fmout.wav");
 		wavFileOutput1.open();
@@ -206,18 +203,23 @@ public class SLWindow {
 	}
 
 	protected void play() {
-		SpeakersOutput speakersOutput = new SpeakersOutput();
-		try {
-			speakersOutput.open();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			speakersOutput.play(sound.getSound());
-		} catch (AudioException e) {
-			e.printStackTrace();
-		}
-		speakersOutput.close();
+		Thread thread = new Thread(new Runnable() {
+			public void run() {
+				SpeakersOutput speakersOutput = new SpeakersOutput();
+				try {
+					speakersOutput.open();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				try {
+					speakersOutput.play(sound.getSound());
+				} catch (AudioException e) {
+					e.printStackTrace();
+				}
+				speakersOutput.close();
+			}
+		});
+		thread.start();
 	}
 
 }

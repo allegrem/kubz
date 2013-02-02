@@ -17,8 +17,6 @@ public class BandsFilter extends Observable {
 
 	private int[] bars;
 
-	// private boolean bypass = false;
-
 	/**
 	 * Create a new BandsFilter and initialize it as a all-pass.
 	 * 
@@ -157,11 +155,5 @@ public class BandsFilter extends Observable {
 	public int getBarNumber() {
 		return bars.length;
 	}
-
-	// public void toogleBypass() {
-	// bypass = !bypass;
-	// setChanged();
-	// notifyObservers();
-	// }
-
+	
 }
