@@ -47,7 +47,7 @@ public class SLWindow {
 	private SLSoundView soundView;
 	private SLSpectrumView spectrumView;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private SLFilterView filterView;
+	private SLBandsFilterView filterView;
 
 	/**
 	 * Create the application.
@@ -178,7 +178,7 @@ public class SLWindow {
 		soundView = new SLSoundView();
 		panel.add(soundView);
 
-		filterView = new SLFilterView(this);
+		filterView = new SLBandsFilterView(this);
 		panel.add(filterView);
 
 		spectrumView = new SLSpectrumView();

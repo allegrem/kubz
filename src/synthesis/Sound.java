@@ -8,7 +8,7 @@ import org.apache.commons.math3.transform.FastFourierTransformer;
 import org.apache.commons.math3.transform.TransformType;
 
 import synthesis.exceptions.RequireAudioBlocksException;
-import synthesis.filters.Equalizer;
+import synthesis.filters.BandsFilter;
 import synthesis.fmInstruments.FmInstrument;
 
 /**
@@ -29,16 +29,16 @@ public class Sound {
 
 	private final FmInstrument instrument;
 
-	private final Equalizer equalizer;
+	private final BandsFilter bandsFilter;
 
 	/**
 	 * 
 	 */
-	public Sound(FmInstrument instrument, Equalizer equalizer, float length) {
+	public Sound(FmInstrument instrument, BandsFilter bandsFilter, float length) {
 		super();
 
 		this.instrument = instrument;
-		this.equalizer = equalizer;
+		this.bandsFilter = bandsFilter;
 		setLength(length);
 	}
 
