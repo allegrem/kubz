@@ -25,8 +25,9 @@ import views.interfaces.DisplayableFather;
  */
 public abstract class MonsterView implements DisplayableFather{
 	protected static final double size= 30;
-	protected static final int height = 30;
+	protected static final double height = 30;
 	private Point position;
+	private double angle=0;
 	private Map map;
 	private ReadableColor color;
 	protected ReadableColor actualColor;
@@ -157,11 +158,18 @@ public abstract class MonsterView implements DisplayableFather{
 		}
 	}
 	
-	public static double getSize(){
+	@Override
+	public  double getSize(){
 		return size;
 	}
 	
-	public static int getHeight(){
+	@Override
+	public double getHeight(){
 		return height;
+	}
+	
+	@Override
+	public double getAngle(){
+		return angle;
 	}
 }

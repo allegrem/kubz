@@ -116,10 +116,6 @@ public class SquareMonsterView extends MonsterView {
 		
 		paintChildren();
 
-		//direction++;
-		for(DisplayableChild child:getChildren()){
-			((AttackConeView) (child)).setDirection(direction);
-		}
 
 	}
 	

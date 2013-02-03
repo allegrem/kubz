@@ -49,4 +49,22 @@ public interface DisplayableFather extends Displayable {
 	 * @return
 	 */
 	public boolean collisionCanOccure(Point point, float taille);
+	
+	/**
+	 * 
+	 * @return L'orientation de l'objet
+	 */
+	public double getAngle();
+
+	/**
+	 * 
+	 * @return La taille de l'objet
+	 */
+	public double getSize();
+
+	/**
+	 * 
+	 * @return Hauteur de l'objet
+	 */
+	public double getHeight();
 }

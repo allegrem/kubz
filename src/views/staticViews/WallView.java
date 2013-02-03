@@ -621,5 +621,23 @@ public class WallView implements DisplayableFather{
 		return false;
 	}
 
+	@Override
+	public double getAngle() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getSize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getHeight() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	
 }

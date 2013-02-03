@@ -3,6 +3,7 @@ package unit;
 import gameEngine.GameEngine;
 import utilities.Point;
 import views.CubeControlledView;
+import views.informationViews.LifeView;
 import player.*;
 
 
@@ -17,13 +18,14 @@ public class Unit {
 	private CubeControlledView view;
 	private Player owner;
 	private GameEngine gameEngine;
-	
+
 	
 	public Unit(Player owner){
 		this.state = new WaitingUState();
 		this.owner = owner;
 		gameEngine=owner.getGameEngine();
 		view=new CubeControlledView(pos);
+		view.addChild(new LifeView(view));
 		gameEngine.getMap().add(view);
 	
 	}
