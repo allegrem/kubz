@@ -34,6 +34,7 @@ public class GameEngine {
 		display.start();
 		map.add(new BackgroundView(width,height,100));
 		display.setLightPlace(0.0f,(float)height/2,0.0f);
+		//display.mode3D();
 		
 		try {
 			monsterList=reader.readMonsters();

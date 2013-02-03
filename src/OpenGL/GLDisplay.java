@@ -58,7 +58,18 @@ public class GLDisplay extends Thread{
 	public static float ratio; // display_width/display_height
 	private boolean do_run=true;
 	private Map map;
-	private Lighting lighting=new Lighting(this);
+	
+	/**
+	 * Parametres de la projection
+	 */
+	private float camx=-20.0f;
+	private float camy=-20.0f;
+	private float camz=20.0f;
+	private float camDx;
+	private float camDy;
+	private float camDz=0.0f;
+	private boolean mode3D=false;
+	private boolean modeChanged=false;
 	
 	/*
 	 * Parametres de l'eclairage
@@ -69,7 +80,7 @@ public class GLDisplay extends Thread{
 	private float lightDx;
 	private float lightDy;
 	private float lightDz=0.0f;
-	
+	private Lighting lighting=new Lighting(this);
 	
 	/**
 	 * Lancement de l'affichage
@@ -83,6 +94,8 @@ public class GLDisplay extends Thread{
 		ratio = display_width/display_height;
 		lightDx=(float)(display_width/2.0);
 		lightDy=(float)(display_height/2.0);
+		camDx=(float)(display_width/2.0);
+		camDy=(float)(display_height/2.0);
 	}
 
 	/**
@@ -99,6 +112,13 @@ public class GLDisplay extends Thread{
 		clear(); //On nettoie la fenetre
 		KeyboardManager.checkKeyboard();
 		setLightPosition();
+		
+		if(modeChanged)
+			changeViewMode();
+		
+		if(mode3D)
+			setCameraDiection();
+		
 		render(); //Rendu de la map
 		update(); //On actualise la fenetre avec le nouveau rendu
 		Display.sync(120); //On synchronise l'affichage sur le bon FPS
@@ -235,6 +255,65 @@ public class GLDisplay extends Thread{
 		lightDy=y;
 		lightDz=z;
 	}
+	
+	/**
+	 * Passage en vue 3D
+	 */
+	public void mode3D() {
+		mode3D=true;
+		modeChanged=true;
+		
+		}
+	
+	/**
+	 * Passage en vue 2D
+	 */
+	public void mode2D(){
+		mode3D=false;
+		modeChanged=true;
+		
+	}
+	
+	/**
+	 * Passage du mode 2D au mode 3D et inversement
+	 */
+	private void changeViewMode(){
+		if (mode3D){
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			GLU.gluPerspective(45.0f, -display_width / display_height, 1.0f,10000.0f);
+		}else{
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			glOrtho(0, display_width, display_height, 0, -1000, 1000);
+		}
+		
+		modeChanged=false;
+	}
+		
+	private void setCameraDiection(){
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		//positionnement de la camera
+		GLU.gluLookAt(camx, camy,camz, camDx,camDy, camDz, 0, 0	, 1);
+	}
+	
+	public void setCamPlace(float x, float y, float z){
+		camx=x;
+		camy=y;
+		camz=z;
+	}
+
+	/**
+	 * Definie la direction de l'eclairage
+	 */
+	public void setCamDirection(float x, float y, float z){
+		camDx=x;
+		camDy=y;
+		camDz=z;
+	}
+	
+	
 }
 
 	

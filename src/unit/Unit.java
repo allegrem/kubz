@@ -12,7 +12,7 @@ import player.*;
 public class Unit {
 	
 	private double life;
-	private Point pos=new Point(10,10);
+	private Point pos=new Point(15,15);
 	private double aperture;
 	private double direction;
 	private double angle=0;
