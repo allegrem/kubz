@@ -59,6 +59,10 @@ public class GLDisplay extends Thread{
 	private boolean do_run=true;
 	private Map map;
 	private Lighting lighting=new Lighting(this);
+	
+	/*
+	 * Parametres de l'eclairage
+	 */
 	private float lightx=-20.0f;
 	private float lighty=-20.0f;
 	private float lightz=20.0f;
@@ -215,7 +219,7 @@ public class GLDisplay extends Thread{
 	}
 	
 	/**
-	 * Define la position de l'eclairage
+	 * Definie la position de l'eclairage
 	 */
 	public void setLightPlace(float x, float y, float z){
 		lightx=x;
@@ -224,7 +228,7 @@ public class GLDisplay extends Thread{
 	}
 
 	/**
-	 * Define la direction de l'eclairage
+	 * Definie la direction de l'eclairage
 	 */
 	public void setLightDirection(float x, float y, float z){
 		lightDx=x;
