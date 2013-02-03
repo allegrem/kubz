@@ -1,7 +1,9 @@
 package views.attacks;
 
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3ub;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
 import java.util.ArrayList;
@@ -31,11 +33,15 @@ public class SinusoidalAttackView implements DisplayableChild {
 	private DisplayableFather father;
 	private double aperture;
 	private double direction;
+	private double idirection;
 	private int power;
 	private int start=0;
 	private ReadableColor color=Color.DKGREY;
 	private long pause=30;// Temps de pause pour le deplacement du signal
 	private long startingTime=0;
+	private long attackStartingTime=0;
+	private int duration=2000;
+	private boolean dead=false;
 	
 	/**
 	 * Creation d'un cone d'atatque
@@ -47,8 +53,9 @@ public class SinusoidalAttackView implements DisplayableChild {
 	 */
 	public SinusoidalAttackView(double aperture, double direction, int power){
 		this.aperture=aperture;
-		this.direction=direction;
+		this.idirection=direction;
 		this.power=power;
+		attackStartingTime=System.currentTimeMillis();
 	}
 	
 	@Override
@@ -65,6 +72,8 @@ public class SinusoidalAttackView implements DisplayableChild {
 		double x=0;
 		double y=0;
 		int fin=power-5;
+		direction=idirection+father.getAngle();
+		direction%=360;
 		/*
 		 * Activation de la transparence
 		 */
@@ -83,7 +92,7 @@ public class SinusoidalAttackView implements DisplayableChild {
 				beta=direction-aperture/2;
 			while(beta<=direction+aperture/2 ){	
 				y=father.getY()+11.0/10.0*i*Math.cos(Math.PI/180*beta);
-				x=father.getX()+11.0/10.0*i*Math.sin(Math.PI/180*beta);
+				x=father.getX()+11.0/10.0*i*Math.sin(Math.PI/180*beta+Math.PI);
 				if (object.isInZone(new Point(x,y))){
 					reflected=true;
 					fin=Math.round(i);
@@ -103,9 +112,15 @@ public class SinusoidalAttackView implements DisplayableChild {
 		for(float i=start;i<=fin;i+=10){
 			alpha=Math.round((fin-i)/fin*255);
 		GL11.glColor4ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue(),(byte)alpha);
+		
+		glMatrixMode(GL_MODELVIEW);
+		GL11.glPopMatrix();
 		GL11.glTranslated(father.getX(), father.getY(),father.getHeight()/2 );
+		GL11.glRotated(direction,0,0,1);
 		Lines.drawSinus((float) aperture, i, 10, 0.1f);
-		GL11.glTranslated(-father.getX(), -father.getY(),-father.getHeight()/2 );
+		GL11.glLoadIdentity();
+		GL11.glPushMatrix();
+		
 		}
 		
 		/*
@@ -123,6 +138,10 @@ public class SinusoidalAttackView implements DisplayableChild {
 		 */
 		GL11.glDisable (GL11.GL_BLEND); 
 		GL11.glDisable(GL11.GL_ALPHA_TEST);  
+		
+	/*	if(System.currentTimeMillis()-attackStartingTime>duration){
+			dead=true;
+		}*/
 	}
 
 	/**
@@ -152,13 +171,12 @@ public class SinusoidalAttackView implements DisplayableChild {
 
 	@Override
 	public int getTimeOut() {
-		// TODO Auto-generated method stub
-		return 0;
+		return duration;
 	}
 
 	@Override
 	public void setTimeOut(int time) {
-		// TODO Auto-generated method stub
+		duration=time;
 		
 	}
 
@@ -178,6 +196,11 @@ public class SinusoidalAttackView implements DisplayableChild {
 	public String getCharac() {
 		
 		return "AttackCone";
+	}
+
+	@Override
+	public boolean isDead() {
+		return dead;
 	}
 
 	

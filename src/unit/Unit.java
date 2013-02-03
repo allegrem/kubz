@@ -3,6 +3,8 @@ package unit;
 import gameEngine.GameEngine;
 import utilities.Point;
 import views.CubeControlledView;
+import views.attacks.AttackConeView;
+import views.attacks.SinusoidalAttackView;
 import views.informationViews.LifeView;
 import player.*;
 
@@ -26,6 +28,8 @@ public class Unit {
 		gameEngine=owner.getGameEngine();
 		view=new CubeControlledView(pos);
 		view.addChild(new LifeView(view));
+		view.addChild(new SinusoidalAttackView(50, 0, 100));
+		//view.addChild(new AttackConeView(45, 0, 100,view));
 		gameEngine.getMap().add(view);
 	
 	}

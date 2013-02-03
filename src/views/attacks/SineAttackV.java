@@ -14,6 +14,7 @@ public class SineAttackV implements DisplayableChild{
 	private DisplayableFather father; 
 	private long time = 0;
 	private int max = 0;
+	private boolean dead=false;
 	
 	
 	
@@ -109,6 +110,12 @@ public class SineAttackV implements DisplayableChild{
 	public void setFather(DisplayableFather father) {
 		this.father = father;
 		
+	}
+
+	@Override
+	public boolean isDead() {
+		// TODO Auto-generated method stub
+		return dead;
 	}
 
 }

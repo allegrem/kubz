@@ -1,7 +1,9 @@
 package views.attacks;
 
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3ub;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
 import java.util.ArrayList;
@@ -31,11 +33,14 @@ public class AttackConeView implements DisplayableChild {
 	private DisplayableFather father;
 	private double aperture;
 	private double direction;
+	private double idirection;
+	private double fatherAngle=0;
 	private int power;
 	private int start=0;
 	private ReadableColor color=Color.DKGREY;
 	private long pause=30;// Temps de pause pour le deplacement du signal
 	private long startingTime=0;
+	private boolean dead=false;
 	
 	/**
 	 * Creation d'un cone d'atatque
@@ -45,10 +50,12 @@ public class AttackConeView implements DisplayableChild {
 	 * @param power La "puissance" du cone
 	 * Plus power est grand, plus la longueur du cone sera importante
 	 */
-	public AttackConeView(double aperture, double direction, int power){
+	public AttackConeView(double aperture, double direction, int power,DisplayableFather father){
 		this.aperture=aperture;
-		this.direction=direction;
+		this.idirection=direction;
 		this.power=power;
+		this.father=father;
+		fatherAngle=father.getAngle();
 	}
 	
 	@Override
@@ -58,6 +65,9 @@ public class AttackConeView implements DisplayableChild {
 	
 	@Override
 	public void paint(){
+		fatherAngle=father.getAngle();
+		direction=idirection-fatherAngle;
+		idirection%=360;
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		int alpha;
 		boolean reflected =false;
@@ -103,9 +113,15 @@ public class AttackConeView implements DisplayableChild {
 		for(float i=start;i<=fin;i+=10){
 			alpha=Math.round((fin-i)/fin*255);
 		GL11.glColor4ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue(),(byte)alpha);
+		glMatrixMode(GL_MODELVIEW);
+		GL11.glPopMatrix();
+		
 		GL11.glTranslated(father.getX(), father.getY(),father.getHeight()/2 );
 		new PartialDisk().draw((float) i,(float) (i+5), 50,1,(float)(direction-aperture/2),(float) aperture);
-		GL11.glTranslated(-father.getX(), -father.getY(),-father.getHeight()/2 );
+		
+		glMatrixMode(GL_MODELVIEW);
+		GL11.glLoadIdentity();
+		GL11.glPushMatrix();
 		}
 		
 		/*
@@ -178,6 +194,11 @@ public class AttackConeView implements DisplayableChild {
 	public String getCharac() {
 		
 		return "AttackCone";
+	}
+
+	@Override
+	public boolean isDead() {
+		return dead;
 	}
 
 	

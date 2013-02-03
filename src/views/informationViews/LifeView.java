@@ -20,31 +20,29 @@ public class LifeView implements DisplayableChild{
 	private DisplayableFather father;
 	private double life=100;
 	private double width=6;
-	private double x;
-	private double y;
 	private double height;
 	private double size;
+	private boolean dead=false;
 	
 	public LifeView(DisplayableFather father){
 		this.father=father;
-		x=father.getX();
-		y=father.getY();
 		height=father.getHeight();
 		size=80.0/100.0*father.getSize();
 	}
 	
 	@Override
 	public void paint() {
-		x=father.getX();
-		y=father.getY();
+		int x=(int)(Math.round(father.getX()));
+		int y=(int)(Math.round(father.getY()));
 		height=father.getHeight();
 		size=80.0/100.0*father.getSize();
 		
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		
 		glMatrixMode(GL_MODELVIEW);
+		GL11.glPopMatrix();
 		GL11.glTranslated(x,y,0);
-		GL11.glRotated(father.getAngle(),0,0,1);
+		GL11.glRotated((int)Math.round(father.getAngle()),0,0,1);
 		
 		GL11.glBegin(GL11.GL_QUADS);
 		GL11.glColor3ub((byte)ReadableColor.GREY.getRed(),(byte)ReadableColor.GREY.getGreen(),(byte)ReadableColor.GREY.getBlue());
@@ -76,9 +74,9 @@ public class LifeView implements DisplayableChild{
 		GL11.glVertex3d(+size/2, -width/2, height);
 		GL11.glVertex3d(-size/2, -width/2, height);
 		GL11.glEnd();
+		GL11.glLoadIdentity();
+		GL11.glPushMatrix();
 		
-		GL11.glRotated(-father.getAngle(),0,0,1);
-		GL11.glTranslated(-x,-y,0);
 		
 	}
 
@@ -118,4 +116,18 @@ public class LifeView implements DisplayableChild{
 		
 	}
 
+	@Override
+	public boolean isDead() {
+		return dead;
+	}
+
+	public double getLife() {
+		return life;
+	}
+
+	public void setLife(double life) {
+		this.life = life;
+	}
+
+	
 }

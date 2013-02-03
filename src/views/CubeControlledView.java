@@ -236,7 +236,11 @@ public class CubeControlledView implements DisplayableFather{
 	
 	public void paintChildren(){
 		for(DisplayableChild child:children){
-			child.paint();
+			if (child.isDead()){
+				System.out.println("dead !");
+				//removeChild(child);
+			}else
+				child.paint();
 		}
 	}
 
