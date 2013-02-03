@@ -33,6 +33,7 @@ public class GameEngine {
 		display=new GLDisplay(width,height,map);
 		display.start();
 		map.add(new BackgroundView(width,height,100));
+		display.setLightPlace(0.0f,(float)height/2,0.0f);
 		
 		try {
 			monsterList=reader.readMonsters();

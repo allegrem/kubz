@@ -14,7 +14,7 @@ import java.awt.event.KeyListener;
 
 import org.lwjgl.input.Keyboard;
 
-import OpenGL.GLDisplay;
+import OpenGL.KeyboardManager;
 import parameter.*;
 import unit.*;
 import views.CubeControlledView;
@@ -146,7 +146,7 @@ public  class Player {
 	public void choosingUTurn(){
 		setPStatesToWaiting();
 		setUStateToSelect();
-		while(!GLDisplay.tap) {
+		while(!KeyboardManager.tap) {
 			
 		}
 	}
@@ -156,13 +156,13 @@ public  class Player {
 	public void movingUTurn(){
 		setPStatesToWaiting();
 		setUStateToMoving();
-		while (!GLDisplay.tap){
-			if(GLDisplay.zKey) unit.translate(0,-1);
-			if(GLDisplay.sKey) unit.translate(0, 1);
-			if(GLDisplay.qKey) unit.translate(-1, 0);
-			if(GLDisplay.dKey) unit.translate(1, 0);
-			if(GLDisplay.wKey) unit.rotateAngle(1);
-			if(GLDisplay.xKey) unit.rotateAngle(-1);
+		while (!KeyboardManager.tap){
+			if(KeyboardManager.zKey) unit.translate(0,-1);
+			if(KeyboardManager.sKey) unit.translate(0, 1);
+			if(KeyboardManager.qKey) unit.translate(-1, 0);
+			if(KeyboardManager.dKey) unit.translate(1, 0);
+			if(KeyboardManager.wKey) unit.rotateAngle(1);
+			if(KeyboardManager.xKey) unit.rotateAngle(-1);
 			
 			try {
 				Thread.sleep(10);
@@ -172,7 +172,7 @@ public  class Player {
 			}
 			
 		}
-		GLDisplay.tap=false;
+		KeyboardManager.tap=false;
 	}
 	/**
 	 * M�thode qui d�clenche la cr�ation du son via les Parameter
@@ -180,15 +180,15 @@ public  class Player {
 	public void soundEditPTurn(){
 		setPStatesToSoundEdit();
 		setUStateToWaiting();
-		while (!GLDisplay.tap){
-				if(GLDisplay.zKey) parameters[GLDisplay.choice].translate(0,1);
-				if(GLDisplay.sKey) parameters[GLDisplay.choice].translate(0, -1);
-				if(GLDisplay.qKey) parameters[GLDisplay.choice].translate(-1, 0);
-				if(GLDisplay.dKey) parameters[GLDisplay.choice].translate(0, 1);
-				if(GLDisplay.wKey) parameters[GLDisplay.choice].rotate(1);
-				if(GLDisplay.xKey) parameters[GLDisplay.choice].rotate(-1);						
+		while (!KeyboardManager.tap){
+				if(KeyboardManager.zKey) parameters[KeyboardManager.choice].translate(0,1);
+				if(KeyboardManager.sKey) parameters[KeyboardManager.choice].translate(0, -1);
+				if(KeyboardManager.qKey) parameters[KeyboardManager.choice].translate(-1, 0);
+				if(KeyboardManager.dKey) parameters[KeyboardManager.choice].translate(0, 1);
+				if(KeyboardManager.wKey) parameters[KeyboardManager.choice].rotate(1);
+				if(KeyboardManager.xKey) parameters[KeyboardManager.choice].rotate(-1);						
 		}
-		GLDisplay.tap = false;
+		KeyboardManager.tap = false;
 	}	
 	/**
 	 * M�thode qui d�clenche le choix de l'angle ou de l'ouverture d'attque de Unit
@@ -196,11 +196,11 @@ public  class Player {
 	public void UDirection(){
 		setPStatesToWaiting();
 		setUStateToDirection();
-		while (!GLDisplay.tap){
-			if(GLDisplay.wKey) unit.rotateDirection(1);
-			if(GLDisplay.xKey) unit.rotateDirection(-1);	
+		while (!KeyboardManager.tap){
+			if(KeyboardManager.wKey) unit.rotateDirection(1);
+			if(KeyboardManager.xKey) unit.rotateDirection(-1);	
 	}
-		GLDisplay.tap = false;
+		KeyboardManager.tap = false;
 	}
 	
 	/*
@@ -214,11 +214,11 @@ public  class Player {
 	public void UAperture(){
 		setPStatesToWaiting();
 		setUStateToDirection();
-		while (!GLDisplay.tap){
-			if(GLDisplay.wKey) unit.rotateAperture(1);
-			if(GLDisplay.xKey) unit.rotateAperture(-1);						
+		while (!KeyboardManager.tap){
+			if(KeyboardManager.wKey) unit.rotateAperture(1);
+			if(KeyboardManager.xKey) unit.rotateAperture(-1);						
 	}
-		GLDisplay.tap = false;
+		KeyboardManager.tap = false;
 	}
 	
 	

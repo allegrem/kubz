@@ -4,6 +4,7 @@ import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
 import static org.lwjgl.opengl.GL11.GL_LEQUAL;
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_NICEST;
 import static org.lwjgl.opengl.GL11.GL_PERSPECTIVE_CORRECTION_HINT;
 import static org.lwjgl.opengl.GL11.GL_PROJECTION;
@@ -51,22 +52,19 @@ import map2.Map;
 public class GLDisplay extends Thread{
 
 	
+	private static final MyBuffer MyFloatBuffer = null;
 	private final int display_width;
 	private final int display_height; 
 	public static float ratio; // display_width/display_height
 	private boolean do_run=true;
 	private Map map;
-	
-	
-	public static boolean zKey = false;
-	public static boolean qKey = false;
-	public static boolean sKey = false;
-	public static boolean dKey = false;
-	public static boolean wKey = false;
-	public static boolean xKey = false;
-	public static boolean tap = false;
-	private static boolean tapTyped=false;
-	public static int choice=0;
+	private Lighting lighting=new Lighting(this);
+	private float lightx=-20.0f;
+	private float lighty=-20.0f;
+	private float lightz=20.0f;
+	private float lightDx;
+	private float lightDy;
+	private float lightDz=0.0f;
 	
 	
 	/**
@@ -79,6 +77,8 @@ public class GLDisplay extends Thread{
 		this.display_height=display_height;
 		this.map=map;
 		ratio = display_width/display_height;
+		lightDx=(float)(display_width/2.0);
+		lightDy=(float)(display_height/2.0);
 	}
 
 	/**
@@ -93,7 +93,8 @@ public class GLDisplay extends Thread{
 		if (Display.isCloseRequested())
 				do_run = false; // On arrete le programme
 		clear(); //On nettoie la fenetre
-		checkKeyboard();
+		KeyboardManager.checkKeyboard();
+		setLightPosition();
 		render(); //Rendu de la map
 		update(); //On actualise la fenetre avec le nouveau rendu
 		Display.sync(120); //On synchronise l'affichage sur le bon FPS
@@ -110,6 +111,7 @@ public class GLDisplay extends Thread{
 	private void initialize() {
 		initDisplay();
 		initGL();
+		lighting.enable();
 		try {
 			Keyboard.create();
 		} catch (LWJGLException e) {
@@ -196,62 +198,39 @@ public class GLDisplay extends Thread{
 		
 	}
 
+	public int getDisplay_width() {
+		return display_width;
+	}
+
+	public int getDisplay_height() {
+		return display_height;
+	}
+	
+	/**
+	 * Met a jour l'emplacement et la direction de l'eclairage
+	 */
+	public void setLightPosition(){
+		lighting.setLightDirection(lightDx, lightDy, lightDz);
+		lighting.placeLighting(lightx, lighty, lightz);
+	}
+	
+	/**
+	 * Define la position de l'eclairage
+	 */
+	public void setLightPlace(float x, float y, float z){
+		lightx=x;
+		lighty=y;
+		lightz=z;
+	}
 
 	/**
-	 * on controle les d�placements via "ZQSD"
-	 * on controle la rotation avec "WX"
-	 * on passe � l'�tape suivante avec "P"
-	 * on change le Parameter sur lequel on agis via "TAB"
-	 * 
+	 * Define la direction de l'eclairage
 	 */
-
-public static void checkKeyboard(){
-
-
-		if (Keyboard.isKeyDown(Keyboard.KEY_Z)){
-			zKey = true;
-		}else{
-			zKey = false;
-		}
-			
-		if (Keyboard.isKeyDown(Keyboard.KEY_Q)){
-			qKey = true;
-		}else
-			qKey = false;
-		
-		if (Keyboard.isKeyDown(Keyboard.KEY_S)){
-			sKey = true;
-		}else
-			sKey = false;
-			
-		if (Keyboard.isKeyDown(Keyboard.KEY_D)){
-			dKey =  true;
-		}else
-			dKey =  false;
-		
-		if (Keyboard.isKeyDown(Keyboard.KEY_W)){
-			wKey =  true;
-		}else
-			wKey =  false;
-			
-		if (Keyboard.isKeyDown(Keyboard.KEY_X)){
-			xKey =  true;
-		}else
-			xKey =  false;
-		
-		if (Keyboard.isKeyDown(Keyboard.KEY_P)){
-			tapTyped = true;	
-		}else if(tapTyped){
-			tap=true;
-			tapTyped=false;
-		}
-			
-				
-		
-		if (Keyboard.isKeyDown(Keyboard.KEY_TAB)){
-				choice = (choice + 1)%Player.nParams;
+	public void setLightDirection(float x, float y, float z){
+		lightDx=x;
+		lightDy=y;
+		lightDz=z;
 	}
-}
 }
 
 	
