@@ -235,13 +235,18 @@ public class CubeControlledView implements DisplayableFather{
 	}
 	
 	public void paintChildren(){
+		ArrayList<DisplayableChild> childrenDead = new ArrayList<DisplayableChild>();
 		for(DisplayableChild child:children){
-			if (child.isDead()){
-				System.out.println("dead !");
-				//removeChild(child);
+			if(child.isDead()){
+				childrenDead.add(child);
 			}else
 				child.paint();
 		}
+		
+		for(DisplayableChild child:childrenDead){
+			children.remove(child);
+		}
+		
 	}
 
 	@Override
