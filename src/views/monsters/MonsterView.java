@@ -152,9 +152,16 @@ public abstract class MonsterView implements DisplayableFather{
 	}
 	
 	public void paintChildren(){
+		ArrayList<DisplayableChild> childrenDead = new ArrayList<DisplayableChild>();
 		for(DisplayableChild child:children){
-			child.paint();
-			
+			if(child.isDead()){
+				childrenDead.add(child);
+			}else
+				child.paint();
+		}
+		
+		for(DisplayableChild child:childrenDead){
+			children.remove(child);
 		}
 	}
 	
