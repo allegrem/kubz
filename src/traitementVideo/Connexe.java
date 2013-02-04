@@ -18,7 +18,7 @@ public class Connexe {
 	private ArrayList<ArrayList<VirtualPixel>> groupesConnexes;
 	private GameEngine gameEngine;
 	
-	public void  updateConnexe(VirtualPixel[][] screen){
+	public void updateConnexe(VirtualPixel[][] screen){
 		
 		vi = screen;
 		int compteurComposantes = 0;
