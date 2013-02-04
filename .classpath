@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/stud/users/promo15/berthier/git/projet-2012-11/OpenGL-libs/lwjgl-2.8.5/jar/lwjgl.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/stud/users/promo15/berthier/git/projet-2012-11/OpenGL-libs/lwjgl-2.8.5/native/linux"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/stud/users/promo15/berthier/git/projet-2012-11/OpenGL-libs/lwjgl-2.8.5/jar/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="/stud/users/promo15/berthier/git/projet-2012-11/OpenGL-libs/slick/lib/slick.jar"/>
+	<classpathentry kind="lib" path="/stud/users/promo15/berthier/git/projet-2012-11/OpenGL-libs/slick/lib/slick-util.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
