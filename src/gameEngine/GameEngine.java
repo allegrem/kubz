@@ -13,6 +13,7 @@ import unit.Unit;
 import utilities.RandomPerso;
 import views.staticViews.BackgroundView;
 import wall.Wall;
+import cube.Cube;
 import cubeManager.*;
 
 public class GameEngine {
@@ -119,5 +120,10 @@ public class GameEngine {
 		
 	}
 	
+
+	public void setFrozen(Cube owner) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
