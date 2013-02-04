@@ -46,10 +46,10 @@ public class LifeView implements DisplayableChild{
 		
 		GL11.glBegin(GL11.GL_QUADS);
 		GL11.glColor3ub((byte)ReadableColor.GREY.getRed(),(byte)ReadableColor.GREY.getGreen(),(byte)ReadableColor.GREY.getBlue());
-		GL11.glVertex3d(-size/2, -width/2, height);
-		GL11.glVertex3d(-size/2, width/2, height);
-		GL11.glVertex3d(+size/2, width/2, height);
-		GL11.glVertex3d(+size/2, -width/2, height);
+		GL11.glVertex3d(-size/2, -father.getSize()/2-10-width/2, height);
+		GL11.glVertex3d(-size/2, -father.getSize()/2-10+width/2, height);
+		GL11.glVertex3d(+size/2, -father.getSize()/2-10+width/2, height);
+		GL11.glVertex3d(+size/2, -father.getSize()/2-10+-width/2, height);
 		GL11.glEnd();
 		
 		GL11.glBegin(GL11.GL_QUADS);
@@ -60,19 +60,19 @@ public class LifeView implements DisplayableChild{
 		}else{
 			GL11.glColor3ub((byte)ReadableColor.GREEN.getRed(),(byte)ReadableColor.GREEN.getGreen(),(byte)ReadableColor.GREEN.getBlue());
 		}
-		GL11.glVertex3d(-size/2, -width/2, height);
-		GL11.glVertex3d(-size/2, +width/2, height);
-		GL11.glVertex3d(+size*(-1.0/2.0+life/100.0), +width/2, height);
-		GL11.glVertex3d(+size*(-1.0/2.0+life/100.0), -width/2, height);
+		GL11.glVertex3d(-size/2, -father.getSize()/2-10+-width/2, height);
+		GL11.glVertex3d(-size/2, -father.getSize()/2-10+width/2, height);
+		GL11.glVertex3d(+size*(-1.0/2.0+life/100.0), -father.getSize()/2-10+width/2, height);
+		GL11.glVertex3d(+size*(-1.0/2.0+life/100.0), -father.getSize()/2-10+-width/2, height);
 		GL11.glEnd();
 		
 		GL11.glBegin(GL11.GL_LINE_STRIP);
 		GL11.glColor3ub((byte)ReadableColor.BLACK.getRed(),(byte)ReadableColor.BLACK.getGreen(),(byte)ReadableColor.BLACK.getBlue());
-		GL11.glVertex3d(-size/2, -width/2, height);
-		GL11.glVertex3d(-size/2, +width/2, height);
-		GL11.glVertex3d(+size/2, +width/2, height);
-		GL11.glVertex3d(+size/2, -width/2, height);
-		GL11.glVertex3d(-size/2, -width/2, height);
+		GL11.glVertex3d(-size/2, -father.getSize()/2-10+-width/2, height);
+		GL11.glVertex3d(-size/2, -father.getSize()/2-10+width/2, height);
+		GL11.glVertex3d(+size/2, -father.getSize()/2-10+width/2, height);
+		GL11.glVertex3d(+size/2, -father.getSize()/2-10+-width/2, height);
+		GL11.glVertex3d(-size/2,-father.getSize()/2-10+ -width/2, height);
 		GL11.glEnd();
 		GL11.glLoadIdentity();
 		GL11.glPushMatrix();
