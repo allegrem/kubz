@@ -1,5 +1,6 @@
 package unit;
 
+import gameEngine.GameEngine;
 import utilities.Point;
 import views.CubeControlledView;
 import player.*;
@@ -8,17 +9,22 @@ import player.*;
 public class Unit {
 	
 	private double life;
-	private Point pos;
+	private Point pos=new Point(10,10);
 	private double aperture;
 	private double direction;
 	private UnitState state;
 	private CubeControlledView view;
 	private Player owner;
+	private GameEngine gameEngine;
 	
 	
 	public Unit(Player owner){
 		this.state = new WaitingUState();
 		this.owner = owner;
+		gameEngine=owner.getGameEngine();
+		view=new CubeControlledView(pos);
+		gameEngine.getMap().add(view);
+	
 	}
 	
 	
@@ -28,7 +34,7 @@ public class Unit {
 
 
 	/**
-	 * Méthodes relatives à la vie de Unit
+	 * Mï¿½thodes relatives ï¿½ la vie de Unit
 	 */
 	public void increaseLife(double inc){
 		life = life + inc;
@@ -85,7 +91,7 @@ public class Unit {
 	}
 
 	/**
-	 * Méthode relatives à l'angle d'ouverture de l'attaque 
+	 * Mï¿½thode relatives ï¿½ l'angle d'ouverture de l'attaque 
 	 * @param theta
 	 * @param dTheta
 	 */
@@ -102,7 +108,7 @@ public class Unit {
 	}
 	
 	/**
-	 * Méthode relatives à la direction de l'attaque 
+	 * Mï¿½thode relatives ï¿½ la direction de l'attaque 
 	 * @param theta
 	 * @param dTheta
 	 */

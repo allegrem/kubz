@@ -85,6 +85,15 @@ public class Map {
 	}
 	
 	/**
+	 * Retourne l'objet d'indice i
+	 * @param i
+	 * @return
+	 */
+	public DisplayableFather getObject(int i){
+		return listObjects.get(i);
+	}
+	
+	/**
 	 * 
 	 * @return La map
 	 */

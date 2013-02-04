@@ -18,12 +18,19 @@ import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.opengl.GL11.glShadeModel;
+
+import java.awt.event.KeyEvent;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
+
+import player.Player;
+
+import views.staticViews.BackgroundView;
 
 import map2.Map;
 
@@ -42,6 +49,17 @@ public class GLDisplay extends Thread{
 	public static float ratio; // display_width/display_height
 	private boolean do_run=true;
 	private Map map;
+	
+	
+	public static boolean zKey = false;
+	public static boolean qKey = false;
+	public static boolean sKey = false;
+	public static boolean dKey = false;
+	public static boolean wKey = false;
+	public static boolean xKey = false;
+	public static boolean tap = false;
+	public static int choice=0;
+	
 	
 	/**
 	 * Lancement de l'affichage
@@ -67,6 +85,7 @@ public class GLDisplay extends Thread{
 		if (Display.isCloseRequested())
 				do_run = false; // On arrete le programme
 		clear(); //On nettoie la fenetre
+		checkKeyboard();
 		render(); //Rendu de la map
 		update(); //On actualise la fenetre avec le nouveau rendu
 		Display.sync(120); //On synchronise l'affichage sur le bon FPS
@@ -165,5 +184,57 @@ public class GLDisplay extends Thread{
 		
 	}
 
-	
+
+	/**
+	 * on controle les d�placements via "ZQSD"
+	 * on controle la rotation avec "WX"
+	 * on passe � l'�tape suivante avec "P"
+	 * on change le Parameter sur lequel on agis via "TAB"
+	 * 
+	 */
+
+public static void checkKeyboard(){
+
+
+		if (Keyboard.isKeyDown(Keyboard.KEY_Z)){
+			zKey = true;
+		}else{
+			zKey = false;
+		}
+			
+		if (Keyboard.isKeyDown(Keyboard.KEY_Q)){
+			qKey = true;
+		}else
+			qKey = false;
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_S)){
+			sKey = true;
+		}else
+			sKey = false;
+			
+		if (Keyboard.isKeyDown(Keyboard.KEY_D)){
+			dKey =  true;
+		}else
+			dKey =  false;
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_W)){
+			wKey =  true;
+		}else
+			wKey =  false;
+			
+		if (Keyboard.isKeyDown(Keyboard.KEY_X)){
+			xKey =  true;
+		}else
+			xKey =  false;
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_P))
+				tap = true;	
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_TAB)){
+				choice = (choice + 1)%Player.nParams;
+	}
 }
+}
+
+	
+

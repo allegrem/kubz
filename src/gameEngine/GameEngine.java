@@ -9,14 +9,15 @@ import map2.MapReader;
 import monster.Monster;
 import player.*;
 import unit.Unit;
+import utilities.RandomPerso;
 import views.staticViews.BackgroundView;
 import wall.Wall;
 import cube.Cube;
 import cubeManager.*;
 
 public class GameEngine {
-	private final int width=500;
-	private final int height=500;
+	private final int width=950;
+	private final int height=700;
 	private ArrayList<Monster> monsterList;
 	private ArrayList<Player> playerList;
 	private ArrayList<Wall> walls;
@@ -24,23 +25,28 @@ public class GameEngine {
 	private CubeManager cubeManager;
 	private GLDisplay display;
 	private Map map;
-	private MapReader reader=new MapReader("map/bases","map/monsters","map/walls",this);
+	private MapReader reader=new MapReader("Maps/bFile.txt","Maps/mFile.txt","Maps/WFile.txt",this);
 	private boolean quit;
 	
 	public GameEngine(){
+		RandomPerso.initialize();
 		map= new Map(width,height);
 		display=new GLDisplay(width,height,map);
 		display.start();
-		map.add(new BackgroundView(width,height));
+		map.add(new BackgroundView(width,height,100));
 		
 		try {
 			monsterList=reader.readMonsters();
 			bases=reader.readBases();
 			walls=reader.readWalls();
+			playerList=new ArrayList<Player>();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		playerList.add(new Player(this));
+			playerTurn();
 	}
 	
 	/**
@@ -70,7 +76,7 @@ public class GameEngine {
 	public void playerTurn(){
 		for(Player player: playerList){
 			player.act();
-		}	
+		}	 
 	}
 	
 	/**

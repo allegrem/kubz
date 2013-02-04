@@ -34,7 +34,7 @@ public class CubeControlledView implements DisplayableFather{
 	private ArrayList<DisplayableChild> children= new ArrayList<DisplayableChild>();
 	private int duration=0;
 	private ReadableColor color=Color.RED;
-	private boolean untracked=false; //L'unite est-elle sur la table ?
+	private boolean untracked=true; //L'unite est-elle sur la table ?
 	private double angle = 0;
 	private double aperture;
 	private double direction;
@@ -44,7 +44,7 @@ public class CubeControlledView implements DisplayableFather{
 	 * @param position Sa position (centre)
 	 * @param color Sa couleur
 	 */
-	public CubeControlledView(Point position, ReadableColor color) {
+	public CubeControlledView(Point position) {
 		this.position = position;
 	}
 	
@@ -164,10 +164,10 @@ public class CubeControlledView implements DisplayableFather{
 			GL11.glNormal3f(0, 0, -1.0f);
 			GL11.glColor3ub((byte) (color.getRed()), (byte) (color.getGreen()) , (byte) (color.getBlue()));
 			
-			glVertex3d(position.getX()-MonsterView.getSize()/2, position.getY()-MonsterView.getSize()/2, 0);
-			glVertex3d(position.getX()+MonsterView.getSize()/2, position.getY()-MonsterView.getSize()/2, 0);
-			glVertex3d(position.getX()+MonsterView.getSize()/2, position.getY()+MonsterView.getSize()/2, 0);
-			glVertex3d(position.getX()-MonsterView.getSize()/2, position.getY()+MonsterView.getSize()/2, 0);
+			glVertex3d(position.getX()-MonsterView.getSize()/2, position.getY()-MonsterView.getSize()/2, 0.2);
+			glVertex3d(position.getX()+MonsterView.getSize()/2, position.getY()-MonsterView.getSize()/2, 0.2);
+			glVertex3d(position.getX()+MonsterView.getSize()/2, position.getY()+MonsterView.getSize()/2, 0.2);
+			glVertex3d(position.getX()-MonsterView.getSize()/2, position.getY()+MonsterView.getSize()/2, 0.2);
 			GL11.glEnd();
 		}
 		
@@ -225,5 +225,9 @@ public class CubeControlledView implements DisplayableFather{
 		if(dist+taille>=vect.norme())
 			return true;
 		return false;
+	}
+	
+	public void setUnTracked(boolean bool){
+		untracked=bool;
 	}
 }

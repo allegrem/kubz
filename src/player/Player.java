@@ -4,36 +4,36 @@ package player;
  * Classe qui représente un joueur, a des référence vers ses unités et paramètres
  */
 
+import gameEngine.GameEngine;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import org.lwjgl.input.Keyboard;
+
+import OpenGL.GLDisplay;
 import parameter.*;
 import unit.*;
+import views.CubeControlledView;
 
 
-public abstract class Player implements ActionListener,KeyListener{
+public  class Player {
 	
 	private Unit unit;
 	private Parameter[] parameters ;
-	private int nParams =2;
+	public static int nParams =2;
 	private float[] shield;
-	
-	private boolean zKey = false;
-	private boolean qKey = false;
-	private boolean sKey = false;
-	private boolean dKey = false;
-	private boolean wKey = false;
-	private boolean xKey = false;
-	private boolean tap = false;
-	private int choice;
+
+	private GameEngine gameEngine;
 	
 	/**
-	 * Création d'un joueur avec une Unit et deux Parameter
+	 * Crï¿½ation d'un joueur avec une Unit et deux Parameter
 	 */
-	public Player(){
+	public Player(GameEngine gameEngine){
+
+		this.gameEngine=gameEngine;
 		this.unit = new Unit(this);
 		this.parameters = new Parameter[2];
 		parameters[0]= new Parameter();
@@ -45,7 +45,7 @@ public abstract class Player implements ActionListener,KeyListener{
 	}
 	
 	/**
-	 * Méthodes relatives au shield de l'Unit
+	 * Mï¿½thodes relatives au shield de l'Unit
 	 */
 	public void setValues(int l, int r, float value){
 		for(int i = l; i<=r; i++)
@@ -63,7 +63,7 @@ public abstract class Player implements ActionListener,KeyListener{
 	
 	
 	/**
-	 * Méthodes qui gèrent l'état des paramètres
+	 * Mï¿½thodes qui gï¿½rent l'ï¿½tat des paramï¿½tres
 	 */
 	
 	public void setPStatesToFrozen(){
@@ -96,7 +96,7 @@ public abstract class Player implements ActionListener,KeyListener{
 	}
 	
 	/**
-	 * Bloc des méthodes où on choisit l'état de l'unité 
+	 * Bloc des mï¿½thodes oï¿½ on choisit l'ï¿½tat de l'unitï¿½ 
 	 */	
 	
 	public void setUStateToAngle(){
@@ -132,7 +132,7 @@ public abstract class Player implements ActionListener,KeyListener{
 	}
 	
 	/**
-	 * A present on va utiliser les méthode du haut pour les différentes phases de jeu
+	 * A present on va utiliser les mï¿½thode du haut pour les diffï¿½rentes phases de jeu
 	 */
 	public void WaitingTurn(){
 		setPStatesToWaiting();
@@ -140,136 +140,89 @@ public abstract class Player implements ActionListener,KeyListener{
 	}
 	
 	/**
-	 * Méthode qui declenche le choix de l'Unit à utiliser
+	 * Mï¿½thode qui declenche le choix de l'Unit ï¿½ utiliser
 	 */
 	public void choosingUTurn(){
 		setPStatesToWaiting();
 		setUStateToSelect();
-		while(!tap) {
+		while(!GLDisplay.tap) {
+			
 		}
 	}
 	/**
-	 * Méthode qui déclenche le mouvement de Unit
+	 * Mï¿½thode qui dï¿½clenche le mouvement de Unit
 	 */
 	public void movingUTurn(){
 		setPStatesToWaiting();
 		setUStateToMoving();
-		while (!tap){
-			if(zKey) unit.translate(0,1);
-			if(sKey) unit.translate(0, -1);
-			if(qKey) unit.translate(-1, 0);
-			if(dKey) unit.translate(0, 1);
+		while (!GLDisplay.tap){
+			if(GLDisplay.zKey) unit.translate(0,-1);
+			if(GLDisplay.sKey) unit.translate(0, 1);
+			if(GLDisplay.qKey) unit.translate(-1, 0);
+			if(GLDisplay.dKey) unit.translate(1, 0);
+			
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		return;
 	}
 	/**
-	 * Méthode qui déclenche la création du son via les Parameter
+	 * Mï¿½thode qui dï¿½clenche la crï¿½ation du son via les Parameter
 	 */
 	public void soundEditPTurn(){
 		setPStatesToSoundEdit();
 		setUStateToWaiting();
-		while (!tap){
-				if(zKey) parameters[choice].translate(0,1);
-				if(sKey) parameters[choice].translate(0, -1);
-				if(qKey) parameters[choice].translate(-1, 0);
-				if(dKey) parameters[choice].translate(0, 1);
-				if(wKey) parameters[choice].rotate(1);
-				if(xKey) parameters[choice].rotate(-1);						
+		while (!GLDisplay.tap){
+				if(GLDisplay.zKey) parameters[GLDisplay.choice].translate(0,1);
+				if(GLDisplay.sKey) parameters[GLDisplay.choice].translate(0, -1);
+				if(GLDisplay.qKey) parameters[GLDisplay.choice].translate(-1, 0);
+				if(GLDisplay.dKey) parameters[GLDisplay.choice].translate(0, 1);
+				if(GLDisplay.wKey) parameters[GLDisplay.choice].rotate(1);
+				if(GLDisplay.xKey) parameters[GLDisplay.choice].rotate(-1);						
 		}
-		tap = false;
+		GLDisplay.tap = false;
 	}	
 	/**
-	 * Méthode qui déclenche le choix de l'angle ou de l'ouverture d'attque de Unit
+	 * Mï¿½thode qui dï¿½clenche le choix de l'angle ou de l'ouverture d'attque de Unit
 	 */
 	public void UDirection(){
 		setPStatesToWaiting();
 		setUStateToDirection();
-		while (!tap){
-			if(wKey) unit.rotateDirection(1);
-			if(xKey) unit.rotateDirection(-1);						
+		while (!GLDisplay.tap){
+			if(GLDisplay.wKey) unit.rotateDirection(1);
+			if(GLDisplay.xKey) unit.rotateDirection(-1);						
 	}
-		tap = false;
+		GLDisplay.tap = false;
 	}
 	
 	public void UAperture(){
 		setPStatesToWaiting();
 		setUStateToDirection();
-		while (!tap){
-			if(wKey) unit.rotateAperture(1);
-			if(xKey) unit.rotateAperture(-1);						
+		while (!GLDisplay.tap){
+			if(GLDisplay.wKey) unit.rotateAperture(1);
+			if(GLDisplay.xKey) unit.rotateAperture(-1);						
 	}
-		tap = false;
+		GLDisplay.tap = false;
 	}
 	
 	
 	
 	public void act(){
-		choosingUTurn();
-		
+		//choosingUTurn();
+		movingUTurn();
 		
 	}
 	
-	
-	/**
-	 * on controle les déplacements via "ZQSD"
-	 * on controle la rotation avec "WX"
-	 * on passe à l'étape suivante avec "P"
-	 * on change le Parameter sur lequel on agis via "TAB"
-	 * 
-	 */
 
 
-	@Override
-	public void keyPressed(KeyEvent arg0) {	
-		if (arg0.getSource().equals(Keyboard.KEY_Z))
-			zKey = true;
-		if (arg0.getSource().equals(Keyboard.KEY_Q))
-			qKey = true;
-		if (arg0.getSource().equals(Keyboard.KEY_S))
-			sKey = true;
-		if (arg0.getSource().equals(Keyboard.KEY_D))
-			dKey =  true;
-		if (arg0.getSource().equals(Keyboard.KEY_W))
-			wKey =  true;
-		if (arg0.getSource().equals(Keyboard.KEY_X))
-			xKey =  true;
-		
-	}
 
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		if (arg0.getSource().equals(Keyboard.KEY_Z))
-			sKey = false;
-		if (arg0.getSource().equals(Keyboard.KEY_Q))
-			qKey = false;
-		if (arg0.getSource().equals(Keyboard.KEY_S))
-			sKey = false;
-		if (arg0.getSource().equals(Keyboard.KEY_D))
-			dKey =  false;
-		if (arg0.getSource().equals(Keyboard.KEY_W))
-			wKey =  false;
-		if (arg0.getSource().equals(Keyboard.KEY_X))
-			xKey =  false;
-		
-	}
-
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		if (arg0.getSource().equals(Keyboard.KEY_P	))
-			tap = true;	
-		if (arg0.getSource().equals(Keyboard.KEY_TAB)){
-			choice = (choice + 1)%nParams;
-		}
-			
-	}
-
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	public GameEngine getGameEngine() {
+		return gameEngine;
 	}
 	
 }
