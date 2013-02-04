@@ -119,7 +119,11 @@ public class GLDisplay extends Thread{
 		if(mode3D)
 			setCameraDiection();
 		
-		render(); //Rendu de la map
+		GL11.glViewport(0, 0, display_width, display_height);
+		mainRender(); //On actualise la fenetre avec le nouveau rendu
+		
+		GL11.glViewport(0, 0, display_width/2, display_height/2);
+		infosRender();
 		update(); //On actualise la fenetre avec le nouveau rendu
 		Display.sync(120); //On synchronise l'affichage sur le bon FPS
 		
@@ -129,6 +133,11 @@ public class GLDisplay extends Thread{
 		
 	}
 	
+	private void infosRender() {
+		
+		
+	}
+
 	/**
 	 * Initialisation de l'OpenGL
 	 */
@@ -148,7 +157,7 @@ public class GLDisplay extends Thread{
 	/**
 	 * Rendu de la map
 	 */
-	public void render(){
+	public void mainRender(){
 		map.paint();
 		
 	}
@@ -211,6 +220,8 @@ public class GLDisplay extends Thread{
 	private void initGL() {
 		/* Diverses options OpenGL */
 		glShadeModel(GL_SMOOTH);
+		GL11.glEnable(GL11.GL_POLYGON_SMOOTH);
+		GL11.glHint(GL11.GL_POLYGON_SMOOTH_HINT,GL11.GL_NICEST);
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClearDepth(1.0f);
 		glEnable(GL_DEPTH_TEST);
