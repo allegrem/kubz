@@ -22,6 +22,17 @@ public class Unit {
 	}
 	
 	
+	public int getDistance(){
+		return (int) parameters[0].getPos().distanceTo(parameters[1].getPos());
+	}
+	public int getAngle1(){
+		return (int) parameters[0].getAngle();
+	}
+	public int getAngle2(){
+		return (int) parameters[1].getAngle();
+	}
+	
+	
 	public Player getOwner() {
 		return owner;
 	}

@@ -20,6 +20,21 @@ public class VirtualCube {
 	
 	
 	
+	public VirtualCube(Point pos1, Point pos2, Point pos3, Cube owner) {
+		super();
+		this.pos1 = pos1;
+		this.pos2 = pos2;
+		this.pos3 = pos3;
+		this.owner = owner;
+		x1Speed = 0;
+		x2Speed = 0;
+		x3Speed = 0;
+		y1Speed = 0;
+		y2Speed = 0;
+		y3Speed = 0;
+		
+	}
+	
 	public Point getPos1() {
 		return pos1;
 	}
