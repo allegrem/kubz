@@ -41,7 +41,7 @@ public  class Player {
 	 * Methode qui retourne l'angle du premier cube parametre
 	 * @return
 	 */
-	public int getAngle1(){
+	public int getChangeAngle1(){
 		return (int) parameters[0].getAngle();
 	}
 	
@@ -49,7 +49,7 @@ public  class Player {
 	 * Methode retourne l'angle du second cube parametre
 	 * @return
 	 */
-	public int getAngle2(){
+	public int getChangeAngle2(){
 		return (int) parameters[1].getAngle();
 	}
 	
@@ -57,7 +57,7 @@ public  class Player {
 	 * methode qui retourne la distance entre les deux parametres
 	 * @return
 	 */
-	public int getDistance(){
+	public int getChangeDistance(){
 		return (int) parameters[0].getPos().distanceTo(parameters[1].getPos());
 	}
 	
@@ -176,10 +176,10 @@ public  class Player {
 		setPStatesToWaiting();
 		setUStateToMoving();
 		while (!GLDisplay.tap){
-			if(GLDisplay.zKey) unit.translate(0,-1);
-			if(GLDisplay.sKey) unit.translate(0, 1);
-			if(GLDisplay.qKey) unit.translate(-1, 0);
-			if(GLDisplay.dKey) unit.translate(1, 0);
+			if((GLDisplay.zKey)&&(unit.getPos().getY()>0)) unit.translate(0,-1);
+			if((GLDisplay.sKey)&&(unit.getPos().getY()<240)) unit.translate(0,1);
+			if((GLDisplay.qKey)&&(unit.getPos().getX()>0)) unit.translate(-1,0);
+			if((GLDisplay.dKey)&&(unit.getPos().getX()<240)) unit.translate(1,0);
 			
 			try {
 				Thread.sleep(10);

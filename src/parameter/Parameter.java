@@ -7,10 +7,18 @@ public class Parameter {
 	
 	private Point pos;
 	private double angle;
+	private double dAngle = 0;
 	private ParameterState state;
 	private CubeControlledView view;
 	
 
+	public double getDAngle(){
+		double vase = dAngle;
+		dAngle = 0;
+		return vase;		
+	}
+	
+	
 	/**
 	 * deplacement relatif de unit
 	 * @param dx
