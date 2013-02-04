@@ -29,7 +29,7 @@ public class Map {
 /**
  * Genere le rendu de la map en affichant chaque objet 
  */
-	public void paint() {
+	public synchronized void paint() {
 		for(DisplayableFather object: listObjects){
 			object.paint();
 			
@@ -42,7 +42,7 @@ public class Map {
  * @param object L'objet a ajouter
  * @return L'objet ajoute
  */
-	public DisplayableFather add(DisplayableFather object){
+	public synchronized DisplayableFather add(DisplayableFather object){
 		listObjects.add(object);
 		return object;
 	}
@@ -53,7 +53,7 @@ public class Map {
 	 * @param object Objet a retirer
 	 * @return L'objet retire si cela a marche
 	 */
-	public DisplayableFather remove(DisplayableFather object){
+	public synchronized DisplayableFather remove(DisplayableFather object){
 		if (listObjects.size()>1){
 		listObjects.remove(object);
 		return object;
@@ -66,7 +66,7 @@ public class Map {
 	 * Retirer le dernier objet ajoute
 	 * 
 	 */
-	public int removeLast(){
+	public synchronized int removeLast(){
 		
 		if (listObjects.size()>1){
 			listObjects.remove(listObjects.size()-1);
@@ -80,7 +80,7 @@ public class Map {
 	 * 
 	 * @return La liste des objets ajoutes a la map
 	 */
-	public ArrayList<DisplayableFather> getObjects(){
+	public synchronized ArrayList<DisplayableFather> getObjects(){
 		return listObjects;
 	}
 	
@@ -89,7 +89,7 @@ public class Map {
 	 * @param i
 	 * @return
 	 */
-	public DisplayableFather getObject(int i){
+	public synchronized DisplayableFather getObject(int i){
 		return listObjects.get(i);
 	}
 	

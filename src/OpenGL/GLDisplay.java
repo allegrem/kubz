@@ -108,7 +108,7 @@ public class GLDisplay extends Thread{
 		camDx=(float)(display_width/2.0);
 		camDy=(float)(display_height/2.0);
 		while(do_run){
-			
+		
 		if (Display.isCloseRequested()||KeyboardManager.quit)
 				do_run = false; // On arrete le programme
 		clear(); //On nettoie la fenetre
@@ -199,7 +199,6 @@ public class GLDisplay extends Thread{
 			display_width = mode.getWidth();
             display_height = mode.getHeight();
             frequency = mode.getFrequency();
-            System.out.println(frequency);
 			// Creation d'une fenetre permettant de dessiner avec OpenGL
 			Display.setDisplayModeAndFullscreen(mode);
 			Display.setTitle("Kubz");
@@ -337,10 +336,11 @@ public class GLDisplay extends Thread{
 		return display_height;
 	}
 
-	public boolean initilized() {
+	public boolean initialized() {
 		
 		return initialized;
 	}
+	
 	
 }
 

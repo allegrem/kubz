@@ -34,18 +34,21 @@ public class GameEngine {
 		map= new Map();
 		display.setMap(map);
 		display.start();
-		while(!display.initilized()){
-			
+		while(!display.initialized()){
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		System.out.println("initialized !");
 		width=display.getDisplay_width();
 		height=display.getDisplay_height();
 		map.setWidth(width);
 		map.setLength(height);	
-		map.add(new BackgroundView(width,height,100));
 		display.setLightPlace(0.0f,(float)height/2,0.0f);
 		//display.mode3D();
-		
+		map.add(new BackgroundView(width,height,100));
 		try {
 			monsterList=reader.readMonsters();
 			bases=reader.readBases();
@@ -115,5 +118,6 @@ public class GameEngine {
 		return map;
 		
 	}
+	
 
 }
