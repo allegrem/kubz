@@ -38,6 +38,33 @@ public  class Player {
 	}
 	
 	/**
+	 * Methode qui retourne l'angle du premier cube parametre
+	 * @return
+	 */
+	public int getAngle1(){
+		return (int) parameters[0].getAngle();
+	}
+	
+	/**
+	 * Methode retourne l'angle du second cube parametre
+	 * @return
+	 */
+	public int getAngle2(){
+		return (int) parameters[1].getAngle();
+	}
+	
+	/**
+	 * methode qui retourne la distance entre les deux parametres
+	 * @return
+	 */
+	public int getDistance(){
+		return (int) parameters[0].getPos().distanceTo(parameters[1].getPos());
+	}
+	
+	
+	
+	
+	/**
 	 * Methodes relatives au shield de l'Unit
 	 */
 	public void setValues(int l, int r, float value){
