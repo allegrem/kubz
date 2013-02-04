@@ -1,4 +1,5 @@
 package gameEngine;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import base.Base;
@@ -15,8 +16,8 @@ import wall.Wall;
 import cubeManager.*;
 
 public class GameEngine {
-	private final int width=950;
-	private final int height=700;
+	private final int width;
+	private final int height;
 	private ArrayList<Monster> monsterList;
 	private ArrayList<Player> playerList;
 	private ArrayList<Wall> walls;
@@ -29,9 +30,18 @@ public class GameEngine {
 	
 	public GameEngine(){
 		RandomPerso.initialize();
-		map= new Map(width,height);
-		display=new GLDisplay(width,height,map);
+		display=new GLDisplay();
+		map= new Map();
+		display.setMap(map);
 		display.start();
+		while(!display.initilized()){
+			
+		}
+		System.out.println("initialized !");
+		width=display.getDisplay_width();
+		height=display.getDisplay_height();
+		map.setWidth(width);
+		map.setLength(height);	
 		map.add(new BackgroundView(width,height,100));
 		display.setLightPlace(0.0f,(float)height/2,0.0f);
 		//display.mode3D();

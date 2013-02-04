@@ -51,13 +51,15 @@ import map2.Map;
  */
 public class GLDisplay extends Thread{
 
-	
+
 	private static final MyBuffer MyFloatBuffer = null;
-	private final int display_width;
-	private final int display_height; 
+	private int display_width=700;
+	private int display_height=500; 
 	public static float ratio; // display_width/display_height
 	private boolean do_run=true;
 	private Map map;
+	private int frequency=50;
+	private  boolean initialized=false;
 	
 	/**
 	 * Parametres de la projection
@@ -82,20 +84,14 @@ public class GLDisplay extends Thread{
 	private float lightDz=0.0f;
 	private Lighting lighting=new Lighting(this);
 	
+	
 	/**
 	 * Lancement de l'affichage
 	 * 
 	 * 
 	 */
-	public GLDisplay(int display_width,int display_height,Map map){
-		this.display_width=display_width;
-		this.display_height=display_height;
-		this.map=map;
-		ratio = display_width/display_height;
-		lightDx=(float)(display_width/2.0);
-		lightDy=(float)(display_height/2.0);
-		camDx=(float)(display_width/2.0);
-		camDy=(float)(display_height/2.0);
+	public GLDisplay(){
+		
 	}
 
 	/**
@@ -105,9 +101,15 @@ public class GLDisplay extends Thread{
 	@Override
 	public void run(){
 		initialize();
+		initialized=true;
+		ratio = display_width/display_height;
+		lightDx=(float)(display_width/2.0);
+		lightDy=(float)(display_height/2.0);
+		camDx=(float)(display_width/2.0);
+		camDy=(float)(display_height/2.0);
 		while(do_run){
 			
-		if (Display.isCloseRequested())
+		if (Display.isCloseRequested()||KeyboardManager.quit)
 				do_run = false; // On arrete le programme
 		clear(); //On nettoie la fenetre
 		KeyboardManager.checkKeyboard();
@@ -124,8 +126,9 @@ public class GLDisplay extends Thread{
 		
 		GL11.glViewport(0, 0, display_width/2, display_height/2);
 		infosRender();
+		
 		update(); //On actualise la fenetre avec le nouveau rendu
-		Display.sync(120); //On synchronise l'affichage sur le bon FPS
+		Display.sync(frequency); //On synchronise l'affichage sur le bon FPS
 		
 		}
 		
@@ -192,9 +195,13 @@ public class GLDisplay extends Thread{
 	 */
 	private void initDisplay() {
 		try {
+			DisplayMode mode = Display.getDesktopDisplayMode();
+			display_width = mode.getWidth();
+            display_height = mode.getHeight();
+            frequency = mode.getFrequency();
+            System.out.println(frequency);
 			// Creation d'une fenetre permettant de dessiner avec OpenGL
-			Display.setDisplayModeAndFullscreen(new DisplayMode(display_width,
-					display_height));
+			Display.setDisplayModeAndFullscreen(mode);
 			Display.setTitle("Kubz");
 			ByteBuffer[] list = new ByteBuffer[2];
 			list[0] = MyBuffer.convertImageData(ImageIO.read(new File("Icone/Kubz32.jpeg")));
@@ -233,13 +240,6 @@ public class GLDisplay extends Thread{
 		
 	}
 
-	public int getDisplay_width() {
-		return display_width;
-	}
-
-	public int getDisplay_height() {
-		return display_height;
-	}
 	
 	/**
 	 * Met a jour l'emplacement et la direction de l'eclairage
@@ -324,6 +324,23 @@ public class GLDisplay extends Thread{
 		camDz=z;
 	}
 	
+
+	public void setMap(Map map) {
+		this.map = map;
+	}
+
+	public int getDisplay_width() {
+		return display_width;
+	}
+
+	public int getDisplay_height() {
+		return display_height;
+	}
+
+	public boolean initilized() {
+		
+		return initialized;
+	}
 	
 }
 

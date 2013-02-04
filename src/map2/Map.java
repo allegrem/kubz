@@ -14,15 +14,15 @@ import views.interfaces.DisplayableFather;
  * 
  */
 public class Map {
+
+
 	private ArrayList<DisplayableFather> listObjects;
 	public static int width;
 	public static int length;
 	private static Map map=null;
 	
-	public Map(int width,int length) {
+	public Map() {
 		listObjects=new ArrayList<DisplayableFather>();
-		this.width = width;
-		this.length = length;
 		map=this;
 	}
 
@@ -101,5 +101,13 @@ public class Map {
 		return map;
 	}
 
+	public static void setWidth(int width) {
+		Map.width = width;
+	}
+
+	public static void setLength(int length) {
+		Map.length = length;
+	}
+	
 }
 

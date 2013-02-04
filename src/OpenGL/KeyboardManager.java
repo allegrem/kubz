@@ -15,6 +15,7 @@ public class KeyboardManager {
 	public static boolean tap = false;
 	private static boolean tapTyped=false;
 	public static int choice=0;
+	public static boolean quit=false;
 
 	/**
 	 * on controle les deplacements via "ZQSD"
@@ -56,6 +57,9 @@ public static void checkKeyboard(){
 			xKey =  true;
 		}else
 			xKey =  false;
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
+			quit =  true;
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_P)){
 			tapTyped = true;	
