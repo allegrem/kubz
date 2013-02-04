@@ -1,12 +1,8 @@
 package utilities;
 
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glVertex3d;
 
 import org.lwjgl.opengl.GL11;
 
-import views.monsters.MonsterView;
 
 /**
  * Dessin de différentes courbes

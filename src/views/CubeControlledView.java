@@ -4,15 +4,10 @@ package views;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glVertex3d;
-
 import java.util.ArrayList;
-
-import map2.Map;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
-
 import utilities.Maths;
 import utilities.Point;
 import utilities.Vector;
@@ -29,7 +24,7 @@ import views.monsters.MonsterView;
  */
 public class CubeControlledView implements DisplayableFather{
 	private double size= 30;
-	private int height = 30;
+	//private int height = 30;
 	private Point position;
 	private ArrayList<DisplayableChild> children= new ArrayList<DisplayableChild>();
 	private int duration=0;

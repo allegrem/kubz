@@ -2,7 +2,6 @@ package map2;
 
 import java.util.ArrayList;
 
-import views.interfaces.Displayable;
 import views.interfaces.DisplayableFather;
 
 
@@ -21,8 +20,8 @@ public class Map {
 	
 	public Map(int width,int length) {
 		listObjects=new ArrayList<DisplayableFather>();
-		this.width = width;
-		this.length = length;
+		//this.width = width;
+		//this.length = length;
 		map=this;
 	}
 

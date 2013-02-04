@@ -21,9 +21,9 @@ public class Monster {
 	
 	protected GameEngine gameEngine;
 	private AttackType attack;
-	private DefenceType defence;
+	//private DefenceType defence;
 	private MoveType move;
-	private LifeType life;
+	//private LifeType life;
 	private Unit cible;
 	private ArrayList<Unit> seenUnits; 
 	private Point pos;
@@ -82,7 +82,7 @@ public class Monster {
 	private void setSeenUnits(ArrayList<Unit> unitList){
 		
 		for(Unit unit : unitList){
-			Point unitPos = unit.getPos();
+			//Point unitPos = unit.getPos();
 			//impleneter la boucle sur la position des murs
 			seenUnits.add(unit);
 		}

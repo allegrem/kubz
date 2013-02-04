@@ -57,4 +57,7 @@ public class Wall {
 		extremity2.setY(normev / 2 * Math.sin(angle) + centre.getY());
 		view.rotate(inc);
 	}
+	public GameEngine getGameEngine(){
+		return gameEngine;
+	}
 }

@@ -4,11 +4,8 @@ package views.staticViews;
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
-import org.lwjgl.util.glu.Disk;
 import org.lwjgl.util.glu.PartialDisk;
-
 import utilities.Point;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;

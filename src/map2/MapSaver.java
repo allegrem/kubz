@@ -15,7 +15,6 @@ import views.staticViews.WallView;
  * @author valeh
  */
 public class MapSaver {
-	private Map map;
 	private ArrayList<BaseView> bases = new ArrayList<BaseView>();
 	private ArrayList<WallView> walls = new ArrayList<WallView>();
 	private ArrayList<MonsterView> monsters = new ArrayList<MonsterView>();

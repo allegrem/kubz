@@ -1,7 +1,6 @@
 package main;
 
 import gameEngine.GameEngine;
-import OpenGL.GLDisplay;
 
 public class Main {
 

@@ -9,7 +9,7 @@ public class Base {
 	private Point center;
 	private int sens;
 	private ReadableColor color;
-	private static final float radius = 80.0f; // on code le rayon des bases "en dur"
+	//private static final float radius = 80.0f; // on code le rayon des bases "en dur"
 	private BaseView view;
 	private GameEngine gameEngine;
 

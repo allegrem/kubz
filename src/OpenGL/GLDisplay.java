@@ -18,20 +18,12 @@ import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.opengl.GL11.glShadeModel;
-
-import java.awt.event.KeyEvent;
-
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.GLU;
-
 import player.Player;
-
-import views.staticViews.BackgroundView;
-
 import map2.Map;
 
 /**

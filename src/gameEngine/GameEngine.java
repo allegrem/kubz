@@ -1,7 +1,7 @@
 package gameEngine;
 import java.util.ArrayList;
 
-import base.Base;
+//import base.Base;
 
 import OpenGL.GLDisplay;
 import map2.Map;
@@ -11,18 +11,18 @@ import player.*;
 import unit.Unit;
 import utilities.RandomPerso;
 import views.staticViews.BackgroundView;
-import wall.Wall;
+//import wall.Wall;
 import cube.Cube;
-import cubeManager.*;
+//import cubeManager.*;
 
 public class GameEngine {
 	private final int width=950;
 	private final int height=700;
 	private ArrayList<Monster> monsterList;
 	private ArrayList<Player> playerList;
-	private ArrayList<Wall> walls;
+	/*private ArrayList<Wall> walls;
 	private ArrayList<Base> bases;
-	private CubeManager cubeManager;
+	private CubeManager cubeManager;*/
 	private GLDisplay display;
 	private Map map;
 	private MapReader reader=new MapReader("Maps/bFile.txt","Maps/mFile.txt","Maps/WFile.txt",this);
@@ -37,11 +37,10 @@ public class GameEngine {
 		
 		try {
 			monsterList=reader.readMonsters();
-			bases=reader.readBases();
-			walls=reader.readWalls();
+			/*bases=reader.readBases();
+			walls=reader.readWalls();*/
 			playerList=new ArrayList<Player>();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -101,7 +100,6 @@ public class GameEngine {
 	}
 
 	public void setFrozen(Cube owner) {
-		// TODO Auto-generated method stub
 		
 	}
 

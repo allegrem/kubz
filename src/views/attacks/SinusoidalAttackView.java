@@ -1,23 +1,13 @@
 package views.attacks;
 
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glColor3ub;
-import static org.lwjgl.opengl.GL11.glVertex3d;
-
-import java.util.ArrayList;
-
 import map2.Map;
 
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
-import org.lwjgl.util.glu.Disk;
-import org.lwjgl.util.glu.PartialDisk;
 
 import utilities.Lines;
 import utilities.Point;
-import utilities.Vector;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
 import views.monsters.MonsterView;
@@ -137,7 +127,7 @@ public class SinusoidalAttackView implements DisplayableChild {
 	 * Modification de l'angle d'ouverture du cone
 	 * @param Angle
 	 */
-	public void setAngle(double Angle){
+	public void setAngle(double angle){
 		this.angle=angle;
 	}
 	

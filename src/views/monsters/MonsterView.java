@@ -1,15 +1,8 @@
 package views.monsters;
 
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glColor3ub;
-import static org.lwjgl.opengl.GL11.glVertex3d;
-
 import java.util.ArrayList;
 
 import map2.Map;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 
 import utilities.Point;

@@ -1,20 +1,12 @@
 
 package views.monsters;
 
-import map2.Map;
-
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.glu.Cylinder;
-import org.lwjgl.util.glu.Disk;
-
-import utilities.Lines;
 import utilities.Maths;
 import utilities.Point;
 import utilities.Vector;
-import views.attacks.SineAttackV;
-import views.attacks.SinusoidalAttackView;
 
 /**
  * Unite Monstre de type cercle.

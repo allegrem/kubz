@@ -4,9 +4,7 @@ package map2;
 import gameEngine.GameEngine;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
@@ -21,12 +19,6 @@ import org.lwjgl.util.Color;
 import base.Base;
 
 import utilities.Point;
-import views.monsters.CircleMonsterView;
-import views.monsters.MonsterView;
-import views.monsters.ShapeMonsterView;
-import views.monsters.SquareMonsterView;
-import views.staticViews.BaseView;
-import views.staticViews.WallView;
 import wall.Wall;
 
 
@@ -41,7 +33,7 @@ import wall.Wall;
  */
 public class MapReader {
 
-	private Map map;
+	//private Map map;
 	private String bFileName,mFileName,wFileName;
 	private GameEngine gameEngine;
 	
@@ -186,7 +178,7 @@ public class MapReader {
 	 * @throws Exception
 	 */
 	public Map read(Map map) throws Exception{
-		this.map = map;
+		//this.map = map;
 		readBases();
 		readMonsters();
 		readWalls();
