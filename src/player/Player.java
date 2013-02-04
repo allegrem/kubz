@@ -6,17 +6,10 @@ package player;
 
 import gameEngine.GameEngine;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
-import org.lwjgl.input.Keyboard;
 
 import OpenGL.GLDisplay;
 import parameter.*;
 import unit.*;
-import views.CubeControlledView;
 
 
 public  class Player {
@@ -29,7 +22,7 @@ public  class Player {
 	private GameEngine gameEngine;
 	
 	/**
-	 * Cr�ation d'un joueur avec une Unit et deux Parameter
+	 * Creation d'un joueur avec une Unit et deux Parameter
 	 */
 	public Player(GameEngine gameEngine){
 
@@ -45,7 +38,7 @@ public  class Player {
 	}
 	
 	/**
-	 * M�thodes relatives au shield de l'Unit
+	 * Methodes relatives au shield de l'Unit
 	 */
 	public void setValues(int l, int r, float value){
 		for(int i = l; i<=r; i++)
@@ -63,7 +56,7 @@ public  class Player {
 	
 	
 	/**
-	 * M�thodes qui g�rent l'�tat des param�tres
+	 * Methodes qui gerent l'etat des parametres
 	 */
 	
 	public void setPStatesToFrozen(){
@@ -96,7 +89,7 @@ public  class Player {
 	}
 	
 	/**
-	 * Bloc des m�thodes o� on choisit l'�tat de l'unit� 
+	 * Bloc des methodes oe on choisit l'etat de l'unite 
 	 */	
 	
 	public void setUStateToAngle(){
@@ -132,7 +125,7 @@ public  class Player {
 	}
 	
 	/**
-	 * A present on va utiliser les m�thode du haut pour les diff�rentes phases de jeu
+	 * A present on va utiliser les methode du haut pour les differentes phases de jeu
 	 */
 	public void WaitingTurn(){
 		setPStatesToWaiting();
@@ -140,7 +133,7 @@ public  class Player {
 	}
 	
 	/**
-	 * M�thode qui declenche le choix de l'Unit � utiliser
+	 * Methode qui declenche le choix de l'Unit e utiliser
 	 */
 	public void choosingUTurn(){
 		setPStatesToWaiting();
@@ -150,7 +143,7 @@ public  class Player {
 		}
 	}
 	/**
-	 * M�thode qui d�clenche le mouvement de Unit
+	 * Methode qui declenche le mouvement de Unit
 	 */
 	public void movingUTurn(){
 		setPStatesToWaiting();
@@ -172,7 +165,7 @@ public  class Player {
 		return;
 	}
 	/**
-	 * M�thode qui d�clenche la cr�ation du son via les Parameter
+	 * Methode qui declenche la creation du son via les Parameter
 	 */
 	public void soundEditPTurn(){
 		setPStatesToSoundEdit();
@@ -188,7 +181,7 @@ public  class Player {
 		GLDisplay.tap = false;
 	}	
 	/**
-	 * M�thode qui d�clenche le choix de l'angle ou de l'ouverture d'attque de Unit
+	 * Methode qui declenche le choix de l'angle ou de l'ouverture d'attque de Unit
 	 */
 	public void UDirection(){
 		setPStatesToWaiting();
