@@ -26,7 +26,6 @@ public class GameEngine {
 	private CubeManager cubeManager;
 	private GLDisplay display;
 	private Map map;
-	//private Sound sound;
 	private MapReader reader=new MapReader("Maps/bFile.txt","Maps/mFile.txt","Maps/WFile.txt",this);
 	private boolean quit;
 	
@@ -34,9 +33,6 @@ public class GameEngine {
 		RandomPerso.initialize();
 		display=new GLDisplay();
 		map= new Map();
-		/*sound=new Sound();
-		 * display.setSound(sound);
-		 */
 		display.setMap(map);
 		display.start();
 		while(!display.initialized()){

@@ -59,6 +59,7 @@ public class GLDisplay extends Thread{
 	private int mapDisplay_height=0;
 	private boolean do_run=true;
 	private Map map;
+	private Sound sound
 	//private Sound sound;
 	private int frequency=50;
 	private  boolean initialized=false;
@@ -350,6 +351,7 @@ public class GLDisplay extends Thread{
 	
 	public void setSound(Sound sound){
 		this.sound=sound;
+		audioRender.setSound(sound);
 	}
 	
 }
