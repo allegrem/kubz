@@ -1,44 +1,34 @@
 package cube;
 
 import utilities.Point;
+//import Xbee library
 
 public class Cube {	
 	private short angle;
 	private boolean tap;
-	private byte R;
-	private byte G;
-	private byte B;
-	private boolean[] irLed = new boolean[3];
-	private byte patern;
 	private short id;
 	
-	
-	
-	public void update(){
-		// a remplir par GueDau
+	public void setRGB(){
+		
 	}
 	
+	public void setIR() {
+		
+	}
 	
+	public void setMotor() {
+		
+	}
 	
 	public short getAngle() {
 		return angle;
 	}
-	public boolean isTap() {
+	
+	public boolean getTap() {
 		return tap;
 	}
-	public byte getR() {
-		return R;
+	
+	public short getID() {
+		return id;
 	}
-	public byte getG() {
-		return G;
-	}
-	public byte getB() {
-		return B;
-	}
-	public boolean[] getIrLed() {
-		return irLed;
-	}
-	public byte getPatern() {
-		return patern;
-	}		
 }
