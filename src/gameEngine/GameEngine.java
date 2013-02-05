@@ -103,4 +103,8 @@ public class GameEngine {
 		
 	}
 
+	public ArrayList<Monster> getMonsterList() {
+		return monsterList;
+	}
+
 }

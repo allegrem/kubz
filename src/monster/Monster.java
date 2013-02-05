@@ -16,14 +16,12 @@ public class Monster {
 	
 	/**
 	 * Differents xxxxType qui permettent de generer differents types
-	 * de monstres de faeon modulaire 
+	 * de monstres de facon modulaire et actions dans le modele
 	 */
 	
 	protected GameEngine gameEngine;
 	private AttackType attack;
-	//private DefenceType defence;
 	private MoveType move;
-	//private LifeType life;
 	private Unit cible;
 	private ArrayList<Unit> seenUnits; 
 	private Point pos;
@@ -32,6 +30,10 @@ public class Monster {
 	 * reference vers la vue du monstre pour pouvoir transmettre les modifications necessaires 
 	 */
 	protected MonsterView view;
+	
+	//private LifeType life;
+	//private DefenceType defence;
+
 	
 	/**
 	 * cree un nouveau monstre e la position (xStart,yStart)
@@ -78,15 +80,13 @@ public class Monster {
 	}	
 	public Unit getCible(){
 		return cible;
-	}		
-	private void setSeenUnits(ArrayList<Unit> unitList){
-		
-		for(Unit unit : unitList){
-			//Point unitPos = unit.getPos();
-			//impleneter la boucle sur la position des murs
-			seenUnits.add(unit);
-		}
-		
+	}	
+	/**
+	 * En attendant de coder la vue des monstres
+	 * @param unitList
+	 */
+	private void setSeenUnits(ArrayList<Unit> unitList){		
+			seenUnits = unitList;		
 	}
 	
 	/**
