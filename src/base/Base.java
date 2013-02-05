@@ -1,9 +1,7 @@
 package base;
 
 import gameEngine.GameEngine;
-
 import org.lwjgl.util.ReadableColor;
-
 import utilities.Point;
 import views.staticViews.BaseView;
 
@@ -16,7 +14,7 @@ public class Base {
 	private GameEngine gameEngine;
 
 	/**
-	 * Constructuer � partir du mod�le, qui va cr�er la vue associ�e
+	 * Constructeur a partir du modele, qui va creer la vue associee
 	 * @param center
 	 * @param sens
 	 * @param color
@@ -50,5 +48,9 @@ public class Base {
 	public void setColor(ReadableColor color) {
 		this.color = color;
 	}
+	public GameEngine getGameEngine(){
+		return gameEngine;
+	}
+	
 	
 }

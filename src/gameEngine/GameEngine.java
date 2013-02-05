@@ -1,4 +1,5 @@
 package gameEngine;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import base.Base;
@@ -12,11 +13,12 @@ import unit.Unit;
 import utilities.RandomPerso;
 import views.staticViews.BackgroundView;
 import wall.Wall;
+import cube.Cube;
 import cubeManager.*;
 
 public class GameEngine {
-	private final int width=950;
-	private final int height=700;
+	private final int width;
+	private final int height;
 	private ArrayList<Monster> monsterList;
 	private ArrayList<Player> playerList;
 	private ArrayList<Wall> walls;
@@ -29,13 +31,25 @@ public class GameEngine {
 	
 	public GameEngine(){
 		RandomPerso.initialize();
-		map= new Map(width,height);
-		display=new GLDisplay(width,height,map);
+		display=new GLDisplay();
+		map= new Map();
+		display.setMap(map);
 		display.start();
-		map.add(new BackgroundView(width,height,100));
+		while(!display.initialized()){
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		width=display.getmapDisplay_width();
+		height=display.getmapDisplay_height();
+		map.setWidth(width);
+		map.setLength(height);	
 		display.setLightPlace(0.0f,(float)height/2,0.0f);
 		//display.mode3D();
-		
+		map.add(new BackgroundView(width,height,100));
 		try {
 			monsterList=reader.readMonsters();
 			bases=reader.readBases();
@@ -51,6 +65,7 @@ public class GameEngine {
 		playerList.add(new Player(this));
 		while(display.isAlive()){
 			playerTurn();
+		
 		}
 	}
 	
@@ -102,6 +117,12 @@ public class GameEngine {
 	
 	public Map getMap(){
 		return map;
+		
+	}
+	
+
+	public void setFrozen(Cube owner) {
+		// TODO Auto-generated method stub
 		
 	}
 

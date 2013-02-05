@@ -34,12 +34,19 @@ public class CircleMonsterView extends MonsterView {
 
 	@Override
 	public void paint() {
+		
+		GL11.glPopMatrix();
+		GL11.glTranslated(getX(),getY(),0);
+		GL11.glRotated((int)Math.round(getAngle()),0,0,1);
 
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		GL11.glColor3ub((byte)actualColor.getRed(),(byte)actualColor.getGreen(),(byte)actualColor.getBlue());
-		GL11.glTranslated(getX(), getY(), 0);
+		
 		cylinder.draw((float)(size/2),0,(float)height, 50, 1);
-		GL11.glTranslated(-getX(), -getY(), 0);
+		
+		GL11.glLoadIdentity();
+		GL11.glPushMatrix();
+		
 		paintChildren();
 	
 	}

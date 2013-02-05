@@ -51,13 +51,18 @@ import map2.Map;
  */
 public class GLDisplay extends Thread{
 
-	
+
 	private static final MyBuffer MyFloatBuffer = null;
-	private final int display_width;
-	private final int display_height; 
-	public static float ratio; // display_width/display_height
+	private int display_width=700;
+	private int display_height=500; 
+	private int mapDisplay_width=0;
+	private int mapDisplay_height=0;
 	private boolean do_run=true;
 	private Map map;
+	//private Sound sound;
+	private int frequency=50;
+	private  boolean initialized=false;
+	private AudioRender audioRender;
 	
 	/**
 	 * Parametres de la projection
@@ -82,20 +87,14 @@ public class GLDisplay extends Thread{
 	private float lightDz=0.0f;
 	private Lighting lighting=new Lighting(this);
 	
+	
 	/**
 	 * Lancement de l'affichage
 	 * 
 	 * 
 	 */
-	public GLDisplay(int display_width,int display_height,Map map){
-		this.display_width=display_width;
-		this.display_height=display_height;
-		this.map=map;
-		ratio = display_width/display_height;
-		lightDx=(float)(display_width/2.0);
-		lightDy=(float)(display_height/2.0);
-		camDx=(float)(display_width/2.0);
-		camDy=(float)(display_height/2.0);
+	public GLDisplay(){
+		
 	}
 
 	/**
@@ -104,13 +103,24 @@ public class GLDisplay extends Thread{
 	 */
 	@Override
 	public void run(){
+		//audioRender=new AudioRender(this,null);
 		initialize();
+		mapDisplay_height=(int)(80.0/100.0*display_height);
+		mapDisplay_width=display_height;
+		
+		lightDx=(float)(display_width/2.0);
+		lightDy=(float)(display_height/2.0);
+		camDx=(float)(display_width/2.0);
+		camDy=(float)(display_height/2.0);
+		initialized=true;
 		while(do_run){
 			
-		if (Display.isCloseRequested())
+		if (Display.isCloseRequested()||KeyboardManager.quit)
 				do_run = false; // On arrete le programme
 		clear(); //On nettoie la fenetre
 		KeyboardManager.checkKeyboard();
+		
+		glMatrixMode(GL_MODELVIEW);
 		setLightPosition();
 		
 		if(modeChanged)
@@ -119,9 +129,13 @@ public class GLDisplay extends Thread{
 		if(mode3D)
 			setCameraDiection();
 		
-		render(); //Rendu de la map
+		mainRender(); //On actualise la fenetre avec le nouveau rendu
+		//audioRender.renderAudioView();
+		//audioRender.renderSpectrumView();
 		update(); //On actualise la fenetre avec le nouveau rendu
-		Display.sync(120); //On synchronise l'affichage sur le bon FPS
+		Display.sync(frequency); //On synchronise l'affichage sur le bon FPS
+	
+		
 		
 		}
 		
@@ -129,6 +143,11 @@ public class GLDisplay extends Thread{
 		
 	}
 	
+	private void infosRender() {
+		
+		
+	}
+
 	/**
 	 * Initialisation de l'OpenGL
 	 */
@@ -148,7 +167,7 @@ public class GLDisplay extends Thread{
 	/**
 	 * Rendu de la map
 	 */
-	public void render(){
+	public void mainRender(){
 		map.paint();
 		
 	}
@@ -183,9 +202,12 @@ public class GLDisplay extends Thread{
 	 */
 	private void initDisplay() {
 		try {
+			DisplayMode mode = Display.getDesktopDisplayMode();
+			display_width = mode.getWidth();
+            display_height = mode.getHeight();
+            frequency = mode.getFrequency();
 			// Creation d'une fenetre permettant de dessiner avec OpenGL
-			Display.setDisplayModeAndFullscreen(new DisplayMode(display_width,
-					display_height));
+			Display.setDisplayModeAndFullscreen(mode);
 			Display.setTitle("Kubz");
 			ByteBuffer[] list = new ByteBuffer[2];
 			list[0] = MyBuffer.convertImageData(ImageIO.read(new File("Icone/Kubz32.jpeg")));
@@ -211,6 +233,8 @@ public class GLDisplay extends Thread{
 	private void initGL() {
 		/* Diverses options OpenGL */
 		glShadeModel(GL_SMOOTH);
+		GL11.glEnable(GL11.GL_POLYGON_SMOOTH);
+		GL11.glHint(GL11.GL_POLYGON_SMOOTH_HINT,GL11.GL_NICEST);
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClearDepth(1.0f);
 		glEnable(GL_DEPTH_TEST);
@@ -222,13 +246,6 @@ public class GLDisplay extends Thread{
 		
 	}
 
-	public int getDisplay_width() {
-		return display_width;
-	}
-
-	public int getDisplay_height() {
-		return display_height;
-	}
 	
 	/**
 	 * Met a jour l'emplacement et la direction de l'eclairage
@@ -257,7 +274,7 @@ public class GLDisplay extends Thread{
 	}
 	
 	/**
-	 * Passage en vue 3D
+	 * Passage en vue 3DmapD
 	 */
 	public void mode3D() {
 		mode3D=true;
@@ -313,6 +330,36 @@ public class GLDisplay extends Thread{
 		camDz=z;
 	}
 	
+
+	public void setMap(Map map) {
+		this.map = map;
+	}
+
+	public int getmapDisplay_width() {
+		return mapDisplay_width;
+	}
+
+	public int getmapDisplay_height() {
+		return mapDisplay_height;
+	}
+	
+	public int getDisplay_width() {
+		return display_width;
+	}
+
+	public int getDisplay_height() {
+		return display_height;
+	}
+
+	public boolean initialized() {
+		
+		return initialized;
+	}
+	
+	public void setSound(Sound sound){
+		this.sound=sound;
+		audioRender.setSound(sound);
+	}
 	
 }
 

@@ -68,6 +68,7 @@ public class Parameter {
 		return angle;
 	}
 	
+	
 	/**
 	 * Setters et getters relatifs à l'état du paramètre
 	 */

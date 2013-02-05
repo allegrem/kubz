@@ -130,7 +130,8 @@ public class Unit {
 	public double getDirection(){
 		return direction;
 	}
-	
+
+
 	/**
 	 * M�thode relatives � l'angle du cube 
 	 * @param theta

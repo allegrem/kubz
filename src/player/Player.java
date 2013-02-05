@@ -1,9 +1,11 @@
 package player;
 
 /**
+
  * Classe qui repr�sente un joueur, a des r�f�rence vers ses unit�s et param�tres
  * @author Felix
  */
+
 
 import gameEngine.GameEngine;
 

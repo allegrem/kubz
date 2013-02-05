@@ -1,11 +1,10 @@
 package monster;
 
-/**classe qui sert de mod�le � MonsterView
+/**classe qui sert de modele e MonsterView
  * @author Felix
  */
 
 import utilities.Point;
-import views.*;
 import views.monsters.MonsterView;
 
 import gameEngine.GameEngine;
@@ -16,8 +15,8 @@ import unit.Unit;
 public class Monster {
 	
 	/**
-	 * Diff�rents xxxxType qui permettent de g�n�rer diff�rents types
-	 * de monstres de fa�on modulaire 
+	 * Differents xxxxType qui permettent de generer differents types
+	 * de monstres de faeon modulaire 
 	 */
 	
 	protected GameEngine gameEngine;
@@ -30,12 +29,12 @@ public class Monster {
 	private Point pos;
 	
 	/**
-	 * r�f�rence vers la vue du monstre pour pouvoir transmettre les modifications n�cessaires 
+	 * reference vers la vue du monstre pour pouvoir transmettre les modifications necessaires 
 	 */
 	protected MonsterView view;
 	
 	/**
-	 * cr�e un nouveau monstre � la position (xStart,yStart)
+	 * cree un nouveau monstre e la position (xStart,yStart)
 	 * @param xStart
 	 * @param yStart
 	 */
@@ -48,12 +47,12 @@ public class Monster {
 		
 	}
 	
-					/** Partie qui g�re l'attaque du monstre*/
+					/** Partie qui gere l'attaque du monstre*/
 	
 	
 	/**
-	 * M�thode qui permet de d�terminer le potentiel de chaque unit�, l'unit� 
-	 * ayant une caract�risque pr�cise sera la cible du monstre (ex vie, distance)
+	 * Methode qui permet de determiner le potentiel de chaque unite, l'unite 
+	 * ayant une caracterisque precise sera la cible du monstre (ex vie, distance)
 	 */
 	
 	private void setPotList(){
@@ -84,17 +83,17 @@ public class Monster {
 		
 		for(Unit unit : unitList){
 			Point unitPos = unit.getPos();
-			//impl�neter la boucle sur la position des murs
+			//impleneter la boucle sur la position des murs
 			seenUnits.add(unit);
 		}
 		
 	}
 	
 	/**
-	 * La composante attack va fournir une ArrayList de fr�quence et d'intensit�s qui vont 
+	 * La composante attack va fournir une ArrayList de frequence et d'intensites qui vont 
 	 * arriver sur le filtre de l'Unit
 	 * 
-	 * Cette m�thode prend en compte la distance du monstre au joueur et les d�gats d�croient en 1/r
+	 * Cette methode prend en compte la distance du monstre au joueur et les degats decroient en 1/r
 	 * 
 	 * @param attackTable
 	 */
@@ -115,10 +114,10 @@ public class Monster {
 	}
 	
 	
-					/** Actions li�es � la position**/
+					/** Actions liees e la position**/
 	
 	/** 
-	 * lance la proc�dure de mouvement du monstre
+	 * lance la procedure de mouvement du monstre
 	 */
  	 void move(){
 		move.move();
