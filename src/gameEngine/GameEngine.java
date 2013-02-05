@@ -45,6 +45,7 @@ public class GameEngine {
 		}
 		width=display.getmapDisplay_width();
 		height=display.getmapDisplay_height();
+		System.out.println("Width: "+width+" Height: "+height);
 		map.setWidth(width);
 		map.setLength(height);	
 		display.setLightPlace(0.0f,(float)height/2,0.0f);
