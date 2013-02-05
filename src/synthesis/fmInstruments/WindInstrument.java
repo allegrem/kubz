@@ -1,68 +1,30 @@
 package synthesis.fmInstruments;
 
-import java.util.ArrayList;
-import synthesis.AudioBlock;
-import synthesis.basicblocks.noinputblocks.WhiteNoise;
+import synthesis.basicblocks.noinputblocks.Constant;
 import synthesis.basicblocks.oneinputblocks.Gain;
+import synthesis.basicblocks.orderedinputsblocks.ADSR;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
 import synthesis.basicblocks.severalinputsblocks.Adder;
-import synthesis.basicblocks.severalinputsblocks.Multiplier;
-import synthesis.exceptions.TooManyInputsException;
 import synthesis.parameter.ParamBlock;
 import synthesis.parameter.ParameterAudioBlock;
 
-/**
- * @author allegrem
- * 
- */
-//public class WindInstrument extends FmInstrument {
-//
-//	private final ParameterAudioBlock vibratoFreq; // f_v
-//	private final ParameterAudioBlock vibratoFactor; // alpha
-//	private final ParameterAudioBlock frequency; // f_m
-//	private final ParameterAudioBlock jitterFactor; // sigma
-//	private final ParameterAudioBlock ampNoiseFactor1; // K_1
-//	private final ParameterAudioBlock envFactor; // I
-//	private final ParameterAudioBlock ampNoiseFactor2; // K_2
-//	private final ParameterAudioBlock freqFactor; // H
-//
-//	public WindInstrument()
-//			throws TooManyInputsException {
-//		super();
-//		
-//		AudioBlock vibrato = new SineWaveOscillator(vibratoFreq,
-//				new Multiplier(frequency, vibratoFactor));
-//
-//		Multiplier lowFreqNoise = new Multiplier(jitterFactor, frequency);
-//		lowFreqNoise.plugin(new WhiteNoise()); // WARNING! Mising low pass
-//												// filter
-//
-//		Adder freqInput1 = new Adder(new ArrayList<AudioBlock>()); // Berk...
-//		freqInput1.plugin(vibrato);
-//		// freqInput1.plugin(lowFreqNoise);
-//		freqInput1.plugin(frequency);
-//
-//		Multiplier noise = new Multiplier(ampNoiseFactor1, new WhiteNoise()); // low
-//																				// pass?
-//
-//		Adder ampInput1 = new Adder(new ArrayList<AudioBlock>()); // Berk...
-//		ampInput1.plugin(noise);
-//		ampInput1.plugin(envFactor); // WARNING! Missing envelope
-//
-//		SineWaveOscillator osc1 = new SineWaveOscillator(freqInput1, ampInput1);
-//
-//		Gain amplifiedOsc1 = new Gain(100f);
-//		amplifiedOsc1.plugin(osc1);
-//
-//		Multiplier amplifiedFreqInput1 = new Multiplier(freqFactor, freqInput1);
-//
-//		Adder freqInput2 = new Adder(new ArrayList<AudioBlock>()); // Berk...
-//		freqInput2.plugin(amplifiedOsc1);
-//		freqInput2.plugin(amplifiedFreqInput1);
-//
-//		Multiplier ampInput2 = new Multiplier(ampNoiseFactor2, ampInput1);
-//
-//		setOut(new SineWaveOscillator(freqInput2, ampInput2));
-//	}
-//
-//}
+public class WindInstrument extends FmInstrument{
+	
+	private final ParameterAudioBlock fm;
+	private final ParameterAudioBlock amp;
+	private final ParameterAudioBlock mod; 
+	
+	public WindInstrument(){
+		fm = addParam(new ParamBlock("fm",300,900,600)); //RECOM val = 600Hz
+		amp = addParam(new ParamBlock("amp",0,120,100));
+		mod = addParam(new ParamBlock("mod",2,10,4)); //RECOM val=4		
+		
+		ADSR env1 = new ADSR(new Constant(0.3f), new Constant(0.2f), new Constant(0.8f), new Constant(0.1f), 1f, amp);		
+		Gain fp = new Gain(1.5f, fm);
+		Adder adder1 = new Adder(new Gain((float) mod.getValue(),fm),env1);
+		SineWaveOscillator osc1 = new SineWaveOscillator(fm,adder1);
+		Adder adder2 = new Adder(fp,osc1);
+		SineWaveOscillator out = new SineWaveOscillator(adder2,env1);
+	}
+
+}

@@ -39,8 +39,10 @@ public class WoodInstrument extends FmInstrument {
 		a = addParam(new GainParamBlock("attack", 0, 100, 30, 0.01f));
 
 		Adder vibrato = new Adder(fm, new SineWaveOscillator(vibrFreq,
-				new Multiplier(fm, vibrGainFactor)));
-		Gain fp = new Gain(3f, vibrato);
+			new Multiplier(fm, vibrGainFactor)));
+		//Vibrato vibrato = new Vibrato((float) (vibrGainFactor.getValue()*0.001),vibrFreq.getValue());
+		//vibrato.plugin(fm);
+		Gain fp = new Gain(3f, fm);
 		SineWaveOscillator osc1 = new SineWaveOscillator(vibrato,
 				new Multiplier(mod, fm));
 
