@@ -5,6 +5,7 @@ package monster;
  * @author Felix
  */
 
+import gameEngine.GameEngine;
 import unit.Unit;
 
 public class MoveType {
@@ -42,6 +43,9 @@ public class MoveType {
 		double rand = Math.random();
 		double xdir =2*(0.5 - rand)*speed; 	
 		double ydir = Math.sqrt(1 - 4*(0.5-rand)*(0.5-rand))* speed;
-		monster.getPos().move(xdir, ydir);
+		if ((monster.getX()+xdir>0)&&(monster.getX()+xdir<monster.gameEngine.getWidth())
+				&&(monster.getY()+ydir>0)&&(monster.getX()+xdir<monster.gameEngine.getHeight())){
+			monster.getPos().move(xdir, ydir);
+		}		
 	}
 }
