@@ -1,7 +1,6 @@
 package synthesis.parameter;
 
 import java.util.Observable;
-
 import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
@@ -93,7 +92,8 @@ public class ParamBlock extends Observable implements ParameterAudioBlock {
 
 	/**
 	 * Modify the value of the parameter. This value is not processed when
-	 * {@link ParamBlock#play(Float)} is called.
+	 * {@link ParamBlock#play(Float)} is called. Calling this method also
+	 * notifies observers.
 	 */
 	@Override
 	public void setValue(int value) {

@@ -1,17 +1,12 @@
 package synthesis.fmInstruments;
 
-import java.util.ArrayList;
-
-import synthesis.AudioBlock;
 import synthesis.basicblocks.noinputblocks.Constant;
 import synthesis.basicblocks.noinputblocks.WhiteNoise;
 import synthesis.basicblocks.oneinputblocks.FixedADSR;
 import synthesis.basicblocks.oneinputblocks.Gain;
-import synthesis.basicblocks.oneinputblocks.OneInputBlock;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
 import synthesis.basicblocks.severalinputsblocks.Adder;
 import synthesis.basicblocks.severalinputsblocks.Multiplier;
-import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.exceptions.TooManyInputsException;
 import synthesis.parameter.ParamBlock;
 import synthesis.parameter.ParameterAudioBlock;
@@ -21,7 +16,7 @@ import synthesis.parameter.ParameterAudioBlock;
  * @author valeh
  *
  */
-public class PianoInstrument implements FmInstrument{
+public class PianoInstrument extends FmInstrument{
 	private static final int STEPS = 1000; //lets define the parameters on a scale of 1 to 1000
 	//different params
 	private final ParameterAudioBlock f0;
@@ -32,50 +27,19 @@ public class PianoInstrument implements FmInstrument{
 	private final ParameterAudioBlock d2;
 	private final ParameterAudioBlock amp;
 	
-
-	private AudioBlock out; 
-	private ArrayList<ParameterAudioBlock> paramList;
-	
 	/**
 	 * Constructs a bell with the different 
 	 * controllable parameters.
 	 */
-	public PianoInstrument(){
-		f0 = new ParamBlock("f0", 100, 1000, 440);
-		epsilon = new ParamBlock("epsilon",1,10,2);
-		a1 = new ParamBlock("a1", 0,100,0);
-		d1 = new ParamBlock("d1",560,1000,580);
-		
-		a2 = new ParamBlock("a2", 0, 50, 2);
-		d2 = new ParamBlock("d", 800, 1000, 998);
-		
-		amp = new ParamBlock("amp", 0, 120, 100);
-		
-		out = buildInstrument();
-		paramList = generateParamList();
-	}
-	
-	private ArrayList<ParameterAudioBlock> generateParamList(){
-		ArrayList<ParameterAudioBlock> list = new ArrayList<ParameterAudioBlock>();
-		
-		list.add(f0);
-		list.add(a1);
-		list.add(d1);
-		list.add(a2);
-		list.add(d2);
-		list.add(epsilon);
-		list.add(amp);
+	public PianoInstrument() {
+		f0 = addParam(new ParamBlock("f0", 100, 1000, 440));
+		epsilon = addParam(new ParamBlock("epsilon",1,10,2));
+		a1 = addParam(new ParamBlock("a1", 0,100,0));
+		d1 = addParam(new ParamBlock("d1",560,1000,580));
+		a2 = addParam(new ParamBlock("a2", 0, 50, 2));
+		d2 = addParam(new ParamBlock("d", 800, 1000, 998));
+		amp = addParam(new ParamBlock("amp", 0, 120, 100));
 
-		return list;
-		
-	}
-	
-	/**
-	 * Creates the instrument out of the values of the
-	 * different parameters.
-	 * @return the resulting AudioBlock	
-	 */
-	private AudioBlock buildInstrument(){
 		WhiteNoise noise = new WhiteNoise();
 		FixedADSR env1 = new FixedADSR(a1.getValue()/STEPS,d1.getValue()/STEPS,0,0,1f);
 		FixedADSR env2 = new FixedADSR(a2.getValue()/STEPS,d2.getValue()/STEPS,0.9f,0,1f); 
@@ -104,41 +68,9 @@ public class PianoInstrument implements FmInstrument{
 		Adder adder = new Adder(osc1,osc2);
 		adder.plugin(new Constant((float) f0.getValue()));
 		
-		
 		SineWaveOscillator osc3 = new SineWaveOscillator(adder,env2);
 		
-		
-		return out = new Adder(osc3,plugin1);
-	
+		setOut(new Adder(osc3,plugin1));
 	}
-	
-	/**
-	 * @see synthesis.AudioBlock#play(java.lang.Float)
-	 */	 
-	@Override
-	public Float play(Float t) throws RequireAudioBlocksException {
-		AudioBlock out = buildInstrument();
-		return out.play(t);
-	}
-	
-	/**
-	 * @see synthesis.AudioBlock#phi(java.lang.Float)
-	 */	 
-	@Override
-	public Float phi(Float t) throws RequireAudioBlocksException {
-		AudioBlock out = buildInstrument();
-		return out.phi(t);
-	}
-	
-	/**
-	 * @see synthesis.FmInstrument#getParameters
-	 */	 
-	@Override
-	public ArrayList<ParameterAudioBlock> getParameters() {
-		return paramList;
-	}
-	
-	
-			
 
 }

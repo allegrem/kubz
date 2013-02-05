@@ -95,7 +95,7 @@ public class MainSynthesis {
 		SineWaveOscillator o2 = new SineWaveOscillator(off, new Constant(120f));
 		
 <<<<<<< HEAD
-		Filter filter = new Filter(feedback, feedforward);
+		DigitalFilter filter = new DigitalFilter(feedback, feedforward);
 		filter.plugin(noise);
 		
 		AudioBlock out2 = filter;

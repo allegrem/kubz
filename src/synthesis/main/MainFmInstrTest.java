@@ -5,12 +5,10 @@ import synthesis.SynthesisUtilities;
 import synthesis.audiooutput.SpeakersOutput;
 import synthesis.audiooutput.WavFileOutput;
 import synthesis.basicblocks.noinputblocks.Constant;
-import synthesis.basicblocks.noinputblocks.FixedSineWaveOscillator;
 import synthesis.basicblocks.oneinputblocks.FixedADSR;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
 import synthesis.basicblocks.severalinputsblocks.Adder;
 import synthesis.exceptions.TooManyInputsException;
-import synthesis.fmInstruments.WindInstrument;
 
 public class MainFmInstrTest {
 

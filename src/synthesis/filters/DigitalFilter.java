@@ -10,7 +10,7 @@ import synthesis.exceptions.RequireAudioBlocksException;
  * @author allegrem
  *
  */
-public class Filter extends OneInputBlock {
+public class DigitalFilter extends OneInputBlock {
 	
 	private final ArrayList<Float> feedbackwards;
 	
@@ -23,7 +23,7 @@ public class Filter extends OneInputBlock {
 	 * @param feedbackwards
 	 * @param feedforwards
 	 */
-	public Filter(ArrayList<Float> feedbackwards, ArrayList<Float> feedforwards) {
+	public DigitalFilter(ArrayList<Float> feedbackwards, ArrayList<Float> feedforwards) {
 		super();
 		this.feedbackwards = feedbackwards;
 		this.feedforwards = feedforwards;

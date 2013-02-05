@@ -6,15 +6,12 @@ import synthesis.AudioBlock;
 import synthesis.SynthesisUtilities;
 import synthesis.audiooutput.SpeakersOutput;
 import synthesis.basicblocks.noinputblocks.Constant;
-import synthesis.basicblocks.noinputblocks.FixedSineWaveOscillator;
 import synthesis.basicblocks.oneinputblocks.Gain;
 import synthesis.basicblocks.orderedinputsblocks.ADSR;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
 import synthesis.basicblocks.severalinputsblocks.Adder;
-import synthesis.basicblocks.severalinputsblocks.Multiplier;
 import synthesis.exceptions.AudioException;
 import synthesis.exceptions.RequireAudioBlocksException;
-import synthesis.fmInstruments.WindInstrument;
 
 public class MainFourierTest {
 

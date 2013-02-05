@@ -11,6 +11,7 @@ import synthesis.exceptions.RequireAudioBlocksException;
  */
 public class SynthesisUtilities {
 
+	@Deprecated
 	public static byte[] computeSound(Float start, Float length, AudioBlock a) 
 			throws RequireAudioBlocksException {
 		byte[] arr = new byte[(int) (length*AudioBlock.SAMPLE_RATE)];
