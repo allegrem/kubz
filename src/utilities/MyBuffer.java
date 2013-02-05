@@ -8,7 +8,7 @@ import org.lwjgl.BufferUtils;
  * @author paul
  *
  */
-public class MyFloatBuffer {
+public class MyBuffer {
 	
 	/**
 	 * Buffer de quatre float

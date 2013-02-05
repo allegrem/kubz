@@ -12,4 +12,10 @@ public interface DisplayableChild extends Displayable {
 	 * @param father
 	 */
 	public void setFather(DisplayableFather father);
+	
+	/**
+	 * 
+	 * @return Si le fils est mort
+	 */
+	public boolean isDead();
 }

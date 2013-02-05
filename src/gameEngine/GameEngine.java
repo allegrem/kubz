@@ -1,7 +1,8 @@
 package gameEngine;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
-//import base.Base;
+import base.Base;
 
 import OpenGL.GLDisplay;
 import map2.Map;
@@ -11,25 +12,11 @@ import player.*;
 import unit.Unit;
 import utilities.RandomPerso;
 import views.staticViews.BackgroundView;
-//import wall.Wall;
+import wall.Wall;
 import cube.Cube;
-//import cubeManager.*;
+import cubeManager.*;
 
 public class GameEngine {
-	private final int width=950;
-	private final int height=700;
-	private ArrayList<Monster> monsterList;
-	private ArrayList<Player> playerList;
-	/*private ArrayList<Wall> walls;
-	private ArrayList<Base> bases;
-	private CubeManager cubeManager;*/
-	private GLDisplay display;
-	private Map map;
-	private MapReader reader=new MapReader("Maps/bFile.txt","Maps/mFile.txt","Maps/WFile.txt",this);
-	private boolean quit;
-	
-	
-	
 	public int getWidth() {
 		return width;
 	}
@@ -38,24 +25,57 @@ public class GameEngine {
 		return height;
 	}
 
+
+	private final int width;
+	private final int height;
+	private ArrayList<Monster> monsterList;
+	private ArrayList<Player> playerList;
+	private ArrayList<Wall> walls;
+	private ArrayList<Base> bases;
+	private CubeManager cubeManager;
+	private GLDisplay display;
+	private Map map;
+	private MapReader reader=new MapReader("Maps/bFile.txt","Maps/mFile.txt","Maps/WFile.txt",this);
+	private boolean quit;
+	
 	public GameEngine(){
 		RandomPerso.initialize();
-		map= new Map(width,height);
-		display=new GLDisplay(width,height,map);
+		display=new GLDisplay();
+		map= new Map();
+		display.setMap(map);
 		display.start();
+		while(!display.initialized()){
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		width=display.getmapDisplay_width();
+		height=display.getmapDisplay_height();
+		map.setWidth(width);
+		map.setLength(height);	
+		display.setLightPlace(0.0f,(float)height/2,0.0f);
+		//display.mode3D();
 		map.add(new BackgroundView(width,height,100));
-		
 		try {
 			monsterList=reader.readMonsters();
-			/*bases=reader.readBases();
-			walls=reader.readWalls();*/
+			bases=reader.readBases();
+			walls=reader.readWalls();
 			playerList=new ArrayList<Player>();
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		playerList.add(new Player(this));
+		playerList.add(new Player(this));
+		playerList.add(new Player(this));
+		while(display.isAlive()){
 			playerTurn();
+		
+		}
 	}
 	
 	/**
@@ -108,13 +128,11 @@ public class GameEngine {
 		return map;
 		
 	}
+	
 
 	public void setFrozen(Cube owner) {
+		// TODO Auto-generated method stub
 		
-	}
-
-	public ArrayList<Monster> getMonsterList() {
-		return monsterList;
 	}
 
 }

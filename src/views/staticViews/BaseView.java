@@ -4,8 +4,11 @@ package views.staticViews;
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
+import org.lwjgl.util.glu.Disk;
 import org.lwjgl.util.glu.PartialDisk;
+
 import utilities.Point;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
@@ -149,6 +152,24 @@ public class BaseView implements DisplayableFather{
 	public void setCenter(Point center2) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public double getAngle() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getSize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getHeight() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 
