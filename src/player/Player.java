@@ -175,11 +175,12 @@ public  class Player {
 	public void movingUTurn(){
 		setPStatesToWaiting();
 		setUStateToMoving();
+		double size=unit.getSize()*Math.sqrt(2)/2;
 		while (!KeyboardManager.tap){
-			if((KeyboardManager.zKey)&&(unit.getY()>0)) unit.translate(0,-1);
-			if((KeyboardManager.sKey)&&(unit.getY()<gameEngine.getHeight())) unit.translate(0,1);
-			if((KeyboardManager.qKey)&&(unit.getX()>0)) unit.translate(-1,0);
-			if((KeyboardManager.dKey)&&(unit.getX()<gameEngine.getWidth())) unit.translate(1,0);
+			if((KeyboardManager.zKey)&&(unit.getY()-size>0)) unit.translate(0,-1);
+			if((KeyboardManager.sKey)&&(unit.getY()+size<gameEngine.getHeight())) unit.translate(0,1);
+			if((KeyboardManager.qKey)&&(unit.getX()-size>0)) unit.translate(-1,0);
+			if((KeyboardManager.dKey)&&(unit.getX()+size<gameEngine.getWidth())) unit.translate(1,0);
 			if(KeyboardManager.wKey) unit.rotate(1);
 			if(KeyboardManager.xKey) unit.rotate(-1);	
 			try {

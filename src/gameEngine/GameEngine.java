@@ -17,15 +17,6 @@ import cube.Cube;
 import cubeManager.*;
 
 public class GameEngine {
-	public int getWidth() {
-		return width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-
 	private final int width;
 	private final int height;
 	private ArrayList<Monster> monsterList;
@@ -61,14 +52,15 @@ public class GameEngine {
 		map.add(new BackgroundView(width,height,100));
 		try {
 			monsterList=reader.readMonsters();
-			bases=reader.readBases();
+			//bases=reader.readBases();
+			bases=new ArrayList<Base>();
 			walls=reader.readWalls();
 			playerList=new ArrayList<Player>();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		bases.add(new Base(this));
 		playerList.add(new Player(this));
 		playerList.add(new Player(this));
 		playerList.add(new Player(this));
@@ -133,5 +125,20 @@ public class GameEngine {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public int getWidth() {
+		return width;
+	}
 
+	public int getHeight() {
+		return height;
+	}
+
+	public int getWindowWidth() {
+		return display.getDisplay_width();
+	}
+
+	public int getWindowHeight() {
+		return display.getDisplay_height();
+	}
 }

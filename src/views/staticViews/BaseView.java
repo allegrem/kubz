@@ -1,6 +1,8 @@
 
 package views.staticViews;
 
+import static org.lwjgl.opengl.GL11.glVertex3d;
+
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
@@ -20,6 +22,7 @@ import views.interfaces.DisplayableFather;
 public class BaseView implements DisplayableFather{
 	private PartialDisk disk1 =new PartialDisk();
 	private PartialDisk disk2=new PartialDisk();
+	private boolean rectangular=true;
 	
 	public static final int HAUT=3;
 	public static final int BAS=1;
@@ -31,6 +34,7 @@ public class BaseView implements DisplayableFather{
 	private Point center;
 	private ReadableColor color;
 	private int sens;
+	private Point size;
 	
 	/**
 	 * Nouvelle base
@@ -42,19 +46,36 @@ public class BaseView implements DisplayableFather{
 		this.center = center;
 		this.color=color;
 		this.sens=sens;
+		rectangular=false;
 	}
 	
+	public BaseView(Point center,Point size,ReadableColor color) {
+		rectangular=true;
+		this.center = center;
+		this.color=color;
+		this.size=size;
+	}
+
 	@Override
 	public void paint(){	
-
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
+				
+		if(rectangular){
+			GL11.glColor3ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue());
+			GL11.glBegin(GL11.GL_QUADS);
+			glVertex3d(center.getX()-size.getX()/2,center.getY()-size.getY()/2, 0);
+			glVertex3d(center.getX()+size.getX()/2, center.getY()-size.getY()/2, 0);
+			glVertex3d(center.getX()+size.getX()/2,center.getY()+size.getY()/2, 0);
+			glVertex3d(center.getX()-size.getX()/2,center.getY()+size.getY()/2, 0);
+			GL11.glEnd();
+		}else{
 		GL11.glColor3ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue());		
 		GL11.glTranslated(center.getX(), center.getY(), 0.1);
 		disk2.draw(0f, radius, 50, 1,sens*90,180);
 		GL11.glColor3ub((byte)(color.getRed()*90/100),(byte)(color.getGreen()*90/100),(byte)(color.getBlue()*90/100));
 		disk1.draw(radius-5, radius, 50, 1,sens*90,180);
 		GL11.glTranslated(-center.getX(), -center.getY(), -0.1);
-
+		}
 	}
 	
 	@Override
