@@ -104,7 +104,7 @@ public class GLDisplay extends Thread{
 	 */
 	@Override
 	public void run(){
-		//audioRender=new AudioRender(this,sound);
+		audioRender=new AudioRender(this,null);
 		initialize();
 		mapDisplay_height=(int)(80.0/100.0*display_height);
 		mapDisplay_width=display_height;
@@ -131,7 +131,7 @@ public class GLDisplay extends Thread{
 			setCameraDiection();
 		
 		mainRender(); //On actualise la fenetre avec le nouveau rendu
-		//audioRender.renderAudioView();
+		audioRender.renderAudioView();
 		//audioRender.renderSpectrumView();
 		update(); //On actualise la fenetre avec le nouveau rendu
 		Display.sync(frequency); //On synchronise l'affichage sur le bon FPS
@@ -260,7 +260,7 @@ public class GLDisplay extends Thread{
 	 * Definie la position de l'eclairage
 	 */
 	public void setLightPlace(float x, float y, float z){
-		lightx=x;
+		lightx=x;SETsOUND
 		lighty=y;
 		lightz=z;
 	}

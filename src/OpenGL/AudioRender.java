@@ -1,6 +1,7 @@
 package OpenGL;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.ReadableColor;
 
 
 
@@ -28,6 +29,7 @@ public class AudioRender {
 	public void renderAudioView() {
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		GL11.glBegin(GL11.GL_LINES);
+		GL11.glColor3ub((byte)ReadableColor.GREY.getRed(),(byte)ReadableColor.GREY.getGreen(),(byte)ReadableColor.GREY.getBlue());
 		if (sound != null) {
 			byte[] soundBytes = sound.getSound();
 			int maxX = zoomX - 2;
