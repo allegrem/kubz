@@ -18,7 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
-import synthesis.Sound;
+import synthesis.FilteredSound;
 
 /**
  * @author allegrem
@@ -40,13 +40,13 @@ public class SLSoundView extends JPanel implements Observer {
 
 	private static final int MANUAL_OFFSET = 25;
 
-	private Sound sound;
+	private FilteredSound filteredSound;
 
-	public SLSoundView(Sound sound) {
+	public SLSoundView(FilteredSound filteredSound) {
 		super();
 
-		this.sound = sound;
-		sound.addObserver(this);
+		this.filteredSound = filteredSound;
+		filteredSound.addObserver(this);
 
 		setPreferredSize(new Dimension(X_SIZE, Y_SIZE + 20));
 		setMinimumSize(new Dimension(X_SIZE, Y_SIZE + 20));
@@ -105,8 +105,8 @@ public class SLSoundView extends JPanel implements Observer {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		if (sound != null) {
-			byte[] soundBytes = sound.getSound();
+		if (filteredSound != null) {
+			byte[] soundBytes = filteredSound.getSound();
 			int maxX = zoomX - 2;
 			int xCoord1 = 0, yCoord1 = 0, xCoord2 = 0, yCoord2 = 0;
 			for (int x = 0; x < maxX - 1; x++) {
@@ -124,7 +124,7 @@ public class SLSoundView extends JPanel implements Observer {
 
 	private void zoom(double d) {
 		zoomX *= d;
-		if (zoomX > currentSoundLength) // cant zoom larger than sound length
+		if (zoomX > currentSoundLength) // cant zoom larger than filteredSound length
 			zoomX = currentSoundLength;
 		if (offsetX + zoomX > currentSoundLength) // move to left if we zoom out
 													// and get out of range
@@ -143,11 +143,11 @@ public class SLSoundView extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		currentSoundLength = sound.getSound().length;
+		currentSoundLength = filteredSound.getSound().length;
 		zoomX = currentSoundLength;
 		updateUI();
 		
-		System.out.println("sound view updated");
+		System.out.println("filteredSound view updated");
 	}
 
 }

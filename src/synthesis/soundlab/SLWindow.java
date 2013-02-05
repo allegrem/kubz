@@ -13,7 +13,7 @@ import javax.swing.JSeparator;
 import javax.swing.JToolBar;
 import javax.swing.JLabel;
 
-import synthesis.Sound;
+import synthesis.FilteredSound;
 import synthesis.audiooutput.SpeakersOutput;
 import synthesis.audiooutput.WavFileOutput;
 import synthesis.exceptions.AudioException;
@@ -43,13 +43,13 @@ public class SLWindow {
 	private SLSpectrumView spectrumView;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private SLBandsFilterView filterView;
-	private Sound sound;
+	private FilteredSound filteredSound;
 
 	/**
 	 * Create the application.
 	 */
 	public SLWindow() {
-		sound = new Sound(new BellInstrument(), new BandsFilter(11), 1f);
+		filteredSound = new FilteredSound(new BellInstrument(), new BandsFilter(11), 1f);
 		initialize();
 	}
 
@@ -165,16 +165,16 @@ public class SLWindow {
 		frmSoundlab.getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(new GridLayout(2, 2, 0, 0));
 
-		instrumentView = new SLInstrumentView(this, sound.getInstrument());
+		instrumentView = new SLInstrumentView(this, filteredSound.getInstrument());
 		panel.add(instrumentView);
 
-		soundView = new SLSoundView(sound);
+		soundView = new SLSoundView(filteredSound);
 		panel.add(soundView);
 
-		filterView = new SLBandsFilterView(this, sound.getBandsFilter());
+		filterView = new SLBandsFilterView(this, filteredSound.getBandsFilter());
 		panel.add(filterView);
 
-		spectrumView = new SLSpectrumView(sound);
+		spectrumView = new SLSpectrumView(filteredSound);
 		panel.add(spectrumView);
 	}
 
@@ -183,7 +183,7 @@ public class SLWindow {
 	}
 
 	private void setInstrument(FmInstrument instrument) {
-		sound.setInstrument(instrument);
+		filteredSound.setInstrument(instrument);
 		instrumentView.setInstrument(instrument);
 	}
 
@@ -194,7 +194,7 @@ public class SLWindow {
 	private void saveInWavFile() {
 		WavFileOutput wavFileOutput1 = new WavFileOutput("fmout.wav");
 		wavFileOutput1.open();
-		wavFileOutput1.play(sound.getSound());
+		wavFileOutput1.play(filteredSound.getSound());
 		try {
 			wavFileOutput1.close();
 		} catch (IOException e) {
@@ -212,7 +212,7 @@ public class SLWindow {
 					e.printStackTrace();
 				}
 				try {
-					speakersOutput.play(sound.getSound());
+					speakersOutput.play(filteredSound.getSound());
 				} catch (AudioException e) {
 					e.printStackTrace();
 				}

@@ -22,7 +22,7 @@ import javax.swing.JToolBar;
 import org.apache.commons.math3.complex.Complex;
 
 import synthesis.AudioBlock;
-import synthesis.Sound;
+import synthesis.FilteredSound;
 
 /**
  * @author allegrem
@@ -42,15 +42,15 @@ public class SLSpectrumView extends JPanel implements Observer {
 
 	private int mouseX = -1;
 
-	private Sound sound;
+	private FilteredSound filteredSound;
 
 	private int[] spectrumCache;
 
-	public SLSpectrumView(Sound sound) {
+	public SLSpectrumView(FilteredSound filteredSound) {
 		super();
 		
-		this.sound = sound;
-		sound.addObserver(this);
+		this.filteredSound = filteredSound;
+		filteredSound.addObserver(this);
 		
 		setPreferredSize(new Dimension(X_SIZE, Y_SIZE));
 		setMinimumSize(new Dimension(X_SIZE, Y_SIZE));
@@ -123,7 +123,7 @@ public class SLSpectrumView extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		Complex[] result = sound.getSpectrum();
+		Complex[] result = filteredSound.getSpectrum();
 		spectrumCache = new int[X_SIZE];
 		for (int x = 0; x < result.length / 4; x++) {
 			int x_coord = x * X_SIZE * 4 / result.length;
