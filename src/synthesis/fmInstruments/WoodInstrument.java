@@ -12,7 +12,8 @@ import synthesis.parameter.ParameterAudioBlock;
 
 /**
  * This class creates a WoodInstrument (typically violin).
- * @author : valeh 
+ * 
+ * @author valeh
  */
 public class WoodInstrument extends FmInstrument {
 
@@ -24,8 +25,7 @@ public class WoodInstrument extends FmInstrument {
 	private final ParameterAudioBlock a;
 
 	/**
-	 * Constructs a wood instrument with the 
-	 * different controllable parameters.
+	 * Constructs a wood instrument with the different controllable parameters.
 	 */
 	public WoodInstrument() {
 		super();
@@ -39,13 +39,18 @@ public class WoodInstrument extends FmInstrument {
 		a = addParam(new GainParamBlock("attack", 0, 100, 30, 0.01f));
 
 		Adder vibrato = new Adder(fm, new SineWaveOscillator(vibrFreq,
-			new Multiplier(fm, vibrGainFactor)));
-		//Vibrato vibrato = new Vibrato((float) (vibrGainFactor.getValue()*0.001),vibrFreq.getValue());
-		//vibrato.plugin(fm);
+				new Multiplier(fm, vibrGainFactor)));
+		// Vibrato vibrato = new Vibrato((float)
+		// (vibrGainFactor.getValue()*0.001),vibrFreq.getValue());
+		// vibrato.plugin(fm);
 		Gain fp = new Gain(3f, fm);
 		SineWaveOscillator osc1 = new SineWaveOscillator(vibrato,
 				new Multiplier(mod, fm));
 
+		// modulating the amplitude with a vibrato synchronized with the one for
+		// the frequency,the result's odd!
+		// Adder ampVibrato = new Adder(amp, new SineWaveOscillator(vibrFreq,new
+		// Multiplier(amp,vibrGainFactor)));
 		ADSR env1 = new ADSR(a, new Constant(0.2f), new Constant(0.8f),
 				new Constant(0.1f), 1f, amp);
 		setOut(new SineWaveOscillator(new Adder(fp, osc1), env1));

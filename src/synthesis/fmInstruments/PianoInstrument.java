@@ -41,8 +41,8 @@ public class PianoInstrument extends FmInstrument{
 		amp = addParam(new ParamBlock("amp", 0, 120, 100));
 
 		WhiteNoise noise = new WhiteNoise();
-		FixedADSR env1 = new FixedADSR(a1.getValue()/STEPS,d1.getValue()/STEPS,0,0,1f);
-		FixedADSR env2 = new FixedADSR(a2.getValue()/STEPS,d2.getValue()/STEPS,0.9f,0,1f); 
+		FixedADSR env1 = new FixedADSR(a1.getValue()/STEPS,d1.getValue()/STEPS,0,0,3f);
+		FixedADSR env2 = new FixedADSR(a2.getValue()/STEPS,d2.getValue()/STEPS,0.9f,0,3f); 
 		Gain sigma = new Gain(10.0f);
 		
 		try {
