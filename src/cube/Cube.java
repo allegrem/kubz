@@ -3,42 +3,42 @@ package cube;
 import utilities.Point;
 
 public class Cube {	
-	private float angle;
+	private short angle;
 	private boolean tap;
-	private int R;
-	private int G;
-	private int B;
+	private byte R;
+	private byte G;
+	private byte B;
 	private boolean[] irLed = new boolean[3];
-	private int patern;
-	private float id;
+	private byte patern;
+	private short id;
 	
 	
 	
 	public void update(){
-		// a remplir par GuéDau
+		// a remplir par GueDau
 	}
 	
 	
 	
-	public float getAngle() {
+	public short getAngle() {
 		return angle;
 	}
 	public boolean isTap() {
 		return tap;
 	}
-	public int getR() {
+	public byte getR() {
 		return R;
 	}
-	public int getG() {
+	public byte getG() {
 		return G;
 	}
-	public int getB() {
+	public byte getB() {
 		return B;
 	}
 	public boolean[] getIrLed() {
 		return irLed;
 	}
-	public int getPatern() {
+	public byte getPatern() {
 		return patern;
 	}		
 }
