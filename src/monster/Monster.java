@@ -46,6 +46,8 @@ public class Monster {
 		this.cible = null;
 		this.seenUnits = new ArrayList<Unit>();
 		this.gameEngine=gameEngine;
+		move=new MoveType(this,200);
+		
 		
 	}
 	
@@ -114,7 +116,7 @@ public class Monster {
 	}
 	
 	
-					/** Actions liees e la position**/
+					/** Actions liees a la position**/
 	
 	/** 
 	 * lance la procedure de mouvement du monstre
@@ -128,9 +130,16 @@ public class Monster {
 	 * @param dx
 	 * @param dy
 	 */	
-	public void translate(int dx, int dy) { 
-		pos.translate(dx, dy);
-		view.translate(dx, dy);
+	public void translate(int dx, int dy) {
+		double size=view.getSize()*Math.sqrt(2)/2;
+		if(pos.getX()+size+dx<gameEngine.getWidth()&&pos.getX()-size+dx>0){
+		pos.translate(dx, 0);
+		view.translate(dx, 0);
+		}
+		if(pos.getY()+size+dy<gameEngine.getHeight()&&pos.getY()-size+dy>0){
+			pos.translate(0, dy);
+			view.translate(0, dy);
+			}
 	}
 	
 	/**
@@ -165,6 +174,6 @@ public class Monster {
 	
 	public void act(){
 		move();
-		attack(attack.result());
+		//attack(attack.result());
 	}
 }
