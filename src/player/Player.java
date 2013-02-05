@@ -180,8 +180,8 @@ public  class Player {
 			if((GLDisplay.sKey)&&(unit.getPos().getY()<240)) unit.translate(0,1);
 			if((GLDisplay.qKey)&&(unit.getPos().getX()>0)) unit.translate(-1,0);
 			if((GLDisplay.dKey)&&(unit.getPos().getX()<240)) unit.translate(1,0);
-			//if(GLDisplay.wKey) unit.rotate(1);
-			//if(GLDisplay.xKey) unit.rotate(-1);	
+			if(GLDisplay.wKey) unit.rotate(1);
+			if(GLDisplay.xKey) unit.rotate(-1);	
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {

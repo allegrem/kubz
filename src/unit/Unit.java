@@ -123,6 +123,10 @@ public class Unit {
 	public double getDirection(){
 		return direction;
 	}
+	
+	public void rotate(double dTheta){
+		view.rotate(dTheta);
+	}
 
 
 	/**

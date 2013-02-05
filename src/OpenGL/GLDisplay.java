@@ -219,8 +219,11 @@ public static void checkKeyboard(){
 		}else
 			xKey =  false;
 		
-		if (Keyboard.isKeyDown(Keyboard.KEY_P))
+		if (Keyboard.isKeyDown(Keyboard.KEY_P)){
 				tap = true;	
+		}else 
+			tap = false;
+		
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_TAB)){
 				choice = (choice + 1)%Player.nParams;
