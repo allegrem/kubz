@@ -25,6 +25,7 @@ public class WindInstrument extends FmInstrument{
 		SineWaveOscillator osc1 = new SineWaveOscillator(fm,adder1);
 		Adder adder2 = new Adder(fp,osc1);
 		SineWaveOscillator out = new SineWaveOscillator(adder2,env1);
+		setOut(out);
 	}
 
 }
