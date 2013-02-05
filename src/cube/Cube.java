@@ -2,39 +2,43 @@ package cube;
 
 import utilities.Point;
 
-public class Cube {
-	private Point pos;
-	private double XSpeed;
-	private double YSpeed;
+public class Cube {	
+	private float angle;
+	private boolean tap;
+	private int R;
+	private int G;
+	private int B;
+	private boolean[] irLed = new boolean[3];
+	private int patern;
+	private float id;
 	
 	
-	public Cube(Point pos) {
-		super();
-		this.pos = pos;
-		XSpeed = 0;
-		YSpeed = 0;
-	}
 	
-	
-	public Point getPos() {
-		return pos;
-	}
-	public void setPos(Point pos) {
-		this.pos = pos;
-	}
-	public double getXSpeed() {
-		return XSpeed;
-	}
-	public void setXSpeed(double xSpeed) {
-		XSpeed = xSpeed;
-	}
-	public double getYSpeed() {
-		return YSpeed;
-	}
-	public void setYSpeed(double ySpeed) {
-		YSpeed = ySpeed;
+	public void update(){
+		// a remplir par GuéDau
 	}
 	
 	
-
+	
+	public float getAngle() {
+		return angle;
+	}
+	public boolean isTap() {
+		return tap;
+	}
+	public int getR() {
+		return R;
+	}
+	public int getG() {
+		return G;
+	}
+	public int getB() {
+		return B;
+	}
+	public boolean[] getIrLed() {
+		return irLed;
+	}
+	public int getPatern() {
+		return patern;
+	}		
 }

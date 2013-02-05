@@ -28,6 +28,16 @@ public class GameEngine {
 	private MapReader reader=new MapReader("Maps/bFile.txt","Maps/mFile.txt","Maps/WFile.txt",this);
 	private boolean quit;
 	
+	
+	
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
 	public GameEngine(){
 		RandomPerso.initialize();
 		map= new Map(width,height);

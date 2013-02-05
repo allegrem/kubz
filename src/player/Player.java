@@ -176,12 +176,13 @@ public  class Player {
 		setPStatesToWaiting();
 		setUStateToMoving();
 		while (!GLDisplay.tap){
-			if((GLDisplay.zKey)&&(unit.getPos().getY()>0)) unit.translate(0,-1);
-			if((GLDisplay.sKey)&&(unit.getPos().getY()<240)) unit.translate(0,1);
-			if((GLDisplay.qKey)&&(unit.getPos().getX()>0)) unit.translate(-1,0);
-			if((GLDisplay.dKey)&&(unit.getPos().getX()<240)) unit.translate(1,0);
+			if((GLDisplay.zKey)&&(unit.getY()>0)) unit.translate(0,-1);
+			if((GLDisplay.sKey)&&(unit.getY()<gameEngine.getHeight())) unit.translate(0,1);
+			if((GLDisplay.qKey)&&(unit.getX()>0)) unit.translate(-1,0);
+			if((GLDisplay.dKey)&&(unit.getX()<gameEngine.getWidth())) unit.translate(1,0);
 			if(GLDisplay.wKey) unit.rotate(1);
 			if(GLDisplay.xKey) unit.rotate(-1);	
+			System.out.println("prout");
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
