@@ -32,7 +32,7 @@ public class BellInstrument extends FmInstrument {
 		a = addParam(new ParamBlock("a", 0, 50, 2));
 		d = addParam(new ParamBlock("d", 800, 1000, 998));
 		
-		FixedADSR env = new FixedADSR(a.getValue()/STEPS,d.getValue()/STEPS,0.0f,0.0f,1f);
+		FixedADSR env = new FixedADSR(a.getValue()/STEPS,d.getValue()/STEPS,0.0f,0.0f,3f);
 		Gain fp = new Gain((float) (1/Math.sqrt(2))); 
 		try {
 			fp.plugin(fm);

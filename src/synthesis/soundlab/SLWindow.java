@@ -51,7 +51,7 @@ public class SLWindow {
 	 * Create the application.
 	 */
 	public SLWindow() {
-		filteredSound = new FilteredSound(new BellInstrument(), new BandsFilter(11), 1f);
+		filteredSound = new FilteredSound(new BellInstrument(), new BandsFilter(11), 3f);
 		initialize();
 	}
 
@@ -151,7 +151,7 @@ public class SLWindow {
 		buttonGroup.add(rdbtnmntmTwooscfm);
 		mnInstrument.add(rdbtnmntmTwooscfm);
 		
-		/*****************************************TWOOSCFMINSTRUMENTBIS***********************************************************/	
+/*****************************************TWOOSCFMINSTRUMENTBIS***********************************************************/	
 		JRadioButtonMenuItem rdbtnmntmTwooscfmBis = new JRadioButtonMenuItem(
 				"TwoOscFM2");
 		rdbtnmntmTwooscfmBis.addActionListener(new ActionListener() {
@@ -162,7 +162,7 @@ public class SLWindow {
 		buttonGroup.add(rdbtnmntmTwooscfmBis);
 		mnInstrument.add(rdbtnmntmTwooscfmBis);
 					
-/****************************************************************************************************/
+/*********************************************WOOD*******************************************************/
 		JRadioButtonMenuItem rdbtnmntmWood = new JRadioButtonMenuItem("WoodInstrument");
 		rdbtnmntmWood.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

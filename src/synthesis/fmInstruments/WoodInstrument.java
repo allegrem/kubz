@@ -52,7 +52,7 @@ public class WoodInstrument extends FmInstrument {
 		// Adder ampVibrato = new Adder(amp, new SineWaveOscillator(vibrFreq,new
 		// Multiplier(amp,vibrGainFactor)));
 		ADSR env1 = new ADSR(a, new Constant(0.2f), new Constant(0.8f),
-				new Constant(0.1f), 1f, amp);
+				new Constant(0.1f), 3f, amp);
 		setOut(new SineWaveOscillator(new Adder(fp, osc1), env1));
 	}
 
