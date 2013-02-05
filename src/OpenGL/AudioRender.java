@@ -2,6 +2,7 @@ package OpenGL;
 
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
+import java.awt.Color;
 import java.util.Observable;
 
 import org.apache.commons.math3.complex.Complex;
@@ -94,6 +95,15 @@ public void renderSpectrumView(){
 	if(sound!=null){
 	GL11.glBegin(GL11.GL_LINES);
 	GL11.glColor3ub((byte)ReadableColor.BLACK.getRed(),(byte)ReadableColor.BLACK.getGreen(),(byte)ReadableColor.BLACK.getBlue());
+
+	if (spectrumCache != null && spectrumCache.length > 0) {
+		for (int x = 0; x < X_SIZE; x++){
+			glVertex3d(x+2*X_SIZE,ymax-Y_SIZE,0);
+			glVertex3d(x+2*X_SIZE,ymax-spectrumCache[x],0);
+			
+		}
+		}
+	
 	GL11.glEnd();
 	}
 }
