@@ -37,6 +37,7 @@ import org.lwjgl.util.glu.GLU;
 
 import player.Player;
 
+import synthesis.Sound;
 import utilities.MyBuffer;
 import views.staticViews.BackgroundView;
 
@@ -59,7 +60,7 @@ public class GLDisplay extends Thread{
 	private int mapDisplay_height=0;
 	private boolean do_run=true;
 	private Map map;
-	//private Sound sound;
+	private Sound sound;
 	private int frequency=50;
 	private  boolean initialized=false;
 	private AudioRender audioRender;
@@ -103,7 +104,7 @@ public class GLDisplay extends Thread{
 	 */
 	@Override
 	public void run(){
-		//audioRender=new AudioRender(this,null);
+		audioRender=new AudioRender(this,null);
 		initialize();
 		mapDisplay_height=(int)(80.0/100.0*display_height);
 		mapDisplay_width=display_height;

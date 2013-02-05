@@ -11,5 +11,4 @@
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="projet-2012-11/OpenGL-libs/lwjgl-2.8.5/native/linux"/>
 		</attributes>
-	</classpathentry>
 </classpath>

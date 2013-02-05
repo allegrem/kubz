@@ -3,6 +3,8 @@ package OpenGL;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.ReadableColor;
 
+import synthesis.Sound;
+
 
 
 public class AudioRender {
@@ -59,6 +61,11 @@ public class AudioRender {
 	
 	
 public void renderSpectrumView(){
+	
+}
+
+public void setSound(Sound sound) {
+	this.sound=sound;
 	
 }
 

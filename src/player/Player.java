@@ -182,7 +182,6 @@ public  class Player {
 			if((KeyboardManager.dKey)&&(unit.getX()<gameEngine.getWidth())) unit.translate(1,0);
 			if(KeyboardManager.wKey) unit.rotate(1);
 			if(KeyboardManager.xKey) unit.rotate(-1);	
-			System.out.println("prout");
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
@@ -191,7 +190,7 @@ public  class Player {
 			}
 			
 		}
-		return;
+		KeyboardManager.tap = false;
 	}
 	/**
 	 * Methode qui declenche la creation du son via les Parameter

@@ -101,11 +101,11 @@ public class Map {
 		return map;
 	}
 
-	public static void setWidth(int width) {
+	public void setWidth(int width) {
 		Map.width = width;
 	}
 
-	public static void setLength(int length) {
+	public void setLength(int length) {
 		Map.length = length;
 	}
 	
