@@ -104,7 +104,7 @@ public class Sound extends Observable implements Observer {
 	
 	protected void applyFilter(BandsFilter filter) {
 		//ArrayList<Double> soundFiltered = new ArrayList<Double>();
-		byte[] soundFiltered = new byte[(int) (this.length*AudioBlock.SAMPLE_RATE)];
+		//byte[] soundFiltered = new byte[(int) (this.length*AudioBlock.SAMPLE_RATE)];
 		float time = 0;			
 		int sampleLength = (int) (AudioBlock.SAMPLE_RATE*20/1000); //*20ms sampling
 		int bandfreq = (int) (this.length*AudioBlock.SAMPLE_RATE/2)/11; //length of each band of the filter (11 bands on the whole)
@@ -131,11 +131,11 @@ public class Sound extends Observable implements Observer {
 			
 			for (int k=0;k<fourierInverse.length;k++){
 				double real = fourierInverse[k].getReal();
-				soundFiltered[(int) (k+time*AudioBlock.SAMPLE_RATE)] = (byte) real;				
+				sound[(int) (k+time*AudioBlock.SAMPLE_RATE)] = (byte) real;				
 			}
 															
 		}
-		
+		//return soundFiltered;
 	}
 	
 	

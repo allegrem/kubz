@@ -18,7 +18,7 @@ public class BandsFilter extends Observable {
 	private int[] bars;
 
 	/**
-	 * Create a new BandsFilter and initialize it as a all-pass.
+	 * Create a new BandsFilter and initialize it as an all-pass.
 	 * 
 	 * @param barNumber
 	 *            the number of bands for the filter.
