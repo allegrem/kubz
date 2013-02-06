@@ -133,7 +133,7 @@ public class GLDisplay extends Thread{
 		
 		if(mode3D){
 			setCameraDiection();
-			if(System.currentTimeMillis()-started>=time)
+			if(time>0 && System.currentTimeMillis()-started>=time)
 				mode2D();
 		}
 		
