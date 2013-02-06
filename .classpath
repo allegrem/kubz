@@ -11,6 +11,6 @@
 		</attributes>
 		<classpathentry kind="lib" path="lib/commons-math3-3.1.jar"/>		<classpathentry kind="output" path="bin"/>	</classpathentry>
 	<classpathentry kind="lib" path="lib/commons-math3-3.1.jar"/>
-	<classpathentry kind="lib" path="lib/library/core.jar"/>
+	<classpathentry kind="lib" path="XBee-libs/xbee-api-0.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
