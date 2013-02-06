@@ -29,7 +29,6 @@ public class Unit {
 		view.addChild(new LifeView(view));
 		size=view.getSize();
 		gameEngine.getMap().add(view);
-		view.addChild(new InstrumentsChoice());
 	
 	}
 	
