@@ -1,7 +1,7 @@
 package cube;
 
 import utilities.Point;
-//import Xbee library
+import processing.serial.*;//import Xbee library
 
 public class Cube {	
 	private short angle;
