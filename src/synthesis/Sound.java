@@ -103,10 +103,12 @@ public class Sound extends Observable implements Observer {
 	
 	
 	protected void applyFilter(BandsFilter filter) {
-		ArrayList<Double> soundFiltered = new ArrayList<Double>();
+		//ArrayList<Double> soundFiltered = new ArrayList<Double>();
+		byte[] soundFiltered = new byte[(int) (this.length*AudioBlock.SAMPLE_RATE)];
 		float time = 0;			
 		int sampleLength = (int) (AudioBlock.SAMPLE_RATE*20/1000); //*20ms sampling
 		int bandfreq = (int) (this.length*AudioBlock.SAMPLE_RATE/2)/11; //length of each band of the filter (11 bands on the whole)
+		
 		for (int i=0;i<(int) (this.length*AudioBlock.SAMPLE_RATE/2)/sampleLength;i++){  //(length*SR/2) / sampleLength (n°of samples in the 
 			time += i*(20/1000);	//the i-th sampling														//first half
 			byte[] soundi = new byte[sampleLength];
@@ -114,16 +116,22 @@ public class Sound extends Observable implements Observer {
 				soundi[j] = sound[(int) (j+time*AudioBlock.SAMPLE_RATE)];
 			}			
 			Complex[] fourierCoeffs = computeFourier(soundi);
+			
 			int bari = (int) ( (time+1)*AudioBlock.SAMPLE_RATE/bandfreq ); //which bar choose
 			int coeff = filter.getBar(bari);
 			double[] fourierFiltered = new double[fourierCoeffs.length];
 			for (int h = 0;h<fourierCoeffs.length;h++){						
-				fourierFiltered[i] = abs(fourierCoeffs[h]) * coeff;
+				fourierFiltered[h] = fourierCoeffs[h].abs() * (coeff/100);
 			}
-			Complex[] fourierInverse = computeFourierInverse(fourierFilterd);
+			FastFourierTransformer fourier = new FastFourierTransformer(
+					DftNormalization.STANDARD);
+			
+			Complex[] fourierInverse = fourier.transform(fourierFiltered,
+					TransformType.INVERSE);
+			
 			for (int k=0;k<fourierInverse.length;k++){
-				double real = fourierFilterd[k].getReal();
-				soundFiltered.add(new Double(real));				
+				double real = fourierInverse[k].getReal();
+				soundFiltered[(int) (k+time*AudioBlock.SAMPLE_RATE)] = (byte) real;				
 			}
 															
 		}
