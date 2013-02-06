@@ -1,6 +1,9 @@
 package gameEngine;
+import org.lwjgl.util.Color;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+
+import org.lwjgl.util.ReadableColor;
 
 import base.Base;
 
@@ -61,7 +64,7 @@ public class GameEngine {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		bases.add(new Base(this));
+		bases.add(new Base(Color.ORANGE,this));
 		playerList.add(new Player(this));
 		playerList.add(new Player(this));
 		playerList.add(new Player(this));

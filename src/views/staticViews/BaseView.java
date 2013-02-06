@@ -20,6 +20,7 @@ import views.interfaces.DisplayableFather;
  * @author valeh
  */
 public class BaseView implements DisplayableFather{
+
 	private PartialDisk disk1 =new PartialDisk();
 	private PartialDisk disk2=new PartialDisk();
 	private boolean rectangular=true;
@@ -61,12 +62,22 @@ public class BaseView implements DisplayableFather{
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 				
 		if(rectangular){
-			GL11.glColor3ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue());
 			GL11.glBegin(GL11.GL_QUADS);
+			
+			GL11.glColor3ub((byte)(color.getRed()*80/100),(byte)(color.getGreen()*80/100),(byte)(color.getBlue()*80/100));
+			
 			glVertex3d(center.getX()-size.getX()/2,center.getY()-size.getY()/2, 0);
 			glVertex3d(center.getX()+size.getX()/2, center.getY()-size.getY()/2, 0);
 			glVertex3d(center.getX()+size.getX()/2,center.getY()+size.getY()/2, 0);
 			glVertex3d(center.getX()-size.getX()/2,center.getY()+size.getY()/2, 0);
+			
+			GL11.glColor3ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue());
+			
+			glVertex3d(center.getX()-size.getX()/2+5,center.getY()-size.getY()/2+5, 0);
+			glVertex3d(center.getX()+size.getX()/2-5, center.getY()-size.getY()/2+5, 0);
+			glVertex3d(center.getX()+size.getX()/2-5,center.getY()+size.getY()/2+-5, 0);
+			glVertex3d(center.getX()-size.getX()/2+5,center.getY()+size.getY()/2-5, 0);
+			
 			GL11.glEnd();
 		}else{
 		GL11.glColor3ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue());		
@@ -194,8 +205,13 @@ public class BaseView implements DisplayableFather{
 	}
 
 
+	public Point getCenter() {
+		return center;
+	}
 
-
+	public Point getBaseSize(){
+		return size;
+	}
 	
 
 	
