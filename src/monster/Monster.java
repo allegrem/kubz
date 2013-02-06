@@ -50,6 +50,7 @@ public class Monster {
 		this.cible = null;
 		this.seenUnits = new ArrayList<Unit>();
 		this.gameEngine=gameEngine;
+		move=new RandomMove(this,500);
 		
 	}
 	
