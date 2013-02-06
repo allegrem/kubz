@@ -130,8 +130,7 @@ public class GLDisplay extends Thread{
 			setCameraDiection();
 		
 		mainRender(); //On actualise la fenetre avec le nouveau rendu
-		audioRender.renderAudioView();
-		audioRender.renderSpectrumView();
+		audioRender();
 		update(); //On actualise la fenetre avec le nouveau rendu
 		Display.sync(frequency); //On synchronise l'affichage sur le bon FPS
 	
@@ -143,10 +142,7 @@ public class GLDisplay extends Thread{
 		
 	}
 	
-	private void infosRender() {
-		
-		
-	}
+
 
 	/**
 	 * Initialisation de l'OpenGL
@@ -356,9 +352,15 @@ public class GLDisplay extends Thread{
 		return initialized;
 	}
 	
-	public void setSound(Sound sound){
+	public synchronized void setSound(Sound sound){
 		this.sound=sound;
 		audioRender.setSound(sound);
+	}
+	
+	private synchronized void audioRender() {
+		audioRender.renderAudioView();
+		audioRender.renderSpectrumView();
+		
 	}
 	
 }
