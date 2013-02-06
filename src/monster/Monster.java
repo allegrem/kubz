@@ -77,7 +77,7 @@ public class Monster {
 		int pot = Integer.MIN_VALUE;
 		for(Unit unit: seenUnits){
 			if(getPot(unit)>pot){
-				pot = getPot(unit);unit
+				pot = getPot(unit);
 				newCible = unit;
 			}
 		}
