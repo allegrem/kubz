@@ -65,7 +65,7 @@ public class GLDisplay extends Thread{
 	private  boolean initialized=false;
 	private AudioRender audioRender;
 	
-	/**
+	/*
 	 * Parametres de la projection
 	 */
 	private float camx=-20.0f;
@@ -76,6 +76,9 @@ public class GLDisplay extends Thread{
 	private float camDz=0.0f;
 	private boolean mode3D=false;
 	private boolean modeChanged=false;
+	private long time=0;
+	private long started=0;
+	
 	
 	/*
 	 * Parametres de l'eclairage
@@ -87,6 +90,8 @@ public class GLDisplay extends Thread{
 	private float lightDy;
 	private float lightDz=0.0f;
 	private Lighting lighting=new Lighting(this);
+	
+	
 	
 	
 	/**
@@ -126,8 +131,11 @@ public class GLDisplay extends Thread{
 		if(modeChanged)
 			changeViewMode();
 		
-		if(mode3D)
+		if(mode3D){
 			setCameraDiection();
+			if(System.currentTimeMillis()-started>=time)
+				mode2D();
+		}
 		
 		mainRender(); //On actualise la fenetre avec le nouveau rendu
 		audioRender();
@@ -272,9 +280,11 @@ public class GLDisplay extends Thread{
 	/**
 	 * Passage en vue 3DmapD
 	 */
-	public void mode3D() {
+	public void mode3D(long time) {
 		mode3D=true;
 		modeChanged=true;
+		this.time=time;
+		this.started=System.currentTimeMillis();
 		
 		}
 	
