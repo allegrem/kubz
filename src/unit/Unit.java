@@ -3,6 +3,7 @@ package unit;
 import gameEngine.GameEngine;
 import utilities.Point;
 import views.CubeControlledView;
+import views.informationViews.InstrumentsChoice;
 import views.informationViews.LifeView;
 import player.*;
 
@@ -28,6 +29,7 @@ public class Unit {
 		view.addChild(new LifeView(view));
 		size=view.getSize();
 		gameEngine.getMap().add(view);
+		view.addChild(new InstrumentsChoice());
 	
 	}
 	
