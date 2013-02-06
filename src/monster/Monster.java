@@ -10,6 +10,9 @@ import views.monsters.MonsterView;
 import gameEngine.GameEngine;
 
 import java.util.*;
+
+import com.sun.org.apache.xpath.internal.functions.Function;
+
 import unit.Unit;
 
 public class Monster {
@@ -21,6 +24,7 @@ public class Monster {
 	
 	protected GameEngine gameEngine;
 	private AttackType attack;
+	private ChooseType choice;
 	private MoveType move;
 	private Unit cible;
 	private ArrayList<Unit> seenUnits; 
@@ -56,15 +60,10 @@ public class Monster {
 	 * Methode qui permet de determiner le potentiel de chaque unite, l'unite 
 	 * ayant une caracterisque precise sera la cible du monstre (ex vie, distance)
 	 */
-	
-	private void setPotList(){
 		
-		for(Unit unit : seenUnits){
-			setPot(unit);
-		}
-		
-	}	
-	private void setPot(Unit unit){		
+	private int getPot(Unit unit){
+		return choice.getPot(unit);	
+
 	}		
 	
 	/**
@@ -72,12 +71,19 @@ public class Monster {
 	 * @return
 	 */
 	
-	private Unit getBetterPot(){
-		return null;
-	}
+	
 	private void setCible(){
-		this.cible = getBetterPot();
+		Unit newCible = null ;
+		int pot = Integer.MIN_VALUE;
+		for(Unit unit: seenUnits){
+			if(getPot(unit)>pot){
+				pot = getPot(unit);
+				newCible = unit;
+			}
+		}
+		cible = newCible;
 	}	
+	
 	public Unit getCible(){
 		return cible;
 	}	
@@ -100,7 +106,6 @@ public class Monster {
 	
 	private void attack(ArrayList<int[]> attackTable){
 		setSeenUnits(gameEngine.getUnitList());
-		setPotList();
 		setCible();
 		
 		if(cible != null){
