@@ -2,12 +2,11 @@ package monster;
 
 /**
  * Composante de Monster qui permet d'en gérer le mouvement
- * @author Felix
  */
 
 import unit.Unit;
 
-public class MoveType {
+public abstract class MoveType {
 	final Monster monster;
 	final double speed;
 	final int width;
