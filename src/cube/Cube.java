@@ -2,43 +2,52 @@ package cube;
 
 import utilities.Point;
 
+
+//import Xbee library
+import com.rapplogic.xbee.api.XBee;
+import com.rapplogic.xbee.api.XBeeAddress64;
+import com.rapplogic.xbee.api.XBeeException;
+import com.rapplogic.xbee.api.zigbee.ZNetTxRequest;
+import com.rapplogic.xbee.util.ByteUtils;
+
+/* import processing.serial.*;//import Xbee library */
+
+
 public class Cube {	
-	private float angle;
+
+	/**
+	 * Attribute of cube
+	 */
+	private short angle;
 	private boolean tap;
-	private int R;
-	private int G;
-	private int B;
-	private boolean[] irLed = new boolean[3];
-	private int patern;
-	private float id;
-	
-	
-	
-	public void update(){
-		// a remplir par GuéDau
+
+	private short id;
+
+	/**
+	 * Method to set the RGB color of the LEDS
+	 * @parameters : chart of 
+	 */
+	public void setRGB(){
+		
 	}
 	
+	public void setIR() {
+		
+	}
 	
+	public void setMotor() {
+		
+	}
 	
 	public float getAngle() {
 		return angle;
 	}
-	public boolean isTap() {
+	
+	public boolean getTap() {
 		return tap;
 	}
-	public int getR() {
-		return R;
-	}
-	public int getG() {
-		return G;
-	}
-	public int getB() {
-		return B;
-	}
-	public boolean[] getIrLed() {
-		return irLed;
-	}
-	public int getPatern() {
-		return patern;
-	}		
+	
+	public short getID() {
+		return id;
+
 }
