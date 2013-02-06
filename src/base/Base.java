@@ -7,6 +7,7 @@ import views.staticViews.BaseView;
 
 public class Base {
 	private Point center;
+	private Point size;
 	private int sens;
 	private ReadableColor color;
 	//private static final float radius = 80.0f; // on code le rayon des bases "en dur"
@@ -27,6 +28,18 @@ public class Base {
 		this.color = color;
 		this.gameEngine=gameEngine;
 		view = new BaseView(center, color, sens);
+		gameEngine.getMap().add(view);
+	}
+	public Base(GameEngine gameEngine) {
+		this.gameEngine=gameEngine;
+		center=null;
+		int centerx=(int)(gameEngine.getWidth()/2);
+		int centery=(int)(gameEngine.getHeight()+(gameEngine.getWindowHeight()-gameEngine.getHeight())/2);
+		this.center=new Point(centerx,centery);
+		int sizex=(int)(gameEngine.getWidth()/3);
+		int sizey=gameEngine.getWindowHeight()-gameEngine.getHeight();
+		this.size=new Point(sizex,sizey);
+		view = new BaseView(center,size,ReadableColor.GREEN);
 		gameEngine.getMap().add(view);
 	}
 	public Point getCenter() {

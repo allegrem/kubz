@@ -3,12 +3,14 @@ package unit;
 import gameEngine.GameEngine;
 import utilities.Point;
 import views.CubeControlledView;
+import views.informationViews.LifeView;
 import player.*;
 
 
 public class Unit {
 	
 	private double life;
+	private double size;
 	private Point pos=new Point(10,10);
 	private double aperture;
 	private double direction;
@@ -23,6 +25,8 @@ public class Unit {
 		this.owner = owner;
 		gameEngine=owner.getGameEngine();
 		view=new CubeControlledView(pos);
+		view.addChild(new LifeView(view));
+		size=view.getSize();
 		gameEngine.getMap().add(view);
 	
 	}
@@ -155,6 +159,12 @@ public class Unit {
 	}	
 	public UnitState getState(){
 		return state;
+	}
+
+
+	public double getSize() {
+		
+		return size;
 	}
 	
 

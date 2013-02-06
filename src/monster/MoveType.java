@@ -1,7 +1,7 @@
 package monster;
 
 /**
- * Composante de Monster qui permet d'en gérer le mouvement
+ * Composante de Monster qui permet d'en gï¿½rer le mouvement
  * @author Felix
  */
 
@@ -19,11 +19,12 @@ public class MoveType {
 		this.speed = speed;
 	}
 
-	public void move() {		
+	public void move() {	
+		randMove();
 	}
 	
 	/**
-	 * Le monstre se déplace vers une unité à la vitesse speed
+	 * Le monstre se dï¿½place vers une unitï¿½ ï¿½ la vitesse speed
 	 * @param unit
 	 */
 	final void moveTo(Unit unit){	
@@ -35,13 +36,14 @@ public class MoveType {
 	}	
 	
 	/** 
-	 * Le monstre se déplace dans direction aléatoire de norme speed, c'est une marche  
-	 * aléatoire dont l'écart à la position initiale est en speed*sqrt(nbIterations) 
+	 * Le monstre se dï¿½place dans direction alï¿½atoire de norme speed, c'est une marche  
+	 * alï¿½atoire dont l'ï¿½cart ï¿½ la position initiale est en speed*sqrt(nbIterations) 
 	 */		
 	final void randMove(){
-		double rand = Math.random();
-		double xdir =2*(0.5 - rand)*speed; 	
-		double ydir = Math.sqrt(1 - 4*(0.5-rand)*(0.5-rand))* speed;
-		monster.getPos().move(xdir, ydir);
+		double rand1 = Math.random();
+		double rand2 = Math.random();
+		double xdir =2*(0.5 - rand1)*speed; 	
+		double ydir =2*(0.5 - rand1)*speed; 
+		monster.translate((int)xdir, (int)ydir);
 	}
 }

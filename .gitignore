@@ -1,0 +1,10 @@
+#.classpath
+#.project
+.settings/
+bin/
+*.wav
+doc/
+.DS_Store
+lib_sources/
+.directory
+stats/

@@ -1,14 +1,24 @@
 package views.attacks;
 
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glColor3ub;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
+import static org.lwjgl.opengl.GL11.glVertex3d;
 
+import java.util.ArrayList;
 
 import map2.Map;
+
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
+import org.lwjgl.util.glu.Disk;
 import org.lwjgl.util.glu.PartialDisk;
 
 import utilities.Point;
+import utilities.Vector;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
 import views.monsters.MonsterView;
@@ -21,26 +31,31 @@ import views.monsters.MonsterView;
  */
 public class AttackConeView implements DisplayableChild {
 	private DisplayableFather father;
-	private double angle;
+	private double aperture;
 	private double direction;
+	private double idirection;
+	private double fatherAngle=0;
 	private int power;
 	private int start=0;
 	private ReadableColor color=Color.DKGREY;
 	private long pause=30;// Temps de pause pour le deplacement du signal
 	private long startingTime=0;
+	private boolean dead=false;
 	
 	/**
 	 * Creation d'un cone d'atatque
-	 * @param angle L'angle d'ouverture du cone
+	 * @param aperture L'aperture d'ouverture du cone
 	 * @param direction La direction du cone autour de z
 	 * Le 0 correspond a l'axe y (vers le bas)
 	 * @param power La "puissance" du cone
 	 * Plus power est grand, plus la longueur du cone sera importante
 	 */
-	public AttackConeView(double angle, double direction, int power){
-		this.angle=angle;
-		this.direction=direction;
+	public AttackConeView(double aperture, double direction, int power,DisplayableFather father){
+		this.aperture=aperture;
+		this.idirection=direction;
 		this.power=power;
+		this.father=father;
+		fatherAngle=father.getAngle();
 	}
 	
 	@Override
@@ -50,6 +65,9 @@ public class AttackConeView implements DisplayableChild {
 	
 	@Override
 	public void paint(){
+		fatherAngle=father.getAngle();
+		direction=idirection-fatherAngle;
+		idirection%=360;
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		int alpha;
 		boolean reflected =false;
@@ -72,8 +90,8 @@ public class AttackConeView implements DisplayableChild {
 		if(!reflected){
 		 for (DisplayableFather object: Map.getMap().getObjects()){
 			if (object !=father && object.collisionCanOccure(new Point(father.getX(),father.getY()),i+5)){
-				beta=direction-angle/2;
-			while(beta<=direction+angle/2 ){	
+				beta=direction-aperture/2;
+			while(beta<=direction+aperture/2 ){	
 				y=father.getY()+i*Math.cos(Math.PI/180*beta);
 				x=father.getX()+i*Math.sin(Math.PI/180*beta);
 				if (object.isInZone(new Point(x,y))){
@@ -95,9 +113,15 @@ public class AttackConeView implements DisplayableChild {
 		for(float i=start;i<=fin;i+=10){
 			alpha=Math.round((fin-i)/fin*255);
 		GL11.glColor4ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue(),(byte)alpha);
-		GL11.glTranslated(father.getX(), father.getY(),MonsterView.getHeight()/2 );
-		new PartialDisk().draw((float) i,(float) (i+5), 50,1,(float)(direction+-angle/2),(float) angle);
-		GL11.glTranslated(-father.getX(), -father.getY(),-MonsterView.getHeight()/2 );
+		glMatrixMode(GL_MODELVIEW);
+		GL11.glPopMatrix();
+		
+		GL11.glTranslated(father.getX(), father.getY(),father.getHeight()/2 );
+		new PartialDisk().draw((float) i,(float) (i+5), 50,1,(float)(direction-aperture/2),(float) aperture);
+		
+		glMatrixMode(GL_MODELVIEW);
+		GL11.glLoadIdentity();
+		GL11.glPushMatrix();
 		}
 		
 		/*
@@ -126,12 +150,11 @@ public class AttackConeView implements DisplayableChild {
 	}
 	
 	/**
-	 * Modification de l'angle d'ouverture du cone
-	 * @param Angle
-	 * @param angle 
+	 * Modification de l'aperture d'ouverture du cone
+	 * @param Aperture
 	 */
-	public void setAngle(double angle){
-		this.angle=angle;
+	public void setAperture(double aperture){
+		this.aperture=aperture;
 	}
 	
 	/**
@@ -171,6 +194,11 @@ public class AttackConeView implements DisplayableChild {
 	public String getCharac() {
 		
 		return "AttackCone";
+	}
+
+	@Override
+	public boolean isDead() {
+		return dead;
 	}
 
 	

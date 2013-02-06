@@ -1,13 +1,25 @@
 package views.attacks;
 
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glColor3ub;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
+import static org.lwjgl.opengl.GL11.glVertex3d;
+
+import java.util.ArrayList;
+
 import map2.Map;
 
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
+import org.lwjgl.util.glu.Disk;
+import org.lwjgl.util.glu.PartialDisk;
 
 import utilities.Lines;
 import utilities.Point;
+import utilities.Vector;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
 import views.monsters.MonsterView;
@@ -19,26 +31,31 @@ import views.monsters.MonsterView;
  */
 public class SinusoidalAttackView implements DisplayableChild {
 	private DisplayableFather father;
-	private double angle;
+	private double aperture;
 	private double direction;
+	private double idirection;
 	private int power;
 	private int start=0;
 	private ReadableColor color=Color.DKGREY;
 	private long pause=30;// Temps de pause pour le deplacement du signal
 	private long startingTime=0;
+	private long attackStartingTime=0;
+	private int duration=3000;
+	private boolean dead=false;
 	
 	/**
 	 * Creation d'un cone d'atatque
-	 * @param angle L'angle d'ouverture du cone
+	 * @param aperture L'aperture d'ouverture du cone
 	 * @param direction La direction du cone autour de z
 	 * Le 0 correspond a l'axe y (vers le bas)
 	 * @param power La "puissance" du cone
 	 * Plus power est grand, plus la longueur du cone sera importante
 	 */
-	public SinusoidalAttackView(double angle, double direction, int power){
-		this.angle=angle;
-		this.direction=direction;
+	public SinusoidalAttackView(double aperture, double direction, int power){
+		this.aperture=aperture;
+		this.idirection=direction;
 		this.power=power;
+		attackStartingTime=System.currentTimeMillis();
 	}
 	
 	@Override
@@ -55,6 +72,8 @@ public class SinusoidalAttackView implements DisplayableChild {
 		double x=0;
 		double y=0;
 		int fin=power-5;
+		direction=idirection+father.getAngle();
+		direction%=360;
 		/*
 		 * Activation de la transparence
 		 */
@@ -70,10 +89,10 @@ public class SinusoidalAttackView implements DisplayableChild {
 		if(!reflected){
 		 for (DisplayableFather object: Map.getMap().getObjects()){
 			if (object !=father && object.collisionCanOccure(new Point(father.getX(),father.getY()),11.0f/10.0f*i)){
-				beta=direction-angle/2;
-			while(beta<=direction+angle/2 ){	
+				beta=direction-aperture/2;
+			while(beta<=direction+aperture/2 ){	
 				y=father.getY()+11.0/10.0*i*Math.cos(Math.PI/180*beta);
-				x=father.getX()+11.0/10.0*i*Math.sin(Math.PI/180*beta);
+				x=father.getX()+11.0/10.0*i*Math.sin(Math.PI/180*beta+Math.PI);
 				if (object.isInZone(new Point(x,y))){
 					reflected=true;
 					fin=Math.round(i);
@@ -93,9 +112,15 @@ public class SinusoidalAttackView implements DisplayableChild {
 		for(float i=start;i<=fin;i+=10){
 			alpha=Math.round((fin-i)/fin*255);
 		GL11.glColor4ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue(),(byte)alpha);
-		GL11.glTranslated(father.getX(), father.getY(),MonsterView.getHeight()/2 );
-		Lines.drawSinus((float) angle, i, 10, 0.1f);
-		GL11.glTranslated(-father.getX(), -father.getY(),-MonsterView.getHeight()/2 );
+		
+		glMatrixMode(GL_MODELVIEW);
+		GL11.glPopMatrix();
+		GL11.glTranslated(father.getX(), father.getY(),father.getHeight()/2 );
+		GL11.glRotated(direction,0,0,1);
+		Lines.drawSinus((float) aperture, i, 10, 0.1f);
+		GL11.glLoadIdentity();
+		GL11.glPushMatrix();
+		
 		}
 		
 		/*
@@ -113,6 +138,10 @@ public class SinusoidalAttackView implements DisplayableChild {
 		 */
 		GL11.glDisable (GL11.GL_BLEND); 
 		GL11.glDisable(GL11.GL_ALPHA_TEST);  
+		
+	if(System.currentTimeMillis()-attackStartingTime>duration){
+			dead=true;
+		}
 	}
 
 	/**
@@ -124,11 +153,11 @@ public class SinusoidalAttackView implements DisplayableChild {
 	}
 	
 	/**
-	 * Modification de l'angle d'ouverture du cone
-	 * @param Angle
+	 * Modification de l'aperture d'ouverture du cone
+	 * @param Aperture
 	 */
-	public void setAngle(double angle){
-		this.angle=angle;
+	public void setAperture(double Aperture){
+		this.aperture=aperture;
 	}
 	
 	/**
@@ -142,13 +171,12 @@ public class SinusoidalAttackView implements DisplayableChild {
 
 	@Override
 	public int getTimeOut() {
-		// TODO Auto-generated method stub
-		return 0;
+		return duration;
 	}
 
 	@Override
 	public void setTimeOut(int time) {
-		// TODO Auto-generated method stub
+		duration=time;
 		
 	}
 
@@ -168,6 +196,11 @@ public class SinusoidalAttackView implements DisplayableChild {
 	public String getCharac() {
 		
 		return "AttackCone";
+	}
+
+	@Override
+	public boolean isDead() {
+		return dead;
 	}
 
 	

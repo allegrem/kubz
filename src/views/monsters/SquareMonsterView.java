@@ -1,10 +1,20 @@
 package views.monsters;
 
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glColor3ub;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glVertex3d;
+
+import map2.Map;
+
 import org.lwjgl.opengl.GL11;
+
+import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
+
 import utilities.Maths;
 import utilities.Point;
 import utilities.Vector;
@@ -38,80 +48,84 @@ public class SquareMonsterView extends MonsterView {
 		GL11.glEnable(GL11.GL_ALPHA_TEST);    
 		GL11.glBlendFunc (GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		
+		glMatrixMode(GL_MODELVIEW);
+		GL11.glPopMatrix();
+		GL11.glTranslated(getX(),getY(),0);
+		GL11.glRotated((int)Math.round(getAngle()),0,0,1);
+		
 		glBegin(GL_QUADS);
 		
 		GL11.glNormal3f(0, 0, -1.0f);
 		GL11.glColor4ub((byte) (actualColor.getRed()*100/100), (byte) (actualColor.getGreen()*100/100) , (byte) (actualColor.getBlue()*100/100),(byte)255);
-		glVertex3d(super.getX()-MonsterView.size/2, super.getY()-MonsterView.size/2, 0);
+		glVertex3d(-MonsterView.size/2, -MonsterView.size/2, 0);
 		GL11.glColor4ub((byte) (actualColor.getRed()*90/100), (byte) (actualColor.getGreen()*90/100) , (byte) (actualColor.getBlue()*90/100),(byte)255);
-		glVertex3d(super.getX()+MonsterView.size/2, super.getY()-MonsterView.size/2, 0);
+		glVertex3d(+MonsterView.size/2, -MonsterView.size/2, 0);
 		GL11.glColor4ub((byte) (actualColor.getRed()*75/100), (byte) (actualColor.getGreen()*75/100) , (byte) (actualColor.getBlue()*75/100),(byte)255);
-		glVertex3d(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
+		glVertex3d(+MonsterView.size/2, +MonsterView.size/2, 0);
 		GL11.glColor4ub((byte) (actualColor.getRed()*60/100), (byte) (actualColor.getGreen()*60/100) , (byte) (actualColor.getBlue()*60/100),(byte)255);
-		glVertex3d(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
+		glVertex3d(-MonsterView.size/2, +MonsterView.size/2, 0);
 		
 		GL11.glNormal3f(-1.0f, 0, 0);
 		GL11.glColor4ub((byte) (actualColor.getRed()*90/100), (byte) (actualColor.getGreen()*90/100) , (byte) (actualColor.getBlue()*90/100),(byte)255);
-		glVertex3d(super.getX()-MonsterView.size/2, super.getY()-MonsterView.size/2, 0);
+		glVertex3d(-MonsterView.size/2, -MonsterView.size/2, 0);
 		GL11.glColor4ub((byte) (actualColor.getRed()*100/100), (byte) (actualColor.getGreen()*100/100) , (byte) (actualColor.getBlue()*100/100),(byte)255);
-		glVertex3d(super.getX()-MonsterView.size/2, super.getY()-MonsterView.size/2, MonsterView.height);
+		glVertex3d(-MonsterView.size/2, -MonsterView.size/2, MonsterView.height);
 		GL11.glColor4ub((byte) (actualColor.getRed()*60/100), (byte) (actualColor.getGreen()*60/100) , (byte) (actualColor.getBlue()*60/100),(byte)255);
-		glVertex3d(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, MonsterView.height);
+		glVertex3d(-MonsterView.size/2, +MonsterView.size/2, MonsterView.height);
 		GL11.glColor4ub((byte) (actualColor.getRed()*75/100), (byte) (actualColor.getGreen()*75/100) , (byte) (actualColor.getBlue()*75/100),(byte)255);
-		glVertex3d(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
+		glVertex3d(-MonsterView.size/2, +MonsterView.size/2, 0);
 		
 		
 		GL11.glNormal3f(0, 1.0f, 0);
 		GL11.glColor4ub((byte) (actualColor.getRed()*100/100), (byte) (actualColor.getGreen()*100/100) , (byte) (actualColor.getBlue()*100/100),(byte)255);
-		glVertex3d(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
+		glVertex3d(-MonsterView.size/2, +MonsterView.size/2, 0);
 		GL11.glColor4ub((byte) (actualColor.getRed()*60/100), (byte) (actualColor.getGreen()*60/100) , (byte) (actualColor.getBlue()*60/100),(byte)255);
-		glVertex3d(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, MonsterView.height);
+		glVertex3d(-MonsterView.size/2, +MonsterView.size/2, MonsterView.height);
 		GL11.glColor4ub((byte) (actualColor.getRed()*75/100), (byte) (actualColor.getGreen()*75/100) , (byte) (actualColor.getBlue()*75/100),(byte)255);
-		glVertex3d(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, MonsterView.height);
+		glVertex3d(+MonsterView.size/2, +MonsterView.size/2, MonsterView.height);
 		GL11.glColor4ub((byte) (actualColor.getRed()*90/100), (byte) (actualColor.getGreen()*90/100) , (byte) (actualColor.getBlue()*90/100),(byte)255);
-		glVertex3d(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
+		glVertex3d(+MonsterView.size/2, +MonsterView.size/2, 0);
 		
 		GL11.glNormal3f(1.0f, 0, 0);
 		GL11.glColor4ub((byte) (actualColor.getRed()*90/100), (byte) (actualColor.getGreen()*90/100) , (byte) (actualColor.getBlue()*90/100),(byte)255);
-		glVertex3d(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, MonsterView.height);
+		glVertex3d(+MonsterView.size/2, +MonsterView.size/2, MonsterView.height);
 		GL11.glColor4ub((byte) (actualColor.getRed()*75/100), (byte) (actualColor.getGreen()*75/100) , (byte) (actualColor.getBlue()*75/100),(byte)255);
-		glVertex3d(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, 0);
+		glVertex3d(+MonsterView.size/2, +MonsterView.size/2, 0);
 		GL11.glColor4ub((byte) (actualColor.getRed()*60/100), (byte) (actualColor.getGreen()*60/100) , (byte) (actualColor.getBlue()*60/100),(byte)255);
-		glVertex3d(super.getX()+MonsterView.size/2, super.getY()-MonsterView.size/2, 0);
+		glVertex3d(+MonsterView.size/2, -MonsterView.size/2, 0);
 		GL11.glColor4ub((byte) (actualColor.getRed()*100/100), (byte) (actualColor.getGreen()*100/100) , (byte) (actualColor.getBlue()*100/100),(byte)255);
-		glVertex3d(super.getX()+MonsterView.size/2, super.getY()-MonsterView.size/2, MonsterView.height);
+		glVertex3d(+MonsterView.size/2, -MonsterView.size/2, MonsterView.height);
 		
 		GL11.glNormal3f(0, -1.0f, 0);
 		GL11.glColor4ub((byte) (actualColor.getRed()*60/100), (byte) (actualColor.getGreen()*60/100) , (byte) (actualColor.getBlue()*60/100),(byte)255);
-		glVertex3d(super.getX()+MonsterView.size/2, super.getY()-MonsterView.size/2, 0);
+		glVertex3d(+MonsterView.size/2, -MonsterView.size/2, 0);
 		GL11.glColor4ub((byte) (actualColor.getRed()*100/100), (byte) (actualColor.getGreen()*100/100) , (byte) (actualColor.getBlue()*100/100),(byte)255);
-		glVertex3d(super.getX()+MonsterView.size/2, super.getY()-MonsterView.size/2, MonsterView.height);
+		glVertex3d(+MonsterView.size/2, -MonsterView.size/2, MonsterView.height);
 		GL11.glColor4ub((byte) (actualColor.getRed()*90/100), (byte) (actualColor.getGreen()*90/100) , (byte) (actualColor.getBlue()*90/100),(byte)255);
-		glVertex3d(super.getX()-MonsterView.size/2, super.getY()-MonsterView.size/2, MonsterView.height);
+		glVertex3d(-MonsterView.size/2, -MonsterView.size/2, MonsterView.height);
 		GL11.glColor4ub((byte) (actualColor.getRed()*75/100), (byte) (actualColor.getGreen()*75/100) , (byte) (actualColor.getBlue()*75/100),(byte)255);
-		glVertex3d(super.getX()-MonsterView.size/2, super.getY()-MonsterView.size/2, 0);
+		glVertex3d(-MonsterView.size/2, -MonsterView.size/2, 0);
 
 		GL11.glNormal3f(0, 0, 1.0f);
 		GL11.glColor4ub((byte) actualColor.getRed(), (byte) actualColor.getGreen() , (byte) actualColor.getBlue(),(byte)255);
-		glVertex3d(super.getX()-MonsterView.size/2, super.getY()-MonsterView.size/2, MonsterView.height);
+		glVertex3d(-MonsterView.size/2, -MonsterView.size/2, MonsterView.height);
 		GL11.glColor4ub((byte) (actualColor.getRed()*90/100), (byte) (actualColor.getGreen()*90/100) , (byte) (actualColor.getBlue()*90/100),(byte)255);
-		glVertex3d(super.getX()+MonsterView.size/2, super.getY()-MonsterView.size/2, MonsterView.height);
+		glVertex3d(+MonsterView.size/2, -MonsterView.size/2, MonsterView.height);
 		GL11.glColor4ub((byte) (actualColor.getRed()*75/100), (byte) (actualColor.getGreen()*75/100) , (byte) (actualColor.getBlue()*75/100),(byte)255);
-		glVertex3d(super.getX()+MonsterView.size/2, super.getY()+MonsterView.size/2, MonsterView.height);
+		glVertex3d(+MonsterView.size/2, +MonsterView.size/2, MonsterView.height);
 		GL11.glColor4ub((byte) (actualColor.getRed()*60/100), (byte) (actualColor.getGreen()*60/100) , (byte) (actualColor.getBlue()*60/100),(byte)255);
-		glVertex3d(super.getX()-MonsterView.size/2, super.getY()+MonsterView.size/2, MonsterView.height);
+		glVertex3d(-MonsterView.size/2, +MonsterView.size/2, MonsterView.height);
 		
 		GL11.glEnd();
+		
+		GL11.glLoadIdentity();
+		GL11.glPushMatrix();
 		
 		GL11.glDisable (GL11.GL_BLEND); 
 		GL11.glDisable(GL11.GL_ALPHA_TEST);  
 		
 		paintChildren();
 
-		//direction++;
-		for(DisplayableChild child:getChildren()){
-			((AttackConeView) (child)).setDirection(direction);
-		}
 
 	}
 	

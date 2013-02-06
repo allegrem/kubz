@@ -270,7 +270,7 @@ public class WallView implements DisplayableFather{
 		/*
 		 * nombre de repetitions de la texture, si on l'utilise
 		 */
-		int nbre = Math.round(normev / 50) + 1;
+		int nbre = Math.round(normev / 100) + 1;
 
 		if (typePeinture == COULEUR) {
 			/*
@@ -282,7 +282,8 @@ public class WallView implements DisplayableFather{
 		} else if (typePeinture == TEXTURE) {
 
 			glEnable(GL11.GL_TEXTURE_2D); // Activation du mode texture
-
+			 GL11.glTexParameteri(GL11.GL_TEXTURE_2D,GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
+			 GL11.glTexParameteri(GL11.GL_TEXTURE_2D,GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
 			/*
 			 * Si la texture n'est pas chargee, on la charge
 			 */
@@ -325,9 +326,9 @@ public class WallView implements DisplayableFather{
 		GL11.glNormal3f(0.0f, 0.0f, 1.0f);
 		GL11.glTexCoord2f(0, 0);
 		glVertex3d(sommets[0].getX(), sommets[0].getY(), height);
-		GL11.glTexCoord2f(nbre, 0);
+		GL11.glTexCoord2f(1, 0);
 		glVertex3d(sommets[1].getX(), sommets[1].getY(), height);
-		GL11.glTexCoord2f(nbre, nbre);
+		GL11.glTexCoord2f(1, nbre);
 		glVertex3d(sommets[3].getX(), sommets[3].getY(), height);
 		GL11.glTexCoord2f(0, nbre);
 		glVertex3d(sommets[2].getX(), sommets[2].getY(), height);
@@ -349,13 +350,13 @@ public class WallView implements DisplayableFather{
 		
 		GL11.glNormal3f(0.0f, 0.0f, -1.0f);
 		GL11.glTexCoord2f(0, 0);
+		glVertex3d(sommets[0].getX(), sommets[0].getY(), 0);
+		GL11.glTexCoord2f(1, 0);
+		glVertex3d(sommets[1].getX(), sommets[1].getY(), 0);
+		GL11.glTexCoord2f(1, nbre);
 		glVertex3d(sommets[3].getX(), sommets[3].getY(), 0);
 		GL11.glTexCoord2f(0, nbre);
 		glVertex3d(sommets[2].getX(), sommets[2].getY(), 0);
-		GL11.glTexCoord2f(nbre, nbre);
-		glVertex3d(sommets[0].getX(), sommets[0].getY(), 0);
-		GL11.glTexCoord2f(0, nbre);
-		glVertex3d(sommets[1].getX(), sommets[1].getY(), 0);
 
 		vect1= Maths.makeNormalizedVector(sommets[1].getX(), sommets[1].getY(), height,
 				sommets[1].getX(), sommets[1].getY(), 0);
@@ -365,11 +366,11 @@ public class WallView implements DisplayableFather{
 		GL11.glNormal3f((float)(normal.getX()), (float)(normal.getY()),(float)( normal.getZ())); 
 		GL11.glTexCoord2f(0, 0);
 		glVertex3d(sommets[1].getX(), sommets[1].getY(), 0);
-		GL11.glTexCoord2f(0, 1);
+		GL11.glTexCoord2f(1, 0);
 		glVertex3d(sommets[1].getX(), sommets[1].getY(), height);
-		GL11.glTexCoord2f(1, 1);
+		GL11.glTexCoord2f(1, nbre);
 		glVertex3d(sommets[3].getX(), sommets[3].getY(), height);
-		GL11.glTexCoord2f(0, 1);
+		GL11.glTexCoord2f(0, nbre);
 		glVertex3d(sommets[3].getX(), sommets[3].getY(), 0);
 		
 		vect1= Maths.makeNormalizedVector(sommets[0].getX(), sommets[0].getY(), height,
@@ -380,11 +381,11 @@ public class WallView implements DisplayableFather{
 		GL11.glNormal3f((float)(normal.getX()), (float)(normal.getY()),(float)( normal.getZ())); 
 		GL11.glTexCoord2f(0, 0);
 		glVertex3d(sommets[0].getX(), sommets[0].getY(), 0);
-		GL11.glTexCoord2f(0, 1);
+		GL11.glTexCoord2f(1, 0);
 		glVertex3d(sommets[0].getX(), sommets[0].getY(), height);
-		GL11.glTexCoord2f(1, 1);
+		GL11.glTexCoord2f(1, nbre);
 		glVertex3d(sommets[2].getX(), sommets[2].getY(), height);
-		GL11.glTexCoord2f(0, 1);
+		GL11.glTexCoord2f(0, nbre);
 		glVertex3d(sommets[2].getX(), sommets[2].getY(), 0);
 
 		GL11.glEnd();
@@ -618,6 +619,24 @@ public class WallView implements DisplayableFather{
 		if(dist+taille>=vect2.norme())
 			return true;
 		return false;
+	}
+
+	@Override
+	public double getAngle() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getSize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getHeight() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	
