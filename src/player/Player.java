@@ -237,7 +237,9 @@ public  class Player {
 	public void act(){
 		//choosingUTurn();
 		movingUTurn();
-		
+		soundEditPTurn();
+		UDirection();
+		UAperture();		
 	}
 	
 
