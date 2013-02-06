@@ -2,15 +2,23 @@ package views.staticViews;
 
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glVertex3d;
+
 import java.util.ArrayList;
+
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.ReadableColor;
+import org.newdawn.slick.Color;
+
 import utilities.Point;
 import utilities.RandomPerso;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
 
+
+import OpenGL.Textures;
 /**
  * Le background
  * 
@@ -235,6 +243,24 @@ public class BackgroundView implements DisplayableFather{
 	public boolean collisionCanOccure(Point point, float taille) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public double getAngle() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getSize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getHeight() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	

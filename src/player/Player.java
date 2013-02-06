@@ -1,13 +1,13 @@
 package player;
 
 /**
- * Classe qui représente un joueur, a des référence vers ses unités et paramètres
+ * Classe qui reprï¿½sente un joueur, a des rï¿½fï¿½rence vers ses unitï¿½s et paramï¿½tres
  */
 
 import gameEngine.GameEngine;
 
 
-import OpenGL.GLDisplay;
+import OpenGL.KeyboardManager;
 import parameter.*;
 import unit.*;
 
@@ -165,7 +165,7 @@ public  class Player {
 	public void choosingUTurn(){
 		setPStatesToWaiting();
 		setUStateToSelect();
-		while(!GLDisplay.tap) {
+		while(!KeyboardManager.tap) {
 			
 		}
 	}
@@ -175,23 +175,22 @@ public  class Player {
 	public void movingUTurn(){
 		setPStatesToWaiting();
 		setUStateToMoving();
-		while (!GLDisplay.tap){
-			if((GLDisplay.zKey)&&(unit.getY()>0)) unit.translate(0,-1);
-			if((GLDisplay.sKey)&&(unit.getY()<gameEngine.getHeight())) unit.translate(0,1);
-			if((GLDisplay.qKey)&&(unit.getX()>0)) unit.translate(-1,0);
-			if((GLDisplay.dKey)&&(unit.getX()<gameEngine.getWidth())) unit.translate(1,0);
-			if(GLDisplay.wKey) unit.rotate(1);
-			if(GLDisplay.xKey) unit.rotate(-1);	
-			System.out.println("prout");
+		double size=unit.getSize()*Math.sqrt(2)/2;
+		while (!KeyboardManager.tap){
+			if((KeyboardManager.zKey)&&(unit.getY()-size>0)) unit.translate(0,-1);
+			if((KeyboardManager.sKey)&&(unit.getY()+size<gameEngine.getHeight())) unit.translate(0,1);
+			if((KeyboardManager.qKey)&&(unit.getX()-size>0)) unit.translate(-1,0);
+			if((KeyboardManager.dKey)&&(unit.getX()+size<gameEngine.getWidth())) unit.translate(1,0);
+			if(KeyboardManager.wKey) unit.rotate(1);
+			if(KeyboardManager.xKey) unit.rotate(-1);	
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
 		}
-		return;
+		KeyboardManager.tap = false;
 	}
 	/**
 	 * Methode qui declenche la creation du son via les Parameter
@@ -199,15 +198,15 @@ public  class Player {
 	public void soundEditPTurn(){
 		setPStatesToSoundEdit();
 		setUStateToWaiting();
-		while (!GLDisplay.tap){
-				if(GLDisplay.zKey) parameters[GLDisplay.choice].translate(0,1);
-				if(GLDisplay.sKey) parameters[GLDisplay.choice].translate(0, -1);
-				if(GLDisplay.qKey) parameters[GLDisplay.choice].translate(-1, 0);
-				if(GLDisplay.dKey) parameters[GLDisplay.choice].translate(0, 1);
-				if(GLDisplay.wKey) parameters[GLDisplay.choice].rotate(1);
-				if(GLDisplay.xKey) parameters[GLDisplay.choice].rotate(-1);						
+		while (!KeyboardManager.tap){
+				if(KeyboardManager.zKey) parameters[KeyboardManager.choice].translate(0,1);
+				if(KeyboardManager.sKey) parameters[KeyboardManager.choice].translate(0, -1);
+				if(KeyboardManager.qKey) parameters[KeyboardManager.choice].translate(-1, 0);
+				if(KeyboardManager.dKey) parameters[KeyboardManager.choice].translate(0, 1);
+				if(KeyboardManager.wKey) parameters[KeyboardManager.choice].rotate(1);
+				if(KeyboardManager.xKey) parameters[KeyboardManager.choice].rotate(-1);						
 		}
-		GLDisplay.tap = false;
+		KeyboardManager.tap = false;
 	}	
 	/**
 	 * Methode qui declenche le choix de l'angle ou de l'ouverture d'attque de Unit
@@ -215,21 +214,21 @@ public  class Player {
 	public void UDirection(){
 		setPStatesToWaiting();
 		setUStateToDirection();
-		while (!GLDisplay.tap){
-			if(GLDisplay.wKey) unit.rotateDirection(1);
-			if(GLDisplay.xKey) unit.rotateDirection(-1);						
+		while (!KeyboardManager.tap){
+			if(KeyboardManager.wKey) unit.rotateDirection(1);
+			if(KeyboardManager.xKey) unit.rotateDirection(-1);						
 	}
-		GLDisplay.tap = false;
+		KeyboardManager.tap = false;
 	}
 	
 	public void UAperture(){
 		setPStatesToWaiting();
 		setUStateToDirection();
-		while (!GLDisplay.tap){
-			if(GLDisplay.wKey) unit.rotateAperture(1);
-			if(GLDisplay.xKey) unit.rotateAperture(-1);						
+		while (!KeyboardManager.tap){
+			if(KeyboardManager.wKey) unit.rotateAperture(1);
+			if(KeyboardManager.xKey) unit.rotateAperture(-1);						
 	}
-		GLDisplay.tap = false;
+		KeyboardManager.tap = false;
 	}
 	
 	
@@ -237,9 +236,7 @@ public  class Player {
 	public void act(){
 		//choosingUTurn();
 		movingUTurn();
-		soundEditPTurn();
-		UDirection();
-		UAperture();		
+		
 	}
 	
 

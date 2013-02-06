@@ -1,7 +1,7 @@
 package monster;
 
 /**
- * Composante de Monster qui permet d'en gérer le mouvement
+ * Composante de Monster qui permet d'en gï¿½rer le mouvement
  */
 
 import unit.Unit;
@@ -26,8 +26,8 @@ public abstract class MoveType {
 	}
 	
 	/**
-	 * Le monstre se déplace vers une unité à la vitesse speed
-	 * Pas de condition pour se déplacer car
+	 * Le monstre se dï¿½place vers une unitï¿½ ï¿½ la vitesse speed
+	 * Pas de condition pour se dï¿½placer car
 	 * - ne croise pas de mur (sinon ne la vois pas)
 	 * - ne sort pas de la carte (sinon le joueur est hors de la acrte et c'est pas possible)
 	 * @param unit
@@ -37,20 +37,22 @@ public abstract class MoveType {
 		double ydiff = unit.getPos().getY() - monster.getPos().getY();
 		double dx = speed*xdiff/Math.sqrt(xdiff*xdiff + ydiff*ydiff);
 		double dy = speed*ydiff/Math.sqrt(xdiff*xdiff + ydiff*ydiff);
-		monster.getPos().move(dx, dy);
+		monster.translate((int)dx, (int)dy);
 	}	
 	
 	/** 
-	 * Le monstre se déplace dans direction aléatoire de norme speed, c'est une marche  
-	 * aléatoire dont l'écart à la position initiale est en speed*sqrt(nbIterations) 
+	 * Le monstre se dï¿½place dans direction alï¿½atoire de norme speed, c'est une marche  
+	 * alï¿½atoire dont l'ï¿½cart ï¿½ la position initiale est en speed*sqrt(nbIterations) 
 	 */		
 	final void randMove(){
-		double rand = Math.random();
-		double xdir =2*(0.5 - rand)*speed; 	
-		double ydir = Math.sqrt(1 - 4*(0.5-rand)*(0.5-rand))* speed;
-		if ((monster.getX()+xdir>0)&&(monster.getX()+xdir<width)
-				&&(monster.getY()+ydir>0)&&(monster.getX()+xdir<height)){
-			monster.getPos().move(xdir, ydir);
+		double rand1 = Math.random();
+		double rand2 = Math.random();
+		double xdir =2*(0.5 - rand1)*speed; 	
+		double ydir =2*(0.5 - rand1)*speed; 
+		double size=monster.getSize()*Math.sqrt(2)/2;
+		if ((monster.getX()+size+xdir>0)&&(monster.getX()+size+xdir<width)
+				&&(monster.getY()+size+ydir>0)&&(monster.getX()+size+xdir<height)){
+			monster.translate((int)xdir, (int)ydir);
 		}		
 	}
 }

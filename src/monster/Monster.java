@@ -77,7 +77,7 @@ public class Monster {
 		int pot = Integer.MIN_VALUE;
 		for(Unit unit: seenUnits){
 			if(getPot(unit)>pot){
-				pot = getPot(unit);
+				pot = getPot(unit);unit
 				newCible = unit;
 			}
 		}
@@ -171,5 +171,10 @@ public class Monster {
 	public void act(){
 		move();
 		attack(attack.result());
+	}
+
+	public double getSize() {
+	
+		return view.getSize();
 	}
 }

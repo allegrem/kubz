@@ -1,8 +1,15 @@
 package views.monsters;
 
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glColor3ub;
+import static org.lwjgl.opengl.GL11.glVertex3d;
+
 import java.util.ArrayList;
 
 import map2.Map;
+
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 
 import utilities.Point;
@@ -18,8 +25,9 @@ import views.interfaces.DisplayableFather;
  */
 public abstract class MonsterView implements DisplayableFather{
 	protected static final double size= 30;
-	protected static final int height = 30;
+	protected static final double height = 30;
 	private Point position;
+	private double angle=0;
 	private Map map;
 	private ReadableColor color;
 	protected ReadableColor actualColor;
@@ -144,17 +152,31 @@ public abstract class MonsterView implements DisplayableFather{
 	}
 	
 	public void paintChildren(){
+		ArrayList<DisplayableChild> childrenDead = new ArrayList<DisplayableChild>();
 		for(DisplayableChild child:children){
-			child.paint();
-			
+			if(child.isDead()){
+				childrenDead.add(child);
+			}else
+				child.paint();
+		}
+		
+		for(DisplayableChild child:childrenDead){
+			children.remove(child);
 		}
 	}
 	
-	public static double getSize(){
+	@Override
+	public  double getSize(){
 		return size;
 	}
 	
-	public static int getHeight(){
+	@Override
+	public double getHeight(){
 		return height;
+	}
+	
+	@Override
+	public double getAngle(){
+		return angle;
 	}
 }

@@ -35,7 +35,7 @@ public class Textures {
 	public static void initTextureWall(){
 		textureWall=null;
 		try {
-			textureWall = TextureLoader.getTexture("JPG",ResourceLoader.getResourceAsStream("Textures/metal021.jpg"));
+			textureWall = TextureLoader.getTexture("JPG",ResourceLoader.getResourceAsStream("Textures/metal049.jpg"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

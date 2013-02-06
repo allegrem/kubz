@@ -1,16 +1,24 @@
 package views;
 
 
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glVertex3d;
+
 import java.util.ArrayList;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
+
+import OpenGL.GLDisplay;
+
 import utilities.Maths;
 import utilities.Point;
 import utilities.Vector;
+import views.attacks.AttackConeView;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
 import views.monsters.MonsterView;
@@ -24,11 +32,11 @@ import views.monsters.MonsterView;
  */
 public class CubeControlledView implements DisplayableFather{
 	private double size= 30;
-	//private int height = 30;
+	private double height = 30;
 	private Point position;
 	private ArrayList<DisplayableChild> children= new ArrayList<DisplayableChild>();
 	private int duration=0;
-	private ReadableColor color=Color.RED;
+	private ReadableColor color=ReadableColor.RED;
 	private boolean untracked=true; //L'unite est-elle sur la table ?
 	private double angle = 0;
 	private double aperture;
@@ -54,7 +62,10 @@ public class CubeControlledView implements DisplayableFather{
 	}
 	public void rotate(double dTheta){
 		angle = angle + dTheta;
+		angle %=360;
 	}
+	
+	@Override
 	public double getAngle(){
 		return angle;
 	}
@@ -149,23 +160,37 @@ public class CubeControlledView implements DisplayableFather{
 	
 	@Override
 	public void paint() {
+		int x=(int) Math.round(position.getX());
+		int y=(int) Math.round(position.getY());
+		int iangle=(int) Math.round(angle);
+		
 		
 		/**
 		 * Si l'unite n'est plus sur la table, on affiche un carre rouge
 		 */
 		if (untracked){
-			glBegin(GL_QUADS);
+			glMatrixMode(GL_MODELVIEW);
 			GL11.glDisable(GL11.GL_TEXTURE_2D);
+			GL11.glTranslated(x,y,0);
+			GL11.glRotated(iangle,0,0,1);
+			GL11.glTranslated(-x,-y,0);
+			glBegin(GL_QUADS);
 			GL11.glNormal3f(0, 0, -1.0f);
 			GL11.glColor3ub((byte) (color.getRed()), (byte) (color.getGreen()) , (byte) (color.getBlue()));
 			
-			glVertex3d(position.getX()-MonsterView.getSize()/2, position.getY()-MonsterView.getSize()/2, 0.2);
-			glVertex3d(position.getX()+MonsterView.getSize()/2, position.getY()-MonsterView.getSize()/2, 0.2);
-			glVertex3d(position.getX()+MonsterView.getSize()/2, position.getY()+MonsterView.getSize()/2, 0.2);
-			glVertex3d(position.getX()-MonsterView.getSize()/2, position.getY()+MonsterView.getSize()/2, 0.2);
+			glVertex3d(position.getX()-size/2, position.getY()-size/2, 0.2);
+			glVertex3d(position.getX()+size/2, position.getY()-size/2, 0.2);
+			glVertex3d(position.getX()+size/2, position.getY()+size/2, 0.2);
+			glVertex3d(position.getX()-size/2, position.getY()+size/2, 0.2);
+			
 			GL11.glEnd();
+			GL11.glTranslated(x,y,0);
+			GL11.glRotated(-iangle,0,0,1);
+			GL11.glTranslated(-x,-y,0);
 		}
 		
+		paintChildren();
+
 	}
 
 
@@ -208,9 +233,18 @@ public class CubeControlledView implements DisplayableFather{
 	}
 	
 	public void paintChildren(){
+		ArrayList<DisplayableChild> childrenDead = new ArrayList<DisplayableChild>();
 		for(DisplayableChild child:children){
-			child.paint();
+			if(child.isDead()){
+				childrenDead.add(child);
+			}else
+				child.paint();
 		}
+		
+		for(DisplayableChild child:childrenDead){
+			children.remove(child);
+		}
+		
 	}
 
 	@Override
@@ -224,5 +258,15 @@ public class CubeControlledView implements DisplayableFather{
 	
 	public void setUnTracked(boolean bool){
 		untracked=bool;
+	}
+
+	@Override
+	public double getSize() {
+		return size;
+	}
+
+	@Override
+	public double getHeight() {
+		return height;
 	}
 }
