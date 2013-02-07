@@ -3,7 +3,6 @@ package views;
 
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
@@ -13,15 +12,11 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 
-import OpenGL.GLDisplay;
-
 import utilities.Maths;
 import utilities.Point;
 import utilities.Vector;
-import views.attacks.AttackConeView;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
-import views.monsters.MonsterView;
 
 /**
  * Un objet controlle par un cube.
@@ -171,7 +166,7 @@ public class CubeControlledView implements DisplayableFather{
 		 */
 		if (untracked){
 			glMatrixMode(GL_MODELVIEW);
-			GL11.glPopMatrix();
+			GL11.glPushMatrix();
 			
 			GL11.glTranslated(x,y,0);
 			GL11.glRotated(iangle,0,0,1);
@@ -188,7 +183,7 @@ public class CubeControlledView implements DisplayableFather{
 			GL11.glEnd();
 			
 			GL11.glLoadIdentity();
-			GL11.glPushMatrix();
+			GL11.glPopMatrix();
 			
 		}
 		
@@ -209,6 +204,7 @@ public class CubeControlledView implements DisplayableFather{
 		
 	}
 	
+	@Override
 	public synchronized void removeChild(DisplayableChild child){
 		children.remove(child);
 	}

@@ -31,6 +31,7 @@ public class IntArrayInputStream implements IIntArrayInputStream {
 		this.source = source;
 	}
 	
+	@Override
 	public int read() {
 		if (pos >= source.length) {
 			throw new IllegalStateException("end of input stream");
@@ -54,6 +55,7 @@ public class IntArrayInputStream implements IIntArrayInputStream {
 		return block;
 	}
 	
+	@Override
 	public int read(String s) {
 		return read();
 	}

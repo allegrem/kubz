@@ -265,6 +265,7 @@ public class WallView implements DisplayableFather{
 	 * On dessine le mur
 	 * 
 	 */
+	@Override
 	public void paint() {
 
 		/*
@@ -542,6 +543,7 @@ public class WallView implements DisplayableFather{
 	 * 
 	 * @return La chaine de caracteres contenant les informations
 	 */
+	@Override
 	public String getCharac() {
 		return extremity1.getX() + " " + extremity1.getY() + " "
 				+ extremity2.getX() + " " + extremity2.getY() + " " + thickness;

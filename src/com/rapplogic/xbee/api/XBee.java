@@ -51,7 +51,8 @@ public class XBee implements IXBee {
 		this.conf = new XBeeConfiguration().withMaxQueueSize(100).withStartupChecks(true);
 		
 		Runtime.getRuntime().addShutdownHook(new Thread() {
-		    public void run() { 
+		    @Override
+			public void run() { 
 		    	if (isConnected()) {
 		    		log.info("ShutdownHook is closing connection");
 		    		close();
@@ -130,6 +131,7 @@ public class XBee implements IXBee {
 	 * is set correctly and attempt to update if AP=1.  If AP=0 (Transparent mode), an
 	 * exception will be thrown.
 	 */
+	@Override
 	public void open(String port, int baudRate) throws XBeeException {
 		try {
 			if (this.isConnected()) {
@@ -176,6 +178,7 @@ public class XBee implements IXBee {
 		}
 	}
 
+	@Override
 	public void addPacketListener(PacketListener packetListener) { 
 		if (parser == null) {
 			throw new IllegalStateException("No connection");
@@ -186,6 +189,7 @@ public class XBee implements IXBee {
 		}
 	}
 
+	@Override
 	public void removePacketListener(PacketListener packetListener) {
 		if (parser == null) {
 			throw new IllegalStateException("No connection");
@@ -212,6 +216,7 @@ public class XBee implements IXBee {
 	 * @param packet
 	 * @throws IOException
 	 */
+	@Override
 	public void sendPacket(XBeePacket packet) throws IOException {	
 		this.sendPacket(packet.getByteArray());
 	}
@@ -224,6 +229,7 @@ public class XBee implements IXBee {
 	 * @param packet
 	 * @throws RuntimeException when serial device is disconnected
 	 */
+	@Override
 	public void sendPacket(int[] packet)  throws IOException {
 		// TODO should we synchronize on read lock so we are sending/recv. simultaneously?
 		// TODO call request listener with byte array
@@ -253,6 +259,7 @@ public class XBee implements IXBee {
 	 * @param request
 	 * @throws XBeeException
 	 */
+	@Override
 	public void sendAsynchronous(XBeeRequest request) throws XBeeException {
 
 		try {
@@ -272,6 +279,7 @@ public class XBee implements IXBee {
 	 * @return
 	 * @throws XBeeException
 	 */
+	@Deprecated
 	public AtCommandResponse sendAtCommand(AtCommand command) throws XBeeException {
 		return (AtCommandResponse) this.sendSynchronous(command, 5000);
 	}
@@ -302,6 +310,7 @@ public class XBee implements IXBee {
 	 * @throws XBeeException 
 	 * @throws XBeeTimeoutException thrown if no matching response is identified
 	 */
+	@Override
 	public XBeeResponse sendSynchronous(final XBeeRequest xbeeRequest, int timeout) throws XBeeTimeoutException, XBeeException {		
 		if (xbeeRequest.getFrameId() == XBeeRequest.NO_RESPONSE_FRAME_ID) {
 			throw new XBeeException("Frame Id cannot be 0 for a synchronous call -- it will always timeout as there is no response!");
@@ -319,6 +328,7 @@ public class XBee implements IXBee {
 			
 			pl = new PacketListener() {
 				// TODO handle error response as well
+				@Override
 				public void processResponse(XBeeResponse response) {
 					if (response instanceof XBeeFrameIdResponse && ((XBeeFrameIdResponse)response).getFrameId() == xbeeRequest.getFrameId()) {
 						// frame id matches -- yay we found it
@@ -345,7 +355,7 @@ public class XBee implements IXBee {
 				throw new XBeeTimeoutException();
 			}
 			
-			return (XBeeResponse) container.get(0);
+			return container.get(0);
 		} catch (IOException io) {
 			throw new XBeeException(io);
 		} finally {
@@ -373,6 +383,7 @@ public class XBee implements IXBee {
 	 * @return
 	 * @throws XBeeException 
 	 */
+	@Override
 	public XBeeResponse getResponse() throws XBeeException {
 		return getResponseTimeout(null);
 	}
@@ -392,6 +403,7 @@ public class XBee implements IXBee {
 	 * @throws XBeeException
 	 * @throws XBeeTimeoutException if timeout occurs before a response is received
 	 */
+	@Override
 	public XBeeResponse getResponse(int timeout) throws XBeeException, XBeeTimeoutException {
 		return this.getResponseTimeout(timeout);
 	}
@@ -419,6 +431,7 @@ public class XBee implements IXBee {
 	/**
 	 * Shuts down RXTX and packet parser thread
 	 */
+	@Override
 	public void close() {		
 
 		if (!this.isConnected()) {
@@ -449,6 +462,7 @@ public class XBee implements IXBee {
 	 * 
 	 * @return
 	 */
+	@Override
 	public boolean isConnected() {
 		try {
 			if (parser.getXBeeConnection().getInputStream() != null && parser.getXBeeConnection().getOutputStream() != null) {
@@ -464,6 +478,7 @@ public class XBee implements IXBee {
 	// TODO move to its own class
 	private int sequentialFrameId = 0xff;
 	
+	@Override
 	public int getCurrentFrameId() {
 		// TODO move to separate class (e.g. FrameIdCounter)
 		return sequentialFrameId;
@@ -478,6 +493,7 @@ public class XBee implements IXBee {
 	 * 
 	 * @return
 	 */
+	@Override
 	public int getNextFrameId() {
 		if (sequentialFrameId == 0xff) {
 			// flip
@@ -495,6 +511,7 @@ public class XBee implements IXBee {
 	 * @param val
 	 * Jan 24, 2009
 	 */
+	@Override
 	public void updateFrameId(int val) {
 		if (val <=0 || val > 0xff) {
 			throw new IllegalArgumentException("invalid frame id");
@@ -506,6 +523,7 @@ public class XBee implements IXBee {
 	/**
 	 * Removes all packets off of the response queue
 	 */
+	@Override
 	public void clearResponseQueue() {
 		parser.getResponseQueue().clear();
 	}

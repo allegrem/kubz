@@ -268,6 +268,7 @@ public class RxResponseIoSample extends RxBaseResponse implements NoRequestRespo
 		return (this.channelIndicator1 & DIO_CHANNEL1) > 0 || this.channelIndicator2 > 0;
 	}
 	
+	@Override
 	public String toString() {
 			
 		StringBuilder sb = new StringBuilder();

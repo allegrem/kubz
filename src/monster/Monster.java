@@ -11,8 +11,6 @@ import gameEngine.GameEngine;
 
 import java.util.*;
 
-import com.sun.org.apache.xpath.internal.functions.Function;
-
 import unit.Unit;
 
 public class Monster {
@@ -172,7 +170,6 @@ public class Monster {
 	public void act(){
 		move();
 		attack(attack.result());
-		//gameEngine.getDisplay().auto3D( gameEngine.getUnitList().get(0).getView(),this.view, 5000);
 	}
 
 	public double getSize() {

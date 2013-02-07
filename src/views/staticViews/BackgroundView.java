@@ -7,13 +7,13 @@ import static org.lwjgl.opengl.GL11.glVertex3d;
 
 import java.util.ArrayList;
 
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.ReadableColor;
 import org.newdawn.slick.Color;
 
 import utilities.Point;
 import utilities.RandomPerso;
+import views.CubeControlledView;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
 
@@ -126,13 +126,17 @@ public class BackgroundView implements DisplayableFather{
 		
 	}
 	
+	@Override
 	public void paint() {	
-		  
+		
 		 glEnable(GL11.GL_TEXTURE_2D);
+		 GL11.glTexParameteri(GL11.GL_TEXTURE_2D,GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
+		 GL11.glTexParameteri(GL11.GL_TEXTURE_2D,GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
+		 
 		 if (Textures.textureSea==null)
 		 	Textures.initTexturePath();   
 		 GL11.glColor3f(1.0f,1.0f,1.0f);
-		 Color.white.bind();
+		 Color.gray.bind();
 		 Textures.textureSea.bind();
 		 
 		
@@ -141,32 +145,32 @@ public class BackgroundView implements DisplayableFather{
 		GL11.glNormal3f(0,0, 1.0f);
 		GL11.glTexCoord2f(0,0);
 		
-		glVertex3d(-500, -500, -0.1);
+		glVertex3d(-1000, -1000, -0.1);
 		
 		GL11.glTexCoord2f(nbre,0);
-		glVertex3d(width+500, -500, -0.1);
+		glVertex3d(width+1000, -1000, -0.1);
 	
 		GL11.glTexCoord2f(nbre,nbre);
-		glVertex3d(width+500, length+500, -0.1);
+		glVertex3d(width+1000, length+1000, -0.1);
 		
 		GL11.glTexCoord2f(0,nbre);
-		glVertex3d(-500,length+500, -0.1);
+		glVertex3d(-1000,length+1000, -0.1);
 		
 		/********************************/
 		
 		GL11.glNormal3f(0,1.0f, 0);
 		
 		GL11.glTexCoord2f(0,0);
-		glVertex3d(-500, -500, 0);
+		glVertex3d(-1000, -1000, 0);
 		
 		GL11.glTexCoord2f(nbre,0);
-		glVertex3d(width+500, -500, 0);
+		glVertex3d(width+1000, -1000, 0);
 		
 		GL11.glTexCoord2f(nbre,nbre);
-		glVertex3d(width+500, -500, 1000);
+		glVertex3d(width+1000, -1000, 1000);
 		
 		GL11.glTexCoord2f(0,nbre);
-		glVertex3d(-500, -500, 1000);
+		glVertex3d(-1000, -1000, 1000);
 		
 		
 	
@@ -175,48 +179,48 @@ public class BackgroundView implements DisplayableFather{
 		GL11.glNormal3f(0,-1.0f, 0);
 		
 		GL11.glTexCoord2f(0,0);
-		glVertex3d(-500,length+500, 0);
+		glVertex3d(-1000,length+1000, 0);
 		
 		GL11.glTexCoord2f(nbre,0);
-		glVertex3d(width+500, length+500, 0);
+		glVertex3d(width+1000, length+1000, 0);
 		
 		GL11.glTexCoord2f(nbre,nbre);
-		glVertex3d(width+500, length+500, 1000);
+		glVertex3d(width+1000, length+1000, 1000);
 		
 		GL11.glTexCoord2f(0,nbre);
-		glVertex3d(-500,length+500, 1000);
+		glVertex3d(-1000,length+1000, 1000);
 		
 		/************************************/
 		
 		GL11.glNormal3f(1.0f,0, 0);
 		
 		GL11.glTexCoord2f(0,0);
-		glVertex3d(-500, -500, 0);
+		glVertex3d(-1000, -1000, 0);
 		
 		GL11.glTexCoord2f(nbre,0);
-		glVertex3d(-500,length+500, 0);
+		glVertex3d(-1000,length+1000, 0);
 		
 		GL11.glTexCoord2f(nbre,nbre);
-		glVertex3d(-500,length+500, 1000);
+		glVertex3d(-1000,length+1000, 1000);
 		
 		GL11.glTexCoord2f(0,nbre);
-		glVertex3d(-500, -500, 1000);
+		glVertex3d(-1000, -1000, 1000);
 		
 		/************************************/
 		
 		GL11.glNormal3f(-1.0f,0, 0);
 		
 		GL11.glTexCoord2f(0,0);
-		glVertex3d(width+500, -500, 0);
+		glVertex3d(width+1000, -1000, 0);
 		
 		GL11.glTexCoord2f(nbre,0);
-		glVertex3d(width+500, length+500, 0);
+		glVertex3d(width+1000, length+1000, 0);
 		
 		GL11.glTexCoord2f(nbre,nbre);
-		glVertex3d(width+500, length+500, 1000);
+		glVertex3d(width+1000, length+1000, 1000);
 		
 		GL11.glTexCoord2f(0,nbre);
-		glVertex3d(width+500, -500, 1000);
+		glVertex3d(width+1000, -1000, 1000);
 		
 		
 	
@@ -224,6 +228,7 @@ public class BackgroundView implements DisplayableFather{
 		
 
 		change();
+		
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		
 		glBegin(GL_QUADS);
@@ -245,7 +250,6 @@ public class BackgroundView implements DisplayableFather{
 		glVertex3d(0,length, 0);
 	
 		GL11.glEnd();
-		
 		
 	
 

@@ -78,6 +78,7 @@ public abstract class RxBaseResponse extends XBeeResponse {
 		this.sourceAddress = sourceAddress;
 	}
 	
+	@Override
 	public String toString() {
 		return super.toString() + ",sourceAddress=" + this.getSourceAddress() + ",rssi=" + this.getRssi() + ",options=" + this.getOptions() +
 			",isAddressBroadcast=" + this.isAddressBroadcast() + ",isPanBroadcast=" + this.isPanBroadcast();

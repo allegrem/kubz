@@ -58,6 +58,7 @@ public abstract class SeveralInputBlock implements AudioBlock {
 	 * error if the list is empty. 
 	 * @param t the specified instant
 	 */
+	@Override
 	public Float play(Float t) throws RequireAudioBlocksException{
 		if (entries == null) 
 			throw new RequireAudioBlocksException(this);
@@ -69,6 +70,7 @@ public abstract class SeveralInputBlock implements AudioBlock {
 	 * @param t the specified instant
 	 * @see AudioBlock#phi(Float)
 	 */
+	@Override
 	public Float phi(Float t) throws RequireAudioBlocksException{
 		if (entries==null)
 			throw new RequireAudioBlocksException(this);

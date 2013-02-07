@@ -38,6 +38,7 @@ public class Adder extends SeveralInputBlock {
 	 * Returns the sum of the entries s(t)=e1(t)+e2(t)+...
 	 * @param t the specified instant
 	 */
+	@Override
 	public Float play(Float t) throws RequireAudioBlocksException{
 		super.play(t);
 		float s = 0.0f;
@@ -53,6 +54,7 @@ public class Adder extends SeveralInputBlock {
 	 * @param t instant t
 	 * @see SeveralInputBlock#phi(Float)
 	 */
+	@Override
 	public Float phi(Float t) throws RequireAudioBlocksException {
 		super.phi(t);
 		Float phi = 0f;

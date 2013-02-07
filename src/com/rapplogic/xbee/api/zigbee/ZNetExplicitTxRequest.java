@@ -128,6 +128,7 @@ public class ZNetExplicitTxRequest extends ZNetTxRequest {
 	/**
 	 * Gets frame data from tx request (super) and inserts necessary bytes
 	 */
+	@Override
 	public int[] getFrameData() {
 		
 		// get frame id from tx request
@@ -153,6 +154,7 @@ public class ZNetExplicitTxRequest extends ZNetTxRequest {
 		return frameData.getIntArray();
 	}
 	
+	@Override
 	public ApiId getApiId() {
 		return ApiId.ZNET_EXPLICIT_TX_REQUEST;
 	}
@@ -189,6 +191,7 @@ public class ZNetExplicitTxRequest extends ZNetTxRequest {
 		this.profileId = profileId;
 	}
 	
+	@Override
 	public String toString() {
 		return super.toString() + 
 			",sourceEndpoint=" + ByteUtils.toBase16(this.getSourceEndpoint()) +

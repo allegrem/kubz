@@ -1,28 +1,16 @@
 package views.attacks;
 
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glColor3ub;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
-import static org.lwjgl.opengl.GL11.glVertex3d;
-
-import java.util.ArrayList;
-
 import map2.Map;
 
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
-import org.lwjgl.util.glu.Disk;
-import org.lwjgl.util.glu.PartialDisk;
-
 import utilities.Lines;
 import utilities.Point;
-import utilities.Vector;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
-import views.monsters.MonsterView;
 
 /**
  * Affiche une attaque de forme sinusoidale
@@ -114,12 +102,12 @@ public class SinusoidalAttackView implements DisplayableChild {
 		GL11.glColor4ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue(),(byte)alpha);
 		
 		glMatrixMode(GL_MODELVIEW);
-		GL11.glPopMatrix();
+		GL11.glPushMatrix();
 		GL11.glTranslated(father.getX(), father.getY(),father.getHeight()/2 );
 		GL11.glRotated(direction,0,0,1);
 		Lines.drawSinus((float) aperture, i, 10, 0.1f);
 		GL11.glLoadIdentity();
-		GL11.glPushMatrix();
+		GL11.glPopMatrix();
 		
 		}
 		

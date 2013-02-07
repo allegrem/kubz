@@ -30,12 +30,12 @@ public class InstrumentsChoice implements DisplayableChild{
 	
 	public InstrumentsChoice(){
 		disk=new Disk();
-		addInstrument(Color.BLUE);
-		addInstrument(Color.RED);
-		addInstrument(Color.GREEN);
-		addInstrument(Color.ORANGE);
-		addInstrument(Color.PURPLE);
-		addInstrument(Color.YELLOW);
+		addInstrument(ReadableColor.BLUE);
+		addInstrument(ReadableColor.RED);
+		addInstrument(ReadableColor.GREEN);
+		addInstrument(ReadableColor.ORANGE);
+		addInstrument(ReadableColor.PURPLE);
+		addInstrument(ReadableColor.YELLOW);
 		chosen=colors.get(0);
 		
 	}
@@ -54,7 +54,7 @@ public class InstrumentsChoice implements DisplayableChild{
 			x=distance*Math.cos(angle);
 			y=distance*Math.sin(angle);
 			glMatrixMode(GL_MODELVIEW);
-			GL11.glPopMatrix();
+			GL11.glPushMatrix();
 			GL11.glTranslated(posx+x, posy+y,father.getHeight()+10 );
 			if(color==chosen){
 			disk.draw(0,rayon+10, 50, 1);
@@ -62,7 +62,7 @@ public class InstrumentsChoice implements DisplayableChild{
 				disk.draw(0,rayon, 50, 1);
 			}
 			GL11.glLoadIdentity();
-			GL11.glPushMatrix();
+			GL11.glPopMatrix();
 			angle+=dAngle;
 		}
 		

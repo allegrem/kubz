@@ -165,10 +165,12 @@ public class ZNetTxRequest extends XBeeRequest {
 		return out;
 	}
 	
+	@Override
 	public int[] getFrameData() {
 		return this.getFrameDataAsIntArrayOutputStream().getIntArray();
 	}
 	
+	@Override
 	public ApiId getApiId() {
 		return ApiId.ZNET_TX_REQUEST;
 	}
@@ -213,6 +215,7 @@ public class ZNetTxRequest extends XBeeRequest {
 		this.payload = payload;
 	}
 	
+	@Override
 	public String toString() {
 		return super.toString() + 
 			",destAddr64=" + this.destAddr64 +

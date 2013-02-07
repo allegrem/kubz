@@ -36,6 +36,7 @@ public abstract class XBeeAddress {
 	
 	public abstract int[] getAddress();
 	
+	@Override
 	public String toString() {
 		return ByteUtils.toBase16(this.getAddress());
 	}

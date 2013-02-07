@@ -31,6 +31,7 @@ public class FixedADSR extends OneInputBlock {
 	}
 	
 	
+	@Override
 	public Float compute(Float t) throws RequireAudioBlocksException {
 		//super.play(t); 
 		float previous = in.play(t).floatValue();

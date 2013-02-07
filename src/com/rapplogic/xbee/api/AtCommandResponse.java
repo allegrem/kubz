@@ -127,6 +127,7 @@ public class AtCommandResponse extends XBeeFrameIdResponse {
 		return String.valueOf((char)this.char1) + String.valueOf((char)this.char2);
 	}
 	
+	@Override
 	public String toString() {
 		return "command=" + this.getCommand() +
 			",status=" + this.getStatus() + ",value=" + 

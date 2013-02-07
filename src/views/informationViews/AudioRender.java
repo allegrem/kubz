@@ -2,9 +2,6 @@ package views.informationViews;
 
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
-import java.awt.Color;
-import java.util.Observable;
-
 import org.apache.commons.math3.complex.Complex;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.ReadableColor;
@@ -39,7 +36,7 @@ public class AudioRender {
 	public AudioRender(GLDisplay display,Sound sound){
 		this.sound=sound;
 		this.display=display;
-		X_SIZE=(int)(display.getmapDisplay_width()/3);
+		X_SIZE=display.getmapDisplay_width()/3;
 		Y_SIZE=display.getDisplay_height()-display.getmapDisplay_height();
 		ymax=display.getDisplay_height();
 		ymin=display.getmapDisplay_height();

@@ -72,9 +72,9 @@ public class ApiReceiverExample {
 					}
 					
  					if (response.getApiId() == ApiId.RX_16_RESPONSE) {
-						log.info("Received RX 16 packet " + ((RxResponse16)response));
+						log.info("Received RX 16 packet " + (response));
  					} else if (response.getApiId() == ApiId.RX_64_RESPONSE) {
- 						log.info("Received RX 64 packet " + ((RxResponse64)response));
+ 						log.info("Received RX 64 packet " + (response));
 					} else {
 						log.info("Ignoring mystery packet " + response.toString());
 					}

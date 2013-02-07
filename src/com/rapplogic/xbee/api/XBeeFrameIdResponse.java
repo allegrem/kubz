@@ -39,6 +39,7 @@ public abstract class XBeeFrameIdResponse extends XBeeResponse {
 		this.frameId = frameId;
 	}
 	
+	@Override
 	public String toString() {
 		return super.toString() + ",frameId=" + ByteUtils.toBase16(this.frameId);
 	}

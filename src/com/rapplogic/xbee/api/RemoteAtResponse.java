@@ -64,6 +64,7 @@ public class RemoteAtResponse extends AtCommandResponse {
 	 * @return
 	 * Mar 4, 2009
 	 */
+	@Deprecated
 	public String getCommandName() {
 		return super.getCommand();
 	}
@@ -73,10 +74,12 @@ public class RemoteAtResponse extends AtCommandResponse {
 	 * @return
 	 * Mar 4, 2009
 	 */
+	@Deprecated
 	public int[] getCommandData() {
 		return super.getValue();
 	}
 	
+	@Override
 	public String toString() {
 		return super.toString() +
 			",remoteAddress64=" + this.remoteAddress64 +

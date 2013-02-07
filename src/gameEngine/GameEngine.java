@@ -1,9 +1,8 @@
 package gameEngine;
 import org.lwjgl.util.Color;
-import java.awt.Toolkit;
-import java.util.ArrayList;
-
 import org.lwjgl.util.ReadableColor;
+
+import java.util.ArrayList;
 
 import base.Base;
 
@@ -51,7 +50,6 @@ public class GameEngine {
 		map.setWidth(width);
 		map.setLength(height);	
 		display.setLightPlace(0.0f,(float)height/2,0.0f);
-		//display.mode3D();
 		map.add(new BackgroundView(width,height,100));
 		try {
 			monsterList=reader.readMonsters();
@@ -63,13 +61,7 @@ public class GameEngine {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		bases.add(new Base(Color.ORANGE,this));
-		playerList.add(new Player(this));
-		playerList.add(new Player(this));
-		playerList.add(new Player(this));
-		playerList.add(new Player(this));
-		playerList.add(new Player(this));
-		playerList.add(new Player(this));
+		bases.add(new Base(ReadableColor.ORANGE,this));
 		playerList.add(new Player(this));
 		playerList.add(new Player(this));
 		playerList.add(new Player(this));

@@ -506,6 +506,7 @@ public class ZNetRxIoSampleResponse extends ZNetRxBaseResponse implements NoRequ
 		analog[SUPPLY_VOLTAGE_INDEX] = supplyVoltage;
 	}
 	
+	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		

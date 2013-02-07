@@ -101,6 +101,7 @@ public class ZNetRxBaseResponse extends XBeeResponse {
 		this.option = option;
 	}
 	
+	@Override
 	public String toString() {
 		return super.toString() +
 			",remoteAddress64=" + this.remoteAddress64 +

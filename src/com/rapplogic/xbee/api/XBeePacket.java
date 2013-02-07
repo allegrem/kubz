@@ -202,6 +202,7 @@ public class XBeePacket {
 	 * @deprecated use getByteArray
 	 * @return
 	 */
+	@Deprecated
 	public int[] getPacket() {
 		return this.getByteArray();
 	}
@@ -216,6 +217,7 @@ public class XBeePacket {
 
     }
 	
+	@Override
 	public String toString() {
 		return ByteUtils.toBase16(this.packet);
 	}

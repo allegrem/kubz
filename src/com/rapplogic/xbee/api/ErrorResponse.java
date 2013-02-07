@@ -59,6 +59,7 @@ public class ErrorResponse extends XBeeResponse {
 		this.exception = exception;
 	}
 
+	@Override
 	public String toString() {
 		return super.toString() + ",errorMsg=" + this.errorMsg + ",exception=" + this.exception;
 	}

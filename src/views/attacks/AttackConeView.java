@@ -1,27 +1,17 @@
 package views.attacks;
 
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glColor3ub;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
-import static org.lwjgl.opengl.GL11.glVertex3d;
-
-import java.util.ArrayList;
-
 import map2.Map;
 
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
-import org.lwjgl.util.glu.Disk;
 import org.lwjgl.util.glu.PartialDisk;
 
 import utilities.Point;
-import utilities.Vector;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
-import views.monsters.MonsterView;
 
 /**
  * Affiche le cone d'attaque servant a
@@ -114,14 +104,14 @@ public class AttackConeView implements DisplayableChild {
 			alpha=Math.round((fin-i)/fin*255);
 		GL11.glColor4ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue(),(byte)alpha);
 		glMatrixMode(GL_MODELVIEW);
-		GL11.glPopMatrix();
+		GL11.glPushMatrix();
 		
 		GL11.glTranslated(father.getX(), father.getY(),father.getHeight()/2 );
-		new PartialDisk().draw((float) i,(float) (i+5), 50,1,(float)(direction-aperture/2),(float) aperture);
+		new PartialDisk().draw(i,i+5, 50,1,(float)(direction-aperture/2),(float) aperture);
 		
 		glMatrixMode(GL_MODELVIEW);
 		GL11.glLoadIdentity();
-		GL11.glPushMatrix();
+		GL11.glPopMatrix();
 		}
 		
 		/*

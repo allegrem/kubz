@@ -37,6 +37,7 @@ public class AtCommandQueue extends AtCommand {
 		super(command, value, frameId);
 	}
 
+	@Override
 	public ApiId getApiId() {
 		return ApiId.AT_COMMAND_QUEUE;
 	}

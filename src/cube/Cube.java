@@ -1,15 +1,5 @@
 package cube;
 
-import utilities.Point;
-
-
-//import Xbee library
-import com.rapplogic.xbee.api.XBee;
-import com.rapplogic.xbee.api.XBeeAddress64;
-import com.rapplogic.xbee.api.XBeeException;
-import com.rapplogic.xbee.api.zigbee.ZNetTxRequest;
-import com.rapplogic.xbee.util.ByteUtils;
-
 //import processing.serial.*;//import Xbee library */
 
 

@@ -79,6 +79,7 @@ public class ModemStatusResponse extends XBeeResponse implements NoRequestRespon
 		this.status = status;
 	}
 
+	@Override
 	public String toString() {
 		return super.toString() + ",status=" + this.status;
 	}

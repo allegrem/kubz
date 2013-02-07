@@ -11,10 +11,12 @@ public class InputStreamWrapper implements IIntArrayInputStream {
 		this.in = in;
 	}
 	
+	@Override
 	public int read() throws IOException {
 		return in.read();
 	}
 	
+	@Override
 	public int read(String s) throws IOException {
 		return in.read();
 	}

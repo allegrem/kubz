@@ -75,6 +75,7 @@ public class SLWindow {
 		JMenuItem mntmPlay = new JMenuItem("Play");
 		mnFile.add(mntmPlay);
 		mntmPlay.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				play();
 			}
@@ -83,6 +84,7 @@ public class SLWindow {
 
 		JMenuItem mntmQuit = new JMenuItem("Quit");
 		mntmQuit.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				frmSoundlab.dispose();
 			}
@@ -90,6 +92,7 @@ public class SLWindow {
 
 		JMenuItem mntmExportAswav = new JMenuItem("Export as .wav");
 		mntmExportAswav.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				saveInWavFile();
 			}
@@ -112,6 +115,7 @@ public class SLWindow {
 		JRadioButtonMenuItem rdbtnmntmBell = new JRadioButtonMenuItem("Bell");
 		buttonGroup.add(rdbtnmntmBell);
 		rdbtnmntmBell.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				setInstrument(new BellInstrument());
 			}
@@ -122,6 +126,7 @@ public class SLWindow {
 /*********************************PIANO*******************************************************************/
 		JRadioButtonMenuItem rdbtnmntmPiano = new JRadioButtonMenuItem("Piano");
 		rdbtnmntmPiano.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				setInstrument(new PianoInstrument());
 			}
@@ -133,6 +138,7 @@ public class SLWindow {
 		JRadioButtonMenuItem rdbtnmntmWindInstr = new JRadioButtonMenuItem(
 				"WindInstrument");
 		rdbtnmntmWindInstr.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				setInstrument(new WindInstrument());
 			}
@@ -144,6 +150,7 @@ public class SLWindow {
 		JRadioButtonMenuItem rdbtnmntmTwooscfm = new JRadioButtonMenuItem(
 				"TwoOscFM");
 		rdbtnmntmTwooscfm.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				setInstrument(new TwoOscFmInstrument());
 			}
@@ -155,6 +162,7 @@ public class SLWindow {
 		JRadioButtonMenuItem rdbtnmntmTwooscfmBis = new JRadioButtonMenuItem(
 				"TwoOscFM2");
 		rdbtnmntmTwooscfmBis.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				setInstrument(new TwoOscFmInstrumentBis());
 			}
@@ -165,6 +173,7 @@ public class SLWindow {
 /****************************************************************************************************/
 		JRadioButtonMenuItem rdbtnmntmWood = new JRadioButtonMenuItem("WoodInstrument");
 		rdbtnmntmWood.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				setInstrument(new WoodInstrument());
 			}
@@ -233,6 +242,7 @@ public class SLWindow {
 
 	protected void play() {
 		Thread thread = new Thread(new Runnable() {
+			@Override
 			public void run() {
 				SpeakersOutput speakersOutput = new SpeakersOutput();
 				try {

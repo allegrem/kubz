@@ -49,8 +49,8 @@ public class ZNetApiAtExample {
 			xbee.open("COM6", 9600);	
 			
 			// get the 8 byte SH/SL address
-			log.debug("SH is " + ByteUtils.toBase16(((AtCommandResponse)xbee.sendAtCommand(new AtCommand("SH"))).getValue()));
-			log.debug("SL is " + ByteUtils.toBase16(((AtCommandResponse)xbee.sendAtCommand(new AtCommand("SL"))).getValue()));
+			log.debug("SH is " + ByteUtils.toBase16(xbee.sendAtCommand(new AtCommand("SH")).getValue()));
+			log.debug("SL is " + ByteUtils.toBase16(xbee.sendAtCommand(new AtCommand("SL")).getValue()));
 			
 			// uncomment to run
 //			this.configureIOSamples(xbee);
@@ -65,7 +65,7 @@ public class ZNetApiAtExample {
 
 	private void associationStatus(XBee xbee) throws XBeeException {
 		// get association status - success indicates it is associated to another XBee
-		AtCommandResponse response = (AtCommandResponse) xbee.sendAtCommand(new AtCommand("AI"));
+		AtCommandResponse response = xbee.sendAtCommand(new AtCommand("AI"));
 		log.debug("Association Status is " + AssociationStatus.get(response));		
 	}
 	

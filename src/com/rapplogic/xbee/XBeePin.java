@@ -226,6 +226,7 @@ public class XBeePin {
 	 *
 	 */
 	private static class PinSorter implements Comparator {
+		@Override
 		public int compare(Object o1, Object o2) {
 			return ((XBeePin)o1).getPin().compareTo(((XBeePin)o2).getPin());
 		}		

@@ -99,6 +99,7 @@ public abstract class XBeeResponse implements Serializable {
 	 * @deprecated Use getRawPacketBytes instead
 	 * @return
 	 */
+	@Deprecated
 	public int[] getPacketBytes() {
 		return this.getRawPacketBytes();
 	}
@@ -172,6 +173,7 @@ public abstract class XBeeResponse implements Serializable {
 		return true;
 	}
 
+	@Override
 	public String toString() {
 		// 8/19/09 fixed null pointer on length.get16BitValue
 		return "apiId=" + this.apiId +

@@ -20,14 +20,10 @@ import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.opengl.GL11.glShadeModel;
 
-import java.awt.Image;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.nio.ByteBuffer;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -35,16 +31,12 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 
-import player.Player;
-
 import synthesis.Sound;
 import utilities.Maths;
 import utilities.MyBuffer;
 import utilities.Vector;
 import views.informationViews.AudioRender;
 import views.interfaces.DisplayableFather;
-import views.staticViews.BackgroundView;
-
 import map2.Map;
 
 /**
@@ -72,11 +64,11 @@ public class GLDisplay extends Thread{
 	/*
 	 * Parametres de la projection
 	 */
-	private float camx=-20.0f;
-	private float camy=-20.0f;
-	private float camz=20.0f;
-	private float camDx;
-	private float camDy;
+	private float camx=0.0f;
+	private float camy=0.0f;
+	private float camz=500.0f;
+	private float camDx=50;
+	private float camDy=50;
 	private float camDz=0.0f;
 	private boolean mode3D=false;
 	private boolean modeChanged=false;
@@ -121,6 +113,7 @@ public class GLDisplay extends Thread{
 		lightDy=(float)(display_height/2.0);
 		camDx=(float)(display_width/2.0);
 		camDy=(float)(display_height/2.0);
+		setCameraDirection();
 		initialized=true;
 		while(do_run){
 			
@@ -128,10 +121,7 @@ public class GLDisplay extends Thread{
 				do_run = false; // On arrete le programme
 		clear(); //On nettoie la fenetre
 		KeyboardManager.checkKeyboard();
-		
-		glMatrixMode(GL_MODELVIEW);
 		setLightPosition();
-		
 		if(modeChanged)
 			changeViewMode();
 		
@@ -143,6 +133,8 @@ public class GLDisplay extends Thread{
 		
 		mainRender(); //On actualise la fenetre avec le nouveau rendu
 		audioRender();
+		
+		
 		update(); //On actualise la fenetre avec le nouveau rendu
 		Display.sync(frequency); //On synchronise l'affichage sur le bon FPS
 	
@@ -228,9 +220,7 @@ public class GLDisplay extends Thread{
 			System.out.println("Error setting up display: " + e.getMessage());
 			System.exit(0);
 		}
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		glOrtho(0, display_width, display_height, 0, -1000, 1000);
+		changeViewMode();
 
 	}
 
@@ -259,6 +249,8 @@ public class GLDisplay extends Thread{
 	 * Met a jour l'emplacement et la direction de l'eclairage
 	 */
 	public void setLightPosition(){
+		glMatrixMode(GL_MODELVIEW);
+		GL11.glLoadIdentity();
 		lighting.setLightDirection(lightDx, lightDy, lightDz);
 		lighting.placeLighting(lightx, lighty, lightz);
 	}
@@ -308,11 +300,13 @@ public class GLDisplay extends Thread{
 		if (mode3D){
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			GLU.gluPerspective(45.0f, display_width / display_height, 1.0f,10000.0f);
+			GLU.gluPerspective(45.0f, -display_width / display_height, 1.0f,10000.0f);
+			glMatrixMode(GL_MODELVIEW);
 		}else{
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
 			glOrtho(0, display_width, display_height, 0, -1000, 1000);
+			glMatrixMode(GL_MODELVIEW);
 		}
 		
 		modeChanged=false;
@@ -320,7 +314,6 @@ public class GLDisplay extends Thread{
 		
 	private void setCameraDirection(){
 		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
 		//positionnement de la camera
 		GLU.gluLookAt(camx, camy,camz, camDx,camDy, camDz, 0, 0	, 1);
 	}
@@ -380,9 +373,11 @@ public class GLDisplay extends Thread{
 	
 	public void auto3D(DisplayableFather attacking,DisplayableFather attacked,int time){
 		
-		setCamDirection((float)attacked.getX(), (float)attacked.getY(), 50);
-		Vector vect =Maths.makeNormalizedVector(attacked.getX(),attacked.getY(),0,attacking.getX(),attacking.getY(),0);
-		setCamPlace((float) (attacking.getX()+100*vect.getX()), (float) (attacking.getY()+100*vect.getY()), 1000);
+		setCamDirection((float)attacked.getX(), (float)attacked.getY(), 0);
+		Vector vect =Maths.makeVector(attacked.getX(),attacked.getY(),0,attacking.getX(),attacking.getY(),0);
+		double norme=vect.norme();
+		Maths.normalize(vect);
+		setCamPlace((float) (attacking.getX()+(norme/3+80)*vect.getX()), (float) (attacking.getY()+(norme/3+80)*vect.getY()), 80);
 		mode3D=true;
 		modeChanged=true;
 		this.time=time;

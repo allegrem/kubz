@@ -181,6 +181,7 @@ public class PacketParser implements IIntArrayInputStream {
 	/**
 	 * Same as read() but logs the context of the byte being read.  useful for debugging
 	 */
+	@Override
 	public int read(String context) throws IOException {
 		int b = this.read();
 		log.debug("Read " + context + " byte, val is " + ByteUtils.formatByte(b));
@@ -205,6 +206,7 @@ public class PacketParser implements IIntArrayInputStream {
 	 * 1. Keeps track of how many bytes we've read
 	 * 2. Un-escapes bytes if necessary and verifies the checksum.
 	 */
+	@Override
 	public int read() throws IOException {
 
 		if (done) {

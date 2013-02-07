@@ -1,8 +1,5 @@
 package views.interfaces;
 
-import java.util.ArrayList;
-
-import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 
 import utilities.Point;

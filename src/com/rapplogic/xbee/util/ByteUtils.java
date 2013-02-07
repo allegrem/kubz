@@ -166,6 +166,7 @@ public class ByteUtils {
 	/**
 	 * @deprecated use toString(int[] arr)
 	 */
+	@Deprecated
 	public static String toChar(int[] arr) {
 		return toString(arr);
 	}
@@ -271,7 +272,7 @@ public class ByteUtils {
 		int[] intArr = new int[s.length()];
 		
 		for (int i = 0; i < s.length(); i++) {
-			intArr[i] = (char)s.charAt(i);
+			intArr[i] = s.charAt(i);
 		}
 		
 		return intArr;

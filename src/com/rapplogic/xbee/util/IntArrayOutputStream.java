@@ -43,6 +43,7 @@ public class IntArrayOutputStream implements IIntArray {
         }
 	}
 	
+	@Override
 	public int[] getIntArray() {
 		//int[] integer = (int[]) intList.toArray(new int[0]);
 		// TODO there has got to be a better way -- how to convert list to int[] array?

@@ -65,6 +65,7 @@ public class SLInstrumentView extends JPanel {
 
 		JButton btnPlay = new JButton("Play");
 		btnPlay.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				window.play();
 			}

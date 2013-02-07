@@ -114,6 +114,7 @@ public class RxTxSerialComm implements XBeeConnection, SerialPortEventListener {
 	/**
 	 * Shuts down RXTX
 	 */
+	@Override
 	public void close() {
 		try {
 			serialPort.getInputStream().close();
@@ -135,14 +136,17 @@ public class RxTxSerialComm implements XBeeConnection, SerialPortEventListener {
 		}
 	}
 	
+	@Override
 	public OutputStream getOutputStream() {
 		return outputStream;
 	}
 
+	@Override
 	public InputStream getInputStream() {
 		return inputStream;
 	}
 	
+	@Override
 	public void serialEvent(SerialPortEvent event) {
 		
 		switch (event.getEventType()) {	

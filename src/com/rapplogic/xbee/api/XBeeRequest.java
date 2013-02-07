@@ -69,6 +69,7 @@ public abstract class XBeeRequest implements Serializable {
 		return frameId;
 	}
 	
+	@Override
 	public String toString() {
 		return "apiId=" + this.getApiId() + ",frameId=" + this.getFrameId();
 	}

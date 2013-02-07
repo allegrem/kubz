@@ -47,6 +47,7 @@ public class ZNetRxResponse extends ZNetRxBaseResponse implements NoRequestRespo
 		this.data = data;
 	}
 	
+	@Override
 	public String toString() {
 		return super.toString() + 
 			",data=" + ByteUtils.toBase16(this.data);

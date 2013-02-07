@@ -102,6 +102,7 @@ public class TxStatusResponse extends XBeeFrameIdResponse {
 		return this.status == Status.PURGED;
 	}
 	
+	@Override
 	public String toString() {
 		return super.toString() + ",status=" + this.getStatus();
 	}

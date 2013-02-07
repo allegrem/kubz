@@ -48,6 +48,7 @@ public class XBeeException extends Exception {
 		this.setCause(cause);
 	}
 
+	@Override
 	public Exception getCause() {
 		return cause;
 	}

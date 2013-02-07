@@ -8,6 +8,7 @@ public class XBeeConfiguration {
 	private ResponseQueueFilter responseQueueFilter;
 	
 	private final ResponseQueueFilter noRequestResponseQueueFilter = new ResponseQueueFilter() {
+		@Override
 		public boolean accept(XBeeResponse response) {
 			return response instanceof NoRequestResponse;
 		}

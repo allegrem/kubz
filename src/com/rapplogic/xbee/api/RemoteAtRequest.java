@@ -129,6 +129,7 @@ public class RemoteAtRequest extends AtCommand {
 		this(XBeeRequest.DEFAULT_FRAME_ID, XBeeAddress64.BROADCAST, remoteAddress16, true, command, value);
 	}
 	
+	@Override
 	public int[] getFrameData() {		
 		IntArrayOutputStream out = new IntArrayOutputStream();
 		
@@ -150,9 +151,9 @@ public class RemoteAtRequest extends AtCommand {
 		}
 		 
 		// command name ascii [1]
-		out.write((int) this.getCommand().substring(0, 1).toCharArray()[0]);
+		out.write(this.getCommand().substring(0, 1).toCharArray()[0]);
 		// command name ascii [2]
-		out.write((int) this.getCommand().substring(1, 2).toCharArray()[0]);
+		out.write(this.getCommand().substring(1, 2).toCharArray()[0]);
 	
 		if (this.getValue() != null) {
 			out.write(this.getValue());
@@ -161,6 +162,7 @@ public class RemoteAtRequest extends AtCommand {
 		return out.getIntArray();
 	}
 	
+	@Override
 	public ApiId getApiId() {
 		return ApiId.REMOTE_AT_REQUEST;
 	}
@@ -189,6 +191,7 @@ public class RemoteAtRequest extends AtCommand {
 		this.applyChanges = applyChanges;
 	}
 	
+	@Override
 	public String toString() {
 		return super.toString() + 
 			",remoteAddr64=" + this.remoteAddr64 +

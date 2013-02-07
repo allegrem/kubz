@@ -97,6 +97,7 @@ public abstract class TxRequestBase extends XBeeRequest {
 		this.option = option;
 	}
 	
+	@Override
 	public String toString() {
 		return super.toString() + ",option=" + this.option + 
 			",payload=" + ByteUtils.toBase16(this.payload);

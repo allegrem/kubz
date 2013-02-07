@@ -71,6 +71,7 @@ public class AtCommand extends XBeeRequest {
 		this.setFrameId(frameId);
 	}
 
+	@Override
 	public int[] getFrameData() {
 		if (command.length() > 2) {
 			throw new IllegalArgumentException("Command should be two characters.  Do not include AT prefix");
@@ -83,9 +84,9 @@ public class AtCommand extends XBeeRequest {
 		// frame id
 		out.write(this.getFrameId());
 		// at command byte 1
-		out.write((int) command.substring(0, 1).toCharArray()[0]);
+		out.write(command.substring(0, 1).toCharArray()[0]);
 		// at command byte 2
-		out.write((int) command.substring(1, 2).toCharArray()[0]);
+		out.write(command.substring(1, 2).toCharArray()[0]);
 
 		// int value is up to four bytes to represent command value
 		if (value != null) {
@@ -95,6 +96,7 @@ public class AtCommand extends XBeeRequest {
 		return out.getIntArray();
 	}
 
+	@Override
 	public ApiId getApiId() {
 		return ApiId.AT_COMMAND;
 	}
@@ -115,6 +117,7 @@ public class AtCommand extends XBeeRequest {
 		this.value = value;
 	}
 
+	@Override
 	public String toString() {
 		return super.toString() +
 			",command=" + this.command +

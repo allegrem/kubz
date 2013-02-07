@@ -26,8 +26,6 @@ import com.rapplogic.xbee.api.ApiId;
 import com.rapplogic.xbee.api.PacketListener;
 import com.rapplogic.xbee.api.XBee;
 import com.rapplogic.xbee.api.XBeeResponse;
-import com.rapplogic.xbee.api.wpan.IoSample;
-import com.rapplogic.xbee.api.wpan.RxResponseIoSample;
 import com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse;
 
 /**
@@ -60,6 +58,7 @@ public class ZNetIoSampleExample implements PacketListener {
 	/**
 	 * Called by XBee API thread when a packet is received
 	 */
+	@Override
 	public void processResponse(XBeeResponse response) {
 		// This is a I/O sample response.  You will only get this is you are connected to a Coordinator that is configured to
 		// receive I/O samples from a remote XBee.
