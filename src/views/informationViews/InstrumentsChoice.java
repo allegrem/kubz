@@ -14,6 +14,12 @@ import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
 import org.lwjgl.util.glu.Disk;
 
+/**
+ * Affichage de cercles autour de l'unite pour le choix des instruments.
+ * Lorsqu'un cercle est selectionne, il s'agrandit
+ * @author berthier
+ *
+ */
 public class InstrumentsChoice implements DisplayableChild{
 	private DisplayableFather father;
 	private ArrayList<ReadableColor> colors=new ArrayList<ReadableColor>();
@@ -24,12 +30,12 @@ public class InstrumentsChoice implements DisplayableChild{
 	
 	public InstrumentsChoice(){
 		disk=new Disk();
-		addColor(Color.BLUE);
-		addColor(Color.RED);
-		addColor(Color.GREEN);
-		addColor(Color.ORANGE);
-		addColor(Color.PURPLE);
-		addColor(Color.YELLOW);
+		addInstrument(Color.BLUE);
+		addInstrument(Color.RED);
+		addInstrument(Color.GREEN);
+		addInstrument(Color.ORANGE);
+		addInstrument(Color.PURPLE);
+		addInstrument(Color.YELLOW);
 		chosen=colors.get(0);
 		
 	}
@@ -104,16 +110,28 @@ public class InstrumentsChoice implements DisplayableChild{
 		return false;
 	}
 	
-	public void addColor(ReadableColor color){
+	/**
+	 * Ajout d'un nouvel instrument
+	 * @param color Sa couleur
+	 */
+	public void addInstrument(ReadableColor color){
 		colors.add(color);
 		
 	}
 
-	public synchronized void removeColor(ReadableColor color){
-		colors.remove(color);
+	/**
+	 * Retirer un instrument
+	 * @param num Son numero
+	 */
+	public synchronized void removeInstrument(int num){
+		colors.remove(num);
 		
 	}
 	
+	/**
+	 * Marquer un instrument comme choisi
+	 * @param num Son numero
+	 */
 	public void setChosen(int num){
 		if(num<colors.size()){
 			chosen=colors.get(num);
