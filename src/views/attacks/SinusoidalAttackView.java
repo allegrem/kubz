@@ -40,7 +40,7 @@ public class SinusoidalAttackView implements DisplayableChild {
 	private long pause=30;// Temps de pause pour le deplacement du signal
 	private long startingTime=0;
 	private long attackStartingTime=0;
-	private int duration=5000;
+	private int duration=3000;
 	private boolean dead=false;
 	
 	/**
@@ -123,6 +123,17 @@ public class SinusoidalAttackView implements DisplayableChild {
 		
 		}
 		
+		if(System.currentTimeMillis()-attackStartingTime>duration){
+			if(start<=fin){
+			if(System.currentTimeMillis()-startingTime>pause){
+				start++;
+				startingTime=System.currentTimeMillis();
+				}
+			}else{
+			dead=true;
+			}
+		}else{
+		
 		/*
 		 * Pause pour que le signal ne se deplace
 		 * pas trop vite
@@ -132,6 +143,7 @@ public class SinusoidalAttackView implements DisplayableChild {
 		start %=10;
 		startingTime=System.currentTimeMillis();
 		}
+		}
 		
 		/*
 		 * Desactivation de la transparence
@@ -139,9 +151,7 @@ public class SinusoidalAttackView implements DisplayableChild {
 		GL11.glDisable (GL11.GL_BLEND); 
 		GL11.glDisable(GL11.GL_ALPHA_TEST);  
 		
-	if(System.currentTimeMillis()-attackStartingTime>duration){
-			dead=true;
-		}
+	
 	}
 
 	/**

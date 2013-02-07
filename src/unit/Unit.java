@@ -3,6 +3,7 @@ package unit;
 import gameEngine.GameEngine;
 import utilities.Point;
 import views.CubeControlledView;
+import views.attacks.SinusoidalAttackView;
 import views.informationViews.InstrumentsChoice;
 import views.informationViews.LifeView;
 import player.*;
