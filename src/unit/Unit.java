@@ -6,6 +6,7 @@ import views.CubeControlledView;
 import views.attacks.SinusoidalAttackView;
 import views.informationViews.InstrumentsChoice;
 import views.informationViews.LifeView;
+import views.interfaces.DisplayableFather;
 import player.*;
 
 
@@ -167,6 +168,12 @@ public class Unit {
 	public double getSize() {
 		
 		return size;
+	}
+
+
+	public DisplayableFather getView() {
+		
+		return view;
 	}
 	
 

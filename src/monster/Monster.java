@@ -120,7 +120,7 @@ public class Monster {
 	}
 	
 	
-					/** Actions liees e la position**/
+					/** Actions liees a la position**/
 	
 	/** 
 	 * lance la procedure de mouvement du monstre
@@ -172,6 +172,7 @@ public class Monster {
 	public void act(){
 		move();
 		attack(attack.result());
+		//gameEngine.getDisplay().auto3D( gameEngine.getUnitList().get(0).getView(),this.view, 5000);
 	}
 
 	public double getSize() {

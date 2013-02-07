@@ -1,4 +1,4 @@
-package OpenGL;
+package views.informationViews;
 
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
@@ -8,6 +8,8 @@ import java.util.Observable;
 import org.apache.commons.math3.complex.Complex;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.ReadableColor;
+
+import OpenGL.GLDisplay;
 
 import synthesis.Sound;
 
@@ -48,10 +50,10 @@ public class AudioRender {
 		
 		GL11.glColor3ub((byte)ReadableColor.LTGREY.getRed(),(byte)ReadableColor.LTGREY.getGreen(),(byte)ReadableColor.LTGREY.getBlue());
 		GL11.glBegin(GL11.GL_QUADS);
-		glVertex3d(0,ymax, 0);
-		glVertex3d(X_SIZE, ymax, 0);
-		glVertex3d(X_SIZE,ymin, 0);
-		glVertex3d(0,ymin, 0);
+		glVertex3d(0,ymax, 100);
+		glVertex3d(X_SIZE, ymax, 100);
+		glVertex3d(X_SIZE,ymin, 100);
+		glVertex3d(0,ymin, 100);
 		GL11.glEnd();
 		
 		GL11.glBegin(GL11.GL_LINES);
@@ -64,15 +66,15 @@ public class AudioRender {
 				xCoord2 = x * X_SIZE / zoomX;
 				yCoord2 = ymax-(Y_SIZE - (soundBytes[offsetX + x] + 127) * Y_SIZE
 						/ 255 + MANUAL_OFFSET);
-				GL11.glVertex3i(xCoord1, yCoord1, 0);
-				GL11.glVertex3i(xCoord2, yCoord2, 0);
+				GL11.glVertex3i(xCoord1, yCoord1, 100);
+				GL11.glVertex3i(xCoord2, yCoord2, 100);
 				xCoord1 = xCoord2;
 				yCoord1 = yCoord2;
 			}
 			
-			GL11.glVertex3i(0,  ymax-(MANUAL_OFFSET + Y_SIZE / 2), 0);
+			GL11.glVertex3i(0,  ymax-(MANUAL_OFFSET + Y_SIZE / 2), 100);
 			GL11.glVertex3i(X_SIZE,ymax-(MANUAL_OFFSET
-					+ Y_SIZE / 2), 0);
+					+ Y_SIZE / 2), 100);
 			
 		}
 
@@ -86,10 +88,10 @@ public void renderSpectrumView(){
 	
 	GL11.glColor3ub((byte)ReadableColor.LTGREY.getRed(),(byte)ReadableColor.LTGREY.getGreen(),(byte)ReadableColor.LTGREY.getBlue());
 	GL11.glBegin(GL11.GL_QUADS);
-	glVertex3d(2*X_SIZE,ymax, 0);
-	glVertex3d(3*X_SIZE, ymax, 0);
-	glVertex3d(3*X_SIZE,ymin, 0);
-	glVertex3d(2*X_SIZE,ymin, 0);
+	glVertex3d(2*X_SIZE,ymax, 100);
+	glVertex3d(3*X_SIZE, ymax, 100);
+	glVertex3d(3*X_SIZE,ymin, 100);
+	glVertex3d(2*X_SIZE,ymin, 100);
 	GL11.glEnd();
 	
 	if(sound!=null){
@@ -98,8 +100,8 @@ public void renderSpectrumView(){
 
 	if (spectrumCache != null && spectrumCache.length > 0) {
 		for (int x = 0; x < X_SIZE; x++){
-			glVertex3d(x+2*X_SIZE,ymax-Y_SIZE,0);
-			glVertex3d(x+2*X_SIZE,ymax-spectrumCache[x],0);
+			glVertex3d(x+2*X_SIZE,ymax-Y_SIZE,100);
+			glVertex3d(x+2*X_SIZE,ymax-spectrumCache[x],100);
 			
 		}
 		}

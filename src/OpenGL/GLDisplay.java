@@ -38,7 +38,11 @@ import org.lwjgl.util.glu.GLU;
 import player.Player;
 
 import synthesis.Sound;
+import utilities.Maths;
 import utilities.MyBuffer;
+import utilities.Vector;
+import views.informationViews.AudioRender;
+import views.interfaces.DisplayableFather;
 import views.staticViews.BackgroundView;
 
 import map2.Map;
@@ -132,7 +136,7 @@ public class GLDisplay extends Thread{
 			changeViewMode();
 		
 		if(mode3D){
-			setCameraDiection();
+			setCameraDirection();
 			if(time>0 && System.currentTimeMillis()-started>=time)
 				mode2D();
 		}
@@ -304,7 +308,7 @@ public class GLDisplay extends Thread{
 		if (mode3D){
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			GLU.gluPerspective(45.0f, -display_width / display_height, 1.0f,10000.0f);
+			GLU.gluPerspective(45.0f, display_width / display_height, 1.0f,10000.0f);
 		}else{
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
@@ -314,7 +318,7 @@ public class GLDisplay extends Thread{
 		modeChanged=false;
 	}
 		
-	private void setCameraDiection(){
+	private void setCameraDirection(){
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		//positionnement de la camera
@@ -334,6 +338,7 @@ public class GLDisplay extends Thread{
 		camDx=x;
 		camDy=y;
 		camDz=z;
+
 	}
 	
 
@@ -373,6 +378,16 @@ public class GLDisplay extends Thread{
 		
 	}
 	
+	public void auto3D(DisplayableFather attacking,DisplayableFather attacked,int time){
+		
+		setCamDirection((float)attacked.getX(), (float)attacked.getY(), 50);
+		Vector vect =Maths.makeNormalizedVector(attacked.getX(),attacked.getY(),0,attacking.getX(),attacking.getY(),0);
+		setCamPlace((float) (attacking.getX()+100*vect.getX()), (float) (attacking.getY()+100*vect.getY()), 1000);
+		mode3D=true;
+		modeChanged=true;
+		this.time=time;
+		this.started=System.currentTimeMillis();
+	}
 }
 
 	

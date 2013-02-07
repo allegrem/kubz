@@ -22,7 +22,7 @@ import cubeManager.*;
 public class GameEngine {
 	private final int width;
 	private final int height;
-	private ArrayList<Monster> monsterList;
+	public ArrayList<Monster> monsterList;
 	private ArrayList<Player> playerList;
 	private ArrayList<Wall> walls;
 	private ArrayList<Base> bases;
@@ -30,7 +30,6 @@ public class GameEngine {
 	private GLDisplay display;
 	private Map map;
 	private MapReader reader=new MapReader("Maps/bFile.txt","Maps/mFile.txt","Maps/WFile.txt",this);
-	private boolean quit;
 	
 	public GameEngine(){
 		RandomPerso.initialize();
@@ -68,10 +67,13 @@ public class GameEngine {
 		playerList.add(new Player(this));
 		playerList.add(new Player(this));
 		playerList.add(new Player(this));
-		while(display.isAlive()){
-			playerTurn();
-			monsterTurn();
-		}
+		playerList.add(new Player(this));
+		playerList.add(new Player(this));
+		playerList.add(new Player(this));
+		playerList.add(new Player(this));
+		playerList.add(new Player(this));
+		playerList.add(new Player(this));
+		act();
 	}
 	
 	/**
@@ -114,7 +116,7 @@ public class GameEngine {
 	 * M�thode principale du gameEngine
 	 */
 	public void act(){
-		while(!quit){
+		while(display.isAlive()){
 			playerTurn();
 			monsterTurn();
 		}
@@ -145,5 +147,9 @@ public class GameEngine {
 
 	public int getWindowHeight() {
 		return display.getDisplay_height();
+	}
+	
+	public GLDisplay getDisplay(){
+		return display;
 	}
 }
