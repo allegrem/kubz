@@ -125,18 +125,18 @@ public abstract class MonsterView implements DisplayableFather{
 	}
 
 	@Override
-	public ArrayList<DisplayableChild> getChildren() {
+	public synchronized ArrayList<DisplayableChild> getChildren() {
 		return children;
 	}
 
 	@Override
-	public void addChild(DisplayableChild child) {
+	public synchronized  void addChild(DisplayableChild child) {
 		children.add(child);
 		child.setFather(this);
 		
 	}
 	
-	public void removeChild(DisplayableChild child){
+	public synchronized void removeChild(DisplayableChild child){
 		children.remove(child);
 	}
 
@@ -151,7 +151,7 @@ public abstract class MonsterView implements DisplayableFather{
 		
 	}
 	
-	public void paintChildren(){
+	public synchronized void paintChildren(){
 		ArrayList<DisplayableChild> childrenDead = new ArrayList<DisplayableChild>();
 		for(DisplayableChild child:children){
 			if(child.isDead()){

@@ -155,21 +155,21 @@ public class BaseView implements DisplayableFather{
 
 
 	@Override
-	public ArrayList<DisplayableChild> getChildren() {
+	public synchronized  ArrayList<DisplayableChild> getChildren() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
-	public void addChild(DisplayableChild object) {
+	public synchronized void addChild(DisplayableChild object) {
 		// TODO Auto-generated method stub
 		
 	}
 
 
 	@Override
-	public void removeChild(DisplayableChild child) {
+	public synchronized  void removeChild(DisplayableChild child) {
 		// TODO Auto-generated method stub
 		
 	}
