@@ -1,5 +1,4 @@
 package cube;
-
 import utilities.Point;
 
 
@@ -10,8 +9,7 @@ import com.rapplogic.xbee.api.XBeeException;
 import com.rapplogic.xbee.api.zigbee.ZNetTxRequest;
 import com.rapplogic.xbee.util.ByteUtils;
 
-import processing.serial.*;//import Xbee library */
-
+//import processing.serial.*;//import Xbee library */
 
 public class Cube {
 
@@ -52,4 +50,5 @@ public class Cube {
 	public short getID() {
 		return id;
     }
+}
 }

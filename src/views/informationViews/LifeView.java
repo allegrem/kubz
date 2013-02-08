@@ -6,6 +6,8 @@ import static org.lwjgl.opengl.GL11.glMatrixMode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.ReadableColor;
 
+import OpenGL.GLDisplay;
+
 import utilities.Point;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
@@ -32,6 +34,7 @@ public class LifeView implements DisplayableChild{
 	
 	@Override
 	public void paint() {
+		if(!GLDisplay.getMode3D()){
 		int x=(int)(Math.round(father.getX()));
 		int y=(int)(Math.round(father.getY()));
 		height=father.getHeight();
@@ -40,9 +43,9 @@ public class LifeView implements DisplayableChild{
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		
 		glMatrixMode(GL_MODELVIEW);
-		GL11.glPopMatrix();
+		GL11.glPushMatrix();
 		GL11.glTranslated(x,y,0);
-		GL11.glRotated((int)Math.round(father.getAngle()),0,0,1);
+		//GL11.glRotated((int)Math.round(father.getAngle()),0,0,1);
 		
 		GL11.glBegin(GL11.GL_QUADS);
 		GL11.glColor3ub((byte)ReadableColor.GREY.getRed(),(byte)ReadableColor.GREY.getGreen(),(byte)ReadableColor.GREY.getBlue());
@@ -75,9 +78,9 @@ public class LifeView implements DisplayableChild{
 		GL11.glVertex3d(-size/2,-father.getSize()/2-10+ -width/2, height);
 		GL11.glEnd();
 		GL11.glLoadIdentity();
-		GL11.glPushMatrix();
+		GL11.glPopMatrix();
 		
-		
+		}
 	}
 
 	@Override

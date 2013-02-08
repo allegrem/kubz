@@ -2,7 +2,6 @@ package utilities;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Transparency;
 import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
@@ -11,12 +10,10 @@ import java.awt.image.ColorModel;
 import java.awt.image.ComponentColorModel;
 import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferByte;
-import java.awt.image.PixelGrabber;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.nio.IntBuffer;
 import java.util.Hashtable;
 
 import org.lwjgl.BufferUtils;
@@ -79,7 +76,7 @@ public class MyBuffer {
         raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE,
                 bufferedImage.getWidth(), bufferedImage.getHeight(), 4, null);
         texImage = new BufferedImage(glAlphaColorModel, raster, true,
-                new Hashtable());
+                new Hashtable<Object, Object>());
 
         // copy the source image into the produced image
         Graphics g = texImage.getGraphics();

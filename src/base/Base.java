@@ -30,16 +30,16 @@ public class Base {
 		view = new BaseView(center, color, sens);
 		gameEngine.getMap().add(view);
 	}
-	public Base(GameEngine gameEngine) {
+	public Base( ReadableColor color,GameEngine gameEngine) {
 		this.gameEngine=gameEngine;
 		center=null;
-		int centerx=(int)(gameEngine.getWidth()/2);
-		int centery=(int)(gameEngine.getHeight()+(gameEngine.getWindowHeight()-gameEngine.getHeight())/2);
+		int centerx=gameEngine.getWidth()/2;
+		int centery=gameEngine.getHeight()+(gameEngine.getWindowHeight()-gameEngine.getHeight())/2;
 		this.center=new Point(centerx,centery);
-		int sizex=(int)(gameEngine.getWidth()/3);
+		int sizex=gameEngine.getWidth()/3;
 		int sizey=gameEngine.getWindowHeight()-gameEngine.getHeight();
 		this.size=new Point(sizex,sizey);
-		view = new BaseView(center,size,ReadableColor.GREEN);
+		view = new BaseView(center,size,color);
 		gameEngine.getMap().add(view);
 	}
 	public Point getCenter() {

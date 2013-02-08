@@ -1,7 +1,6 @@
 package synthesis.basicblocks.oneinputblocks;
 
 import synthesis.AudioBlock;
-import synthesis.basicblocks.noinputblocks.FixedSineWaveOscillator;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
 import synthesis.basicblocks.noinputblocks.Constant;
 import synthesis.basicblocks.severalinputsblocks.Adder;

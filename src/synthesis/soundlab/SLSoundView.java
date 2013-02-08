@@ -62,6 +62,7 @@ public class SLSoundView extends JPanel implements Observer {
 
 		JButton btnZoomIn = new JButton("Zoom in");
 		btnZoomIn.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				zoom(0.5);
 			}
@@ -70,6 +71,7 @@ public class SLSoundView extends JPanel implements Observer {
 
 		JButton btnZoomOut = new JButton("Zoom out");
 		btnZoomOut.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				zoom(2);
 				if (zoomX == 0 && currentSoundLength > 0)
@@ -80,6 +82,7 @@ public class SLSoundView extends JPanel implements Observer {
 
 		JButton button = new JButton("<");
 		button.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				offset(-1 * zoomX / 10);
 			}
@@ -88,6 +91,7 @@ public class SLSoundView extends JPanel implements Observer {
 
 		JButton button_1 = new JButton(">");
 		button_1.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				offset(zoomX / 10);
 			}

@@ -11,8 +11,6 @@ import gameEngine.GameEngine;
 
 import java.util.*;
 
-import com.sun.org.apache.xpath.internal.functions.Function;
-
 import unit.Unit;
 
 public class Monster {
@@ -50,6 +48,7 @@ public class Monster {
 		this.cible = null;
 		this.seenUnits = new ArrayList<Unit>();
 		this.gameEngine=gameEngine;
+		move=new RandomMove(this,500);
 		
 	}
 	
@@ -77,7 +76,7 @@ public class Monster {
 		int pot = Integer.MIN_VALUE;
 		for(Unit unit: seenUnits){
 			if(getPot(unit)>pot){
-				pot = getPot(unit);unit
+				pot = getPot(unit);
 				newCible = unit;
 			}
 		}
@@ -119,7 +118,7 @@ public class Monster {
 	}
 	
 	
-					/** Actions liees e la position**/
+					/** Actions liees a la position**/
 	
 	/** 
 	 * lance la procedure de mouvement du monstre
@@ -171,6 +170,7 @@ public class Monster {
 	public void act(){
 		move();
 		attack(attack.result());
+		//gameEngine.getDisplay().auto3D(view, gameEngine.getUnitList().get(0).getView(), 5000);
 	}
 
 	public double getSize() {

@@ -22,7 +22,8 @@ public abstract class MoveType {
 		height = monster.gameEngine.getHeight();
 	}
 
-	public void move() {		
+	public void move() {	
+		
 	}
 	
 	/**

@@ -2,7 +2,6 @@ package map2;
 
 import java.util.ArrayList;
 
-import views.interfaces.Displayable;
 import views.interfaces.DisplayableFather;
 
 

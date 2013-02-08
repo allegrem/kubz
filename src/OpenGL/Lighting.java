@@ -7,7 +7,6 @@ import static org.lwjgl.opengl.GL11.glMatrixMode;
 import org.lwjgl.opengl.GL11;
 
 import utilities.MyBuffer;
-import utilities.Point;
 /**
  * Classe servant à gérer l'éclairage
  * @author paul

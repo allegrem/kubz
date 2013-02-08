@@ -13,7 +13,7 @@ import views.staticViews.WallView;
 public class Wall {
 	private Point extremity1;
 	private Point extremity2;
-	//private int thickness;                 Ce param�tre est utilis� ?
+	private int thickness;
 	private Vector vect; 
 	private float normev;
 	private double angle;
@@ -24,7 +24,7 @@ public class Wall {
 		super();
 		this.extremity1 = extremity1;
 		this.extremity2 = extremity2;
-		//this.thickness = thickness;
+		this.thickness = thickness;
 		this.gameEngine=gameEngine;
 		view=new WallView(extremity1,extremity2,thickness,type);
 		gameEngine.getMap().add(view);
@@ -35,7 +35,7 @@ public class Wall {
 	public void ChangeWall(Point extremity1, Point extremity2, int thickness) {
 		this.extremity1 = extremity1;
 		this.extremity2 = extremity2;
-		//this.thickness = thickness;
+		this.thickness = thickness;
 		view.ChangeWall(extremity1, extremity2, thickness);
 	}
 	public void translateX(double longueur) {

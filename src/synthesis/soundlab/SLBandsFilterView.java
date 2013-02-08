@@ -66,6 +66,7 @@ public class SLBandsFilterView extends JPanel {
 
 		JButton btnReset = new JButton("Reset");
 		btnReset.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				bandsFilter.resetBars(100);
 			}
@@ -74,6 +75,7 @@ public class SLBandsFilterView extends JPanel {
 
 		JButton btnRandom = new JButton("Random");
 		btnRandom.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				bandsFilter.random();
 			}
@@ -82,6 +84,7 @@ public class SLBandsFilterView extends JPanel {
 
 		btnBypass = new JButton("Bypass");
 		btnBypass.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// window.toogleBypass(); TODO
 				if (btnBypass.getBackground() != Color.LIGHT_GRAY)

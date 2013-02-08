@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import utilities.RandomPerso;
 
 /**
- * Sous classe de AttackType qui crée des attaques de manière aléatoire
+ * Sous classe de AttackType qui crï¿½e des attaques de maniï¿½re alï¿½atoire
  * @author Felix
  */
 
@@ -16,8 +16,9 @@ public class RandomAttack extends AttackType{
 	}
 	
 	/**
-	 * Génère une attaque à une fréquence aléatoire.
+	 * Gï¿½nï¿½re une attaque ï¿½ une frï¿½quence alï¿½atoire.
 	 */
+	@Override
 	public ArrayList<int[]> result(){
 		ArrayList<int[]> attackTable = new ArrayList<int[]>();
 		int[] attack = {RandomPerso.entier(11),strenght};
