@@ -1,15 +1,9 @@
 package views.monsters;
 
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glColor3ub;
-import static org.lwjgl.opengl.GL11.glVertex3d;
-
 import java.util.ArrayList;
 
 import map2.Map;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 
 import utilities.Point;
@@ -125,18 +119,19 @@ public abstract class MonsterView implements DisplayableFather{
 	}
 
 	@Override
-	public ArrayList<DisplayableChild> getChildren() {
+	public synchronized ArrayList<DisplayableChild> getChildren() {
 		return children;
 	}
 
 	@Override
-	public void addChild(DisplayableChild child) {
+	public synchronized  void addChild(DisplayableChild child) {
 		children.add(child);
 		child.setFather(this);
 		
 	}
 	
-	public void removeChild(DisplayableChild child){
+	@Override
+	public synchronized void removeChild(DisplayableChild child){
 		children.remove(child);
 	}
 
@@ -151,7 +146,7 @@ public abstract class MonsterView implements DisplayableFather{
 		
 	}
 	
-	public void paintChildren(){
+	public synchronized void paintChildren(){
 		ArrayList<DisplayableChild> childrenDead = new ArrayList<DisplayableChild>();
 		for(DisplayableChild child:children){
 			if(child.isDead()){

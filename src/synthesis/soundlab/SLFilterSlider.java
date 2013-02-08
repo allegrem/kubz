@@ -9,6 +9,7 @@ import java.util.Observer;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -56,7 +57,7 @@ public class SLFilterSlider extends JPanel implements Observer {
 		setLayout(new BorderLayout());
 
 		slider = new JSlider(1, 100, 100);
-		slider.setOrientation(JSlider.VERTICAL);
+		slider.setOrientation(SwingConstants.VERTICAL);
 		slider.setPreferredSize(new Dimension(30, 130));
 		slider.addChangeListener(new ChangeListener() {
 			@Override

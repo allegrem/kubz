@@ -51,11 +51,6 @@
 			<locationURI>PROJECT_LOC/xbee-api-0.9/rxtxSerial.dll</locationURI>
 		</link>
 		<link>
-			<name>XBee-libs/src</name>
-			<type>2</type>
-			<locationURI>PROJECT_LOC/xbee-api-0.9/src</locationURI>
-		</link>
-		<link>
 			<name>XBee-libs/xbee-api-0.9.jar</name>
 			<type>1</type>
 			<locationURI>PROJECT_LOC/xbee-api-0.9/xbee-api-0.9.jar</locationURI>

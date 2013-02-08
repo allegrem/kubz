@@ -44,7 +44,7 @@ public class GainParamBlock extends ParamBlock {
 	 */
 	@Override
 	public Float play(Float t) throws RequireAudioBlocksException {
-		return (float) getValue() * gain;
+		return getValue() * gain;
 	}
 
 	/**

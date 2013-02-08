@@ -25,7 +25,7 @@ public class XBeeReceive {
                          // make it a broadcast packet
                          request.setOption(ZNetTxRequest.Option.BROADCAST);
 
-                         log.info("request packet bytes (base 16) " + ByteUtils.toBase16(request.getXBeePacket().getPacket()));
+                        // log.info("request packet bytes (base 16) " + ByteUtils.toBase16(request.getXBeePacket().getPacket()));
                         
                          xbee.sendAsynchronous(request);
                          // we just assume it was sent.  that's just the way it is with broadcast.  

@@ -6,18 +6,9 @@ import static org.lwjgl.opengl.GL11.glColor3ub;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.IntBuffer;
-
-import map2.Map;
-
 import org.lwjgl.opengl.GL11;
 
-import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
-import org.lwjgl.util.glu.Cylinder;
-
 import utilities.Maths;
 import utilities.Point;
 import utilities.Vector;
@@ -45,7 +36,7 @@ public class ShapeMonsterView extends MonsterView {
 		glColor3ub((byte) actualColor.getRed(), (byte) actualColor.getGreen() , (byte) actualColor.getBlue()); 
 		
 		glMatrixMode(GL_MODELVIEW);
-		GL11.glPopMatrix();
+		GL11.glPushMatrix();
 		GL11.glTranslated(getX(),getY(),0);
 		GL11.glRotated((int)Math.round(getAngle()),0,0,1);
 		
@@ -91,7 +82,7 @@ public class ShapeMonsterView extends MonsterView {
 		GL11.glEnd();
 		
 		GL11.glLoadIdentity();
-		GL11.glPushMatrix();
+		GL11.glPopMatrix();
 		
 		paintChildren();
 	}

@@ -12,17 +12,17 @@ import org.newdawn.slick.util.ResourceLoader;
  *
  */
 public class Textures {
-	public static Texture texturePath;
+	public static Texture textureSea;
 	public static Texture textureWall;
 	
 	/**
 	 * Initilaisation de la texture du sol
 	 */
 	public static void initTexturePath(){
-		texturePath=null;
+		textureSea=null;
 		try {
 
-			texturePath = TextureLoader.getTexture("JPG",ResourceLoader.getResourceAsStream("Textures/metal091b.jpg"));
+			textureSea = TextureLoader.getTexture("JPG",ResourceLoader.getResourceAsStream("Textures/sea.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

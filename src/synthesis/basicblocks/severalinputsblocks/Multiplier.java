@@ -39,6 +39,7 @@ public class Multiplier extends SeveralInputBlock {
 	 * Returns the product of the entries s(t)=e1(t)*e2(t)*...
 	 * @param t the specified instant
 	 */
+	@Override
 	public Float play(Float t) throws RequireAudioBlocksException{
 		super.play(t);
 		float s = 1f;
@@ -53,6 +54,7 @@ public class Multiplier extends SeveralInputBlock {
 	 * @param t instant t
 	 * @see SeveralInputBlock#phi(Float)
 	 */
+	@Override
 	public Float phi(Float t) throws RequireAudioBlocksException {
 		
 		Float phi = super.phi(t);    

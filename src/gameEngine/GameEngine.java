@@ -1,5 +1,7 @@
 package gameEngine;
-import java.awt.Toolkit;
+import org.lwjgl.util.Color;
+import org.lwjgl.util.ReadableColor;
+
 import java.util.ArrayList;
 
 import base.Base;
@@ -19,7 +21,7 @@ import cubeManager.*;
 public class GameEngine {
 	private final int width;
 	private final int height;
-	private ArrayList<Monster> monsterList;
+	public ArrayList<Monster> monsterList;
 	private ArrayList<Player> playerList;
 	private ArrayList<Wall> walls;
 	private ArrayList<Base> bases;
@@ -27,7 +29,6 @@ public class GameEngine {
 	private GLDisplay display;
 	private Map map;
 	private MapReader reader=new MapReader("Maps/bFile.txt","Maps/mFile.txt","Maps/WFile.txt",this);
-	private boolean quit;
 	
 	public GameEngine(){
 		RandomPerso.initialize();
@@ -49,7 +50,6 @@ public class GameEngine {
 		map.setWidth(width);
 		map.setLength(height);	
 		display.setLightPlace(0.0f,(float)height/2,0.0f);
-		//display.mode3D();
 		map.add(new BackgroundView(width,height,100));
 		try {
 			monsterList=reader.readMonsters();
@@ -61,14 +61,11 @@ public class GameEngine {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		bases.add(new Base(this));
+		bases.add(new Base(ReadableColor.ORANGE,this));
 		playerList.add(new Player(this));
 		playerList.add(new Player(this));
 		playerList.add(new Player(this));
-		while(display.isAlive()){
-			playerTurn();
-			monsterTurn();
-		}
+		act();
 	}
 	
 	/**
@@ -111,7 +108,7 @@ public class GameEngine {
 	 * M�thode principale du gameEngine
 	 */
 	public void act(){
-		while(!quit){
+		while(display.isAlive()){
 			playerTurn();
 			monsterTurn();
 		}
@@ -142,5 +139,9 @@ public class GameEngine {
 
 	public int getWindowHeight() {
 		return display.getDisplay_height();
+	}
+	
+	public GLDisplay getDisplay(){
+		return display;
 	}
 }

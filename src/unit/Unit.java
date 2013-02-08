@@ -4,6 +4,7 @@ import gameEngine.GameEngine;
 import utilities.Point;
 import views.CubeControlledView;
 import views.informationViews.LifeView;
+import views.interfaces.DisplayableFather;
 import player.*;
 
 
@@ -28,7 +29,7 @@ public class Unit {
 		view.addChild(new LifeView(view));
 		size=view.getSize();
 		gameEngine.getMap().add(view);
-	
+		
 	}
 	
 	
@@ -165,6 +166,12 @@ public class Unit {
 	public double getSize() {
 		
 		return size;
+	}
+
+
+	public DisplayableFather getView() {
+		
+		return view;
 	}
 	
 

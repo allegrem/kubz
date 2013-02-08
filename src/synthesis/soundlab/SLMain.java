@@ -16,6 +16,7 @@ public class SLMain {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					SLWindow window = new SLWindow();

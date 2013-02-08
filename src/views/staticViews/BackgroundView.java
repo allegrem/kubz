@@ -7,13 +7,13 @@ import static org.lwjgl.opengl.GL11.glVertex3d;
 
 import java.util.ArrayList;
 
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.ReadableColor;
 import org.newdawn.slick.Color;
 
 import utilities.Point;
 import utilities.RandomPerso;
+import views.CubeControlledView;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
 
@@ -30,6 +30,7 @@ public class BackgroundView implements DisplayableFather{
 	private int length;
 	private long time;
 	private long startTime=0;
+	private int nbre=10;
 	
 	/*
 	 * Les couleurs de depart du background
@@ -125,19 +126,109 @@ public class BackgroundView implements DisplayableFather{
 		
 	}
 	
-	public void paint() {
-		/*
-		 * Sert dans le cas ou l'on utilise une texture pour le background
-		 * 
-		 * glEnable(GL11.GL_TEXTURE_2D);
-		 *if (Textures.texturePath==null)
-		 *	Textures.initTexturePath();   
-		 *GL11.glColor3f(1.0f,1.0f,1.0f);
-		 *Color.white.bind();
-		 *Textures.texturePath.bind();
-		 */
+	@Override
+	public void paint() {	
 		
+		 glEnable(GL11.GL_TEXTURE_2D);
+		 GL11.glTexParameteri(GL11.GL_TEXTURE_2D,GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
+		 GL11.glTexParameteri(GL11.GL_TEXTURE_2D,GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
+		 
+		 if (Textures.textureSea==null)
+		 	Textures.initTexturePath();   
+		 GL11.glColor3f(1.0f,1.0f,1.0f);
+		 Color.gray.bind();
+		 Textures.textureSea.bind();
+		 
+		
+		
+		glBegin(GL_QUADS);
+		GL11.glNormal3f(0,0, 1.0f);
+		GL11.glTexCoord2f(0,0);
+		
+		glVertex3d(-1000, -1000, -0.1);
+		
+		GL11.glTexCoord2f(nbre,0);
+		glVertex3d(width+1000, -1000, -0.1);
+	
+		GL11.glTexCoord2f(nbre,nbre);
+		glVertex3d(width+1000, length+1000, -0.1);
+		
+		GL11.glTexCoord2f(0,nbre);
+		glVertex3d(-1000,length+1000, -0.1);
+		
+		/********************************/
+		
+		GL11.glNormal3f(0,1.0f, 0);
+		
+		GL11.glTexCoord2f(0,0);
+		glVertex3d(-1000, -1000, 0);
+		
+		GL11.glTexCoord2f(nbre,0);
+		glVertex3d(width+1000, -1000, 0);
+		
+		GL11.glTexCoord2f(nbre,nbre);
+		glVertex3d(width+1000, -1000, 1000);
+		
+		GL11.glTexCoord2f(0,nbre);
+		glVertex3d(-1000, -1000, 1000);
+		
+		
+	
+		/*********************************/
+		
+		GL11.glNormal3f(0,-1.0f, 0);
+		
+		GL11.glTexCoord2f(0,0);
+		glVertex3d(-1000,length+1000, 0);
+		
+		GL11.glTexCoord2f(nbre,0);
+		glVertex3d(width+1000, length+1000, 0);
+		
+		GL11.glTexCoord2f(nbre,nbre);
+		glVertex3d(width+1000, length+1000, 1000);
+		
+		GL11.glTexCoord2f(0,nbre);
+		glVertex3d(-1000,length+1000, 1000);
+		
+		/************************************/
+		
+		GL11.glNormal3f(1.0f,0, 0);
+		
+		GL11.glTexCoord2f(0,0);
+		glVertex3d(-1000, -1000, 0);
+		
+		GL11.glTexCoord2f(nbre,0);
+		glVertex3d(-1000,length+1000, 0);
+		
+		GL11.glTexCoord2f(nbre,nbre);
+		glVertex3d(-1000,length+1000, 1000);
+		
+		GL11.glTexCoord2f(0,nbre);
+		glVertex3d(-1000, -1000, 1000);
+		
+		/************************************/
+		
+		GL11.glNormal3f(-1.0f,0, 0);
+		
+		GL11.glTexCoord2f(0,0);
+		glVertex3d(width+1000, -1000, 0);
+		
+		GL11.glTexCoord2f(nbre,0);
+		glVertex3d(width+1000, length+1000, 0);
+		
+		GL11.glTexCoord2f(nbre,nbre);
+		glVertex3d(width+1000, length+1000, 1000);
+		
+		GL11.glTexCoord2f(0,nbre);
+		glVertex3d(width+1000, -1000, 1000);
+		
+		
+	
+		GL11.glEnd();
+		
+
 		change();
+		
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		
 		glBegin(GL_QUADS);
@@ -159,7 +250,6 @@ public class BackgroundView implements DisplayableFather{
 		glVertex3d(0,length, 0);
 	
 		GL11.glEnd();
-		
 		
 	
 
@@ -222,19 +312,19 @@ public class BackgroundView implements DisplayableFather{
 	}
 
 	@Override
-	public ArrayList<DisplayableChild> getChildren() {
+	public synchronized ArrayList<DisplayableChild> getChildren() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void addChild(DisplayableChild object) {
+	public synchronized void addChild(DisplayableChild object) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void removeChild(DisplayableChild child) {
+	public synchronized void removeChild(DisplayableChild child) {
 		// TODO Auto-generated method stub
 		
 	}

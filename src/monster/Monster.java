@@ -10,6 +10,7 @@ import views.monsters.MonsterView;
 import gameEngine.GameEngine;
 
 import java.util.*;
+
 import unit.Unit;
 
 public class Monster {
@@ -21,6 +22,7 @@ public class Monster {
 	
 	protected GameEngine gameEngine;
 	private AttackType attack;
+	private ChooseType choice;
 	private MoveType move;
 	private Unit cible;
 	private ArrayList<Unit> seenUnits; 
@@ -46,8 +48,7 @@ public class Monster {
 		this.cible = null;
 		this.seenUnits = new ArrayList<Unit>();
 		this.gameEngine=gameEngine;
-		move=new MoveType(this,200);
-		
+		move=new RandomMove(this,500);
 		
 	}
 	
@@ -58,15 +59,10 @@ public class Monster {
 	 * Methode qui permet de determiner le potentiel de chaque unite, l'unite 
 	 * ayant une caracterisque precise sera la cible du monstre (ex vie, distance)
 	 */
-	
-	private void setPotList(){
 		
-		for(Unit unit : seenUnits){
-			setPot(unit);
-		}
-		
-	}	
-	private void setPot(Unit unit){		
+	private int getPot(Unit unit){
+		return choice.getPot(unit);	
+
 	}		
 	
 	/**
@@ -74,12 +70,19 @@ public class Monster {
 	 * @return
 	 */
 	
-	private Unit getBetterPot(){
-		return null;
-	}
+	
 	private void setCible(){
-		this.cible = getBetterPot();
+		Unit newCible = null ;
+		int pot = Integer.MIN_VALUE;
+		for(Unit unit: seenUnits){
+			if(getPot(unit)>pot){
+				pot = getPot(unit);
+				newCible = unit;
+			}
+		}
+		cible = newCible;
 	}	
+	
 	public Unit getCible(){
 		return cible;
 	}	
@@ -102,7 +105,6 @@ public class Monster {
 	
 	private void attack(ArrayList<int[]> attackTable){
 		setSeenUnits(gameEngine.getUnitList());
-		setPotList();
 		setCible();
 		
 		if(cible != null){
@@ -130,16 +132,9 @@ public class Monster {
 	 * @param dx
 	 * @param dy
 	 */	
-	public void translate(int dx, int dy) {
-		double size=view.getSize()*Math.sqrt(2)/2;
-		if(pos.getX()+size+dx<gameEngine.getWidth()&&pos.getX()-size+dx>0){
-		pos.translate(dx, 0);
-		view.translate(dx, 0);
-		}
-		if(pos.getY()+size+dy<gameEngine.getHeight()&&pos.getY()-size+dy>0){
-			pos.translate(0, dy);
-			view.translate(0, dy);
-			}
+	public void translate(int dx, int dy) { 
+		pos.translate(dx, dy);
+		view.translate(dx, dy);
 	}
 	
 	/**
@@ -174,6 +169,12 @@ public class Monster {
 	
 	public void act(){
 		move();
-		//attack(attack.result());
+		attack(attack.result());
+		//gameEngine.getDisplay().auto3D(view, gameEngine.getUnitList().get(0).getView(), 5000);
+	}
+
+	public double getSize() {
+	
+		return view.getSize();
 	}
 }

@@ -2,14 +2,15 @@ package monster;
 
 /**
  * Composante de Monster qui permet d'en g�rer le mouvement
- * @author Felix
  */
 
 import unit.Unit;
 
-public class MoveType {
+public abstract class MoveType {
 	final Monster monster;
 	final double speed;
+	final int width;
+	final int height;
 	
 
 
@@ -17,14 +18,19 @@ public class MoveType {
 		super();
 		this.monster = monster;
 		this.speed = speed;
+		width = monster.gameEngine.getWidth();
+		height = monster.gameEngine.getHeight();
 	}
 
 	public void move() {	
-		randMove();
+		
 	}
 	
 	/**
 	 * Le monstre se d�place vers une unit� � la vitesse speed
+	 * Pas de condition pour se d�placer car
+	 * - ne croise pas de mur (sinon ne la vois pas)
+	 * - ne sort pas de la carte (sinon le joueur est hors de la acrte et c'est pas possible)
 	 * @param unit
 	 */
 	final void moveTo(Unit unit){	
@@ -32,7 +38,7 @@ public class MoveType {
 		double ydiff = unit.getPos().getY() - monster.getPos().getY();
 		double dx = speed*xdiff/Math.sqrt(xdiff*xdiff + ydiff*ydiff);
 		double dy = speed*ydiff/Math.sqrt(xdiff*xdiff + ydiff*ydiff);
-		monster.getPos().move(dx, dy);
+		monster.translate((int)dx, (int)dy);
 	}	
 	
 	/** 
@@ -44,6 +50,10 @@ public class MoveType {
 		double rand2 = Math.random();
 		double xdir =2*(0.5 - rand1)*speed; 	
 		double ydir =2*(0.5 - rand1)*speed; 
-		monster.translate((int)xdir, (int)ydir);
+		double size=monster.getSize()*Math.sqrt(2)/2;
+		if ((monster.getX()+size+xdir>0)&&(monster.getX()+size+xdir<width)
+				&&(monster.getY()+size+ydir>0)&&(monster.getX()+size+xdir<height)){
+			monster.translate((int)xdir, (int)ydir);
+		}		
 	}
 }

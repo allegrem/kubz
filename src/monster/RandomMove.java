@@ -8,8 +8,9 @@ public class RandomMove extends MoveType{
 	}
 	
 	/**
-	 * Son seul type de mouvement est de se déplacer vers une direction aléatoire
+	 * Son seul type de mouvement est de se dï¿½placer vers une direction alï¿½atoire
 	 */
+	@Override
 	public void move(){
 		randMove();
 	}

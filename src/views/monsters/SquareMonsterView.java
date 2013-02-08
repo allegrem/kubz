@@ -3,23 +3,16 @@ package views.monsters;
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glColor3ub;
-import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
-import map2.Map;
-
 import org.lwjgl.opengl.GL11;
 
-import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 
 import utilities.Maths;
 import utilities.Point;
 import utilities.Vector;
-import views.attacks.AttackConeView;
-import views.interfaces.DisplayableChild;
 
 /**
  * Une unite en forme de carre
@@ -49,7 +42,7 @@ public class SquareMonsterView extends MonsterView {
 		GL11.glBlendFunc (GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		
 		glMatrixMode(GL_MODELVIEW);
-		GL11.glPopMatrix();
+		GL11.glPushMatrix();
 		GL11.glTranslated(getX(),getY(),0);
 		GL11.glRotated((int)Math.round(getAngle()),0,0,1);
 		
@@ -119,7 +112,7 @@ public class SquareMonsterView extends MonsterView {
 		GL11.glEnd();
 		
 		GL11.glLoadIdentity();
-		GL11.glPushMatrix();
+		GL11.glPopMatrix();
 		
 		GL11.glDisable (GL11.GL_BLEND); 
 		GL11.glDisable(GL11.GL_ALPHA_TEST);  
