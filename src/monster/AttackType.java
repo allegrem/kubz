@@ -7,7 +7,7 @@ public abstract class AttackType {
 	public void attack(Unit unit){		
 	}
 	public ArrayList<int[]> result(){
-		System.out.println("tata");
+		System.out.println("tata felix");
 		return null;
 		
 	}
