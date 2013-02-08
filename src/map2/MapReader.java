@@ -32,8 +32,7 @@ import wall.Wall;
  * 
  */
 public class MapReader {
-
-	//private Map map;
+	
 	private String bFileName,mFileName,wFileName;
 	private GameEngine gameEngine;
 	
