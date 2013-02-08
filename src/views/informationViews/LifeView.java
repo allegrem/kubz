@@ -45,7 +45,7 @@ public class LifeView implements DisplayableChild{
 		glMatrixMode(GL_MODELVIEW);
 		GL11.glPushMatrix();
 		GL11.glTranslated(x,y,0);
-		GL11.glRotated((int)Math.round(father.getAngle()),0,0,1);
+		//GL11.glRotated((int)Math.round(father.getAngle()),0,0,1);
 		
 		GL11.glBegin(GL11.GL_QUADS);
 		GL11.glColor3ub((byte)ReadableColor.GREY.getRed(),(byte)ReadableColor.GREY.getGreen(),(byte)ReadableColor.GREY.getBlue());

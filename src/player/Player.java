@@ -18,6 +18,8 @@ public  class Player {
 	private Parameter[] parameters ;
 	public static int nParams =2;
 	private float[] shield;
+	private boolean isTurn;
+	private int choice;
 
 	private GameEngine gameEngine;
 	
@@ -234,13 +236,31 @@ public  class Player {
 	
 	
 	public void act(){
+		isTurn = true;
 		//choosingUTurn();
 		movingUTurn();
+		isTurn = false;
 		
 	}
 	
 
 
+
+	public boolean isTurn() {
+		return isTurn;
+	}
+
+	public void setTurn(boolean isTurn) {
+		this.isTurn = isTurn;
+	}
+
+	public int getChoice() {
+		return choice;
+	}
+
+	public void setChoice(int choice) {
+		this.choice = choice;
+	}
 
 	public GameEngine getGameEngine() {
 		return gameEngine;
