@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="src/" kind="src" path=""/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="OpenGL-libs/lwjgl-2.8.5/jar/lwjgl_util.jar"/>
-	<classpathentry kind="lib" path="OpenGL-libs/lwjgl-2.8.5/jar/lwjgl.jar">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/commons-math3-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/core.jar"/>
+	<classpathentry kind="lib" path="lib/log4j.jar"/>
+	<classpathentry kind="lib" path="lib/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="lib/lwjgl.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="projet-2012-11/OpenGL-libs/lwjgl-2.8.5/native/linux"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="OpenGL-libs/slick/lib/slick-util.jar"/>
-	<classpathentry kind="lib" path="OpenGL-libs/slick/lib/slick.jar"/>
-	<classpathentry kind="lib" path="xbee-api-0.9/xbee-api-0.9.jar"/>
-	<classpathentry kind="lib" path="xbee-api-0.9/lib/RXTXcomm.jar"/>
-	<classpathentry kind="lib" path="xbee-api-0.9/lib/log4j.jar"/>
-	<classpathentry kind="lib" path="lib/commons-math3-3.1.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/slick-util.jar"/>
+	<classpathentry kind="lib" path="lib/slick.jar"/>
+	<classpathentry kind="lib" path="lib/xbee-api-0.9.jar"/>
+	<classpathentry kind="lib" path="lib/RXTXcomm.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
