@@ -49,7 +49,6 @@ import map2.Map;
 public class GLDisplay extends Thread{
 
 
-	private static final MyBuffer MyFloatBuffer = null;
 	private int display_width=700;
 	private int display_height=500; 
 	private int mapDisplay_width=0;
@@ -70,7 +69,7 @@ public class GLDisplay extends Thread{
 	private float camDx=50;
 	private float camDy=50;
 	private float camDz=0.0f;
-	private boolean mode3D=false;
+	private static boolean mode3D=false;
 	private boolean modeChanged=false;
 	private long time=0;
 	private long started=0;
@@ -85,6 +84,12 @@ public class GLDisplay extends Thread{
 	private float lightDx;
 	private float lightDy;
 	private float lightDz=0.0f;
+	private float lightsx=-20.0f;
+	private float lightsy=-20.0f;
+	private float lightsz=20.0f;
+	private float lightsDx;
+	private float lightsDy;
+	private float lightsDz=0.0f;
 	private Lighting lighting=new Lighting(this);
 	
 	
@@ -124,11 +129,12 @@ public class GLDisplay extends Thread{
 		setLightPosition();
 		if(modeChanged)
 			changeViewMode();
-		
 		if(mode3D){
 			setCameraDirection();
-			if(time>0 && System.currentTimeMillis()-started>=time)
+			if(time>0 && System.currentTimeMillis()-started>=time){
 				mode2D();
+				resetLight();
+			}
 		}
 		
 		mainRender(); //On actualise la fenetre avec le nouveau rendu
@@ -146,7 +152,6 @@ public class GLDisplay extends Thread{
 		
 	}
 	
-
 
 	/**
 	 * Initialisation de l'OpenGL
@@ -274,6 +279,20 @@ public class GLDisplay extends Thread{
 	}
 	
 	/**
+	 * Replalce la lumière à sa position sauvegardée
+	 */
+	private void resetLight() {
+		lightx=lightsx;
+		lighty=lightsy;
+		lightz=lightsz;
+		lightDx=lightsDx;
+		lightDy=lightsDy;
+		lightDz=lightsDz;
+		
+	}
+
+	
+	/**
 	 * Passage en vue 3DmapD
 	 */
 	public void mode3D(long time) {
@@ -311,7 +330,9 @@ public class GLDisplay extends Thread{
 		
 		modeChanged=false;
 	}
-		
+		/**
+		 * Sert a placer la camera aux coordonnees definies
+		 */
 	private void setCameraDirection(){
 		glMatrixMode(GL_MODELVIEW);
 		//positionnement de la camera
@@ -355,34 +376,68 @@ public class GLDisplay extends Thread{
 		return display_height;
 	}
 
+	/**
+	 * 
+	 * @return Si l'initialisation de l'OpenGL est terminee
+	 */
 	public boolean initialized() {
 		
 		return initialized;
 	}
 	
+	/**
+	 * 
+	 * @param sound Le son a afficher
+	 */
 	public synchronized void setSound(Sound sound){
 		this.sound=sound;
 		audioRender.setSound(sound);
 	}
 	
+	/**
+	 * Rendu des visuels du son
+	 */
 	private synchronized void audioRender() {
 		audioRender.renderAudioView();
 		audioRender.renderSpectrumView();
 		
 	}
 	
+	/**
+	 * Pace en mode 3D "automatique": La camera est placee derriere l'attaquant et regarde la cible.
+	 * Idem pour l'eclairage
+	 * @param attacking
+	 * @param attacked
+	 * @param time
+	 */
 	public void auto3D(DisplayableFather attacking,DisplayableFather attacked,int time){
-		
+		lightsx=lightx;
+		lightsy=lighty;
+		lightsz=lightz;
+		lightsDx=lightDx;
+		lightsDy=lightDy;
+		lightsDz=lightDz;
 		setCamDirection((float)attacked.getX(), (float)attacked.getY(), 0);
+		setLightDirection((float)attacked.getX(), (float)attacked.getY(), 0);
 		Vector vect =Maths.makeVector(attacked.getX(),attacked.getY(),0,attacking.getX(),attacking.getY(),0);
 		double norme=vect.norme();
 		Maths.normalize(vect);
 		setCamPlace((float) (attacking.getX()+(norme/3+80)*vect.getX()), (float) (attacking.getY()+(norme/3+80)*vect.getY()), 80);
+		setLightPlace((float) (attacking.getX()+(norme/3+80)*vect.getX()), (float) (attacking.getY()+(norme/3+80)*vect.getY()), 80);
 		mode3D=true;
 		modeChanged=true;
 		this.time=time;
 		this.started=System.currentTimeMillis();
 	}
+	
+	/**
+	 * 
+	 * @return Si on est en mode 3D
+	 */
+	public static boolean getMode3D(){
+		return mode3D;
+	}
+	
 }
 
 	
