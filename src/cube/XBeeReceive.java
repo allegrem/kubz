@@ -9,7 +9,7 @@ import com.rapplogic.xbee.util.ByteUtils;
 
 public class XBeeReceive {
 // Attention ceci n'est qu'un exemple qui doit être modifié.
-	private XBeeReceive() throws XBeeException {
+	public XBeeReceive() throws XBeeException {
 		
 		 XBee xbee = new XBee();
          
