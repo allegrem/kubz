@@ -170,6 +170,7 @@ public class Monster {
 	public void act(){
 		move();
 		attack(attack.result());
+		//gameEngine.getDisplay().auto3D(view, gameEngine.getUnitList().get(0).getView(), 5000);
 	}
 
 	public double getSize() {

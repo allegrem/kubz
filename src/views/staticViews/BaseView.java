@@ -9,6 +9,8 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.glu.PartialDisk;
 
+import OpenGL.GLDisplay;
+
 import utilities.Point;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
@@ -60,6 +62,7 @@ public class BaseView implements DisplayableFather{
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 				
 		if(rectangular){
+			if(!GLDisplay.getMode3D()){
 			GL11.glBegin(GL11.GL_QUADS);
 			
 			GL11.glColor3ub((byte)(color.getRed()*80/100),(byte)(color.getGreen()*80/100),(byte)(color.getBlue()*80/100));
@@ -77,6 +80,7 @@ public class BaseView implements DisplayableFather{
 			glVertex3d(center.getX()-size.getX()/2+5,center.getY()+size.getY()/2-5, 100);
 			
 			GL11.glEnd();
+			}
 		}else{
 		GL11.glColor3ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue());		
 		GL11.glTranslated(center.getX(), center.getY(), 0.1);

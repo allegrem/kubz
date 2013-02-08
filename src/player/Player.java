@@ -18,6 +18,8 @@ public  class Player {
 	private Parameter[] parameters ;
 	public static int nParams =2;
 	private float[] shield;
+	private boolean isTurn;
+	private int choice;
 
 	private GameEngine gameEngine;
 	
@@ -199,12 +201,12 @@ public  class Player {
 		setPStatesToSoundEdit();
 		setUStateToWaiting();
 		while (!KeyboardManager.tap){
-				if(KeyboardManager.zKey) parameters[KeyboardManager.choice].translate(0,1);
-				if(KeyboardManager.sKey) parameters[KeyboardManager.choice].translate(0, -1);
-				if(KeyboardManager.qKey) parameters[KeyboardManager.choice].translate(-1, 0);
-				if(KeyboardManager.dKey) parameters[KeyboardManager.choice].translate(0, 1);
-				if(KeyboardManager.wKey) parameters[KeyboardManager.choice].rotate(1);
-				if(KeyboardManager.xKey) parameters[KeyboardManager.choice].rotate(-1);						
+				if(KeyboardManager.zKey) parameters[choice].translate(0,1);
+				if(KeyboardManager.sKey) parameters[choice].translate(0, -1);
+				if(KeyboardManager.qKey) parameters[choice].translate(-1, 0);
+				if(KeyboardManager.dKey) parameters[choice].translate(0, 1);
+				if(KeyboardManager.wKey) parameters[choice].rotate(1);
+				if(KeyboardManager.xKey) parameters[choice].rotate(-1);						
 		}
 		KeyboardManager.tap = false;
 	}	
@@ -234,13 +236,31 @@ public  class Player {
 	
 	
 	public void act(){
+		isTurn = true;
 		//choosingUTurn();
 		movingUTurn();
+		isTurn = false;
 		
 	}
 	
 
 
+
+	public boolean isTurn() {
+		return isTurn;
+	}
+
+	public void setTurn(boolean isTurn) {
+		this.isTurn = isTurn;
+	}
+
+	public int getChoice() {
+		return choice;
+	}
+
+	public void setChoice(int choice) {
+		this.choice = choice;
+	}
 
 	public GameEngine getGameEngine() {
 		return gameEngine;

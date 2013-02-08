@@ -43,6 +43,7 @@ public class AudioRender {
 	}
 
 	public void renderAudioView() {
+		if(!GLDisplay.getMode3D()){
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		
 		GL11.glColor3ub((byte)ReadableColor.LTGREY.getRed(),(byte)ReadableColor.LTGREY.getGreen(),(byte)ReadableColor.LTGREY.getBlue());
@@ -72,7 +73,7 @@ public class AudioRender {
 			GL11.glVertex3i(0,  ymax-(MANUAL_OFFSET + Y_SIZE / 2), 100);
 			GL11.glVertex3i(X_SIZE,ymax-(MANUAL_OFFSET
 					+ Y_SIZE / 2), 100);
-			
+		}
 		}
 
 		GL11.glEnd();
@@ -81,6 +82,7 @@ public class AudioRender {
 	
 	
 public void renderSpectrumView(){
+	if(!GLDisplay.getMode3D()){
 	GL11.glDisable(GL11.GL_TEXTURE_2D);
 	
 	GL11.glColor3ub((byte)ReadableColor.LTGREY.getRed(),(byte)ReadableColor.LTGREY.getGreen(),(byte)ReadableColor.LTGREY.getBlue());
@@ -104,6 +106,7 @@ public void renderSpectrumView(){
 		}
 	
 	GL11.glEnd();
+	}
 	}
 }
 
