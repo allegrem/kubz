@@ -24,7 +24,7 @@ public class GameEngine {
 	private final int height;
 	public ArrayList<Monster> monsterList;
 	private ArrayList<Player> playerList;
-	private ArrayList<Wall> walls;
+	//private ArrayList<Wall> walls;
 	private ArrayList<Base> bases;
 	private CubeManager cubeManager;
 	private GLDisplay display;
@@ -57,7 +57,7 @@ public class GameEngine {
 			monsterList=reader.readMonsters();
 			//bases=reader.readBases();
 			bases=new ArrayList<Base>();
-			walls=reader.readWalls();
+			//walls=reader.readWalls();
 			playerList=new ArrayList<Player>();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

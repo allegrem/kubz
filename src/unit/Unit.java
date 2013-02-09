@@ -108,7 +108,7 @@ public class Unit {
 		view.setAngle(theta);
 	}
 	public void rotateAperture(double dTheta){
-		aperture = aperture + dTheta;
+		if (aperture+dTheta>0) aperture = aperture + dTheta;
 		view.rotateAperture(dTheta);
 		view.rotate(dTheta);
 	}
