@@ -110,11 +110,11 @@ public class CubeControlledView implements DisplayableFather{
 /**
  * Nouvelle position a partir des 
  * nouvelles coordonnes
- * @param x
- * @param y
+ * @param d
+ * @param e
  */
-	public void setLocation(int x, int y) {
-		position.move(x, y);
+	public void setLocation(double d, double e) {
+		position.move(d, e);
 
 	}
 

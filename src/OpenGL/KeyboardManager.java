@@ -19,8 +19,8 @@ public class KeyboardManager {
 	public static boolean quit=false;
 	private static GameEngine gameEngine;
 
-	public static void  setGameEngine(GameEngine gameEngine){
-		gameEngine=gameEngine;
+	public static void  setGameEngine(GameEngine gameEngine2){
+		gameEngine=gameEngine2;
 	}
 	
 	
@@ -76,9 +76,9 @@ public static void checkKeyboard(){
 		}
 			
 				
-		
 		if (Keyboard.isKeyDown(Keyboard.KEY_TAB)){
 			for(Player player:gameEngine.getPlayerList()){
+				System.out.println(player);
 				if (player.isTurn()){
 					player.setChoice((player.getChoice() + 1)%player.getnParams());
 				}

@@ -1,5 +1,4 @@
 package gameEngine;
-import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 
 import java.util.ArrayList;
@@ -62,9 +61,9 @@ public class GameEngine {
 			e.printStackTrace();
 		}
 		bases.add(new Base(ReadableColor.ORANGE,this));
-		playerList.add(new Player(this));
-		playerList.add(new Player(this));
-		playerList.add(new Player(this));
+		playerList.add(new Player(this,bases.get(0)));
+		//playerList.add(new Player(this));
+		//playerList.add(new Player(this));
 		act();
 	}
 	

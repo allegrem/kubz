@@ -28,13 +28,16 @@ public  class Player {
 	/**
 	 * Creation d'un joueur avec une Unit et deux Parameter
 	 */
-	public Player(GameEngine gameEngine){
+	public Player(GameEngine gameEngine, Base base){
 
 		this.gameEngine=gameEngine;
+		this.base = base;
 		this.unit = new Unit(this);
 		this.parameters = new Parameter[2];
-		parameters[0]= new Parameter();
-		parameters[1]= new Parameter();
+		parameters[0]= new Parameter(this);
+		parameters[1]= new Parameter(this);
+		parameters[0].setLocation(base.getCenter().getX()-parameters[0].getSize(), base.getCenter().getY());
+		parameters[1].setLocation(base.getCenter().getX()+parameters[1].getSize(), base.getCenter().getY());
 		this.shield = new float[1000];
 		for(int i=0; i<11;i++)
 			shield[i]=1f;
@@ -204,10 +207,10 @@ public  class Player {
 		setUStateToWaiting();
 		double size=unit.getSize()*Math.sqrt(2)/2;
 		while (!KeyboardManager.tap){
-				if((KeyboardManager.zKey)&&(unit.getY()-size>(base.getCenter().getY()-(base.getSize().getY()/2)))) parameters[choice].translate(0,1);
-				if((KeyboardManager.sKey)&&(unit.getY()-size<(base.getCenter().getY()+(base.getSize().getY()/2)))) parameters[choice].translate(0, -1);
-				if((KeyboardManager.qKey)&&(unit.getY()-size>(base.getCenter().getX()-(base.getSize().getX()/2)))) parameters[choice].translate(-1, 0);
-				if((KeyboardManager.dKey)&&(unit.getY()-size>(base.getCenter().getX()+(base.getSize().getX()/2)))) parameters[choice].translate(0, 1);
+				if((KeyboardManager.zKey)&&(parameters[choice].getY()-size>(base.getCenter().getY()-(base.getSize().getY()/2)))) parameters[choice].translate(0,-1);
+				if((KeyboardManager.sKey)&&(parameters[choice].getY()+size<(base.getCenter().getY()+(base.getSize().getY()/2)))) parameters[choice].translate(0,1);
+				if((KeyboardManager.qKey)&&(parameters[choice].getX()-size>(base.getCenter().getX()-(base.getSize().getX()/2)))) parameters[choice].translate(-1,0);
+				if((KeyboardManager.dKey)&&(parameters[choice].getX()+size<(base.getCenter().getX()+(base.getSize().getX()/2)))) parameters[choice].translate(1,0);
 				if(KeyboardManager.wKey) parameters[choice].rotate(1);
 				if(KeyboardManager.xKey) parameters[choice].rotate(-1);	
 				try {
@@ -247,6 +250,7 @@ public  class Player {
 		isTurn = true;
 		//choosingUTurn();
 		movingUTurn();
+		soundEditPTurn();
 		isTurn = false;
 		
 	}

@@ -1,18 +1,38 @@
 package parameter;
 
+import gameEngine.GameEngine;
+import player.Player;
 import views.CubeControlledView;
+import views.informationViews.LifeView;
 import utilities.Point;
 
 public class Parameter {
 	
-	private Point pos;
+	private Point pos = new Point(10,10);
 	private double angle;
 	private double dAngle = 0;
 	private ParameterState state;
+	private Player owner;
+	private GameEngine gameEngine;
+	private double size;
 	private CubeControlledView view;
-	
 
-	public double getDAngle(){
+	
+	public Parameter(Player owner){
+		this.state = new WaitingPState();
+		this.owner = owner;
+		gameEngine=owner.getGameEngine();
+		view = new CubeControlledView(pos);
+		size = view.getSize();
+		gameEngine.getMap().add(view);
+		
+	}
+
+	
+	
+	
+	
+	double getDAngle(){
 		double vase = dAngle;
 		dAngle = 0;
 		return vase;		
@@ -31,12 +51,12 @@ public class Parameter {
 	
 	/**
 	 * deplacement absolu de unit
-	 * @param x
-	 * @param y
+	 * @param d
+	 * @param e
 	 */	
-	public void setLocation(int x, int y) {		
-		pos.move(x, y);
-		view.setLocation(x,y);
+	public void setLocation(double d, double e) {		
+		pos.move(d, e);
+		view.setLocation(d,e);
 	}
 		
 	/**
@@ -57,6 +77,9 @@ public class Parameter {
 	}
 	public Point getPos(){
 		return pos;
+	}
+	public double getSize(){
+		return size;
 	}
 	
 	/**
