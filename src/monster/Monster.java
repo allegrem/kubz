@@ -21,12 +21,12 @@ public class Monster {
 	 */
 	
 	protected GameEngine gameEngine;
-	private AttackType attack;
-	private ChooseType choice;
-	private MoveType move;
-	private Unit cible;
-	private ArrayList<Unit> seenUnits; 
-	private Point pos;
+	protected AttackType attack;
+	protected ChooseType choice;
+	protected MoveType move;
+	protected Unit cible;
+	protected ArrayList<Unit> seenUnits; 
+	protected Point pos;
 	
 	/**
 	 * reference vers la vue du monstre pour pouvoir transmettre les modifications necessaires 
@@ -132,7 +132,7 @@ public class Monster {
 	 * @param dx
 	 * @param dy
 	 */	
-	public void translate(int dx, int dy) { 
+	public void translate(double dx, double dy) { 
 		pos.translate(dx, dy);
 		view.translate(dx, dy);
 	}

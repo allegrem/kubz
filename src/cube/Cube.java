@@ -18,7 +18,7 @@ public class Cube {
 	 */
 	private short angle;
 	private boolean tap;
-
+	private boolean ir;
 	private short id;
 
     public Cube(){}
@@ -31,8 +31,8 @@ public class Cube {
 		
 	}
 	
-	public void setIR() {
-		
+	public void setIR(boolean newIr) {
+		ir = newIr;
 	}
 	
 	public void setMotor() {
@@ -51,4 +51,4 @@ public class Cube {
 		return id;
     }
 }
-}
+
