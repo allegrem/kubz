@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 .project
 .classpath
 *.class
-=======
-#.classpath
 #.project
 .settings/
 bin/
@@ -23,4 +20,4 @@ stats/
 .idea/uiDesigner.xml
 .idea/vcs.xml
 .idea/workspace.xml
->>>>>>> sauvegardeGET
+

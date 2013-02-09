@@ -10,6 +10,8 @@ import map2.Map;
 import map2.MapReader;
 import monster.Monster;
 import player.*;
+import synthesis.Sound;
+import synthesis.fmInstruments.BellInstrument;
 import unit.Unit;
 import utilities.RandomPerso;
 import views.staticViews.BackgroundView;
@@ -43,6 +45,7 @@ public class GameEngine {
 				e.printStackTrace();
 			}
 		}
+		display.setSound(new Sound(new BellInstrument(),1));
 		width=display.getmapDisplay_width();
 		height=display.getmapDisplay_height();
 		System.out.println("Width: "+width+" Height: "+height);

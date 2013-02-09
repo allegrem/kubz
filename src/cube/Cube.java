@@ -31,11 +31,12 @@ public class Cube {
 		
     }
 	
-	public void setIrOn(){	
-		setIR((byte) 7);
+
+	public void setIrOn(){
+		setIR((byte)7);
 	}
 	public void setIrOf(){
-		setIR((byte) 0);
+		setIR((byte)0);
 	}
 
     /**
