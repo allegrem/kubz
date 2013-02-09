@@ -15,17 +15,19 @@ import synthesis.fmInstruments.FmInstrument;
 
 /**
  * This class handles a sound and can perform some Fourier transforms and
- * filtering. The sound is linked with a {@link FmInstrumentFmInstrument}, and each
- * time the FmInstrument is modified, the sound (and its spectrum) is
+ * filtering. The sound is linked with a {@link FmInstrumentFmInstrument}, and
+ * each time the FmInstrument is modified, the sound (and its spectrum) is
  * updated. The length of the sound can also be edited. Finally the sound can be
- * filtered with a {@link BandsFilter}, but in this case, if the
- * FmInstrument changes again, the filtered sound will be erased. That's
- * why a {@link Sound#lock()} method is provided to prevent the sound from being
+ * filtered with a {@link BandsFilter}, but in this case, if the FmInstrument
+ * changes again, the filtered sound will be erased. That's why a
+ * {@link Sound#lock()} method is provided to prevent the sound from being
  * modified by instrument's updates.
  * 
  * @author allegrem
  */
 public class Sound extends Observable implements Observer {
+
+	private static final Float SAMPLING_TIME = 0.01f;
 
 	private float length;
 
@@ -62,7 +64,7 @@ public class Sound extends Observable implements Observer {
 	 */
 	public void setLength(float length) throws InvalidParameterException {
 		if (length < 0)
-			throw new InvalidParameterException("negative sound length");
+			throw new InvalidParameterException("Negative sound length");
 		this.length = length;
 		updateSound();
 	}
@@ -105,6 +107,10 @@ public class Sound extends Observable implements Observer {
 				DftNormalization.STANDARD);
 		spectrum = fourier
 				.transform(originalSoundDouble, TransformType.FORWARD);
+
+		// notify observers
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
@@ -152,10 +158,33 @@ public class Sound extends Observable implements Observer {
 		updateSound();
 	}
 
+	// methode MA
+	protected void applyFilter2(BandsFilter filter) {
+		// apply filter
+		int barLength = spectrum.length / 2 / filter.getBarNumber() + 1;
+		for (int i = 0; i < spectrum.length / 2; i++) {
+			int barNumber = i / barLength;
+			double barValue = (double) filter.getBar(barNumber) / 100.;
+			spectrum[i] = spectrum[i].multiply(barValue);
+			spectrum[spectrum.length - i - 1] = spectrum[spectrum.length
+					- i - 1].multiply(barValue);
+		}
+
+		// inverse transform
+		FastFourierTransformer fourier = new FastFourierTransformer(
+				DftNormalization.STANDARD);
+		Complex[] fourierInverse = fourier.transform(spectrum,
+				TransformType.INVERSE);
+
+		// keep real part
+		for (int i = 0; i < sound.length; i++)
+			sound[i] = (byte) fourierInverse[i].getReal();
+	}
+
+	// methode BD
 	protected void applyFilter(BandsFilter filter) {
 		int cursor = 0;
-		int sampleLength = (int) (AudioBlock.SAMPLE_RATE * 0.02); // 20ms
-																	// sampling
+		int sampleLength = (int) (AudioBlock.SAMPLE_RATE * SAMPLING_TIME);
 
 		while (cursor < sound.length) {
 			// extract sample
@@ -167,12 +196,14 @@ public class Sound extends Observable implements Observer {
 			Complex[] sampleSpectrum = computeFourier(sample);
 
 			// apply filter
-			int barLength = sampleSpectrum.length / 2 / filter.getBarNumber() + 1;
+			int barLength = sampleSpectrum.length / 2 / filter.getBarNumber()
+					+ 1;
 			for (int i = 0; i < sampleSpectrum.length / 2; i++) {
 				int barNumber = i / barLength;
 				double barValue = (double) filter.getBar(barNumber) / 100.;
-				sampleSpectrum[i].multiply(barValue);
-				sampleSpectrum[sampleSpectrum.length - i - 1].multiply(barValue);
+				sampleSpectrum[i] = sampleSpectrum[i].multiply(barValue);
+				sampleSpectrum[sampleSpectrum.length - i - 1] = sampleSpectrum[sampleSpectrum.length
+						- i - 1].multiply(barValue);
 			}
 
 			// inverse transform
@@ -181,12 +212,14 @@ public class Sound extends Observable implements Observer {
 			Complex[] fourierInverse = fourier.transform(sampleSpectrum,
 					TransformType.INVERSE);
 
-			//keep real part
-			for (int i = 0; i < sampleLength; i++) 
+			// keep real part
+			for (int i = 0; i < sampleLength; i++)
 				sound[i + cursor] = (byte) fourierInverse[i].getReal();
 
 			cursor += sampleLength;
 		}
+
+		updateSpectrum();
 	}
 
 	private Complex[] computeFourier(byte[] soundPiece) {
@@ -220,6 +253,7 @@ public class Sound extends Observable implements Observer {
 		Sound filteredSound = new Sound(instrument, length);
 		filteredSound.lock();
 		filteredSound.applyFilter(filter);
+//		filteredSound.applyFilter2(filter);
 		return filteredSound;
 	}
 
