@@ -5,7 +5,7 @@ import unit.*;
 
 public abstract class AttackType {	
 	public void attack(Unit unit){		
-	}
+	}	
 	public ArrayList<int[]> result(){
 		return null;	
 	}

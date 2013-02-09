@@ -11,6 +11,9 @@ public abstract class MoveType {
 	final int speed;
 	final int width;
 	final int height;
+	private double startTime;
+	private double pause;
+	
 	
 
 
@@ -47,15 +50,13 @@ public abstract class MoveType {
 	 */		
 	final void randMove(){
 		double rand = 2*Math.PI*Math.random();
-		double xdir =Math.cos(rand); 	
-		double ydir =Math.sin(rand); 
+		double xdir =speed*Math.cos(rand); 	
+		double ydir =speed*Math.sin(rand); 
 		System.out.println(xdir + "  " + ydir);
 		double size=monster.getSize()*Math.sqrt(2)/2;
-		for (int i =0; i<speed;i++){
-			if ((monster.getX()+size+(xdir)>0)&&(monster.getX()+size+(xdir)<width)
-					&&(monster.getY()+size+(ydir)>0)&&(monster.getX()+size+(xdir)<height)){
-				monster.translate(xdir, ydir);
-			}
+		if ((monster.getX()+size+(xdir)>0)&&(monster.getX()+size+(xdir)<width)
+				&&(monster.getY()+size+(ydir)>0)&&(monster.getX()+size+(xdir)<height)){
+			monster.translate(xdir, ydir);			
 		}		
 	}
 }
