@@ -116,4 +116,9 @@ public class ParamBlock extends Observable implements ParameterAudioBlock {
 		return value;
 	}
 
+	@Override
+	public void incrValue(int incr) {
+		setValue(getValue() + incr);
+	}
+
 }

@@ -6,7 +6,7 @@ import synthesis.basicblocks.severalinputsblocks.Adder;
 import synthesis.parameter.ParamBlock;
 import synthesis.parameter.ParameterAudioBlock;
 
-public class TwoOscFmInstrumentBis extends FmInstrument {
+public class TwoOscFmInstrumentBis extends FmInstrumentNParams {
 	private ParameterAudioBlock fp;
 	private ParameterAudioBlock mod;
 	private ParameterAudioBlock amp;

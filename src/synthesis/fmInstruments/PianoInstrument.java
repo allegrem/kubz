@@ -16,7 +16,7 @@ import synthesis.parameter.ParameterAudioBlock;
  * @author valeh
  *
  */
-public class PianoInstrument extends FmInstrument{
+public class PianoInstrument extends FmInstrumentNParams{
 	private static final int STEPS = 1000; //lets define the parameters on a scale of 1 to 1000
 	//different params
 	private final ParameterAudioBlock f0;

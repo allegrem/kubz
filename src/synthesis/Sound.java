@@ -11,14 +11,14 @@ import org.apache.commons.math3.transform.TransformType;
 
 import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.filters.BandsFilter;
-import synthesis.fmInstruments.FmInstrument;
+import synthesis.fmInstruments.FmInstrumentNParams;
 
 /**
  * This class handles a sound and can perform some Fourier transforms and
- * filtering. The sound is linked with a {@link FmInstrument}, and each time the
- * FmInstrument is modified, the sound (and its spectrum) is updated. The length
+ * filtering. The sound is linked with a {@link FmInstrumentNParams}, and each time the
+ * FmInstrumentNParams is modified, the sound (and its spectrum) is updated. The length
  * of the sound can also be edited. Finally the sound can be filtered with a
- * {@link BandsFilter}, but in this case, if the FmInstrument changes again, the
+ * {@link BandsFilter}, but in this case, if the FmInstrumentNParams changes again, the
  * filtered sound will be erased. That's why a {@link Sound#lock()} method is
  * provided to prevent the sound from being modified by instrument's updates.
  * 
@@ -32,7 +32,7 @@ public class Sound extends Observable implements Observer {
 
 	private Complex[] spectrum = null;
 
-	private FmInstrument instrument;
+	private FmInstrumentNParams instrument;
 
 	private boolean locked = false; // block instrument observation
 
@@ -40,11 +40,11 @@ public class Sound extends Observable implements Observer {
 	 * Create a new Sound. The sound is updated then.
 	 * 
 	 * @param instrument
-	 *            The {@link FmInstrument} to use.
+	 *            The {@link FmInstrumentNParams} to use.
 	 * @param length
 	 *            The default length of the played sounds.
 	 */
-	public Sound(FmInstrument instrument, float length) {
+	public Sound(FmInstrumentNParams instrument, float length) {
 		super();
 		setInstrument(instrument); // FIXME double call of update here...
 		setLength(length); // /... and here
@@ -135,9 +135,9 @@ public class Sound extends Observable implements Observer {
 	}
 
 	/**
-	 * Return the {@link FmInstrument} used to compute the sound.
+	 * Return the {@link FmInstrumentNParams} used to compute the sound.
 	 */
-	public FmInstrument getInstrument() {
+	public FmInstrumentNParams getInstrument() {
 		return instrument;
 	}
 
@@ -145,7 +145,7 @@ public class Sound extends Observable implements Observer {
 	 * Modify the instrument linked with the sound and observe it. Then the
 	 * sound is updated.
 	 */
-	public void setInstrument(FmInstrument instrument2) {
+	public void setInstrument(FmInstrumentNParams instrument2) {
 		this.instrument = instrument2;
 		instrument2.addObserver(this);
 		updateSound();

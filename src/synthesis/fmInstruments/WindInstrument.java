@@ -8,7 +8,7 @@ import synthesis.basicblocks.severalinputsblocks.Adder;
 import synthesis.parameter.ParamBlock;
 import synthesis.parameter.ParameterAudioBlock;
 
-public class WindInstrument extends FmInstrument{
+public class WindInstrument extends FmInstrumentNParams{
 	
 	private final ParameterAudioBlock fm;
 	private final ParameterAudioBlock amp;

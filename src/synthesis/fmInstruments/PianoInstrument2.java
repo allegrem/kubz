@@ -12,7 +12,7 @@ import synthesis.parameter.ParameterAudioBlock;
  * @author allegrem
  * 
  */
-public class PianoInstrument2 extends FmInstrument {
+public class PianoInstrument2 extends FmInstrumentNParams {
 
 	private ParameterAudioBlock a;
 	private ParameterAudioBlock f0;

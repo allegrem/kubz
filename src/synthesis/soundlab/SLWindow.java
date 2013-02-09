@@ -19,7 +19,7 @@ import synthesis.audiooutput.WavFileOutput;
 import synthesis.exceptions.AudioException;
 import synthesis.filters.BandsFilter;
 import synthesis.fmInstruments.BellInstrument;
-import synthesis.fmInstruments.FmInstrument;
+import synthesis.fmInstruments.FmInstrumentNParams;
 import synthesis.fmInstruments.PianoInstrument;
 import synthesis.fmInstruments.PianoInstrument2;
 import synthesis.fmInstruments.TwoOscFmInstrument;
@@ -224,7 +224,7 @@ public class SLWindow {
 			final String message) {
 	}
 
-	private void setInstrument(FmInstrument instrument) {
+	private void setInstrument(FmInstrumentNParams instrument) {
 		filteredSound.setInstrument(instrument);
 		instrumentView.setInstrument(instrument);
 	}

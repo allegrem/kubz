@@ -14,7 +14,7 @@ import synthesis.parameter.ParameterAudioBlock;
  * @author valeh
  *
  */
-public class BellInstrument extends FmInstrument {
+public class BellInstrument extends FmInstrumentNParams {
 	
 	private final float STEPS = 1000;  //lets define the parameters on a scale of 1 to 1000
 	private final ParameterAudioBlock fm;

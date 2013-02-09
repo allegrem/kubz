@@ -9,15 +9,15 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
-import synthesis.fmInstruments.FmInstrument;
+import synthesis.fmInstruments.FmInstrumentNParams;
 import synthesis.parameter.ParameterAudioBlock;
 
 /**
- * This class is the view for a {@link FmInstrument}. It retrieves the list of
+ * This class is the view for a {@link FmInstrumentNParams}. It retrieves the list of
  * its parameters and shows a controller for each of them. It also contains a
- * toolbar with some action button (play, ...). The FmInstrument can be changed
+ * toolbar with some action button (play, ...). The FmInstrumentNParams can be changed
  * on the fly with the method
- * {@link SLInstrumentView#setInstrument(FmInstrument)}.
+ * {@link SLInstrumentView#setInstrument(FmInstrumentNParams)}.
  * 
  * @author allegrem
  */
@@ -49,7 +49,7 @@ public class SLInstrumentView extends JPanel {
 	 * @param instrument
 	 *            The instrument to display.
 	 */
-	public SLInstrumentView(SLWindow window, FmInstrument instrument) {
+	public SLInstrumentView(SLWindow window, FmInstrumentNParams instrument) {
 		this(window);
 		setInstrument(instrument);
 	}
@@ -79,12 +79,12 @@ public class SLInstrumentView extends JPanel {
 	}
 
 	/**
-	 * Change the {@link FmInstrument} of the view. The old controllers are
+	 * Change the {@link FmInstrumentNParams} of the view. The old controllers are
 	 * removed and replaced by the controllers for the given instrument. 
 	 * 
-	 * @param instrument The new {@link FmInstrument} to display.
+	 * @param instrument The new {@link FmInstrumentNParams} to display.
 	 */
-	public void setInstrument(FmInstrument instrument) {
+	public void setInstrument(FmInstrumentNParams instrument) {
 		removeAll();
 		createToolbar();
 		for (ParameterAudioBlock p : instrument.getParameters())

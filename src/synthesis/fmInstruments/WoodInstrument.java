@@ -15,7 +15,7 @@ import synthesis.parameter.ParameterAudioBlock;
  * 
  * @author valeh
  */
-public class WoodInstrument extends FmInstrument {
+public class WoodInstrument extends FmInstrumentNParams {
 
 	private final ParameterAudioBlock fm;
 	private final ParameterAudioBlock amp;
