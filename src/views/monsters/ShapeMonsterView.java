@@ -33,6 +33,7 @@ public class ShapeMonsterView extends MonsterView {
 
 	@Override
 	public void paint() {
+		actualizePosition();
 		glColor3ub((byte) actualColor.getRed(), (byte) actualColor.getGreen() , (byte) actualColor.getBlue()); 
 		
 		glMatrixMode(GL_MODELVIEW);

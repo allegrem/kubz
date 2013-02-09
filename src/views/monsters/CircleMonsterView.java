@@ -29,6 +29,7 @@ public class CircleMonsterView extends MonsterView {
 
 	@Override
 	public void paint() {
+		actualizePosition();
 		glMatrixMode(GL_MODELVIEW);
 		GL11.glPushMatrix();
 		GL11.glTranslated(getX(),getY(),0);

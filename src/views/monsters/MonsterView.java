@@ -21,12 +21,15 @@ public abstract class MonsterView implements DisplayableFather{
 	protected static final double size= 30;
 	protected static final double height = 30;
 	private Point position;
+	private Point positionToGo=new Point(0,0);
 	private double angle=0;
 	private Map map;
 	private ReadableColor color;
 	protected ReadableColor actualColor;
 	protected ArrayList<DisplayableChild> children= new ArrayList<DisplayableChild>();
 	protected int duration=0;
+	private double startingTime=0;
+	private double pause=10;
 
 	/**
 	 * Nouveau monstre
@@ -36,6 +39,7 @@ public abstract class MonsterView implements DisplayableFather{
 	public MonsterView(Point position, ReadableColor color) {
 		this.map=Map.getMap();
 		this.position = position;
+		positionToGo.setLocation(position);
 		this.color = color;
 		actualColor = color;
 	}
@@ -49,7 +53,7 @@ public abstract class MonsterView implements DisplayableFather{
 	 * @param dy
 	 */
 	public void translate(double dx, double dy) {
-		position.translate(dx, dy);
+		positionToGo.translate(dx, dy);
 	}
 
 	/**
@@ -59,7 +63,7 @@ public abstract class MonsterView implements DisplayableFather{
 	 * @param y
 	 */
 	public void setLocation(int x, int y) {
-		position.move(x, y);
+		positionToGo.move(x, y);
 
 	}
 
@@ -69,7 +73,7 @@ public abstract class MonsterView implements DisplayableFather{
 	 * @param p
 	 */
 	public void setLocation(Point p) {
-		position.setLocation(p);
+		positionToGo.setLocation(p);
 
 	}
 
@@ -173,6 +177,21 @@ public abstract class MonsterView implements DisplayableFather{
 	@Override
 	public double getAngle(){
 		return angle;
+	}
+	
+	public void actualizePosition(){
+		if((positionToGo.getX()-position.getX())!=0 || (positionToGo.getY()-position.getY())!=0){
+			if(System.currentTimeMillis()-startingTime>pause){
+				startingTime=System.currentTimeMillis();
+				
+			position.translateX(Math.signum(positionToGo.getX()-position.getX()));
+			position.translateY(Math.signum(positionToGo.getY()-position.getY()));
+				
+			}
+			
+			
+		}
+		
 	}
 
 }

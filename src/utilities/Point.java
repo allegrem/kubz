@@ -61,6 +61,14 @@ public class Point {
 		
 	}
 	
+	public void translateX(double dx){
+		x+=dx;	
+	}
+	
+	public void translateY(double dy){
+		y+=dy;
+	}
+	
 	/**
 	 * Placer le point a l'emplacement d'un autre point
 	 * @param p L'endroit ou doit etre place le point
