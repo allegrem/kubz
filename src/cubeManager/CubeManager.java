@@ -9,7 +9,11 @@ public class CubeManager {
 	private ArrayList<Cube> usedCubesList;
 	private ArrayList<Cube> freeCubesList;
 
-    public CubeManager()
+    public CubeManager(){
+        /* usedCubesList is initially empty */
+        this.usedCubesList = new ArrayList<Cube>();
+        /* Define the freeCubesList */
+    }
 	
 	public Cube getFreeCube(){
 		Cube cube = freeCubesList.remove(0);

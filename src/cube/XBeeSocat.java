@@ -1,5 +1,8 @@
 package cube;
 
+import java.io.BufferedOutputStream;
+import java.net.InetAddress;
+
 /**
  * Created with IntelliJ IDEA.
  * User: nico
@@ -8,15 +11,31 @@ package cube;
  * To change this template use File | Settings | File Templates.
  */
 
-import java.net.Socket;
+/* Adapted from http://edn.embarcadero.com/article/31995 */
+public class XBeeSocat{
 
-public class XBeeSocat(host: String, port Int) extends XBee{
+    /** Define a host server */
+    String host = "localhost";
+    /** Define a port */
+    int port = 4161;
 
-        private val socket: Socket = new Socket(host,port)
+    StringBuffer instr = new StringBuffer();
+    String TimeStamp;
+    System.out.println("SocketClient initialized");
+
+    try {
+        /** Obtain an adress object of the server */
+        InetAddress adress = InetAddress.getByName(host);
+        /** Establishing a socket connection */
+        Socket connection = new Socket(adress, port);
+        /** Instantiate a BufferedOutputStream object */
+        BufferedOutputStream bos = new BufferedOutputStream(connection.)
+    }
+       /* private val socket: Socket = new Socket(host,port)
 
         override protected val inStream = socket.getInputStream
         override protected val outStream = socket.getOutputStream
 
-        init ()
+        init ()*/
 
 }
