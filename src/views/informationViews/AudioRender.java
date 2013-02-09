@@ -26,7 +26,7 @@ public class AudioRender {
 
 	private int offsetX = 0;
 
-	private static final int MANUAL_OFFSET = 25;
+	private static final int MANUAL_OFFSET = 0;
 
 	private Sound sound;
 	private GLDisplay display;
