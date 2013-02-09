@@ -158,14 +158,12 @@ public class Sound extends Observable implements Observer {
 		float time = 0;
 		int sampleLength = (int) (AudioBlock.SAMPLE_RATE * 20 / 1000); // *20ms
 																		// sampling
-		int bandfreq = (int) (this.length * AudioBlock.SAMPLE_RATE / 2)
-				/ filter.getBarNumber(); // length of each band of the filter
-											// (11 bands on the whole)
+		int bandfreq = (int) (this.length * AudioBlock.SAMPLE_RATE / 2)/filter.getBarNumber(); // length of each band of the filter
+																							  // (11 bands on the whole)
 
-		for (int i = 0; i < (int) (this.length * AudioBlock.SAMPLE_RATE / 2)
-				/ sampleLength; i++) { // (length*SR/2) / sampleLength (n�of
-										// samples in the
-			time += i * (20 / 1000); // the i-th sampling //first half
+		for (int i = 0; i < (int) (this.length * AudioBlock.SAMPLE_RATE / 2)/ sampleLength; i++) { // (length*SR/2) / sampleLength (n�of
+										// samples in the first half
+			time += i * (20 / 1000); // the i-th sampling 
 			byte[] soundi = new byte[sampleLength];
 			for (int j = 0; j < sampleLength; j++) {
 				soundi[j] = sound[(int) (j + time * AudioBlock.SAMPLE_RATE)];

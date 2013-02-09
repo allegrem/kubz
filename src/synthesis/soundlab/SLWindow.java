@@ -174,7 +174,7 @@ public class SLWindow {
 		buttonGroup.add(rdbtnmntmWood);
 		mnInstrument.add(rdbtnmntmWood);
 		
-/****************************************************************************************************/
+/********************************************XYLOPHONE********************************************************/
 		JRadioButtonMenuItem rdbtnmntmXylophone = new JRadioButtonMenuItem("XylophoneInstrument");
 		rdbtnmntmXylophone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
