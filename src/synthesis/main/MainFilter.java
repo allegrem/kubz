@@ -18,11 +18,12 @@ public class MainFilter {
 	 */
 	public static void main(String[] args) {
 		FmInstrument instr = new PianoInstrument2();
-		Sound sound = new Sound(instr,3f);
+		Sound sound = new Sound(instr,1f);
 		//byte[] soundTab = sound.getSound();
 		BandsFilter makeFilter = new BandsFilter(11);
 		for (int i=0;i<11;i++)
-			makeFilter.setBar(i, 50);		
+			makeFilter.setBar(i, 100);		
+		
 		
 		byte[] soundTab = sound.filter(makeFilter).getSound();
 		

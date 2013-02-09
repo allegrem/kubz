@@ -1,3 +1,4 @@
+
 package synthesis;
 
 import java.security.InvalidParameterException;
@@ -156,23 +157,26 @@ public class Sound extends Observable implements Observer {
 		// byte[] soundFiltered = new byte[(int)
 		// (this.length*AudioBlock.SAMPLE_RATE)];
 		float time = 0;
-		int sampleLength = (int) (AudioBlock.SAMPLE_RATE * 20 / 1000); // *20ms
+		
+		int sampleLength = (int) ( AudioBlock.SAMPLE_RATE * (200 / 1000)); // *20ms		
 																		// sampling
 		int bandfreq = (int) (this.length * AudioBlock.SAMPLE_RATE / 2)/filter.getBarNumber(); // length of each band of the filter
 																							  // (11 bands on the whole)
 
-		for (int i = 0; i < (int) (this.length * AudioBlock.SAMPLE_RATE / 2)/ sampleLength; i++) { // (length*SR/2) / sampleLength (n�of
+		for (int i = 0; i < (int) ((this.length * AudioBlock.SAMPLE_RATE / 2)/ sampleLength); i++) { // (length*SR/2) / sampleLength (n�of
 										// samples in the first half
-			time += i * (20 / 1000); // the i-th sampling 
+			time += i * (200 / 1000); // the i-th sampling 
 			byte[] soundi = new byte[sampleLength];
 			for (int j = 0; j < sampleLength; j++) {
+				
 				soundi[j] = sound[(int) (j + time * AudioBlock.SAMPLE_RATE)];
 			}
+			
+			System.out.println("fourier");
 			Complex[] fourierCoeffs = computeFourier(soundi);
-
-			int bari = (int) ((time + 1) * AudioBlock.SAMPLE_RATE / bandfreq); // which
-																				// bar
-																				// choose
+			System.out.println("fin fourier");
+			
+			int bari = (int) (time * AudioBlock.SAMPLE_RATE / bandfreq) ; // which bar choose																				
 			int coeff = filter.getBar(bari);
 			double[] fourierFiltered = new double[fourierCoeffs.length];
 			for (int h = 0; h < fourierCoeffs.length; h++) {
