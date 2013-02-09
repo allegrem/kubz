@@ -1,3 +1,4 @@
+
 package synthesis;
 
 import java.security.InvalidParameterException;
@@ -157,6 +158,52 @@ public class Sound extends Observable implements Observer {
 		instrument2.addObserver(this);
 		updateSound();
 	}
+	
+	// methode VV
+	protected void applyFilter3(BandsFilter filter) {
+		// ArrayList<Double> soundFiltered = new ArrayList<Double>();
+		// byte[] soundFiltered = new byte[(int)
+		// (this.length*AudioBlock.SAMPLE_RATE)];
+		float time = 0;
+		
+		int sampleLength = (int) ( AudioBlock.SAMPLE_RATE * (200 / 1000)); // *20ms		
+																		// sampling
+		int bandfreq = (int) (this.length * AudioBlock.SAMPLE_RATE / 2)/filter.getBarNumber(); // length of each band of the filter
+																							  // (11 bands on the whole)
+
+		for (int i = 0; i < (int) ((this.length * AudioBlock.SAMPLE_RATE / 2)/ sampleLength); i++) { // (length*SR/2) / sampleLength (n�of
+										// samples in the first half
+			time += i * (200 / 1000); // the i-th sampling 
+			byte[] soundi = new byte[sampleLength];
+			for (int j = 0; j < sampleLength; j++) {
+				
+				soundi[j] = sound[(int) (j + time * AudioBlock.SAMPLE_RATE)];
+			}
+			
+			System.out.println("fourier");
+			Complex[] fourierCoeffs = computeFourier(soundi);
+			System.out.println("fin fourier");
+			
+			int bari = (int) (time * AudioBlock.SAMPLE_RATE / bandfreq) ; // which bar choose																				
+			int coeff = filter.getBar(bari);
+			double[] fourierFiltered = new double[fourierCoeffs.length];
+			for (int h = 0; h < fourierCoeffs.length; h++) {
+				fourierFiltered[h] = fourierCoeffs[h].abs() * (coeff / 100);
+			}
+			FastFourierTransformer fourier = new FastFourierTransformer(
+					DftNormalization.STANDARD);
+
+			Complex[] fourierInverse = fourier.transform(fourierFiltered,
+					TransformType.INVERSE);
+
+			for (int k = 0; k < fourierInverse.length; k++) {
+				double real = fourierInverse[k].getReal();
+				sound[(int) (k + time * AudioBlock.SAMPLE_RATE)] = (byte) real;
+			}
+
+		}
+		// return soundFiltered;
+	}
 
 	// methode MA
 	protected void applyFilter2(BandsFilter filter) {
@@ -182,6 +229,7 @@ public class Sound extends Observable implements Observer {
 	}
 
 	// methode BD
+	// TODO samples are not continuous !!
 	protected void applyFilter(BandsFilter filter) {
 		int cursor = 0;
 		int sampleLength = (int) (AudioBlock.SAMPLE_RATE * SAMPLING_TIME);

@@ -36,7 +36,7 @@ public class PianoInstrument2 extends FmInstrumentNParams {
 		epsilon = addParam(new GainParamBlock("epsilon", 0, 100, 10, 0.1f));
 		amp = addParam(new ParamBlock("amp", 0, 125, 100));
 
-		ADSR env = new ADSR(a, d, s, r, 1f, amp);
+		ADSR env = new ADSR(a, d, s, r, 3f, amp);
 		
 		SineWaveOscillator osc1 = new SineWaveOscillator(
 				new Adder(f0, epsilon), env);
