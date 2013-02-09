@@ -62,7 +62,7 @@ public class AudioRender {
 			int xCoord1 = 0, yCoord1 = ymax, xCoord2 = 0, yCoord2 = ymax;
 			for (int x = 0; x < maxX - 1; x++) {
 				xCoord2 = x * X_SIZE / zoomX;
-				yCoord2 = ymax-(Y_SIZE-20 - (soundBytes[offsetX + x] + 127) * (Y_SIZE-20)
+				yCoord2 = ymax-(Y_SIZE - (soundBytes[offsetX + x] + 127) * (Y_SIZE)
 						/ 255 + MANUAL_OFFSET);
 				GL11.glVertex3i(xCoord1, yCoord1, 100);
 				GL11.glVertex3i(xCoord2, yCoord2, 100);
@@ -70,9 +70,9 @@ public class AudioRender {
 				yCoord1 = yCoord2;
 			}
 			
-			GL11.glVertex3i(0,  ymax-(MANUAL_OFFSET + (Y_SIZE -20)/ 2), 100);
+			GL11.glVertex3i(0,  ymax-(MANUAL_OFFSET + Y_SIZE/ 2), 100);
 			GL11.glVertex3i(X_SIZE,ymax-(MANUAL_OFFSET
-					+ (Y_SIZE-20) / 2), 100);
+					+ Y_SIZE / 2), 100);
 		}
 		}
 
