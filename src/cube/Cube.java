@@ -10,7 +10,7 @@ public class Cube {
 	private short angle;
 	private boolean tap;
 
-	private short id;
+	private char id;
 
     public Cube(){
     }
@@ -67,7 +67,7 @@ public class Cube {
      * Method to get the ID of the cube
      * @return id (short)
      */
-	public short getID() {
+	public char getID() {
 		return id;
 
     }

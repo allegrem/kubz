@@ -1,6 +1,7 @@
 package cubeManager;
+import cube.Cube;
+
 import java.util.ArrayList;
-import cube.*;
 
 
 public class CubeManager {
@@ -18,6 +19,12 @@ public class CubeManager {
 	public ArrayList<Cube> getAllCubes(){
 		return usedCubesList;
 	}
+
+    public Cube getCube (char adress){
+        for (int i = 0; i < size(this.usedCubesList); i++){
+
+        }
+    }
 	
 
 }
