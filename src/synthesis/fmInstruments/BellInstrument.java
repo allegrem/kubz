@@ -10,7 +10,7 @@ import synthesis.parameter.ParamBlock;
 import synthesis.parameter.ParameterAudioBlock;
 
 /**
- * This class creates the sound of bell.
+ * This class creates the sound of a bell.
  * @author valeh
  *
  */

@@ -11,9 +11,10 @@ import synthesis.parameter.ParamBlock;
 import synthesis.parameter.ParameterAudioBlock;
 
 /**
- * This class creates a WoodInstrument (typically violin).
- * 
+ * This class creates the sound of a WindInstrument
+ * (typically violin) with controllable vibrato factor.
  * @author valeh
+ *
  */
 public class WoodInstrument extends FmInstrument {
 

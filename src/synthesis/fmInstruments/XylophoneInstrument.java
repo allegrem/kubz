@@ -9,6 +9,7 @@ import synthesis.parameter.ParamBlock;
 import synthesis.parameter.ParameterAudioBlock;
 
 /**
+ * This class creates the sound of an xylophone. 
  * @author allegrem
  *
  */
@@ -22,9 +23,6 @@ public class XylophoneInstrument extends FmInstrument {
 	private ParameterAudioBlock s;
 	private ParameterAudioBlock r;
 
-	/**
-	 * 
-	 */
 	public XylophoneInstrument() {
 		super();
 
@@ -36,7 +34,7 @@ public class XylophoneInstrument extends FmInstrument {
 		epsilon = addParam(new GainParamBlock("epsilon", 0, 1000, 250, 1f));
 		amp = addParam(new ParamBlock("amp", 0, 125, 100));
 
-		ADSR env = new ADSR(a, d, s, r, 1f, amp);
+		ADSR env = new ADSR(a, d, s, r, 3f, amp);
 		
 		SineWaveOscillator osc1 = new SineWaveOscillator(
 				new Adder(f0, epsilon), env);

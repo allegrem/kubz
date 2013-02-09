@@ -30,9 +30,9 @@ public class FixedADSR extends OneInputBlock {
 
 	}
 	
-	
+	@Override
 	public Float compute(Float t) throws RequireAudioBlocksException {
-		//super.play(t); 
+		
 		float previous = in.play(t).floatValue();
 		float sPrevious = s*previous;
 		float tfloat = t.floatValue();
@@ -43,7 +43,9 @@ public class FixedADSR extends OneInputBlock {
 		float dExpr = ( (sPrevious-previous)/(d*duration) )*(tfloat-dDur) + sPrevious;
 		float sExpr = sPrevious;
 		float rExpr = ( (-sPrevious)/(r*duration) )*(tfloat-sDur) + sPrevious;
-
+		
+		//the next lines correspond to the defintition of the 
+		//envelop (definie par morceaux)
 		if (tfloat <= aDur )
 			return new Float( aExpr );
 		if (tfloat>aDur && tfloat<=dDur)
@@ -55,9 +57,7 @@ public class FixedADSR extends OneInputBlock {
 		
 	
 			return new Float(0);
-		
 
-	
 	}
 
 

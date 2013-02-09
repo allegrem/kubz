@@ -27,7 +27,11 @@ public class Adder extends SeveralInputBlock {
 		super();
 	}
 	
-	
+	/**
+	 * Method used to create and Adder with only two entries (faster to implement!).
+	 * @param block1
+	 * @param block2
+	 */
 	public Adder(AudioBlock block1, AudioBlock block2) {
 		super();
 		plugin(block1);
