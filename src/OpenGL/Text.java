@@ -24,35 +24,17 @@ import org.lwjgl.opengl.GL11;
 
 
 /**
- * @author Mark Bernard
- * date:    26-May-2004
+ * @author Mark Bernard, adapted by Paul
  *
- * Port of NeHe's Lesson 13 to LWJGL
- * Title: Bitmap fonts
- * Uses version 0.9alpha of LWJGL http://www.lwjgl.org/
- *
- * Be sure that the LWJGL libraries are in your classpath
- *
- * Ported directly from the C++ version
- *
- * The main point of this tutorial is to get fonts on the screen.  The original OpenGL did
- * not port directly as it used Windows specific extensions and I could not get some OpenGL
- * commands to work.  In the end, what you see on the screen is the same, but it is written
- * somewhat differently.  I have noted the differences in the code with comments.
- *
- * 2004-10-08: Updated to version 0.92alpha of LWJGL.
- * 2004-12-19: Updated to version 0.94alpha of LWJGL
  */
 public class Text {
-    private boolean f1 = false;
 
     private int texture;
 
     //build colours for font with alpha transparency
-    private static final Color OPAQUE_WHITE = new Color(0xFFFFFFFF, true);
-    private static final Color TRANSPARENT_BLACK = new Color(0x00000000, true);
-    private NumberFormat numberFormat = NumberFormat.getInstance();
-
+    private static final Color OPAQUE_WHITE = new Color(255,255,255,255);
+   
+    private static final Color TRANSPARENT_BLACK = new Color(100,100,100);
     private int base;                       // Base Display List For The Font Set
    
 
@@ -61,27 +43,16 @@ public Text(){
 }
 
 
-    public void render() {
-    	buildFont();
-        GL11.glTranslated(500,500,0);                               // Move One Unit Into The Screen
-
-        GL11.glColor3f(Color.red.getRed(),Color.red.getGreen(),Color.red.getBlue());
-
- 
-        glPrint("Ca marche !");     // Print GL Text To The Screen
-  
-      
-    }
-
     /* Some liberties had to be taken with this method.  I could not get the glCallLists() to work, so
      * it is done manually instead.
      */
     public void glPrint(String msg) {                                      // Custom GL "Print" Routine
-        if(msg != null) {
+    	GL11.glEnable(GL11.GL_TEXTURE_2D);
+    	if(msg != null) {
             GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture);
             for(int i=0;i<msg.length();i++) {
                 GL11.glCallList(base + msg.charAt(i));
-                GL11.glTranslatef(0.05f, 0.0f, 0.0f);
+                GL11.glTranslatef(15f, 0.0f, 0.0f);
             }
         }
     }
@@ -94,7 +65,7 @@ public Text(){
      */
     public void buildFont() {                          // Build Our Bitmap Font
         Font font;                                      // Font object
-
+    	GL11.glEnable(GL11.GL_TEXTURE_2D);
         /* Note that I have set the font to Courier New.  This font is not guraunteed to be on all
          * systems.  However it is very common so it is likely to be there.  You can replace this name
          * with any named font on your system or use the Java default names that are guraunteed to be there.
@@ -165,6 +136,7 @@ public Text(){
         g.setFont(font);
         g.setColor(OPAQUE_WHITE);
         g.setBackground(TRANSPARENT_BLACK);
+        g.clearRect(0, 0, 1000, 1000);
         FontMetrics fm = g.getFontMetrics();
         for(int i=0;i<256;i++) {
             int x = i % 16;
@@ -235,13 +207,13 @@ public Text(){
             GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture);
             GL11.glBegin(GL11.GL_QUADS);
                 GL11.glTexCoord2f(u, v);
-                GL11.glVertex3f(-0.0450f, 0.0450f, 0.0f);
+                GL11.glVertex3f(-10f, -10f, 0.0f);
                 GL11.glTexCoord2f((u + textureDelta), v);
-                GL11.glVertex3f(0.0450f, 0.0450f, 0.0f);
+                GL11.glVertex3f(10f, -10, 0.0f);
                 GL11.glTexCoord2f((u + textureDelta), v - textureDelta);
-                GL11.glVertex3f(0.0450f, -0.0450f, 0.0f);
+                GL11.glVertex3f(10f, 10f, 0.0f);
                 GL11.glTexCoord2f(u, v - textureDelta);
-                GL11.glVertex3f(-0.0450f, -0.0450f, 0.0f);
+                GL11.glVertex3f(-10f, 10f, 0.0f);
             GL11.glEnd();
             GL11.glEndList();
         }
