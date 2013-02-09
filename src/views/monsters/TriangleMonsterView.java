@@ -19,7 +19,7 @@ import utilities.Vector;
  * @author paul
  *
  */
-public class ShapeMonsterView extends MonsterView {
+public class TriangleMonsterView extends MonsterView {
 	
 
 /**
@@ -27,7 +27,7 @@ public class ShapeMonsterView extends MonsterView {
  * @param position Sa position (centre)
  * @param color Sa couleur
  */
-	public ShapeMonsterView(Point position, ReadableColor color) {
+	public TriangleMonsterView(Point position, ReadableColor color) {
 		super(position, color);
 	}
 
