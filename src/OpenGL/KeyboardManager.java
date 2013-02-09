@@ -17,6 +17,7 @@ public class KeyboardManager {
 	public static boolean tap = false;
 	private static boolean tapTyped=false;
 	public static boolean quit=false;
+	private static boolean tabTyped=false;
 	private static GameEngine gameEngine;
 
 	public static void  setGameEngine(GameEngine gameEngine2){
@@ -74,9 +75,13 @@ public static void checkKeyboard(){
 			tap=true;
 			tapTyped=false;
 		}
-			
+		
+		if(!Keyboard.isKeyDown(Keyboard.KEY_TAB)){
+			tabTyped=false;
+		}
 				
-		if (Keyboard.isKeyDown(Keyboard.KEY_TAB)){
+		if (Keyboard.isKeyDown(Keyboard.KEY_TAB) &&!tabTyped){
+			tabTyped=true;
 			for(Player player:gameEngine.getPlayerList()){
 				System.out.println(player);
 				if (player.isTurn()){
