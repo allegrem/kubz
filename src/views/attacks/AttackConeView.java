@@ -34,7 +34,7 @@ public class AttackConeView implements DisplayableChild {
 	
 	/**
 	 * Creation d'un cone d'atatque
-	 * @param aperture L'aperture d'ouverture du cone
+	 * @param aperture L'angle d'ouverture du cone
 	 * @param direction La direction du cone autour de z
 	 * Le 0 correspond a l'axe y (vers le bas)
 	 * @param power La "puissance" du cone
@@ -55,8 +55,7 @@ public class AttackConeView implements DisplayableChild {
 	
 	@Override
 	public void paint(){
-		fatherAngle=father.getAngle();
-		direction=idirection-fatherAngle;
+		direction=idirection;
 		idirection%=360;
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		int alpha;
