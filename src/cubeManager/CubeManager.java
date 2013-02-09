@@ -8,7 +8,8 @@ public class CubeManager {
 	
 	private ArrayList<Cube> usedCubesList;
 	private ArrayList<Cube> freeCubesList;
-	
+
+    public CubeManager()
 	
 	public Cube getFreeCube(){
 		Cube cube = freeCubesList.remove(0);
@@ -21,9 +22,15 @@ public class CubeManager {
 	}
 
     public Cube getCube (char adress){
-        for (int i = 0; i < this.usedCubesList.size(); i++){
 
+        Cube rep = new Cube();
+
+        for (int i = 0; i < this.usedCubesList.size(); i++){
+            if (freeCubesList.get(i).getID() == adress) rep = freeCubesList.get(i);
+            i++;
         }
+
+        return rep;
     }
 	
 

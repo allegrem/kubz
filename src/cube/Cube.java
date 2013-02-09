@@ -13,6 +13,7 @@ public class Cube {
 	private char id;
 
     public Cube(){
+        this.id = 0;
     }
 
 	/**
