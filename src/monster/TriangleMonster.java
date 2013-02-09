@@ -6,16 +6,16 @@ import monster.move.RandomMove;
 import org.lwjgl.util.ReadableColor;
 
 import utilities.Point;
-import views.monsters.SquareMonsterView;
+import views.monsters.TriangleMonsterView;
 import gameEngine.GameEngine;
 
-public class SquareMonster extends Monster {
+public class TriangleMonster extends Monster {
 
-	public SquareMonster(float xStart, float yStart,ReadableColor color, GameEngine gameEngine) {
+	public TriangleMonster(float xStart, float yStart,ReadableColor color,GameEngine gameEngine) {
 		super(xStart, yStart, gameEngine);
 		this.move = new RandomMove(this, 200);
 		this.choice = new ChooseDistance(this);
-		view= new SquareMonsterView(new Point(xStart,yStart), color);
+		view= new TriangleMonsterView(new Point(xStart,yStart), color);
 		gameEngine.getMap().add(view);
 	}
 

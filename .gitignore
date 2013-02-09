@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+.project
+.classpath
+*.class
+=======
 #.classpath
 #.project
 .settings/
@@ -8,3 +13,14 @@ doc/
 lib_sources/
 .directory
 stats/
+.idea/.name
+.idea/compiler.xml
+.idea/copyright/
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/scopes/
+.idea/uiDesigner.xml
+.idea/vcs.xml
+.idea/workspace.xml
+>>>>>>> sauvegardeGET

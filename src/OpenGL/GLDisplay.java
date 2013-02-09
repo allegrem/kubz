@@ -20,6 +20,8 @@ import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.opengl.GL11.glShadeModel;
 
+import gameEngine.GameEngine;
+
 import java.io.File;
 import java.nio.ByteBuffer;
 
@@ -48,7 +50,7 @@ import map2.Map;
  */
 public class GLDisplay extends Thread{
 
-
+	private GameEngine gameEngine;
 	private int display_width=700;
 	private int display_height=500; 
 	private int mapDisplay_width=0;
@@ -59,6 +61,7 @@ public class GLDisplay extends Thread{
 	private int frequency=50;
 	private  boolean initialized=false;
 	private AudioRender audioRender;
+	private Text texte;
 	
 	/*
 	 * Parametres de la projection
@@ -91,6 +94,7 @@ public class GLDisplay extends Thread{
 	private float lightsDy;
 	private float lightsDz=0.0f;
 	private Lighting lighting=new Lighting(this);
+
 	
 	
 	
@@ -100,8 +104,10 @@ public class GLDisplay extends Thread{
 	 * 
 	 * 
 	 */
-	public GLDisplay(){
-		
+	public GLDisplay(GameEngine gameEngine){
+		this.gameEngine=gameEngine;
+		texte=new Text();
+		KeyboardManager.setGameEngine(gameEngine);
 	}
 
 	/**
@@ -139,7 +145,7 @@ public class GLDisplay extends Thread{
 		
 		mainRender(); //On actualise la fenetre avec le nouveau rendu
 		audioRender();
-		
+		//texte.render();
 		
 		update(); //On actualise la fenetre avec le nouveau rendu
 		Display.sync(frequency); //On synchronise l'affichage sur le bon FPS
@@ -160,6 +166,7 @@ public class GLDisplay extends Thread{
 		initDisplay();
 		initGL();
 		lighting.enable();
+		texte.buildFont();
 		try {
 			Keyboard.create();
 		} catch (LWJGLException e) {

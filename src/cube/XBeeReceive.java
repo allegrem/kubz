@@ -10,7 +10,7 @@ import com.rapplogic.xbee.api.wpan.RxResponseIoSample;
 public class XBeeReceive {
 // Attention ceci n'est qu'un exemple qui doit être modifié.
     XBee xbee = new XBee();
-    xbee.open("/dev/ttyXBee", 115200);
+   xbee.open("/dev/ttyXBee", 115200);
 
     while (true) {
         RxResponseIoSample ioSample = null;

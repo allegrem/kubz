@@ -1,7 +1,6 @@
 package cube;
 
-//import processing.serial.*;//import Xbee library */
-
+/* Import the library needed */
 
 public class Cube {	
 
@@ -12,6 +11,9 @@ public class Cube {
 	private boolean tap;
 
 	private short id;
+
+    public Cube(){
+    }
 
 	/**
 	 * Method to set the RGB color of the LEDS
@@ -62,3 +64,4 @@ public class Cube {
 
     }
 }
+

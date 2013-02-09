@@ -16,7 +16,7 @@ public  class Player {
 	
 	private Unit unit;
 	private Parameter[] parameters ;
-	public static int nParams =2;
+	private int nParams =2;
 	private float[] shield;
 	private boolean isTurn;
 	private int choice;
@@ -264,6 +264,11 @@ public  class Player {
 
 	public GameEngine getGameEngine() {
 		return gameEngine;
+	}
+
+	public int getnParams() {
+	
+		return nParams;
 	}
 	
 }

@@ -35,6 +35,7 @@ public class SquareMonsterView extends MonsterView {
 
 	@Override
 	public void paint() {
+		actualizePosition();
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		
 		GL11.glEnable (GL11.GL_BLEND);

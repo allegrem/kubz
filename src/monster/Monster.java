@@ -11,6 +11,11 @@ import gameEngine.GameEngine;
 
 import java.util.*;
 
+import monster.attack.AttackType;
+import monster.attack.ChooseType;
+import monster.move.MoveType;
+import monster.move.RandomMove;
+
 import unit.Unit;
 
 public class Monster {
@@ -20,13 +25,13 @@ public class Monster {
 	 * de monstres de facon modulaire et actions dans le modele
 	 */
 	
-	protected GameEngine gameEngine;
-	private AttackType attack;
-	private ChooseType choice;
-	private MoveType move;
-	private Unit cible;
-	private ArrayList<Unit> seenUnits; 
-	private Point pos;
+	private GameEngine gameEngine;
+	protected AttackType attack;
+	protected ChooseType choice;
+	protected MoveType move;
+	protected Unit cible;
+	protected ArrayList<Unit> seenUnits; 
+	protected Point pos;
 	
 	/**
 	 * reference vers la vue du monstre pour pouvoir transmettre les modifications necessaires 
@@ -47,7 +52,7 @@ public class Monster {
 		this.pos = new Point(xStart, yStart);
 		this.cible = null;
 		this.seenUnits = new ArrayList<Unit>();
-		this.gameEngine=gameEngine;
+		this.setGameEngine(gameEngine);
 		move=new RandomMove(this,500);
 		
 	}
@@ -104,7 +109,7 @@ public class Monster {
 	 */
 	
 	private void attack(ArrayList<int[]> attackTable){
-		setSeenUnits(gameEngine.getUnitList());
+		setSeenUnits(getGameEngine().getUnitList());
 		setCible();
 		
 		if(cible != null){
@@ -132,7 +137,7 @@ public class Monster {
 	 * @param dx
 	 * @param dy
 	 */	
-	public void translate(int dx, int dy) { 
+	public void translate(double dx, double dy) { 
 		pos.translate(dx, dy);
 		view.translate(dx, dy);
 	}
@@ -169,12 +174,20 @@ public class Monster {
 	
 	public void act(){
 		move();
-		attack(attack.result());
+		//attack(attack.result());
 		//gameEngine.getDisplay().auto3D(view, gameEngine.getUnitList().get(0).getView(), 5000);
 	}
 
 	public double getSize() {
 	
 		return view.getSize();
+	}
+
+	public GameEngine getGameEngine() {
+		return gameEngine;
+	}
+
+	public void setGameEngine(GameEngine gameEngine) {
+		this.gameEngine = gameEngine;
 	}
 }
