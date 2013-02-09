@@ -102,7 +102,7 @@ public void renderSpectrumView(){
 	if (spectrumCache != null && spectrumCache.length > 0) {
 		for (int x = 0; x < X_SIZE; x++){
 			glVertex3d(x+2*X_SIZE,ymax,100);
-			glVertex3d(x+2*X_SIZE,ymax-spectrumCache[x],100);
+			glVertex3d(x+2*X_SIZE,spectrumCache[x]+display.getmapDisplay_height(),100);
 			
 		}
 		}
