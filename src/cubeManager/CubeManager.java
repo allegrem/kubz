@@ -21,7 +21,7 @@ public class CubeManager {
 	}
 
     public Cube getCube (char adress){
-        for (int i = 0; i < size(this.usedCubesList); i++){
+        for (int i = 0; i < this.usedCubesList.size(); i++){
 
         }
     }

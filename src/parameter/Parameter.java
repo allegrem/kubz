@@ -3,7 +3,6 @@ package parameter;
 import gameEngine.GameEngine;
 import player.Player;
 import views.CubeControlledView;
-import views.informationViews.LifeView;
 import utilities.Point;
 
 public class Parameter {
