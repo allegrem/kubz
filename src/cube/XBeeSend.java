@@ -10,38 +10,35 @@ public class XBeeSend {
 
     public XBeeSend() throws XBeeException {
 
-        XBee xbee = new XBee();
+        ZMQ.Context context = ZMQ.context(1);
+        ZMQ.Socket socket = context.socket(ZMQ.REP);
 
-        try {
-            // replace with your com port and baud rate. this is the com port of my coordinator
-            xbee.open("/dev/tty.usbserial-FTC889FB", 115200);
+        System.out.println("Binding hello world server");
+        socket.bind ("tcp://*:5555");
 
-            while (true) {
-                // put some arbitrary data in the payload
-                int[] payload = ByteUtils.stringToIntArray("Hello from Kubz 2\r");
-                XBeeAddress64 address = new XBeeAddress64(1,1,1,0,1,1,1,4);
+        while (!Thread.currentThread ().isInterrupted ()) {
 
-                ZNetTxRequest request = new ZNetTxRequest(address, payload);
-                // make it a broadcast packet
-                request.setOption(ZNetTxRequest.Option.UNICAST);
+            // Wait for next request from client
+            byte[] reply = socket.recv(0);
+            System.out.println("Received " + reply.length );
+            System.out.println("Received " + ": [" + new String(reply) + "]");
 
-                // log.info("request packet bytes (base 16) " + ByteUtils.toBase16(request.getXBeePacket().getPacket()));
+            Thread.sleep(1000);
+            //  Create a "Hello" message.
+            //  Ensure that the last byte of our "Hello" message is 0 because
+            //  our "Hello World" server is expecting a 0-terminated string:
+            String requestString = "Hello" ;
+            byte[] request = requestString.getBytes();
+            //request[request.length-1]=0; //Sets the last byte to 0
+            // Send the message
+            System.out.println("Sending response " + requestString );
+            socket.send(request, 0);
 
-                xbee.sendAsynchronous(request);
-                // we just assume it was sent.  that's just the way it is with broadcast.
-                // no transmit status response is sent, so don't bother calling getResponse()
-
-                try {
-                    // wait a bit then send another packet
-                    Thread.sleep(15000);
-                } catch (InterruptedException e) {
-                }
-            }
-        } finally {
-            xbee.close();
+            //  Get the reply.
         }
 
-
+        socket.close();
+        context.term();
 
     }
 

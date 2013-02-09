@@ -1,30 +1,44 @@
 package cube;
 
-//import Xbee library
+/* import */
+import java.lang.*;
+import org.zeromq.ZMQ;
 
-import com.rapplogic.xbee.api.XBee;
-import com.rapplogic.xbee.api.XBeeAddress64;
-import com.rapplogic.xbee.api.XBeeException;
-import com.rapplogic.xbee.api.wpan.RxResponseIoSample;
+public class XBeeReceive extends Thread{
+    /* Adapted from the ZMQ examples on http://github.com/imatix/zguide/tree/master/examples/ */
 
-public class XBeeReceive {
-// Attention ceci n'est qu'un exemple qui doit Etre modifie.
-    XBee xbee = new XBee();
-    xbee.open("/dev/ttyXBee", 115200);
+    //  Prepare our context and socket
+    ZMQ.Context context = ZMQ.context(1);
+    ZMQ.Socket socket = context.socket(ZMQ.REQ);
 
-    while(true) {
-        RxResponseIoSample ioSample = null;
-        try {
-            ioSample = (RxResponseIoSample) xbee.getResponse();
-        } catch (XBeeException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+            /* Connect to the localhost */
+    socket.connect ("tcp://localhost:5555");
 
-        System.out.println("We received a sample from " + ioSample.getSourceAddress());
+    System.out.println("Connecting to hello world server");
 
-        if (ioSample.containsAnalog()) {
-            System.out.println("10-bit temp reading (pin 19) is " + ioSample.getSamples()[0].getAnalog1());
-        }
+    public void run () {
+
+            //  Wait for a response
+            while (1) {
+                //  Create a "Hello" message.
+                //  Ensure that the last byte of our "Hello" message is 0 because
+                //  our "Hello World" server is expecting a 0-terminated string:
+                String requestString = "Hello" ;
+                byte[] request = requestString.getBytes();
+                // Send the message
+                System.out.println("Sending request " + requestNbr );
+                socket.send(request, 0);
+
+                //  Get the reply.
+                byte[] reply = socket.recv(0);
+                //  When displaying reply as a String, omit the last byte because
+                //  our "Hello World" server has sent us a 0-terminated string:
+                System.out.println("Received reply " + requestNbr + ": [" + new String(reply) + "]");
+            }
+
     }
+
+    socket.close();
+    context.term();
 	
 }
