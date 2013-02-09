@@ -23,6 +23,7 @@ import org.apache.commons.math3.complex.Complex;
 
 import synthesis.AudioBlock;
 import synthesis.FilteredSound;
+import synthesis.Sound;
 
 /**
  * @author allegrem
@@ -123,7 +124,11 @@ public class SLSpectrumView extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		Complex[] result = filteredSound.getSpectrum();
+//		Complex[] result = filteredSound.getSpectrum();
+		Sound sound = new Sound(filteredSound.getInstrument(), filteredSound.getLength());
+		Sound soundWithFilter = sound.filter(filteredSound.getBandsFilter());
+		Complex[] result = soundWithFilter.getSpectrum();
+		
 		spectrumCache = new int[X_SIZE];
 		for (int x = 0; x < result.length / 4; x++) {
 			int x_coord = x * X_SIZE * 4 / result.length;

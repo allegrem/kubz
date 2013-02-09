@@ -29,7 +29,6 @@ public class FilteredSound extends Observable implements Observer {
 
 	private Complex[] originalSpectrum = null;
 
-
 	private FmInstrumentNParams instrument;
 
 	private BandsFilter bandsFilter;
@@ -159,6 +158,13 @@ public class FilteredSound extends Observable implements Observer {
 		this.instrument = instrument2;
 		instrument2.addObserver(this);
 		updateOriginalSound();
+	}
+	
+	/**
+	 * @return the length
+	 */
+	public float getLength() {
+		return length;
 	}
 
 }

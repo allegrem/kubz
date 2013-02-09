@@ -11,16 +11,17 @@ import org.apache.commons.math3.transform.TransformType;
 
 import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.filters.BandsFilter;
-import synthesis.fmInstruments.FmInstrumentNParams;
+import synthesis.fmInstruments.FmInstrument;
 
 /**
  * This class handles a sound and can perform some Fourier transforms and
- * filtering. The sound is linked with a {@link FmInstrumentNParams}, and each time the
- * FmInstrumentNParams is modified, the sound (and its spectrum) is updated. The length
- * of the sound can also be edited. Finally the sound can be filtered with a
- * {@link BandsFilter}, but in this case, if the FmInstrumentNParams changes again, the
- * filtered sound will be erased. That's why a {@link Sound#lock()} method is
- * provided to prevent the sound from being modified by instrument's updates.
+ * filtering. The sound is linked with a {@link FmInstrumentFmInstrument}, and each
+ * time the FmInstrument is modified, the sound (and its spectrum) is
+ * updated. The length of the sound can also be edited. Finally the sound can be
+ * filtered with a {@link BandsFilter}, but in this case, if the
+ * FmInstrument changes again, the filtered sound will be erased. That's
+ * why a {@link Sound#lock()} method is provided to prevent the sound from being
+ * modified by instrument's updates.
  * 
  * @author allegrem
  */
@@ -32,7 +33,7 @@ public class Sound extends Observable implements Observer {
 
 	private Complex[] spectrum = null;
 
-	private FmInstrumentNParams instrument;
+	private FmInstrument instrument;
 
 	private boolean locked = false; // block instrument observation
 
@@ -40,11 +41,11 @@ public class Sound extends Observable implements Observer {
 	 * Create a new Sound. The sound is updated then.
 	 * 
 	 * @param instrument
-	 *            The {@link FmInstrumentNParams} to use.
+	 *            The {@link FmInstrument} to use.
 	 * @param length
 	 *            The default length of the played sounds.
 	 */
-	public Sound(FmInstrumentNParams instrument, float length) {
+	public Sound(FmInstrument instrument, float length) {
 		super();
 		setInstrument(instrument); // FIXME double call of update here...
 		setLength(length); // /... and here
@@ -135,9 +136,9 @@ public class Sound extends Observable implements Observer {
 	}
 
 	/**
-	 * Return the {@link FmInstrumentNParams} used to compute the sound.
+	 * Return the {@link FmInstrument} used to compute the sound.
 	 */
-	public FmInstrumentNParams getInstrument() {
+	public FmInstrument getInstrument() {
 		return instrument;
 	}
 
@@ -145,54 +146,47 @@ public class Sound extends Observable implements Observer {
 	 * Modify the instrument linked with the sound and observe it. Then the
 	 * sound is updated.
 	 */
-	public void setInstrument(FmInstrumentNParams instrument2) {
+	public void setInstrument(FmInstrument instrument2) {
 		this.instrument = instrument2;
 		instrument2.addObserver(this);
 		updateSound();
 	}
 
 	protected void applyFilter(BandsFilter filter) {
-		// ArrayList<Double> soundFiltered = new ArrayList<Double>();
-		// byte[] soundFiltered = new byte[(int)
-		// (this.length*AudioBlock.SAMPLE_RATE)];
-		float time = 0;
-		int sampleLength = (int) (AudioBlock.SAMPLE_RATE * 20 / 1000); // *20ms
-																		// sampling
-		int bandfreq = (int) (this.length * AudioBlock.SAMPLE_RATE / 2)
-				/ filter.getBarNumber(); // length of each band of the filter
-											// (11 bands on the whole)
+		int cursor = 0;
+		int sampleLength = (int) (AudioBlock.SAMPLE_RATE * 0.02); // 20ms
+																	// sampling
 
-		for (int i = 0; i < (int) (this.length * AudioBlock.SAMPLE_RATE / 2)
-				/ sampleLength; i++) { // (length*SR/2) / sampleLength (n�of
-										// samples in the
-			time += i * (20 / 1000); // the i-th sampling //first half
-			byte[] soundi = new byte[sampleLength];
-			for (int j = 0; j < sampleLength; j++) {
-				soundi[j] = sound[(int) (j + time * AudioBlock.SAMPLE_RATE)];
-			}
-			Complex[] fourierCoeffs = computeFourier(soundi);
+		while (cursor < sound.length) {
+			// extract sample
+			byte[] sample = new byte[sampleLength];
+			for (int i = 0; i < sampleLength; i++)
+				sample[i] = sound[i + cursor];
 
-			int bari = (int) ((time + 1) * AudioBlock.SAMPLE_RATE / bandfreq); // which
-																				// bar
-																				// choose
-			int coeff = filter.getBar(bari);
-			double[] fourierFiltered = new double[fourierCoeffs.length];
-			for (int h = 0; h < fourierCoeffs.length; h++) {
-				fourierFiltered[h] = fourierCoeffs[h].abs() * (coeff / 100);
+			// compute spectrum
+			Complex[] sampleSpectrum = computeFourier(sample);
+
+			// apply filter
+			int barLength = sampleSpectrum.length / 2 / filter.getBarNumber() + 1;
+			for (int i = 0; i < sampleSpectrum.length / 2; i++) {
+				int barNumber = i / barLength;
+				double barValue = (double) filter.getBar(barNumber) / 100.;
+				sampleSpectrum[i].multiply(barValue);
+				sampleSpectrum[sampleSpectrum.length - i - 1].multiply(barValue);
 			}
+
+			// inverse transform
 			FastFourierTransformer fourier = new FastFourierTransformer(
 					DftNormalization.STANDARD);
-
-			Complex[] fourierInverse = fourier.transform(fourierFiltered,
+			Complex[] fourierInverse = fourier.transform(sampleSpectrum,
 					TransformType.INVERSE);
 
-			for (int k = 0; k < fourierInverse.length; k++) {
-				double real = fourierInverse[k].getReal();
-				sound[(int) (k + time * AudioBlock.SAMPLE_RATE)] = (byte) real;
-			}
+			//keep real part
+			for (int i = 0; i < sampleLength; i++) 
+				sound[i + cursor] = (byte) fourierInverse[i].getReal();
 
+			cursor += sampleLength;
 		}
-		// return soundFiltered;
 	}
 
 	private Complex[] computeFourier(byte[] soundPiece) {
