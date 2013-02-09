@@ -69,8 +69,6 @@ public  class Player {
 	}
 	
 	
-	
-	
 	/**
 	 * Methodes relatives au shield de l'Unit
 	 */
@@ -86,9 +84,7 @@ public  class Player {
 		return unit;
 	}
 	
-	
-	
-	
+
 	/**
 	 * Methodes qui gerent l'etat des parametres
 	 */
@@ -199,6 +195,20 @@ public  class Player {
 		}
 		KeyboardManager.tap = false;
 	}
+	
+	public void chooseWeaponTurn(){
+		while (!KeyboardManager.tap){
+			if(KeyboardManager.wKey) unit.rotateIstrumentChoice(1);
+			if(KeyboardManager.xKey) unit.rotateIstrumentChoice(-1);
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		KeyboardManager.tap = false;
+	}
+	
 	/**
 	 * Methode qui declenche la creation du son via les Parameter
 	 */
@@ -251,6 +261,7 @@ public  class Player {
 		//choosingUTurn();
 		movingUTurn();
 		soundEditPTurn();
+		chooseWeaponTurn();
 		isTurn = false;
 		
 	}
@@ -278,8 +289,7 @@ public  class Player {
 		return gameEngine;
 	}
 
-	public int getnParams() {
-	
+	public int getnParams() {	
 		return nParams;
 	}
 	
