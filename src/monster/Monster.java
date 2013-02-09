@@ -11,6 +11,11 @@ import gameEngine.GameEngine;
 
 import java.util.*;
 
+import monster.attack.AttackType;
+import monster.attack.ChooseType;
+import monster.move.MoveType;
+import monster.move.RandomMove;
+
 import unit.Unit;
 
 public class Monster {
@@ -20,7 +25,7 @@ public class Monster {
 	 * de monstres de facon modulaire et actions dans le modele
 	 */
 	
-	protected GameEngine gameEngine;
+	private GameEngine gameEngine;
 	protected AttackType attack;
 	protected ChooseType choice;
 	protected MoveType move;
@@ -47,7 +52,7 @@ public class Monster {
 		this.pos = new Point(xStart, yStart);
 		this.cible = null;
 		this.seenUnits = new ArrayList<Unit>();
-		this.gameEngine=gameEngine;
+		this.setGameEngine(gameEngine);
 		move=new RandomMove(this,500);
 		
 	}
@@ -104,7 +109,7 @@ public class Monster {
 	 */
 	
 	private void attack(ArrayList<int[]> attackTable){
-		setSeenUnits(gameEngine.getUnitList());
+		setSeenUnits(getGameEngine().getUnitList());
 		setCible();
 		
 		if(cible != null){
@@ -176,5 +181,13 @@ public class Monster {
 	public double getSize() {
 	
 		return view.getSize();
+	}
+
+	public GameEngine getGameEngine() {
+		return gameEngine;
+	}
+
+	public void setGameEngine(GameEngine gameEngine) {
+		this.gameEngine = gameEngine;
 	}
 }

@@ -1,5 +1,7 @@
 package monster;
 
+import monster.move.RandomMove;
+
 import org.lwjgl.util.ReadableColor;
 
 import utilities.Point;

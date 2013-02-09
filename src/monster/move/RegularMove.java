@@ -1,10 +1,11 @@
-package monster;
+package monster.move;
 
 /**
  * Mouvements normaux qui se déplace vers sa cible
  * @author Felix
  */
 
+import monster.Monster;
 import unit.Unit;
 
 public class RegularMove extends MoveType{

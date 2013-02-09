@@ -1,10 +1,11 @@
-package monster;
+package monster.attack;
 
 import java.util.ArrayList;
+
 import utilities.RandomPerso;
 
 /**
- * Sous classe de AttackType qui cr�e des attaques de mani�re al�atoire
+ * Sous classe de AttackType qui cree des attaques de maniere aleatoire
  * @author Felix
  */
 
@@ -16,7 +17,7 @@ public class RandomAttack extends AttackType{
 	}
 	
 	/**
-	 * G�n�re une attaque � une fr�quence al�atoire.
+	 * Genere une attaque a une frequence aleatoire.
 	 */
 	@Override
 	public ArrayList<int[]> result(){

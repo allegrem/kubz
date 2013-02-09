@@ -1,9 +1,10 @@
-package monster;
+package monster.move;
 
 /**
  * Composante de Monster qui permet d'en g�rer le mouvement
  */
 
+import monster.Monster;
 import unit.Unit;
 
 public abstract class MoveType {
@@ -11,18 +12,13 @@ public abstract class MoveType {
 	final int speed;
 	final int width;
 	final int height;
-	private double startTime;
-	private double pause;
 	
-	
-
-
 	public MoveType(Monster monster, int speed) {
 		super();
 		this.monster = monster;
 		this.speed = speed;
-		width = monster.gameEngine.getWidth();
-		height = monster.gameEngine.getHeight();
+		width = monster.getGameEngine().getWidth();
+		height = monster.getGameEngine().getHeight();
 	}
 
 	public void move() {	

@@ -1,4 +1,4 @@
-package monster;
+package monster.attack;
 import java.util.ArrayList;
 
 import unit.*;

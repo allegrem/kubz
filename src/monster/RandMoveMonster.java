@@ -1,5 +1,6 @@
 package monster;
 
+import monster.move.RandomMove;
 import gameEngine.GameEngine;
 
 public class RandMoveMonster extends Monster {
