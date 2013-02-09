@@ -50,8 +50,8 @@ public abstract class MoveType {
 		double ydir =speed*Math.sin(rand); 
 		System.out.println(xdir + "  " + ydir);
 		double size=monster.getSize()*Math.sqrt(2)/2;
-		if ((monster.getX()+size+(xdir)>0)&&(monster.getX()+size+(xdir)<width)
-				&&(monster.getY()+size+(ydir)>0)&&(monster.getX()+size+(xdir)<height)){
+		if ((monster.getX()+size+xdir)>0 &&(monster.getX()+size+xdir)<width
+				&&(monster.getY()+size+ydir)>0 &&(monster.getY()+size+ydir)<height){
 			monster.translate(xdir, ydir);			
 		}		
 	}
