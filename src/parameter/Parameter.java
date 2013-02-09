@@ -19,7 +19,7 @@ public class Parameter {
 	
 	public Parameter(Player owner){
 		this.state = new WaitingPState();
-		this.owner = owner;
+		this.setOwner(owner);
 		gameEngine=owner.getGameEngine();
 		view = new CubeControlledView(pos);
 		size = view.getSize();
@@ -28,9 +28,7 @@ public class Parameter {
 	}
 
 	
-	
-	
-	
+
 	double getDAngle(){
 		double vase = dAngle;
 		dAngle = 0;
@@ -116,6 +114,14 @@ public class Parameter {
 	}
 	public ParameterState getState() {
 		return state;
+	}
+
+	public Player getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Player owner) {
+		this.owner = owner;
 	}
 	
 }
