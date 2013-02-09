@@ -21,7 +21,6 @@ public class SinusoidalAttackView implements DisplayableChild {
 	private DisplayableFather father;
 	private double aperture;
 	private double direction;
-	private double idirection;
 	private int power;
 	private int start=0;
 	private ReadableColor color=Color.DKGREY;
@@ -39,10 +38,11 @@ public class SinusoidalAttackView implements DisplayableChild {
 	 * @param power La "puissance" du cone
 	 * Plus power est grand, plus la longueur du cone sera importante
 	 */
-	public SinusoidalAttackView(double aperture, double direction, int power){
+	public SinusoidalAttackView(double aperture, double direction, int power, DisplayableFather father){
 		this.aperture=aperture;
-		this.idirection=direction;
+		this.direction=direction;
 		this.power=power;
+		this.father = father;
 		attackStartingTime=System.currentTimeMillis();
 	}
 	
@@ -60,7 +60,6 @@ public class SinusoidalAttackView implements DisplayableChild {
 		double x=0;
 		double y=0;
 		int fin=power-5;
-		direction=idirection+father.getAngle();
 		direction%=360;
 		/*
 		 * Activation de la transparence
