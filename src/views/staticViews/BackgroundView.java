@@ -13,7 +13,6 @@ import org.newdawn.slick.Color;
 
 import utilities.Point;
 import utilities.RandomPerso;
-import views.CubeControlledView;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
 
@@ -123,6 +122,7 @@ public class BackgroundView implements DisplayableFather{
 		}
 		}
 		}
+	
 		
 	}
 	

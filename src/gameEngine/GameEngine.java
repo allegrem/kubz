@@ -68,6 +68,7 @@ public class GameEngine {
 		//playerList.add(new Player(this));
 		//playerList.add(new Player(this));
 		act();
+	
 	}
 	
 	/**
@@ -121,6 +122,8 @@ public class GameEngine {
 		while(display.isAlive()){
 			playerTurn();
 			monsterTurn();
+			
+		
 		}
 	}
 	

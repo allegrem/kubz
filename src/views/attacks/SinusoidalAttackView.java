@@ -21,7 +21,6 @@ public class SinusoidalAttackView implements DisplayableChild {
 	private DisplayableFather father;
 	private double aperture;
 	private double direction;
-	private double idirection;
 	private int power;
 	private int start=0;
 	private ReadableColor color=Color.DKGREY;
@@ -41,7 +40,7 @@ public class SinusoidalAttackView implements DisplayableChild {
 	 */
 	public SinusoidalAttackView(double aperture, double direction, int power){
 		this.aperture=aperture;
-		this.idirection=direction;
+		this.direction=direction;
 		this.power=power;
 		attackStartingTime=System.currentTimeMillis();
 	}
@@ -60,7 +59,6 @@ public class SinusoidalAttackView implements DisplayableChild {
 		double x=0;
 		double y=0;
 		int fin=power-5;
-		direction=idirection+father.getAngle();
 		direction%=360;
 		/*
 		 * Activation de la transparence
@@ -104,7 +102,7 @@ public class SinusoidalAttackView implements DisplayableChild {
 		glMatrixMode(GL_MODELVIEW);
 		GL11.glPushMatrix();
 		GL11.glTranslated(father.getX(), father.getY(),father.getHeight()/2 );
-		GL11.glRotated(direction,0,0,1);
+		GL11.glRotated(-direction,0,0,1);
 		Lines.drawSinus((float) aperture, i, 10, 0.1f);
 		GL11.glLoadIdentity();
 		GL11.glPopMatrix();
