@@ -15,12 +15,12 @@ public class Unit {
 	private Point pos=new Point(10,10);
 	private double aperture;
 	private double direction;
-	private double instrumentChoice;
+	private double instrumentChoiceAngle;
 	private UnitState state;
 	private CubeControlledView view;
 	private Player owner;
 	private GameEngine gameEngine;
-	private int nbInst;
+	private int power;
 	
 	
 	public Unit(Player owner){
@@ -140,29 +140,26 @@ public class Unit {
 	 * @param theta
 	 * @param dTheta
 	 */
-	public void setIstrumentChoice(double theta){
-		instrumentChoice = theta;
+	public void setInstrumentChoice(double theta){
+		instrumentChoiceAngle = theta;
 		view.setIstrumentChoice(theta);
 		view.setAngle(theta);
 	}
-	public void rotateIstrumentChoice(double dTheta){
-		instrumentChoice = instrumentChoice + dTheta;
+	public void rotateInstrumentChoice(double dTheta){
+		instrumentChoiceAngle = instrumentChoiceAngle + dTheta;
 		view.rotateIstrumentChoice(dTheta);
 		view.rotate(dTheta);
 	}
-	public double getIstrumentChoice(){
-		return instrumentChoice;
-	}
-	
-	
-	
-	public double getInstrumentChoice() {
-		return instrumentChoice;
-	}
+	public double getInstrumentChoiceAngle(){
+		return instrumentChoiceAngle;
+	}	
 
 
-	public void setInstrumentChoice(double instrumentChoice) {
-		this.instrumentChoice = instrumentChoice;
+	public int getPower() {
+		return power;
+	}
+	public void setPower(int power) {
+		this.power = power;
 	}
 
 
