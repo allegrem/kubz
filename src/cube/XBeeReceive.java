@@ -19,7 +19,7 @@ public class XBeeReceive extends Thread{
     public void run () {
 
             //  Wait for a response
-            while (1) {
+            while (true) {
                 //  Create a "Hello" message.
                 //  Ensure that the last byte of our "Hello" message is 0 because
                 //  our "Hello World" server is expecting a 0-terminated string:
