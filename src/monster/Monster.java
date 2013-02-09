@@ -173,6 +173,8 @@ public class Monster {
 	}
 	
 	public void act(){
+		setSeenUnits(gameEngine.getUnitList());
+		setCible();
 		move();
 		//attack(attack.result());
 		//gameEngine.getDisplay().auto3D(view, gameEngine.getUnitList().get(0).getView(), 5000);

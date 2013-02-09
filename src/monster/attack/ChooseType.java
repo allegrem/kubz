@@ -12,7 +12,6 @@ public abstract class ChooseType {
 	protected Monster monster;
 		
 	public ChooseType(Monster monster) {
-		super();
 		this.monster = monster;
 	}
 
