@@ -1,9 +1,10 @@
-package monster;
+package monster.attack;
 
 /**
  * Classe abstraite qui correspond au choix des potentiels des Unit vu par Monster
  */
 
+import monster.Monster;
 import unit.Unit;
 
 public abstract class ChooseType {

@@ -1,4 +1,4 @@
-package monster;
+package monster.attack;
 
 /**
  * Monstre qui attaque tout le temps à la même fréquence de toute sa puissance
