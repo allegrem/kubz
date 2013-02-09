@@ -25,15 +25,15 @@ public class Connexe {
 		ArrayList<ArrayList<VirtualPixel>> groupesConnexeIntermediare = new ArrayList<ArrayList<VirtualPixel>>();
 		ArrayList<ArrayList<VirtualPixel>> retour = new ArrayList<ArrayList<VirtualPixel>>();
 		
-		if (vi[0][0].isBrightness()==true){
+		if (vi[0][0].isBrightness()){
 			compteurComposantes++;
 			groupesConnexeIntermediare.add(compteurComposantes, new ArrayList<VirtualPixel>());
 			groupesConnexeIntermediare.get(compteurComposantes).add(vi[0][0]);
 			vi[0][0].setGroupeConnexe(compteurComposantes);
 		}
 		for(int j=1; j<240;j++){
-			if (vi[0][j].isBrightness()==true){
-				if((vi[0][j-1].isBrightness()==true)){;
+			if (vi[0][j].isBrightness()){
+				if((vi[0][j-1].isBrightness())){;
 					groupesConnexeIntermediare.get(vi[0][j-1].getGroupeConnexe()).add(vi[0][j]);
 					vi[0][j].setGroupeConnexe(vi[0][j-1].getGroupeConnexe());
 				}
@@ -46,7 +46,7 @@ public class Connexe {
 			}			
 		}
 		for(int i=1; i<240; i++){
-			if (vi[i][0].isBrightness()==true){
+			if (vi[i][0].isBrightness()){
 				if((vi[i-1][0].isBrightness()==true)){
 					vi[i][0].setGroupeConnexe(vi[i-1][0].getGroupeConnexe());
 					groupesConnexeIntermediare.get(vi[i][0].getGroupeConnexe()).add(vi[i][0]);
@@ -59,16 +59,16 @@ public class Connexe {
 				}
 			}
 			for(int j=1; j<240; j++){
-				if (vi[i][j].isBrightness()==true){
-					if ((vi[i][j-1].isBrightness()==true)&&(vi[i-1][j].isBrightness()==false)){
+				if (vi[i][j].isBrightness()){
+					if ((vi[i][j-1].isBrightness())&&(!vi[i-1][j].isBrightness())){
 						vi[i][j].setGroupeConnexe(vi[i][j-1].getGroupeConnexe());
 						groupesConnexeIntermediare.get(vi[i][j].getGroupeConnexe()).add(vi[i][j]);
 					}
-					if ((vi[i-1][j].isBrightness()==true)&&(vi[i][j-1].isBrightness()==false)){
+					if ((vi[i-1][j].isBrightness())&&(!vi[i][j-1].isBrightness())){
 						vi[i][j].setGroupeConnexe(vi[i-1][j].getGroupeConnexe());
 						groupesConnexeIntermediare.get(vi[i][j].getGroupeConnexe()).add(vi[i][j]);
 					}
-					if ((vi[i-1][j].isBrightness()==true)&&(vi[i][j-1].isBrightness()==true)){
+					if ((vi[i-1][j].isBrightness())&&(!vi[i][j-1].isBrightness())){
 						vi[i][j].setGroupeConnexe(vi[i-1][j].getGroupeConnexe());
 						groupesConnexeIntermediare.get(vi[i][j].getGroupeConnexe()).add(vi[i][j]);
 						uniongroupesConnexeIntermediare(groupesConnexeIntermediare,vi[i-1][j].getGroupeConnexe(),vi[i][j-1].getGroupeConnexe()); 

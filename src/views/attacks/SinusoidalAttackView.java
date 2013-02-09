@@ -39,10 +39,11 @@ public class SinusoidalAttackView implements DisplayableChild {
 	 * @param power La "puissance" du cone
 	 * Plus power est grand, plus la longueur du cone sera importante
 	 */
-	public SinusoidalAttackView(double aperture, double direction, int power){
+	public SinusoidalAttackView(double aperture, double direction, int power, DisplayableFather father){
 		this.aperture=aperture;
 		this.idirection=direction;
 		this.power=power;
+		this.father = father;
 		attackStartingTime=System.currentTimeMillis();
 	}
 	

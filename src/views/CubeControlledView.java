@@ -76,14 +76,14 @@ public class CubeControlledView implements DisplayableFather{
 		aperture = theta;
 	}
 	public void rotateAperture(double dTheta){
-		aperture = aperture + dTheta;;
+		if(aperture + dTheta>0) aperture = aperture + dTheta;;
 	}
 	public double getAperture(){
 		return aperture;
 	}
 	
 	/**
-	 * M�thode relatives � la direction de l'attaque 
+	 * Methode relatives a la direction de l'attaque 
 	 * @param theta
 	 * @param dTheta
 	 * @author Felix

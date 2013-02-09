@@ -10,6 +10,7 @@ import OpenGL.KeyboardManager;
 import parameter.*;
 import unit.*;
 import views.attacks.AttackConeView;
+import views.attacks.SinusoidalAttackView;
 import views.informationViews.InstrumentsChoice;
 
 public  class Player {
@@ -284,17 +285,22 @@ public  class Player {
 	}
 		unit.getView().removeChild(attackCone);
 		KeyboardManager.tap = false;
+		
 	}
 	
-	
+	public void UAttack(){
+		SinusoidalAttackView attack = new SinusoidalAttackView(unit.getAperture(), unit.getDirection(), 100, unit.getView());
+		unit.getView().addChild(attack);
+	}
 	
 	public void act(){
 		isTurn = true;
 		movingUTurn();
-		//chooseWeaponTurn();
-		//soundEditPTurn();
+		chooseWeaponTurn();
+		soundEditPTurn();
 		UAperture();
 		UDirection();
+		UAttack();
 		isTurn = false;
 		
 	}
