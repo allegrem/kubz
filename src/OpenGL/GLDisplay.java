@@ -132,6 +132,8 @@ public class GLDisplay extends Thread{
 				do_run = false; // On arrete le programme
 		clear(); //On nettoie la fenetre
 		KeyboardManager.checkKeyboard();
+		glMatrixMode(GL_MODELVIEW);
+		GL11.glTranslatef((float)(1000),0f,0f);
 		setLightPosition();
 		if(modeChanged)
 			changeViewMode();
@@ -261,7 +263,6 @@ public class GLDisplay extends Thread{
 	 */
 	public void setLightPosition(){
 		glMatrixMode(GL_MODELVIEW);
-		GL11.glLoadIdentity();
 		lighting.setLightDirection(lightDx, lightDy, lightDz);
 		lighting.placeLighting(lightx, lighty, lightz);
 	}
