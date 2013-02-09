@@ -2,9 +2,8 @@ package monster;
 
 public class RandomMove extends MoveType{
 
-	public RandomMove(Monster monster, double speed) {
+	public RandomMove(Monster monster, int speed) {
 		super(monster, speed);
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**

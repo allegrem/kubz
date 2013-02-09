@@ -8,13 +8,16 @@ import unit.Unit;
 
 public abstract class MoveType {
 	final Monster monster;
-	final double speed;
+	final int speed;
 	final int width;
 	final int height;
+	private double startTime;
+	private double pause;
+	
 	
 
 
-	public MoveType(Monster monster, double speed) {
+	public MoveType(Monster monster, int speed) {
 		super();
 		this.monster = monster;
 		this.speed = speed;
@@ -46,14 +49,14 @@ public abstract class MoveType {
 	 * al�atoire dont l'�cart � la position initiale est en speed*sqrt(nbIterations) 
 	 */		
 	final void randMove(){
-		double rand1 = Math.random();
-		double rand2 = Math.random();
-		double xdir =2*(0.5 - rand1)*speed; 	
-		double ydir =2*(0.5 - rand1)*speed; 
+		double rand = 2*Math.PI*Math.random();
+		double xdir =speed*Math.cos(rand); 	
+		double ydir =speed*Math.sin(rand); 
+		System.out.println(xdir + "  " + ydir);
 		double size=monster.getSize()*Math.sqrt(2)/2;
-		if ((monster.getX()+size+xdir>0)&&(monster.getX()+size+xdir<width)
-				&&(monster.getY()+size+ydir>0)&&(monster.getX()+size+xdir<height)){
-			monster.translate((int)xdir, (int)ydir);
+		if ((monster.getX()+size+(xdir)>0)&&(monster.getX()+size+(xdir)<width)
+				&&(monster.getY()+size+(ydir)>0)&&(monster.getX()+size+(xdir)<height)){
+			monster.translate(xdir, ydir);			
 		}		
 	}
 }

@@ -48,7 +48,7 @@ public abstract class MonsterView implements DisplayableFather{
 	 * @param dx
 	 * @param dy
 	 */
-	public void translate(int dx, int dy) {
+	public void translate(double dx, double dy) {
 		position.translate(dx, dy);
 	}
 
@@ -174,4 +174,5 @@ public abstract class MonsterView implements DisplayableFather{
 	public double getAngle(){
 		return angle;
 	}
+
 }
