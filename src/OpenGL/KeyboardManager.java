@@ -1,11 +1,13 @@
 package OpenGL;
 
+import gameEngine.GameEngine;
+
 import org.lwjgl.input.Keyboard;
 
 import player.Player;
 
 public class KeyboardManager {
-	
+
 	public static boolean zKey = false;
 	public static boolean qKey = false;
 	public static boolean sKey = false;
@@ -14,9 +16,14 @@ public class KeyboardManager {
 	public static boolean xKey = false;
 	public static boolean tap = false;
 	private static boolean tapTyped=false;
-	public static int choice=0;
 	public static boolean quit=false;
+	private static GameEngine gameEngine;
 
+	public static void  setGameEngine(GameEngine gameEngine){
+		gameEngine=gameEngine;
+	}
+	
+	
 	/**
 	 * on controle les deplacements via "ZQSD"
 	 * on controle la rotation avec "WX"
@@ -71,7 +78,14 @@ public static void checkKeyboard(){
 				
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_TAB)){
-				choice = (choice + 1)%Player.nParams;
+			for(Player player:gameEngine.getPlayerList()){
+				if (player.isTurn()){
+					player.setChoice((player.getChoice() + 1)%player.getnParams());
+				}
+			}	
 	}
+		
+		
 }
+
 }
