@@ -243,8 +243,14 @@ public  class Player {
 		AttackConeView attackCone = new AttackConeView(unit.getAperture(), unit.getDirection(), 100, unit.getView());
 		unit.getView().addChild(attackCone);
 		while (!KeyboardManager.tap){
-			if(KeyboardManager.wKey) unit.rotateDirection(1);
-			if(KeyboardManager.xKey) unit.rotateDirection(-1);	
+			if(KeyboardManager.wKey){
+				unit.rotateDirection(1);
+				attackCone.setDirection((long)unit.getDirection());
+			}
+			if(KeyboardManager.xKey){
+				unit.rotateDirection(-1);
+				attackCone.setDirection((long)unit.getDirection());
+			}
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
