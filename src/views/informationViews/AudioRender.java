@@ -20,7 +20,7 @@ public class AudioRender {
 	private int ymax;
 	private int ymin;
 
-	private int zoomX = 0;
+	private int zoomX = 10000;
 
 	private int currentSoundLength = 0;
 
@@ -62,7 +62,7 @@ public class AudioRender {
 			int xCoord1 = 0, yCoord1 = ymax, xCoord2 = 0, yCoord2 = ymax;
 			for (int x = 0; x < maxX - 1; x++) {
 				xCoord2 = x * X_SIZE / zoomX;
-				yCoord2 = ymax-(Y_SIZE - (soundBytes[offsetX + x] + 127) * Y_SIZE
+				yCoord2 = ymax-(Y_SIZE-20 - (soundBytes[offsetX + x] + 127) * (Y_SIZE-20)
 						/ 255 + MANUAL_OFFSET);
 				GL11.glVertex3i(xCoord1, yCoord1, 100);
 				GL11.glVertex3i(xCoord2, yCoord2, 100);
@@ -70,9 +70,9 @@ public class AudioRender {
 				yCoord1 = yCoord2;
 			}
 			
-			GL11.glVertex3i(0,  ymax-(MANUAL_OFFSET + Y_SIZE / 2), 100);
+			GL11.glVertex3i(0,  ymax-(MANUAL_OFFSET + (Y_SIZE -20)/ 2), 100);
 			GL11.glVertex3i(X_SIZE,ymax-(MANUAL_OFFSET
-					+ Y_SIZE / 2), 100);
+					+ (Y_SIZE-20) / 2), 100);
 		}
 		}
 
@@ -96,10 +96,12 @@ public void renderSpectrumView(){
 	if(sound!=null){
 	GL11.glBegin(GL11.GL_LINES);
 	GL11.glColor3ub((byte)ReadableColor.BLACK.getRed(),(byte)ReadableColor.BLACK.getGreen(),(byte)ReadableColor.BLACK.getBlue());
-
+	
+	updateSpectrum();
+	
 	if (spectrumCache != null && spectrumCache.length > 0) {
 		for (int x = 0; x < X_SIZE; x++){
-			glVertex3d(x+2*X_SIZE,ymax-Y_SIZE,100);
+			glVertex3d(x+2*X_SIZE,ymax,100);
 			glVertex3d(x+2*X_SIZE,ymax-spectrumCache[x],100);
 			
 		}
@@ -118,13 +120,12 @@ public void setSound(Sound sound) {
 
 public void updateSpectrum() {
 	Complex[] result = sound.getSpectrum();
-	System.out.println(result);
 	spectrumCache = new int[X_SIZE];
 	for (int x = 0; x < result.length / 4; x++) {
 		int x_coord = x * X_SIZE * 4 / result.length;
-		int y1 = (int) (Y_SIZE + 75 - Math.abs(Math.log10(0.0001 + result[x]
+		int y1 = (int) (Y_SIZE + 55 - Math.abs(Math.log10(0.0001 + result[x]
 				.abs())) * Y_SIZE / 5);
-		int y2 = (int) (Y_SIZE + 75 - Math.abs(Math
+		int y2 = (int) (Y_SIZE + 55 - Math.abs(Math
 				.log10(0.0001 + result[result.length / 4 + x].abs()))
 				* Y_SIZE / 5);
 		if (y2 < y1) // keep the higher value
