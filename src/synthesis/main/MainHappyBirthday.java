@@ -8,21 +8,22 @@ import synthesis.basicblocks.oneinputblocks.Gain;
 import synthesis.basicblocks.severalinputsblocks.Adder;
 import synthesis.exceptions.AudioException;
 import synthesis.exceptions.RequireAudioBlocksException;
+import synthesis.fmInstruments.PianoInstrument2;
 import synthesis.fmInstruments.WoodInstrument;
 import synthesis.parameter.ParameterAudioBlock;
 
-public class MainWoodTest {
+public class MainHappyBirthday {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		WoodInstrument wood1 = new WoodInstrument();
+		PianoInstrument2 wood1 = new PianoInstrument2();
 
 		// getting note parameter
 		ParameterAudioBlock note = null;
 		for (ParameterAudioBlock a : wood1.getParameters()) {
-			if (a.getLabel() == "fm")
+			if (a.getLabel() == "f0")
 				note = a;
 		}
 

@@ -21,6 +21,7 @@ import synthesis.filters.BandsFilter;
 import synthesis.fmInstruments.BellInstrument;
 import synthesis.fmInstruments.FmInstrument;
 import synthesis.fmInstruments.PianoInstrument;
+import synthesis.fmInstruments.PianoInstrument2;
 import synthesis.fmInstruments.TwoOscFmInstrument;
 import synthesis.fmInstruments.TwoOscFmInstrumentBis;
 import synthesis.fmInstruments.WindInstrument;
@@ -120,10 +121,10 @@ public class SLWindow {
 		mnInstrument.add(rdbtnmntmBell);
 		
 /*********************************PIANO*******************************************************************/
-		JRadioButtonMenuItem rdbtnmntmPiano = new JRadioButtonMenuItem("Piano");
+		JRadioButtonMenuItem rdbtnmntmPiano = new JRadioButtonMenuItem("Piano2");
 		rdbtnmntmPiano.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setInstrument(new PianoInstrument());
+				setInstrument(new PianoInstrument2());
 			}
 		});
 		buttonGroup.add(rdbtnmntmPiano);
@@ -241,7 +242,9 @@ public class SLWindow {
 					e.printStackTrace();
 				}
 				try {
-					speakersOutput.play(filteredSound.getSound());
+					byte[] sound = filteredSound.getSound();
+//					while(true) //mouhahaha
+						speakersOutput.play(sound);
 				} catch (AudioException e) {
 					e.printStackTrace();
 				}
