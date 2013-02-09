@@ -27,9 +27,16 @@ public class Cube {
      * Method to switch on or off the IR LEDS using the pattern given
      * @param : byte, the 3 last bit determined witch LEDS are switch on.
      */
-	public void setIR(byte pattern){
-
+	private void setIR(byte pattern){
+		
     }
+	
+	public void setIrOn(){	
+		setIR((byte) 7);
+	}
+	public void setIrOf(){
+		setIR((byte) 0);
+	}
 
     /**
      * Method to switch on the Motor using the pattern given

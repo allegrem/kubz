@@ -4,6 +4,7 @@ package player;
  * Classe qui repr�sente un joueur, a des r�f�rence vers ses unit�s et param�tres
  */
 
+import base.Base;
 import gameEngine.GameEngine;
 
 
@@ -16,6 +17,7 @@ public  class Player {
 	
 	private Unit unit;
 	private Parameter[] parameters ;
+	private Base base;
 	private int nParams =2;
 	private float[] shield;
 	private boolean isTurn;
@@ -200,13 +202,19 @@ public  class Player {
 	public void soundEditPTurn(){
 		setPStatesToSoundEdit();
 		setUStateToWaiting();
+		double size=unit.getSize()*Math.sqrt(2)/2;
 		while (!KeyboardManager.tap){
-				if(KeyboardManager.zKey) parameters[choice].translate(0,1);
-				if(KeyboardManager.sKey) parameters[choice].translate(0, -1);
-				if(KeyboardManager.qKey) parameters[choice].translate(-1, 0);
-				if(KeyboardManager.dKey) parameters[choice].translate(0, 1);
+				if((KeyboardManager.zKey)&&(unit.getY()-size>(base.getCenter().getY()-(base.getSize().getY()/2)))) parameters[choice].translate(0,1);
+				if((KeyboardManager.sKey)&&(unit.getY()-size<(base.getCenter().getY()+(base.getSize().getY()/2)))) parameters[choice].translate(0, -1);
+				if((KeyboardManager.qKey)&&(unit.getY()-size>(base.getCenter().getX()-(base.getSize().getX()/2)))) parameters[choice].translate(-1, 0);
+				if((KeyboardManager.dKey)&&(unit.getY()-size>(base.getCenter().getX()+(base.getSize().getX()/2)))) parameters[choice].translate(0, 1);
 				if(KeyboardManager.wKey) parameters[choice].rotate(1);
-				if(KeyboardManager.xKey) parameters[choice].rotate(-1);						
+				if(KeyboardManager.xKey) parameters[choice].rotate(-1);	
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 		}
 		KeyboardManager.tap = false;
 	}	

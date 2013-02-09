@@ -1,7 +1,6 @@
 package monster;
 
 import monster.attack.ChooseDistance;
-import monster.move.RandomMove;
 import monster.move.RegularMove;
 
 import org.lwjgl.util.ReadableColor;
@@ -14,7 +13,7 @@ public class TriangleMonster extends Monster {
 
 	public TriangleMonster(float xStart, float yStart,ReadableColor color,GameEngine gameEngine) {
 		super(xStart, yStart, gameEngine);
-		this.move = new RandomMove(this, 200);
+		this.move = new RegularMove(this, 200);
 		this.choice = new ChooseDistance(this);
 		view= new TriangleMonsterView(new Point(xStart,yStart), color);
 		gameEngine.getMap().add(view);
