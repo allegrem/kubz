@@ -61,6 +61,7 @@ public class GLDisplay extends Thread{
 	private int frequency=50;
 	private  boolean initialized=false;
 	private AudioRender audioRender;
+	private Text texte;
 	
 	/*
 	 * Parametres de la projection
@@ -105,6 +106,7 @@ public class GLDisplay extends Thread{
 	 */
 	public GLDisplay(GameEngine gameEngine){
 		this.gameEngine=gameEngine;
+		texte=new Text();
 		KeyboardManager.setGameEngine(gameEngine);
 	}
 
@@ -141,9 +143,9 @@ public class GLDisplay extends Thread{
 			}
 		}
 		
-		mainRender(); //On actualise la fenetre avec le nouveau rendu
-		audioRender();
-		
+		//mainRender(); //On actualise la fenetre avec le nouveau rendu
+		//audioRender();
+		texte.render();
 		
 		update(); //On actualise la fenetre avec le nouveau rendu
 		Display.sync(frequency); //On synchronise l'affichage sur le bon FPS
@@ -164,6 +166,7 @@ public class GLDisplay extends Thread{
 		initDisplay();
 		initGL();
 		lighting.enable();
+		texte.buildFont();
 		try {
 			Keyboard.create();
 		} catch (LWJGLException e) {
