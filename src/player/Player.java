@@ -6,12 +6,11 @@ package player;
 
 import base.Base;
 import gameEngine.GameEngine;
-
-
 import OpenGL.KeyboardManager;
 import parameter.*;
 import unit.*;
-
+import views.attacks.AttackConeView;
+import views.informationViews.InstrumentsChoice;
 
 public  class Player {
 	
@@ -69,8 +68,6 @@ public  class Player {
 	}
 	
 	
-	
-	
 	/**
 	 * Methodes relatives au shield de l'Unit
 	 */
@@ -86,9 +83,7 @@ public  class Player {
 		return unit;
 	}
 	
-	
-	
-	
+
 	/**
 	 * Methodes qui gerent l'etat des parametres
 	 */
@@ -199,6 +194,24 @@ public  class Player {
 		}
 		KeyboardManager.tap = false;
 	}
+	
+	public void chooseWeaponTurn(){
+		InstrumentsChoice instChoice = new InstrumentsChoice();
+		unit.getView().addChild(instChoice);
+		while (!KeyboardManager.tap){
+			instChoice.setChosen(Math.abs((int) ((unit.getInstrumentChoiceAngle()%360) / 60 )) );
+			if(KeyboardManager.wKey) unit.rotateInstrumentChoice(1);
+			if(KeyboardManager.xKey) unit.rotateInstrumentChoice(-1);
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		unit.getView().removeChild(instChoice);
+		KeyboardManager.tap = false;
+	}
+	
 	/**
 	 * Methode qui declenche la creation du son via les Parameter
 	 */
@@ -222,25 +235,48 @@ public  class Player {
 		KeyboardManager.tap = false;
 	}	
 	/**
-	 * Methode qui declenche le choix de l'angle ou de l'ouverture d'attque de Unit
+	 * Methode qui declenche le choix de l'ouverture d'attaque de Unit
 	 */
 	public void UDirection(){
 		setPStatesToWaiting();
 		setUStateToDirection();
+		AttackConeView attackCone = new AttackConeView(unit.getAperture(), unit.getDirection(), 100, unit.getView());
+		unit.getView().addChild(attackCone);
 		while (!KeyboardManager.tap){
 			if(KeyboardManager.wKey) unit.rotateDirection(1);
-			if(KeyboardManager.xKey) unit.rotateDirection(-1);						
+			if(KeyboardManager.xKey) unit.rotateDirection(-1);	
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 	}
+		unit.getView().removeChild(attackCone);
 		KeyboardManager.tap = false;
 	}
+	
 	
 	public void UAperture(){
 		setPStatesToWaiting();
 		setUStateToDirection();
+		AttackConeView attackCone = new AttackConeView(unit.getAperture(), unit.getDirection(), 100, unit.getView());
+		unit.getView().addChild(attackCone);
 		while (!KeyboardManager.tap){
-			if(KeyboardManager.wKey) unit.rotateAperture(1);
-			if(KeyboardManager.xKey) unit.rotateAperture(-1);						
+			if(KeyboardManager.wKey) {
+				unit.rotateAperture(1);
+				attackCone.setAperture(unit.getAperture());
+			}
+			if(KeyboardManager.xKey){ 
+				unit.rotateAperture(-1);
+				attackCone.setAperture(unit.getAperture());
+			}
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 	}
+		unit.getView().removeChild(attackCone);
 		KeyboardManager.tap = false;
 	}
 	
@@ -248,9 +284,11 @@ public  class Player {
 	
 	public void act(){
 		isTurn = true;
-		//choosingUTurn();
 		movingUTurn();
-		soundEditPTurn();
+		//chooseWeaponTurn();
+		//soundEditPTurn();
+		UAperture();
+		UDirection();
 		isTurn = false;
 		
 	}
@@ -278,8 +316,7 @@ public  class Player {
 		return gameEngine;
 	}
 
-	public int getnParams() {
-	
+	public int getnParams() {	
 		return nParams;
 	}
 	

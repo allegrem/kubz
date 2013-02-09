@@ -15,10 +15,12 @@ public class Unit {
 	private Point pos=new Point(10,10);
 	private double aperture;
 	private double direction;
+	private double instrumentChoiceAngle;
 	private UnitState state;
 	private CubeControlledView view;
 	private Player owner;
 	private GameEngine gameEngine;
+	private int power;
 	
 	
 	public Unit(Player owner){
@@ -103,10 +105,12 @@ public class Unit {
 	public void setAperture(double theta){
 		aperture = theta;
 		view.setAperture(theta);
+		view.setAngle(theta);
 	}
 	public void rotateAperture(double dTheta){
 		aperture = aperture + dTheta;
 		view.rotateAperture(dTheta);
+		view.rotate(dTheta);
 	}
 	public double getAperture(){
 		return aperture;
@@ -120,15 +124,49 @@ public class Unit {
 	public void setDirection(double theta){
 		direction = theta;
 		view.setDirection(theta);
+		view.setAngle(theta);
 	}
 	public void rotateDirection(double dTheta){
 		direction = direction + dTheta;
 		view.rotateDirection(dTheta);
+		view.rotate(dTheta);
 	}
 	public double getDirection(){
 		return direction;
 	}
 	
+	/**
+	 * M�thode relatives au choix de l'instrument 
+	 * @param theta
+	 * @param dTheta
+	 */
+	public void setInstrumentChoice(double theta){
+		instrumentChoiceAngle = theta;
+		view.setIstrumentChoice(theta);
+		view.setAngle(theta);
+	}
+	public void rotateInstrumentChoice(double dTheta){
+		instrumentChoiceAngle = instrumentChoiceAngle + dTheta;
+		view.rotateIstrumentChoice(dTheta);
+		view.rotate(dTheta);
+	}
+	public double getInstrumentChoiceAngle(){
+		return instrumentChoiceAngle;
+	}	
+
+
+	public int getPower() {
+		return power;
+	}
+	public void setPower(int power) {
+		this.power = power;
+	}
+
+
+	/**
+	 * Simple rotation qui ne modifie aucun parametre
+	 * @param dTheta
+	 */
 	public void rotate(double dTheta){
 		view.rotate(dTheta);
 	}

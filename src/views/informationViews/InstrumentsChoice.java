@@ -6,7 +6,6 @@ import static org.lwjgl.opengl.GL11.glMatrixMode;
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 
 import utilities.Point;
