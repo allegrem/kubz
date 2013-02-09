@@ -6,7 +6,9 @@ import map2.Map;
 
 import org.lwjgl.util.ReadableColor;
 
+import utilities.Maths;
 import utilities.Point;
+import utilities.Vector;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
 
@@ -29,7 +31,7 @@ public abstract class MonsterView implements DisplayableFather{
 	protected ArrayList<DisplayableChild> children= new ArrayList<DisplayableChild>();
 	protected int duration=0;
 	private double startingTime=0;
-	private double pause=10;
+	private double pause=0;
 
 	/**
 	 * Nouveau monstre
@@ -183,9 +185,11 @@ public abstract class MonsterView implements DisplayableFather{
 		if((positionToGo.getX()-position.getX())!=0 || (positionToGo.getY()-position.getY())!=0){
 			if(System.currentTimeMillis()-startingTime>pause){
 				startingTime=System.currentTimeMillis();
-				
-			position.translateX(Math.signum(positionToGo.getX()-position.getX()));
-			position.translateY(Math.signum(positionToGo.getY()-position.getY()));
+			Vector dir=Maths.makeVector(position, positionToGo);
+			if (dir.norme()>=2){
+				Maths.normalize(dir);
+				position.translate(2*dir.getX(), 2*dir.getY());
+			}
 				
 			}
 			
