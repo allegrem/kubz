@@ -145,7 +145,7 @@ public class GLDisplay extends Thread{
 		
 		mainRender(); //On actualise la fenetre avec le nouveau rendu
 		audioRender();
-		//texte.render();
+		texte.render();
 		
 		update(); //On actualise la fenetre avec le nouveau rendu
 		Display.sync(frequency); //On synchronise l'affichage sur le bon FPS
@@ -443,6 +443,10 @@ public class GLDisplay extends Thread{
 	 */
 	public static boolean getMode3D(){
 		return mode3D;
+	}
+	
+	public Text getText(){
+		return texte;
 	}
 	
 }
