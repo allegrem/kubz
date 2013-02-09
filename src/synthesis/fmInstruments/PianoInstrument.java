@@ -12,7 +12,8 @@ import synthesis.parameter.ParamBlock;
 import synthesis.parameter.ParameterAudioBlock;
 
 /**
- * This class creates the sound of piano.
+ * This class creates the sound of a piano.
+ * @see PianoInstrument2
  * @author valeh
  *
  */
@@ -28,7 +29,7 @@ public class PianoInstrument extends FmInstrumentNParams{
 	private final ParameterAudioBlock amp;
 	
 	/**
-	 * Constructs a bell with the different 
+	 * Constructs a piano with the different 
 	 * controllable parameters.
 	 */
 	public PianoInstrument() {

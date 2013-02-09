@@ -9,6 +9,7 @@ import synthesis.parameter.ParamBlock;
 import synthesis.parameter.ParameterAudioBlock;
 
 /**
+ * This class creates the sound of a piano (without the WhiteNoise).
  * @author allegrem
  * 
  */
@@ -22,9 +23,7 @@ public class PianoInstrument2 extends FmInstrumentNParams {
 	private ParameterAudioBlock s;
 	private ParameterAudioBlock r;
 
-	/**
-	 * 
-	 */
+	
 	public PianoInstrument2() {
 		super();
 

@@ -5,7 +5,8 @@ package synthesis;
 
 import synthesis.exceptions.RequireAudioBlocksException;
 
-/**
+/**This class aims to simplify the code elsewhere since it contains the recurrent method 
+ * computeSound.
  * @author allegrem
  *
  */

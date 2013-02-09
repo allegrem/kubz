@@ -46,7 +46,7 @@ public abstract class SeveralInputBlock implements AudioBlock {
 	}
 	
 	/**
-	 * Plugs in the sprecified AudioBlock by adding it in the list.
+	 * Plugs in the specified AudioBlock by adding it in the list.
 	 * @param a the AudioBlock to plug in 
 	 */
 	public void plugin(AudioBlock a) {

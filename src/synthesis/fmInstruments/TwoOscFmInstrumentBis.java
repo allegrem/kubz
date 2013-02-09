@@ -6,6 +6,13 @@ import synthesis.basicblocks.severalinputsblocks.Adder;
 import synthesis.parameter.ParamBlock;
 import synthesis.parameter.ParameterAudioBlock;
 
+/**
+ * An FmInstrument based on the FM 2 oscillators instrument but 
+ * with special ranges for the the fm and the modulation factor, which 
+ * make a funny noise.
+ * @author valeh
+ * @see TwoOscFmInstrument
+ */
 public class TwoOscFmInstrumentBis extends FmInstrumentNParams {
 	private ParameterAudioBlock fp;
 	private ParameterAudioBlock mod;
