@@ -17,6 +17,6 @@ public class ChooseDistance extends ChooseType{
 
 	@Override
 	public int getPot(Unit unit){
-		return (int) monster.getPos().distanceTo(unit.getPos());
+		return (int) -monster.getPos().distanceTo(unit.getPos());
 	}
 }

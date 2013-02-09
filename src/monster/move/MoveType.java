@@ -33,11 +33,19 @@ public abstract class MoveType {
 	 * @param unit
 	 */
 	final void moveTo(Unit unit){	
+		double dx;
+		double dy;
 		double xdiff = unit.getPos().getX() - monster.getPos().getX();
 		double ydiff = unit.getPos().getY() - monster.getPos().getY();
-		double dx = speed*xdiff/Math.sqrt(xdiff*xdiff + ydiff*ydiff);
-		double dy = speed*ydiff/Math.sqrt(xdiff*xdiff + ydiff*ydiff);
-		monster.translate((int)dx, (int)dy);
+		if (((xdiff*xdiff)+(ydiff*ydiff))>=speed*speed){
+			dx = speed*xdiff/Math.sqrt(xdiff*xdiff + ydiff*ydiff);
+			dy = speed*ydiff/Math.sqrt(xdiff*xdiff + ydiff*ydiff);
+		}
+		else{
+			dx = xdiff;
+			dy = ydiff;
+		}
+		monster.translate(dx, dy);
 	}	
 	
 	/** 

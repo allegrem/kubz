@@ -8,11 +8,11 @@ import com.rapplogic.xbee.api.XBeeException;
 import com.rapplogic.xbee.api.wpan.RxResponseIoSample;
 
 public class XBeeReceive {
-// Attention ceci n'est qu'un exemple qui doit être modifié.
+// Attention ceci n'est qu'un exemple qui doit Etre modifie.
     XBee xbee = new XBee();
-   xbee.open("/dev/ttyXBee", 115200);
+    xbee.open("/dev/ttyXBee", 115200);
 
-    while (true) {
+    while(true) {
         RxResponseIoSample ioSample = null;
         try {
             ioSample = (RxResponseIoSample) xbee.getResponse();
@@ -23,7 +23,7 @@ public class XBeeReceive {
         System.out.println("We received a sample from " + ioSample.getSourceAddress());
 
         if (ioSample.containsAnalog()) {
-            System.out.println("10-bit temp reading (pin 19) is " + ioSample.getSamples()[0].getAnalog1();
+            System.out.println("10-bit temp reading (pin 19) is " + ioSample.getSamples()[0].getAnalog1());
         }
     }
 	
