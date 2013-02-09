@@ -199,6 +199,20 @@ public  class Player {
 		}
 		KeyboardManager.tap = false;
 	}
+	
+	public void chooseWeaponTurn(){
+		while (!KeyboardManager.tap){
+			if(KeyboardManager.wKey) unit.rotate(1);
+			if(KeyboardManager.xKey) unit.rotate(-1);
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		KeyboardManager.tap = false;
+	}
+	
 	/**
 	 * Methode qui declenche la creation du son via les Parameter
 	 */

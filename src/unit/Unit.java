@@ -15,6 +15,7 @@ public class Unit {
 	private Point pos=new Point(10,10);
 	private double aperture;
 	private double direction;
+	private double instrumentChoice;
 	private UnitState state;
 	private CubeControlledView view;
 	private Player owner;
@@ -129,6 +130,27 @@ public class Unit {
 		return direction;
 	}
 	
+	/**
+	 * M�thode relatives au choix de l'instrument 
+	 * @param theta
+	 * @param dTheta
+	 */
+	public void setIstrumentChoice(double theta){
+		instrumentChoice = theta;
+		view.setDirection(theta);
+	}
+	public void rotateIstrumentChoice(double dTheta){
+		instrumentChoice = instrumentChoice + dTheta;
+		view.rotateDirection(dTheta);
+	}
+	public double getIstrumentChoice(){
+		return instrumentChoice;
+	}
+	
+	/**
+	 * Simple rotation qui ne modifie aucun parametre
+	 * @param dTheta
+	 */
 	public void rotate(double dTheta){
 		view.rotate(dTheta);
 	}
