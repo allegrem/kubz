@@ -6,12 +6,10 @@ package player;
 
 import base.Base;
 import gameEngine.GameEngine;
-
-
 import OpenGL.KeyboardManager;
 import parameter.*;
 import unit.*;
-
+import views.informationViews.InstrumentsChoice;
 
 public  class Player {
 	
@@ -197,7 +195,10 @@ public  class Player {
 	}
 	
 	public void chooseWeaponTurn(){
+		InstrumentsChoice instChoice = new InstrumentsChoice();
+		unit.getView().addChild(instChoice);
 		while (!KeyboardManager.tap){
+			instChoice.setChosen((int) ((unit.getInstrumentChoice()%360) / 60 ) );
 			if(KeyboardManager.wKey) unit.rotateIstrumentChoice(1);
 			if(KeyboardManager.xKey) unit.rotateIstrumentChoice(-1);
 			try {
@@ -206,6 +207,7 @@ public  class Player {
 				e.printStackTrace();
 			}
 		}
+		unit.getView().removeChild(instChoice);
 		KeyboardManager.tap = false;
 	}
 	
@@ -258,10 +260,9 @@ public  class Player {
 	
 	public void act(){
 		isTurn = true;
-		//choosingUTurn();
 		movingUTurn();
-		soundEditPTurn();
 		chooseWeaponTurn();
+		soundEditPTurn();
 		isTurn = false;
 		
 	}
