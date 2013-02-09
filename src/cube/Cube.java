@@ -31,6 +31,7 @@ public class Cube {
 		
     }
 	
+
 	public void setIrOn(){
 		setIR((byte)7);
 	}
