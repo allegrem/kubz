@@ -64,6 +64,9 @@ public class Base {
 	public GameEngine getGameEngine(){
 		return gameEngine;
 	}
+	public Point getSize(){
+		return size;
+	}
 	
 	
 }

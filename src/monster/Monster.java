@@ -108,7 +108,7 @@ public class Monster {
 	 * @param attackTable
 	 */
 	
-	private void attack(ArrayList<int[]> attackTable){
+	/*private void attack(ArrayList<int[]> attackTable){
 		setSeenUnits(getGameEngine().getUnitList());
 		setCible();
 		
@@ -120,7 +120,7 @@ public class Monster {
 		}
 		else return;
 		
-	}
+	}*/
 	
 	
 					/** Actions liees a la position**/

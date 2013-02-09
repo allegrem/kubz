@@ -1,9 +1,7 @@
 package monster;
 
 import monster.attack.ChooseDistance;
-import monster.move.RandomMove;
 import monster.move.RegularMove;
-
 import org.lwjgl.util.ReadableColor;
 
 import utilities.Point;
