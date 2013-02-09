@@ -1,44 +1,41 @@
 package cube;
 
-/* import */
-import java.lang.*;
-import org.zeromq.ZMQ;
+import cubeManager.CubeManager;
+import java.lang.Byte;
+
 
 public class XBeeReceive extends Thread{
-    /* Adapted from the ZMQ examples on http://github.com/imatix/zguide/tree/master/examples/ */
 
-    //  Prepare our context and socket
-    ZMQ.Context context = ZMQ.context(1);
-    ZMQ.Socket socket = context.socket(ZMQ.REQ);
+    private byte[] msg = new byte[109];
+    private byte checksum;
+    private char length;
+    private char sourceAdress;
+    private short angle;
 
-            /* Connect to the localhost */
-    socket.connect ("tcp://localhost:5555");
+    private CubeManager manager = new CubeManager();
 
-    System.out.println("Connecting to hello world server");
+    /* Permet de récupérer le cube manager pour donner les informations au bon cube */
+    public void setCubeManager(CubeManager cubeManager) {
+         this.manager = cubeManager;
+    }
 
     public void run () {
 
-            //  Wait for a response
-            while (true) {
-                //  Create a "Hello" message.
-                //  Ensure that the last byte of our "Hello" message is 0 because
-                //  our "Hello World" server is expecting a 0-terminated string:
-                String requestString = "Hello" ;
-                byte[] request = requestString.getBytes();
-                // Send the message
-                System.out.println("Sending request " + requestNbr );
-                socket.send(request, 0);
+        /* Longueur des données */
+        length = ((msg[1] << 8) + msg[2]);
+        /* Octet de vérification, = 0xFF si ok */
+        checksum = msg[(int) length + 3];
 
-                //  Get the reply.
-                byte[] reply = socket.recv(0);
-                //  When displaying reply as a String, omit the last byte because
-                //  our "Hello World" server has sent us a 0-terminated string:
-                System.out.println("Received reply " + requestNbr + ": [" + new String(reply) + "]");
-            }
+         if ((msg[0] == 0x7E) & (checksum == 0xFF)){
+             /* Récupération de l'adresse du cube qui parle */
+             sourceAdress = ((msg[4] << 8) + msg[5]);
+             /* Récupération de l'angle */
+             angle = ((msg[9] << 8) + msg[8]);
+
+
+
+         }
 
     }
-
-    socket.close();
-    context.term();
 	
 }
