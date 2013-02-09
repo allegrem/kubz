@@ -10,10 +10,10 @@ import synthesis.parameter.ParameterAudioBlock;
 
 /**
  * @author allegrem
- * 
+ *
  */
-public class PianoInstrument2 extends FmInstrument {
-
+public class XylophoneInstrument extends FmInstrument {
+	
 	private ParameterAudioBlock a;
 	private ParameterAudioBlock f0;
 	private ParameterAudioBlock epsilon;
@@ -25,7 +25,7 @@ public class PianoInstrument2 extends FmInstrument {
 	/**
 	 * 
 	 */
-	public PianoInstrument2() {
+	public XylophoneInstrument() {
 		super();
 
 		a = addParam(new GainParamBlock("attack", 0, 100, 1, 0.01f));
@@ -33,7 +33,7 @@ public class PianoInstrument2 extends FmInstrument {
 		s = addParam(new GainParamBlock("sustain", 0, 100, 60, 0.01f));
 		r = addParam(new GainParamBlock("release", 0, 100, 80, 0.01f));
 		f0 = addParam(new ParamBlock("f0", 20, 5000, 440));
-		epsilon = addParam(new GainParamBlock("epsilon", 0, 100, 10, 0.1f));
+		epsilon = addParam(new GainParamBlock("epsilon", 0, 1000, 250, 1f));
 		amp = addParam(new ParamBlock("amp", 0, 125, 100));
 
 		ADSR env = new ADSR(a, d, s, r, 1f, amp);

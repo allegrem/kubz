@@ -26,6 +26,7 @@ import synthesis.fmInstruments.TwoOscFmInstrument;
 import synthesis.fmInstruments.TwoOscFmInstrumentBis;
 import synthesis.fmInstruments.WindInstrument;
 import synthesis.fmInstruments.WoodInstrument;
+import synthesis.fmInstruments.XylophoneInstrument;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -174,6 +175,17 @@ public class SLWindow {
 		mnInstrument.add(rdbtnmntmWood);
 		
 /****************************************************************************************************/
+		JRadioButtonMenuItem rdbtnmntmXylophone = new JRadioButtonMenuItem("XylophoneInstrument");
+		rdbtnmntmXylophone.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setInstrument(new XylophoneInstrument());
+			}
+		});
+		buttonGroup.add(rdbtnmntmXylophone);
+		mnInstrument.add(rdbtnmntmXylophone);
+		
+		
+		
 		JMenu menu = new JMenu("?");
 		menuBar.add(menu);
 

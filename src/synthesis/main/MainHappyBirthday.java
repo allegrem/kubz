@@ -10,6 +10,7 @@ import synthesis.exceptions.AudioException;
 import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.fmInstruments.PianoInstrument2;
 import synthesis.fmInstruments.WoodInstrument;
+import synthesis.fmInstruments.XylophoneInstrument;
 import synthesis.parameter.ParameterAudioBlock;
 
 public class MainHappyBirthday {
@@ -18,7 +19,7 @@ public class MainHappyBirthday {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		PianoInstrument2 wood1 = new PianoInstrument2();
+		XylophoneInstrument wood1 = new XylophoneInstrument();
 
 		// getting note parameter
 		ParameterAudioBlock note = null;
