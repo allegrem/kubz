@@ -9,6 +9,6 @@ package cube;
  */
 public abstract class XBee {
 
-    protected val inStream
-    protected val outStr
+    protected val inStream;
+    protected val outStr;
 }

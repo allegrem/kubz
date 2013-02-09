@@ -22,15 +22,15 @@ public class XBeeReceive extends Thread{
     public void run () {
 
         /* Longueur des données */
-        length = ((msg[1] << 8) + msg[2]);
+        length = (char) ((msg[1] << 8) + msg[2]);
         /* Octet de vérification, = 0xFF si ok */
         checksum = msg[(int) length + 3];
 
          if ((msg[0] == 0x7E) & (checksum == 0xFF)){
              /* Récupération de l'adresse du cube qui parle */
-             sourceAdress = ((msg[4] << 8) + msg[5]);
+             sourceAdress = (char) ((msg[4] << 8) + msg[5]);
              /* Récupération de l'angle */
-             angle = ((msg[9] << 8) + msg[8]);
+             angle = (short) ((msg[9] << 8) + msg[8]);
 
 
 
