@@ -32,7 +32,7 @@ public class GameEngine {
 	
 	public GameEngine(){
 		RandomPerso.initialize();
-		display=new GLDisplay();
+		display=new GLDisplay(this);
 		map= new Map();
 		display.setMap(map);
 		display.start();
@@ -78,6 +78,14 @@ public class GameEngine {
 		for (Player player : playerList)
 			unitList.add(player.getUnit());
 		return unitList;
+	}
+	
+	
+	public ArrayList<Player> getPlayerList(){
+		ArrayList<Player> playerList= new ArrayList<Player>();
+		for (Player player : this.playerList)
+			playerList.add(player);
+		return playerList;
 	}
 	
 	/**
