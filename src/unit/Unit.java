@@ -20,6 +20,7 @@ public class Unit {
 	private CubeControlledView view;
 	private Player owner;
 	private GameEngine gameEngine;
+	private int nbInst;
 	
 	
 	public Unit(Player owner){
@@ -104,10 +105,12 @@ public class Unit {
 	public void setAperture(double theta){
 		aperture = theta;
 		view.setAperture(theta);
+		view.setAngle(theta);
 	}
 	public void rotateAperture(double dTheta){
 		aperture = aperture + dTheta;
 		view.rotateAperture(dTheta);
+		view.rotate(dTheta);
 	}
 	public double getAperture(){
 		return aperture;
@@ -121,10 +124,12 @@ public class Unit {
 	public void setDirection(double theta){
 		direction = theta;
 		view.setDirection(theta);
+		view.setAngle(theta);
 	}
 	public void rotateDirection(double dTheta){
 		direction = direction + dTheta;
 		view.rotateDirection(dTheta);
+		view.rotate(dTheta);
 	}
 	public double getDirection(){
 		return direction;
@@ -137,16 +142,30 @@ public class Unit {
 	 */
 	public void setIstrumentChoice(double theta){
 		instrumentChoice = theta;
-		view.setDirection(theta);
+		view.setIstrumentChoice(theta);
+		view.setAngle(theta);
 	}
 	public void rotateIstrumentChoice(double dTheta){
 		instrumentChoice = instrumentChoice + dTheta;
-		view.rotateDirection(dTheta);
+		view.rotateIstrumentChoice(dTheta);
+		view.rotate(dTheta);
 	}
 	public double getIstrumentChoice(){
 		return instrumentChoice;
 	}
 	
+	
+	
+	public double getInstrumentChoice() {
+		return instrumentChoice;
+	}
+
+
+	public void setInstrumentChoice(double instrumentChoice) {
+		this.instrumentChoice = instrumentChoice;
+	}
+
+
 	/**
 	 * Simple rotation qui ne modifie aucun parametre
 	 * @param dTheta

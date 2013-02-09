@@ -36,6 +36,7 @@ public class CubeControlledView implements DisplayableFather{
 	private double angle = 0;
 	private double aperture;
 	private double direction;
+	private double instrumentChoice;
 	
 	/**
 	 * Nouveau cubeControlled
@@ -267,5 +268,13 @@ public class CubeControlledView implements DisplayableFather{
 	@Override
 	public double getHeight() {
 		return height;
+	}
+
+	public void rotateIstrumentChoice(double dTheta) {
+		instrumentChoice = instrumentChoice + dTheta;		
+	}
+
+	public void setIstrumentChoice(double theta) {
+		instrumentChoice = theta;		
 	}
 }
