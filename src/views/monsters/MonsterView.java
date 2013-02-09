@@ -32,6 +32,7 @@ public abstract class MonsterView implements DisplayableFather{
 	protected int duration=0;
 	private double startingTime=0;
 	private double pause=0;
+	private boolean moveFinished=true;
 
 	/**
 	 * Nouveau monstre
@@ -56,6 +57,7 @@ public abstract class MonsterView implements DisplayableFather{
 	 */
 	public void translate(double dx, double dy) {
 		positionToGo.translate(dx, dy);
+		moveFinished=false;
 	}
 
 	/**
@@ -66,6 +68,7 @@ public abstract class MonsterView implements DisplayableFather{
 	 */
 	public void setLocation(int x, int y) {
 		positionToGo.move(x, y);
+		moveFinished=false;
 
 	}
 
@@ -76,6 +79,7 @@ public abstract class MonsterView implements DisplayableFather{
 	 */
 	public void setLocation(Point p) {
 		positionToGo.setLocation(p);
+		moveFinished=false;
 
 	}
 
@@ -189,13 +193,19 @@ public abstract class MonsterView implements DisplayableFather{
 			if (dir.norme()>=2){
 				Maths.normalize(dir);
 				position.translate(2*dir.getX(), 2*dir.getY());
+			}else{
+				moveFinished=true;
 			}
 				
 			}
-			
+		
 			
 		}
 		
 	}
 
+	public boolean moveFinished(){
+		return moveFinished;
+	}
+	
 }
