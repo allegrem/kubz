@@ -1,10 +1,8 @@
 package cube;
 
 import java.io.*;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.*;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.ArrayList;
@@ -117,16 +115,11 @@ public void readFrame (){
 
 public void parseRXFrame (){
 	// XXX : TODO : Calculate Checksum
-	
 	int addr = buf[3]*256 + buf[4];
-	int angle = (int)(short)(buf[8]*256 + buf[7]);
-	
-	System.out.println("angle = " + angle);
-	System.out.println("address = " + addr);
-	
-	manager.getCube(addr).setAngle(angle);
-	
-	System.out.println("le cube numéro : " + manager.getCube(addr).getID() + " a pour angle : " + manager.getCube(addr).getAngle());
+
+	char [] c = {(char)buf[7],(char)buf[8],(char)buf[9],(char)buf[10],(char)buf[11],(char)buf[12],(char)buf[13],(char)buf[14]};
+	int angle = (int)Long.parseLong(new String(c), 16);
+	//manager.getCube(addr).setAngle(angle);	
 }
 
 }
