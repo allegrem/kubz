@@ -8,10 +8,10 @@ public class Cube{
 	/**
 	 * Attribute of cube
 	 */
-	private short angle;
+	private int angle;
 	private boolean tap;
 
-	private char id;
+	private int id;
 
     private XBee xBee;
 
@@ -85,8 +85,8 @@ public class Cube{
      * Method to get the actual cube angle
      * @return angle (float)
      */
-	public float getAngle() {
-		return angle;
+	public int getAngle() {
+		return this.angle;
 	}
 
     /**
@@ -94,17 +94,25 @@ public class Cube{
      * @return tap (boolean)
      */
 	public boolean getTap() {
-		return tap;
+		return this.tap;
 	}
 
     /**
      * Method to get the ID of the cube
      * @return id (short)
      */
-	public char getID() {
-		return id;
+	public int getID() {
+		return this.id;
 
     }
+	
+	public void setAngle (int ang){
+		this.angle = ang;
+	}
+	
+	public void setID (int i){
+		this.id = i;
+	}
 
 }
 

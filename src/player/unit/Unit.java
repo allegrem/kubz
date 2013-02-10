@@ -1,6 +1,8 @@
-package unit;
+package player.unit;
 
+import cube.Cube;
 import gameEngine.GameEngine;
+import traitementVideo.VirtualCube;
 import utilities.Point;
 import views.CubeControlledView;
 import views.informationViews.LifeView;
@@ -8,7 +10,7 @@ import views.interfaces.DisplayableFather;
 import player.*;
 
 
-public class Unit {
+public class Unit extends CubeOwner{
 	
 	private double life;
 	private double size;
@@ -21,6 +23,8 @@ public class Unit {
 	private Player owner;
 	private GameEngine gameEngine;
 	private int power;
+	private Cube cube;
+	private VirtualCube vCube;
 	
 	
 	public Unit(Player owner){
@@ -34,11 +38,29 @@ public class Unit {
 		
 	}
 	
-	
-	public Player getOwner() {
+	/**
+	 * Renvoie le Player auquel est lie cet Unit
+	 * @return
+	 */
+	public Player getOwner(){
 		return owner;
 	}
 
+	/**
+	 * Retourne le cube physique auquel est associé Unit
+	 * @return
+	 */
+	public Cube getCube() {
+		return cube;
+	}
+	
+	/**
+	 * Retourne le cube du traitement de l'image auquel est associe Unit
+	 * @return
+	 */
+	public VirtualCube getVCube(){
+		return vCube;
+	}
 
 	/**
 	 * Mï¿½thodes relatives ï¿½ la vie de Unit

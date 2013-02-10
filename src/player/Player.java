@@ -7,8 +7,8 @@ package player;
 import base.Base;
 import gameEngine.GameEngine;
 import OpenGL.KeyboardManager;
-import parameter.*;
-import unit.*;
+import player.parameter.*;
+import player.unit.*;
 import views.attacks.AttackConeView;
 import views.attacks.SinusoidalAttackView;
 import views.informationViews.InstrumentsChoice;
@@ -88,6 +88,10 @@ public  class Player {
 	
 	public Unit getUnit(){
 		return unit;
+	}
+	
+	public Parameter[] getParameters(){
+		return parameters;
 	}
 	
 
@@ -206,14 +210,15 @@ public  class Player {
 		InstrumentsChoice instChoice = new InstrumentsChoice();
 		unit.getView().addChild(instChoice);
 		while (!KeyboardManager.tap){
-			if (unit.getInstrumentChoiceAngle()>0){
-			instChoice.setChosen(Math.abs((int) ((unit.getInstrumentChoiceAngle()%360) / 60 )) );
+			if (unit.getInstrumentChoiceAngle()>=0){
+			instChoice.setChosen((int) ((unit.getInstrumentChoiceAngle()%360) / 60 )) ;
 			}else{
-				instChoice.setChosen(Math.abs((int) (((360+unit.getInstrumentChoiceAngle())%360) / 60 )) );
+				instChoice.setChosen((int) (((360*(1+Math.abs((int)((unit.getInstrumentChoiceAngle()/360))))
+						+unit.getInstrumentChoiceAngle())%360) / 60 ));
 
 			}
-			if(KeyboardManager.wKey && unit.getInstrumentChoiceAngle()<360) unit.rotateInstrumentChoice(1);
-			if(KeyboardManager.xKey && unit.getInstrumentChoiceAngle()>-360) unit.rotateInstrumentChoice(-1);
+			if(KeyboardManager.wKey ) unit.rotateInstrumentChoice(1);
+			if(KeyboardManager.xKey ) unit.rotateInstrumentChoice(-1);
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
@@ -255,10 +260,10 @@ public  class Player {
 		AttackConeView attackCone = new AttackConeView(unit.getAperture(), unit.getDirection(), 100, unit.getView());
 		unit.getView().addChild(attackCone);
 		while (!KeyboardManager.tap){
-			if(KeyboardManager.wKey && unit.getDirection()<360){
+			if(KeyboardManager.wKey){
 				unit.rotateDirection(1);
 			}
-			if(KeyboardManager.xKey && unit.getDirection()>-360){
+			if(KeyboardManager.xKey){
 				unit.rotateDirection(-1);
 			}
 			if(unit.getDirection()>0){
@@ -306,8 +311,9 @@ public  class Player {
 	public void UAttack(){
 		SinusoidalAttackView attack = new SinusoidalAttackView(unit.getAperture(), unit.getDirection(), 100, unit.getView());
 		unit.getView().addChild(attack);
+		gameEngine.getDisplay().auto3D(unit.getView(), unit.getDirection(),100, 6000);
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(6000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -351,5 +357,7 @@ public  class Player {
 	public int getnParams() {	
 		return nParams;
 	}
+	
+
 	
 }

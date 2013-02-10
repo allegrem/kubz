@@ -1,4 +1,4 @@
-package unit;
+package player.unit;
 
 public abstract class UnitState {
 

@@ -1,11 +1,14 @@
-package parameter;
+package player.parameter;
 
+import cube.Cube;
 import gameEngine.GameEngine;
+import player.CubeOwner;
 import player.Player;
 import views.CubeControlledView;
+import traitementVideo.VirtualCube;
 import utilities.Point;
 
-public class Parameter {
+public class Parameter extends CubeOwner{
 	
 	private Point pos = new Point(10,10);
 	private int angle;
@@ -15,6 +18,8 @@ public class Parameter {
 	private GameEngine gameEngine;
 	private double size;
 	private CubeControlledView view;
+	private Cube cube;
+	private VirtualCube vCube;
 
 	
 	public Parameter(Player owner){
@@ -33,6 +38,22 @@ public class Parameter {
 		double vase = dAngle;
 		dAngle = 0;
 		return vase;		
+	}
+	
+	/**
+	 * Retourne le cube physique auquel est associé Parameter
+	 * @return
+	 */
+	public Cube getCube() {
+		return cube;
+	}
+	
+	/**
+	 * Retourne le cube du traitement de l'image auquel est associe Parameter
+	 * @return
+	 */
+	public VirtualCube getVCube(){
+		return vCube;
 	}
 	
 	

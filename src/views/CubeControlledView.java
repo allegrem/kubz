@@ -12,6 +12,8 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 
+import OpenGL.GLDisplay;
+
 import utilities.Maths;
 import utilities.Point;
 import utilities.Vector;
@@ -37,6 +39,7 @@ public class CubeControlledView implements DisplayableFather{
 	private double aperture;
 	private double direction;
 	private double instrumentChoice;
+	private boolean invisible3D=false;
 	
 	/**
 	 * Nouveau cubeControlled
@@ -165,7 +168,8 @@ public class CubeControlledView implements DisplayableFather{
 		/**
 		 * Si l'unite n'est plus sur la table, on affiche un carre rouge
 		 */
-		if (untracked){
+	
+		if (untracked && !(GLDisplay.getMode3D() && invisible3D)){
 			glMatrixMode(GL_MODELVIEW);
 			GL11.glPushMatrix();
 			
@@ -276,5 +280,9 @@ public class CubeControlledView implements DisplayableFather{
 
 	public void setIstrumentChoice(double theta) {
 		instrumentChoice = theta;		
+	}
+	
+	public void setInvisible3D(boolean invisible){
+		invisible3D=invisible;
 	}
 }

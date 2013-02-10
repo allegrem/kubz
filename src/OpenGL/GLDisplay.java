@@ -36,6 +36,7 @@ import org.lwjgl.util.glu.GLU;
 import synthesis.Sound;
 import utilities.Maths;
 import utilities.MyBuffer;
+import utilities.Point;
 import utilities.Vector;
 import views.informationViews.AudioRender;
 import views.interfaces.DisplayableFather;
@@ -429,8 +430,29 @@ public class GLDisplay extends Thread{
 		Vector vect =Maths.makeVector(attacked.getX(),attacked.getY(),0,attacking.getX(),attacking.getY(),0);
 		double norme=vect.norme();
 		Maths.normalize(vect);
-		setCamPlace((float) (attacking.getX()+(norme/3+80)*vect.getX()), (float) (attacking.getY()+(norme/3+80)*vect.getY()), 80);
-		setLightPlace((float) (attacking.getX()+(norme/3+80)*vect.getX()), (float) (attacking.getY()+(norme/3+80)*vect.getY()), 80);
+		setCamPlace((float) (attacking.getX()+(norme/3+50)*vect.getX()), (float) (attacking.getY()+(norme/3+50)*vect.getY()), 400);
+		setLightPlace((float) (attacking.getX()+(norme/3+50)*vect.getX()), (float) (attacking.getY()+(norme/3+50)*vect.getY()), 400);
+		mode3D=true;
+		modeChanged=true;
+		this.time=time;
+		this.started=System.currentTimeMillis();
+	}
+	
+	public void auto3D(DisplayableFather attacking, double direction, int power, int time) {
+		lightsx=lightx;
+		lightsy=lighty;
+		lightsz=lightz;
+		lightsDx=lightDx;
+		lightsDy=lightDy;
+		lightsDz=lightDz;
+		Point attacked=new Point(attacking.getX()-2*power*Math.sin(Math.PI/180*direction),attacking.getY()+2*power*Math.cos(Math.PI/180*direction));
+		setCamDirection((float)attacked.getX(), (float)attacked.getY(), 0);
+		setLightDirection((float)attacked.getX(), (float)attacked.getY(), 0);
+		Vector vect =Maths.makeVector(attacked.getX(),attacked.getY(),0,attacking.getX(),attacking.getY(),0);
+		double norme=vect.norme();
+		Maths.normalize(vect);
+		setCamPlace((float) (attacking.getX()+(norme/3+200)*vect.getX()), (float) (attacking.getY()+(norme/3+200)*vect.getY()), 400);
+		setLightPlace((float) (attacking.getX()+(norme/3+200)*vect.getX()), (float) (attacking.getY()+(norme/3+200)*vect.getY()), 400);
 		mode3D=true;
 		modeChanged=true;
 		this.time=time;
@@ -448,6 +470,8 @@ public class GLDisplay extends Thread{
 	public Text getText(){
 		return texte;
 	}
+
+	
 	
 }
 

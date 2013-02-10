@@ -1,6 +1,6 @@
-package unit;
+package player.unit;
 
-public class AngleUState extends UnitState {
+public class DirectionUState extends UnitState {
 
 	@Override
 	public boolean canTap() {

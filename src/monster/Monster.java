@@ -11,12 +11,13 @@ import gameEngine.GameEngine;
 
 import java.util.*;
 
+import player.unit.Unit;
+
 import monster.attack.AttackType;
 import monster.attack.ChooseType;
 import monster.move.MoveType;
 import monster.move.RandomMove;
 
-import unit.Unit;
 
 public class Monster {
 	
@@ -178,7 +179,12 @@ public class Monster {
 		move();
 		attack.attack(cible);
 		//attack(attack.result());
-		//gameEngine.getDisplay().auto3D(view, gameEngine.getUnitList().get(0).getView(), 5000);
+		gameEngine.getDisplay().auto3D(view, cible.getView(), 6000);
+		try {
+			Thread.sleep(6000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public double getSize() {

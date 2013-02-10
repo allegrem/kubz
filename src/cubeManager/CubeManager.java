@@ -14,6 +14,7 @@ public class CubeManager {
         /* usedCubesList is initially empty */
         this.usedCubesList = new ArrayList<Cube>();
         /* Define the freeCubesList */
+        this.freeCubesList = new ArrayList<Cube>();
     }
 	
 	public Cube getFreeCube(){
@@ -26,11 +27,11 @@ public class CubeManager {
 		return usedCubesList;
 	}
 
-    public Cube getCube (char adress){
+    public Cube getCube (int adress){
 
         Cube rep = new Cube(null);
 
-        for (int i = 0; i < this.usedCubesList.size(); i++){
+        for (int i = 0; i < this.freeCubesList.size(); i++){
             if (freeCubesList.get(i).getID() == adress) rep = freeCubesList.get(i);
             i++;
         }
@@ -38,5 +39,8 @@ public class CubeManager {
         return rep;
     }
 	
+    public void addFreeCube (Cube c){
+    	this.freeCubesList.add(c);
+    }
 
 }
