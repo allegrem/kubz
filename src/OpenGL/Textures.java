@@ -14,6 +14,7 @@ import org.newdawn.slick.util.ResourceLoader;
 public class Textures {
 	public static Texture textureSea;
 	public static Texture textureWall;
+	public static Texture textureTry;
 	
 	/**
 	 * Initilaisation de la texture du sol
@@ -41,6 +42,19 @@ public class Textures {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	/**
+	 *
+	 */
+	public static void initTextureTry(){
+		textureTry = null;
+		try {
+			textureTry = TextureLoader.getTexture("jpg", ResourceLoader.getResourceAsStream("Textures/metal091b.jpg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
