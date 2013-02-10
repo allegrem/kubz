@@ -1,7 +1,4 @@
-.project
-.classpath
 *.class
-#.project
 .settings/
 bin/
 *.wav
