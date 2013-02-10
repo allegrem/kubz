@@ -1,8 +1,6 @@
 package cube;
 
-/* Import the library needed */
-
-public class Cube {	
+public class Cube {
 
 	/**
 	 * Attribute of cube
@@ -12,7 +10,11 @@ public class Cube {
 
 	private char id;
 
-    public Cube(){
+    private XBee xBee;
+
+    public Cube(XBee currentXBee){
+        this.id = 0;
+        this.xBee = currentXBee;
     }
 
 	/**
@@ -71,5 +73,6 @@ public class Cube {
 		return id;
 
     }
+
 }
 
