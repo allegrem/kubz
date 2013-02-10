@@ -1,5 +1,7 @@
 package traitementVideo;
 
+import java.util.ArrayList;
+
 import cube.*;
 import utilities.Point;
 
@@ -15,6 +17,7 @@ public class VirtualCube {
 	private double y2Speed;
 	private double y3Speed;
 	private final Cube owner;
+	private ArrayList<Point> pos;
 	
 	
 	
@@ -32,7 +35,9 @@ public class VirtualCube {
 		y1Speed = 0;
 		y2Speed = 0;
 		y3Speed = 0;
-		
+		pos.add(this.pos1);
+		pos.add(this.pos2);
+		pos.add(this.pos3);		
 	}
 	
 	public Point getPos1() {
@@ -92,6 +97,10 @@ public class VirtualCube {
 
 	public Cube getOwner(){
 		return owner;
+	}
+	
+	public ArrayList<Point> getPos(){
+		return pos;
 	}
 	
 }
