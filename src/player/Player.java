@@ -22,6 +22,8 @@ public  class Player {
 	private float[] shield;
 	private boolean isTurn;
 	private int choice;
+	private int lastAngle1;
+	private int lastAngle2;
 
 	private GameEngine gameEngine;
 	
@@ -49,7 +51,9 @@ public  class Player {
 	 * @return
 	 */
 	public int getChangeAngle1(){
-		return (int) parameters[0].getAngle();
+		int retour = lastAngle1 -parameters[0].getAngle();
+		lastAngle1 = parameters[0].getAngle();
+		return retour;
 	}
 	
 	/**
@@ -57,7 +61,9 @@ public  class Player {
 	 * @return
 	 */
 	public int getChangeAngle2(){
-		return (int) parameters[1].getAngle();
+		int retour = lastAngle2 -parameters[1].getAngle();
+		lastAngle2 = parameters[1].getAngle();
+		return retour;
 	}
 	
 	/**

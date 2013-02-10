@@ -8,8 +8,8 @@ import utilities.Point;
 public class Parameter {
 	
 	private Point pos = new Point(10,10);
-	private double angle;
-	private double dAngle = 0;
+	private int angle;
+	private int dAngle = 0;
 	private ParameterState state;
 	private Player owner;
 	private GameEngine gameEngine;
@@ -84,15 +84,15 @@ public class Parameter {
 	 * @param theta
 	 * @param dTheta
 	 */
-	public void setAngle(double theta){
+	public void setAngle(int theta){
 		angle = theta;
 		view.setAngle(theta);
 	}
-	public void rotate(double dTheta){
+	public void rotate(int dTheta){
 		angle = angle + dTheta;
 		view.rotate(dTheta);
 	}
-	public double getAngle(){
+	public int getAngle(){
 		return angle;
 	}
 	
