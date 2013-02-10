@@ -135,7 +135,6 @@ public class InstrumentsChoice implements DisplayableChild{
 		if (num>=0)
 			chosen=colors.get(num%colors.size());
 		if (num<=0)
-			System.out.println(colors.size()-Math.abs(num)%colors.size()-1);
 			chosen=colors.get(colors.size()-Math.abs(num)%colors.size()-1);
 				
 	}

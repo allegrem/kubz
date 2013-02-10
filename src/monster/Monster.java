@@ -176,7 +176,6 @@ public class Monster {
 		setSeenUnits(gameEngine.getUnitList());
 		setCible();
 		move();
-		System.out.println(cible);
 		attack.attack(cible);
 		//attack(attack.result());
 		//gameEngine.getDisplay().auto3D(view, gameEngine.getUnitList().get(0).getView(), 5000);
