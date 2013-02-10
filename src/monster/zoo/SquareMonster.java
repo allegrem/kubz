@@ -1,6 +1,8 @@
-package monster;
+package monster.zoo;
 
+import monster.Monster;
 import monster.attack.ChooseDistance;
+import monster.attack.FixedFrenquenceAttack;
 import monster.move.RegularMove;
 import org.lwjgl.util.ReadableColor;
 
@@ -12,10 +14,10 @@ public class SquareMonster extends Monster {
 
 	public SquareMonster(float xStart, float yStart,ReadableColor color, GameEngine gameEngine) {
 		super(xStart, yStart, gameEngine);
-		this.move = new RegularMove(this, 200);
 		this.choice = new ChooseDistance(this);
+		this.attack = new FixedFrenquenceAttack(this, 6, 30);
+		this.move = new RegularMove(this, 200);
 		view= new SquareMonsterView(new Point(xStart,yStart), color);
-		gameEngine.getMap().add(view);
+		gameEngine.getMap().add(view);	
 	}
-
 }

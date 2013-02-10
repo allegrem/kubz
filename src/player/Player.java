@@ -1,7 +1,7 @@
 package player;
 
 /**
- * Classe qui repr�sente un joueur, a des r�f�rence vers ses unit�s et param�tres
+ * Classe qui represente un joueur, a des reference vers ses unites et parametres
  */
 
 import base.Base;
@@ -300,6 +300,11 @@ public  class Player {
 	public void UAttack(){
 		SinusoidalAttackView attack = new SinusoidalAttackView(unit.getAperture(), unit.getDirection(), 100, unit.getView());
 		unit.getView().addChild(attack);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void act(){
