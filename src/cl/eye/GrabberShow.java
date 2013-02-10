@@ -9,8 +9,9 @@ import java.awt.image.WritableRaster;
 import javax.swing.JPanel;
 
 import processing.core.PImage;
+import traitementVideo.VirtualPixel;
 import videoprocessing.ImagePanel;
-import videoprocessing.VirtualPixel;
+
 
 import com.googlecode.javacv.CanvasFrame;
 

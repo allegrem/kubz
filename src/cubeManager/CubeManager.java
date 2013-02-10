@@ -28,7 +28,7 @@ public class CubeManager {
 
     public Cube getCube (char adress){
 
-        Cube rep = new Cube();
+        Cube rep = new Cube(null);
 
         for (int i = 0; i < this.usedCubesList.size(); i++){
             if (freeCubesList.get(i).getID() == adress) rep = freeCubesList.get(i);
