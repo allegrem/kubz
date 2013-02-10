@@ -320,5 +320,13 @@ public class Sound extends Observable implements Observer {
 		locked = false;
 		updateSound();
 	}
+	
+	
+	public int getDegats() {
+		int result = 0;
+		for(int i=0; i<spectrum.length; i++)
+			result += spectrum[i].abs();
+		return result;
+	}
 
 }

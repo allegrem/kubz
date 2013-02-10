@@ -26,6 +26,7 @@ public class Unit extends CubeOwner{
 	
 	
 	public Unit(Player owner){
+		life = 1000;
 		this.state = new WaitingUState();
 		this.owner = owner;
 		gameEngine=owner.getGameEngine();
@@ -53,6 +54,10 @@ public class Unit extends CubeOwner{
 	}
 	public void decreaseLife(double dec){
 		life = life - dec;
+		if (life<0){
+			gameEngine.getUnitList().remove(this);
+			gameEngine.getPlayerList().remove(owner);
+		}
 	}
 	public void setLife(double newLife){
 		life = newLife;

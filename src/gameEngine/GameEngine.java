@@ -136,24 +136,36 @@ public class GameEngine {
 
 	}
 
-	public void setFrozen(Cube owner) {
+	/**
+	 * Methode a appeler quand on perd un ou plusieurs cubes
+	 * Tous les cubes deviennent rouge si ils ont mal places et verts si ils sont bien places
+	 * Des carres rouges apparaissent sous la precedente position connue
+	 * @param owner
+	 */
+	public void setFrozen(Cube source) {
 		boolean ok = false;
 		boolean internOk = true;
 		for (Player player : playerList) {
 			player.getUnit().getCube().setIrOf();
+			player.getUnit().getCube().setRGB((byte)127,(byte) 0,(byte) 0, (short)500);
 			player.getParameters()[0].getCube().setIrOf();
+			player.getParameters()[0].getCube().setRGB((byte)127,(byte) 0,(byte) 0, (short)500);
 			player.getParameters()[1].getCube().setIrOf();
-			// ici on affiche les carrés rouges
+			player.getParameters()[1].getCube().setRGB((byte)127,(byte) 0,(byte) 0, (short)500);
+			// ici on affiche les nouvelles positions
 		}
 		while (!ok) {
 			internOk = true;
 			for (Player player : playerList) {
 				boolean unitOk = checkPos(player.getUnit());
-				if (unitOk) player.getUnit().getCube().setRGB((byte)0,(byte) 127,(byte) 0,(short) 1); //delay tout le temps
+				if (unitOk) player.getUnit().getCube().setRGB((byte)0,(byte) 127,(byte) 0,(short) 500); //delay tout le temps
+				else player.getUnit().getCube().setRGB((byte)127,(byte) 0,(byte) 0,(short) 500);
 				boolean param1ok = checkPos(player.getParameters()[0]);
-				if (param1ok) player.getParameters()[0].getCube().setRGB((byte)0,(byte) 127,(byte) 0,(short) 1);
+				if (param1ok) player.getParameters()[0].getCube().setRGB((byte)0,(byte) 127,(byte) 0,(short) 500);
+				else player.getParameters()[0].getCube().setRGB((byte)127,(byte) 0,(byte) 0,(short) 500);
 				boolean param2ok = checkPos(player.getParameters()[1]);
-				if (param1ok) player.getParameters()[1].getCube().setRGB((byte)0,(byte) 127,(byte) 0,(short) 1);
+				if (param1ok) player.getParameters()[1].getCube().setRGB((byte)0,(byte) 127,(byte) 0,(short) 500);
+				else player.getParameters()[1].getCube().setRGB((byte)0,(byte) 127,(byte) 0,(short) 500);
 				internOk = internOk&&unitOk&&param1ok&&param2ok;
 			}
 			ok = internOk;
