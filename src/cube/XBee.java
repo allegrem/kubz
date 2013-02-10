@@ -13,10 +13,10 @@ public class XBee extends Thread implements Runnable{
 
     private CubeManager manager = new CubeManager();
     private String dataReceive = null;
-    private String dataSend = null;
+    private byte[] dataSend = new byte[208];
     private Scanner sc = new Scanner(System.in);
 
-    int [] buf =  new int[109];
+    int [] buf =  new int[209];
     ReentrantLock mutex = new ReentrantLock(true);
 
     /* Socket part, adapted from http://systembash.com/content/a-simple-java-tcp-server-and-tcp-client/ */
@@ -51,39 +51,11 @@ public class XBee extends Thread implements Runnable{
     }
     
     public void run () {
-
-    	mutex.lock();
-    	
-    	try{
-    		datasend = "0x7E 0x00 0X06 0x08 0x52 0x2B 0x2B 0x2B 0x35";
-    	    outToServer.writeBytes(dataSend);
-    	    outToServer.flush();
-    	    datasend = "0x7E 0x00 0X06 0x88 0x52 0x44 0x4C 0x35";
-    	    outToServer.writeBytes(dataSend);
-    	    outToServer.flush();
-    	} catch (IOException e){
-    	    e.printStackTrace();
-    	} finally {
-            mutex.unlock();
-    	}
     	
         while (true){
             readFrame();
         	parseRXFrame();
         	
-        	mutex.lock();
-        	
-        	try{
-        	   dataSend = sc.nextLine();
-        	   outToServer.writeBytes(dataSend);
-        	   outToServer.flush();
-        	} catch (IOException e){
-        	   e.printStackTrace();
-        	} finally {
-               mutex.unlock();
-        	}
-
-
         }
     }
 
@@ -149,6 +121,47 @@ public void parseRXFrame (){
 	// Put the angle in the cube which has the good address.
 	manager.getCube(addr).setAngle(angle);	
 	} catch (Exception e){}
+}
+
+public void sendRXFrame (){
+	// XXX TODO : add mutex 
+	String message = new String();
+	byte[] msg =  new byte[200];
+	byte sum = 0x00;
+	
+	try{
+		message = sc.nextLine();
+		msg = message.getBytes();
+	    // send the begin of the frame (0x7E)
+		dataSend[0] = 0x7E;
+		dataSend[1] = 0x00;
+		dataSend[2] = (byte)(11 + message.length()); // Frame length
+		dataSend[3] = 0x00;
+		dataSend[4] = 0x52; // Frame ID
+		dataSend[5] = 0x00; // 5-12 -> Broadcast mode
+		dataSend[6] = 0x00;
+		dataSend[7] = 0x00;
+		dataSend[8] = 0x00;
+		dataSend[9] = 0x00;
+		dataSend[10] = 0x00;
+		dataSend[11] = 0xFF;
+		dataSend[12] = 0xFF;
+		dataSend[13] = 0x04; // Send packet with Broadcast Pan ID
+		
+		for (int i=0; i<msg.length; i++){
+			dataSend[i+12] = msg[i]; // Put the data in the packet
+			sum = (sum + msg[i]) & 0xFF;
+		}
+		sum = (sum + msg[3] + msg[4] + msg[5] + msg[6] + msg[7] + msg[8] + msg[9] + msg[10] + msg[11] + msg[12] + msg[13]) & 0xFF;
+		
+		dataSend[12 + msg.length]= 0xFF - (sum); // checksum		
+		
+	   outToServer.write(dataSend, 0, 12 + msg.length);
+	   outToServer.flush();
+	} catch (IOException e){
+	   e.printStackTrace();
+	} 
+
 }
 
 }
