@@ -17,7 +17,7 @@ public class XBee extends Thread{
 
     /* Socket part, adapted from http://systembash.com/content/a-simple-java-tcp-server-and-tcp-client/ */
     /* Open a new socket on localhost:4161 */
-        Socket clientSocket = new Socket("localhost", 4161);
+    Socket clientSocket = new Socket("localhost", 4161);
     /* Creating a buffer for the data receive */
     BufferedReader inFromServer = new BufferedReader ( new InputStreamReader(clientSocket.getInputStream()));
     /* Creating a data output object to cast what we want to send to the server */

@@ -2,8 +2,6 @@ package cube;
 
 //import Xbee library
 
-import cubeManager.CubeManager;
-
 public class XBeeReceiveTest {
 
 	/**
@@ -12,7 +10,7 @@ public class XBeeReceiveTest {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
         XBee xbee = new XBee();
-        xbee.setCubeManager(new CubeManager());    //À COMPLÉTER
+        //xbee.setCubeManager(new CubeManager());    //À COMPLÉTER
         xbee.start();
 
     }
