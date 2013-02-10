@@ -56,8 +56,8 @@ public class BackgroundView implements DisplayableFather{
 		this.width=width;
 		this.length=length;
 		this.time=time;
-		h1=2*time/3;
-		h2=time/3;
+		h1=time/2;
+		h2=time/2;
 		color1.fromHSB((float)(h1/time),1f,1f);
 		color2.fromHSB((float)(h2/time),1f,1f);
 		

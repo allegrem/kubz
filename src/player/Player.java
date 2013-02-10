@@ -307,7 +307,7 @@ public  class Player {
 		SinusoidalAttackView attack = new SinusoidalAttackView(unit.getAperture(), unit.getDirection(), 100, unit.getView());
 		unit.getView().addChild(attack);
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(7000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

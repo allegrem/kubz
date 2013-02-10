@@ -429,8 +429,8 @@ public class GLDisplay extends Thread{
 		Vector vect =Maths.makeVector(attacked.getX(),attacked.getY(),0,attacking.getX(),attacking.getY(),0);
 		double norme=vect.norme();
 		Maths.normalize(vect);
-		setCamPlace((float) (attacking.getX()+(norme/3+80)*vect.getX()), (float) (attacking.getY()+(norme/3+80)*vect.getY()), 80);
-		setLightPlace((float) (attacking.getX()+(norme/3+80)*vect.getX()), (float) (attacking.getY()+(norme/3+80)*vect.getY()), 80);
+		setCamPlace((float) (attacking.getX()+(norme/3+50)*vect.getX()), (float) (attacking.getY()+(norme/3+50)*vect.getY()), 400);
+		setLightPlace((float) (attacking.getX()+(norme/3+50)*vect.getX()), (float) (attacking.getY()+(norme/3+50)*vect.getY()), 400);
 		mode3D=true;
 		modeChanged=true;
 		this.time=time;
