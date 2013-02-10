@@ -11,6 +11,7 @@ import player.parameter.*;
 import player.unit.*;
 import views.attacks.AttackConeView;
 import views.attacks.SinusoidalAttackView;
+import views.informationViews.InstrumentChoice;
 import views.informationViews.InstrumentsChoice;
 
 public  class Player {
@@ -207,7 +208,8 @@ public  class Player {
 	}
 	
 	public void chooseWeaponTurn(){
-		InstrumentsChoice instChoice = new InstrumentsChoice();
+		//InstrumentsChoice instChoice = new InstrumentsChoice();
+		InstrumentChoice instChoice = new InstrumentChoice();
 		unit.getView().addChild(instChoice);
 		while (!KeyboardManager.tap){
 			if (unit.getInstrumentChoiceAngle()>=0){
