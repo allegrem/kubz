@@ -17,7 +17,6 @@ public abstract class AttackType {
 		double adjacent = monster.getCible().getX() -monster.getX();
 		double oppose = -(monster.getCible().getY() -monster.getY());
 		double hypothenus = Math.sqrt(adjacent*adjacent + oppose*oppose);
-		System.out.println(180*Math.atan2(oppose,adjacent)/Math.PI  - 180);
 		SinusoidalAttackView attack = new SinusoidalAttackView(20, 270 - 180*Math.atan2(oppose,adjacent)/Math.PI, 100, monster.getView());
 		this.monster.getView().addChild(attack);
 	}	

@@ -132,8 +132,7 @@ public class InstrumentsChoice implements DisplayableChild{
 	 * @param num Son numero
 	 */
 	public void setChosen(int num){
-			chosen=colors.get(num);
-				
+			chosen=colors.get(num);		
 	}
 	
 }
