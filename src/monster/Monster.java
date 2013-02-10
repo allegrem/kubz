@@ -178,7 +178,12 @@ public class Monster {
 		move();
 		attack.attack(cible);
 		//attack(attack.result());
-		//gameEngine.getDisplay().auto3D(view, gameEngine.getUnitList().get(0).getView(), 5000);
+		gameEngine.getDisplay().auto3D(view, cible.getView(), 6000);
+		try {
+			Thread.sleep(6000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public double getSize() {
