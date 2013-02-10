@@ -9,7 +9,9 @@ import java.awt.image.WritableRaster;
 import javax.swing.JPanel;
 
 import processing.core.PImage;
+import traitementVideo.Traitement;
 import traitementVideo.VirtualPixel;
+import utilities.Point;
 import videoprocessing.ImagePanel;
 
 
@@ -73,12 +75,9 @@ public class GrabberShow implements Runnable {
 			int comptX = 0, comptY = 0;
 			double cupos = 0;
 			for (int i = 0; i < myImage.pixels.length; i++) {
-				if ((myImage.pixels[i] & 0xFF) > 250) {
-					white = true;
-					posX = comptX;
-					posY = comptY;
-				}
+				if ((myImage.pixels[i] & 0xFF) > 250) white = true;
 				else white = false;
+				virtualTab[comptX][comptY] = new VirtualPixel(white, 0, new Point(comptX,comptY));
 				comptX++; // on parcours l'image en largeur
 				if (comptX == CAMERA_WIDTH) // on descend d'une ligne
 				{
@@ -108,6 +107,15 @@ public class GrabberShow implements Runnable {
 						CAMERA_HEIGHT, myImage.pixels);
 				imagePanel.updateImage(raster);
 			}
+			// Je pense que comme ca, ca peut marcher, t'auras juste a decommenter et creer l'objet Traitement ou il faudra
+			
+			Traitement traitement = new Traitement();
+			traitement.updateConnexe(virtualTab);
+			traitement.getGroupesPos(); // te renvoie une liste de points (coordonnées en double) qui sont les centres des taches (normalement)
+			  
+			 
+			
+			
 		}
 	}
 
@@ -163,4 +171,17 @@ public class GrabberShow implements Runnable {
 
 		return true;
 	}
+
+	public VirtualPixel[][] getVirtualTab() {
+		return virtualTab;
+	}
+
+	public void setVirtualTab(VirtualPixel[][] virtualTab) {
+		this.virtualTab = virtualTab;
+	}
+	
+	
+	
+	
+	
 }

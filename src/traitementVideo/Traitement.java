@@ -5,7 +5,7 @@ import gameEngine.GameEngine;
 import java.util.*;
 import utilities.*;
 
-public class Connexe {
+public class Traitement {
 	
 	/**
 	 * Cette méthode permet de parcourir l'image pour en déterminer les composantes connexes (ici les taches lumineueses)
@@ -84,7 +84,7 @@ public class Connexe {
 		}
 		
 		/**
-		 *  Cette sous méthode permet de mettre à jour la straucture (les groupes vides sont effaces)
+		 *  Cette sous méthode permet de mettre à jour la structure (les groupes vides sont effaces)
 		 */
 		int taille = groupesConnexeIntermediare.size();
 		int compteurRetour = 0; 
@@ -108,9 +108,9 @@ public class Connexe {
 	 * @param groupesConnexeIntermediare
 	 * @return
 	 */
-	public static ArrayList<Point> getGroupesPos(ArrayList<ArrayList<VirtualPixel>> groupesConnexeIntermediare){
+	public ArrayList<Point> getGroupesPos(){
 		ArrayList<Point> groupesConnexeIntermediarePos = new ArrayList<Point>();
-		for(ArrayList<VirtualPixel> array : groupesConnexeIntermediare){
+		for(ArrayList<VirtualPixel> array : groupesConnexes){
 			double xMoy = 0;
 			double yMoy = 0;
 			for(VirtualPixel vp : array){
@@ -296,6 +296,19 @@ public class Connexe {
 		vc.getPos3().setX(newXPos);
 		vc.getPos3().setY(newYPos);
 	}
+
+	public ArrayList<ArrayList<VirtualPixel>> getGroupesConnexes() {
+		return groupesConnexes;
+	}
+
+	public void setGroupesConnexes(
+			ArrayList<ArrayList<VirtualPixel>> groupesConnexes) {
+		this.groupesConnexes = groupesConnexes;
+	}
+	
+	
+	
+	
 }
 
 
