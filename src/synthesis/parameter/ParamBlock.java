@@ -120,5 +120,10 @@ public class ParamBlock extends Observable implements ParameterAudioBlock {
 	public void incrValue(int incr) {
 		setValue(getValue() + incr);
 	}
+	
+	
+	public void random() {
+		setValue((int) (getMin() + Math.random() * (double) (getMax() - getMin())));
+	}
 
 }

@@ -22,6 +22,20 @@ public class FmInstruments3Params extends FmInstrument implements
 	private ParameterAudioBlock rot2;
 	private ParameterAudioBlock distance;
 	
+	public ParameterAudioBlock getRot1() {
+		return rot1;
+	}
+
+
+	public ParameterAudioBlock getRot2() {
+		return rot2;
+	}
+
+
+	public ParameterAudioBlock getDistance() {
+		return distance;
+	}
+
 	private FmInstrumentNParams instrument;
 	
 	/**
@@ -81,6 +95,13 @@ public class FmInstruments3Params extends FmInstrument implements
 		notifyObservers();
 
 		System.out.println("fm instrument updated");
+	}
+
+
+	public void random() {
+		rot1.random();
+		rot2.random();
+		distance.random();
 	}
 
 }
