@@ -1,5 +1,11 @@
 package player.unit;
 
+/**
+ * 
+ * @author Felix
+ *
+ */
+
 public class PositionErrorUState extends UnitState {
 
 	@Override

@@ -2,6 +2,7 @@ package player;
 
 /**
  * Classe qui represente un joueur, a des reference vers ses unites et parametres
+ * @author Felix
  */
 
 import base.Base;
@@ -9,6 +10,7 @@ import gameEngine.GameEngine;
 import OpenGL.KeyboardManager;
 import player.parameter.*;
 import player.unit.*;
+import synthesis.Sound;
 import synthesis.filters.BandsFilter;
 import views.attacks.AttackConeView;
 import views.attacks.SinusoidalAttackView;

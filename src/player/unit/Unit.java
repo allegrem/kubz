@@ -1,8 +1,13 @@
 package player.unit;
 
-import cube.Cube;
+/**
+ * 
+ * @author Felix
+ * 
+ */
+
 import gameEngine.GameEngine;
-import traitementVideo.VirtualCube;
+import synthesis.Sound;
 import utilities.Point;
 import views.CubeControlledView;
 import views.informationViews.LifeView;
@@ -18,6 +23,7 @@ public class Unit extends CubeOwner{
 	private double aperture;
 	private double direction;
 	private double instrumentChoiceAngle=0;
+	private Sound sound;
 	private UnitState state;
 	private CubeControlledView view;
 	private Player owner;

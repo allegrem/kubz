@@ -1,11 +1,13 @@
 package player.parameter;
 
-import cube.Cube;
+/**
+ * @author Felix
+ */
+
 import gameEngine.GameEngine;
 import player.CubeOwner;
 import player.Player;
 import views.CubeControlledView;
-import traitementVideo.VirtualCube;
 import utilities.Point;
 
 public class Parameter extends CubeOwner{
