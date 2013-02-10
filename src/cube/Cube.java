@@ -31,9 +31,9 @@ public class Cube{
         mutex.lock();
 
         try {
-            RString = R.toString();
-            GString = G.toString();
-            BString = B.toString();
+            RString = ((Short)R).toString();
+            GString = ((Short)G).toString();
+            BString = ((Short)B).toString();
             xBee.setDataSend("L" + RString + GString + BString + "\n");
         } finally {
             mutex.unlock();
@@ -44,7 +44,7 @@ public class Cube{
      * Method to switch on or off the IR LEDS using the pattern given
      * @param : byte, the 3 last bit determined witch LEDS are switch on.
      */
-	private void setIR(byte pattern){
+	private void setIR(Byte pattern){
         mutex.lock();
 
         try {
@@ -71,7 +71,7 @@ public class Cube{
         mutex.lock();
 
         try {
-            motorPatternString = pattern.toString();
+            motorPatternString = ((Byte)pattern).toString();
             xBee.setDataSend("I" + motorPatternString + "\n");
         } finally {
             mutex.unlock();
