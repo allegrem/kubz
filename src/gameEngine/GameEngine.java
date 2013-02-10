@@ -1,5 +1,4 @@
 package gameEngine;
-import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 
 import java.util.ArrayList;
@@ -11,6 +10,8 @@ import map2.Map;
 import map2.MapReader;
 import monster.Monster;
 import player.*;
+import synthesis.Sound;
+import synthesis.fmInstruments.BellInstrument;
 import unit.Unit;
 import utilities.RandomPerso;
 import views.staticViews.BackgroundView;
@@ -23,7 +24,7 @@ public class GameEngine {
 	private final int height;
 	public ArrayList<Monster> monsterList;
 	private ArrayList<Player> playerList;
-	private ArrayList<Wall> walls;
+	//private ArrayList<Wall> walls;
 	private ArrayList<Base> bases;
 	private CubeManager cubeManager;
 	private GLDisplay display;
@@ -32,7 +33,7 @@ public class GameEngine {
 	
 	public GameEngine(){
 		RandomPerso.initialize();
-		display=new GLDisplay();
+		display=new GLDisplay(this);
 		map= new Map();
 		display.setMap(map);
 		display.start();
@@ -44,28 +45,30 @@ public class GameEngine {
 				e.printStackTrace();
 			}
 		}
+		display.setSound(new Sound(new BellInstrument(),1));
 		width=display.getmapDisplay_width();
 		height=display.getmapDisplay_height();
 		System.out.println("Width: "+width+" Height: "+height);
 		map.setWidth(width);
 		map.setLength(height);	
 		display.setLightPlace(0.0f,(float)height/2,0.0f);
-		map.add(new BackgroundView(width,height,100));
+		map.add(new BackgroundView(width,height,5000));
 		try {
 			monsterList=reader.readMonsters();
 			//bases=reader.readBases();
 			bases=new ArrayList<Base>();
-			walls=reader.readWalls();
+			//walls=reader.readWalls();
 			playerList=new ArrayList<Player>();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		bases.add(new Base(ReadableColor.ORANGE,this));
-		playerList.add(new Player(this));
-		playerList.add(new Player(this));
-		playerList.add(new Player(this));
+		playerList.add(new Player(this,bases.get(0)));
+		//playerList.add(new Player(this,bases.get(0)));
+		//playerList.add(new Player(this));
 		act();
+	
 	}
 	
 	/**
@@ -78,6 +81,14 @@ public class GameEngine {
 		for (Player player : playerList)
 			unitList.add(player.getUnit());
 		return unitList;
+	}
+	
+	
+	public ArrayList<Player> getPlayerList(){
+		ArrayList<Player> playerList= new ArrayList<Player>();
+		for (Player player : this.playerList)
+			playerList.add(player);
+		return playerList;
 	}
 	
 	/**
@@ -111,6 +122,8 @@ public class GameEngine {
 		while(display.isAlive()){
 			playerTurn();
 			monsterTurn();
+			
+		
 		}
 	}
 	

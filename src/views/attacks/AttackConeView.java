@@ -23,7 +23,6 @@ public class AttackConeView implements DisplayableChild {
 	private DisplayableFather father;
 	private double aperture;
 	private double direction;
-	private double idirection;
 	private double fatherAngle=0;
 	private int power;
 	private int start=0;
@@ -34,7 +33,7 @@ public class AttackConeView implements DisplayableChild {
 	
 	/**
 	 * Creation d'un cone d'atatque
-	 * @param aperture L'aperture d'ouverture du cone
+	 * @param aperture L'angle d'ouverture du cone
 	 * @param direction La direction du cone autour de z
 	 * Le 0 correspond a l'axe y (vers le bas)
 	 * @param power La "puissance" du cone
@@ -42,7 +41,7 @@ public class AttackConeView implements DisplayableChild {
 	 */
 	public AttackConeView(double aperture, double direction, int power,DisplayableFather father){
 		this.aperture=aperture;
-		this.idirection=direction;
+		this.direction=direction;
 		this.power=power;
 		this.father=father;
 		fatherAngle=father.getAngle();
@@ -55,9 +54,8 @@ public class AttackConeView implements DisplayableChild {
 	
 	@Override
 	public void paint(){
-		fatherAngle=father.getAngle();
-		direction=idirection-fatherAngle;
-		idirection%=360;
+		
+		direction%=360;
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		int alpha;
 		boolean reflected =false;
@@ -107,7 +105,7 @@ public class AttackConeView implements DisplayableChild {
 		GL11.glPushMatrix();
 		
 		GL11.glTranslated(father.getX(), father.getY(),father.getHeight()/2 );
-		new PartialDisk().draw(i,i+5, 50,1,(float)(direction-aperture/2),(float) aperture);
+		new PartialDisk().draw(i,i+5, 50,1,(float)(-direction-aperture/2),(float) aperture);
 		
 		glMatrixMode(GL_MODELVIEW);
 		GL11.glLoadIdentity();
@@ -137,6 +135,10 @@ public class AttackConeView implements DisplayableChild {
 	 */
 	public void setDirection( long direction){
 		this.direction=direction;
+	}
+	
+	public void setdDirection( long dDirection){
+		direction+=dDirection;
 	}
 	
 	/**

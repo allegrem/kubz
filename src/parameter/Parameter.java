@@ -1,18 +1,35 @@
 package parameter;
 
+import gameEngine.GameEngine;
+import player.Player;
 import views.CubeControlledView;
 import utilities.Point;
 
 public class Parameter {
 	
-	private Point pos;
-	private double angle;
-	private double dAngle = 0;
+	private Point pos = new Point(10,10);
+	private int angle;
+	private int dAngle = 0;
 	private ParameterState state;
+	private Player owner;
+	private GameEngine gameEngine;
+	private double size;
 	private CubeControlledView view;
+
+	
+	public Parameter(Player owner){
+		this.state = new WaitingPState();
+		this.setOwner(owner);
+		gameEngine=owner.getGameEngine();
+		view = new CubeControlledView(pos);
+		size = view.getSize();
+		gameEngine.getMap().add(view);
+		
+	}
+
 	
 
-	public double getDAngle(){
+	double getDAngle(){
 		double vase = dAngle;
 		dAngle = 0;
 		return vase;		
@@ -31,12 +48,12 @@ public class Parameter {
 	
 	/**
 	 * deplacement absolu de unit
-	 * @param x
-	 * @param y
+	 * @param d
+	 * @param e
 	 */	
-	public void setLocation(int x, int y) {		
-		pos.move(x, y);
-		view.setLocation(x,y);
+	public void setLocation(double d, double e) {		
+		pos.move(d, e);
+		view.setLocation(d,e);
 	}
 		
 	/**
@@ -58,21 +75,24 @@ public class Parameter {
 	public Point getPos(){
 		return pos;
 	}
+	public double getSize(){
+		return size;
+	}
 	
 	/**
 	 * méthodes relatives à l'angle du cube
 	 * @param theta
 	 * @param dTheta
 	 */
-	public void setAngle(double theta){
+	public void setAngle(int theta){
 		angle = theta;
 		view.setAngle(theta);
 	}
-	public void rotate(double dTheta){
+	public void rotate(int dTheta){
 		angle = angle + dTheta;
 		view.rotate(dTheta);
 	}
-	public double getAngle(){
+	public int getAngle(){
 		return angle;
 	}
 	
@@ -94,6 +114,14 @@ public class Parameter {
 	}
 	public ParameterState getState() {
 		return state;
+	}
+
+	public Player getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Player owner) {
+		this.owner = owner;
 	}
 	
 }

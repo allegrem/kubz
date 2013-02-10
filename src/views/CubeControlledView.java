@@ -36,6 +36,7 @@ public class CubeControlledView implements DisplayableFather{
 	private double angle = 0;
 	private double aperture;
 	private double direction;
+	private double instrumentChoice;
 	
 	/**
 	 * Nouveau cubeControlled
@@ -75,14 +76,14 @@ public class CubeControlledView implements DisplayableFather{
 		aperture = theta;
 	}
 	public void rotateAperture(double dTheta){
-		aperture = aperture + dTheta;;
+		if((aperture + dTheta>=0&&(aperture+dTheta<=360))) aperture = aperture + dTheta;
 	}
 	public double getAperture(){
 		return aperture;
 	}
 	
 	/**
-	 * M�thode relatives � la direction de l'attaque 
+	 * Methode relatives a la direction de l'attaque 
 	 * @param theta
 	 * @param dTheta
 	 * @author Felix
@@ -110,11 +111,11 @@ public class CubeControlledView implements DisplayableFather{
 /**
  * Nouvelle position a partir des 
  * nouvelles coordonnes
- * @param x
- * @param y
+ * @param d
+ * @param e
  */
-	public void setLocation(int x, int y) {
-		position.move(x, y);
+	public void setLocation(double d, double e) {
+		position.move(d, e);
 
 	}
 
@@ -267,5 +268,13 @@ public class CubeControlledView implements DisplayableFather{
 	@Override
 	public double getHeight() {
 		return height;
+	}
+
+	public void rotateIstrumentChoice(double dTheta) {
+		instrumentChoice = instrumentChoice + dTheta;		
+	}
+
+	public void setIstrumentChoice(double theta) {
+		instrumentChoice = theta;		
 	}
 }

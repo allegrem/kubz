@@ -67,17 +67,17 @@ public class BaseView implements DisplayableFather{
 			
 			GL11.glColor3ub((byte)(color.getRed()*80/100),(byte)(color.getGreen()*80/100),(byte)(color.getBlue()*80/100));
 			
-			glVertex3d(center.getX()-size.getX()/2,center.getY()-size.getY()/2, 100);
-			glVertex3d(center.getX()+size.getX()/2, center.getY()-size.getY()/2, 100);
-			glVertex3d(center.getX()+size.getX()/2,center.getY()+size.getY()/2, 100);
-			glVertex3d(center.getX()-size.getX()/2,center.getY()+size.getY()/2, 100);
+			glVertex3d(center.getX()-size.getX()/2,center.getY()-size.getY()/2, 0);
+			glVertex3d(center.getX()+size.getX()/2, center.getY()-size.getY()/2, 0);
+			glVertex3d(center.getX()+size.getX()/2,center.getY()+size.getY()/2, 0);
+			glVertex3d(center.getX()-size.getX()/2,center.getY()+size.getY()/2, 0);
 			
 			GL11.glColor3ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue());
 			
-			glVertex3d(center.getX()-size.getX()/2+5,center.getY()-size.getY()/2+5, 100);
-			glVertex3d(center.getX()+size.getX()/2-5, center.getY()-size.getY()/2+5, 100);
-			glVertex3d(center.getX()+size.getX()/2-5,center.getY()+size.getY()/2+-5, 100);
-			glVertex3d(center.getX()-size.getX()/2+5,center.getY()+size.getY()/2-5, 100);
+			glVertex3d(center.getX()-size.getX()/2+5,center.getY()-size.getY()/2+5, 0);
+			glVertex3d(center.getX()+size.getX()/2-5, center.getY()-size.getY()/2+5, 0);
+			glVertex3d(center.getX()+size.getX()/2-5,center.getY()+size.getY()/2+-5, 0);
+			glVertex3d(center.getX()-size.getX()/2+5,center.getY()+size.getY()/2-5, 0);
 			
 			GL11.glEnd();
 			}

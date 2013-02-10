@@ -11,8 +11,8 @@ import java.util.Scanner;
 
 import monster.CircleMonster;
 import monster.Monster;
-import monster.ShapeMonster;
-import monster.SquareMonster;
+import monster.zoo.SquareMonster;
+import monster.zoo.TriangleMonster;
 
 import org.lwjgl.util.Color;
 
@@ -106,7 +106,7 @@ public class MapReader {
 					monsters.add(new CircleMonster( xCenter,yCenter , new Color(red,green,blue) ,gameEngine) );
 				break;
 				case 'T':
-					monsters.add(new ShapeMonster( xCenter,yCenter, new Color(red,green,blue),gameEngine) );
+					monsters.add(new TriangleMonster( xCenter,yCenter, new Color(red,green,blue),gameEngine) );
 				break;
 				case 'S':
 					monsters.add(new SquareMonster(xCenter,yCenter , new Color(red,green,blue),gameEngine ) );

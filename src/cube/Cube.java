@@ -1,17 +1,9 @@
 package cube;
-import utilities.Point;
 
+import java.lang.Short;
+import java.util.concurrent.locks.ReentrantLock;
 
-//import Xbee library
-import com.rapplogic.xbee.api.XBee;
-import com.rapplogic.xbee.api.XBeeAddress64;
-import com.rapplogic.xbee.api.XBeeException;
-import com.rapplogic.xbee.api.zigbee.ZNetTxRequest;
-import com.rapplogic.xbee.util.ByteUtils;
-
-//import processing.serial.*;//import Xbee library */
-
-public class Cube {
+public class Cube{
 
 	/**
 	 * Attribute of cube
@@ -19,36 +11,100 @@ public class Cube {
 	private short angle;
 	private boolean tap;
 
-	private short id;
+	private char id;
 
-    public Cube(){}
+    private XBee xBee;
+
+    ReentrantLock mutex = new ReentrantLock(true);
+    String RString, GString, BString, delayString, irPatternString, motorPatternString;
+
+    public Cube(XBee currentXBee){
+        this.id = 0;
+        this.xBee = currentXBee;
+    }
 
 	/**
 	 * Method to set the RGB color of the LEDS
-	 * @parameters : chart of 
+	 * @param : The 3 short that control R,G and B color, and the short for the delay.
 	 */
-	public void setRGB(){
-		
+	public void setRGB(byte R, byte G, byte B, short delay){
+        mutex.lock();
+
+        try {
+            RString = ((Byte)R).toString();
+            GString = ((Byte)G).toString();
+            BString = ((Byte)B).toString();
+            delayString = ((Short)delay).toString();
+            xBee.setDataSend("L" + RString + GString + BString + delayString + "\n");
+        } finally {
+            mutex.unlock();
+        }
 	}
+
+    /**
+     * Method to switch on or off the IR LEDS using the pattern given
+     * @param : byte, the 3 last bit determined witch LEDS are switch on.
+     */
+	private void setIR(byte pattern){
+        mutex.lock();
+
+        try {
+            irPatternString = ((Byte)pattern).toString();
+            xBee.setDataSend("I" + irPatternString + "\n");
+        } finally {
+            mutex.unlock();
+        }
+    }
 	
-	public void setIR() {
-		
+
+	public void setIrOn(){
+        /* Type byte is signed */
+		setIR((byte)(-121));
 	}
-	
-	public void setMotor() {
-		
+	public void setIrOf(){
+        /* Type byte is signed */
+		setIR((byte)(-128));
 	}
-	
+
+    /**
+     * Method to switch on the Motor using the pattern given
+     * @param : byte
+     */
+	public void setMotor(byte pattern) {
+        mutex.lock();
+
+        try {
+            motorPatternString = ((Byte)pattern).toString();
+            xBee.setDataSend("M" + motorPatternString + "\n");
+        } finally {
+            mutex.unlock();
+        }
+	}
+
+    /**
+     * Method to get the actual cube angle
+     * @return angle (float)
+     */
 	public float getAngle() {
 		return angle;
 	}
-	
+
+    /**
+     * Method to get the actual state of the tap
+     * @return tap (boolean)
+     */
 	public boolean getTap() {
 		return tap;
 	}
-	
-	public short getID() {
+
+    /**
+     * Method to get the ID of the cube
+     * @return id (short)
+     */
+	public char getID() {
 		return id;
+
     }
+
 }
-}
+

@@ -1,38 +1,45 @@
 package player;
 
 /**
- * Classe qui repr�sente un joueur, a des r�f�rence vers ses unit�s et param�tres
+ * Classe qui represente un joueur, a des reference vers ses unites et parametres
  */
 
+import base.Base;
 import gameEngine.GameEngine;
-
-
 import OpenGL.KeyboardManager;
 import parameter.*;
 import unit.*;
-
+import views.attacks.AttackConeView;
+import views.attacks.SinusoidalAttackView;
+import views.informationViews.InstrumentsChoice;
 
 public  class Player {
 	
 	private Unit unit;
 	private Parameter[] parameters ;
-	public static int nParams =2;
+	private Base base;
+	private int nParams =2;
 	private float[] shield;
 	private boolean isTurn;
 	private int choice;
+	private int lastAngle1;
+	private int lastAngle2;
 
 	private GameEngine gameEngine;
 	
 	/**
 	 * Creation d'un joueur avec une Unit et deux Parameter
 	 */
-	public Player(GameEngine gameEngine){
+	public Player(GameEngine gameEngine, Base base){
 
 		this.gameEngine=gameEngine;
+		this.base = base;
 		this.unit = new Unit(this);
 		this.parameters = new Parameter[2];
-		parameters[0]= new Parameter();
-		parameters[1]= new Parameter();
+		parameters[0]= new Parameter(this);
+		parameters[1]= new Parameter(this);
+		parameters[0].setLocation(base.getCenter().getX()-parameters[0].getSize(), base.getCenter().getY());
+		parameters[1].setLocation(base.getCenter().getX()+parameters[1].getSize(), base.getCenter().getY());
 		this.shield = new float[1000];
 		for(int i=0; i<11;i++)
 			shield[i]=1f;
@@ -44,7 +51,9 @@ public  class Player {
 	 * @return
 	 */
 	public int getChangeAngle1(){
-		return (int) parameters[0].getAngle();
+		int retour = lastAngle1 -parameters[0].getAngle();
+		lastAngle1 = parameters[0].getAngle();
+		return retour;
 	}
 	
 	/**
@@ -52,7 +61,9 @@ public  class Player {
 	 * @return
 	 */
 	public int getChangeAngle2(){
-		return (int) parameters[1].getAngle();
+		int retour = lastAngle2 -parameters[1].getAngle();
+		lastAngle2 = parameters[1].getAngle();
+		return retour;
 	}
 	
 	/**
@@ -62,8 +73,6 @@ public  class Player {
 	public int getChangeDistance(){
 		return (int) parameters[0].getPos().distanceTo(parameters[1].getPos());
 	}
-	
-	
 	
 	
 	/**
@@ -81,9 +90,7 @@ public  class Player {
 		return unit;
 	}
 	
-	
-	
-	
+
 	/**
 	 * Methodes qui gerent l'etat des parametres
 	 */
@@ -194,51 +201,126 @@ public  class Player {
 		}
 		KeyboardManager.tap = false;
 	}
+	
+	public void chooseWeaponTurn(){
+		InstrumentsChoice instChoice = new InstrumentsChoice();
+		unit.getView().addChild(instChoice);
+		while (!KeyboardManager.tap){
+			if (unit.getInstrumentChoiceAngle()>0){
+			instChoice.setChosen(Math.abs((int) ((unit.getInstrumentChoiceAngle()%360) / 60 )) );
+			}else{
+				instChoice.setChosen(Math.abs((int) (((360+unit.getInstrumentChoiceAngle())%360) / 60 )) );
+
+			}
+			if(KeyboardManager.wKey && unit.getInstrumentChoiceAngle()<360) unit.rotateInstrumentChoice(1);
+			if(KeyboardManager.xKey && unit.getInstrumentChoiceAngle()>-360) unit.rotateInstrumentChoice(-1);
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		unit.getView().removeChild(instChoice);
+		KeyboardManager.tap = false;
+	}
+	
 	/**
 	 * Methode qui declenche la creation du son via les Parameter
 	 */
 	public void soundEditPTurn(){
 		setPStatesToSoundEdit();
 		setUStateToWaiting();
+		double size=unit.getSize()*Math.sqrt(2)/2;
 		while (!KeyboardManager.tap){
-				if(KeyboardManager.zKey) parameters[choice].translate(0,1);
-				if(KeyboardManager.sKey) parameters[choice].translate(0, -1);
-				if(KeyboardManager.qKey) parameters[choice].translate(-1, 0);
-				if(KeyboardManager.dKey) parameters[choice].translate(0, 1);
+				if((KeyboardManager.zKey)&&(parameters[choice].getY()-size>(base.getCenter().getY()-(base.getSize().getY()/2)))) parameters[choice].translate(0,-1);
+				if((KeyboardManager.sKey)&&(parameters[choice].getY()+size<(base.getCenter().getY()+(base.getSize().getY()/2)))) parameters[choice].translate(0,1);
+				if((KeyboardManager.qKey)&&(parameters[choice].getX()-size>(base.getCenter().getX()-(base.getSize().getX()/2)))) parameters[choice].translate(-1,0);
+				if((KeyboardManager.dKey)&&(parameters[choice].getX()+size<(base.getCenter().getX()+(base.getSize().getX()/2)))) parameters[choice].translate(1,0);
 				if(KeyboardManager.wKey) parameters[choice].rotate(1);
-				if(KeyboardManager.xKey) parameters[choice].rotate(-1);						
+				if(KeyboardManager.xKey) parameters[choice].rotate(-1);	
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 		}
 		KeyboardManager.tap = false;
 	}	
 	/**
-	 * Methode qui declenche le choix de l'angle ou de l'ouverture d'attque de Unit
+	 * Methode qui declenche le choix de l'ouverture d'attaque de Unit
 	 */
 	public void UDirection(){
 		setPStatesToWaiting();
 		setUStateToDirection();
+		AttackConeView attackCone = new AttackConeView(unit.getAperture(), unit.getDirection(), 100, unit.getView());
+		unit.getView().addChild(attackCone);
 		while (!KeyboardManager.tap){
-			if(KeyboardManager.wKey) unit.rotateDirection(1);
-			if(KeyboardManager.xKey) unit.rotateDirection(-1);						
+			if(KeyboardManager.wKey && unit.getDirection()<360){
+				unit.rotateDirection(1);
+			}
+			if(KeyboardManager.xKey && unit.getDirection()>-360){
+				unit.rotateDirection(-1);
+			}
+			if(unit.getDirection()>0){
+				attackCone.setDirection((long)unit.getDirection());
+			}else{
+				attackCone.setDirection((long)(360+unit.getDirection()));
+			}
+			
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 	}
+		unit.getView().removeChild(attackCone);
 		KeyboardManager.tap = false;
 	}
+	
 	
 	public void UAperture(){
 		setPStatesToWaiting();
 		setUStateToDirection();
+		AttackConeView attackCone = new AttackConeView(unit.getAperture(), unit.getDirection(), 100, unit.getView());
+		unit.getView().addChild(attackCone);
 		while (!KeyboardManager.tap){
-			if(KeyboardManager.wKey) unit.rotateAperture(1);
-			if(KeyboardManager.xKey) unit.rotateAperture(-1);						
+			if(KeyboardManager.wKey && unit.getAperture()<360) {
+				unit.rotateAperture(1);
+				attackCone.setAperture(unit.getAperture());
+			}
+			if(KeyboardManager.xKey && unit.getAperture()>0){ 
+				unit.rotateAperture(-1);
+				attackCone.setAperture(unit.getAperture());
+			}
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 	}
+		unit.getView().removeChild(attackCone);
 		KeyboardManager.tap = false;
+		
 	}
 	
-	
+	public void UAttack(){
+		SinusoidalAttackView attack = new SinusoidalAttackView(unit.getAperture(), unit.getDirection(), 100, unit.getView());
+		unit.getView().addChild(attack);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public void act(){
 		isTurn = true;
-		//choosingUTurn();
 		movingUTurn();
+		chooseWeaponTurn();
+		soundEditPTurn();
+		UAperture();
+		UDirection();
+		UAttack();
 		isTurn = false;
 		
 	}
@@ -264,6 +346,10 @@ public  class Player {
 
 	public GameEngine getGameEngine() {
 		return gameEngine;
+	}
+
+	public int getnParams() {	
+		return nParams;
 	}
 	
 }

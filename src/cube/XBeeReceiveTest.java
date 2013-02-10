@@ -9,7 +9,9 @@ public class XBeeReceiveTest {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-        XBeeReceive xbee = new XBeeReceive();
+        XBee xbee = new XBee();
+        //xbee.setCubeManager(new CubeManager());    //À COMPLÉTER
+        xbee.start();
 
     }
 

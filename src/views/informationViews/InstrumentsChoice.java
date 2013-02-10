@@ -6,7 +6,6 @@ import static org.lwjgl.opengl.GL11.glMatrixMode;
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 
 import utilities.Point;
@@ -133,10 +132,7 @@ public class InstrumentsChoice implements DisplayableChild{
 	 * @param num Son numero
 	 */
 	public void setChosen(int num){
-		if(num<colors.size()){
-			chosen=colors.get(num);
-		}
-		
+			chosen=colors.get(num);		
 	}
 	
 }
