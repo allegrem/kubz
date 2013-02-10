@@ -72,7 +72,7 @@ public class Cube{
 
         try {
             motorPatternString = ((Byte)pattern).toString();
-            xBee.setDataSend("I" + motorPatternString + "\n");
+            xBee.setDataSend("M" + motorPatternString + "\n");
         } finally {
             mutex.unlock();
         }
