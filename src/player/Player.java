@@ -206,10 +206,11 @@ public  class Player {
 		InstrumentsChoice instChoice = new InstrumentsChoice();
 		unit.getView().addChild(instChoice);
 		while (!KeyboardManager.tap){
-			if (unit.getInstrumentChoiceAngle()>0){
-			instChoice.setChosen(Math.abs((int) ((unit.getInstrumentChoiceAngle()%360) / 60 )) );
+			if (unit.getInstrumentChoiceAngle()>=0){
+			instChoice.setChosen((int) ((unit.getInstrumentChoiceAngle()%360) / 60 )) ;
 			}else{
-				instChoice.setChosen(Math.abs((int) (((360+unit.getInstrumentChoiceAngle())%360) / 60 )) );
+				instChoice.setChosen((int) (((360*(1+Math.abs((int)((unit.getInstrumentChoiceAngle()/360))))
+						+unit.getInstrumentChoiceAngle())%360) / 60 ));
 
 			}
 			if(KeyboardManager.wKey ) unit.rotateInstrumentChoice(1);

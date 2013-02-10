@@ -25,7 +25,7 @@ public class Parameter {
 		view.setInvisible3D(true);
 		size = view.getSize();
 		gameEngine.getMap().add(view);
-		
+
 	}
 
 	
