@@ -1,14 +1,13 @@
 package cube;
 
-import cubeManager.CubeManager;
-
-import java.io.BufferedReader;
+import java.io.*;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.Socket;
+import java.net.*;
 import java.util.Scanner;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.ArrayList;
 
 public class XBee extends Thread implements Runnable{
 
@@ -17,6 +16,7 @@ public class XBee extends Thread implements Runnable{
     private String dataSend = null;
     private Scanner sc = new Scanner(System.in);
 
+    byte [] byteReceive =  new byte[109];
     ReentrantLock mutex = new ReentrantLock(true);
 
     /* Socket part, adapted from http://systembash.com/content/a-simple-java-tcp-server-and-tcp-client/ */
@@ -53,15 +53,13 @@ public class XBee extends Thread implements Runnable{
     public void run () {
 
         while (true){
-            try {
-                /* Putting the data receive in dataReceive and sending it to the terminal */
-                dataReceive = inFromServer.readLine();
-                System.out.println(dataReceive);
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-
-            System.out.println("Your message :");
+            readFrame();
+            System.out.format("msg = ");
+        	for (byte b : byteReceive)
+        		System.out.format("%02X ", b);
+        	System.out.println();
+        	
+            /*System.out.println("Your message :");
 
             mutex.lock();
 
@@ -73,13 +71,15 @@ public class XBee extends Thread implements Runnable{
                 e.printStackTrace();
             } finally {
                 mutex.unlock();
-            }
+            } */
 
         }
 
         /* clientSocket.close() manquant ??? */
 
     }
+
+    //clientSocket.close();
 
 /* Set the cube manager created at the beginning of the game */
 public void setCubeManager(CubeManager cubeManager) {
@@ -88,26 +88,83 @@ public void setCubeManager(CubeManager cubeManager) {
 
 public void parse (byte[] msg){
 
-     byte checksum;
+     /*byte checksum;
      char length;
      char sourceAddress;
      short angle;
 
-    /* Data length */
+    /* Data length *
     length = (char) ((msg[1] << 8) + msg[2]);
-    /* Verification byte, equal 0xFF if OK */
-    checksum = msg[(int) length + 3];
+    /* Verification byte, equal 0xFF if OK *
+    checksum = msg[10];//msg[(byte) length + 3];
 
-    if ((msg[0] == 0x7E) & (checksum == 0xFF)){
-        /* Get back the address of the sender */
+    //if ((msg[0] == 0x7E) & (checksum == 0xFF)){
+        /* Get back the address of the sender *
         sourceAddress = (char) ((msg[4] << 8) + msg[5]);
-        /* Get back the actual value of th angle of the cube which is speaking */
+        System.out.println(sourceAddress);
+        /* Get back the actual value of the angle of the cube which is speaking *
         angle = (short) ((msg[9] << 8) + msg[8]);
-    }
+        System.out.println(angle);
+    //}*/
+	
+	byte checksum;
+	short length;
+	short sourceAddress;
+	short angle;
+	
+	length = (short) (((short)msg[1]+128)*256 + ((short)msg[2]+128));
+	checksum = msg[10];
+	System.out.format("msg = ");
+	for (byte b : msg)
+		System.out.format("%02X ", b);
+	System.out.println();
+	
+	if ((msg[0]== 0x7E)){
+		System.out.println("salut");
+		sourceAddress = (short) (((short)msg[4]+128)*256 + ((short)msg[5]+128));
+		System.out.println(sourceAddress);
+	}
+	
 }
 
 public void setDataSend (String s){
     this.dataSend = s;
 }
 
+
+public byte readByte() {
+	byte [] b = new byte[1];
+	int n=0;
+	while(n==0) {
+		try {
+			n = clientSocket.getInputStream().read(b, 0, 1);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	return b[0];
+}
+
+
+public void readFrame (){
+	// Initialise le tableau dans lequel on va stocker la trame
+	for(int i=0; i<109; i++)
+		byteReceive[i] = 0;
+	
+	// Lit caractère par caractère, jusqu'au début de trame suivant (0x7E)
+	// et au plus 109 caractères.
+	int n = 0;
+	while(n < 109) {
+		byte b;
+		b = readByte();
+		if(b==0x7e) 
+			// On a un marqueur de début de trame, on renvoie la trame actuelle
+			return;
+		
+		// Sinon, on accumule les caractères dans byteReceive
+		byteReceive[n] = b;
+		n = n+1;
+	}
+}
 }
