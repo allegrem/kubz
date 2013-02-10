@@ -53,9 +53,10 @@ public class XBee extends Thread implements Runnable{
     public void run () {
     	
         while (true){
-            readFrame();
-        	parseRXFrame();
+            //readFrame();
+        	//parseRXFrame();
         	
+        	sendRXFrame("salut");
         }
     }
 
@@ -64,7 +65,7 @@ public void setCubeManager(CubeManager cubeManager) {
         this.manager = cubeManager;
 }
 
-public void setDataSend (String s){
+public void setDataSend (byte[] s){
     this.dataSend = s;
 }
 
@@ -123,15 +124,14 @@ public void parseRXFrame (){
 	} catch (Exception e){}
 }
 
-public void sendRXFrame (){
+public void sendRXFrame (String message){
 	// XXX TODO : add mutex 
-	String message = new String();
 	byte[] msg =  new byte[200];
 	byte sum = 0x00;
 	
 	try{
-		message = sc.nextLine();
 		msg = message.getBytes();
+
 	    // send the begin of the frame (0x7E)
 		dataSend[0] = 0x7E;
 		dataSend[1] = 0x00;
@@ -144,21 +144,22 @@ public void sendRXFrame (){
 		dataSend[8] = 0x00;
 		dataSend[9] = 0x00;
 		dataSend[10] = 0x00;
-		dataSend[11] = 0xFF;
-		dataSend[12] = 0xFF;
+		dataSend[11] = (byte)(-1);
+		dataSend[12] = (byte)(-1);
 		dataSend[13] = 0x04; // Send packet with Broadcast Pan ID
 		
 		for (int i=0; i<msg.length; i++){
-			dataSend[i+12] = msg[i]; // Put the data in the packet
-			sum = (sum + msg[i]) & 0xFF;
+			dataSend[i+14] = msg[i]; // Put the data in the packet
+			sum = (byte) ((sum + msg[i]) & 0xFF);
 		}
-		sum = (sum + msg[3] + msg[4] + msg[5] + msg[6] + msg[7] + msg[8] + msg[9] + msg[10] + msg[11] + msg[12] + msg[13]) & 0xFF;
 		
-		dataSend[12 + msg.length]= 0xFF - (sum); // checksum		
+		sum = (byte) (((sum + dataSend[3] + dataSend[4] + dataSend[5] + dataSend[6] + dataSend[7] + dataSend[8] + dataSend[9] + dataSend[10] + dataSend[11] + dataSend[12] + dataSend[13])+0) & 0xFF);
 		
-	   outToServer.write(dataSend, 0, 12 + msg.length);
-	   outToServer.flush();
-	} catch (IOException e){
+		dataSend[14 + msg.length]= (byte) (0xFF - (sum)); // checksum		;
+		
+	   outToServer.write(dataSend, 0, 15 + msg.length);
+	   //outToServer.flush();
+	} catch (Exception e){
 	   e.printStackTrace();
 	} 
 
