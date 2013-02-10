@@ -1,4 +1,5 @@
 package cubeManager;
+
 import cube.Cube;
 
 import java.util.ArrayList;
