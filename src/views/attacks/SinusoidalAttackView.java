@@ -27,7 +27,7 @@ public class SinusoidalAttackView implements DisplayableChild {
 	private long pause=30;// Temps de pause pour le deplacement du signal
 	private long startingTime=0;
 	private long attackStartingTime=0;
-	private int duration=3000;
+	private int duration=2000;
 	private boolean dead=false;
 	
 	/**
