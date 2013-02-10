@@ -11,10 +11,11 @@ import synthesis.parameter.ParamBlock;
 import synthesis.parameter.ParameterAudioBlock;
 
 /**
- * This class creates the sound of a WindInstrument
- * (typically violin) with controllable vibrato factor.
+ * This class creates the sound of a WindInstrument (typically violin) with
+ * controllable vibrato factor.
+ * 
  * @author valeh
- *
+ * 
  */
 public class WoodInstrument extends FmInstrumentNParams {
 
@@ -39,14 +40,14 @@ public class WoodInstrument extends FmInstrumentNParams {
 		vibrFreq = addParam(new ParamBlock("vibr freq", 0, 10, 5));
 		a = addParam(new GainParamBlock("attack", 0, 100, 30, 0.01f));
 
-		Adder vibrato = new Adder(fm, new SineWaveOscillator(vibrFreq,
-				new Multiplier(fm, vibrGainFactor)));
+		Adder vibrato = new Adder(getFm(), new SineWaveOscillator(
+				getVibrFreq(), new Multiplier(getFm(), vibrGainFactor)));
 		// Vibrato vibrato = new Vibrato((float)
 		// (vibrGainFactor.getValue()*0.001),vibrFreq.getValue());
 		// vibrato.plugin(fm);
-		Gain fp = new Gain(3f, fm);
+		Gain fp = new Gain(3f, getFm());
 		SineWaveOscillator osc1 = new SineWaveOscillator(vibrato,
-				new Multiplier(mod, fm));
+				new Multiplier(getMod(), getFm()));
 
 		// modulating the amplitude with a vibrato synchronized with the one for
 		// the frequency,the result's odd!
@@ -55,6 +56,24 @@ public class WoodInstrument extends FmInstrumentNParams {
 		ADSR env1 = new ADSR(a, new Constant(0.2f), new Constant(0.8f),
 				new Constant(0.1f), 3f, amp);
 		setOut(new SineWaveOscillator(new Adder(fp, osc1), env1));
+	}
+
+	public static FmInstruments3Params getFmInstruments3Params() {
+		WoodInstrument instrument = new WoodInstrument();
+		return new FmInstruments3Params(instrument, instrument.getFm(),
+				instrument.getVibrFreq(), instrument.getMod());
+	}
+
+	public ParameterAudioBlock getFm() {
+		return fm;
+	}
+
+	public ParameterAudioBlock getMod() {
+		return mod;
+	}
+
+	public ParameterAudioBlock getVibrFreq() {
+		return vibrFreq;
 	}
 
 }

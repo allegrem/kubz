@@ -10,6 +10,7 @@ import synthesis.parameter.ParameterAudioBlock;
 
 /**
  * This class creates the sound of a piano (without the WhiteNoise).
+ * 
  * @author allegrem
  * 
  */
@@ -22,8 +23,8 @@ public class PianoInstrument2 extends FmInstrumentNParams {
 	private ParameterAudioBlock d;
 	private ParameterAudioBlock s;
 	private ParameterAudioBlock r;
+	private ParameterAudioBlock detune;
 
-	
 	public PianoInstrument2() {
 		super();
 
@@ -34,22 +35,41 @@ public class PianoInstrument2 extends FmInstrumentNParams {
 		f0 = addParam(new ParamBlock("f0", 20, 5000, 440));
 		epsilon = addParam(new GainParamBlock("epsilon", 0, 100, 10, 0.1f));
 		amp = addParam(new ParamBlock("amp", 0, 125, 100));
+		detune = addParam(new GainParamBlock("detune", 0, 100, 50, 0.1f));
 
 		ADSR env = new ADSR(a, d, s, r, 3f, amp);
-		
-		SineWaveOscillator osc1 = new SineWaveOscillator(
-				new Adder(f0, epsilon), env);
+
+		SineWaveOscillator osc1 = new SineWaveOscillator(new Adder(getF0(),
+				getEpsilon()), env);
 		SineWaveOscillator osc2 = new SineWaveOscillator(new Adder(new Gain(4f,
-				f0), epsilon), env);
-		
+				getF0()), getEpsilon()), env);
+
 		Adder add = new Adder();
 		add.plugin(osc1);
 		add.plugin(osc2);
-		add.plugin(f0);
-		
+		add.plugin(new Adder(getDetune(), getF0()));
+
 		SineWaveOscillator oscOut = new SineWaveOscillator(add, env);
-		
+
 		setOut(oscOut);
+	}
+
+	public static FmInstruments3Params getFmInstruments3Params() {
+		PianoInstrument2 instrument = new PianoInstrument2();
+		return new FmInstruments3Params(instrument, instrument.getF0(),
+				instrument.getDetune(), instrument.getEpsilon());
+	}
+
+	public ParameterAudioBlock getF0() {
+		return f0;
+	}
+
+	public ParameterAudioBlock getEpsilon() {
+		return epsilon;
+	}
+
+	public ParameterAudioBlock getDetune() {
+		return detune;
 	}
 
 }
