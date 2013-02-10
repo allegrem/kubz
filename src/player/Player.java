@@ -249,14 +249,18 @@ public  class Player {
 		AttackConeView attackCone = new AttackConeView(unit.getAperture(), unit.getDirection(), 100, unit.getView());
 		unit.getView().addChild(attackCone);
 		while (!KeyboardManager.tap){
-			if(KeyboardManager.wKey){
+			if(KeyboardManager.wKey && unit.getDirection()<360){
 				unit.rotateDirection(1);
-				attackCone.setDirection((long)unit.getDirection());
 			}
-			if(KeyboardManager.xKey){
+			if(KeyboardManager.xKey && unit.getDirection()>-360){
 				unit.rotateDirection(-1);
-				attackCone.setDirection((long)unit.getDirection());
 			}
+			if(unit.getDirection()>0){
+				attackCone.setDirection((long)unit.getDirection());
+			}else{
+				attackCone.setDirection((long)(360+unit.getDirection()));
+			}
+			
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
@@ -274,11 +278,11 @@ public  class Player {
 		AttackConeView attackCone = new AttackConeView(unit.getAperture(), unit.getDirection(), 100, unit.getView());
 		unit.getView().addChild(attackCone);
 		while (!KeyboardManager.tap){
-			if(KeyboardManager.wKey) {
+			if(KeyboardManager.wKey && unit.getAperture()<360) {
 				unit.rotateAperture(1);
 				attackCone.setAperture(unit.getAperture());
 			}
-			if(KeyboardManager.xKey){ 
+			if(KeyboardManager.xKey && unit.getAperture()>0){ 
 				unit.rotateAperture(-1);
 				attackCone.setAperture(unit.getAperture());
 			}
