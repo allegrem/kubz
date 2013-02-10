@@ -176,6 +176,8 @@ public class Monster {
 		setSeenUnits(gameEngine.getUnitList());
 		setCible();
 		move();
+		System.out.println(cible);
+		attack.attack(cible);
 		//attack(attack.result());
 		//gameEngine.getDisplay().auto3D(view, gameEngine.getUnitList().get(0).getView(), 5000);
 	}
@@ -192,4 +194,14 @@ public class Monster {
 	public void setGameEngine(GameEngine gameEngine) {
 		this.gameEngine = gameEngine;
 	}
+
+	public MonsterView getView() {
+		return view;
+	}
+
+	public void setView(MonsterView view) {
+		this.view = view;
+	}
+	
+	
 }

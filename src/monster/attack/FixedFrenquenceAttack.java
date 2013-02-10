@@ -6,16 +6,24 @@ package monster.attack;
  */
 import java.util.ArrayList;
 
-public class FixedFrenquenceAttack {
+import monster.Monster;
+
+public class FixedFrenquenceAttack extends AttackType{
 	
 	private int strenght;
 	private int frequency;
 	
-	public FixedFrenquenceAttack(int frequency, int strenght){
-		this.frequency = frequency;
-		this.strenght = strenght;
-	}
 	
+	
+	public FixedFrenquenceAttack(Monster monster, int strenght, int frequency) {
+		super(monster);
+		this.frequency = frequency;
+		this.strenght = strenght;				
+	}
+
+
+
+	@Override
 	public ArrayList<int[]> result(){
 		ArrayList<int[]> attackTable = new ArrayList<int[]>();
 		int[] attack = {frequency,strenght};

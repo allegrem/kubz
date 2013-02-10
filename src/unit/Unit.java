@@ -10,7 +10,7 @@ import player.*;
 
 public class Unit {
 	
-	private double life;
+	private double life = 100;
 	private double size;
 	private Point pos=new Point(10,10);
 	private double aperture;
@@ -108,7 +108,7 @@ public class Unit {
 		view.setAngle(theta);
 	}
 	public void rotateAperture(double dTheta){
-		if (aperture+dTheta>0) aperture = aperture + dTheta;
+		if ((aperture+dTheta>=0)&&(aperture+dTheta<=360)) aperture = aperture + dTheta;		
 		view.rotateAperture(dTheta);
 		view.rotate(dTheta);
 	}

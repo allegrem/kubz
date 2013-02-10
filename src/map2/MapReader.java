@@ -11,8 +11,8 @@ import java.util.Scanner;
 
 import monster.CircleMonster;
 import monster.Monster;
-import monster.TriangleMonster;
-import monster.SquareMonster;
+import monster.zoo.SquareMonster;
+import monster.zoo.TriangleMonster;
 
 import org.lwjgl.util.Color;
 

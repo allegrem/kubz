@@ -2,6 +2,8 @@ package monster.attack;
 
 import java.util.ArrayList;
 
+import monster.Monster;
+
 import utilities.RandomPerso;
 
 /**
@@ -12,7 +14,9 @@ import utilities.RandomPerso;
 public class RandomAttack extends AttackType{
 	private int strenght;
 	
-	public RandomAttack(int strenght){
+	
+	public RandomAttack(Monster monster, int strenght) {
+		super(monster);
 		this.strenght = strenght;
 	}
 	

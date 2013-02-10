@@ -1,5 +1,6 @@
-package monster;
+package monster.zoo;
 
+import monster.Monster;
 import monster.move.RandomMove;
 import gameEngine.GameEngine;
 
