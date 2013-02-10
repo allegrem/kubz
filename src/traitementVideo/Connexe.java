@@ -31,7 +31,7 @@ public class Connexe {
 			groupesConnexeIntermediare.get(compteurComposantes).add(vi[0][0]);
 			vi[0][0].setGroupeConnexe(compteurComposantes);
 		}
-		for(int j=1; j<240;j++){
+		for(int j=1; j<480;j++){
 			if (vi[0][j].isBrightness()){
 				if((vi[0][j-1].isBrightness())){;
 					groupesConnexeIntermediare.get(vi[0][j-1].getGroupeConnexe()).add(vi[0][j]);
@@ -45,7 +45,7 @@ public class Connexe {
 				}
 			}			
 		}
-		for(int i=1; i<240; i++){
+		for(int i=1; i<480; i++){
 			if (vi[i][0].isBrightness()){
 				if((vi[i-1][0].isBrightness()==true)){
 					vi[i][0].setGroupeConnexe(vi[i-1][0].getGroupeConnexe());
@@ -58,7 +58,7 @@ public class Connexe {
 					vi[i][0].setGroupeConnexe(compteurComposantes);
 				}
 			}
-			for(int j=1; j<240; j++){
+			for(int j=1; j<480; j++){
 				if (vi[i][j].isBrightness()){
 					if ((vi[i][j-1].isBrightness())&&(!vi[i-1][j].isBrightness())){
 						vi[i][j].setGroupeConnexe(vi[i][j-1].getGroupeConnexe());
