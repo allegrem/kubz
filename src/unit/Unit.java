@@ -21,6 +21,7 @@ public class Unit {
 	private Player owner;
 	private GameEngine gameEngine;
 	private int power;
+	private int nInstrum;
 	
 	
 	public Unit(Player owner){
@@ -210,6 +211,16 @@ public class Unit {
 	public DisplayableFather getView() {
 		
 		return view;
+	}
+
+
+	public int getnInstrum() {
+		return nInstrum;
+	}
+
+
+	public void setnInstrum(int nInstrum) {
+		this.nInstrum = nInstrum;
 	}
 	
 

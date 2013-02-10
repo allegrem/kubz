@@ -132,10 +132,12 @@ public class InstrumentsChoice implements DisplayableChild{
 	 * @param num Son numero
 	 */
 	public void setChosen(int num){
-		if(num<colors.size()){
-			chosen=colors.get(num);
-		}
-		
+		if (num>=0)
+			chosen=colors.get(num%colors.size());
+		if (num<=0)
+			System.out.println(colors.size()-Math.abs((num%colors.size()))-1);
+			chosen=colors.get(colors.size()-Math.abs((num%colors.size()))-1);
+				
 	}
 	
 }

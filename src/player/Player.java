@@ -200,9 +200,14 @@ public  class Player {
 		InstrumentsChoice instChoice = new InstrumentsChoice();
 		unit.getView().addChild(instChoice);
 		while (!KeyboardManager.tap){
-			instChoice.setChosen(Math.abs((int) ((unit.getInstrumentChoiceAngle()%360) / 60 )) );
-			if(KeyboardManager.wKey) unit.rotateInstrumentChoice(1);
-			if(KeyboardManager.xKey) unit.rotateInstrumentChoice(-1);
+			if(KeyboardManager.wKey) {
+				unit.rotateInstrumentChoice(1);
+				instChoice.setChosen((int) Math.round( ((unit.getInstrumentChoiceAngle()%360) / 60 )));
+			}
+			if(KeyboardManager.xKey) {
+				unit.rotateInstrumentChoice(-1);
+				instChoice.setChosen((int) Math.round( ((unit.getInstrumentChoiceAngle()%360) / 60 )));
+			}
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
