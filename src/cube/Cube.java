@@ -16,7 +16,7 @@ public class Cube{
     private XBee xBee;
 
     ReentrantLock mutex = new ReentrantLock(true);
-    String RString, GString, BString, irPatternString, motorPatternString;
+    String RString, GString, BString, delayString, irPatternString, motorPatternString;
 
     public Cube(XBee currentXBee){
         this.id = 0;
@@ -25,16 +25,17 @@ public class Cube{
 
 	/**
 	 * Method to set the RGB color of the LEDS
-	 * @param : The 3 short that control R,G and B color.
+	 * @param : The 3 short that control R,G and B color, and the short for the delay.
 	 */
-	public void setRGB(short R, short G, short B){
+	public void setRGB(byte R, byte G, byte B, short delay){
         mutex.lock();
 
         try {
-            RString = ((Short)R).toString();
-            GString = ((Short)G).toString();
-            BString = ((Short)B).toString();
-            xBee.setDataSend("L" + RString + GString + BString + "\n");
+            RString = ((Byte)R).toString();
+            GString = ((Byte)G).toString();
+            BString = ((Byte)B).toString();
+            delayString = ((Short)delay).toString();
+            xBee.setDataSend("L" + RString + GString + BString + delayString + "\n");
         } finally {
             mutex.unlock();
         }
@@ -44,11 +45,11 @@ public class Cube{
      * Method to switch on or off the IR LEDS using the pattern given
      * @param : byte, the 3 last bit determined witch LEDS are switch on.
      */
-	private void setIR(Byte pattern){
+	private void setIR(byte pattern){
         mutex.lock();
 
         try {
-            irPatternString = pattern.toString();
+            irPatternString = ((Byte)pattern).toString();
             xBee.setDataSend("I" + irPatternString + "\n");
         } finally {
             mutex.unlock();
@@ -57,10 +58,12 @@ public class Cube{
 	
 
 	public void setIrOn(){
-		setIR((byte)7);
+        /* Type byte is signed */
+		setIR((byte)(-121));
 	}
 	public void setIrOf(){
-		setIR((byte)0);
+        /* Type byte is signed */
+		setIR((byte)(-128));
 	}
 
     /**
