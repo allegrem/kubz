@@ -4,8 +4,8 @@ package monster.move;
  * Composante de Monster qui permet d'en g�rer le mouvement
  */
 
+import player.unit.Unit;
 import monster.Monster;
-import unit.Unit;
 
 public abstract class MoveType {
 	final Monster monster;

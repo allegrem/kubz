@@ -1,4 +1,4 @@
-package unit;
+package player.unit;
 
 import cube.Cube;
 import gameEngine.GameEngine;
@@ -10,7 +10,7 @@ import views.interfaces.DisplayableFather;
 import player.*;
 
 
-public class Unit {
+public class Unit extends CubeOwner{
 	
 	private double life;
 	private double size;
@@ -42,7 +42,7 @@ public class Unit {
 	 * Renvoie le Player auquel est lie cet Unit
 	 * @return
 	 */
-	public Player getOwner() {
+	public Player getOwner(){
 		return owner;
 	}
 

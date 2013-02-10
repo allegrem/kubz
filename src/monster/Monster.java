@@ -11,12 +11,13 @@ import gameEngine.GameEngine;
 
 import java.util.*;
 
+import player.unit.Unit;
+
 import monster.attack.AttackType;
 import monster.attack.ChooseType;
 import monster.move.MoveType;
 import monster.move.RandomMove;
 
-import unit.Unit;
 
 public class Monster {
 	

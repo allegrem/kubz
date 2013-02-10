@@ -1,13 +1,14 @@
-package parameter;
+package player.parameter;
 
 import cube.Cube;
 import gameEngine.GameEngine;
+import player.CubeOwner;
 import player.Player;
 import views.CubeControlledView;
 import traitementVideo.VirtualCube;
 import utilities.Point;
 
-public class Parameter {
+public class Parameter extends CubeOwner{
 	
 	private Point pos = new Point(10,10);
 	private int angle;

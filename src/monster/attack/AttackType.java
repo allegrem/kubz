@@ -1,9 +1,10 @@
 package monster.attack;
 import java.util.ArrayList;
 
+import player.unit.*;
+
 import monster.Monster;
 
-import unit.*;
 import views.attacks.SinusoidalAttackView;
 
 public abstract class AttackType {	

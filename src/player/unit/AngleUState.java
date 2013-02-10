@@ -1,11 +1,6 @@
-package unit;
+package player.unit;
 
-public class MovingUState extends UnitState {
-
-	@Override
-	public boolean canMove() {
-		return true;
-	}
+public class AngleUState extends UnitState {
 
 	@Override
 	public boolean canTap() {
