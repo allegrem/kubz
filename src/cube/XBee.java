@@ -49,16 +49,41 @@ public class XBee extends Thread implements Runnable{
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
     }
-
+    
     public void run () {
 
+    	mutex.lock();
+    	
+    	try{
+    		datasend = "0x7E 0x00 0X06 0x08 0x52 0x2B 0x2B 0x2B 0x35";
+    	    outToServer.writeBytes(dataSend);
+    	    outToServer.flush();
+    	    datasend = "0x7E 0x00 0X06 0x88 0x52 0x44 0x4C 0x35";
+    	    outToServer.writeBytes(dataSend);
+    	    outToServer.flush();
+    	} catch (IOException e){
+    	    e.printStackTrace();
+    	} finally {
+            mutex.unlock();
+    	}
+    	
         while (true){
             readFrame();
-            System.out.format("msg = ");
-        	for (int b : buf)
-        		System.out.format("%02X ", b);
-        	System.out.println();
         	parseRXFrame();
+        	
+        	mutex.lock();
+        	
+        	try{
+        	   dataSend = sc.nextLine();
+        	   outToServer.writeBytes(dataSend);
+        	   outToServer.flush();
+        	} catch (IOException e){
+        	   e.printStackTrace();
+        	} finally {
+               mutex.unlock();
+        	}
+
+
         }
     }
 
@@ -77,8 +102,7 @@ public int readByte() {
 	while(n==0) {
 		try {
 			n = inStream.read(b, 0, 1);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (IOException e){
 			e.printStackTrace();
 		}
 	}
@@ -87,18 +111,18 @@ public int readByte() {
 
 
 public void readFrame (){
-	// Initialise le tableau dans lequel on va stocker la trame
+	// Initialize the Array where the Frame will be
 	for(int i=0; i<109; i++)
 		buf[i] = 0;
 	
-	// Lit caractère par caractère, jusqu'au début de trame suivant (0x7E)
-	// et au plus 109 caractères.
+	// Read char by char until next frame (0x7E)
+	// There is 109 char maximum.
 	int n = 0;
 	while(n < 109) {
 		int b;
 		b = readByte();
 		if(b==0x7e) 
-			// On a un marqueur de début de trame, on renvoie la trame actuelle
+			// New frame detected, use the previous
 			return;
 		
 		// Unescape escaped chars
@@ -107,7 +131,7 @@ public void readFrame (){
 			b = b ^ 0x20;
 		}
 		
-		// Sinon, on accumule les caractères dans byteReceive
+		// Until that, we complete the buffer
 		buf[n] = b;
 		n = n+1;
 	}
@@ -117,9 +141,14 @@ public void parseRXFrame (){
 	// XXX : TODO : Calculate Checksum
 	int addr = buf[3]*256 + buf[4];
 
+	try {
 	char [] c = {(char)buf[7],(char)buf[8],(char)buf[9],(char)buf[10],(char)buf[11],(char)buf[12],(char)buf[13],(char)buf[14]};
-	int angle = (int)Long.parseLong(new String(c), 16);
-	//manager.getCube(addr).setAngle(angle);	
+	String s = new String(c);
+	int angle = (int)Long.parseLong(s, 16);
+
+	// Put the angle in the cube which has the good address.
+	manager.getCube(addr).setAngle(angle);	
+	} catch (Exception e){}
 }
 
 }
