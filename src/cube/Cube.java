@@ -1,6 +1,9 @@
 package cube;
 
-public class Cube {
+import java.lang.Short;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class Cube{
 
 	/**
 	 * Attribute of cube
@@ -12,6 +15,9 @@ public class Cube {
 
     private XBee xBee;
 
+    ReentrantLock mutex = new ReentrantLock(true);
+    String RString, GString, BString, irPatternString, motorPatternString;
+
     public Cube(XBee currentXBee){
         this.id = 0;
         this.xBee = currentXBee;
@@ -22,7 +28,16 @@ public class Cube {
 	 * @param : The 3 short that control R,G and B color.
 	 */
 	public void setRGB(short R, short G, short B){
-		
+        mutex.lock();
+
+        try {
+            RString = R.toString();
+            GString = G.toString();
+            BString = B.toString();
+            xBee.setDataSend("L" + RString + GString + BString + "\n");
+        } finally {
+            mutex.unlock();
+        }
 	}
 
     /**
@@ -30,7 +45,14 @@ public class Cube {
      * @param : byte, the 3 last bit determined witch LEDS are switch on.
      */
 	private void setIR(byte pattern){
-		
+        mutex.lock();
+
+        try {
+            irPatternString = pattern.toString();
+            xBee.setDataSend("I" + irPatternString + "\n");
+        } finally {
+            mutex.unlock();
+        }
     }
 	
 
@@ -46,7 +68,14 @@ public class Cube {
      * @param : byte
      */
 	public void setMotor(byte pattern) {
-		
+        mutex.lock();
+
+        try {
+            motorPatternString = pattern.toString();
+            xBee.setDataSend("I" + motorPatternString + "\n");
+        } finally {
+            mutex.unlock();
+        }
 	}
 
     /**

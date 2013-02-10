@@ -7,15 +7,17 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-
 import java.util.Scanner;
+import java.util.concurrent.locks.ReentrantLock;
 
-public class XBee extends Thread{
+public class XBee extends Thread implements Runnable{
 
     private CubeManager manager = new CubeManager();
     private String dataReceive = null;
     private String dataSend = null;
     private Scanner sc = new Scanner(System.in);
+
+    ReentrantLock mutex = new ReentrantLock(true);
 
     /* Socket part, adapted from http://systembash.com/content/a-simple-java-tcp-server-and-tcp-client/ */
     /* Open a new socket on localhost:4161 */
@@ -60,13 +62,21 @@ public class XBee extends Thread{
             }
 
             System.out.println("Your message :");
-            dataSend = sc.nextLine();
+
+            mutex.lock();
+
             try{
+                dataSend = sc.nextLine();
                 outToServer.writeBytes(dataSend);
                 outToServer.flush();
             } catch (IOException e){
                 e.printStackTrace();
+            } finally {
+                mutex.unlock();
             }
+
+
+
 
 
 
@@ -98,6 +108,11 @@ public void parse (byte[] msg){
         sourceAddress = (char) ((msg[4] << 8) + msg[5]);
         /* Get back the actual value of th angle of the cube which is speaking */
         angle = (short) ((msg[9] << 8) + msg[8]);
+    }
 }
+
+public void setDataSend (String s){
+    this.dataSend = s;
 }
+
 }
