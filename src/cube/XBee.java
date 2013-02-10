@@ -72,11 +72,7 @@ public class XBee extends Thread{
 
         }
 
-        try {
-            clientSocket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        /* clientSocket.close() manquant ??? */
 
     }
 
