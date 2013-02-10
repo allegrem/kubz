@@ -90,6 +90,10 @@ public  class Player {
 		return unit;
 	}
 	
+	public Parameter[] getParameters(){
+		return parameters;
+	}
+	
 
 	/**
 	 * Methodes qui gerent l'etat des parametres
@@ -351,5 +355,7 @@ public  class Player {
 	public int getnParams() {	
 		return nParams;
 	}
+	
+
 	
 }

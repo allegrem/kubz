@@ -140,8 +140,7 @@ public class Traitement {
 				groupesConnexeIntermediare.get(groupe1).add(vp);
 			}
 			groupesConnexeIntermediare.get(groupe2).clear();
-		}
-		
+		}	
 	}
 	/**
 	 * Methode qui renvoie la position moyenne d'une composante connexe
@@ -161,7 +160,7 @@ public class Traitement {
 	}
 	
 	/**
-	 * Methode qui permet d'actualisar la position et la vitesse des cubes
+	 * Methode qui permet d'actualiser la position et la vitesse des cubes
 	 * Elle utilise une recherche locale en partant de la position attendue du cube
 	 * Methode un peu dégueu mais je vois pas trop comment la faire avec un joli boucle
 	 * @param vc
@@ -173,7 +172,7 @@ public class Traitement {
 		int expectedY1 = (int) (vc.getPos1().getY() + vc.getY1Speed());
 		int expectedY2 = (int) (vc.getPos2().getY() + vc.getY2Speed());
 		int expectedY3 = (int) (vc.getPos3().getY() + vc.getY3Speed());
-		/**
+		/*
 		 * Bon là c'est hyper HYPER dégueu mais j'ai pas trouvé comment faire joli :/
 		 * (enfin si mais ça prend trois plombes...(la seule boucle que j'ai trouvé fait 50 lignes ...))
 		 */

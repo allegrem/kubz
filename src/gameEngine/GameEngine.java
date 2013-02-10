@@ -12,7 +12,9 @@ import monster.Monster;
 import player.*;
 import synthesis.Sound;
 import synthesis.fmInstruments.BellInstrument;
+import traitementVideo.Traitement;
 import unit.Unit;
+import utilities.Point;
 import utilities.RandomPerso;
 import views.staticViews.BackgroundView;
 import wall.Wall;
@@ -30,6 +32,7 @@ public class GameEngine {
 	private GLDisplay display;
 	private Map map;
 	private MapReader reader=new MapReader("Maps/bFile.txt","Maps/mFile.txt","Maps/WFile.txt",this);
+	private Traitement traitement;
 	
 	public GameEngine(){
 		RandomPerso.initialize();
@@ -134,7 +137,29 @@ public class GameEngine {
 	
 
 	public void setFrozen(Cube owner) {
-		// TODO Auto-generated method stub
+		boolean ok = false;
+		boolean internOk = true;
+		for (Player player: playerList){
+			player.getUnit().getCube().setIrOf();
+			player.getParameters()[0].getCube().setIrOf();
+			player.getParameters()[1].getCube().setIrOf();
+			//ici on affiche les carrés rouges
+		}
+		while(!ok){
+			internOk = true;
+			for (Player player: playerList){
+				player.getUnit().getCube().setIrOn();	
+				traitement.updateConnexe(null); //intégration avec la cam à regler pour recuperer l'image
+				ArrayList<Point> currentPositions = new ArrayList<Point>();
+				for (int i=1; i<=3; i++){
+					currentPositions.add(traitement.getGroupePos(i));
+				}
+				//internOk = (traitement.getGroupePos(1)==player.getUnit().getVCube().get)
+				
+				
+				ok = true;
+			}
+		}
 		
 	}
 	
