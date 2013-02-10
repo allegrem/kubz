@@ -61,4 +61,6 @@ public interface ParameterAudioBlock extends AudioBlock {
 	 */
 	public int getValue();
 
+	public void random();
+
 }
