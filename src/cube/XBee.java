@@ -75,11 +75,6 @@ public class XBee extends Thread implements Runnable{
                 mutex.unlock();
             }
 
-
-
-
-
-
         }
 
         /* clientSocket.close() manquant ??? */
