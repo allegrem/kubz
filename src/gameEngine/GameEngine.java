@@ -148,20 +148,15 @@ public class GameEngine {
 		while (!ok) {
 			internOk = true;
 			for (Player player : playerList) {
-				player.getUnit().getCube().setIrOn();
-				traitement.updateConnexe(null); // intégration avec la cam à
-												// regler pour recuperer l'image
-				ArrayList<Point> currentPositions = new ArrayList<Point>();
-				for (int i = 1; i <= 3; i++) {
-					currentPositions.add(traitement.getGroupePos(i));
-				}
-				internOk = ((currentPositions.containsAll(player.getUnit()
-						.getVCube().getPos()))
-						&& player.getUnit().getVCube().getPos()
-								.containsAll(currentPositions) && internOk);
-
-				ok = true;
+				boolean unitOk = checkPos(player.getUnit());
+				if (unitOk) player.getUnit().getCube().setRGB((byte)0,(byte) 127,(byte) 0,(short) 1); //delay tout le temps
+				boolean param1ok = checkPos(player.getParameters()[0]);
+				if (param1ok) player.getParameters()[0].getCube().setRGB((byte)0,(byte) 127,(byte) 0,(short) 1);
+				boolean param2ok = checkPos(player.getParameters()[1]);
+				if (param1ok) player.getParameters()[1].getCube().setRGB((byte)0,(byte) 127,(byte) 0,(short) 1);
+				internOk = internOk&&unitOk&&param1ok&&param2ok;
 			}
+			ok = internOk;
 		}
 
 	}
@@ -184,5 +179,19 @@ public class GameEngine {
 
 	public GLDisplay getDisplay() {
 		return display;
+	}
+	
+	private boolean checkPos(CubeOwner cubeOwner){
+		cubeOwner.getCube().setIrOn();
+		traitement.updateConnexe(null); // intégration avec la cam à
+										// regler pour recuperer l'image
+		ArrayList<Point> currentPositions = new ArrayList<Point>();
+		for (int i = 1; i <= 3; i++) {
+			currentPositions.add(traitement.getGroupePos(i));
+		}
+		boolean result = currentPositions.containsAll(cubeOwner.getVCube().getPos());
+				// la on verifie que le traitement voit bien le cube
+		cubeOwner.getCube().setIrOf();
+		return result;
 	}
 }

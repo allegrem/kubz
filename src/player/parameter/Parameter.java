@@ -18,8 +18,6 @@ public class Parameter extends CubeOwner{
 	private GameEngine gameEngine;
 	private double size;
 	private CubeControlledView view;
-	private Cube cube;
-	private VirtualCube vCube;
 
 	
 	public Parameter(Player owner){
@@ -40,21 +38,6 @@ public class Parameter extends CubeOwner{
 		return vase;		
 	}
 	
-	/**
-	 * Retourne le cube physique auquel est associé Parameter
-	 * @return
-	 */
-	public Cube getCube() {
-		return cube;
-	}
-	
-	/**
-	 * Retourne le cube du traitement de l'image auquel est associe Parameter
-	 * @return
-	 */
-	public VirtualCube getVCube(){
-		return vCube;
-	}
 	
 	
 	/**

@@ -23,8 +23,6 @@ public class Unit extends CubeOwner{
 	private Player owner;
 	private GameEngine gameEngine;
 	private int power;
-	private Cube cube;
-	private VirtualCube vCube;
 	
 	
 	public Unit(Player owner){
@@ -46,21 +44,6 @@ public class Unit extends CubeOwner{
 		return owner;
 	}
 
-	/**
-	 * Retourne le cube physique auquel est associé Unit
-	 * @return
-	 */
-	public Cube getCube() {
-		return cube;
-	}
-	
-	/**
-	 * Retourne le cube du traitement de l'image auquel est associe Unit
-	 * @return
-	 */
-	public VirtualCube getVCube(){
-		return vCube;
-	}
 
 	/**
 	 * Mï¿½thodes relatives ï¿½ la vie de Unit
