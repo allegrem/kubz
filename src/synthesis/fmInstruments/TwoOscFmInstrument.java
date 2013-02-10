@@ -14,7 +14,7 @@ import synthesis.parameter.ParameterAudioBlock;
  * 
  * @author allegrem
  */
-public class TwoOscFmInstrument extends FmInstrument {
+public class TwoOscFmInstrument extends FmInstrumentNParams {
 
 	private final ParameterAudioBlock fm;
 	private final ParameterAudioBlock fp;
@@ -32,10 +32,28 @@ public class TwoOscFmInstrument extends FmInstrument {
 		amp = addParam(new ParamBlock("amp", 0, 120, 100));
 		mod = addParam(new ParamBlock("mod", 0, 100, 2));
 
-		SineWaveOscillator osc1 = new SineWaveOscillator(fm, new Multiplier(
-				mod, fm));
-		Adder add = new Adder(fp, osc1);
+		SineWaveOscillator osc1 = new SineWaveOscillator(getFm(),
+				new Multiplier(getMod(), getFm()));
+		Adder add = new Adder(getFp(), osc1);
 		setOut(new SineWaveOscillator(add, amp));
+	}
+
+	public static FmInstruments3Params getFmInstruments3Params() {
+		TwoOscFmInstrument instrument = new TwoOscFmInstrument();
+		return new FmInstruments3Params(instrument, instrument.getFm(),
+				instrument.getFp(), instrument.getMod());
+	}
+
+	protected ParameterAudioBlock getFm() {
+		return fm;
+	}
+
+	protected ParameterAudioBlock getFp() {
+		return fp;
+	}
+
+	protected ParameterAudioBlock getMod() {
+		return mod;
 	}
 
 }

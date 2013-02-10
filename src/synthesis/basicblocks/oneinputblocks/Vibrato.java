@@ -6,6 +6,11 @@ import synthesis.basicblocks.noinputblocks.Constant;
 import synthesis.basicblocks.severalinputsblocks.Adder;
 import synthesis.exceptions.RequireAudioBlocksException;
 
+
+/**
+ * This class lets you create a Vibrato with the specified gain and frequency.
+ * @author valeh
+ */
 public class Vibrato extends OneInputBlock{
 
 	private float gain; 

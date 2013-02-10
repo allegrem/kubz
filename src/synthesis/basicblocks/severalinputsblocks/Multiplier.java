@@ -28,6 +28,11 @@ public class Multiplier extends SeveralInputBlock {
 	}
 	
 	
+	/**
+	 * Method used to create a Multiplier with only two entries (faster to implement!).
+	 * @param block1
+	 * @param block2
+	 */
 	public Multiplier(AudioBlock block1, AudioBlock block2) {
 		super();
 		plugin(block1);

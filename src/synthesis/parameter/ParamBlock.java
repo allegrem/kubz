@@ -92,12 +92,18 @@ public class ParamBlock extends Observable implements ParameterAudioBlock {
 
 	/**
 	 * Modify the value of the parameter. This value is not processed when
-	 * {@link ParamBlock#play(Float)} is called. Calling this method also
-	 * notifies observers.
+	 * {@link ParamBlock#play(Float)} is called. If the given value is greater
+	 * than the max value, then the value is set to the max value (same thing
+	 * with the min value). Calling this method also notifies observers.
 	 */
 	@Override
 	public void setValue(int value) {
-		this.value = value;
+		if (value > max)
+			this.value = max;
+		else if (value < min)
+			this.value = min;
+		else
+			this.value = value;
 		setChanged();
 		notifyObservers();
 	}
@@ -108,6 +114,11 @@ public class ParamBlock extends Observable implements ParameterAudioBlock {
 	@Override
 	public int getValue() {
 		return value;
+	}
+
+	@Override
+	public void incrValue(int incr) {
+		setValue(getValue() + incr);
 	}
 
 }

@@ -13,18 +13,19 @@ import javax.swing.JSeparator;
 import javax.swing.JToolBar;
 import javax.swing.JLabel;
 
-import synthesis.FilteredSound;
+import synthesis.Sound;
 import synthesis.audiooutput.SpeakersOutput;
 import synthesis.audiooutput.WavFileOutput;
 import synthesis.exceptions.AudioException;
 import synthesis.filters.BandsFilter;
 import synthesis.fmInstruments.BellInstrument;
-import synthesis.fmInstruments.FmInstrument;
-import synthesis.fmInstruments.PianoInstrument;
+import synthesis.fmInstruments.FmInstrumentNParams;
+import synthesis.fmInstruments.PianoInstrument2;
 import synthesis.fmInstruments.TwoOscFmInstrument;
 import synthesis.fmInstruments.TwoOscFmInstrumentBis;
 import synthesis.fmInstruments.WindInstrument;
 import synthesis.fmInstruments.WoodInstrument;
+import synthesis.fmInstruments.XylophoneInstrument;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -34,8 +35,10 @@ import java.awt.GridLayout;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 
-public class SLWindow {
+public class SLWindow implements Observer {
 
 	protected static final String DEFAULT_STATUS_BAR_TEXT = "SoundLab 0.2";
 	private JFrame frmSoundlab;
@@ -45,13 +48,18 @@ public class SLWindow {
 	private SLSpectrumView spectrumView;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private SLBandsFilterView filterView;
-	private FilteredSound filteredSound;
+	private Sound sound;
+	private BandsFilter bandsFilter;
 
 	/**
 	 * Create the application.
 	 */
 	public SLWindow() {
-		filteredSound = new FilteredSound(new BellInstrument(), new BandsFilter(11), 1f);
+		sound = new Sound(new BellInstrument(), 3f);
+		
+		bandsFilter = new BandsFilter(11);
+		bandsFilter.addObserver(this);
+		
 		initialize();
 	}
 
@@ -124,11 +132,11 @@ public class SLWindow {
 		mnInstrument.add(rdbtnmntmBell);
 		
 /*********************************PIANO*******************************************************************/
-		JRadioButtonMenuItem rdbtnmntmPiano = new JRadioButtonMenuItem("Piano");
+		JRadioButtonMenuItem rdbtnmntmPiano = new JRadioButtonMenuItem("Piano2");
 		rdbtnmntmPiano.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setInstrument(new PianoInstrument());
+				setInstrument(new PianoInstrument2());
 			}
 		});
 		buttonGroup.add(rdbtnmntmPiano);
@@ -158,7 +166,7 @@ public class SLWindow {
 		buttonGroup.add(rdbtnmntmTwooscfm);
 		mnInstrument.add(rdbtnmntmTwooscfm);
 		
-		/*****************************************TWOOSCFMINSTRUMENTBIS***********************************************************/	
+/*****************************************TWOOSCFMINSTRUMENTBIS***********************************************************/	
 		JRadioButtonMenuItem rdbtnmntmTwooscfmBis = new JRadioButtonMenuItem(
 				"TwoOscFM2");
 		rdbtnmntmTwooscfmBis.addActionListener(new ActionListener() {
@@ -170,7 +178,7 @@ public class SLWindow {
 		buttonGroup.add(rdbtnmntmTwooscfmBis);
 		mnInstrument.add(rdbtnmntmTwooscfmBis);
 					
-/****************************************************************************************************/
+/*********************************************WOOD*******************************************************/
 		JRadioButtonMenuItem rdbtnmntmWood = new JRadioButtonMenuItem("WoodInstrument");
 		rdbtnmntmWood.addActionListener(new ActionListener() {
 			@Override
@@ -181,7 +189,18 @@ public class SLWindow {
 		buttonGroup.add(rdbtnmntmWood);
 		mnInstrument.add(rdbtnmntmWood);
 		
-/****************************************************************************************************/
+/********************************************XYLOPHONE********************************************************/
+		JRadioButtonMenuItem rdbtnmntmXylophone = new JRadioButtonMenuItem("XylophoneInstrument");
+		rdbtnmntmXylophone.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setInstrument(new XylophoneInstrument());
+			}
+		});
+		buttonGroup.add(rdbtnmntmXylophone);
+		mnInstrument.add(rdbtnmntmXylophone);
+		
+		
+		
 		JMenu menu = new JMenu("?");
 		menuBar.add(menu);
 
@@ -203,16 +222,18 @@ public class SLWindow {
 		frmSoundlab.getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(new GridLayout(2, 2, 0, 0));
 
-		instrumentView = new SLInstrumentView(this, filteredSound.getInstrument());
+		instrumentView = new SLInstrumentView(this, (FmInstrumentNParams) sound.getInstrument());
 		panel.add(instrumentView);
 
-		soundView = new SLSoundView(filteredSound);
+		soundView = new SLSoundView(this);
+		sound.addObserver(soundView);
 		panel.add(soundView);
 
-		filterView = new SLBandsFilterView(this, filteredSound.getBandsFilter());
+		filterView = new SLBandsFilterView(this, bandsFilter);
 		panel.add(filterView);
 
-		spectrumView = new SLSpectrumView(filteredSound);
+		spectrumView = new SLSpectrumView(this);
+		sound.addObserver(spectrumView);
 		panel.add(spectrumView);
 	}
 
@@ -220,8 +241,8 @@ public class SLWindow {
 			final String message) {
 	}
 
-	private void setInstrument(FmInstrument instrument) {
-		filteredSound.setInstrument(instrument);
+	private void setInstrument(FmInstrumentNParams instrument) {
+		sound.setInstrument(instrument);
 		instrumentView.setInstrument(instrument);
 	}
 
@@ -232,7 +253,7 @@ public class SLWindow {
 	private void saveInWavFile() {
 		WavFileOutput wavFileOutput1 = new WavFileOutput("fmout.wav");
 		wavFileOutput1.open();
-		wavFileOutput1.play(filteredSound.getSound());
+		wavFileOutput1.play(sound.getSound());
 		try {
 			wavFileOutput1.close();
 		} catch (IOException e) {
@@ -251,7 +272,9 @@ public class SLWindow {
 					e.printStackTrace();
 				}
 				try {
-					speakersOutput.play(filteredSound.getSound());
+					byte[] soundBytes = getSound().getSound();
+//					while(true) //mouhahaha
+						speakersOutput.play(soundBytes);
 				} catch (AudioException e) {
 					e.printStackTrace();
 				}
@@ -259,6 +282,19 @@ public class SLWindow {
 			}
 		});
 		thread.start();
+	}
+
+	public Sound getSound() {
+		return sound.filter(bandsFilter);
+	}
+
+	public int getSoundLength() {
+		return sound.getSound().length;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		sound.update(null, null);
 	}
 
 }
