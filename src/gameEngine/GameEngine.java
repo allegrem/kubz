@@ -52,7 +52,7 @@ public class GameEngine {
 		map.setWidth(width);
 		map.setLength(height);	
 		display.setLightPlace(0.0f,(float)height/2,0.0f);
-		map.add(new BackgroundView(width,height,100));
+		map.add(new BackgroundView(width,height,5000));
 		try {
 			monsterList=reader.readMonsters();
 			//bases=reader.readBases();
