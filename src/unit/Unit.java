@@ -10,18 +10,17 @@ import player.*;
 
 public class Unit {
 	
-	private double life = 100;
+	private double life;
 	private double size;
 	private Point pos=new Point(10,10);
 	private double aperture;
 	private double direction;
-	private double instrumentChoiceAngle;
+	private double instrumentChoiceAngle=0;
 	private UnitState state;
 	private CubeControlledView view;
 	private Player owner;
 	private GameEngine gameEngine;
 	private int power;
-	private int nInstrum;
 	
 	
 	public Unit(Player owner){
@@ -211,16 +210,6 @@ public class Unit {
 	public DisplayableFather getView() {
 		
 		return view;
-	}
-
-
-	public int getnInstrum() {
-		return nInstrum;
-	}
-
-
-	public void setnInstrum(int nInstrum) {
-		this.nInstrum = nInstrum;
 	}
 	
 

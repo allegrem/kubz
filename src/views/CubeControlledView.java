@@ -76,7 +76,7 @@ public class CubeControlledView implements DisplayableFather{
 		aperture = theta;
 	}
 	public void rotateAperture(double dTheta){
-		if((aperture + dTheta>=0&&(aperture+dTheta<=360))) aperture = aperture + dTheta;;
+		if((aperture + dTheta>=0&&(aperture+dTheta<=360))) aperture = aperture + dTheta;
 	}
 	public double getAperture(){
 		return aperture;
