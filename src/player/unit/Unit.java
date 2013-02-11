@@ -173,7 +173,7 @@ public class Unit extends CubeOwner{
 	public void rotateDirection(double dTheta){
 		direction = direction + dTheta;
 		view.rotateDirection(dTheta);
-		view.rotate(dTheta);
+		view.rotate(-dTheta);
 	}
 	public double getDirection(){
 		return direction;
