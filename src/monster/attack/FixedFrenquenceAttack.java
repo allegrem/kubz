@@ -1,7 +1,7 @@
 package monster.attack;
 
 /**
- * Monstre qui attaque tout le temps à la même fréquence de toute sa puissance
+ * Monstre qui attaque tout le temps ï¿½ la mï¿½me frï¿½quence de toute sa puissance
  * @author Felix
  */
 

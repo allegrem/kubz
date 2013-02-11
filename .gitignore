@@ -5,6 +5,7 @@
 .settings/
 bin/
 *.wav
+.classpath
 doc/
 .DS_Store
 lib_sources/
