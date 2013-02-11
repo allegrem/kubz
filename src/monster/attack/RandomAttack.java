@@ -1,6 +1,6 @@
 package monster.attack;
 
-import monster.Monster;
+import monster.zoo.Monster;
 
 
 /**

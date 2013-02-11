@@ -5,7 +5,7 @@ package monster.move;
  */
 
 import player.unit.Unit;
-import monster.Monster;
+import monster.zoo.Monster;
 
 public abstract class MoveType {
 	final Monster monster;

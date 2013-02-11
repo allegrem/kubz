@@ -1,4 +1,4 @@
-package monster;
+package monster.zoo;
 
 /**classe qui sert de modele e MonsterView
  * @author Felix
@@ -35,14 +35,10 @@ public class Monster {
 	protected ArrayList<Unit> seenUnits; 
 	protected Point pos;
 	protected double life;
+	protected LifeView lifeView;
+	protected MonsterView view;
 	
-	/**
-	 * reference vers la vue du monstre pour pouvoir transmettre les modifications necessaires 
-	 */
-	protected MonsterView view = new MonsterView();
-	lifeView = new LifeView(view);
-	view.addChild(lifeView);
-	
+
 	
 	
 	//private LifeType life;

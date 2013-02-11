@@ -9,7 +9,7 @@ import base.Base;
 import OpenGL.GLDisplay;
 import map2.Map;
 import map2.MapReader;
-import monster.Monster;
+import monster.zoo.Monster;
 import player.*;
 import player.unit.Unit;
 import synthesis.Sound;
