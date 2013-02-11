@@ -50,7 +50,6 @@ public class GameEngine {
 				e.printStackTrace();
 			}
 		}
-		display.setSound(new Sound(new BellInstrument(), 1));
 		width = display.getmapDisplay_width();
 		height = display.getmapDisplay_height();
 		System.out.println("Width: " + width + " Height: " + height);
@@ -195,7 +194,7 @@ public class GameEngine {
 	
 	private boolean checkPos(CubeOwner cubeOwner){
 		cubeOwner.getCube().setIrOn();
-		traitement.updateConnexe(null); // intégration avec la cam à
+		traitement.updateConnexe(null); // intï¿½gration avec la cam ï¿½
 										// regler pour recuperer l'image
 		ArrayList<Point> currentPositions = new ArrayList<Point>();
 		for (int i = 1; i <= 3; i++) {
