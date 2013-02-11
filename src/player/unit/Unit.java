@@ -75,10 +75,12 @@ public class Unit extends CubeOwner{
 	public void decreaseLife(double dec){
 		life = life - dec;
 		lifeView.setLife(life);
-		/*if (life<0){
+		if (life<0){
 			gameEngine.getUnitList().remove(this);
 			gameEngine.getPlayerList().remove(owner);
-		}*/
+			view.removeChild(lifeView);
+			view.setUnTracked(false);
+		}
 	}
 	public void setLife(double newLife){
 		life = newLife;
