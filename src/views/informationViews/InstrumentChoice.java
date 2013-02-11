@@ -3,6 +3,8 @@ package views.informationViews;
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 
+import gameEngine.GameEngine;
+
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
@@ -20,12 +22,20 @@ import OpenGL.Textures;
 
 public class InstrumentChoice implements DisplayableChild{
 	private DisplayableFather father;
-	
-	private int length = 6;
+	private int[] instrList = new int[6];
 	private double distance=90;	
+	private GameEngine gameEngine;
 	
-	int chosen = 0;
+	private ReadableColor chosen;
+	
+	
+	
 
+
+	public InstrumentChoice(GameEngine gameEngine){
+		this.gameEngine=gameEngine;
+	}
+	
 	@Override
 	public synchronized void paint() {
 		//GL11.glDisable(GL11.GL_TEXTURE_2D);			
@@ -34,20 +44,24 @@ public class InstrumentChoice implements DisplayableChild{
 		double x;
 		double y;
 		double angle =0;		
-		double dAngle=2*Math.PI/(length);
+		double dAngle=2*Math.PI/(instrList.length);
 		int sideLength = 20;  //cote du carre pour les instuements
-		for (int i=0;i<length;i++){
+		for (int i=0;i<instrList.length;i++){
 			//GL11.glColor3ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue());
 			x=distance*Math.cos(angle);
-			y=distance*Math.sin(angle);			
+			y=distance*Math.sin(angle);	
+			if(posx+x<0 || posy+y<0 || posx+x>gameEngine.getWidth() || posy+y>gameEngine.getWindowHeight() ){
+				x=2*distance*Math.cos(angle+Math.PI);
+				y=2*distance*Math.sin(angle+Math.PI);	
+			}
 			glMatrixMode(GL_MODELVIEW);
 			GL11.glPushMatrix();
 			GL11.glTranslated(posx+x, posy+y,father.getHeight()+10 );
-			
-			if(i==chosen)
-				sideLength = 30;
-			else sideLength = 20;
-					
+			/*if(color==chosen){
+			//disk.draw(0,rayon+10, 50, 1);
+			sideLength = 30;
+			}*/
+				//disk.draw(0,rayon, 50, 1);		
 				GL11.glEnable(GL11.GL_TEXTURE_2D);
 				//Texture texturei = InstrumentTextures.textureList[i];
 				if (InstrumentTextures.textureList[i] == null)
@@ -104,7 +118,7 @@ public class InstrumentChoice implements DisplayableChild{
 	@Override
 	public String getCharac() {
 	
-		return "InstrumentChoice";
+		return "InstrumentsChoice";
 	}
 
 	@Override
@@ -142,7 +156,7 @@ public class InstrumentChoice implements DisplayableChild{
 	 * @param num Son numero
 	 */
 	public void setChosen(int num){
-			chosen=num;		
+			//chosen=colors.get(num);		
 	}
 	
 }

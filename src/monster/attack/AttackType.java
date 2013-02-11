@@ -27,6 +27,7 @@ public abstract class AttackType {
 		sound = new Sound(instrument, 3f);
 	}
 
+
 	public void attack(Unit unit) {
 		if (monster.getCible() != null) {
 			double oppose = -(monster.getCible().getX() - monster.getX());
@@ -47,6 +48,7 @@ public abstract class AttackType {
 				monster.getCible().decreaseLife(degats);
 			}
 		}
+
 	}
 
 }

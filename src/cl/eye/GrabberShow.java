@@ -69,7 +69,7 @@ public class GrabberShow implements Runnable {
 		while (true) {
 
 			myCamera.getCameraFrame(myImage.pixels, 1000);
-			//myImage.filter(PImage.THRESHOLD, 0.5f); //passage en mode threshold
+			myImage.filter(PImage.THRESHOLD, 0.5f); //passage en mode threshold
 			compconn = 0;
 			int posX = 0, posY = 0;
 			int comptX = 0, comptY = 0;
