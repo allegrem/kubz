@@ -1,6 +1,8 @@
-package unit;
+package player.unit;
 
+import cube.Cube;
 import gameEngine.GameEngine;
+import traitementVideo.VirtualCube;
 import utilities.Point;
 import views.CubeControlledView;
 import views.informationViews.LifeView;
@@ -8,7 +10,7 @@ import views.interfaces.DisplayableFather;
 import player.*;
 
 
-public class Unit {
+public class Unit extends CubeOwner{
 	
 	private double life;
 	private double size;
@@ -24,6 +26,7 @@ public class Unit {
 	
 	
 	public Unit(Player owner){
+		life = 1000;
 		this.state = new WaitingUState();
 		this.owner = owner;
 		gameEngine=owner.getGameEngine();
@@ -34,8 +37,11 @@ public class Unit {
 		
 	}
 	
-	
-	public Player getOwner() {
+	/**
+	 * Renvoie le Player auquel est lie cet Unit
+	 * @return
+	 */
+	public Player getOwner(){
 		return owner;
 	}
 
@@ -48,6 +54,10 @@ public class Unit {
 	}
 	public void decreaseLife(double dec){
 		life = life - dec;
+		if (life<0){
+			gameEngine.getUnitList().remove(this);
+			gameEngine.getPlayerList().remove(owner);
+		}
 	}
 	public void setLife(double newLife){
 		life = newLife;

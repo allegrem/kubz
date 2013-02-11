@@ -5,8 +5,8 @@ package monster.attack;
  * Ici le pot correspond juste a la distance de Unit a Monster
  */
 
+import player.unit.Unit;
 import monster.Monster;
-import unit.Unit;
 
 public class ChooseDistance extends ChooseType{
 	

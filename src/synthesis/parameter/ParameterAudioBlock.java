@@ -6,10 +6,10 @@ package synthesis.parameter;
 import java.util.Observer;
 
 import synthesis.AudioBlock;
-import synthesis.fmInstruments.FmInstrument;
+import synthesis.fmInstruments.FmInstrumentNParams;
 
 /**
- * This interface defines a Parameter used in a {@link FmInstrument}. A
+ * This interface defines a Parameter used in a {@link FmInstrumentNParams}. A
  * parameter has a label, a min and a max value, its value can be modified and
  * accessed.<br />
  * WARNING: the value of a parameter is an integer! If the parameter is between
@@ -51,6 +51,8 @@ public interface ParameterAudioBlock extends AudioBlock {
 	 * WARNING: this is not necessarily the same value than the play method.
 	 */
 	public void setValue(int value);
+	
+	public void incrValue(int incr);
 
 	public void addObserver(Observer o); // useless??
 
@@ -58,5 +60,7 @@ public interface ParameterAudioBlock extends AudioBlock {
 	 * Return the value of the parameter given by the user.
 	 */
 	public int getValue();
+
+	public void random();
 
 }

@@ -7,8 +7,9 @@ package player;
 import base.Base;
 import gameEngine.GameEngine;
 import OpenGL.KeyboardManager;
-import parameter.*;
-import unit.*;
+import player.parameter.*;
+import player.unit.*;
+import synthesis.filters.BandsFilter;
 import views.attacks.AttackConeView;
 import views.attacks.SinusoidalAttackView;
 import views.informationViews.InstrumentsChoice;
@@ -19,7 +20,7 @@ public  class Player {
 	private Parameter[] parameters ;
 	private Base base;
 	private int nParams =2;
-	private float[] shield;
+	private BandsFilter shield;
 	private boolean isTurn;
 	private int choice;
 	private int lastAngle1;
@@ -40,9 +41,8 @@ public  class Player {
 		parameters[1]= new Parameter(this);
 		parameters[0].setLocation(base.getCenter().getX()-parameters[0].getSize(), base.getCenter().getY());
 		parameters[1].setLocation(base.getCenter().getX()+parameters[1].getSize(), base.getCenter().getY());
-		this.shield = new float[1000];
-		for(int i=0; i<11;i++)
-			shield[i]=1f;
+		this.shield = new BandsFilter(11);
+		this.shield.random();
 		
 	}
 	
@@ -73,21 +73,21 @@ public  class Player {
 	public int getChangeDistance(){
 		return (int) parameters[0].getPos().distanceTo(parameters[1].getPos());
 	}
-	
-	
-	/**
-	 * Methodes relatives au shield de l'Unit
-	 */
-	public void setValues(int l, int r, float value){
-		for(int i = l; i<=r; i++)
-			shield[i]=value;
+		
+	public BandsFilter getShield() {
+		return shield;
 	}
-	public float getValue(int index){
-		return shield[index];
+
+	public void setShield(BandsFilter shield) {
+		this.shield = shield;
 	}
-	
+
 	public Unit getUnit(){
 		return unit;
+	}
+	
+	public Parameter[] getParameters(){
+		return parameters;
 	}
 	
 
@@ -206,10 +206,11 @@ public  class Player {
 		InstrumentsChoice instChoice = new InstrumentsChoice();
 		unit.getView().addChild(instChoice);
 		while (!KeyboardManager.tap){
-			if (unit.getInstrumentChoiceAngle()>0){
-			instChoice.setChosen(Math.abs((int) ((unit.getInstrumentChoiceAngle()%360) / 60 )) );
+			if (unit.getInstrumentChoiceAngle()>=0){
+			instChoice.setChosen((int) ((unit.getInstrumentChoiceAngle()%360) / 60 )) ;
 			}else{
-				instChoice.setChosen(Math.abs((int) (((360+unit.getInstrumentChoiceAngle())%360) / 60 )) );
+				instChoice.setChosen((int) (((360*(1+Math.abs((int)((unit.getInstrumentChoiceAngle()/360))))
+						+unit.getInstrumentChoiceAngle())%360) / 60 ));
 
 			}
 			if(KeyboardManager.wKey ) unit.rotateInstrumentChoice(1);
@@ -352,5 +353,7 @@ public  class Player {
 	public int getnParams() {	
 		return nParams;
 	}
+	
+
 	
 }

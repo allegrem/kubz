@@ -1,6 +1,3 @@
-/**
- * 
- */
 package synthesis.soundlab;
 
 import java.awt.BorderLayout;
@@ -22,7 +19,6 @@ import javax.swing.JToolBar;
 import org.apache.commons.math3.complex.Complex;
 
 import synthesis.AudioBlock;
-import synthesis.FilteredSound;
 
 /**
  * @author allegrem
@@ -42,15 +38,14 @@ public class SLSpectrumView extends JPanel implements Observer {
 
 	private int mouseX = -1;
 
-	private FilteredSound filteredSound;
-
 	private int[] spectrumCache;
 
-	public SLSpectrumView(FilteredSound filteredSound) {
+	private SLWindow window;
+
+	public SLSpectrumView(SLWindow window) {
 		super();
 		
-		this.filteredSound = filteredSound;
-		filteredSound.addObserver(this);
+		this.window = window;
 		
 		setPreferredSize(new Dimension(X_SIZE, Y_SIZE));
 		setMinimumSize(new Dimension(X_SIZE, Y_SIZE));
@@ -123,7 +118,9 @@ public class SLSpectrumView extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		Complex[] result = filteredSound.getSpectrum();
+//		Complex[] result = sound.getSpectrum();
+		Complex[] result = window.getSound().getSpectrum();
+		
 		spectrumCache = new int[X_SIZE];
 		for (int x = 0; x < result.length / 4; x++) {
 			int x_coord = x * X_SIZE * 4 / result.length;

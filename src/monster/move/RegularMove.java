@@ -5,8 +5,8 @@ package monster.move;
  * @author Felix
  */
 
+import player.unit.Unit;
 import monster.Monster;
-import unit.Unit;
 
 public class RegularMove extends MoveType{
 	

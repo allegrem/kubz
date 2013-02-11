@@ -11,7 +11,7 @@ import org.apache.commons.math3.transform.TransformType;
 
 import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.filters.BandsFilter;
-import synthesis.fmInstruments.FmInstrument;
+import synthesis.fmInstruments.FmInstrumentNParams;
 
 /**
  * @author allegrem
@@ -29,8 +29,7 @@ public class FilteredSound extends Observable implements Observer {
 
 	private Complex[] originalSpectrum = null;
 
-
-	private FmInstrument instrument;
+	private FmInstrumentNParams instrument;
 
 	private BandsFilter bandsFilter;
 	
@@ -39,7 +38,7 @@ public class FilteredSound extends Observable implements Observer {
 	/**
 	 * 
 	 */
-	public FilteredSound(FmInstrument instrument, BandsFilter bandsFilter, float length) {
+	public FilteredSound(FmInstrumentNParams instrument, BandsFilter bandsFilter, float length) {
 		super();
 
 		setInstrument(instrument);
@@ -151,14 +150,21 @@ public class FilteredSound extends Observable implements Observer {
 		return bandsFilter;
 	}
 
-	public FmInstrument getInstrument() {
+	public FmInstrumentNParams getInstrument() {
 		return instrument;
 	}
 
-	public void setInstrument(FmInstrument instrument2) {
+	public void setInstrument(FmInstrumentNParams instrument2) {
 		this.instrument = instrument2;
 		instrument2.addObserver(this);
 		updateOriginalSound();
+	}
+	
+	/**
+	 * @return the length
+	 */
+	public float getLength() {
+		return length;
 	}
 
 }

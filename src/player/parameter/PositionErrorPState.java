@@ -1,4 +1,4 @@
-package parameter;
+package player.parameter;
 
 public class PositionErrorPState extends ParameterState{
 

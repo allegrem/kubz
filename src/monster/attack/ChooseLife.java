@@ -5,8 +5,8 @@ package monster.attack;
  * Ici le pot correspond juste a la vie de Unit
  */
 
+import player.unit.Unit;
 import monster.Monster;
-import unit.Unit;
 
 public class ChooseLife extends ChooseType{
 
