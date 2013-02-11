@@ -13,11 +13,9 @@ public class XBee extends Thread implements Runnable{
 
     private CubeManager manager = new CubeManager();
     private String dataReceive = null;
-    private byte[] dataSend = new byte[208];
     private Scanner sc = new Scanner(System.in);
 
     int [] buf =  new int[209];
-    ReentrantLock mutex = new ReentrantLock(true);
 
     /* Socket part, adapted from http://systembash.com/content/a-simple-java-tcp-server-and-tcp-client/ */
     /* Open a new socket on localhost:4161 */
@@ -53,20 +51,14 @@ public class XBee extends Thread implements Runnable{
     public void run () {
     	
         while (true){
-            //readFrame();
-        	//parseRXFrame();
-        	
-        	sendRXFrame("salut");
+            readFrame();
+        	parseRXFrame();
         }
     }
 
 /* Set the cube manager created at the beginning of the game */
 public void setCubeManager(CubeManager cubeManager) {
         this.manager = cubeManager;
-}
-
-public void setDataSend (byte[] s){
-    this.dataSend = s;
 }
 
 public int readByte() {
@@ -127,7 +119,9 @@ public void parseRXFrame (){
 public void sendRXFrame (String message){
 	// XXX TODO : add mutex 
 	byte[] msg =  new byte[200];
+    byte[] dataSend = new byte[208];
 	byte sum = 0x00;
+	String st = "";
 	
 	try{
 		msg = message.getBytes();
@@ -137,31 +131,34 @@ public void sendRXFrame (String message){
 		dataSend[1] = 0x00;
 		dataSend[2] = (byte)(11 + message.length()); // Frame length
 		dataSend[3] = 0x00;
-		dataSend[4] = 0x52; // Frame ID
-		dataSend[5] = 0x00; // 5-12 -> Broadcast mode
-		dataSend[6] = 0x00;
+		dataSend[4] = 0x01; // API identifier
+		dataSend[5] = 0x52; // Frame ID
+		dataSend[6] = 0x00; // 5-12 -> Broadcast mode
 		dataSend[7] = 0x00;
 		dataSend[8] = 0x00;
 		dataSend[9] = 0x00;
 		dataSend[10] = 0x00;
-		dataSend[11] = (byte)(-1);
+		dataSend[11] = 0x00;
 		dataSend[12] = (byte)(-1);
-		dataSend[13] = 0x04; // Send packet with Broadcast Pan ID
+		dataSend[13] = (byte)(-1);
+		dataSend[14] = 0x04; // Send packet with Broadcast Pan ID
 		
 		for (int i=0; i<msg.length; i++){
-			dataSend[i+14] = msg[i]; // Put the data in the packet
+			dataSend[i+15] = msg[i]; // Put the data in the packet
 			sum = (byte) ((sum + msg[i]) & 0xFF);
 		}
 		
-		sum = (byte) (((sum + dataSend[3] + dataSend[4] + dataSend[5] + dataSend[6] + dataSend[7] + dataSend[8] + dataSend[9] + dataSend[10] + dataSend[11] + dataSend[12] + dataSend[13])+0) & 0xFF);
+		sum = (byte) (((sum + dataSend[3] + dataSend[4] + dataSend[5] + dataSend[6] + dataSend[7] + dataSend[8] + dataSend[9] + dataSend[10] + dataSend[11] + dataSend[12] + dataSend[13] + dataSend[14])+0) & 0xFF);
 		
-		dataSend[14 + msg.length]= (byte) (0xFF - (sum)); // checksum		;
+		dataSend[15 + msg.length]= (byte) (0xFF - (sum)); // checksum				
 		
-	   outToServer.write(dataSend, 0, 15 + msg.length);
-	   outToServer.flush();
+	    outToServer.writeBytes(st);
+	    outToServer.flush();
 	} catch (Exception e){
 	   e.printStackTrace();
 	} 
+	
+
 
 }
 
