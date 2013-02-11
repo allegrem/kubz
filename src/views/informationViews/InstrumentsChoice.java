@@ -30,8 +30,8 @@ public class InstrumentsChoice implements DisplayableChild{
 	public InstrumentsChoice(){
 		disk=new Disk();
 		addInstrument(ReadableColor.BLUE);
-		addInstrument(ReadableColor.RED);
-		addInstrument(ReadableColor.GREEN);
+		//addInstrument(ReadableColor.RED);
+		//addInstrument(ReadableColor.GREEN);
 		addInstrument(ReadableColor.ORANGE);
 		addInstrument(ReadableColor.PURPLE);
 		addInstrument(ReadableColor.YELLOW);

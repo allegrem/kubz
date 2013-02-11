@@ -16,11 +16,12 @@ import views.attacks.SinusoidalAttackView;
 
 public abstract class AttackType {	
 	protected Monster monster;
-	private final Sound sound;
+	protected Sound sound;
 	
 	public AttackType(Monster monster){
 		this.monster = monster;
 		FmInstruments3Params instrument = TwoOscFmInstrument.getFmInstruments3Params();
+		instrument.random();
 		sound = new Sound(instrument, 3f);
 	}
 	
@@ -30,7 +31,9 @@ public abstract class AttackType {
 		SinusoidalAttackView attack = new SinusoidalAttackView(20,180*Math.atan2(oppose,adjacent)/Math.PI, 100, monster.getView());
 		monster.getView().addChild(attack);
 		int degats = sound.filter(monster.getCible().getOwner().getShield()).getDegats();
-		monster.getCible().decreaseLife(degats);
+		System.out.println(degats);
+		sound.playToSpeakers();
+		//monster.getCible().decreaseLife(degats);
 	}	
 	public ArrayList<int[]> result(){
 		return null;	

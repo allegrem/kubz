@@ -14,8 +14,12 @@ import monster.Monster;
 public class FixedFrenquenceAttack extends AttackType {
 
 	private int strenght;
-	private final Sound sound;
 
+	/**
+	 * 
+	 * @param monster
+	 * @param strenght
+	 */
 	public FixedFrenquenceAttack(Monster monster, int strenght) {
 		super(monster);
 		this.strenght = strenght;
@@ -25,7 +29,7 @@ public class FixedFrenquenceAttack extends AttackType {
 		sound = new Sound(instrument, 3f);
 		
 		//connerie pour les degats
-		int degats = sound.filter(monster.getCible().getOwner().getShield()).getDegats();
+		//int degats = sound.filter(monster.getCible().getOwner().getShield()).getDegats();
 	}
 
 }
