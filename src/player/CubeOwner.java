@@ -1,5 +1,9 @@
 package player;
 
+/**
+ * @author Felix
+ */
+
 import cube.Cube;
 import traitementVideo.VirtualCube;
 

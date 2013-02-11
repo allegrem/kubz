@@ -1,7 +1,7 @@
-#.project
-#.classpath
+
+*.tmp
+.project
 *.class
-#.project
 .settings/
 bin/
 *.wav
@@ -24,4 +24,4 @@ stats/
 lib/log4j.properties
 lib/xbee_api/
 projet-2012-11.iml
-
+*~

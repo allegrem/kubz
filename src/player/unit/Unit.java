@@ -1,8 +1,16 @@
 package player.unit;
 
+/**
+ * 
+ * @author Felix
+ * 
+ */
+
 import cube.Cube;
 import gameEngine.GameEngine;
-import traitementVideo.VirtualCube;
+import synthesis.Sound;
+import synthesis.fmInstruments.FmInstruments3Params;
+import synthesis.fmInstruments.TwoOscFmInstrument;
 import utilities.Point;
 import views.CubeControlledView;
 import views.informationViews.LifeView;
@@ -18,6 +26,7 @@ public class Unit extends CubeOwner{
 	private double aperture;
 	private double direction;
 	private double instrumentChoiceAngle=0;
+	private Sound sound;
 	private UnitState state;
 	private CubeControlledView view;
 	private Player owner;
@@ -26,6 +35,7 @@ public class Unit extends CubeOwner{
 	
 	
 	public Unit(Player owner){
+		life = 1000;
 		this.state = new WaitingUState();
 		this.owner = owner;
 		gameEngine=owner.getGameEngine();
@@ -33,6 +43,7 @@ public class Unit extends CubeOwner{
 		view.addChild(new LifeView(view));
 		size=view.getSize();
 		gameEngine.getMap().add(view);
+		this.sound = new Sound(TwoOscFmInstrument.getFmInstruments3Params(), 3f);
 		
 	}
 	
@@ -45,6 +56,23 @@ public class Unit extends CubeOwner{
 	}
 
 
+	public Sound getSound() {
+		return sound;
+	}
+
+	/**
+	 * Retourne le cube physique auquel est associ� Unit
+	 * @return
+	 */
+	public Cube getCube() {
+		return cube;
+
+	}
+
+	public void setSound(Sound sound) {
+		this.sound = sound;
+	}
+
 	/**
 	 * M�thodes relatives � la vie de Unit
 	 */
@@ -53,6 +81,10 @@ public class Unit extends CubeOwner{
 	}
 	public void decreaseLife(double dec){
 		life = life - dec;
+		if (life<0){
+			gameEngine.getUnitList().remove(this);
+			gameEngine.getPlayerList().remove(owner);
+		}
 	}
 	public void setLife(double newLife){
 		life = newLife;
@@ -115,7 +147,7 @@ public class Unit extends CubeOwner{
 	public void rotateAperture(double dTheta){
 		if ((aperture+dTheta>=0)&&(aperture+dTheta<=360)) aperture = aperture + dTheta;		
 		view.rotateAperture(dTheta);
-		view.rotate(dTheta);
+		view.rotate(-dTheta);
 	}
 	public double getAperture(){
 		return aperture;

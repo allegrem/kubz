@@ -3,6 +3,8 @@ package monster.attack;
 /**
  * Classe qui correspond au choix des potentiels des Unit vu par Monster
  * Ici le pot correspond juste a la vie de Unit
+ * @author Felix
+ * 
  */
 
 import player.unit.Unit;

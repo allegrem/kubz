@@ -15,7 +15,7 @@ public class AttackMonster extends Monster{
 	public AttackMonster(float xStart, float yStart,ReadableColor color, GameEngine gameEngine) {
 		super(xStart, yStart, gameEngine);
 		this.choice = new ChooseDistance(this);
-		this.attack = new FixedFrenquenceAttack(this, 6, 30);
+		this.attack = new FixedFrenquenceAttack(this, 6);
 		this.move = new RegularMove(this, 200);
 		view= new SquareMonsterView(new Point(xStart,yStart), color);
 		gameEngine.getMap().add(view);	

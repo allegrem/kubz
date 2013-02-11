@@ -4,33 +4,28 @@ package monster.attack;
  * Monstre qui attaque tout le temps à la même fréquence de toute sa puissance
  * @author Felix
  */
-import java.util.ArrayList;
+
+import synthesis.Sound;
+import synthesis.fmInstruments.FmInstruments3Params;
+import synthesis.fmInstruments.TwoOscFmInstrument;
 
 import monster.Monster;
 
-public class FixedFrenquenceAttack extends AttackType{
-	
+public class FixedFrenquenceAttack extends AttackType {
+
 	private int strenght;
-	private int frequency;
-	
-	
-	
-	public FixedFrenquenceAttack(Monster monster, int strenght, int frequency) {
+	private final Sound sound;
+
+	public FixedFrenquenceAttack(Monster monster, int strenght) {
 		super(monster);
-		this.frequency = frequency;
-		this.strenght = strenght;				
+		this.strenght = strenght;
+		
+		FmInstruments3Params instrument = TwoOscFmInstrument.getFmInstruments3Params();
+		instrument.random();
+		sound = new Sound(instrument, 3f);
+		
+		//connerie pour les degats
+		int degats = sound.filter(monster.getCible().getOwner().getShield()).getDegats();
 	}
 
-
-
-	@Override
-	public ArrayList<int[]> result(){
-		ArrayList<int[]> attackTable = new ArrayList<int[]>();
-		int[] attack = {frequency,strenght};
-		attackTable.add(attack);
-		return attackTable;
-	}
-	
 }
-	
-

@@ -22,6 +22,20 @@ public class FmInstruments3Params extends FmInstrument implements
 	private ParameterAudioBlock rot2;
 	private ParameterAudioBlock distance;
 	
+	public ParameterAudioBlock getRot1() {
+		return rot1;
+	}
+
+
+	public ParameterAudioBlock getRot2() {
+		return rot2;
+	}
+
+
+	public ParameterAudioBlock getDistance() {
+		return distance;
+	}
+
 	private FmInstrumentNParams instrument;
 	
 	/**
@@ -42,10 +56,16 @@ public class FmInstruments3Params extends FmInstrument implements
 	}
 	
 	
+	/**
+	 * Change params. rot1 and rot2 : relative ; distance : absolute
+	 * @param rot1
+	 * @param rot2
+	 * @param distance
+	 */
 	public void changeParams(int rot1, int rot2, int distance) {
 		this.rot1.incrValue(rot1);
 		this.rot2.incrValue(rot2);
-		this.distance.incrValue(distance);
+		this.distance.setValue(distance);
 	}
 
 	/**
@@ -81,6 +101,13 @@ public class FmInstruments3Params extends FmInstrument implements
 		notifyObservers();
 
 		System.out.println("fm instrument updated");
+	}
+
+
+	public void random() {
+		rot1.random();
+		rot2.random();
+		distance.random();
 	}
 
 }

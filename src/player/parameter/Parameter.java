@@ -1,5 +1,9 @@
 package player.parameter;
 
+/**
+ * @author Felix
+ */
+
 import cube.Cube;
 import gameEngine.GameEngine;
 import player.CubeOwner;
@@ -25,6 +29,7 @@ public class Parameter extends CubeOwner{
 		this.setOwner(owner);
 		gameEngine=owner.getGameEngine();
 		view = new CubeControlledView(pos);
+		view.setInvisible3D(true);
 		size = view.getSize();
 		gameEngine.getMap().add(view);
 		
@@ -37,7 +42,23 @@ public class Parameter extends CubeOwner{
 		dAngle = 0;
 		return vase;		
 	}
+
+	/**
+	 * Retourne le cube physique auquel est associï¿½ Parameter
+	 * @return
+	 */
+	public Cube getCube() {
+		return cube;
+	}
 	
+	/**
+	 * Retourne le cube du traitement de l'image auquel est associe Parameter
+	 * @return
+	 */
+	public VirtualCube getVCube(){
+		return vCube;
+	}
+
 	
 	
 	/**
@@ -84,7 +105,7 @@ public class Parameter extends CubeOwner{
 	}
 	
 	/**
-	 * méthodes relatives à l'angle du cube
+	 * mï¿½thodes relatives ï¿½ l'angle du cube
 	 * @param theta
 	 * @param dTheta
 	 */
@@ -102,7 +123,7 @@ public class Parameter extends CubeOwner{
 	
 	
 	/**
-	 * Setters et getters relatifs à l'état du paramètre
+	 * Setters et getters relatifs ï¿½ l'ï¿½tat du paramï¿½tre
 	 */
 	public void setToFrozen(){
 		this.state = new FrozenPState();

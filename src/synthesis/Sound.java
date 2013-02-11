@@ -1,6 +1,6 @@
-
 package synthesis;
 
+import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.Observable;
 import java.util.Observer;
@@ -10,6 +10,8 @@ import org.apache.commons.math3.transform.DftNormalization;
 import org.apache.commons.math3.transform.FastFourierTransformer;
 import org.apache.commons.math3.transform.TransformType;
 
+import synthesis.audiooutput.SpeakersOutput;
+import synthesis.exceptions.AudioException;
 import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.filters.BandsFilter;
 import synthesis.fmInstruments.FmInstrument;
@@ -53,7 +55,7 @@ public class Sound extends Observable implements Observer {
 		setInstrument(instrument); // FIXME double call of update here...
 		setLength(length); // /... and here
 	}
-
+	
 	/**
 	 * Change the length of the sound. The sound is updated after editing the
 	 * length.
@@ -139,7 +141,7 @@ public class Sound extends Observable implements Observer {
 		if (!locked)
 			updateSound();
 
-		System.out.println("sound updated");
+//		System.out.println("sound updated");
 	}
 
 	/**
@@ -154,37 +156,45 @@ public class Sound extends Observable implements Observer {
 	 * sound is updated.
 	 */
 	public void setInstrument(FmInstrument instrument2) {
-		this.instrument = instrument2;
+		if (instrument != null)
+			instrument.deleteObserver(this);
+		instrument = instrument2;
 		instrument2.addObserver(this);
 		updateSound();
 	}
-	
+
 	// methode VV
 	protected void applyFilter3(BandsFilter filter) {
 		// ArrayList<Double> soundFiltered = new ArrayList<Double>();
 		// byte[] soundFiltered = new byte[(int)
 		// (this.length*AudioBlock.SAMPLE_RATE)];
 		float time = 0;
-		
-		int sampleLength = (int) ( AudioBlock.SAMPLE_RATE * (200 / 1000)); // *20ms		
-																		// sampling
-		int bandfreq = (int) (this.length * AudioBlock.SAMPLE_RATE / 2)/filter.getBarNumber(); // length of each band of the filter
-																							  // (11 bands on the whole)
 
-		for (int i = 0; i < (int) ((this.length * AudioBlock.SAMPLE_RATE / 2)/ sampleLength); i++) { // (length*SR/2) / sampleLength (n�of
-										// samples in the first half
-			time += i * (200 / 1000); // the i-th sampling 
+		int sampleLength = (int) (AudioBlock.SAMPLE_RATE * (200 / 1000)); // *20ms
+																			// sampling
+		int bandfreq = (int) (this.length * AudioBlock.SAMPLE_RATE / 2)
+				/ filter.getBarNumber(); // length of each band of the filter
+											// (11 bands on the whole)
+
+		for (int i = 0; i < (int) ((this.length * AudioBlock.SAMPLE_RATE / 2) / sampleLength); i++) { // (length*SR/2)
+																										// /
+																										// sampleLength
+																										// (n�of
+			// samples in the first half
+			time += i * (200 / 1000); // the i-th sampling
 			byte[] soundi = new byte[sampleLength];
 			for (int j = 0; j < sampleLength; j++) {
-				
+
 				soundi[j] = sound[(int) (j + time * AudioBlock.SAMPLE_RATE)];
 			}
-			
+
 			System.out.println("fourier");
 			Complex[] fourierCoeffs = computeFourier(soundi);
 			System.out.println("fin fourier");
-			
-			int bari = (int) (time * AudioBlock.SAMPLE_RATE / bandfreq) ; // which bar choose																				
+
+			int bari = (int) (time * AudioBlock.SAMPLE_RATE / bandfreq); // which
+																			// bar
+																			// choose
 			int coeff = filter.getBar(bari);
 			double[] fourierFiltered = new double[fourierCoeffs.length];
 			for (int h = 0; h < fourierCoeffs.length; h++) {
@@ -213,8 +223,8 @@ public class Sound extends Observable implements Observer {
 			int barNumber = i / barLength;
 			double barValue = (double) filter.getBar(barNumber) / 100.;
 			spectrum[i] = spectrum[i].multiply(barValue);
-			spectrum[spectrum.length - i - 1] = spectrum[spectrum.length
-					- i - 1].multiply(barValue);
+			spectrum[spectrum.length - i - 1] = spectrum[spectrum.length - i
+					- 1].multiply(barValue);
 		}
 
 		// inverse transform
@@ -299,9 +309,8 @@ public class Sound extends Observable implements Observer {
 	 */
 	public Sound filter(BandsFilter filter) {
 		Sound filteredSound = new Sound(instrument, length);
-		filteredSound.lock();
-		filteredSound.applyFilter(filter);
-//		filteredSound.applyFilter2(filter);
+		filteredSound.disconnectInstrument();
+		filteredSound.applyFilter2(filter);
 		return filteredSound;
 	}
 
@@ -320,6 +329,50 @@ public class Sound extends Observable implements Observer {
 	public void unlock() {
 		locked = false;
 		updateSound();
+	}
+
+	/**
+	 * Sum the spectrum
+	 * 
+	 * @return
+	 */
+	public int getDegats() {
+		int result = 0;
+		for (int i = 0; i < spectrum.length; i++)
+			result += spectrum[i].abs();
+		return result;
+	}
+
+	/**
+	 * Sends to speakers
+	 */
+	public void playToSpeakers() {
+		Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				SpeakersOutput speakersOutput = new SpeakersOutput();
+				try {
+					speakersOutput.open();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				try {
+					speakersOutput.play(sound);
+				} catch (AudioException e) {
+					e.printStackTrace();
+				}
+				speakersOutput.close();
+			}
+		});
+		thread.start();
+	}
+	
+	
+	public void disconnectInstrument() {
+		if (instrument != null)
+			instrument.deleteObserver(this); 
+		instrument = null;
+		lock();
 	}
 
 }

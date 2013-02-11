@@ -87,7 +87,7 @@ public class SLFilterSlider extends JPanel implements Observer {
 		slider.setValue(eq.getBar(num));
 		changeFromModel = false;
 		
-		System.out.println("filter slider updated");
+//		System.out.println("filter slider updated");
 	}
 
 }

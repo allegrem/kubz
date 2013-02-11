@@ -1,5 +1,10 @@
 package player.unit;
 
+/**
+ * 
+ * @author Felix
+ *
+ */
 public class DirectionUState extends UnitState {
 
 	@Override
