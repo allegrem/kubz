@@ -100,7 +100,7 @@ public class FmInstruments3Params extends FmInstrument implements
 		setChanged();
 		notifyObservers();
 
-		System.out.println("fm instrument updated");
+		//System.out.println("fm instrument updated");
 	}
 
 

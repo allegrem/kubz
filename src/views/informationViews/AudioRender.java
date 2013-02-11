@@ -20,7 +20,7 @@ public class AudioRender {
 	private int ymax;
 	private int ymin;
 
-	private int zoomX = 10000;
+	private int zoomX = 5000;
 
 	private int currentSoundLength = 0;
 
