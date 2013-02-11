@@ -136,7 +136,7 @@ public class SLSpectrumView extends JPanel implements Observer {
 		}
 		updateUI();
 		
-		System.out.println("spectrum view updated");
+//		System.out.println("spectrum view updated");
 	}
 
 }

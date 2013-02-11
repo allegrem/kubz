@@ -93,7 +93,7 @@ public abstract class FmInstrumentNParams extends FmInstrument implements AudioB
 		setChanged();
 		notifyObservers();
 		
-		System.out.println("fm instrument updated");
+//		System.out.println("fm instrument updated");
 	}
 
 }

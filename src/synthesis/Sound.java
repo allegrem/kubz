@@ -141,7 +141,7 @@ public class Sound extends Observable implements Observer {
 		if (!locked)
 			updateSound();
 
-		System.out.println("sound updated");
+//		System.out.println("sound updated");
 	}
 
 	/**
@@ -157,7 +157,7 @@ public class Sound extends Observable implements Observer {
 	 */
 	public void setInstrument(FmInstrument instrument2) {
 		if (instrument != null)
-			instrument.deleteObserver(this);
+			instrument.deleteObservers();  // remove all observers from the instrument
 		instrument = instrument2;
 		instrument2.addObserver(this);
 		updateSound();
