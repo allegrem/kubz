@@ -55,7 +55,7 @@ public class Sound extends Observable implements Observer {
 		setInstrument(instrument); // FIXME double call of update here...
 		setLength(length); // /... and here
 	}
-
+	
 	/**
 	 * Change the length of the sound. The sound is updated after editing the
 	 * length.
@@ -157,7 +157,7 @@ public class Sound extends Observable implements Observer {
 	 */
 	public void setInstrument(FmInstrument instrument2) {
 		if (instrument != null)
-			instrument.deleteObservers();  // remove all observers from the instrument
+			instrument.deleteObserver(this);
 		instrument = instrument2;
 		instrument2.addObserver(this);
 		updateSound();
@@ -309,7 +309,7 @@ public class Sound extends Observable implements Observer {
 	 */
 	public Sound filter(BandsFilter filter) {
 		Sound filteredSound = new Sound(instrument, length);
-		filteredSound.lock();
+		filteredSound.disconnectInstrument();
 		filteredSound.applyFilter2(filter);
 		return filteredSound;
 	}
@@ -365,6 +365,14 @@ public class Sound extends Observable implements Observer {
 			}
 		});
 		thread.start();
+	}
+	
+	
+	public void disconnectInstrument() {
+		if (instrument != null)
+			instrument.deleteObserver(this); 
+		instrument = null;
+		lock();
 	}
 
 }
