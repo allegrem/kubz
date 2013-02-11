@@ -152,7 +152,7 @@ public class SLSoundView extends JPanel implements Observer {
 		zoomX = currentSoundLength;
 		updateUI();
 		
-		System.out.println("sound view updated");
+//		System.out.println("sound view updated");
 	}
 
 }

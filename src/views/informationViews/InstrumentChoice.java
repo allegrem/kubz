@@ -3,6 +3,8 @@ package views.informationViews;
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 
+import gameEngine.GameEngine;
+
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
@@ -22,6 +24,7 @@ public class InstrumentChoice implements DisplayableChild{
 	private DisplayableFather father;
 	private int[] instrList = new int[6];
 	private double distance=90;	
+	private GameEngine gameEngine;
 	
 	private ReadableColor chosen;
 	
@@ -29,6 +32,10 @@ public class InstrumentChoice implements DisplayableChild{
 	
 
 
+	public InstrumentChoice(GameEngine gameEngine){
+		this.gameEngine=gameEngine;
+	}
+	
 	@Override
 	public synchronized void paint() {
 		//GL11.glDisable(GL11.GL_TEXTURE_2D);			
@@ -42,7 +49,11 @@ public class InstrumentChoice implements DisplayableChild{
 		for (int i=0;i<instrList.length;i++){
 			//GL11.glColor3ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue());
 			x=distance*Math.cos(angle);
-			y=distance*Math.sin(angle);			
+			y=distance*Math.sin(angle);	
+			if(posx+x<0 || posy+y<0 || posx+x>gameEngine.getWidth() || posy+y>gameEngine.getWindowHeight() ){
+				x=2*distance*Math.cos(angle+Math.PI);
+				y=2*distance*Math.sin(angle+Math.PI);	
+			}
 			glMatrixMode(GL_MODELVIEW);
 			GL11.glPushMatrix();
 			GL11.glTranslated(posx+x, posy+y,father.getHeight()+10 );

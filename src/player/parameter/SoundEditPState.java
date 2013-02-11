@@ -1,5 +1,11 @@
 package player.parameter;
 
+/**
+ * 
+ * @author Felix
+ *
+ */
+
 public class SoundEditPState extends ParameterState{
 
 	@Override

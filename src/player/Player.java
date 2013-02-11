@@ -2,6 +2,7 @@ package player;
 
 /**
  * Classe qui represente un joueur, a des reference vers ses unites et parametres
+ * @author Felix
  */
 
 import base.Base;
@@ -9,7 +10,9 @@ import gameEngine.GameEngine;
 import OpenGL.KeyboardManager;
 import player.parameter.*;
 import player.unit.*;
+import synthesis.Sound;
 import synthesis.filters.BandsFilter;
+import synthesis.fmInstruments.FmInstruments3Params;
 import views.attacks.AttackConeView;
 import views.attacks.SinusoidalAttackView;
 import views.informationViews.InstrumentChoice;
@@ -205,7 +208,7 @@ public  class Player {
 	
 	public void chooseWeaponTurn(){
 		//InstrumentsChoice instChoice = new InstrumentsChoice();
-		InstrumentChoice instChoice = new InstrumentChoice();
+		InstrumentChoice instChoice = new InstrumentChoice(gameEngine);
 		unit.getView().addChild(instChoice);
 		while (!KeyboardManager.tap){
 			if (unit.getInstrumentChoiceAngle()>=0){
@@ -241,6 +244,8 @@ public  class Player {
 				if((KeyboardManager.dKey)&&(parameters[choice].getX()+size<(base.getCenter().getX()+(base.getSize().getX()/2)))) parameters[choice].translate(1,0);
 				if(KeyboardManager.wKey) parameters[choice].rotate(1);
 				if(KeyboardManager.xKey) parameters[choice].rotate(-1);	
+				FmInstruments3Params instrument = (FmInstruments3Params) unit.getSound().getInstrument();
+				instrument.changeParams(getChangeAngle1(), getChangeAngle2(), getChangeDistance());
 				try {
 					Thread.sleep(10);
 				} catch (InterruptedException e) {
@@ -287,12 +292,12 @@ public  class Player {
 		AttackConeView attackCone = new AttackConeView(unit.getAperture(), unit.getDirection(), 100, unit.getView());
 		unit.getView().addChild(attackCone);
 		while (!KeyboardManager.tap){
-			if(KeyboardManager.wKey && unit.getAperture()<360) {
-				unit.rotateAperture(1);
+			if(KeyboardManager.wKey && unit.getAperture()>0) {
+				unit.rotateAperture(-1);
 				attackCone.setAperture(unit.getAperture());
 			}
-			if(KeyboardManager.xKey && unit.getAperture()>0){ 
-				unit.rotateAperture(-1);
+			if(KeyboardManager.xKey && unit.getAperture()<360){ 
+				unit.rotateAperture(1);
 				attackCone.setAperture(unit.getAperture());
 			}
 			try {
