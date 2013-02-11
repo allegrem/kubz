@@ -20,7 +20,8 @@ import OpenGL.Textures;
 
 public class InstrumentChoice implements DisplayableChild{
 	private DisplayableFather father;
-	private int[] instrList = new int[6];
+	
+	private int length = 6;
 	private double distance=90;	
 	
 	int chosen = 0;
@@ -33,9 +34,9 @@ public class InstrumentChoice implements DisplayableChild{
 		double x;
 		double y;
 		double angle =0;		
-		double dAngle=2*Math.PI/(instrList.length);
+		double dAngle=2*Math.PI/(length);
 		int sideLength = 20;  //cote du carre pour les instuements
-		for (int i=0;i<instrList.length;i++){
+		for (int i=0;i<length;i++){
 			//GL11.glColor3ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue());
 			x=distance*Math.cos(angle);
 			y=distance*Math.sin(angle);			
