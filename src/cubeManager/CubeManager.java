@@ -17,16 +17,19 @@ public class CubeManager {
         this.freeCubesList = new ArrayList<Cube>();
     }
 	
+    /* Take a free Cube and put it on the usedCubesList */
 	public Cube getFreeCube(){
 		Cube cube = freeCubesList.remove(0);
 		usedCubesList.add(cube);
 		return cube;
 	}
 	
+	/* Return the list of the cubes actually used */
 	public ArrayList<Cube> getAllCubes(){
 		return usedCubesList;
 	}
 
+	/* Return the cube which has the address given */
     public Cube getCube (int adress){
 
         Cube rep = new Cube(null);
@@ -39,6 +42,7 @@ public class CubeManager {
         return rep;
     }
 	
+    /* Add a cube to the freeCubesList */
     public void addFreeCube (Cube c){
     	this.freeCubesList.add(c);
     }
