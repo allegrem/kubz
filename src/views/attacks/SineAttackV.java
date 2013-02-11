@@ -5,6 +5,11 @@ import utilities.Point;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
 
+/**
+ * Attaque sinusoidale version 2. 
+ * @author valeh
+ *
+ */
 
 public class SineAttackV implements DisplayableChild{
 	

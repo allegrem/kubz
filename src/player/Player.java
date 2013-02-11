@@ -19,6 +19,7 @@ import synthesis.fmInstruments.WoodInstrument;
 import synthesis.fmInstruments.XylophoneInstrument;
 import views.attacks.AttackConeView;
 import views.attacks.SinusoidalAttackView;
+import views.informationViews.InstrumentChoice;
 import views.informationViews.InstrumentsChoice;
 
 public class Player {
@@ -226,6 +227,7 @@ public class Player {
 		}
 		KeyboardManager.tap = false;
 	}
+
 
 	public void chooseWeaponTurn() {
 		InstrumentsChoice instChoice = new InstrumentsChoice();

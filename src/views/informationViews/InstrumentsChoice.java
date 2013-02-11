@@ -12,6 +12,9 @@ import utilities.Point;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
 import org.lwjgl.util.glu.Disk;
+import org.newdawn.slick.Color;
+
+import OpenGL.Textures;
 
 /**
  * Affichage de cercles autour de l'unite pour le choix des instruments.
@@ -41,24 +44,25 @@ public class InstrumentsChoice implements DisplayableChild{
 
 	@Override
 	public synchronized void paint() {
-		GL11.glDisable(GL11.GL_TEXTURE_2D);
+		GL11.glDisable(GL11.GL_TEXTURE_2D);			
 		double posx=father.getX();
 		double posy=father.getY();
 		double x;
 		double y;
-		double angle =0;
+		double angle =0;		
 		double dAngle=2*Math.PI/(colors.size());
-		for (ReadableColor color:colors){
+		for (ReadableColor color : colors){
 			GL11.glColor3ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue());
 			x=distance*Math.cos(angle);
-			y=distance*Math.sin(angle);
+			y=distance*Math.sin(angle);			
 			glMatrixMode(GL_MODELVIEW);
 			GL11.glPushMatrix();
 			GL11.glTranslated(posx+x, posy+y,father.getHeight()+10 );
 			if(color==chosen){
 			disk.draw(0,rayon+10, 50, 1);
+			
 			}else{
-				disk.draw(0,rayon, 50, 1);
+				disk.draw(0,rayon, 50, 1);		
 			}
 			GL11.glLoadIdentity();
 			GL11.glPopMatrix();

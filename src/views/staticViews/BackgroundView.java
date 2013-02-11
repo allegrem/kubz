@@ -97,10 +97,10 @@ public class BackgroundView implements DisplayableFather{
 		 if (Textures.textureSea==null)
 		 	Textures.initTexturePath();   
 		 GL11.glColor3f(1.0f,1.0f,1.0f);
-		 Textures.textureSea.bind();
+		 //Textures.textureSea.bind();
 		 
-		
-		
+		 GL11.glBindTexture(GL11.GL_TEXTURE_2D,Textures.textureSea.getTextureID());		 
+		 
 		glBegin(GL_QUADS);
 		GL11.glNormal3f(0,0, 1.0f);
 		GL11.glTexCoord2f(0,0);
