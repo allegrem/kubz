@@ -11,7 +11,9 @@ import cubeManager.CubeManager;
 
 public class XBee extends Thread implements Runnable{
 
+	/* Ref on the cube manager in order to actualize the good cube*/
     private CubeManager manager = new CubeManager();
+    
     private String dataReceive = null;
     private Scanner sc = new Scanner(System.in);
 
@@ -44,7 +46,7 @@ public class XBee extends Thread implements Runnable{
         try {
             outToServer = new DataOutputStream(clientSocket.getOutputStream());
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();  
         }
     }
     
@@ -61,6 +63,7 @@ public void setCubeManager(CubeManager cubeManager) {
         this.manager = cubeManager;
 }
 
+/* Read the next byte receive */
 public int readByte() {
 	byte [] b = new byte[1];
 	int n=0;
@@ -74,7 +77,7 @@ public int readByte() {
 	return (int) b[0] & 0xff;
 }
 
-
+/* Read the complete next frame */
 public void readFrame (){
 	// Initialize the Array where the Frame will be
 	for(int i=0; i<109; i++)
@@ -102,6 +105,7 @@ public void readFrame (){
 	}
 }
 
+/* Parse the frame in order to decode the data */
 public void parseRXFrame (){
 	// XXX : TODO : Calculate Checksum
 	int addr = buf[3]*256 + buf[4];
@@ -116,8 +120,8 @@ public void parseRXFrame (){
 	} catch (Exception e){}
 }
 
+/* Send the frame which will diffuse the message given */
 public void sendRXFrame (String message){
-	// XXX TODO : add mutex 
 	byte[] msg =  new byte[200];
     byte[] dataSend = new byte[208];
 	byte sum = 0x00;
@@ -152,7 +156,7 @@ public void sendRXFrame (String message){
 		
 		dataSend[15 + msg.length]= (byte) (0xFF - (sum)); // checksum				
 		
-	    outToServer.writeBytes(st);
+	    outToServer.writeBytes(st); // Send the frame
 	    outToServer.flush();
 	} catch (Exception e){
 	   e.printStackTrace();

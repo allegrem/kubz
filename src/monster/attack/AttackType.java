@@ -9,7 +9,7 @@ import synthesis.Sound;
 import synthesis.fmInstruments.FmInstruments3Params;
 import synthesis.fmInstruments.TwoOscFmInstrument;
 
-import monster.Monster;
+import monster.zoo.Monster;
 
 import views.attacks.SinusoidalAttackView;
 
@@ -38,7 +38,7 @@ public abstract class AttackType {
 			monster.getView().addChild(attack);
 			int degats = sound
 					.filter(monster.getCible().getOwner().getShield())
-					.getDegats() / 30000000; // dégats diminues sinon ca fait
+					.getDegats() / 30000000; // dï¿½gats diminues sinon ca fait
 												// trop
 												// mal au joueur
 			System.out.println(degats);

@@ -9,7 +9,7 @@ import base.Base;
 import OpenGL.GLDisplay;
 import map2.Map;
 import map2.MapReader;
-import monster.Monster;
+import monster.zoo.Monster;
 import player.*;
 import player.unit.Unit;
 import synthesis.Sound;
@@ -23,7 +23,7 @@ import cube.Cube;
 
 //import cubeManager.*;
 
-public class GameEngine {
+public class GameEngine extends Thread{
 	private final int width;
 	private final int height;
 	public ArrayList<Monster> monsterList;
@@ -51,7 +51,6 @@ public class GameEngine {
 				e.printStackTrace();
 			}
 		}
-		display.setSound(new Sound(new BellInstrument(), 1));
 		width = display.getmapDisplay_width();
 		height = display.getmapDisplay_height();
 		System.out.println("Width: " + width + " Height: " + height);
@@ -73,7 +72,7 @@ public class GameEngine {
 		playerList.add(new Player(this, bases.get(0)));
 		// playerList.add(new Player(this,bases.get(0)));
 		// playerList.add(new Player(this));
-		act();
+		
 
 	}
 
@@ -124,7 +123,7 @@ public class GameEngine {
 	/**
 	 * Mehode principale du gameEngine
 	 */
-	public void act() {
+	public void run() {
 		while (display.isAlive()) {
 			playerTurn();
 			monsterTurn();
@@ -225,7 +224,7 @@ public class GameEngine {
 
 	private boolean checkPos(CubeOwner cubeOwner) {
 		cubeOwner.getCube().setIrOn();
-		traitement.updateConnexe(null); // intégration avec la cam à
+		traitement.updateConnexe(null); // intï¿½gration avec la cam ï¿½
 										// regler pour recuperer l'image
 		ArrayList<Point> currentPositions = new ArrayList<Point>();
 		for (int i = 1; i <= 3; i++) {

@@ -1,12 +1,12 @@
 package monster.move;
 
 /**
- * Mouvements normaux qui se déplace vers sa cible
+ * Mouvements normaux qui se dï¿½place vers sa cible
  * @author Felix
  */
 
 import player.unit.Unit;
-import monster.Monster;
+import monster.zoo.Monster;
 
 public class RegularMove extends MoveType{
 	

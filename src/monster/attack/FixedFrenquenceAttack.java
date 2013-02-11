@@ -9,7 +9,7 @@ import synthesis.Sound;
 import synthesis.fmInstruments.FmInstruments3Params;
 import synthesis.fmInstruments.TwoOscFmInstrument;
 
-import monster.Monster;
+import monster.zoo.Monster;
 
 public class FixedFrenquenceAttack extends AttackType {
 

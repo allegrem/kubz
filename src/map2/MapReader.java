@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
-import monster.CircleMonster;
-import monster.Monster;
+import monster.zoo.CircleMonster;
+import monster.zoo.Monster;
 import monster.zoo.SquareMonster;
 import monster.zoo.TriangleMonster;
 
