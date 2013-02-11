@@ -23,7 +23,7 @@ import cube.Cube;
 
 //import cubeManager.*;
 
-public class GameEngine {
+public class GameEngine extends Thread{
 	private final int width;
 	private final int height;
 	public ArrayList<Monster> monsterList;
@@ -72,7 +72,7 @@ public class GameEngine {
 		playerList.add(new Player(this, bases.get(0)));
 		// playerList.add(new Player(this,bases.get(0)));
 		// playerList.add(new Player(this));
-		act();
+		
 
 	}
 
@@ -123,7 +123,7 @@ public class GameEngine {
 	/**
 	 * Mehode principale du gameEngine
 	 */
-	public void act() {
+	public void run() {
 		while (display.isAlive()) {
 			playerTurn();
 			monsterTurn();
