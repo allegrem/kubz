@@ -8,14 +8,13 @@ import java.awt.image.WritableRaster;
 
 import javax.swing.JPanel;
 
+import com.googlecode.javacv.CanvasFrame;
+
 import processing.core.PImage;
 import traitementVideo.Traitement;
 import traitementVideo.VirtualPixel;
 import utilities.Point;
 import videoprocessing.ImagePanel;
-
-
-import com.googlecode.javacv.CanvasFrame;
 
 /**
  * 
@@ -69,22 +68,26 @@ public class GrabberShow implements Runnable {
 		while (true) {
 
 			myCamera.getCameraFrame(myImage.pixels, 1000);
-			myImage.filter(PImage.THRESHOLD, 0.5f); //passage en mode threshold
+			myImage.filter(PImage.THRESHOLD, 0.25f); //passage en mode threshold
 			compconn = 0;
 			int posX = 0, posY = 0;
 			int comptX = 0, comptY = 0;
 			double cupos = 0;
 			for (int i = 0; i < myImage.pixels.length; i++) {
-				if ((myImage.pixels[i] & 0xFF) > 250) white = true;
+				if ((myImage.pixels[i] & 0xFF) > 45) {
+					white = true;
+					posX = comptX;
+					posY = comptY;
+				}
 				else white = false;
-				virtualTab[comptX][comptY] = new VirtualPixel(white, 0, new Point(comptX,comptY));
+				//virtualTab[comptX][comptY] = new VirtualPixel(white, 0, new Point(comptX,comptY));
 				comptX++; // on parcours l'image en largeur
 				if (comptX == CAMERA_WIDTH) // on descend d'une ligne
 				{
 					comptX = 0;
 					comptY++;
 				}
-				// virtualTab[comptX][comptY] = new VirtualPixel(comptX,comptY,white,compconn);
+				//virtualTab[comptX][comptY] = new VirtualPixel(comptX,comptY,white,compconn);
 			}
 			cupos = Math.sqrt((posnX - posX) * (posnX - posX) + (posnY - posY)
 					* (posnY - posY));
@@ -109,9 +112,9 @@ public class GrabberShow implements Runnable {
 			}
 			// Je pense que comme ca, ca peut marcher, t'auras juste a decommenter et creer l'objet Traitement ou il faudra
 			
-			Traitement traitement = new Traitement();
-			traitement.updateConnexe(virtualTab);
-			traitement.getGroupesPos(); // te renvoie une liste de points (coordonnées en double) qui sont les centres des taches (normalement)
+			//Traitement traitement = new Traitement();
+			//traitement.updateConnexe(virtualTab);
+			//traitement.getGroupesPos(); // te renvoie une liste de points (coordonnées en double) qui sont les centres des taches (normalement)
 			  
 			 
 			

@@ -9,7 +9,6 @@ package player.unit;
 import cube.Cube;
 import gameEngine.GameEngine;
 import synthesis.Sound;
-import synthesis.fmInstruments.FmInstruments3Params;
 import synthesis.fmInstruments.TwoOscFmInstrument;
 import utilities.Point;
 import views.CubeControlledView;
@@ -32,15 +31,17 @@ public class Unit extends CubeOwner{
 	private Player owner;
 	private GameEngine gameEngine;
 	private int power;
+	private LifeView lifeView;
 	
 	
 	public Unit(Player owner){
-		life = 1000;
+		life = 100;
 		this.state = new WaitingUState();
 		this.owner = owner;
 		gameEngine=owner.getGameEngine();
 		view=new CubeControlledView(pos);
-		view.addChild(new LifeView(view));
+		lifeView = new LifeView(view);
+		view.addChild(lifeView);
 		size=view.getSize();
 		gameEngine.getMap().add(view);
 		this.sound = new Sound(TwoOscFmInstrument.getFmInstruments3Params(), 3f);
@@ -74,20 +75,25 @@ public class Unit extends CubeOwner{
 	}
 
 	/**
-	 * M�thodes relatives � la vie de Unit
+	 * Methodes relatives a la vie de Unit
 	 */
 	public void increaseLife(double inc){
 		life = life + inc;
+		lifeView.setLife(life);
 	}
 	public void decreaseLife(double dec){
 		life = life - dec;
+		lifeView.setLife(life);
 		if (life<0){
 			gameEngine.getUnitList().remove(this);
 			gameEngine.getPlayerList().remove(owner);
+			view.removeChild(lifeView);
+			view.setUnTracked(false);
 		}
 	}
 	public void setLife(double newLife){
 		life = newLife;
+		lifeView.setLife(life);
 	}
 	public double getLife(){
 		return life;
@@ -154,7 +160,7 @@ public class Unit extends CubeOwner{
 	}
 	
 	/**
-	 * M�thode relatives � la direction de l'attaque 
+	 * Methode relatives a la direction de l'attaque 
 	 * @param theta
 	 * @param dTheta
 	 */
@@ -166,14 +172,14 @@ public class Unit extends CubeOwner{
 	public void rotateDirection(double dTheta){
 		direction = direction + dTheta;
 		view.rotateDirection(dTheta);
-		view.rotate(dTheta);
+		view.rotate(-dTheta);
 	}
 	public double getDirection(){
 		return direction;
 	}
 	
 	/**
-	 * M�thode relatives au choix de l'instrument 
+	 * Methode relatives au choix de l'instrument 
 	 * @param theta
 	 * @param dTheta
 	 */

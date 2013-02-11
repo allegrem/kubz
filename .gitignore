@@ -5,6 +5,7 @@
 .settings/
 bin/
 *.wav
+.classpath
 doc/
 .DS_Store
 lib_sources/
@@ -25,3 +26,4 @@ lib/log4j.properties
 lib/xbee_api/
 projet-2012-11.iml
 *~
+.classpath
