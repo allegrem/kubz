@@ -60,10 +60,10 @@ public class InstrumentsChoice implements DisplayableChild{
 			GL11.glColor3ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue());
 			x=distance*Math.cos(angle);
 			y=distance*Math.sin(angle);	
-			if(posx+x<0 || posy+y<0 || posx+x>gameEngine.getWidth() || posy+y>gameEngine.getWindowHeight() ){
+			/*if(posx+x<0 || posy+y<0 || posx+x>gameEngine.getWidth() || posy+y>gameEngine.getWindowHeight() ){
 				x=2*distance*Math.cos(angle+Math.PI);
 				y=2*distance*Math.sin(angle+Math.PI);	
-			}
+			}*/
 			glMatrixMode(GL_MODELVIEW);
 			GL11.glPushMatrix();
 			GL11.glTranslated(posx+x, posy+y,father.getHeight()+10 );
