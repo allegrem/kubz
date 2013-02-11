@@ -8,6 +8,7 @@ import player.unit.*;
 import synthesis.Sound;
 import synthesis.fmInstruments.FmInstruments3Params;
 import synthesis.fmInstruments.TwoOscFmInstrument;
+import synthesis.fmInstruments.WoodInstrument;
 
 import monster.zoo.Monster;
 
@@ -21,7 +22,7 @@ public abstract class AttackType {
 
 	public AttackType(Monster monster) {
 		this.monster = monster;
-		FmInstruments3Params instrument = TwoOscFmInstrument
+		FmInstruments3Params instrument = WoodInstrument
 				.getFmInstruments3Params();
 		instrument.random();
 		sound = new Sound(instrument, 3f);

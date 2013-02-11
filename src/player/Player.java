@@ -313,6 +313,14 @@ public class Player {
 				parameters[choice].rotate(-1);
 				isModified = true;
 			}
+			if (KeyboardManager.aKey) {
+				unit.getSound().playToSpeakers();
+				try {
+					Thread.sleep(3000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}	
 			if (!(KeyboardManager.zKey || KeyboardManager.sKey
 					|| KeyboardManager.qKey || KeyboardManager.dKey
 					|| KeyboardManager.wKey || KeyboardManager.xKey)) {
@@ -321,8 +329,9 @@ public class Player {
 							.getSound().getInstrument();
 					instrument.changeParams(getChangeAngle1(),
 							getChangeAngle2(), getChangeDistance());
-					isModified = false;
+					isModified = false;					
 				}
+				
 			}
 			try {
 				Thread.sleep(10);
