@@ -208,8 +208,7 @@ public  class Player {
 	}
 	
 	public void chooseWeaponTurn(){
-		//InstrumentsChoice instChoice = new InstrumentsChoice();
-		InstrumentChoice instChoice = new InstrumentChoice(gameEngine);
+		InstrumentsChoice instChoice = new InstrumentsChoice(gameEngine);
 		unit.getView().addChild(instChoice);
 		while (!KeyboardManager.tap){
 			if (unit.getInstrumentChoiceAngle()>=0){
