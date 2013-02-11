@@ -26,7 +26,7 @@ public abstract class MoveType {
 	}
 	
 	/**
-	 * Le monstre se d�place vers une unit� � la vitesse speed
+	 * Le monstre se deplace vers une unit� � la vitesse speed
 	 * Pas de condition pour se d�placer car
 	 * - ne croise pas de mur (sinon ne la vois pas)
 	 * - ne sort pas de la carte (sinon le joueur est hors de la acrte et c'est pas possible)

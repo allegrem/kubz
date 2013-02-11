@@ -39,9 +39,9 @@ public class Monster {
 	/**
 	 * reference vers la vue du monstre pour pouvoir transmettre les modifications necessaires 
 	 */
-	protected MonsterView view = new MonsterView();
-	lifeView = new LifeView(view);
-	view.addChild(lifeView);
+	protected MonsterView view;
+	/*lifeView = new LifeView(view);
+	view.addChild(lifeView);*/
 	
 	
 	
@@ -63,7 +63,7 @@ public class Monster {
 		move=new RandomMove(this,500);
 		
 	}
-	
+	/*
 	public void increaseLife(double inc){
 		life = life + inc;
 		lifeView.setLife(life);
@@ -83,7 +83,7 @@ public class Monster {
 	}
 	public double getLife(){
 		return life;
-	}
+	}*/
 	
 					/** Partie qui gere l'attaque du monstre*/
 	
