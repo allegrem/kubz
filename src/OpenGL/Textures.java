@@ -23,7 +23,7 @@ public class Textures {
 		textureSea=null;
 		try {
 
-			textureSea = TextureLoader.getTexture("JPG",ResourceLoader.getResourceAsStream("Textures/sea.png"));
+			textureSea = TextureLoader.getTexture("JPG",ResourceLoader.getResourceAsStream("Textures/lune.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

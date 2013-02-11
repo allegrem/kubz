@@ -8,7 +8,7 @@
 	<classpathentry kind="lib" path="lib/lwjgl_util.jar"/>
 	<classpathentry kind="lib" path="lib/lwjgl.jar">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="projet-2012-11/OpenGL-libs/lwjgl-2.8.5/native/windows"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="projet-2012-11/OpenGL-libs/lwjgl-2.8.5/native/linux"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/RXTXcomm.jar"/>
