@@ -1,3 +1,6 @@
+
+*.tmp
+.project
 *.class
 .settings/
 bin/
