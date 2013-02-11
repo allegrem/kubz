@@ -31,6 +31,7 @@ public class Parameter extends CubeOwner{
 		view = new CubeControlledView(pos);
 		view.setInvisible3D(true);
 		size = view.getSize();
+		view.setInvisible3D(true);
 		gameEngine.getMap().add(view);
 		
 	}
