@@ -158,7 +158,7 @@ public void sendRXFrame (String message){
 		dataSend[14 + msg.length]= (byte) (0xFF - (sum)); // checksum		;
 		
 	   outToServer.write(dataSend, 0, 15 + msg.length);
-	   //outToServer.flush();
+	   outToServer.flush();
 	} catch (Exception e){
 	   e.printStackTrace();
 	} 
