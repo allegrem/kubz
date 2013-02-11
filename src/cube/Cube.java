@@ -11,6 +11,7 @@ public class Cube{
 	 * Attribute of cube
 	 */
 	private int angle;
+	private int lastAngle;
 	private boolean tap;
 
 	private int id;
@@ -68,6 +69,12 @@ public class Cube{
      */
 	public int getAngle() {
 		return this.angle;
+	}
+	
+	public int getAngleChange(){
+		int retour = lastAngle - angle;
+		lastAngle = angle;
+		return retour;
 	}
 
     /**
