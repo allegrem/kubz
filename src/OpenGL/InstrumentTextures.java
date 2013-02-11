@@ -16,23 +16,45 @@ public class InstrumentTextures {
 		textureList[i] = null;
 		switch (i){
 		case 0:			
-			fileName = "Textures/herringbone21.jpg";
+			fileName = "Textures/1360563702_tmp_violin.jpg";
+			break;
 		case 1:
-			fileName =  "Textures/metal021.jpg";
+			fileName =  "Textures/bell.jpg";
+			break;
+		case 2:
+			fileName = "Textures/flute.jpg";
+			break;
+		case 3:
+			fileName = "Textures/FM2.jpg";
+			break;
+		case 4:
+			fileName = "Textures/xylophone.jpg";
+			break;
+		case 5:
+			fileName = "Textures/piano.jpg";
+			break;			
+		default:
+			//throw exception... will be written later
+			break;
 		
 		}
-		textureList[i] = loadTexture(fileName);
-	}
-	
-	private static Texture loadTexture(String fileName){
-		Texture textureToLoad = null;
 		try {
-			textureToLoad = TextureLoader.getTexture("jpg", ResourceLoader.getResourceAsStream(fileName));
+			textureList[i] = TextureLoader.getTexture("jpg", ResourceLoader.getResourceAsStream(fileName));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return textureToLoad;
 	}
+	
+	/*private static void loadTexture(Texture texture,String fileName){
+		
+		try {
+			texture = TextureLoader.getTexture("jpg", ResourceLoader.getResourceAsStream(fileName));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}*/
 
 }
