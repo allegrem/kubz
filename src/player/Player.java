@@ -47,7 +47,8 @@ public  class Player {
 		parameters[1].setLocation(base.getCenter().getX()+parameters[1].getSize(), base.getCenter().getY());
 		this.shield = new BandsFilter(11);
 		this.shield.random();
-		
+		gameEngine.getDisplay().setSound(unit.getSound());
+
 	}
 	
 	/**
