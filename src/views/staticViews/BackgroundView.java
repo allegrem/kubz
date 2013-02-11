@@ -56,8 +56,8 @@ public class BackgroundView implements DisplayableFather{
 		this.width=width;
 		this.length=length;
 		this.time=time;
-		h1=time/2;
-		h2=time/2;
+		h1=time/10;
+		h2=time-time/10;
 		color1.fromHSB((float)(h1/time),1f,1f);
 		color2.fromHSB((float)(h2/time),1f,1f);
 		
@@ -81,6 +81,10 @@ public class BackgroundView implements DisplayableFather{
 			}
 			h2 +=sh2*alea;	
 
+			if(Math.abs(h2-h1)<50 && sh1==sh2){
+				sh1*=-1;
+			}
+			
 		color1.fromHSB((float)(h1/time),1f,1f);
 		color2.fromHSB((float)(h2/time),1f,1f);
 		
