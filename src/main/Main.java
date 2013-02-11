@@ -11,7 +11,7 @@ public class Main {
 	public static void main(String[] args) {
 		GameEngine gameEngine=new GameEngine();
 		GLDisplay display=gameEngine.getDisplay();
-		gameEngine.start();
+		gameEngine.start();p
 		while(display.isAlive()){
 			try {
 				Thread.sleep(1000);
