@@ -26,3 +26,4 @@ lib/log4j.properties
 lib/xbee_api/
 projet-2012-11.iml
 *~
+.classpath
