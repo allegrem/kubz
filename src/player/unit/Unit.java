@@ -6,6 +6,7 @@ package player.unit;
  * 
  */
 
+import cube.Cube;
 import gameEngine.GameEngine;
 import synthesis.Sound;
 import synthesis.fmInstruments.FmInstruments3Params;
@@ -57,6 +58,15 @@ public class Unit extends CubeOwner{
 
 	public Sound getSound() {
 		return sound;
+	}
+
+	/**
+	 * Retourne le cube physique auquel est associ� Unit
+	 * @return
+	 */
+	public Cube getCube() {
+		return cube;
+
 	}
 
 	public void setSound(Sound sound) {
@@ -137,7 +147,7 @@ public class Unit extends CubeOwner{
 	public void rotateAperture(double dTheta){
 		if ((aperture+dTheta>=0)&&(aperture+dTheta<=360)) aperture = aperture + dTheta;		
 		view.rotateAperture(dTheta);
-		view.rotate(dTheta);
+		view.rotate(-dTheta);
 	}
 	public double getAperture(){
 		return aperture;
