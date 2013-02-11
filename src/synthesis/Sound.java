@@ -156,7 +156,9 @@ public class Sound extends Observable implements Observer {
 	 * sound is updated.
 	 */
 	public void setInstrument(FmInstrument instrument2) {
-		this.instrument = instrument2;
+		if (instrument != null)
+			instrument.deleteObserver(this);
+		instrument = instrument2;
 		instrument2.addObserver(this);
 		updateSound();
 	}
