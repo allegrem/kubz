@@ -26,7 +26,7 @@ public class Cube{
 	 */
 	public void setRGB(byte R, byte G, byte B, short delay){
 		String message = "L" + R + G + B + delay; 
-		xBee.sendRXFrame(message);		  
+		// XXX TODO :xBee.sendRXFrame(message);		  
 	}
 
     /**
@@ -35,7 +35,7 @@ public class Cube{
      */
 	private void setIR(byte pattern){
 		String message = "I" + pattern;
-		xBee.sendRXFrame(message);
+		//XXX TODO : xBee.sendRXFrame(message);
     }
 	
 
@@ -54,7 +54,7 @@ public class Cube{
      */
 	public void setMotor(byte pattern) {
          String message = "M" + pattern;
-         xBee.sendRXFrame(message);
+         // XXX TODO : xBee.sendRXFrame(message);
 	}
 
     /**
