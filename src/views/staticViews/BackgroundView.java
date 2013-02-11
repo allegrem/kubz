@@ -8,8 +8,8 @@ import static org.lwjgl.opengl.GL11.glVertex3d;
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
+import org.newdawn.slick.Color;
 
 import utilities.Point;
 import utilities.RandomPerso;
@@ -28,24 +28,26 @@ public class BackgroundView implements DisplayableFather{
 	private int width;
 	private int length;
 	private long time;
+	private long startTime=0;
 	private int nbre=10;
-	private Color color1=new Color(0,0,0);
-	private Color color2=new Color(0,0,0);
 	
 	/*
 	 * Les couleurs de depart du background
 	 * (a l'ouverture de la fenetre)
 	 */
-	private double h1 ;
-	private double h2 ;
+	private int red1 = 197,blue1 = 226, green1 = 197;
+	private int red2 = 197,blue2 = 226, green2 = 197;
 	
 	/*
 	 * Sens de variation des differentes
 	 * composantes des couleurs
 	 */
-	private int sh1=1;
-	private int sh2=-1;
-
+	private int sRed1=1;
+	private int sGreen1=1;
+	private int sBlue1=1;
+	private int sRed2=-1;
+	private int sGreen2=-1;
+	private int sBlue2=-1;
 	
 	/**
 	 * Nouveau background
@@ -55,12 +57,9 @@ public class BackgroundView implements DisplayableFather{
 	public BackgroundView(int width, int length,long time) {
 		this.width=width;
 		this.length=length;
-		this.time=time;
-		h1=time/10;
-		h2=time-time/10;
-		color1.fromHSB((float)(h1/time),1f,1f);
-		color2.fromHSB((float)(h2/time),1f,1f);
-		
+		this.time=100;
+		startTime=System.currentTimeMillis();
+
 	}
 
 	/**
@@ -68,32 +67,67 @@ public class BackgroundView implements DisplayableFather{
 	 * de facon aleatoire et avec un degrade
 	 */
 	public void change(){
-	
-		int alea=RandomPerso.entier(5);
-			if(h1+sh1*alea<0 || h1+sh1*alea>time){
-			sh1*=-1;
-			}
-			h1 +=sh1*alea;	
-	
-		alea=RandomPerso.entier(5);
-		if(h2+sh2*alea<0 || h1+sh2*alea>time){
-			sh2*=-1;
-			}
-			h2 +=sh2*alea;	
-
-			if(Math.abs(h2-h1)<50 && sh1==sh2){
-				sh1*=-1;
-			}
+		if(System.currentTimeMillis()-startTime>=time){
 			
-		color1.fromHSB((float)(h1/time),1f,1f);
-		color2.fromHSB((float)(h2/time),1f,1f);
 		
+		startTime=System.currentTimeMillis();
+		int alea=RandomPerso.entier(5);
+		switch(RandomPerso.entier(3)){
+		case 0:
+			if(blue1+sBlue1*alea<100 || blue1+sBlue1*alea>255){
+			sBlue1*=-1;
+			}
+			blue1 +=sBlue1*alea;	
+			break;
+		
+		case 1:
+			if(green1+sGreen1*alea<100 || green1+sGreen1*alea>255){
+				sGreen1*=-1;
+				}
+				green1 +=sGreen1*alea;	
+				break;
+		
+		case 2:
+			if(red1+sRed1*alea<100 || red1+sRed1*alea>255){
+				sRed1*=-1;
+				}
+				red1 +=sRed1*alea;	
+
+				break;
+		}
+		
+		alea=RandomPerso.entier(5);
+		switch(RandomPerso.entier(3)){
+		case 0:{
+			if(blue2+sBlue2*alea<100 || blue2+sBlue2*alea>255){
+			sBlue2*=-1;
+			}
+			blue2 +=sBlue2*alea;	
+			break;
+		}
+		case 1:{
+			if(green2+sGreen2*alea<100 || green2+sGreen2*alea>255){
+				sGreen2*=-1;
+				}
+				green2 +=sGreen2*alea;	
+				break;
+		}
+		case 2:{
+			if(red2+sRed2*alea<100 || red2+sRed2*alea>255){
+				sRed2*=-1;
+				}
+				red2 +=sRed2*alea;	
+
+				break;
+		}
+		}
+		}
+	
 		
 	}
 	
 	@Override
 	public void paint() {	
-		
 		 glEnable(GL11.GL_TEXTURE_2D);
 		 GL11.glTexParameteri(GL11.GL_TEXTURE_2D,GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
 		 GL11.glTexParameteri(GL11.GL_TEXTURE_2D,GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
@@ -101,10 +135,11 @@ public class BackgroundView implements DisplayableFather{
 		 if (Textures.textureSea==null)
 		 	Textures.initTexturePath();   
 		 GL11.glColor3f(1.0f,1.0f,1.0f);
-		 //Textures.textureSea.bind();
+		 Color.gray.bind();
+		 Textures.textureSea.bind();
 		 
-		 GL11.glBindTexture(GL11.GL_TEXTURE_2D,Textures.textureSea.getTextureID());		 
-		 
+		
+		
 		glBegin(GL_QUADS);
 		GL11.glNormal3f(0,0, 1.0f);
 		GL11.glTexCoord2f(0,0);
@@ -197,19 +232,19 @@ public class BackgroundView implements DisplayableFather{
 		
 		glBegin(GL_QUADS);
 		GL11.glNormal3f(0,0, 1.0f);
-		GL11.glColor3ub((byte)color1.getRed(),(byte) color1.getGreen() ,(byte) color1.getBlue());
+		GL11.glColor3ub((byte)red1,(byte) green1 ,(byte) blue1);
 		//GL11.glTexCoord2f(0,0);
 		glVertex3d(0, 0, 0);
 		
-		GL11.glColor3ub((byte) ((color1.getRed()+color2.getRed())/2),(byte) color2.getGreen() , (byte) ((color1.getBlue()+color2.getBlue())/2));
+		GL11.glColor3ub((byte) ((red1+red2)/2),(byte) green2 , (byte) ((blue1+blue2)/2));
 		//GL11.glTexCoord2f(nbre,0);
 		glVertex3d(width, 0, 0);
 	
-		GL11.glColor3ub((byte)color2.getRed(), (byte)color2.getGreen() , (byte) color2.getBlue());
+		GL11.glColor3ub((byte)red2, (byte)green2 , (byte) blue2);
 		//GL11.glTexCoord2f(nbre,nbre);
 		glVertex3d(width, length, 0);
 		
-		GL11.glColor3ub((byte) ((color1.getRed()+color2.getRed())/2),(byte)color1.getGreen() ,(byte) ((color1.getBlue()+color2.getBlue())/2));
+		GL11.glColor3ub((byte) ((red1+red2)/2),(byte)green1 ,(byte) ((blue1+blue2)/2));
 		//GL11.glTexCoord2f(0,nbre);
 		glVertex3d(0,length, 0);
 	
