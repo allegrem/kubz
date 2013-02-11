@@ -1,5 +1,11 @@
 package player.parameter;
 
+/**
+ * 
+ * @author Felix
+ *
+ */
+
 public class ParameterState {
 	
 	public boolean canMove() {

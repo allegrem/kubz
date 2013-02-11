@@ -2,6 +2,7 @@ package player;
 
 /**
  * Classe qui represente un joueur, a des reference vers ses unites et parametres
+ * @author Felix
  */
 
 import base.Base;
@@ -9,7 +10,9 @@ import gameEngine.GameEngine;
 import OpenGL.KeyboardManager;
 import player.parameter.*;
 import player.unit.*;
+import synthesis.Sound;
 import synthesis.filters.BandsFilter;
+import synthesis.fmInstruments.FmInstruments3Params;
 import views.attacks.AttackConeView;
 import views.attacks.SinusoidalAttackView;
 import views.informationViews.InstrumentsChoice;
@@ -239,6 +242,8 @@ public  class Player {
 				if((KeyboardManager.dKey)&&(parameters[choice].getX()+size<(base.getCenter().getX()+(base.getSize().getX()/2)))) parameters[choice].translate(1,0);
 				if(KeyboardManager.wKey) parameters[choice].rotate(1);
 				if(KeyboardManager.xKey) parameters[choice].rotate(-1);	
+				FmInstruments3Params instrument = (FmInstruments3Params) unit.getSound().getInstrument();
+				instrument.changeParams(getChangeAngle1(), getChangeAngle2(), getChangeDistance());
 				try {
 					Thread.sleep(10);
 				} catch (InterruptedException e) {

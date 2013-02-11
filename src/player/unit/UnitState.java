@@ -1,5 +1,11 @@
 package player.unit;
 
+/**
+ * 
+ * @author Felix
+ *
+ */
+
 public abstract class UnitState {
 
 	public boolean canMove() {

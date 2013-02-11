@@ -1,6 +1,10 @@
 package monster.attack;
-import java.util.ArrayList;
 
+/**
+ * @author Felix
+ */
+
+import java.util.ArrayList;
 import player.unit.*;
 import synthesis.Sound;
 import synthesis.fmInstruments.FmInstruments3Params;
