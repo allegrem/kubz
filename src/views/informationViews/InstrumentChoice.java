@@ -23,11 +23,7 @@ public class InstrumentChoice implements DisplayableChild{
 	private int[] instrList = new int[6];
 	private double distance=90;	
 	
-	private ReadableColor chosen;
-	
-	
-	
-
+	int chosen = 0;
 
 	@Override
 	public synchronized void paint() {
@@ -46,11 +42,11 @@ public class InstrumentChoice implements DisplayableChild{
 			glMatrixMode(GL_MODELVIEW);
 			GL11.glPushMatrix();
 			GL11.glTranslated(posx+x, posy+y,father.getHeight()+10 );
-			/*if(color==chosen){
-			//disk.draw(0,rayon+10, 50, 1);
-			sideLength = 30;
-			}*/
-				//disk.draw(0,rayon, 50, 1);		
+			
+			if(i==chosen)
+				sideLength = 30;
+			else sideLength = 20;
+					
 				GL11.glEnable(GL11.GL_TEXTURE_2D);
 				//Texture texturei = InstrumentTextures.textureList[i];
 				if (InstrumentTextures.textureList[i] == null)
@@ -107,7 +103,7 @@ public class InstrumentChoice implements DisplayableChild{
 	@Override
 	public String getCharac() {
 	
-		return "InstrumentsChoice";
+		return "InstrumentChoice";
 	}
 
 	@Override
@@ -145,7 +141,7 @@ public class InstrumentChoice implements DisplayableChild{
 	 * @param num Son numero
 	 */
 	public void setChosen(int num){
-			//chosen=colors.get(num);		
+			chosen=num;		
 	}
 	
 }
