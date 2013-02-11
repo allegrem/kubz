@@ -300,8 +300,7 @@ public class Sound extends Observable implements Observer {
 	public Sound filter(BandsFilter filter) {
 		Sound filteredSound = new Sound(instrument, length);
 		filteredSound.lock();
-		filteredSound.applyFilter(filter);
-//		filteredSound.applyFilter2(filter);
+		filteredSound.applyFilter2(filter);
 		return filteredSound;
 	}
 

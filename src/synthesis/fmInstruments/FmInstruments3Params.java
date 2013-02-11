@@ -56,10 +56,16 @@ public class FmInstruments3Params extends FmInstrument implements
 	}
 	
 	
+	/**
+	 * Change params. rot1 and rot2 : relative ; distance : absolute
+	 * @param rot1
+	 * @param rot2
+	 * @param distance
+	 */
 	public void changeParams(int rot1, int rot2, int distance) {
 		this.rot1.incrValue(rot1);
 		this.rot2.incrValue(rot2);
-		this.distance.incrValue(distance);
+		this.distance.setValue(distance);
 	}
 
 	/**
