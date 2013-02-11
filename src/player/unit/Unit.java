@@ -9,7 +9,6 @@ package player.unit;
 import cube.Cube;
 import gameEngine.GameEngine;
 import synthesis.Sound;
-import synthesis.fmInstruments.FmInstruments3Params;
 import synthesis.fmInstruments.TwoOscFmInstrument;
 import utilities.Point;
 import views.CubeControlledView;
