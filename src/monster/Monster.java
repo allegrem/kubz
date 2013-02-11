@@ -5,6 +5,7 @@ package monster;
  */
 
 import utilities.Point;
+import views.informationViews.LifeView;
 import views.monsters.MonsterView;
 
 import gameEngine.GameEngine;
@@ -33,11 +34,16 @@ public class Monster {
 	protected Unit cible;
 	protected ArrayList<Unit> seenUnits; 
 	protected Point pos;
+	protected double life;
 	
 	/**
 	 * reference vers la vue du monstre pour pouvoir transmettre les modifications necessaires 
 	 */
-	protected MonsterView view;
+	protected MonsterView view = new MonsterView();
+	lifeView = new LifeView(view);
+	view.addChild(lifeView);
+	
+	
 	
 	//private LifeType life;
 	//private DefenceType defence;
@@ -56,6 +62,27 @@ public class Monster {
 		this.setGameEngine(gameEngine);
 		move=new RandomMove(this,500);
 		
+	}
+	
+	public void increaseLife(double inc){
+		life = life + inc;
+		lifeView.setLife(life);
+	}
+	public void decreaseLife(double dec){
+		life = life - dec;
+		lifeView.setLife(life);
+		if (life<0){
+			gameEngine.getMonsterList().remove(this);
+			view.removeChild(lifeView);
+			//view.setUnTracked(false);
+		}
+	}
+	public void setLife(double newLife){
+		life = newLife;
+		lifeView.setLife(life);
+	}
+	public double getLife(){
+		return life;
 	}
 	
 					/** Partie qui gere l'attaque du monstre*/

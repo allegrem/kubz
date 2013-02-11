@@ -10,7 +10,6 @@ import gameEngine.GameEngine;
 import OpenGL.KeyboardManager;
 import player.parameter.*;
 import player.unit.*;
-import synthesis.Sound;
 import synthesis.filters.BandsFilter;
 import synthesis.fmInstruments.FmInstruments3Params;
 import synthesis.fmInstruments.PianoInstrument2;
