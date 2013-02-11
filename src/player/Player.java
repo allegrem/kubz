@@ -209,7 +209,7 @@ public  class Player {
 	
 	public void chooseWeaponTurn(){
 		//InstrumentsChoice instChoice = new InstrumentsChoice();
-		InstrumentChoice instChoice = new InstrumentChoice();
+		InstrumentChoice instChoice = new InstrumentChoice(gameEngine);
 		unit.getView().addChild(instChoice);
 		while (!KeyboardManager.tap){
 			if (unit.getInstrumentChoiceAngle()>=0){
@@ -291,12 +291,12 @@ public  class Player {
 		AttackConeView attackCone = new AttackConeView(unit.getAperture(), unit.getDirection(), 100, unit.getView());
 		unit.getView().addChild(attackCone);
 		while (!KeyboardManager.tap){
-			if(KeyboardManager.wKey && unit.getAperture()<360) {
-				unit.rotateAperture(1);
+			if(KeyboardManager.wKey && unit.getAperture()>0) {
+				unit.rotateAperture(-1);
 				attackCone.setAperture(unit.getAperture());
 			}
-			if(KeyboardManager.xKey && unit.getAperture()>0){ 
-				unit.rotateAperture(-1);
+			if(KeyboardManager.xKey && unit.getAperture()<360){ 
+				unit.rotateAperture(1);
 				attackCone.setAperture(unit.getAperture());
 			}
 			try {

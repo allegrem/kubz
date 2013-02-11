@@ -47,7 +47,7 @@ public class Unit extends CubeOwner{
 	}
 
 	/**
-	 * Retourne le cube physique auquel est associé Unit
+	 * Retourne le cube physique auquel est associï¿½ Unit
 	 * @return
 	 */
 	public Cube getCube() {
@@ -132,7 +132,7 @@ public class Unit extends CubeOwner{
 	public void rotateAperture(double dTheta){
 		if ((aperture+dTheta>=0)&&(aperture+dTheta<=360)) aperture = aperture + dTheta;		
 		view.rotateAperture(dTheta);
-		view.rotate(dTheta);
+		view.rotate(-dTheta);
 	}
 	public double getAperture(){
 		return aperture;
