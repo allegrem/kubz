@@ -5,11 +5,13 @@ package player;
  * @author Felix
  */
 
+import monster.zoo.*;
 import base.Base;
 import gameEngine.GameEngine;
 import OpenGL.KeyboardManager;
 import player.parameter.*;
 import player.unit.*;
+import synthesis.Sound;
 import synthesis.filters.BandsFilter;
 import synthesis.fmInstruments.FmInstruments3Params;
 import synthesis.fmInstruments.PianoInstrument2;
@@ -31,6 +33,8 @@ public class Player {
 	private int choice;
 	private int lastAngle1;
 	private int lastAngle2;
+	
+	int power = 100;
 
 	private GameEngine gameEngine;
 
@@ -355,6 +359,7 @@ public class Player {
 		AttackConeView attackCone = new AttackConeView(unit.getAperture(),
 				unit.getDirection(), 100, unit.getView());
 		unit.getView().addChild(attackCone);
+		unit.setDirection(0);
 		while (!KeyboardManager.tap) {
 			if (KeyboardManager.wKey) {
 				unit.rotateDirection(1);
@@ -367,7 +372,6 @@ public class Player {
 			} else {
 				attackCone.setDirection((long) (360 + unit.getDirection()));
 			}
-
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
@@ -406,8 +410,9 @@ public class Player {
 
 	public void UAttack() {
 		SinusoidalAttackView attack = new SinusoidalAttackView(
-				unit.getAperture(), unit.getDirection(), 100, unit.getView());
+				unit.getAperture(), unit.getDirection(), power, unit.getView());
 		unit.getView().addChild(attack);
+		Sound sound = unit.getSound();
 		unit.getSound().playToSpeakers();
 		// gameEngine.getDisplay().auto3D(unit.getView(),
 		// unit.getDirection(),100, 6000);
@@ -415,6 +420,15 @@ public class Player {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+		}
+		for(Monster monster: gameEngine.getMonsterList()){
+			double xdiff = monster.getPos().getX()-unit.getPos().getX();
+			double ydiff = monster.getPos().getY()-unit.getPos().getY();
+			double theta = (180*Math.atan2(ydiff, xdiff)/Math.PI)-90;
+			if((monster.getPos().distanceTo(unit.getPos())<power)&&(((unit.getDirection()-unit.getAperture()/2)%360<=theta%360)&&((unit.getDirection()+unit.getAperture()/2)%360>=theta%360))){
+				monster.decreaseLife(sound.filter(monster.getDefence().getShield()).getDegats()/ 30000000);
+				System.out.println("player :" + sound.filter(monster.getDefence().getShield()).getDegats()/ 30000000);
+			}
 		}
 	}
 
