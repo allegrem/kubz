@@ -1,6 +1,6 @@
 package monster.attack;
 
-import monster.Monster;
+import monster.zoo.Monster;
 
 
 /**
@@ -9,12 +9,10 @@ import monster.Monster;
  */
 
 public class RandomAttack extends AttackType{
-	private int strenght;
 	
 	
-	public RandomAttack(Monster monster, int strenght) {
+	public RandomAttack(Monster monster) {
 		super(monster);
-		this.strenght = strenght;
 	}
 	
 }

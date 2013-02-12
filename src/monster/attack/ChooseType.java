@@ -6,7 +6,7 @@ package monster.attack;
  */
 
 import player.unit.Unit;
-import monster.Monster;
+import monster.zoo.Monster;
 
 public abstract class ChooseType {
 	

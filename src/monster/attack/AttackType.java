@@ -8,8 +8,9 @@ import player.unit.*;
 import synthesis.Sound;
 import synthesis.fmInstruments.FmInstruments3Params;
 import synthesis.fmInstruments.TwoOscFmInstrument;
+import synthesis.fmInstruments.WoodInstrument;
 
-import monster.Monster;
+import monster.zoo.Monster;
 
 import views.attacks.SinusoidalAttackView;
 
@@ -21,7 +22,7 @@ public abstract class AttackType {
 
 	public AttackType(Monster monster) {
 		this.monster = monster;
-		FmInstruments3Params instrument = TwoOscFmInstrument
+		FmInstruments3Params instrument = WoodInstrument
 				.getFmInstruments3Params();
 		instrument.random();
 		sound = new Sound(instrument, 3f);
@@ -38,7 +39,7 @@ public abstract class AttackType {
 			monster.getView().addChild(attack);
 			int degats = sound
 					.filter(monster.getCible().getOwner().getShield())
-					.getDegats() / 30000000; // dégats diminues sinon ca fait
+					.getDegats() / 30000000; // dï¿½gats diminues sinon ca fait
 												// trop
 												// mal au joueur
 			System.out.println(degats);

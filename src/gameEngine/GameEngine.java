@@ -9,7 +9,7 @@ import base.Base;
 import OpenGL.GLDisplay;
 import map2.Map;
 import map2.MapReader;
-import monster.Monster;
+import monster.zoo.Monster;
 import player.*;
 import player.unit.Unit;
 import synthesis.Sound;
@@ -18,18 +18,19 @@ import traitementVideo.Traitement;
 import utilities.Point;
 import utilities.RandomPerso;
 import views.staticViews.BackgroundView;
-import wall.Wall;
+//import wall.Wall;
 import cube.Cube;
-import cubeManager.*;
 
-public class GameEngine {
+//import cubeManager.*;
+
+public class GameEngine extends Thread{
 	private final int width;
 	private final int height;
 	public ArrayList<Monster> monsterList;
 	private ArrayList<Player> playerList;
 	// private ArrayList<Wall> walls;
 	private ArrayList<Base> bases;
-	private CubeManager cubeManager;
+	// private CubeManager cubeManager;
 	private GLDisplay display;
 	private Map map;
 	private MapReader reader = new MapReader("Maps/bFile.txt",
@@ -50,7 +51,6 @@ public class GameEngine {
 				e.printStackTrace();
 			}
 		}
-		display.setSound(new Sound(new BellInstrument(), 1));
 		width = display.getmapDisplay_width();
 		height = display.getmapDisplay_height();
 		System.out.println("Width: " + width + " Height: " + height);
@@ -72,13 +72,13 @@ public class GameEngine {
 		playerList.add(new Player(this, bases.get(0)));
 		// playerList.add(new Player(this,bases.get(0)));
 		// playerList.add(new Player(this));
-		act();
+		
 
 	}
 
 	/**
-	 * pas de liste de joueurs car un seul joueur pour le moment, de mï¿½me une
-	 * seule unitï¿½ (Que 3 cubes pour le moment
+	 * pas de liste de joueurs car un seul joueur pour le moment, de meme une
+	 * seule unite (que 3 cubes pour le moment)
 	 */
 
 	public ArrayList<Unit> getUnitList() {
@@ -96,7 +96,7 @@ public class GameEngine {
 	}
 
 	/**
-	 * Mï¿½thode qui lance les actions des joueurs
+	 * Methode qui lance les actions des joueurs
 	 */
 	public void monsterTurn() {
 		for (Monster m : monsterList) {
@@ -105,7 +105,7 @@ public class GameEngine {
 	}
 
 	/**
-	 * Mï¿½thode qui lance les actions du(des) joueur(s)
+	 * Methode qui lance les actions du(des) joueur(s)
 	 */
 	public void playerTurn() {
 		for (Player player : playerList) {
@@ -114,16 +114,16 @@ public class GameEngine {
 	}
 
 	/**
-	 * Mï¿½thode qui freeze le jeu, condition de relance sur le mode normal ï¿½
-	 * revoir, ï¿½ lancer quand un cube disparait
+	 * Methode qui freeze le jeu, condition de relance sur le mode normal a
+	 * revoir, a lancer quand un cube disparait
 	 */
 	public void frozen() {
 	}
 
 	/**
-	 * Mï¿½thode principale du gameEngine
+	 * Mehode principale du gameEngine
 	 */
-	public void act() {
+	public void run() {
 		while (display.isAlive()) {
 			playerTurn();
 			monsterTurn();
@@ -137,9 +137,10 @@ public class GameEngine {
 	}
 
 	/**
-	 * Methode a appeler quand on perd un ou plusieurs cubes
-	 * Tous les cubes deviennent rouge si ils ont mal places et verts si ils sont bien places
+	 * Methode a appeler quand on perd un ou plusieurs cubes Tous les cubes
+	 * deviennent rouge si ils ont mal places et verts si ils sont bien places
 	 * Des carres rouges apparaissent sous la precedente position connue
+	 * 
 	 * @param owner
 	 */
 	public void setFrozen(Cube source) {
@@ -147,30 +148,58 @@ public class GameEngine {
 		boolean internOk = true;
 		for (Player player : playerList) {
 			player.getUnit().getCube().setIrOf();
-			player.getUnit().getCube().setRGB((byte)127,(byte) 0,(byte) 0, (short)500);
+			player.getUnit().getCube()
+					.setRGB((byte) 127, (byte) 0, (byte) 0, (short) 500);
 			player.getParameters()[0].getCube().setIrOf();
-			player.getParameters()[0].getCube().setRGB((byte)127,(byte) 0,(byte) 0, (short)500);
+			player.getParameters()[0].getCube().setRGB((byte) 127, (byte) 0,
+					(byte) 0, (short) 500);
 			player.getParameters()[1].getCube().setIrOf();
-			player.getParameters()[1].getCube().setRGB((byte)127,(byte) 0,(byte) 0, (short)500);
+			player.getParameters()[1].getCube().setRGB((byte) 127, (byte) 0,
+					(byte) 0, (short) 500);
 			// ici on affiche les nouvelles positions
 		}
 		while (!ok) {
 			internOk = true;
 			for (Player player : playerList) {
 				boolean unitOk = checkPos(player.getUnit());
-				if (unitOk) player.getUnit().getCube().setRGB((byte)0,(byte) 127,(byte) 0,(short) 500); //delay tout le temps
-				else player.getUnit().getCube().setRGB((byte)127,(byte) 0,(byte) 0,(short) 500);
+				if (unitOk)
+					player.getUnit()
+							.getCube()
+							.setRGB((byte) 0, (byte) 127, (byte) 0, (short) 500);
+				else
+					player.getUnit()
+							.getCube()
+							.setRGB((byte) 127, (byte) 0, (byte) 0, (short) 500);
 				boolean param1ok = checkPos(player.getParameters()[0]);
-				if (param1ok) player.getParameters()[0].getCube().setRGB((byte)0,(byte) 127,(byte) 0,(short) 500);
-				else player.getParameters()[0].getCube().setRGB((byte)127,(byte) 0,(byte) 0,(short) 500);
+				if (param1ok)
+					player.getParameters()[0].getCube().setRGB((byte) 0,
+							(byte) 127, (byte) 0, (short) 500);
+				else
+					player.getParameters()[0].getCube().setRGB((byte) 127,
+							(byte) 0, (byte) 0, (short) 500);
 				boolean param2ok = checkPos(player.getParameters()[1]);
-				if (param1ok) player.getParameters()[1].getCube().setRGB((byte)0,(byte) 127,(byte) 0,(short) 500);
-				else player.getParameters()[1].getCube().setRGB((byte)0,(byte) 127,(byte) 0,(short) 500);
-				internOk = internOk&&unitOk&&param1ok&&param2ok;
+				if (param1ok)
+					player.getParameters()[1].getCube().setRGB((byte) 0,
+							(byte) 127, (byte) 0, (short) 500);
+				else
+					player.getParameters()[1].getCube().setRGB((byte) 0,
+							(byte) 127, (byte) 0, (short) 500);
+				internOk = internOk && unitOk && param1ok && param2ok;
 			}
 			ok = internOk;
 		}
 
+	}
+	
+	
+	
+
+	public ArrayList<Monster> getMonsterList() {
+		return monsterList;
+	}
+
+	public void setMonsterList(ArrayList<Monster> monsterList) {
+		this.monsterList = monsterList;
 	}
 
 	public int getWidth() {
@@ -192,17 +221,18 @@ public class GameEngine {
 	public GLDisplay getDisplay() {
 		return display;
 	}
-	
-	private boolean checkPos(CubeOwner cubeOwner){
+
+	private boolean checkPos(CubeOwner cubeOwner) {
 		cubeOwner.getCube().setIrOn();
-		traitement.updateConnexe(null); // intégration avec la cam à
+		traitement.updateConnexe(null); // intï¿½gration avec la cam ï¿½
 										// regler pour recuperer l'image
 		ArrayList<Point> currentPositions = new ArrayList<Point>();
 		for (int i = 1; i <= 3; i++) {
 			currentPositions.add(traitement.getGroupePos(i));
 		}
-		boolean result = currentPositions.containsAll(cubeOwner.getVCube().getPos());
-				// la on verifie que le traitement voit bien le cube
+		boolean result = currentPositions.containsAll(cubeOwner.getVCube()
+				.getPos());
+		// la on verifie que le traitement voit bien le cube
 		cubeOwner.getCube().setIrOf();
 		return result;
 	}

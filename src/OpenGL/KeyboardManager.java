@@ -14,6 +14,7 @@ public class KeyboardManager {
 	public static boolean dKey = false;
 	public static boolean wKey = false;
 	public static boolean xKey = false;
+	public static boolean aKey = false;
 	public static boolean tap = false;
 	private static boolean tapTyped=false;
 	public static boolean quit=false;
@@ -39,6 +40,12 @@ public static void checkKeyboard(){
 			zKey = true;
 		}else{
 			zKey = false;
+		}
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_A)){
+			aKey = true;
+		}else{
+			aKey = false;
 		}
 			
 		if (Keyboard.isKeyDown(Keyboard.KEY_Q)){

@@ -3,18 +3,22 @@ package cube;
 import java.lang.Short;
 import java.util.concurrent.locks.ReentrantLock;
 
+/* XXX TODO : Add mutex to the communication */
+
 public class Cube{
 
 	/**
 	 * Attribute of cube
 	 */
 	private int angle;
+	private int lastAngle;
 	private boolean tap;
 
 	private int id;
 
     private XBee xBee;
 
+    /* Constructor */
     public Cube(XBee currentXBee){
         this.id = 0;
         this.xBee = currentXBee;
@@ -38,11 +42,13 @@ public class Cube{
 		//XXX TODO : xBee.sendRXFrame(message);
     }
 	
-
+	/* Switch all the ir leds on */
 	public void setIrOn(){
         /* Type byte is signed */
 		setIR((byte)(-121));
 	}
+	
+	/* Switch all the ir leds off */
 	public void setIrOf(){
         /* Type byte is signed */
 		setIR((byte)(-128));
@@ -64,6 +70,12 @@ public class Cube{
 	public int getAngle() {
 		return this.angle;
 	}
+	
+	public int getAngleChange(){
+		int retour = lastAngle - angle;
+		lastAngle = angle;
+		return retour;
+	}
 
     /**
      * Method to get the actual state of the tap
@@ -82,10 +94,12 @@ public class Cube{
 
     }
 	
+	/* Change the angle with the value given */
 	public void setAngle (int ang){
 		this.angle = ang;
 	}
 	
+	/* Change the id with the one given */
 	public void setID (int i){
 		this.id = i;
 	}

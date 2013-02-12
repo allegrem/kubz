@@ -10,7 +10,6 @@ import gameEngine.GameEngine;
 import OpenGL.KeyboardManager;
 import player.parameter.*;
 import player.unit.*;
-import synthesis.Sound;
 import synthesis.filters.BandsFilter;
 import synthesis.fmInstruments.FmInstruments3Params;
 import synthesis.fmInstruments.PianoInstrument2;
@@ -228,7 +227,7 @@ public class Player {
 	}
 
 	public void chooseWeaponTurn() {
-		InstrumentsChoice instChoice = new InstrumentsChoice();
+		InstrumentsChoice instChoice = new InstrumentsChoice(gameEngine);
 		unit.getView().addChild(instChoice);
 		int fmChoice = 0;
 		while (!KeyboardManager.tap) {
@@ -314,6 +313,14 @@ public class Player {
 				parameters[choice].rotate(-1);
 				isModified = true;
 			}
+			if (KeyboardManager.aKey) {
+				unit.getSound().playToSpeakers();
+				try {
+					Thread.sleep(3000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}	
 			if (!(KeyboardManager.zKey || KeyboardManager.sKey
 					|| KeyboardManager.qKey || KeyboardManager.dKey
 					|| KeyboardManager.wKey || KeyboardManager.xKey)) {
@@ -322,8 +329,9 @@ public class Player {
 							.getSound().getInstrument();
 					instrument.changeParams(getChangeAngle1(),
 							getChangeAngle2(), getChangeDistance());
-					isModified = false;
+					isModified = false;					
 				}
+				
 			}
 			try {
 				Thread.sleep(10);
@@ -377,12 +385,12 @@ public class Player {
 				unit.getDirection(), 100, unit.getView());
 		unit.getView().addChild(attackCone);
 		while (!KeyboardManager.tap) {
-			if (KeyboardManager.wKey && unit.getAperture() < 360) {
-				unit.rotateAperture(1);
+			if (KeyboardManager.wKey && unit.getAperture() >0) {
+				unit.rotateAperture(-1);
 				attackCone.setAperture(unit.getAperture());
 			}
-			if (KeyboardManager.xKey && unit.getAperture() > 0) {
-				unit.rotateAperture(-1);
+			if (KeyboardManager.xKey && unit.getAperture() <360) {
+				unit.rotateAperture(1);
 				attackCone.setAperture(unit.getAperture());
 			}
 			try {

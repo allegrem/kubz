@@ -8,7 +8,7 @@ package monster.attack;
  */
 
 import player.unit.Unit;
-import monster.Monster;
+import monster.zoo.Monster;
 
 public class ChooseLife extends ChooseType{
 

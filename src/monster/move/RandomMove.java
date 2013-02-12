@@ -1,6 +1,6 @@
 package monster.move;
 
-import monster.Monster;
+import monster.zoo.Monster;
 
 public class RandomMove extends MoveType{
 

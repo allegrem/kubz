@@ -1,4 +1,4 @@
-package monster;
+package monster.zoo;
 
 /**classe qui sert de modele e MonsterView
  * @author Felix
@@ -35,14 +35,10 @@ public class Monster {
 	protected ArrayList<Unit> seenUnits; 
 	protected Point pos;
 	protected double life;
-	
-	/**
-	 * reference vers la vue du monstre pour pouvoir transmettre les modifications necessaires 
-	 */
+	protected LifeView lifeView;
 	protected MonsterView view;
-	/*lifeView = new LifeView(view);
-	view.addChild(lifeView);*/
 	
+
 	
 	
 	//private LifeType life;
@@ -60,10 +56,10 @@ public class Monster {
 		this.cible = null;
 		this.seenUnits = new ArrayList<Unit>();
 		this.setGameEngine(gameEngine);
-		//move=new RandomMove(this,500);
+		move=new RandomMove(this,500);
 		
 	}
-	/*
+	
 	public void increaseLife(double inc){
 		life = life + inc;
 		lifeView.setLife(life);
@@ -83,7 +79,7 @@ public class Monster {
 	}
 	public double getLife(){
 		return life;
-	}*/
+	}
 	
 					/** Partie qui gere l'attaque du monstre*/
 	
@@ -205,6 +201,8 @@ public class Monster {
 		setCible();
 		move();
 		attack.attack(cible);
+		//attack(attack.result());
+		//gameEngine.getDisplay().auto3D(view, cible.getView(), 6000);
 		try {
 			Thread.sleep(6000);
 		} catch (InterruptedException e) {

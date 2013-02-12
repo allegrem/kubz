@@ -33,17 +33,15 @@ public class InstrumentsChoice implements DisplayableChild{
 	private ReadableColor chosen;
 	private GameEngine gameEngine;
 	
-	public InstrumentsChoice(GameEngine gameEngine){
-		this.gameEngine=gameEngine;
-	}
 	
-	public InstrumentsChoice(){
+	public InstrumentsChoice(GameEngine gameEngine){
 		disk=new Disk();
 		addInstrument(ReadableColor.BLUE);
 		addInstrument(ReadableColor.RED);
 		addInstrument(ReadableColor.GREEN);
 		addInstrument(ReadableColor.ORANGE);
 		chosen=colors.get(0);
+		this.gameEngine=gameEngine;
 		
 	}
 

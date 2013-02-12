@@ -6,7 +6,8 @@ public class atan2 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		System.out.println(Math.atan2(1, 0));
+		System.out.println(Math.cos(Math.PI));
+		
 
 	}
 
