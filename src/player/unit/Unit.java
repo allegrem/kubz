@@ -6,6 +6,10 @@ package player.unit;
  * 
  */
 
+import org.lwjgl.util.ReadableColor;
+
+import OpenGL.KeyboardManager;
+
 import cube.Cube;
 import gameEngine.GameEngine;
 import synthesis.Sound;
@@ -89,6 +93,16 @@ public class Unit extends CubeOwner{
 			gameEngine.getPlayerList().remove(owner);
 			view.removeChild(lifeView);
 			view.setUnTracked(false);
+			gameEngine.getDisplay().print(gameEngine.getWidth()/2,gameEngine.getHeight()/2,ReadableColor.RED," Game Over !");
+		   while(!KeyboardManager.qKey){
+			   try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Bloc catch généré automatiquement
+				e.printStackTrace();
+			}
+		   }
+			System.exit(0);
 		}
 	}
 	public void setLife(double newLife){
