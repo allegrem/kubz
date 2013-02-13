@@ -88,7 +88,7 @@ public class Unit extends CubeOwner{
 			gameEngine.getUnitList().remove(this);
 			gameEngine.getPlayerList().remove(owner);
 			view.removeChild(lifeView);
-			view.setUnTracked(false);
+			gameEngine.getMap().remove(view);
 		}
 	}
 	public void setLife(double newLife){

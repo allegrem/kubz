@@ -59,7 +59,7 @@ public class Monster {
 		this.seenUnits = new ArrayList<Unit>();
 		this.setGameEngine(gameEngine);
 		move=new RandomMove(this,500);
-		this.life = 30;
+		this.life = 1;
 		
 	}
 	
@@ -73,7 +73,8 @@ public class Monster {
 		if (life<0){
 			gameEngine.getMonsterList().remove(this);
 			view.removeChild(lifeView);
-			//view.setUnTracked(false);
+			gameEngine.getMap().remove(view);
+			this.view = null;
 		}
 	}
 	public void setLife(double newLife){

@@ -421,14 +421,16 @@ public class Player {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		for(Monster monster: gameEngine.getMonsterList()){
-			double xdiff = monster.getPos().getX()-unit.getPos().getX();
-			double ydiff = monster.getPos().getY()-unit.getPos().getY();
-			double theta = (180*Math.atan2(ydiff, xdiff)/Math.PI)-90;
-			if((monster.getPos().distanceTo(unit.getPos())<power)&&(((unit.getDirection()-unit.getAperture()/2)%360<=theta%360)&&((unit.getDirection()+unit.getAperture()/2)%360>=theta%360))){
-				monster.decreaseLife(sound.filter(monster.getDefence().getShield()).getDegats()/ 30000000);
-				System.out.println("player :" + sound.filter(monster.getDefence().getShield()).getDegats()/ 30000000);
-			}
+		if (!gameEngine.getMonsterList().isEmpty()){
+			for(Monster monster: gameEngine.getMonsterList()){
+				double xdiff = monster.getPos().getX()-unit.getPos().getX();
+				double ydiff = monster.getPos().getY()-unit.getPos().getY();
+				double theta = (180*Math.atan2(ydiff, xdiff)/Math.PI)-90;
+				if((monster.getPos().distanceTo(unit.getPos())<power)&&(((unit.getDirection()-unit.getAperture()/2)%360<=theta%360)&&((unit.getDirection()+unit.getAperture()/2)%360>=theta%360))){
+					monster.decreaseLife(sound.filter(monster.getDefence().getShield()).getDegats()/ 30000000);
+					//System.out.println("player :" + sound.filter(monster.getDefence().getShield()).getDegats()/ 30000000);
+				}
+			}	
 		}
 	}
 
