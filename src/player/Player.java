@@ -33,7 +33,7 @@ public class Player {
 	private int choice;
 	private int lastAngle1;
 	private int lastAngle2;
-	
+
 	int power = 100;
 
 	private GameEngine gameEngine;
@@ -324,7 +324,7 @@ public class Player {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-			}	
+			}
 			if (!(KeyboardManager.zKey || KeyboardManager.sKey
 					|| KeyboardManager.qKey || KeyboardManager.dKey
 					|| KeyboardManager.wKey || KeyboardManager.xKey)) {
@@ -333,9 +333,9 @@ public class Player {
 							.getSound().getInstrument();
 					instrument.changeParams(getChangeAngle1(),
 							getChangeAngle2(), getChangeDistance());
-					isModified = false;					
+					isModified = false;
 				}
-				
+
 			}
 			try {
 				Thread.sleep(10);
@@ -388,11 +388,11 @@ public class Player {
 				unit.getDirection(), 100, unit.getView());
 		unit.getView().addChild(attackCone);
 		while (!KeyboardManager.tap) {
-			if (KeyboardManager.wKey && unit.getAperture() >0) {
+			if (KeyboardManager.wKey && unit.getAperture() > 0) {
 				unit.rotateAperture(-1);
 				attackCone.setAperture(unit.getAperture());
 			}
-			if (KeyboardManager.xKey && unit.getAperture() <360) {
+			if (KeyboardManager.xKey && unit.getAperture() < 360) {
 				unit.rotateAperture(1);
 				attackCone.setAperture(unit.getAperture());
 			}
@@ -420,16 +420,25 @@ public class Player {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		if (!gameEngine.getMonsterList().isEmpty()){
-			for(Monster monster: gameEngine.getMonsterList()){
-				double xdiff = monster.getPos().getX()-unit.getPos().getX();
-				double ydiff = monster.getPos().getY()-unit.getPos().getY();
-				double theta = (180*Math.atan2(ydiff, xdiff)/Math.PI)-90;
-				if((monster.getPos().distanceTo(unit.getPos())<power)&&(((unit.getDirection()-unit.getAperture()/2)%360<=theta%360)&&((unit.getDirection()+unit.getAperture()/2)%360>=theta%360))){
-					monster.decreaseLife(sound.filter(monster.getDefence().getShield()).getDegats()/ 30000000);
-					//System.out.println("player :" + sound.filter(monster.getDefence().getShield()).getDegats()/ 30000000);
+		if (!gameEngine.getMonsterList().isEmpty()) {
+			for (int i = 0; (i < gameEngine.getMonsterList().size())
+					&& (gameEngine.getMonsterList().get(i) != null); i++) {
+				Monster monster = gameEngine.getMonsterList().get(i);
+				double xdiff = monster.getPos().getX() - unit.getPos().getX();
+				double ydiff = monster.getPos().getY() - unit.getPos().getY();
+				double theta = (180 * Math.atan2(ydiff, xdiff) / Math.PI) - 90;
+				if ((monster.getPos().distanceTo(unit.getPos()) < power)
+						&& (((unit.getDirection() - unit.getAperture() / 2) % 360 <= theta % 360) && ((unit
+								.getDirection() + unit.getAperture() / 2) % 360 >= theta % 360))) {
+					System.out.println("player :"
+							+ sound.filter(monster.getDefence().getShield())
+									.getDegats() / 30000000);
+					monster.decreaseLife(sound.filter(
+							monster.getDefence().getShield()).getDegats() / 30000000);
+
 				}
-			}	
+				gameEngine.getMonsterList().trimToSize();
+			}
 		}
 	}
 
