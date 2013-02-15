@@ -6,9 +6,13 @@ import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
+import objLoader.ObjDisplay;
+
 import org.lwjgl.opengl.GL11;
 
 import org.lwjgl.util.ReadableColor;
+
+import OpenGL.GLDisplay;
 
 import utilities.Maths;
 import utilities.Point;
@@ -22,6 +26,8 @@ import utilities.Vector;
  */
 public class SquareMonsterView extends MonsterView {
 	private long direction=0;
+	private boolean initialized=false;
+	private ObjDisplay objDisplay;
 	
 	/**
 	 * Nouveau monstre carre
@@ -32,9 +38,15 @@ public class SquareMonsterView extends MonsterView {
 		super(position, color);
 		
 	}
+	
+	private void initialize(){
+		objDisplay= new ObjDisplay();
+		objDisplay.VBOLoad("objets/roundedCube.obj");
+		initialized=true;
+	}
 
-	@Override
-	public void paint() {
+	//@Override
+	public void paint2() {
 		actualizePosition();
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		
@@ -120,6 +132,30 @@ public class SquareMonsterView extends MonsterView {
 		
 		paintChildren();
 
+
+	}
+	
+	public void paint() {
+		if(!initialized)
+			initialize();
+		
+		actualizePosition();
+		int x=(int) Math.round(getX());
+		int y=(int) Math.round(getY());
+		int iangle=(int) Math.round(getAngle());
+		
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
+		
+		glMatrixMode(GL_MODELVIEW);
+		GL11.glPushMatrix();
+		
+			objDisplay.renderVBO(actualColor,x,y,(int)0.2,iangle);
+		
+		GL11.glLoadIdentity();
+		GL11.glPopMatrix();
+		
+		paintChildren();
+		
 
 	}
 	

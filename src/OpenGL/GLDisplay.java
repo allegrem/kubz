@@ -26,6 +26,9 @@ import java.io.File;
 import java.nio.ByteBuffer;
 
 import javax.imageio.ImageIO;
+
+import objLoader.ObjDisplay;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
