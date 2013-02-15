@@ -3,6 +3,9 @@ package testMath;
 /**
  * Test à lancer pour vérifier que le repérage des groupes connexes se fait bien sur deux points l'un a cote de l'autre
  */
+
+/* pour le moment quand on met deux pixels allumes non cote a cote ca marche correctement, mais des qu'ils sont l'un a cote de l'autre 
+ * ca ne marche pas*/
 import traitementVideo.Traitement;
 import traitementVideo.VirtualPixel;
 import utilities.Point;
@@ -46,7 +49,7 @@ public class testTraitement2 {
 					x1 + 1, y1));
 			traitement.updateConnexe(testscreen, LENGHT, HEIGHT);
 			Point pos1 = traitement.getGroupePos(1);
-			Point pos2 = traitement.getGroupePos(2);
+			//Point pos2 = traitement.getGroupePos(2);
 			/*
 			 * System.out.println(pos1.getX() + " et " + (((double)x1)+0.5));
 			 * System.out.println(pos1.getY() + " et " + y1);

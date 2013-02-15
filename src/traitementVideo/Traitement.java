@@ -21,6 +21,12 @@ public class Traitement {
 	private ArrayList<ArrayList<VirtualPixel>> groupesConnexes;
 	private GameEngine gameEngine;
 
+	/*=================>FIRST !!!!//les boucles ne sont pas parcourues comme il faut en plus :/
+			
+	=================>SECOND !!!! // verifier l'ajout des groupes	*/	
+	
+	=================> CLAIREMENT IL FAUT REECRIRE UPDATE CONNEXE !!
+			
 	public void updateConnexe(VirtualPixel[][] screen, int LENGHT, int HEIGHT) {
 
 		vi = screen;
@@ -40,14 +46,11 @@ public class Traitement {
 		for (int j = 1; j < HEIGHT; j++) {
 			if (vi[0][j].isBrightness()) {
 				if ((vi[0][j - 1].isBrightness())) {
-					;
-					groupesConnexeIntermediare.get(
-							vi[0][j - 1].getGroupeConnexe()).add(vi[0][j]);
+					groupesConnexeIntermediare.get(vi[0][j - 1].getGroupeConnexe()).add(vi[0][j]);
 					vi[0][j].setGroupeConnexe(vi[0][j - 1].getGroupeConnexe());
 				} else {
 					compteurComposantes++;
-					groupesConnexeIntermediare
-							.add(new ArrayList<VirtualPixel>());
+					groupesConnexeIntermediare.add(new ArrayList<VirtualPixel>());
 					groupesConnexeIntermediare.get(compteurComposantes).add(
 							vi[0][j]);
 					vi[0][j].setGroupeConnexe(compteurComposantes);
@@ -58,8 +61,7 @@ public class Traitement {
 			if (vi[i][0].isBrightness()) {
 				if ((vi[i - 1][0].isBrightness() == true)) {
 					vi[i][0].setGroupeConnexe(vi[i - 1][0].getGroupeConnexe());
-					groupesConnexeIntermediare.get(vi[i][0].getGroupeConnexe())
-							.add(vi[i][0]);
+					groupesConnexeIntermediare.get(vi[i][0].getGroupeConnexe()).add(vi[i][0]);
 				} else {
 					compteurComposantes++;
 					groupesConnexeIntermediare.add(compteurComposantes,
@@ -71,36 +73,22 @@ public class Traitement {
 			}
 			for (int j = 1; j < HEIGHT; j++) {
 				if (vi[i][j].isBrightness()) {
-					if ((vi[i][j - 1].isBrightness())
-							&& (!vi[i - 1][j].isBrightness())) {
-						vi[i][j].setGroupeConnexe(vi[i][j - 1]
-								.getGroupeConnexe());
-						groupesConnexeIntermediare.get(
-								vi[i][j].getGroupeConnexe()).add(vi[i][j]);
+					if ((vi[i][j - 1].isBrightness())&& (!vi[i - 1][j].isBrightness())) {
+						vi[i][j].setGroupeConnexe(vi[i][j - 1].getGroupeConnexe());
+						groupesConnexeIntermediare.get(vi[i][j-1].getGroupeConnexe()).add(vi[i][j]);
 					}
-					if ((vi[i - 1][j].isBrightness())
-							&& (!vi[i][j - 1].isBrightness())) {
-						vi[i][j].setGroupeConnexe(vi[i - 1][j]
-								.getGroupeConnexe());
-						groupesConnexeIntermediare.get(
-								vi[i][j].getGroupeConnexe()).add(vi[i][j]);
+					if ((vi[i - 1][j].isBrightness())&& (!vi[i][j - 1].isBrightness())) {
+						vi[i][j].setGroupeConnexe(vi[i-1][j].getGroupeConnexe());
+						groupesConnexeIntermediare.get(vi[i-1][j].getGroupeConnexe()).add(vi[i][j]);
 					}
-					if ((vi[i - 1][j].isBrightness())
-							&& (!vi[i][j - 1].isBrightness())) {
-						vi[i][j].setGroupeConnexe(vi[i - 1][j]
-								.getGroupeConnexe());
-						groupesConnexeIntermediare.get(
-								vi[i][j].getGroupeConnexe()).add(vi[i][j]);
-						uniongroupesConnexeIntermediare(
-								groupesConnexeIntermediare,
-								vi[i - 1][j].getGroupeConnexe(),
-								vi[i][j - 1].getGroupeConnexe());
+					if ((vi[i - 1][j].isBrightness())&& (vi[i][j - 1].isBrightness())) {
+						vi[i][j].setGroupeConnexe(vi[i - 1][j].getGroupeConnexe());
+						groupesConnexeIntermediare.get(vi[i][j].getGroupeConnexe()).add(vi[i][j]);
+						uniongroupesConnexeIntermediare(groupesConnexeIntermediare,vi[i - 1][j].getGroupeConnexe(),vi[i][j - 1].getGroupeConnexe());
 					} else {
 						compteurComposantes++;
-						groupesConnexeIntermediare.add(compteurComposantes,
-								new ArrayList<VirtualPixel>());
-						groupesConnexeIntermediare.get(compteurComposantes)
-								.add(vi[i][j]);
+						groupesConnexeIntermediare.add(compteurComposantes,new ArrayList<VirtualPixel>());
+						groupesConnexeIntermediare.get(compteurComposantes).add(vi[i][j]);
 						vi[i][j].setGroupeConnexe(compteurComposantes);
 					}
 				}
@@ -160,19 +148,12 @@ public class Traitement {
 	 * @param groupe1
 	 * @param groupe2
 	 */
-	private static void uniongroupesConnexeIntermediare(
-			ArrayList<ArrayList<VirtualPixel>> groupesConnexeIntermediare,
-			int groupe1, int groupe2) {
-		if (groupesConnexeIntermediare.get(groupe1).size() < groupesConnexeIntermediare
-				.get(groupe2).size()) {
-			for (VirtualPixel vp : groupesConnexeIntermediare.get(groupe1)) {
-				groupesConnexeIntermediare.get(groupe2).add(vp);
-			}
+	private static void uniongroupesConnexeIntermediare(ArrayList<ArrayList<VirtualPixel>> groupesConnexeIntermediare,int groupe1, int groupe2) {
+		if (groupesConnexeIntermediare.get(groupe1).size() < groupesConnexeIntermediare.get(groupe2).size()) {
+			groupesConnexeIntermediare.get(groupe2).addAll(groupesConnexeIntermediare.get(groupe1));
 			groupesConnexeIntermediare.get(groupe1).clear();
 		} else {
-			for (VirtualPixel vp : groupesConnexeIntermediare.get(groupe2)) {
-				groupesConnexeIntermediare.get(groupe1).add(vp);
-			}
+			groupesConnexeIntermediare.get(groupe1).addAll(groupesConnexeIntermediare.get(groupe2));
 			groupesConnexeIntermediare.get(groupe2).clear();
 		}
 	}
@@ -186,7 +167,7 @@ public class Traitement {
 	public Point getGroupePos(int groupe) {
 		double xMoy = 0;
 		double yMoy = 0;
-		System.out.println(xMoy);
+		/*System.out.println(xMoy);
 		for (VirtualPixel vp : groupesConnexes.get(groupe)) {
 			xMoy = xMoy + vp.getPos().getX();
 			yMoy = yMoy + vp.getPos().getY();
@@ -194,7 +175,8 @@ public class Traitement {
 		}
 		xMoy = xMoy / groupesConnexes.get(groupe).size();
 		System.out.println(xMoy);
-		yMoy = yMoy / groupesConnexes.get(groupe).size();
+		yMoy = yMoy / groupesConnexes.get(groupe).size();*/
+		System.out.println(groupesConnexes.get(groupe));
 		return new Point(xMoy, yMoy);
 	}
 
