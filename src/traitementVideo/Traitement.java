@@ -18,12 +18,14 @@ public class Traitement {
 	private ArrayList<ArrayList<VirtualPixel>> groupesConnexes;
 	private GameEngine gameEngine;
 	
-	public void updateConnexe(VirtualPixel[][] screen){
+	public void updateConnexe(VirtualPixel[][] screen, int LENGHT, int HEIGHT){
 		
 		vi = screen;
 		int compteurComposantes = 0;
 		ArrayList<ArrayList<VirtualPixel>> groupesConnexeIntermediare = new ArrayList<ArrayList<VirtualPixel>>();
 		ArrayList<ArrayList<VirtualPixel>> retour = new ArrayList<ArrayList<VirtualPixel>>();
+		groupesConnexeIntermediare.add(new ArrayList<VirtualPixel>());
+		retour.add(new ArrayList<VirtualPixel>());
 		
 		if (vi[0][0].isBrightness()){
 			compteurComposantes++;
@@ -31,7 +33,7 @@ public class Traitement {
 			groupesConnexeIntermediare.get(compteurComposantes).add(vi[0][0]);
 			vi[0][0].setGroupeConnexe(compteurComposantes);
 		}
-		for(int j=1; j<480;j++){
+		for(int j=1; j<HEIGHT;j++){
 			if (vi[0][j].isBrightness()){
 				if((vi[0][j-1].isBrightness())){;
 					groupesConnexeIntermediare.get(vi[0][j-1].getGroupeConnexe()).add(vi[0][j]);
@@ -39,13 +41,13 @@ public class Traitement {
 				}
 				else{
 					compteurComposantes++;
-					groupesConnexeIntermediare.add(compteurComposantes, new ArrayList<VirtualPixel>());
+					groupesConnexeIntermediare.add(new ArrayList<VirtualPixel>());
 					groupesConnexeIntermediare.get(compteurComposantes).add(vi[0][j]);
 					vi[0][j].setGroupeConnexe(compteurComposantes);
 				}
 			}			
 		}
-		for(int i=1; i<480; i++){
+		for(int i=1; i<LENGHT; i++){
 			if (vi[i][0].isBrightness()){
 				if((vi[i-1][0].isBrightness()==true)){
 					vi[i][0].setGroupeConnexe(vi[i-1][0].getGroupeConnexe());
@@ -58,7 +60,7 @@ public class Traitement {
 					vi[i][0].setGroupeConnexe(compteurComposantes);
 				}
 			}
-			for(int j=1; j<480; j++){
+			for(int j=1; j<HEIGHT; j++){
 				if (vi[i][j].isBrightness()){
 					if ((vi[i][j-1].isBrightness())&&(!vi[i-1][j].isBrightness())){
 						vi[i][j].setGroupeConnexe(vi[i][j-1].getGroupeConnexe());

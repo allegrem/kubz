@@ -37,7 +37,7 @@ public class Unit extends CubeOwner {
 	private LifeView lifeView;
 
 	public Unit(Player owner) {
-		life = 100;
+		life = 1;
 		this.state = new WaitingUState();
 		this.owner = owner;
 		gameEngine = owner.getGameEngine();
