@@ -156,8 +156,8 @@ public class Traitement {
 			xMoy = xMoy + vp.getPos().getX();
 			yMoy = yMoy + vp.getPos().getY();
 		}
-		xMoy = xMoy/groupesConnexes.size();
-		yMoy = yMoy/groupesConnexes.size();
+		xMoy = xMoy/groupesConnexes.get(groupe).size();
+		yMoy = yMoy/groupesConnexes.get(groupe).size();
 		return new Point(xMoy,yMoy);
 	}
 	
