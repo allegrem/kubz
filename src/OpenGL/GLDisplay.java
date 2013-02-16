@@ -26,11 +26,15 @@ import java.io.File;
 import java.nio.ByteBuffer;
 
 import javax.imageio.ImageIO;
+
+import objLoader.ObjDisplay;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.glu.GLU;
 
 import synthesis.Sound;
@@ -97,8 +101,17 @@ public class GLDisplay extends Thread{
 	private Lighting lighting=new Lighting(this);
 
 	
+	/*
+	 * 
+	 * gestion du texte
+	 * 
+	 */
 	
-	
+	private boolean printMessage=false;
+	private String message =" ";
+	private int mx=0;
+	private int my=0;
+	private ReadableColor mColor=null;
 	
 	/**
 	 * Lancement de l'affichage
@@ -148,7 +161,7 @@ public class GLDisplay extends Thread{
 		
 		mainRender(); //On actualise la fenetre avec le nouveau rendu
 		audioRender();
-		
+		glPrint();
 		update(); //On actualise la fenetre avec le nouveau rendu
 		Display.sync(frequency); //On synchronise l'affichage sur le bon FPS
 	
@@ -471,6 +484,24 @@ public class GLDisplay extends Thread{
 		return texte;
 	}
 
+	public void print(int x, int y, ReadableColor color, String message) {
+		printMessage=true;
+		mx=x;
+		my=y;
+		mColor=color;
+		this.message=message;
+		
+	}
+	
+	public void eraseMessage(){
+		printMessage=false;
+		
+	}
+	
+	private void glPrint(){
+		if(printMessage)
+		texte.glPrint(mx, my, mColor, message);
+	}
 	
 	
 }

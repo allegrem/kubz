@@ -14,6 +14,7 @@ import java.util.*;
 
 import player.unit.Unit;
 
+import monster.DefenceType;
 import monster.attack.AttackType;
 import monster.attack.ChooseType;
 import monster.move.MoveType;
@@ -42,7 +43,7 @@ public class Monster {
 	
 	
 	//private LifeType life;
-	//private DefenceType defence;
+	private DefenceType defence;
 
 	
 	/**
@@ -52,11 +53,13 @@ public class Monster {
 	 */
 	public Monster(float xStart, float yStart, GameEngine gameEngine){
 		
+		defence = new DefenceType();
 		this.pos = new Point(xStart, yStart);
 		this.cible = null;
 		this.seenUnits = new ArrayList<Unit>();
 		this.setGameEngine(gameEngine);
 		move=new RandomMove(this,500);
+		this.life = 1;
 		
 	}
 	
@@ -70,7 +73,8 @@ public class Monster {
 		if (life<0){
 			gameEngine.getMonsterList().remove(this);
 			view.removeChild(lifeView);
-			//view.setUnTracked(false);
+			gameEngine.getMap().remove(view);
+			this.view = null;
 		}
 	}
 	public void setLife(double newLife){
@@ -123,29 +127,6 @@ public class Monster {
 			seenUnits = unitList;		
 	}
 	
-	/**
-	 * La composante attack va fournir une ArrayList de frequence et d'intensites qui vont 
-	 * arriver sur le filtre de l'Unit
-	 * 
-	 * Cette methode prend en compte la distance du monstre au joueur et les degats decroient en 1/r
-	 * 
-	 * @param attackTable
-	 */
-	
-	/*private void attack(ArrayList<int[]> attackTable){
-		setSeenUnits(getGameEngine().getUnitList());
-		setCible();
-		
-		if(cible != null){
-			for(int i=0; i<attackTable.size();i++){
-				double distance = this.pos.distanceTo(cible.getPos());
-				cible.decreaseLife(cible.getOwner().getValue(attackTable.get(i)[0])*attackTable.get(i)[1]/distance);
-			}
-		}
-		else return;
-		
-	}*/
-	
 	
 					/** Actions liees a la position**/
 	
@@ -156,6 +137,14 @@ public class Monster {
 		move.move();
 	}
 	
+	public DefenceType getDefence() {
+		return defence;
+	}
+
+	public void setDefence(DefenceType defence) {
+		this.defence = defence;
+	}
+
 	/**
 	 * deplacement relatif du monstre
 	 * @param dx

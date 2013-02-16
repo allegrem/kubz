@@ -7,6 +7,13 @@ public class DefenceType {
 	
 	public DefenceType(){
 		this.shield = new BandsFilter(11);
+		shield.random();
 	}
 
+	public BandsFilter getShield() {
+		return shield;
+	}
+	public void setShield(BandsFilter shield) {
+		this.shield = shield;
+	}
 }

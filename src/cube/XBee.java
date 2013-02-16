@@ -50,11 +50,14 @@ public class XBee extends Thread implements Runnable{
         }
     }
     
+     @Override
     public void run () {
        	while(true){
             readFrame();
         	parseRXFrame();
+
        	}
+
     }
 
 /* Set the cube manager created at the beginning of the game */

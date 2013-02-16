@@ -150,7 +150,7 @@ public class AttackConeView implements DisplayableChild {
 	}
 	
 	/**
-	 * Modification de la puissance du cone
+	 * Modification redde la puissance du cone
 	 * @param power
 	 */
 	public void setPower(int power){
