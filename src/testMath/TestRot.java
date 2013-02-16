@@ -21,14 +21,18 @@ public class TestRot {
 		cube1.setID(45679);
 		cubeManager.addFreeCube(cube1);
 		
-		while(true){
+		xbee.setCubeManager(cubeManager); // Add the cube manager in the XBee
+        
+        xbee.start(); // Start the XBee thread
+		
+		/*while(true){
 			System.out.println(cubeManager.getCube(adress1).getAngle());
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		}
+		}*/
 
 	}
 

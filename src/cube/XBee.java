@@ -51,11 +51,10 @@ public class XBee extends Thread implements Runnable{
     }
     
     public void run () {
-    	
-        while (true){
+       	while(true){
             readFrame();
         	parseRXFrame();
-        }
+       	}
     }
 
 /* Set the cube manager created at the beginning of the game */
@@ -80,13 +79,13 @@ public int readByte() {
 /* Read the complete next frame */
 public void readFrame (){
 	// Initialize the Array where the Frame will be
-	for(int i=0; i<109; i++)
+	for(int i=0; i<209; i++)
 		buf[i] = 0;
 	
 	// Read char by char until next frame (0x7E)
-	// There is 109 char maximum.
+	// There is 209 char maximum.
 	int n = 0;
-	while(n < 109) {
+	while(n < 209) {
 		int b;
 		b = readByte();
 		if(b==0x7e) 
@@ -114,10 +113,12 @@ public void parseRXFrame (){
 	char [] c = {(char)buf[7],(char)buf[8],(char)buf[9],(char)buf[10],(char)buf[11],(char)buf[12],(char)buf[13],(char)buf[14]};
 	String s = new String(c);
 	int angle = (int)Long.parseLong(s, 16);
-
+	
 	// Put the angle in the cube which has the good address.
 	manager.getCube(addr).setAngle(angle);	
-	} catch (Exception e){}
+	} catch (Exception e){
+		e.printStackTrace();
+	}
 }
 
 /* Send the frame which will diffuse the message given */
