@@ -26,8 +26,6 @@ import utilities.Vector;
  */
 public class SquareMonsterView extends MonsterView {
 	private long direction=0;
-	private boolean initialized=false;
-	private ObjDisplay objDisplay;
 	
 	/**
 	 * Nouveau monstre carre
@@ -39,11 +37,6 @@ public class SquareMonsterView extends MonsterView {
 		
 	}
 	
-	private void initialize(){
-		objDisplay= new ObjDisplay();
-		objDisplay.VBOLoad("objets/roundedCube.obj");
-		initialized=true;
-	}
 
 	//@Override
 	public void paint2() {
@@ -136,9 +129,6 @@ public class SquareMonsterView extends MonsterView {
 	}
 	
 	public void paint() {
-		if(!initialized)
-			initialize();
-		
 		actualizePosition();
 		int x=(int) Math.round(getX());
 		int y=(int) Math.round(getY());
@@ -149,7 +139,7 @@ public class SquareMonsterView extends MonsterView {
 		glMatrixMode(GL_MODELVIEW);
 		GL11.glPushMatrix();
 		
-			objDisplay.renderVBO(actualColor,x,y,(int)0.2,iangle);
+			ObjDisplay.ROUNDED_CUBE.render(actualColor,x,y,(int)0.2,iangle);
 		
 		GL11.glLoadIdentity();
 		GL11.glPopMatrix();

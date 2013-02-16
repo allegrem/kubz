@@ -168,7 +168,7 @@ public class GLDisplay extends Thread{
 		
 		
 		}
-		
+		ObjDisplay.cleanUp();
 		close();//Fermeture de la fenêtre
 		
 	}
