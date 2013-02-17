@@ -192,9 +192,11 @@ public class ObjDisplay {
 			 obj.m=ObjLoader.loadModel(new File(fichier));
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
+				cleanUp();
 				System.exit(1);
 			} catch (IOException e) {
 				e.printStackTrace();
+				cleanUp();
 				System.exit(1);
 			}
 		 FloatBuffer vertices= reserveData(obj.m.faces.size()*9);
