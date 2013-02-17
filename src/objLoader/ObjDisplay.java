@@ -28,7 +28,7 @@ public class ObjDisplay {
 	
 	public static enum Objet
 	{
-		ROUNDED_CUBE("objets/roundedCube.obj");
+		ROUNDED_CUBE("objets/cube.obj");
 	
 	    // Membres :
 	  

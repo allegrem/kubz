@@ -81,7 +81,7 @@ public class AttackConeView implements DisplayableChild {
 				beta=direction-aperture/2;
 			while(beta<=direction+aperture/2 ){	
 				y=father.getY()+i*Math.cos(Math.PI/180*beta);
-				x=father.getX()+i*Math.sin(Math.PI/180*beta);
+				x=father.getX()+i*Math.sin(Math.PI/180*beta+Math.PI);
 				if (object.isInZone(new Point(x,y))){
 					reflected=true;
 					fin=Math.round(i-15);
