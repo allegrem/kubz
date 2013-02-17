@@ -158,7 +158,7 @@ public class AudioRender implements Observer{
 			
 		 vertices.flip();
 		 GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vboVertexHandleA);
-		 GL15.glBufferData(GL15.GL_ARRAY_BUFFER, vertices, GL15.GL_STATIC_DRAW);
+		 GL15.glBufferData(GL15.GL_ARRAY_BUFFER, vertices, GL15.GL_DYNAMIC_DRAW);
 
 	
 		 GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
@@ -175,7 +175,7 @@ public class AudioRender implements Observer{
 		 vertices.flip();
 
 		 GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vboVertexHandleS);
-		 GL15.glBufferData(GL15.GL_ARRAY_BUFFER,vertices, GL15.GL_STATIC_DRAW);
+		 GL15.glBufferData(GL15.GL_ARRAY_BUFFER,vertices, GL15.GL_DYNAMIC_DRAW);
 	
 		 GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 	}
