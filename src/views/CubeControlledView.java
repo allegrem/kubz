@@ -42,8 +42,6 @@ public class CubeControlledView implements DisplayableFather{
 	private double direction;
 	private double instrumentChoice;
 	private boolean invisible3D=false;
-	private ObjDisplay objDisplay;
-	private boolean initialized =false;
 	
 	/**
 	 * Nouveau cubeControlled
@@ -53,12 +51,6 @@ public class CubeControlledView implements DisplayableFather{
 	public CubeControlledView(Point position) {
 		this.position = position;
 	
-	}
-	
-	private void initialize(){
-		objDisplay= new ObjDisplay();
-		objDisplay.VBOLoad("objets/roundedCube.obj");
-		initialized=true;
 	}
 	
 	/**
@@ -209,8 +201,6 @@ public class CubeControlledView implements DisplayableFather{
 	
 	
 	public void paint() {
-		if(!initialized)
-			initialize();
 		int x=(int) Math.round(position.getX());
 		int y=(int) Math.round(position.getY());
 		int iangle=(int) Math.round(angle);
@@ -225,7 +215,7 @@ public class CubeControlledView implements DisplayableFather{
 		 */
 	
 		if (untracked && !(GLDisplay.getMode3D() && invisible3D)){
-			objDisplay.renderVBO(color,x,y,(int)0.2,iangle);
+			ObjDisplay.ROUNDED_CUBE.render(color,x,y,(int)0.2,iangle);
 		}
 		
 		GL11.glLoadIdentity();

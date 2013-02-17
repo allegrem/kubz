@@ -20,6 +20,7 @@ public class TestRot {
 		cube1.setID(45679);
 		cubeManager.addFreeCube(cube1);
 		
+
 		xbee.setCubeManager(cubeManager); // Add the cube manager in the XBee	        
 	    xbee.start(); // Start the XBee thread
 		

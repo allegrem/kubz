@@ -34,6 +34,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL20;
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.glu.GLU;
 
@@ -168,7 +169,7 @@ public class GLDisplay extends Thread{
 		
 		
 		}
-		
+		ObjDisplay.cleanUp();
 		close();//Fermeture de la fenêtre
 		
 	}
@@ -188,6 +189,8 @@ public class GLDisplay extends Thread{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	    System.out.println("OpenGL version: "+GL11.glGetString(GL11.GL_VERSION));
+		System.out.println("GLSL version: "+GL11.glGetString(GL20.GL_SHADING_LANGUAGE_VERSION));
 		
 	}
 

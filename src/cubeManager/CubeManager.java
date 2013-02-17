@@ -36,7 +36,6 @@ public class CubeManager {
 
         for (int i = 0; i < this.freeCubesList.size(); i++){
             if (freeCubesList.get(i).getID() == adress) rep = freeCubesList.get(i);
-            i++;
         }
 
         return rep;

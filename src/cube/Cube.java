@@ -11,8 +11,8 @@ public class Cube{
 	 * Attribute of cube
 	 */
 	private int angle;
-	private int lastAngle;
 	private boolean tap;
+	int lastAngle;
 
 	private int id;
 
@@ -49,7 +49,7 @@ public class Cube{
 	}
 	
 	/* Switch all the ir leds off */
-	public void setIrOf(){
+	public void setIrOff(){
         /* Type byte is signed */
 		setIR((byte)(-128));
 	}

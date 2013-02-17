@@ -147,13 +147,13 @@ public class GameEngine extends Thread{
 		boolean ok = false;
 		boolean internOk = true;
 		for (Player player : playerList) {
-			player.getUnit().getCube().setIrOf();
+			player.getUnit().getCube().setIrOff();
 			player.getUnit().getCube()
 					.setRGB((byte) 127, (byte) 0, (byte) 0, (short) 500);
-			player.getParameters()[0].getCube().setIrOf();
+			player.getParameters()[0].getCube().setIrOff();
 			player.getParameters()[0].getCube().setRGB((byte) 127, (byte) 0,
 					(byte) 0, (short) 500);
-			player.getParameters()[1].getCube().setIrOf();
+			player.getParameters()[1].getCube().setIrOff();
 			player.getParameters()[1].getCube().setRGB((byte) 127, (byte) 0,
 					(byte) 0, (short) 500);
 			// ici on affiche les nouvelles positions
@@ -224,7 +224,7 @@ public class GameEngine extends Thread{
 
 	private boolean checkPos(CubeOwner cubeOwner) {
 		cubeOwner.getCube().setIrOn();
-		traitement.updateConnexe(null); // int�gration avec la cam �
+		//traitement.updateConnexe(null); // int�gration avec la cam �
 										// regler pour recuperer l'image
 		ArrayList<Point> currentPositions = new ArrayList<Point>();
 		for (int i = 1; i <= 3; i++) {
@@ -233,7 +233,7 @@ public class GameEngine extends Thread{
 		boolean result = currentPositions.containsAll(cubeOwner.getVCube()
 				.getPos());
 		// la on verifie que le traitement voit bien le cube
-		cubeOwner.getCube().setIrOf();
+		cubeOwner.getCube().setIrOff();
 		return result;
 	}
 }
