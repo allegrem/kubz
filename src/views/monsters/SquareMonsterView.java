@@ -149,7 +149,7 @@ public class SquareMonsterView extends MonsterView {
 		glMatrixMode(GL_MODELVIEW);
 		GL11.glPushMatrix();
 		
-			objDisplay.renderVBO(actualColor,x,y,(int)0.2,iangle);
+		objDisplay.renderVBO(actualColor,x,y,(int)0.2,iangle);
 		
 		GL11.glLoadIdentity();
 		GL11.glPopMatrix();

@@ -20,7 +20,7 @@ public class testTraitement2 {
 		Traitement traitement = new Traitement();
 
 		testCoteACote(10, 10, 4, 5, traitement);
-		// test(4, 4, 0, 1, traitement);
+		testDessusDessous(10, 10, 4, 5, traitement);
 	}
 
 	/**
@@ -45,15 +45,44 @@ public class testTraitement2 {
 		}
 		if ((x1 <= LENGHT - 1) && (y1 <= HEIGHT)) {
 			testscreen[x1][y1] = new VirtualPixel(true, 0, new Point(x1, y1));
-			testscreen[x1 + 1][y1] = new VirtualPixel(true, 0, new Point(
-					x1 + 1, y1));
+			testscreen[x1 + 1][y1] = new VirtualPixel(true, 0, new Point(x1 + 1, y1));
 			traitement.updateConnexe(testscreen, LENGHT, HEIGHT);
 			Point pos1 = traitement.getGroupePos(1);
-			//Point pos2 = traitement.getGroupePos(2);
-			/*
-			 * System.out.println(pos1.getX() + " et " + (((double)x1)+0.5));
-			 * System.out.println(pos1.getY() + " et " + y1);
-			 */
+			if((pos1.getX()==(double)(x1+0.5))&&(pos1.getY()==(double)y1)){
+				System.out.println("le test est reussis");
+			}
+			else System.out.println("le test est rate");
+
+		} else
+			System.out.println("les donnees entrées ne sont pas correctes");
+	}
+	
+	
+	/**
+	 * Test qui cree un tableau avec deux pixels allumes l'un au dessus de l'autre
+	 * @param LENGHT
+	 * @param HEIGHT
+	 * @param x1
+	 * @param y1
+	 * @param traitement
+	 */
+	public static void testDessusDessous(int LENGHT, int HEIGHT, int x1, int y1,
+			Traitement traitement) {
+		VirtualPixel[][] testscreen = new VirtualPixel[LENGHT][HEIGHT];
+		for (int i = 0; i < LENGHT; i++) {
+			for (int j = 0; j < HEIGHT; j++) {
+				testscreen[i][j] = new VirtualPixel(false, 0, new Point(i, j));
+			}
+		}
+		if ((x1 <= LENGHT) && (y1 <= HEIGHT - 1)) {
+			testscreen[x1][y1] = new VirtualPixel(true, 0, new Point(x1, y1));
+			testscreen[x1][y1 + 1] = new VirtualPixel(true, 0, new Point(x1, y1 + 1));
+			traitement.updateConnexe(testscreen, LENGHT, HEIGHT);
+			Point pos1 = traitement.getGroupePos(1);
+			if((pos1.getX()==(double)(x1))&&(pos1.getY()==(double)(y1+0.5))){
+				System.out.println("le test est reussis");
+			}
+			else System.out.println("le test est rate");
 
 		} else
 			System.out.println("les donnees entrées ne sont pas correctes");
