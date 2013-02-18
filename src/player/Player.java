@@ -412,9 +412,7 @@ public class Player {
 				unit.getAperture(), unit.getDirection(), power, unit.getView());
 		unit.getView().addChild(attack);
 		Sound sound = unit.getSound();
-		unit.getSound().playToSpeakers();
-		// gameEngine.getDisplay().auto3D(unit.getView(),
-		// unit.getDirection(),100, 6000);
+		//unit.getSound().playToSpeakers(); //A NE PAS ENLEVER QUAND JE FAIS MON NAZI SUR LES COMMENTAIRES
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {

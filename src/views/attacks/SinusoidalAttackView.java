@@ -104,7 +104,7 @@ public class SinusoidalAttackView implements DisplayableChild {
 		GL11.glPushMatrix();
 		GL11.glTranslated(father.getX(), father.getY(),father.getHeight()/2 );
 		GL11.glRotated(direction,0,0,1);
-		Lines.drawSinus((float) aperture, i, 10, 0.1f);
+		Lines.drawSinus((float) aperture, i, 20, 0.1f);
 		GL11.glLoadIdentity();
 		GL11.glPopMatrix();
 		

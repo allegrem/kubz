@@ -37,7 +37,7 @@ public class Unit extends CubeOwner {
 	private LifeView lifeView;
 
 	public Unit(Player owner) {
-		life = 1;
+		life = 15;
 		this.state = new WaitingUState();
 		this.owner = owner;
 		gameEngine = owner.getGameEngine();
@@ -97,11 +97,16 @@ public class Unit extends CubeOwner {
 			gameEngine.getDisplay().print(gameEngine.getWidth() / 2,
 					gameEngine.getHeight() / 2, ReadableColor.RED,
 					" Game Over !");
-			/*
-			 * while(!KeyboardManager.qKey){ try { Thread.sleep(10); } catch
-			 * (InterruptedException e) { // TODO Bloc catch généré
-			 * automatiquement e.printStackTrace(); } }
-			 */
+
+			while (!KeyboardManager.qKey) {
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) { // TODO Bloc catch généré
+													// automatiquement
+					e.printStackTrace();
+				}
+			}
+
 			System.exit(0);
 		}
 	}

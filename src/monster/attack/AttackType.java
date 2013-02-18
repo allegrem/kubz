@@ -43,7 +43,7 @@ public abstract class AttackType {
 												// trop
 												// mal au joueur
 			System.out.println(degats);
-			sound.playToSpeakers();
+			//sound.playToSpeakers(); //A NE PAS ENLEVER QUAND JE FAIS MON NAZI SUR LES COMMENTAIRES
 			if (power > monster.getPos()
 					.distanceTo(monster.getCible().getPos())) {
 				monster.getCible().decreaseLife(degats);
