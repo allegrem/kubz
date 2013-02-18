@@ -5,6 +5,10 @@ package player;
  * @author Felix
  */
 
+import java.util.ArrayList;
+
+import org.lwjgl.util.ReadableColor;
+
 import monster.zoo.*;
 import base.Base;
 import gameEngine.GameEngine;
@@ -24,7 +28,7 @@ import views.informationViews.InstrumentsChoice;
 
 public class Player {
 
-	private Unit unit;
+	private ArrayList<Unit> unitList;
 	private Parameter[] parameters;
 	private Base base;
 	private int nParams = 2;
@@ -45,7 +49,9 @@ public class Player {
 
 		this.gameEngine = gameEngine;
 		this.base = base;
-		this.unit = new Unit(this);
+		unitList = new ArrayList<Unit>();
+		unitList.add(new Unit(this));
+		unitList.add(new Unit(this));
 		this.parameters = new Parameter[2];
 		parameters[0] = new Parameter(this);
 		parameters[1] = new Parameter(this);
@@ -91,6 +97,31 @@ public class Player {
 		return (int) parameters[0].getPos().distanceTo(parameters[1].getPos());
 	}
 
+	
+	protected.removeUnit(Unit unit){
+		gameEngine.getUnitList().remove(unit);
+		unit.getView().removeChild(lifeView);
+		gameEngine.getMap().remove(unit.getView());
+		unit.getView().setUnTracked(false);
+		
+		gameEngine.getDisplay().print(gameEngine.getWidth() / 2,
+				gameEngine.getHeight() / 2, ReadableColor.RED,
+				" Game Over !");
+
+		while (!KeyboardManager.qKey) {
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) { // TODO Bloc catch généré
+												// automatiquement
+				e.printStackTrace();
+			}
+		}
+
+		System.exit(0);
+	}
+	
+	
+	
 	public BandsFilter getShield() {
 		return shield;
 	}
@@ -99,8 +130,8 @@ public class Player {
 		this.shield = shield;
 	}
 
-	public Unit getUnit() {
-		return unit;
+	public ArrayList<Unit> getUnitList() {
+		return unitList;
 	}
 
 	public Parameter[] getParameters() {
@@ -142,49 +173,56 @@ public class Player {
 		return paramsState;
 	}
 
+	
 	/**
 	 * Bloc des methodes oe on choisit l'etat de l'unite
 	 */
+	
 
-	public void setUStateToAngle() {
-		this.unit.setUStateToAngle();
+	public void setUStateToAngle(Unit unit) {
+		unit.setUStateToAngle();
 	}
 
-	public void setUStateToDirection() {
-		this.unit.setUStateToDirection();
+	public void setUStateToDirection(Unit unit) {
+		unit.setUStateToDirection();
 	}
 
-	public void setUStateToFrozen() {
-		this.unit.setUStateToFrozen();
+	public void setUStateToFrozen(Unit unit) {
+		unit.setUStateToFrozen();
 	}
 
-	public void setUStateToMoving() {
-		this.unit.setUStateToMoving();
+	public void setUStateToMoving(Unit unit) {
+		unit.setUStateToMoving();
 	}
 
-	public void setUStateToPositionError() {
-		this.unit.setUStateToPositionError();
+	public void setUStateToPositionError(Unit unit) {
+		unit.setUStateToPositionError();
 	}
 
-	public void setUStateToSelect() {
-		this.unit.setUStateToSelect();
+	public void setUStateToSelect(Unit unit) {
+		unit.setUStateToSelect();
 	}
 
-	public void setUStateToWaiting() {
-		this.unit.setUStateToWaiting();
+	public void setUStateToWaiting(Unit unit) {
+		unit.setUStateToWaiting();
 	}
 
-	public UnitState getState() {
+	public UnitState getState(Unit unit) {
 		return unit.getState();
 	}
+	
+	
 
 	/**
 	 * A present on va utiliser les methode du haut pour les differentes phases
 	 * de jeu
 	 */
+	
 	public void WaitingTurn() {
 		setPStatesToWaiting();
-		setUStateToWaiting();
+		for(Unit unit : unitList){
+			setUStateToWaiting(unit);
+		}
 	}
 
 	/**
@@ -192,7 +230,9 @@ public class Player {
 	 */
 	public void choosingUTurn() {
 		setPStatesToWaiting();
-		setUStateToSelect();
+		for(Unit unit : unitList){
+			setUStateToSelect(unit);
+		}
 		while (!KeyboardManager.tap) {
 
 		}
@@ -201,9 +241,9 @@ public class Player {
 	/**
 	 * Methode qui declenche le mouvement de Unit
 	 */
-	public void movingUTurn() {
+	public void movingUTurn(Unit unit) {
 		setPStatesToWaiting();
-		setUStateToMoving();
+		setUStateToMoving(unit);
 		double size = unit.getSize() * Math.sqrt(2) / 2;
 		while (!KeyboardManager.tap) {
 			if ((KeyboardManager.zKey) && (unit.getY() - size > 0))
@@ -230,7 +270,7 @@ public class Player {
 		KeyboardManager.tap = false;
 	}
 
-	public void chooseWeaponTurn() {
+	public void chooseWeaponTurn(Unit unit) {
 		InstrumentsChoice instChoice = new InstrumentsChoice(gameEngine);
 		unit.getView().addChild(instChoice);
 		int fmChoice = 0;
@@ -278,10 +318,11 @@ public class Player {
 
 	/**
 	 * Methode qui declenche la creation du son via les Parameter
+	 * Ici les Parameters sont liees au Player
 	 */
-	public void soundEditPTurn() {
+	public void soundEditPTurn(Unit unit) {
 		setPStatesToSoundEdit();
-		setUStateToWaiting();
+		setUStateToWaiting(unit);
 		double size = unit.getSize() * Math.sqrt(2) / 2;
 		boolean isModified = true;
 		while (!KeyboardManager.tap) {
@@ -319,11 +360,11 @@ public class Player {
 			}
 			if (KeyboardManager.aKey) {
 				unit.getSound().playToSpeakers();
-				try {
+				/*try {
 					Thread.sleep(3000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
-				}
+				}*/
 			}
 			if (!(KeyboardManager.zKey || KeyboardManager.sKey
 					|| KeyboardManager.qKey || KeyboardManager.dKey
@@ -354,9 +395,9 @@ public class Player {
 	/**
 	 * Methode qui declenche le choix de l'ouverture d'attaque de Unit
 	 */
-	public void UDirection() {
+	public void UDirection(Unit unit) {
 		setPStatesToWaiting();
-		setUStateToDirection();
+		setUStateToDirection(unit);
 		AttackConeView attackCone = new AttackConeView(unit.getAperture(),
 				unit.getDirection(), 100, unit.getView());
 		unit.getView().addChild(attackCone);
@@ -382,9 +423,9 @@ public class Player {
 		KeyboardManager.tap = false;
 	}
 
-	public void UAperture() {
+	public void UAperture(Unit unit) {
 		setPStatesToWaiting();
-		setUStateToDirection();
+		setUStateToDirection(unit);
 		AttackConeView attackCone = new AttackConeView(unit.getAperture(),
 				unit.getDirection(), 100, unit.getView());
 		unit.getView().addChild(attackCone);
@@ -408,14 +449,12 @@ public class Player {
 
 	}
 
-	public void UAttack() {
+	public void UAttack(Unit unit) {
 		SinusoidalAttackView attack = new SinusoidalAttackView(
 				unit.getAperture(), unit.getDirection(), power, unit.getView());
 		unit.getView().addChild(attack);
 		Sound sound = unit.getSound();
 		unit.getSound().playToSpeakers();
-		// gameEngine.getDisplay().auto3D(unit.getView(),
-		// unit.getDirection(),100, 6000);
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
@@ -445,12 +484,14 @@ public class Player {
 
 	public void act() {
 		isTurn = true;
-		movingUTurn();
-		chooseWeaponTurn();
-		soundEditPTurn();
-		UAperture();
-		UDirection();
-		UAttack();
+		for(Unit unit: unitList){
+			movingUTurn(unit);
+			chooseWeaponTurn(unit);
+			soundEditPTurn(unit);
+			UAperture(unit);
+			UDirection(unit);
+			UAttack(unit);
+		}
 		isTurn = false;
 
 	}

@@ -88,26 +88,8 @@ public class Unit extends CubeOwner {
 	public void decreaseLife(double dec) {
 		life = life - dec;
 		lifeView.setLife(life);
-		if (life < 0) {
-			gameEngine.getUnitList().remove(this);
-			gameEngine.getPlayerList().remove(owner);
-			view.removeChild(lifeView);
-			gameEngine.getMap().remove(view);
-			view.setUnTracked(false);
-			gameEngine.getDisplay().print(gameEngine.getWidth() / 2,
-					gameEngine.getHeight() / 2, ReadableColor.RED,
-					" Game Over !");
-
-			while (!KeyboardManager.qKey) {
-				try {
-					Thread.sleep(10);
-				} catch (InterruptedException e) { // TODO Bloc catch généré
-													// automatiquement
-					e.printStackTrace();
-				}
-			}
-
-			System.exit(0);
+		if (life <= 0) {
+			owner.removeUnit(this);
 		}
 	}
 
