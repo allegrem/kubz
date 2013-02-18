@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+import java.util.ArrayList;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.ARBVertexBufferObject;
@@ -22,10 +23,18 @@ import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.vector.Vector3f;
 
+/**
+ * Affichage de l'objet
+ * @author paul
+ *
+ */
 public class ObjDisplay {
 	public static final Objet ROUNDED_CUBE=Objet.ROUNDED_CUBE;
+	private static ArrayList<Objet> objets= new ArrayList<Objet>();
 	
-	
+	/*
+	 *enum des differents objets a charger
+	 */
 	public static enum Objet
 	{
 		ROUNDED_CUBE("objets/cube.obj");
@@ -47,7 +56,11 @@ public class ObjDisplay {
 		  this.address=address;
 	  }
 	  
+	  /**
+	   * Initialisation de l'objet
+	   */
 	  public void initialize(){
+		  objets.add(this);
 		  VBOLoad(this,address);
 		   shaderProgram = GL20.glCreateProgram();
 	       vertexShader = GL20.glCreateShader(GL20.GL_VERTEX_SHADER);
@@ -113,6 +126,14 @@ public class ObjDisplay {
 		  
 	  }
 	    
+	  /**
+	   * Rendu de l'objet
+	   * @param color
+	   * @param x
+	   * @param y
+	   * @param z
+	   * @param a
+	   */
 	  public void render(ReadableColor color,int x, int y, int z, int a){
 		  if(!initialized)
 			  initialize();
@@ -123,67 +144,12 @@ public class ObjDisplay {
 	    
 	};
 
-	
-	public static void load(Objet obj,String fichier){
-	
-		obj.objectDisplayList=GL11.glGenLists(1);
-		GL11.glNewList(obj.objectDisplayList,GL11.GL_COMPILE);
-		{
-		Model m=null;
-		try {
-			m=ObjLoader.loadModel(new File(fichier));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.exit(1);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
-		
-		
-		GL11.glBegin(GL11.GL_TRIANGLES);
-		for(Face face:m.faces){
-			Vector3f n1=m.normals.get((int) face.normal.x-1);
-			GL11.glNormal3f(n1.x, n1.y, n1.z);
-			Vector3f v1=m.vertices.get((int) face.vertex.x-1);
-			GL11.glVertex3f(v1.x, v1.y, v1.z);
-			
-			Vector3f n2=m.normals.get((int) face.normal.y-1);
-			GL11.glNormal3f(n2.x, n2.y, n2.z);
-			Vector3f v2=m.vertices.get((int) face.vertex.y-1);
-			GL11.glVertex3f(v2.x, v2.y, v2.z);
-			
-			Vector3f n3=m.normals.get((int) face.normal.z-1);
-			GL11.glNormal3f(n3.x, n3.y, n3.z);
-			Vector3f v3=m.vertices.get((int) face.vertex.z-1);
-			GL11.glVertex3f(v3.x, v3.y, v3.z);
-			 
-			
-			
-		}
-			
-		GL11.glEnd();
-		}
-		GL11.glEndList();
-	}
-	
-	public static void render(Objet obj){
-		GL11.glDisable(GL11.GL_TEXTURE_2D);
-
-		glMatrixMode(GL_MODELVIEW);
-		GL11.glPushMatrix();
-		GL11.glTranslated(500, 400,0);
-		GL11.glScalef((float)100, (float)100, (float)100);
-		GL11.glColor3ub((byte)Color.RED.getRed(), (byte)Color.RED.getGreen(),(byte)Color.RED.getBlue());
-		
-		GL11.glCallList(obj.objectDisplayList);
-		
-		GL11.glLoadIdentity();
-		GL11.glPopMatrix();
-
-		
-	}
-	
+	/**
+	 * Lecture de l'objet depuis le fichier
+	 * en utilisant des VBO
+	 * @param obj
+	 * @param fichier
+	 */
 	public static void VBOLoad(Objet obj,String fichier){
 		 obj.vboVertexHandle= GL15.glGenBuffers();
 		 obj.vboNormalHandle= GL15.glGenBuffers();
@@ -201,7 +167,7 @@ public class ObjDisplay {
 			}
 		 FloatBuffer vertices= reserveData(obj.m.faces.size()*9);
 		 FloatBuffer normals= reserveData(obj.m.faces.size()*9);
-		 for (Face face: obj.m.faces){
+		 for (Vertex face: obj.m.faces){
 			 vertices.put( asFloats(obj.m.vertices.get((int) face.vertex.x-1)));
 			 vertices.put( asFloats(obj.m.vertices.get((int) face.vertex.y-1)));
 			 vertices.put( asFloats(obj.m.vertices.get((int) face.vertex.z-1)));
@@ -221,6 +187,15 @@ public class ObjDisplay {
 		 GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 	}
 	
+	/**
+	 * Rendu avec utilisation de shaders et des VBO
+	 * @param obj
+	 * @param color
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param a
+	 */
 	public static void renderVBO(Objet obj,ReadableColor color,int x, int y, int z, int a){
 		GL20.glUseProgram(obj.shaderProgram);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,obj.vboVertexHandle);
@@ -239,23 +214,37 @@ public class ObjDisplay {
 		GL20.glUseProgram(0);
 	}
 
+	/**
+	 * 
+	 * @param v
+	 * @return Vector3f to float[]
+	 */
 	private static float[] asFloats(Vector3f v) {
 	
 		return new float[]{v.x,v.y,v.z};
 	}
 
+	/**
+	 * Reservation d'un FloatBuffer de taille donnee
+	 * @param size
+	 * @return
+	 */
 	private static FloatBuffer reserveData(int size) {
 		FloatBuffer data= BufferUtils.createFloatBuffer(size);
 		return data;
 	}
 	
+	/**
+	 * Nettoyage des VBO et shaders
+	 */
 	public static void cleanUp(){
-		GL15.glDeleteBuffers(ROUNDED_CUBE.vboVertexHandle);
-		GL15.glDeleteBuffers(ROUNDED_CUBE.vboNormalHandle);
-		GL20.glDeleteProgram(ROUNDED_CUBE.shaderProgram);
-		GL20.glDeleteShader(ROUNDED_CUBE.vertexShader);
-		GL20.glDeleteShader(ROUNDED_CUBE.fragmentShader);
-		
+		for(Objet objet:objets){
+		GL15.glDeleteBuffers(objet.vboVertexHandle);
+		GL15.glDeleteBuffers(objet.vboNormalHandle);
+		GL20.glDeleteProgram(objet.shaderProgram);
+		GL20.glDeleteShader(objet.vertexShader);
+		GL20.glDeleteShader(objet.fragmentShader);
+		}
 		
 	}
 	

@@ -3,17 +3,11 @@ package views.informationViews;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.util.Observable;
 import java.util.Observer;
-
-import objLoader.Face;
-import objLoader.ObjLoader;
-import objLoader.ObjDisplay.Objet;
 
 import org.apache.commons.math3.complex.Complex;
 import org.lwjgl.BufferUtils;
@@ -23,12 +17,15 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.vector.Vector3f;
 
+import synthesis.Sound;
 import OpenGL.GLDisplay;
 
-import synthesis.Sound;
 
-
-
+/**
+ * Rendu de l'audio
+ * @author paul
+ *
+ */
 public class AudioRender implements Observer{
 	private int vboVertexHandleA= GL15.glGenBuffers();
 
@@ -43,8 +40,6 @@ public class AudioRender implements Observer{
 	private int ymin;
 
 	private int zoomX = 5000;
-
-	private int currentSoundLength = 0;
 
 	private int offsetX = 0;
 
@@ -74,7 +69,10 @@ public class AudioRender implements Observer{
 		loadShaders();
 	}
 
-
+/**
+ * Chargement des shaders
+ * 
+ */
 	private void loadShaders() {
 		   shaderProgram = GL20.glCreateProgram();
 		   int  vertexShader = GL20.glCreateShader(GL20.GL_VERTEX_SHADER);
@@ -137,6 +135,9 @@ public class AudioRender implements Observer{
 	}
 
 
+	/**
+	 * Chargement des VBO pour l'audio
+	 */
 	public void VBOLoadAudio(){
 		 int maxX = zoomX - 2;
 		 FloatBuffer vertices= reserveData(maxX*6);
@@ -164,6 +165,9 @@ public class AudioRender implements Observer{
 		 GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 	}
 	
+	/**
+	 * Chargement des VBO pour le spectre
+	 */
 
 	public void VBOLoadSpectrum(){
 		 FloatBuffer vertices= reserveData((X_SIZE)*6);
@@ -181,6 +185,9 @@ public class AudioRender implements Observer{
 	}
 	
 	
+	/**
+	 * Rendu de l'audio
+	 */
 	public void renderAudioView() {
 		if(update)
 			update();
@@ -209,6 +216,9 @@ public class AudioRender implements Observer{
 		}
 	}
 	
+	/**
+	 * Rendu du spectre
+	 */
 	public void renderSpectrumView() {
 		if(update)
 			update();
@@ -239,76 +249,12 @@ public class AudioRender implements Observer{
 		}
 		}
 	}
-/*	public void renderAudioView() {
-		if(!GLDisplay.getMode3D())
-		GL11.glDisable(GL11.GL_TEXTURE_2D);
-		
-		GL11.glColor3ub((byte)ReadableColor.LTGREY.getRed(),(byte)ReadableColor.LTGREY.getGreen(),(byte)ReadableColor.LTGREY.getBlue());
-		GL11.glBegin(GL11.GL_QUADS);
-		glVertex3d(0,ymax, 100);
-		glVertex3d(X_SIZE, ymax, 100);
-		glVertex3d(X_SIZE,ymin, 100);
-		glVertex3d(0,ymin, 100);
-		GL11.glEnd();
-		
-		GL11.glBegin(GL11.GL_LINES);
-		GL11.glColor3ub((byte)ReadableColor.BLACK.getRed(),(byte)ReadableColor.BLACK.getGreen(),(byte)ReadableColor.BLACK.getBlue());
-		if (sound != null) {
-			int maxX = zoomX - 2;
-			int xCoord1 = 0, yCoord1 = ymax, xCoord2 = 0, yCoord2 = ymax;
-			for (int x = 0; x < maxX - 1; x++) {
-				xCoord2 = x * X_SIZE / zoomX;
-				yCoord2 = ymax-(Y_SIZE - (soundBytes[offsetX + x] + 127) * (Y_SIZE)
-						/ 255 + MANUAL_OFFSET);
-				GL11.glVertex3i(xCoord1, yCoord1, 100);
-				GL11.glVertex3i(xCoord2, yCoord2, 100);
-				xCoord1 = xCoord2;
-				yCoord1 = yCoord2;
-			}
-			
-			GL11.glVertex3i(0,  ymax-(MANUAL_OFFSET + Y_SIZE/ 2), 100);
-			GL11.glVertex3i(X_SIZE,ymax-(MANUAL_OFFSET
-					+ Y_SIZE / 2), 100);
-		}
-		}
 
-		GL11.glEnd();
-	}
-		
 	
-	
-public void renderSpectrumView(){
-	if(!GLDisplay.getMode3D()){
-	GL11.glDisable(GL11.GL_TEXTURE_2D);
-	
-	GL11.glColor3ub((byte)ReadableColor.LTGREY.getRed(),(byte)ReadableColor.LTGREY.getGreen(),(byte)ReadableColor.LTGREY.getBlue());
-	GL11.glBegin(GL11.GL_QUADS);
-	glVertex3d(2*X_SIZE,ymax, 100);
-	glVertex3d(3*X_SIZE, ymax, 100);
-	glVertex3d(3*X_SIZE,ymin, 100);
-	glVertex3d(2*X_SIZE,ymin, 100);
-	GL11.glEnd();
-	
-	if(sound!=null){
-	GL11.glBegin(GL11.GL_LINES);
-	GL11.glColor3ub((byte)ReadableColor.BLACK.getRed(),(byte)ReadableColor.BLACK.getGreen(),(byte)ReadableColor.BLACK.getBlue());
-	
-	if (spectrumCache != null && spectrumCache.length > 0) {
-		for (int x = 0; x < X_SIZE; x++){
-			glVertex3d(x+2*X_SIZE,ymax,100);
-			glVertex3d(x+2*X_SIZE,spectrumCache[x]+display.getmapDisplay_height(),100);
-			
-		}
-		}
-	
-	GL11.glEnd();
-	}
-	}
-}
-
-*/
-	
-	
+/**
+ * 	
+ * @param sound Le son a afficher
+ */
 public void setSound(Sound sound) {
 	this.sound=sound;
 	sound.addObserver(this);
@@ -316,17 +262,29 @@ public void setSound(Sound sound) {
 	
 }
 
+/**
+ * 
+ * @param v
+ * @return vector3f to float[]
+ */
 private static float[] asFloats(Vector3f v) {
 	
 	return new float[]{v.x,v.y,v.z};
 }
 
+/**
+ * Reserve un FloatBuffer de la taille donnee
+ * @param size
+ * @return
+ */
 private static FloatBuffer reserveData(int size) {
 	FloatBuffer data= BufferUtils.createFloatBuffer(size);
 	return data;
 }
 
-
+/**
+ * Mise a jour du spectre
+ */
 public void updateSpectrum() {
 	spectrumCache = new int[X_SIZE];
 	for (int x = 0; x < result.length / 4; x++) {
@@ -344,12 +302,16 @@ public void updateSpectrum() {
 }
 
 
+
 @Override
 public void update(Observable arg0, Object arg1) {
 	update=true;
 	
 }
 
+/**
+ * Mise a jour de tout le son
+ */
 public void update(){
 
 		soundBytes = sound.getSound();

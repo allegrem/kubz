@@ -8,6 +8,11 @@ import java.io.IOException;
 
 import org.lwjgl.util.vector.Vector3f;
 
+/**
+ * Chargement d'un fichier .obj
+ * @author paul
+ *
+ */
 public class ObjLoader {
  
 	public static Model loadModel(File f) throws FileNotFoundException, IOException{
@@ -36,7 +41,7 @@ public class ObjLoader {
 				Vector3f normalIndices= new Vector3f(Float.valueOf(line.split(" ")[1].split("/")[2]),
 						Float.valueOf(line.split(" ")[2].split("/")[2]),
 						Float.valueOf(line.split(" ")[3].split("/")[2])	);
-				m.faces.add(new Face(vertexIndices,normalIndices));
+				m.faces.add(new Vertex(vertexIndices,normalIndices));
 				
 			}
 			
