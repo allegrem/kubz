@@ -20,6 +20,7 @@ import synthesis.fmInstruments.WoodInstrument;
 import synthesis.fmInstruments.XylophoneInstrument;
 import views.attacks.AttackConeView;
 import views.attacks.SinusoidalAttackView;
+import views.informationViews.AudioRender;
 import views.informationViews.InstrumentsChoice;
 
 public class Player {
@@ -33,6 +34,7 @@ public class Player {
 	private int choice;
 	private int lastAngle1;
 	private int lastAngle2;
+	private AudioRender audioRender;
 
 	int power = 100;
 
@@ -41,7 +43,7 @@ public class Player {
 	/**
 	 * Creation d'un joueur avec une Unit et deux Parameter
 	 */
-	public Player(GameEngine gameEngine, Base base) {
+	public Player(GameEngine gameEngine) {
 
 		this.gameEngine = gameEngine;
 		this.base = base;
@@ -49,12 +51,10 @@ public class Player {
 		this.parameters = new Parameter[2];
 		parameters[0] = new Parameter(this);
 		parameters[1] = new Parameter(this);
-		parameters[0].setLocation(
-				base.getCenter().getX() - parameters[0].getSize(), base
-						.getCenter().getY());
-		parameters[1].setLocation(
-				base.getCenter().getX() + parameters[1].getSize(), base
-						.getCenter().getY());
+		parameters[0].setLocation(100,100);
+		parameters[1].setLocation(200,100);
+		audioRender=new AudioRender(gameEngine.getDisplay(), unit.getSound(), parameters[0], parameters[1]);
+		gameEngine.getMap().add(audioRender);
 		this.shield = new BandsFilter(11);
 		this.shield.random();
 	}
@@ -285,26 +285,22 @@ public class Player {
 		boolean isModified = true;
 		while (!KeyboardManager.tap) {
 			if ((KeyboardManager.zKey)
-					&& (parameters[choice].getY() - size > (base.getCenter()
-							.getY() - (base.getSize().getY() / 2)))) {
+					&& (parameters[choice].getY() - size > 0)) {
 				parameters[choice].translate(0, -1);
 				isModified = true;
 			}
 			if ((KeyboardManager.sKey)
-					&& (parameters[choice].getY() + size < (base.getCenter()
-							.getY() + (base.getSize().getY() / 2)))) {
+					&& (parameters[choice].getY() + size < (gameEngine.getHeight()))) {
 				parameters[choice].translate(0, 1);
 				isModified = true;
 			}
 			if ((KeyboardManager.qKey)
-					&& (parameters[choice].getX() - size > (base.getCenter()
-							.getX() - (base.getSize().getX() / 2)))) {
+					&& (parameters[choice].getX() - size > (0))) {
 				parameters[choice].translate(-1, 0);
 				isModified = true;
 			}
 			if ((KeyboardManager.dKey)
-					&& (parameters[choice].getX() + size < (base.getCenter()
-							.getX() + (base.getSize().getX() / 2)))) {
+					&& (parameters[choice].getX() + size < (gameEngine.getWidth()))) {
 				parameters[choice].translate(1, 0);
 				isModified = true;
 			}

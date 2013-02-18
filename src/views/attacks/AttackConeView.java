@@ -10,6 +10,7 @@ import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.glu.PartialDisk;
 
 import utilities.Point;
+import views.interfaces.Displayable;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
 
@@ -76,7 +77,7 @@ public class AttackConeView implements DisplayableChild {
 		 */
 		collision : for(float i=15;i<=power;i+=10){
 		if(!reflected){
-		 for (DisplayableFather object: Map.getMap().getObjects()){
+		 for (Displayable object: Map.getMap().getObjects()){
 			if (object !=father && object.collisionCanOccure(new Point(father.getX(),father.getY()),i+5)){
 				beta=direction-aperture/2;
 			while(beta<=direction+aperture/2 ){	
@@ -191,6 +192,12 @@ public class AttackConeView implements DisplayableChild {
 	@Override
 	public boolean isDead() {
 		return dead;
+	}
+
+	@Override
+	public boolean collisionCanOccure(Point point, float f) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	

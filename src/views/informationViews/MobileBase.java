@@ -56,4 +56,10 @@ public class MobileBase implements DisplayableChild{
 		return false;
 	}
 
+	@Override
+	public boolean collisionCanOccure(Point point, float f) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

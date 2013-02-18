@@ -17,11 +17,11 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.vector.Vector3f;
 
+import player.parameter.Parameter;
+
 import synthesis.Sound;
 import utilities.Point;
 import views.interfaces.Displayable;
-import views.interfaces.DisplayableChild;
-import views.interfaces.DisplayableFather;
 import OpenGL.GLDisplay;
 
 
@@ -32,20 +32,21 @@ import OpenGL.GLDisplay;
  */
 public class AudioRender implements Displayable,Observer{
 
-	private int vboVertexHandle= GL15.glGenBuffers();
+	private static int vboVertexHandle;
+	private boolean initialized=false;
 	
-	private DisplayableFather father1;
-	private DisplayableFather father2;
+	private Parameter parameter1;
+	private Parameter parameter2;
 
 
-	private int Y_SIZE = 0;
+	private int Y_SIZE = 100;
 
 	private  int X_SIZE = 0;
-	
-	private int ymax;
-	private int ymin;
 
-	private int zoomX = 5000;
+	private int angle=0;
+	
+
+	private int zoomX = 1000;
 
 	private int offsetX = 0;
 
@@ -57,25 +58,32 @@ public class AudioRender implements Displayable,Observer{
 	private int[] spectrumCache;
 	private byte[] soundBytes;
 	private Complex[] result;
-	private boolean update=false;
+	private boolean update=true;
 
 	private int shaderProgram;
 	
-	public AudioRender(GLDisplay display,Sound sound,DisplayableFather father1,DisplayableFather father2){
+	public AudioRender(GLDisplay display,Sound sound,Parameter parameter1,Parameter parameter2){
 		this.sound=sound;
 		this.display=display;
-		this.father1=father1;
-		this.father2=father2;
-		if(sound!=null){
-		update(null,null);
+		this.parameter1=parameter1;
+		this.parameter2=parameter2;
 		sound.addObserver(this);
-		}
-		loadShaders();
 		setPosition();
+	}
+	
+	private void initialize(){
+		loadShaders();
+		vboVertexHandle= GL15.glGenBuffers();
+		initialized=true;
+		
 	}
 
 	private void setPosition() {
-		// TODO Auto-generated method stub
+		Point p1=new Point(parameter1.getX(),parameter1.getY());
+		Point p2=new Point(parameter2.getX(),parameter2.getY());
+		X_SIZE=(int) p1.distanceTo(p2);
+		angle=(int) Math.toDegrees(Math.atan2(p2.getY()-p1.getY(), p2.getX()-p1.getX()));
+		
 		
 	}
 
@@ -83,12 +91,16 @@ public class AudioRender implements Displayable,Observer{
 	 * Chargement des VBO
 	 */
 	private void VBOLoad() {
+		if(!initialized){
+			initialize();
+		}
+		zoomX=X_SIZE*20;
 		 int maxX = zoomX - 2;
 		 FloatBuffer vertices= reserveData(maxX*6);
-		 int xCoord1 = 0, yCoord1 = ymax, xCoord2 = 0, yCoord2 = ymax;
+		 int xCoord1 = 0, yCoord1 = 0, xCoord2 = 0, yCoord2 = 0;
 			for (int x = 0; x < maxX - 1; x++) {
 				xCoord2 = x * X_SIZE / zoomX;
-				yCoord2 = ymax-(Y_SIZE - (soundBytes[offsetX + x] + 127) * (Y_SIZE)
+				yCoord2 =-(Y_SIZE/2-(soundBytes[offsetX + x] + 127) * Y_SIZE
 						/ 255 + MANUAL_OFFSET);
 				vertices.put(asFloats(new Vector3f(xCoord1, yCoord1, 100)));
 				vertices.put(asFloats(new Vector3f(xCoord2, yCoord2, 100)));
@@ -96,9 +108,8 @@ public class AudioRender implements Displayable,Observer{
 				yCoord1 = yCoord2;
 			}
 		
-			vertices.put(asFloats(new Vector3f(0,  ymax-(MANUAL_OFFSET + Y_SIZE/ 2), 100)));
-			vertices.put(asFloats(new Vector3f(X_SIZE,ymax-(MANUAL_OFFSET
-					+ Y_SIZE / 2), 100)));
+			vertices.put(asFloats(new Vector3f(0, -(MANUAL_OFFSET ), 100)));
+			vertices.put(asFloats(new Vector3f(X_SIZE,-(MANUAL_OFFSET), 100)));
 			 
 			
 		 vertices.flip();
@@ -355,7 +366,6 @@ public void update(Observable arg0, Object arg1) {
  * Mise a jour de tout le son
  */
 public void update(){
-		setPosition();
 		soundBytes = sound.getSound();
 		result = sound.getSpectrum();
 		updateSpectrum();
@@ -369,7 +379,26 @@ public void update(){
 
 @Override
 public void paint() {
-	// TODO Auto-generated method stub
+	if(update)
+		update();
+	setPosition();
+	
+	if(!GLDisplay.getMode3D()){
+	GL11.glDisable(GL11.GL_TEXTURE_2D);
+
+	if(sound!=null){
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vboVertexHandle);
+		GL11.glVertexPointer(3,GL11.GL_FLOAT,0,0L);
+		GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
+		GL11.glColor3ub((byte)ReadableColor.BLACK.getRed(),(byte)ReadableColor.BLACK.getGreen(),(byte)ReadableColor.BLACK.getBlue());
+		GL11.glTranslated(parameter1.getX(),parameter1.getY(),0);
+		GL11.glRotatef(angle, 0, 0, 1);
+		GL11.glDrawArrays(GL11.GL_LINES,0,(zoomX-2)*2);
+		GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+
+	}
+	}
 	
 }
 
@@ -403,9 +432,15 @@ public String getCharac() {
 	return "Audio";
 }
 
-private void setFathers(DisplayableFather father1,DisplayableFather father2){
-	this.father1=father1;
-	this.father2=father2;
+private void setparameters(Parameter parameter1,Parameter parameter2){
+	this.parameter1=parameter1;
+	this.parameter2=parameter2;
+}
+
+@Override
+public boolean collisionCanOccure(Point point, float f) {
+	// TODO Auto-generated method stub
+	return false;
 }
 
 }

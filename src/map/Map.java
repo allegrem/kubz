@@ -2,7 +2,7 @@ package map;
 
 import java.util.ArrayList;
 
-import views.interfaces.DisplayableFather;
+import views.interfaces.Displayable;
 
 
 /**
@@ -15,13 +15,13 @@ import views.interfaces.DisplayableFather;
 public class Map {
 
 
-	private ArrayList<DisplayableFather> listObjects;
+	private ArrayList<Displayable> listObjects;
 	public static int width;
 	public static int length;
 	private static Map map=null;
 	
 	public Map() {
-		listObjects=new ArrayList<DisplayableFather>();
+		listObjects=new ArrayList<Displayable>();
 		map=this;
 	}
 
@@ -29,7 +29,7 @@ public class Map {
  * Genere le rendu de la map en affichant chaque objet 
  */
 	public synchronized void paint() {
-		for(DisplayableFather object: listObjects){
+		for(Displayable object: listObjects){
 			object.paint();
 			
 		}
@@ -41,7 +41,7 @@ public class Map {
  * @param object L'objet a ajouter
  * @return L'objet ajoute
  */
-	public synchronized DisplayableFather add(DisplayableFather object){
+	public synchronized Displayable add(Displayable object){
 		listObjects.add(object);
 		return object;
 	}
@@ -52,7 +52,7 @@ public class Map {
 	 * @param object Objet a retirer
 	 * @return L'objet retire si cela a marche
 	 */
-	public synchronized DisplayableFather remove(DisplayableFather object){
+	public synchronized Displayable remove(Displayable object){
 		if (listObjects.size()>1){
 		listObjects.remove(object);
 		return object;
@@ -79,7 +79,7 @@ public class Map {
 	 * 
 	 * @return La liste des objets ajoutes a la map
 	 */
-	public synchronized ArrayList<DisplayableFather> getObjects(){
+	public synchronized ArrayList<Displayable> getObjects(){
 		return listObjects;
 	}
 	
@@ -88,7 +88,7 @@ public class Map {
 	 * @param i
 	 * @return
 	 */
-	public synchronized DisplayableFather getObject(int i){
+	public synchronized Displayable getObject(int i){
 		return listObjects.get(i);
 	}
 	

@@ -31,7 +31,7 @@ public class MapSaver {
 	 * @param map
 	 */
 	public void saveToFile(Map map){
-		ArrayList<DisplayableFather> displayables = map.getObjects();
+		ArrayList<Displayable> displayables = map.getObjects();
 		for (Displayable disp : displayables){
 			if (disp instanceof BaseView)
 				bases.add( (BaseView) disp );

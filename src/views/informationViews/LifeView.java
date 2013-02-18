@@ -132,5 +132,11 @@ public class LifeView implements DisplayableChild{
 		this.life = life;
 	}
 
+	@Override
+	public boolean collisionCanOccure(Point point, float f) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	
 }
