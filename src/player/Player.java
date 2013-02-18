@@ -20,7 +20,6 @@ import synthesis.fmInstruments.WoodInstrument;
 import synthesis.fmInstruments.XylophoneInstrument;
 import views.attacks.AttackConeView;
 import views.attacks.SinusoidalAttackView;
-import views.informationViews.AudioRender;
 import views.informationViews.InstrumentsChoice;
 
 public class Player {
@@ -34,7 +33,6 @@ public class Player {
 	private int choice;
 	private int lastAngle1;
 	private int lastAngle2;
-	private AudioRender audioRender;
 
 	int power = 100;
 
@@ -51,12 +49,15 @@ public class Player {
 		this.parameters = new Parameter[2];
 		parameters[0] = new Parameter(this);
 		parameters[1] = new Parameter(this);
-		parameters[0].setLocation(gameEngine.getWidth()/2-50,gameEngine.getHeight()-100);
-		parameters[1].setLocation(gameEngine.getWidth()/2+50,gameEngine.getHeight()-100);
-		audioRender=new AudioRender(gameEngine.getDisplay(),unit.getSound(),parameters[0],parameters[1]);
-		gameEngine.getMap().add(audioRender);
+		parameters[0].setLocation(
+				base.getCenter().getX() - parameters[0].getSize(), base
+						.getCenter().getY());
+		parameters[1].setLocation(
+				base.getCenter().getX() + parameters[1].getSize(), base
+						.getCenter().getY());
 		this.shield = new BandsFilter(11);
 		this.shield.random();
+		//gameEngine.getDisplay().setSound(unit.getSound());
 	}
 
 	/**
@@ -349,6 +350,7 @@ public class Player {
 		KeyboardManager.tap = false;
 	}
 
+	
 	/**
 	 * Methode qui declenche le choix de l'ouverture d'attaque de Unit
 	 */
@@ -411,7 +413,9 @@ public class Player {
 				unit.getAperture(), unit.getDirection(), power, unit.getView());
 		unit.getView().addChild(attack);
 		Sound sound = unit.getSound();
-		//unit.getSound().playToSpeakers(); //A NE PAS ENLEVER QUAND JE FAIS MON NAZI SUR LES COMMENTAIRES
+		unit.getSound().playToSpeakers();
+		// gameEngine.getDisplay().auto3D(unit.getView(),
+		// unit.getDirection(),100, 6000);
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {

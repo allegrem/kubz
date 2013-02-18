@@ -77,7 +77,7 @@ public class Traitement {
 			}
 			
 		}
-		//parcours du reste du tableau
+		//parcours du reste du tableau normalement
 		for(int i=1; i<HEIGHT;i++){
 			for(int j=1; j<LENGHT; j++){
 				if(vi[i][j].isBrightness()){
@@ -99,16 +99,25 @@ public class Traitement {
 						compteurComposante++;
 					}
 					if((vi[i-1][j].isBrightness())&&(vi[i][j-1].isBrightness())){
-						int newGroupe = vi[i-1][j].getGroupeConnexe();
-						vi[i][j].setGroupeConnexe(newGroupe);
-						groupesConnexesIntermediaire.get(newGroupe).add(vi[i][j]);
-						uniongroupesConnexeIntermediare(groupesConnexesIntermediaire,newGroupe,vi[i][j - 1].getGroupeConnexe());
+						int groupe1 = vi[i-1][j].getGroupeConnexe();
+						int groupe2 = vi[i][j-1].getGroupeConnexe();
+						vi[i][j].setGroupeConnexe(groupe2);
+						groupesConnexesIntermediaire.get(groupe2).add(vi[i][j]);
+						uniongroupesConnexeIntermediare(groupesConnexesIntermediaire,groupe1,groupe2);
 					}					
 				}
 			}
 		}
+		
 		//on actualise le tableau des groupes connexes
-		groupesConnexes = groupesConnexesIntermediaire;
+		ArrayList<ArrayList<VirtualPixel>> vase = new ArrayList<ArrayList<VirtualPixel>>();
+		vase.add(new ArrayList<VirtualPixel>());
+		for (ArrayList<VirtualPixel> list : groupesConnexesIntermediaire){
+			if(!(list.size()==0)){
+				vase.add(list);
+			}
+		}
+		groupesConnexes = vase;
 	}
 
 	/**
@@ -155,7 +164,7 @@ public class Traitement {
 
 	/**
 	 * Methode qui renvoie la position moyenne d'une composante connexe
-	 * 
+	 * On considere que le centre de la tache est son barycentre 
 	 * @param groupe
 	 * @return
 	 */
