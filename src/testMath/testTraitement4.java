@@ -1,4 +1,4 @@
-package player;
+package testMath;
 
 import traitementVideo.Traitement;
 import traitementVideo.VirtualPixel;

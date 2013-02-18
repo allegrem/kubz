@@ -60,4 +60,6 @@ public interface DisplayableFather extends Displayable {
 	 * @return Hauteur de l'objet
 	 */
 	public double getHeight();
+
+	public void setUnTracked(boolean b);
 }

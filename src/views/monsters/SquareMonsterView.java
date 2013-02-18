@@ -161,5 +161,12 @@ public class SquareMonsterView extends MonsterView {
 	}
 
 
+	@Override
+	public void setUnTracked(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 
 }

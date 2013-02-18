@@ -352,6 +352,12 @@ public class BackgroundView implements DisplayableFather{
 		return 0;
 	}
 
+	@Override
+	public void setUnTracked(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 

@@ -102,6 +102,12 @@ public class TriangleMonsterView extends MonsterView {
 		return false;
 	}
 
+	@Override
+	public void setUnTracked(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 	//There's a need to have normals (/!\ normalized vectors) for each side to let OpenGL know which direction each side is facing and 
 	//knowing the position of the light, deduce their relative positions (light and face) and render the right 

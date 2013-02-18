@@ -6,10 +6,6 @@ package player.unit;
  * 
  */
 
-import org.lwjgl.util.ReadableColor;
-
-import OpenGL.KeyboardManager;
-
 import cube.Cube;
 import gameEngine.GameEngine;
 import synthesis.Sound;
@@ -275,5 +271,15 @@ public class Unit extends CubeOwner {
 
 		return view;
 	}
+
+	public LifeView getLifeView() {
+		return lifeView;
+	}
+
+	public void setLifeView(LifeView lifeView) {
+		this.lifeView = lifeView;
+	}
+	
+	
 
 }

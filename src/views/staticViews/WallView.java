@@ -641,5 +641,11 @@ public class WallView implements DisplayableFather{
 		return 0;
 	}
 
+	@Override
+	public void setUnTracked(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }

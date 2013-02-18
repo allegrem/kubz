@@ -98,26 +98,28 @@ public class Player {
 	}
 
 	
-	protected.removeUnit(Unit unit){
+	public void removeUnit(Unit unit){
 		gameEngine.getUnitList().remove(unit);
-		unit.getView().removeChild(lifeView);
+		unit.getView().removeChild(unit.getLifeView());
 		gameEngine.getMap().remove(unit.getView());
 		unit.getView().setUnTracked(false);
-		
-		gameEngine.getDisplay().print(gameEngine.getWidth() / 2,
-				gameEngine.getHeight() / 2, ReadableColor.RED,
-				" Game Over !");
-
-		while (!KeyboardManager.qKey) {
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) { // TODO Bloc catch généré
-												// automatiquement
-				e.printStackTrace();
+		unitList.remove(unit);
+		if (unitList.isEmpty()){		
+			gameEngine.getDisplay().print(gameEngine.getWidth() / 2,
+					gameEngine.getHeight() / 2, ReadableColor.RED,
+					" Game Over !");
+	
+			while (!KeyboardManager.qKey) {
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) { // TODO Bloc catch généré
+													// automatiquement
+					e.printStackTrace();
+				}
 			}
+	
+			System.exit(0);
 		}
-
-		System.exit(0);
 	}
 	
 	

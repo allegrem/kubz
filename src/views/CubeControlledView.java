@@ -291,6 +291,7 @@ public class CubeControlledView implements DisplayableFather{
 		return false;
 	}
 	
+	@Override
 	public void setUnTracked(boolean bool){
 		untracked=bool;
 	}

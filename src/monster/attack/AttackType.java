@@ -7,7 +7,6 @@ package monster.attack;
 import player.unit.*;
 import synthesis.Sound;
 import synthesis.fmInstruments.FmInstruments3Params;
-import synthesis.fmInstruments.TwoOscFmInstrument;
 import synthesis.fmInstruments.WoodInstrument;
 
 import monster.zoo.Monster;
