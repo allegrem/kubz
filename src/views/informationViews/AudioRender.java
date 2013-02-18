@@ -42,6 +42,7 @@ public class AudioRender implements Displayable,Observer{
 	private int Y_SIZE = 100;
 
 	private  int X_SIZE = 0;
+	private int sX_SIZE=0;
 
 	private int angle=0;
 	
@@ -61,6 +62,7 @@ public class AudioRender implements Displayable,Observer{
 	private boolean update=true;
 
 	private int shaderProgram;
+	private boolean paint=true;
 	
 	public AudioRender(GLDisplay display,Sound sound,Parameter parameter1,Parameter parameter2){
 		this.sound=sound;
@@ -83,7 +85,9 @@ public class AudioRender implements Displayable,Observer{
 		Point p2=new Point(parameter2.getX(),parameter2.getY());
 		X_SIZE=(int) p1.distanceTo(p2);
 		angle=(int) Math.toDegrees(Math.atan2(p2.getY()-p1.getY(), p2.getX()-p1.getX()));
-		
+		if(X_SIZE!=sX_SIZE)
+			paint=false;
+		sX_SIZE=X_SIZE;
 		
 	}
 
@@ -118,6 +122,7 @@ public class AudioRender implements Displayable,Observer{
 
 	
 		 GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+		 paint=true;
 		
 	}
 	
@@ -382,7 +387,7 @@ public void paint() {
 	if(update)
 		update();
 	setPosition();
-	
+	if(paint){
 	if(!GLDisplay.getMode3D()){
 	GL11.glDisable(GL11.GL_TEXTURE_2D);
 
@@ -396,6 +401,7 @@ public void paint() {
 		GL11.glDrawArrays(GL11.GL_LINES,0,(zoomX-2)*2);
 		GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+	}
 
 	}
 	}

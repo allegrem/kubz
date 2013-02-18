@@ -1,16 +1,36 @@
 package views.informationViews;
 
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
+
+import java.awt.Color;
+
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.ReadableColor;
+import org.lwjgl.util.glu.Disk;
 
 import utilities.Point;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
 
 public class MobileBase implements DisplayableChild{
+	private DisplayableFather father;
+	private Disk disk;
 
+	public MobileBase(DisplayableFather father){
+		this.father=father;
+		disk=new Disk();
+	}
+	
 	@Override
 	public void paint() {
-		// TODO Auto-generated method stub
+		glMatrixMode(GL_MODELVIEW);
+		GL11.glPushMatrix();
+		GL11.glTranslated(father.getX(),father.getY(),0);
+		GL11.glColor4f(Color.red.getRed(), Color.red.getGreen(), Color.red.getRed(),120f);
+		disk.draw(0,30,50,1);
+		GL11.glLoadIdentity();
+		GL11.glPopMatrix();
 		
 	}
 
@@ -40,13 +60,12 @@ public class MobileBase implements DisplayableChild{
 
 	@Override
 	public String getCharac() {
-		// TODO Auto-generated method stub
-		return null;
+		return "MobileBase";
 	}
 
 	@Override
 	public void setFather(DisplayableFather father) {
-		// TODO Auto-generated method stub
+	this.father=father;
 		
 	}
 
