@@ -18,6 +18,10 @@ import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.vector.Vector3f;
 
 import synthesis.Sound;
+import utilities.Point;
+import views.interfaces.Displayable;
+import views.interfaces.DisplayableChild;
+import views.interfaces.DisplayableFather;
 import OpenGL.GLDisplay;
 
 
@@ -26,10 +30,12 @@ import OpenGL.GLDisplay;
  * @author paul
  *
  */
-public class AudioRender implements Observer{
-	private int vboVertexHandleA= GL15.glGenBuffers();
+public class AudioRender implements Displayable,Observer{
 
-	private int vboVertexHandleS= GL15.glGenBuffers();
+	private int vboVertexHandle= GL15.glGenBuffers();
+	
+	private DisplayableFather father1;
+	private DisplayableFather father2;
 
 
 	private int Y_SIZE = 0;
@@ -55,20 +61,56 @@ public class AudioRender implements Observer{
 
 	private int shaderProgram;
 	
-	public AudioRender(GLDisplay display,Sound sound){
+	public AudioRender(GLDisplay display,Sound sound,DisplayableFather father1,DisplayableFather father2){
 		this.sound=sound;
 		this.display=display;
+		this.father1=father1;
+		this.father2=father2;
 		if(sound!=null){
 		update(null,null);
 		sound.addObserver(this);
 		}
-		X_SIZE=display.getmapDisplay_width()/3;
-		Y_SIZE=display.getDisplay_height()-display.getmapDisplay_height();
-		ymax=display.getDisplay_height();
-		ymin=display.getmapDisplay_height();
 		loadShaders();
+		setPosition();
 	}
 
+	private void setPosition() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * Chargement des VBO
+	 */
+	private void VBOLoad() {
+		 int maxX = zoomX - 2;
+		 FloatBuffer vertices= reserveData(maxX*6);
+		 int xCoord1 = 0, yCoord1 = ymax, xCoord2 = 0, yCoord2 = ymax;
+			for (int x = 0; x < maxX - 1; x++) {
+				xCoord2 = x * X_SIZE / zoomX;
+				yCoord2 = ymax-(Y_SIZE - (soundBytes[offsetX + x] + 127) * (Y_SIZE)
+						/ 255 + MANUAL_OFFSET);
+				vertices.put(asFloats(new Vector3f(xCoord1, yCoord1, 100)));
+				vertices.put(asFloats(new Vector3f(xCoord2, yCoord2, 100)));
+				xCoord1 = xCoord2;
+				yCoord1 = yCoord2;
+			}
+		
+			vertices.put(asFloats(new Vector3f(0,  ymax-(MANUAL_OFFSET + Y_SIZE/ 2), 100)));
+			vertices.put(asFloats(new Vector3f(X_SIZE,ymax-(MANUAL_OFFSET
+					+ Y_SIZE / 2), 100)));
+			 
+			
+		 vertices.flip();
+		 GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vboVertexHandle);
+		 GL15.glBufferData(GL15.GL_ARRAY_BUFFER, vertices, GL15.GL_DYNAMIC_DRAW);
+
+	
+		 GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+		
+	}
+	
+	
 /**
  * Chargement des shaders
  * 
@@ -134,121 +176,121 @@ public class AudioRender implements Observer{
 	        GL20.glValidateProgram(shaderProgram);
 	}
 
-
-	/**
-	 * Chargement des VBO pour l'audio
-	 */
-	public void VBOLoadAudio(){
-		 int maxX = zoomX - 2;
-		 FloatBuffer vertices= reserveData(maxX*6);
-		 int xCoord1 = 0, yCoord1 = ymax, xCoord2 = 0, yCoord2 = ymax;
-			for (int x = 0; x < maxX - 1; x++) {
-				xCoord2 = x * X_SIZE / zoomX;
-				yCoord2 = ymax-(Y_SIZE - (soundBytes[offsetX + x] + 127) * (Y_SIZE)
-						/ 255 + MANUAL_OFFSET);
-				vertices.put(asFloats(new Vector3f(xCoord1, yCoord1, 100)));
-				vertices.put(asFloats(new Vector3f(xCoord2, yCoord2, 100)));
-				xCoord1 = xCoord2;
-				yCoord1 = yCoord2;
-			}
-		
-			vertices.put(asFloats(new Vector3f(0,  ymax-(MANUAL_OFFSET + Y_SIZE/ 2), 100)));
-			vertices.put(asFloats(new Vector3f(X_SIZE,ymax-(MANUAL_OFFSET
-					+ Y_SIZE / 2), 100)));
-			 
-			
-		 vertices.flip();
-		 GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vboVertexHandleA);
-		 GL15.glBufferData(GL15.GL_ARRAY_BUFFER, vertices, GL15.GL_DYNAMIC_DRAW);
-
-	
-		 GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
-	}
-	
-	/**
-	 * Chargement des VBO pour le spectre
-	 */
-
-	public void VBOLoadSpectrum(){
-		 FloatBuffer vertices= reserveData((X_SIZE)*6);
-		 for (int x = 0; x < X_SIZE; x++){
-			 vertices.put(asFloats(new Vector3f(x+2*X_SIZE,ymax,100)));
-			 vertices.put(asFloats(new Vector3f(x+2*X_SIZE,spectrumCache[x]+display.getmapDisplay_height(),100)));
-				
-			}
-		 vertices.flip();
-
-		 GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vboVertexHandleS);
-		 GL15.glBufferData(GL15.GL_ARRAY_BUFFER,vertices, GL15.GL_DYNAMIC_DRAW);
-	
-		 GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
-	}
-	
-	
-	/**
-	 * Rendu de l'audio
-	 */
-	public void renderAudioView() {
-		if(update)
-			update();
-		
-		if(!GLDisplay.getMode3D()){
-		GL11.glDisable(GL11.GL_TEXTURE_2D);
-		
-		GL11.glColor3ub((byte)ReadableColor.LTGREY.getRed(),(byte)ReadableColor.LTGREY.getGreen(),(byte)ReadableColor.LTGREY.getBlue());
-		GL11.glBegin(GL11.GL_QUADS);
-		glVertex3d(0,ymax, 100);
-		glVertex3d(X_SIZE, ymax, 100);
-		glVertex3d(X_SIZE,ymin, 100);
-		glVertex3d(0,ymin, 100);
-		GL11.glEnd();
-		
-		if(sound!=null){
-			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vboVertexHandleA);
-			GL11.glVertexPointer(3,GL11.GL_FLOAT,0,0L);
-			GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
-			GL11.glColor3ub((byte)ReadableColor.BLACK.getRed(),(byte)ReadableColor.BLACK.getGreen(),(byte)ReadableColor.BLACK.getBlue());
-			GL11.glDrawArrays(GL11.GL_LINES,0,(zoomX-2)*2);
-			GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
-			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
-
-		}
-		}
-	}
-	
-	/**
-	 * Rendu du spectre
-	 */
-	public void renderSpectrumView() {
-		if(update)
-			update();
-		
-		if(!GLDisplay.getMode3D()){
-			GL11.glDisable(GL11.GL_TEXTURE_2D);
-			
-			GL11.glColor3ub((byte)ReadableColor.LTGREY.getRed(),(byte)ReadableColor.LTGREY.getGreen(),(byte)ReadableColor.LTGREY.getBlue());
-			GL11.glBegin(GL11.GL_QUADS);
-			glVertex3d(2*X_SIZE,ymax, 100);
-			glVertex3d(3*X_SIZE, ymax, 100);
-			glVertex3d(3*X_SIZE,ymin, 100);
-			glVertex3d(2*X_SIZE,ymin, 100);
-			GL11.glEnd();
-			
-		
-		if(sound!=null){
-			GL20.glUseProgram(shaderProgram);
-			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vboVertexHandleS);
-			GL11.glVertexPointer(3,GL11.GL_FLOAT,0,0L);
-			GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
-			GL11.glColor3ub((byte)ReadableColor.BLACK.getRed(),(byte)ReadableColor.BLACK.getGreen(),(byte)ReadableColor.BLACK.getBlue());
-			GL11.glDrawArrays(GL11.GL_LINES,0,(X_SIZE)*2);
-			GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
-			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
-			GL20.glUseProgram(0);
-
-		}
-		}
-	}
+//
+//	/**
+//	 * Chargement des VBO pour l'audio
+//	 */
+//	public void VBOLoadAudio(){
+//		 int maxX = zoomX - 2;
+//		 FloatBuffer vertices= reserveData(maxX*6);
+//		 int xCoord1 = 0, yCoord1 = ymax, xCoord2 = 0, yCoord2 = ymax;
+//			for (int x = 0; x < maxX - 1; x++) {
+//				xCoord2 = x * X_SIZE / zoomX;
+//				yCoord2 = ymax-(Y_SIZE - (soundBytes[offsetX + x] + 127) * (Y_SIZE)
+//						/ 255 + MANUAL_OFFSET);
+//				vertices.put(asFloats(new Vector3f(xCoord1, yCoord1, 100)));
+//				vertices.put(asFloats(new Vector3f(xCoord2, yCoord2, 100)));
+//				xCoord1 = xCoord2;
+//				yCoord1 = yCoord2;
+//			}
+//		
+//			vertices.put(asFloats(new Vector3f(0,  ymax-(MANUAL_OFFSET + Y_SIZE/ 2), 100)));
+//			vertices.put(asFloats(new Vector3f(X_SIZE,ymax-(MANUAL_OFFSET
+//					+ Y_SIZE / 2), 100)));
+//			 
+//			
+//		 vertices.flip();
+//		 GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vboVertexHandleA);
+//		 GL15.glBufferData(GL15.GL_ARRAY_BUFFER, vertices, GL15.GL_DYNAMIC_DRAW);
+//
+//	
+//		 GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+//	}
+//	
+//	/**
+//	 * Chargement des VBO pour le spectre
+//	 */
+//
+//	public void VBOLoadSpectrum(){
+//		 FloatBuffer vertices= reserveData((X_SIZE)*6);
+//		 for (int x = 0; x < X_SIZE; x++){
+//			 vertices.put(asFloats(new Vector3f(x+2*X_SIZE,ymax,100)));
+//			 vertices.put(asFloats(new Vector3f(x+2*X_SIZE,spectrumCache[x]+display.getmapDisplay_height(),100)));
+//				
+//			}
+//		 vertices.flip();
+//
+//		 GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vboVertexHandleS);
+//		 GL15.glBufferData(GL15.GL_ARRAY_BUFFER,vertices, GL15.GL_DYNAMIC_DRAW);
+//	
+//		 GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+//	}
+//	
+//	
+//	/**
+//	 * Rendu de l'audio
+//	 */
+//	public void renderAudioView() {
+//		if(update)
+//			update();
+//		
+//		if(!GLDisplay.getMode3D()){
+//		GL11.glDisable(GL11.GL_TEXTURE_2D);
+//		
+//		GL11.glColor3ub((byte)ReadableColor.LTGREY.getRed(),(byte)ReadableColor.LTGREY.getGreen(),(byte)ReadableColor.LTGREY.getBlue());
+//		GL11.glBegin(GL11.GL_QUADS);
+//		glVertex3d(0,ymax, 100);
+//		glVertex3d(X_SIZE, ymax, 100);
+//		glVertex3d(X_SIZE,ymin, 100);
+//		glVertex3d(0,ymin, 100);
+//		GL11.glEnd();
+//		
+//		if(sound!=null){
+//			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vboVertexHandleA);
+//			GL11.glVertexPointer(3,GL11.GL_FLOAT,0,0L);
+//			GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
+//			GL11.glColor3ub((byte)ReadableColor.BLACK.getRed(),(byte)ReadableColor.BLACK.getGreen(),(byte)ReadableColor.BLACK.getBlue());
+//			GL11.glDrawArrays(GL11.GL_LINES,0,(zoomX-2)*2);
+//			GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
+//			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+//
+//		}
+//		}
+//	}
+//	
+//	/**
+//	 * Rendu du spectre
+//	 */
+//	public void renderSpectrumView() {
+//		if(update)
+//			update();
+//		
+//		if(!GLDisplay.getMode3D()){
+//			GL11.glDisable(GL11.GL_TEXTURE_2D);
+//			
+//			GL11.glColor3ub((byte)ReadableColor.LTGREY.getRed(),(byte)ReadableColor.LTGREY.getGreen(),(byte)ReadableColor.LTGREY.getBlue());
+//			GL11.glBegin(GL11.GL_QUADS);
+//			glVertex3d(2*X_SIZE,ymax, 100);
+//			glVertex3d(3*X_SIZE, ymax, 100);
+//			glVertex3d(3*X_SIZE,ymin, 100);
+//			glVertex3d(2*X_SIZE,ymin, 100);
+//			GL11.glEnd();
+//			
+//		
+//		if(sound!=null){
+//			GL20.glUseProgram(shaderProgram);
+//			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vboVertexHandleS);
+//			GL11.glVertexPointer(3,GL11.GL_FLOAT,0,0L);
+//			GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
+//			GL11.glColor3ub((byte)ReadableColor.BLACK.getRed(),(byte)ReadableColor.BLACK.getGreen(),(byte)ReadableColor.BLACK.getBlue());
+//			GL11.glDrawArrays(GL11.GL_LINES,0,(X_SIZE)*2);
+//			GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
+//			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+//			GL20.glUseProgram(0);
+//
+//		}
+//		}
+//	}
 
 	
 /**
@@ -313,15 +355,57 @@ public void update(Observable arg0, Object arg1) {
  * Mise a jour de tout le son
  */
 public void update(){
-
+		setPosition();
 		soundBytes = sound.getSound();
 		result = sound.getSpectrum();
 		updateSpectrum();
-		VBOLoadAudio();
-		VBOLoadSpectrum();
+		VBOLoad();
 		update=false;
 		
 	
+}
+
+
+
+@Override
+public void paint() {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public int getTimeOut() {
+	// TODO Auto-generated method stub
+	return 0;
+}
+
+@Override
+public void setTimeOut(int time) {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public boolean isInZone(Point mousePoint) {
+	// TODO Auto-generated method stub
+	return false;
+}
+
+@Override
+public void setColor(ReadableColor color) {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public String getCharac() {
+	
+	return "Audio";
+}
+
+private void setFathers(DisplayableFather father1,DisplayableFather father2){
+	this.father1=father1;
+	this.father2=father2;
 }
 
 }

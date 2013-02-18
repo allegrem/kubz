@@ -2,7 +2,7 @@ package views.monsters;
 
 import java.util.ArrayList;
 
-import map2.Map;
+import map.Map;
 
 import org.lwjgl.util.ReadableColor;
 

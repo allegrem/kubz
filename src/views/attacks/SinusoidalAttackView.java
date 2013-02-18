@@ -2,7 +2,7 @@ package views.attacks;
 
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
-import map2.Map;
+import map.Map;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;

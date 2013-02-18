@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import base.Base;
 
 import OpenGL.GLDisplay;
-import map2.Map;
-import map2.MapReader;
+import map.Map;
+import map.MapReader;
 import monster.zoo.Monster;
 import player.*;
 import player.unit.Unit;

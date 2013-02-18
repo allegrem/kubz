@@ -1,25 +1,17 @@
 package objLoader;
 
-import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
-import static org.lwjgl.opengl.GL11.glMatrixMode;
-
-import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
 import java.util.ArrayList;
 
 import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.ARBVertexBufferObject;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -37,7 +29,7 @@ public class ObjDisplay {
 	 */
 	public static enum Objet
 	{
-		ROUNDED_CUBE("objets/cube.obj");
+		ROUNDED_CUBE("objets/roundedCube.obj");
 	
 	    // Membres :
 	  
@@ -50,10 +42,11 @@ public class ObjDisplay {
 		private int vertexShader;
 		private  int fragmentShader;
 		private  Model  m;
-	 
+	
 	  private Objet(String address){
 		  initialized=false;
 		  this.address=address;
+		  
 	  }
 	  
 	  /**

@@ -5,14 +5,10 @@ import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glVertex3d;
-
 import objLoader.ObjDisplay;
 
 import org.lwjgl.opengl.GL11;
-
 import org.lwjgl.util.ReadableColor;
-
-import OpenGL.GLDisplay;
 
 import utilities.Maths;
 import utilities.Point;

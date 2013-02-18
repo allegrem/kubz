@@ -1,4 +1,4 @@
-package map2;
+package map;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;

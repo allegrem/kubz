@@ -35,8 +35,8 @@ public class BackgroundView implements DisplayableFather{
 	 * Les couleurs de depart du background
 	 * (a l'ouverture de la fenetre)
 	 */
-	private int red1 = 197,blue1 = 226, green1 = 197;
-	private int red2 = 197,blue2 = 226, green2 = 197;
+	private int red1 = 255, green1 = 255,blue1 = 240;
+	private int red2 = 255, green2 = 255,blue2 = 240;
 	
 	/*
 	 * Sens de variation des differentes
@@ -226,7 +226,7 @@ public class BackgroundView implements DisplayableFather{
 		GL11.glEnd();
 		
 
-		change();
+		//change();
 		
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		
