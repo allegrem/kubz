@@ -7,13 +7,12 @@ import java.util.ArrayList;
 import base.Base;
 
 import OpenGL.GLDisplay;
+import OpenGL.KeyboardManager;
 import map.Map;
 import map.MapReader;
 import monster.zoo.Monster;
 import player.*;
 import player.unit.Unit;
-import synthesis.Sound;
-import synthesis.fmInstruments.BellInstrument;
 import traitementVideo.Traitement;
 import utilities.Point;
 import utilities.RandomPerso;
@@ -70,6 +69,7 @@ public class GameEngine extends Thread {
 		}
 		bases.add(new Base(ReadableColor.ORANGE, this));
 		playerList.add(new Player(this, bases.get(0)));
+		playerList.add(new Player(this, bases.get(0)));
 		// playerList.add(new Player(this,bases.get(0)));
 		// playerList.add(new Player(this));
 
@@ -112,6 +112,25 @@ public class GameEngine extends Thread {
 		}
 	}
 
+	public void removePlayer(Player player) {
+		playerList.remove(player);
+		if (playerList.isEmpty()) {
+			// quand tous les joueurs sont morts on affiche "game over"
+			display.print(width / 2, height / 2, ReadableColor.RED,
+					" Game Over !");
+			// tant que l'on appuie pas sur la touche q le jeu tourne en boucle
+			while (!KeyboardManager.qKey) {
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) { // automatiquement
+					e.printStackTrace();
+				}
+			}
+			System.exit(0);
+
+		}
+	}
+
 	/**
 	 * Methode qui freeze le jeu, condition de relance sur le mode normal a
 	 * revoir, a lancer quand un cube disparait
@@ -126,7 +145,7 @@ public class GameEngine extends Thread {
 		while (display.isAlive()) {
 			playerTurn();
 			monsterTurn();
-
+			System.out.println(playerList.size());
 		}
 	}
 
@@ -161,10 +180,11 @@ public class GameEngine extends Thread {
 		while (!ok) {
 			internOk = true;
 			/*
-			 * on verifie que les elements lies a chaque Player sont bien a leur place
+			 * on verifie que les elements lies a chaque Player sont bien a leur
+			 * place
 			 */
 			for (Player player : playerList) {
-				boolean unitsOk = true; 
+				boolean unitsOk = true;
 				/*
 				 * on verifie que chacune des Unit de player sont à leur place
 				 */
@@ -176,7 +196,9 @@ public class GameEngine extends Thread {
 					else
 						unit.getCube().setRGB((byte) 127, (byte) 0, (byte) 0,
 								(short) 500);
-					unitsOk = unitsOk&&unitOk; // si une des unit de player n'est pas a sa place, alors tout se bloque
+					unitsOk = unitsOk && unitOk; // si une des unit de player
+													// n'est pas a sa place,
+													// alors tout se bloque
 				}
 				/*
 				 * on verifie que les Parameter de player sont bien a leur place

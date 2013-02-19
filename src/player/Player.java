@@ -53,7 +53,7 @@ public class Player {
 		this.base = base;
 		unitList = new ArrayList<Unit>();
 		unitList.add(new Unit(this));
-		unitList.add(new Unit(this));
+		//unitList.add(new Unit(this));
 		this.parameters = new Parameter[2];
 		parameters[0] = new Parameter(this);
 		parameters[1] = new Parameter(this);
@@ -108,20 +108,7 @@ public class Player {
 		unit.getView().setUnTracked(false);
 		unitList.remove(unit);
 		if (unitList.isEmpty()){		
-			gameEngine.getDisplay().print(gameEngine.getWidth() / 2,
-					gameEngine.getHeight() / 2, ReadableColor.RED,
-					" Game Over !");
-	
-			while (!KeyboardManager.qKey) {
-				try {
-					Thread.sleep(10);
-				} catch (InterruptedException e) { // TODO Bloc catch généré
-													// automatiquement
-					e.printStackTrace();
-				}
-			}
-	
-			System.exit(0);
+			gameEngine.removePlayer(this);
 		}
 	}
 	
