@@ -9,6 +9,7 @@ import gameEngine.GameEngine;
 import player.CubeOwner;
 import player.Player;
 import views.CubeControlledView;
+import views.informationViews.MobileBase;
 import traitementVideo.VirtualCube;
 import utilities.Point;
 
@@ -22,6 +23,7 @@ public class Parameter extends CubeOwner{
 	private GameEngine gameEngine;
 	private double size;
 	private CubeControlledView view;
+	private MobileBase baseView;
 
 	
 	public Parameter(Player owner){
@@ -32,6 +34,8 @@ public class Parameter extends CubeOwner{
 		view.setInvisible3D(true);
 		size = view.getSize();
 		view.setInvisible3D(true);
+		baseView=new MobileBase(view);
+		view.addChild(baseView);
 		gameEngine.getMap().add(view);
 		
 	}

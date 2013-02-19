@@ -214,6 +214,12 @@ public class BaseView implements DisplayableFather{
 	public Point getBaseSize(){
 		return size;
 	}
+
+	@Override
+	public void setUnTracked(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 	

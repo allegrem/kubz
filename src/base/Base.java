@@ -34,13 +34,12 @@ public class Base {
 		this.gameEngine=gameEngine;
 		center=null;
 		int centerx=gameEngine.getWidth()/2;
-		int centery=gameEngine.getHeight()+(gameEngine.getWindowHeight()-gameEngine.getHeight())/2;
+		int centery=gameEngine.getHeight()-100;
 		this.center=new Point(centerx,centery);
-		int sizex=gameEngine.getWidth()/3;
-		int sizey=gameEngine.getWindowHeight()-gameEngine.getHeight();
+		int sizex=gameEngine.getWidth();
+		int sizey=200;
 		this.size=new Point(sizex,sizey);
-		view = new BaseView(center,size,color);
-		gameEngine.getMap().add(view);
+		view = null;
 	}
 	public Point getCenter() {
 		return center;

@@ -8,6 +8,9 @@ package OpenGL;
  *      If You've Found This Code Useful, Please Let Me Know.
  *      Visit My Site At nehe.gamedev.net
  */
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -21,6 +24,7 @@ import java.nio.IntBuffer;
 import java.text.NumberFormat;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.ReadableColor;
 
 
 /**
@@ -31,23 +35,20 @@ public class Text {
 
     private int texture;
 
+    
     //build colours for font with alpha transparency
     private static final Color OPAQUE_WHITE = new Color(255,255,255,255);
    
     private static final Color TRANSPARENT_BLACK = new Color(100,100,100);
     private int base;                       // Base Display List For The Font Set
-   
 
-public Text(){
-
-}
-
-
-    /* Some liberties had to be taken with this method.  I could not get the glCallLists() to work, so
-     * it is done manually instead.
-     */
-    public void glPrint(String msg) {                                      // Custom GL "Print" Routine
+    public void glPrint(int x, int y, ReadableColor color, String msg) {                                      // Custom GL "Print" Routine
     	GL11.glEnable(GL11.GL_TEXTURE_2D);
+    	x-=(int)(msg.length()*15/2);
+    	GL11.glColor3ub((byte)color.getRed(),(byte)color.getGreen(),(byte)color.getBlue());
+		glMatrixMode(GL_MODELVIEW);
+		GL11.glPushMatrix();
+		GL11.glTranslated(x, y,100);
     	if(msg != null) {
             GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture);
             for(int i=0;i<msg.length();i++) {
@@ -55,6 +56,8 @@ public Text(){
                 GL11.glTranslatef(15f, 0.0f, 0.0f);
             }
         }
+    	GL11.glLoadIdentity();
+    	GL11.glPopMatrix();
     }
 
 

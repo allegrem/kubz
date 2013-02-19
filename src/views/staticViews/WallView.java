@@ -7,7 +7,7 @@ import static org.lwjgl.opengl.GL11.glVertex3d;
 
 import java.util.ArrayList;
 
-import map2.Map;
+import map.Map;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.ReadableColor;
@@ -639,6 +639,12 @@ public class WallView implements DisplayableFather{
 	public double getHeight() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public void setUnTracked(boolean b) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

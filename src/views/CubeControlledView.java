@@ -8,6 +8,8 @@ import static org.lwjgl.opengl.GL11.glVertex3d;
 
 import java.util.ArrayList;
 
+import objLoader.ObjDisplay;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
@@ -29,7 +31,7 @@ import views.interfaces.DisplayableFather;
  */
 public class CubeControlledView implements DisplayableFather{
 	private double size= 30;
-	private double height = 30;
+	private double height = 80;
 	private Point position;
 	private ArrayList<DisplayableChild> children= new ArrayList<DisplayableChild>();
 	private int duration=0;
@@ -48,6 +50,7 @@ public class CubeControlledView implements DisplayableFather{
 	 */
 	public CubeControlledView(Point position) {
 		this.position = position;
+	
 	}
 	
 	/**
@@ -112,7 +115,7 @@ public class CubeControlledView implements DisplayableFather{
 	}
 
 /**
- * Nouvelle position a partir des 
+ * Nouvelle position a partir des 0
  * nouvelles coordonnes
  * @param d
  * @param e
@@ -157,8 +160,8 @@ public class CubeControlledView implements DisplayableFather{
 		return false;
 	}
 	
-	@Override
-	public void paint() {
+	//@Override
+	public void paint2() {
 		int x=(int) Math.round(position.getX());
 		int y=(int) Math.round(position.getY());
 		int iangle=(int) Math.round(angle);
@@ -195,6 +198,34 @@ public class CubeControlledView implements DisplayableFather{
 		paintChildren();
 
 	}
+	
+	
+	public void paint() {
+		int x=(int) Math.round(position.getX());
+		int y=(int) Math.round(position.getY());
+		int iangle=(int) Math.round(angle);
+		
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
+		
+		glMatrixMode(GL_MODELVIEW);
+		GL11.glPushMatrix();
+		
+		/**
+		 * Si l'unite n'est plus sur la table, on affiche un carre rouge
+		 */
+	
+		if (untracked && !(GLDisplay.getMode3D() && invisible3D)){
+			ObjDisplay.ROUNDED_CUBE.render(color,x,y,(int)0.2,iangle);
+		}
+		
+		GL11.glLoadIdentity();
+		GL11.glPopMatrix();
+		
+		paintChildren();
+		
+
+	}
+	
 
 
 	@Override
@@ -260,6 +291,7 @@ public class CubeControlledView implements DisplayableFather{
 		return false;
 	}
 	
+	@Override
 	public void setUnTracked(boolean bool){
 		untracked=bool;
 	}

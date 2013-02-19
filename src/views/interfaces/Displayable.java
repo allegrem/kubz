@@ -52,4 +52,14 @@ public interface Displayable {
 	 */
 	public String getCharac();
 
+	/**
+	 * Renvoie si oui ou non une collision peut se produire
+	 * 
+	 * @param point Centre de l'objet a analyser
+	 * @param taille taille de l'objet dont le centre est point
+	 * @return
+	 */
+	public boolean collisionCanOccure(Point point, float f);
+
+
 }

@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import base.Base;
 
 import OpenGL.GLDisplay;
-import map2.Map;
-import map2.MapReader;
+import map.Map;
+import map.MapReader;
 import monster.zoo.Monster;
 import player.*;
 import player.unit.Unit;
@@ -23,7 +23,7 @@ import cube.Cube;
 
 //import cubeManager.*;
 
-public class GameEngine extends Thread{
+public class GameEngine extends Thread {
 	private final int width;
 	private final int height;
 	public ArrayList<Monster> monsterList;
@@ -72,7 +72,6 @@ public class GameEngine extends Thread{
 		playerList.add(new Player(this, bases.get(0)));
 		// playerList.add(new Player(this,bases.get(0)));
 		// playerList.add(new Player(this));
-		
 
 	}
 
@@ -84,7 +83,7 @@ public class GameEngine extends Thread{
 	public ArrayList<Unit> getUnitList() {
 		ArrayList<Unit> unitList = new ArrayList<Unit>();
 		for (Player player : playerList)
-			unitList.add(player.getUnit());
+			unitList.addAll(player.getUnitList());
 		return unitList;
 	}
 
@@ -147,29 +146,41 @@ public class GameEngine extends Thread{
 		boolean ok = false;
 		boolean internOk = true;
 		for (Player player : playerList) {
-			player.getUnit().getCube().setIrOf();
-			player.getUnit().getCube()
-					.setRGB((byte) 127, (byte) 0, (byte) 0, (short) 500);
-			player.getParameters()[0].getCube().setIrOf();
+			for (Unit unit : player.getUnitList()) {
+				unit.getCube().setIrOff();
+				unit.getCube().setRGB((byte) 127, (byte) 0, (byte) 0,
+						(short) 500);
+			}
+			player.getParameters()[0].getCube().setIrOff();
 			player.getParameters()[0].getCube().setRGB((byte) 127, (byte) 0,
 					(byte) 0, (short) 500);
-			player.getParameters()[1].getCube().setIrOf();
+			player.getParameters()[1].getCube().setIrOff();
 			player.getParameters()[1].getCube().setRGB((byte) 127, (byte) 0,
 					(byte) 0, (short) 500);
-			// ici on affiche les nouvelles positions
 		}
 		while (!ok) {
 			internOk = true;
+			/*
+			 * on verifie que les elements lies a chaque Player sont bien a leur place
+			 */
 			for (Player player : playerList) {
-				boolean unitOk = checkPos(player.getUnit());
-				if (unitOk)
-					player.getUnit()
-							.getCube()
-							.setRGB((byte) 0, (byte) 127, (byte) 0, (short) 500);
-				else
-					player.getUnit()
-							.getCube()
-							.setRGB((byte) 127, (byte) 0, (byte) 0, (short) 500);
+				boolean unitsOk = true; 
+				/*
+				 * on verifie que chacune des Unit de player sont à leur place
+				 */
+				for (Unit unit : player.getUnitList()) {
+					boolean unitOk = checkPos(unit);
+					if (unitOk)
+						unit.getCube().setRGB((byte) 0, (byte) 127, (byte) 0,
+								(short) 500);
+					else
+						unit.getCube().setRGB((byte) 127, (byte) 0, (byte) 0,
+								(short) 500);
+					unitsOk = unitsOk&&unitOk; // si une des unit de player n'est pas a sa place, alors tout se bloque
+				}
+				/*
+				 * on verifie que les Parameter de player sont bien a leur place
+				 */
 				boolean param1ok = checkPos(player.getParameters()[0]);
 				if (param1ok)
 					player.getParameters()[0].getCube().setRGB((byte) 0,
@@ -184,15 +195,12 @@ public class GameEngine extends Thread{
 				else
 					player.getParameters()[1].getCube().setRGB((byte) 0,
 							(byte) 127, (byte) 0, (short) 500);
-				internOk = internOk && unitOk && param1ok && param2ok;
+				internOk = internOk && unitsOk && param1ok && param2ok;
 			}
 			ok = internOk;
 		}
 
 	}
-	
-	
-	
 
 	public ArrayList<Monster> getMonsterList() {
 		return monsterList;
@@ -224,8 +232,8 @@ public class GameEngine extends Thread{
 
 	private boolean checkPos(CubeOwner cubeOwner) {
 		cubeOwner.getCube().setIrOn();
-		traitement.updateConnexe(null); // intï¿½gration avec la cam ï¿½
-										// regler pour recuperer l'image
+		// traitement.updateConnexe(null); // intï¿½gration avec la cam ï¿½
+		// regler pour recuperer l'image
 		ArrayList<Point> currentPositions = new ArrayList<Point>();
 		for (int i = 1; i <= 3; i++) {
 			currentPositions.add(traitement.getGroupePos(i));
@@ -233,7 +241,7 @@ public class GameEngine extends Thread{
 		boolean result = currentPositions.containsAll(cubeOwner.getVCube()
 				.getPos());
 		// la on verifie que le traitement voit bien le cube
-		cubeOwner.getCube().setIrOf();
+		cubeOwner.getCube().setIrOff();
 		return result;
 	}
 }

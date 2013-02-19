@@ -41,14 +41,7 @@ public interface DisplayableFather extends Displayable {
 	 */
 	public void removeChild(DisplayableChild child);
 	
-	/**
-	 * Renvoie si oui ou non une collision peut se produire
-	 * 
-	 * @param point Centre de l'objet a analyser
-	 * @param taille taille de l'objet dont le centre est point
-	 * @return
-	 */
-	public boolean collisionCanOccure(Point point, float taille);
+
 	
 	/**
 	 * 
@@ -67,4 +60,6 @@ public interface DisplayableFather extends Displayable {
 	 * @return Hauteur de l'objet
 	 */
 	public double getHeight();
+
+	public void setUnTracked(boolean b);
 }

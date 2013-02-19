@@ -26,11 +26,16 @@ import java.io.File;
 import java.nio.ByteBuffer;
 
 import javax.imageio.ImageIO;
+
+import objLoader.ObjDisplay;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL20;
+import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.glu.GLU;
 
 import synthesis.Sound;
@@ -40,7 +45,7 @@ import utilities.Point;
 import utilities.Vector;
 import views.informationViews.AudioRender;
 import views.interfaces.DisplayableFather;
-import map2.Map;
+import map.Map;
 
 /**
  * Instructions OpenGL:
@@ -61,7 +66,6 @@ public class GLDisplay extends Thread{
 	private Sound sound;
 	private int frequency=50;
 	private  boolean initialized=false;
-	private AudioRender audioRender;
 	private Text texte;
 	
 	/*
@@ -97,8 +101,17 @@ public class GLDisplay extends Thread{
 	private Lighting lighting=new Lighting(this);
 
 	
+	/*
+	 * 
+	 * gestion du texte
+	 * 
+	 */
 	
-	
+	private boolean printMessage=false;
+	private String message =" ";
+	private int mx=0;
+	private int my=0;
+	private ReadableColor mColor=null;
 	
 	/**
 	 * Lancement de l'affichage
@@ -118,9 +131,8 @@ public class GLDisplay extends Thread{
 	@Override
 	public void run(){
 		initialize();
-		mapDisplay_height=(int)(80.0/100.0*display_height);
+		mapDisplay_height=(int)(display_height);
 		mapDisplay_width=display_height;
-		audioRender=new AudioRender(this,null);
 		lightDx=(float)(display_width/2.0);
 		lightDy=(float)(display_height/2.0);
 		camDx=(float)(display_width/2.0);
@@ -147,15 +159,14 @@ public class GLDisplay extends Thread{
 		}
 		
 		mainRender(); //On actualise la fenetre avec le nouveau rendu
-		audioRender();
-		
+		glPrint();
 		update(); //On actualise la fenetre avec le nouveau rendu
 		Display.sync(frequency); //On synchronise l'affichage sur le bon FPS
 	
 		
 		
 		}
-		
+		ObjDisplay.cleanUp();
 		close();//Fermeture de la fenêtre
 		
 	}
@@ -175,6 +186,8 @@ public class GLDisplay extends Thread{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	    System.out.println("OpenGL version: "+GL11.glGetString(GL11.GL_VERSION));
+		System.out.println("GLSL version: "+GL11.glGetString(GL20.GL_SHADING_LANGUAGE_VERSION));
 		
 	}
 
@@ -394,24 +407,6 @@ public class GLDisplay extends Thread{
 	}
 	
 	/**
-	 * 
-	 * @param sound Le son a afficher
-	 */
-	public synchronized void setSound(Sound sound){
-		this.sound=sound;
-		audioRender.setSound(sound);
-	}
-	
-	/**
-	 * Rendu des visuels du son
-	 */
-	private synchronized void audioRender() {
-		audioRender.renderAudioView();
-		audioRender.renderSpectrumView();
-		
-	}
-	
-	/**
 	 * Pace en mode 3D "automatique": La camera est placee derriere l'attaquant et regarde la cible.
 	 * Idem pour l'eclairage
 	 * @param attacking
@@ -471,6 +466,24 @@ public class GLDisplay extends Thread{
 		return texte;
 	}
 
+	public void print(int x, int y, ReadableColor color, String message) {
+		printMessage=true;
+		mx=x;
+		my=y;
+		mColor=color;
+		this.message=message;
+		
+	}
+	
+	public void eraseMessage(){
+		printMessage=false;
+		
+	}
+	
+	private void glPrint(){
+		if(printMessage)
+		texte.glPrint(mx, my, mColor, message);
+	}
 	
 	
 }

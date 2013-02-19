@@ -5,11 +5,17 @@ package player;
  * @author Felix
  */
 
+import java.util.ArrayList;
+
+import org.lwjgl.util.ReadableColor;
+
+import monster.zoo.*;
 import base.Base;
 import gameEngine.GameEngine;
 import OpenGL.KeyboardManager;
 import player.parameter.*;
 import player.unit.*;
+import synthesis.Sound;
 import synthesis.filters.BandsFilter;
 import synthesis.fmInstruments.FmInstruments3Params;
 import synthesis.fmInstruments.PianoInstrument2;
@@ -18,11 +24,12 @@ import synthesis.fmInstruments.WoodInstrument;
 import synthesis.fmInstruments.XylophoneInstrument;
 import views.attacks.AttackConeView;
 import views.attacks.SinusoidalAttackView;
+import views.informationViews.AudioRender;
 import views.informationViews.InstrumentsChoice;
 
 public class Player {
 
-	private Unit unit;
+	private ArrayList<Unit> unitList;
 	private Parameter[] parameters;
 	private Base base;
 	private int nParams = 2;
@@ -32,7 +39,10 @@ public class Player {
 	private int lastAngle1;
 	private int lastAngle2;
 
+	int power = 100;
+
 	private GameEngine gameEngine;
+	private AudioRender audioRender;
 
 	/**
 	 * Creation d'un joueur avec une Unit et deux Parameter
@@ -41,7 +51,9 @@ public class Player {
 
 		this.gameEngine = gameEngine;
 		this.base = base;
-		this.unit = new Unit(this);
+		unitList = new ArrayList<Unit>();
+		unitList.add(new Unit(this));
+		unitList.add(new Unit(this));
 		this.parameters = new Parameter[2];
 		parameters[0] = new Parameter(this);
 		parameters[1] = new Parameter(this);
@@ -53,7 +65,8 @@ public class Player {
 						.getCenter().getY());
 		this.shield = new BandsFilter(11);
 		this.shield.random();
-		gameEngine.getDisplay().setSound(unit.getSound());
+		audioRender = new AudioRender(gameEngine.getDisplay(),unitList.get(0).getSound(),parameters[0],parameters[1]);
+		gameEngine.getMap().add(audioRender);
 	}
 
 	/**
@@ -87,6 +100,33 @@ public class Player {
 		return (int) parameters[0].getPos().distanceTo(parameters[1].getPos());
 	}
 
+	
+	public void removeUnit(Unit unit){
+		gameEngine.getUnitList().remove(unit);
+		unit.getView().removeChild(unit.getLifeView());
+		gameEngine.getMap().remove(unit.getView());
+		unit.getView().setUnTracked(false);
+		unitList.remove(unit);
+		if (unitList.isEmpty()){		
+			gameEngine.getDisplay().print(gameEngine.getWidth() / 2,
+					gameEngine.getHeight() / 2, ReadableColor.RED,
+					" Game Over !");
+	
+			while (!KeyboardManager.qKey) {
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) { // TODO Bloc catch généré
+													// automatiquement
+					e.printStackTrace();
+				}
+			}
+	
+			System.exit(0);
+		}
+	}
+	
+	
+	
 	public BandsFilter getShield() {
 		return shield;
 	}
@@ -95,8 +135,8 @@ public class Player {
 		this.shield = shield;
 	}
 
-	public Unit getUnit() {
-		return unit;
+	public ArrayList<Unit> getUnitList() {
+		return unitList;
 	}
 
 	public Parameter[] getParameters() {
@@ -138,49 +178,56 @@ public class Player {
 		return paramsState;
 	}
 
+	
 	/**
 	 * Bloc des methodes oe on choisit l'etat de l'unite
 	 */
+	
 
-	public void setUStateToAngle() {
-		this.unit.setUStateToAngle();
+	public void setUStateToAngle(Unit unit) {
+		unit.setUStateToAngle();
 	}
 
-	public void setUStateToDirection() {
-		this.unit.setUStateToDirection();
+	public void setUStateToDirection(Unit unit) {
+		unit.setUStateToDirection();
 	}
 
-	public void setUStateToFrozen() {
-		this.unit.setUStateToFrozen();
+	public void setUStateToFrozen(Unit unit) {
+		unit.setUStateToFrozen();
 	}
 
-	public void setUStateToMoving() {
-		this.unit.setUStateToMoving();
+	public void setUStateToMoving(Unit unit) {
+		unit.setUStateToMoving();
 	}
 
-	public void setUStateToPositionError() {
-		this.unit.setUStateToPositionError();
+	public void setUStateToPositionError(Unit unit) {
+		unit.setUStateToPositionError();
 	}
 
-	public void setUStateToSelect() {
-		this.unit.setUStateToSelect();
+	public void setUStateToSelect(Unit unit) {
+		unit.setUStateToSelect();
 	}
 
-	public void setUStateToWaiting() {
-		this.unit.setUStateToWaiting();
+	public void setUStateToWaiting(Unit unit) {
+		unit.setUStateToWaiting();
 	}
 
-	public UnitState getState() {
+	public UnitState getState(Unit unit) {
 		return unit.getState();
 	}
+	
+	
 
 	/**
 	 * A present on va utiliser les methode du haut pour les differentes phases
 	 * de jeu
 	 */
+	
 	public void WaitingTurn() {
 		setPStatesToWaiting();
-		setUStateToWaiting();
+		for(Unit unit : unitList){
+			setUStateToWaiting(unit);
+		}
 	}
 
 	/**
@@ -188,7 +235,9 @@ public class Player {
 	 */
 	public void choosingUTurn() {
 		setPStatesToWaiting();
-		setUStateToSelect();
+		for(Unit unit : unitList){
+			setUStateToSelect(unit);
+		}
 		while (!KeyboardManager.tap) {
 
 		}
@@ -197,9 +246,9 @@ public class Player {
 	/**
 	 * Methode qui declenche le mouvement de Unit
 	 */
-	public void movingUTurn() {
+	public void movingUTurn(Unit unit) {
 		setPStatesToWaiting();
-		setUStateToMoving();
+		setUStateToMoving(unit);
 		double size = unit.getSize() * Math.sqrt(2) / 2;
 		while (!KeyboardManager.tap) {
 			if ((KeyboardManager.zKey) && (unit.getY() - size > 0))
@@ -226,7 +275,7 @@ public class Player {
 		KeyboardManager.tap = false;
 	}
 
-	public void chooseWeaponTurn() {
+	public void chooseWeaponTurn(Unit unit) {
 		InstrumentsChoice instChoice = new InstrumentsChoice(gameEngine);
 		unit.getView().addChild(instChoice);
 		int fmChoice = 0;
@@ -274,10 +323,11 @@ public class Player {
 
 	/**
 	 * Methode qui declenche la creation du son via les Parameter
+	 * Ici les Parameters sont liees au Player
 	 */
-	public void soundEditPTurn() {
+	public void soundEditPTurn(Unit unit) {
 		setPStatesToSoundEdit();
-		setUStateToWaiting();
+		setUStateToWaiting(unit);
 		double size = unit.getSize() * Math.sqrt(2) / 2;
 		boolean isModified = true;
 		while (!KeyboardManager.tap) {
@@ -315,12 +365,12 @@ public class Player {
 			}
 			if (KeyboardManager.aKey) {
 				unit.getSound().playToSpeakers();
-				try {
+				/*try {
 					Thread.sleep(3000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
-				}
-			}	
+				}*/
+			}
 			if (!(KeyboardManager.zKey || KeyboardManager.sKey
 					|| KeyboardManager.qKey || KeyboardManager.dKey
 					|| KeyboardManager.wKey || KeyboardManager.xKey)) {
@@ -329,9 +379,9 @@ public class Player {
 							.getSound().getInstrument();
 					instrument.changeParams(getChangeAngle1(),
 							getChangeAngle2(), getChangeDistance());
-					isModified = false;					
+					isModified = false;
 				}
-				
+
 			}
 			try {
 				Thread.sleep(10);
@@ -346,12 +396,13 @@ public class Player {
 		KeyboardManager.tap = false;
 	}
 
+	
 	/**
 	 * Methode qui declenche le choix de l'ouverture d'attaque de Unit
 	 */
-	public void UDirection() {
+	public void UDirection(Unit unit) {
 		setPStatesToWaiting();
-		setUStateToDirection();
+		setUStateToDirection(unit);
 		AttackConeView attackCone = new AttackConeView(unit.getAperture(),
 				unit.getDirection(), 100, unit.getView());
 		unit.getView().addChild(attackCone);
@@ -367,7 +418,6 @@ public class Player {
 			} else {
 				attackCone.setDirection((long) (360 + unit.getDirection()));
 			}
-
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
@@ -378,18 +428,18 @@ public class Player {
 		KeyboardManager.tap = false;
 	}
 
-	public void UAperture() {
+	public void UAperture(Unit unit) {
 		setPStatesToWaiting();
-		setUStateToDirection();
+		setUStateToDirection(unit);
 		AttackConeView attackCone = new AttackConeView(unit.getAperture(),
 				unit.getDirection(), 100, unit.getView());
 		unit.getView().addChild(attackCone);
 		while (!KeyboardManager.tap) {
-			if (KeyboardManager.wKey && unit.getAperture() >0) {
+			if (KeyboardManager.wKey && unit.getAperture() > 0) {
 				unit.rotateAperture(-1);
 				attackCone.setAperture(unit.getAperture());
 			}
-			if (KeyboardManager.xKey && unit.getAperture() <360) {
+			if (KeyboardManager.xKey && unit.getAperture() < 360) {
 				unit.rotateAperture(1);
 				attackCone.setAperture(unit.getAperture());
 			}
@@ -404,28 +454,50 @@ public class Player {
 
 	}
 
-	public void UAttack() {
+	public void UAttack(Unit unit) {
 		SinusoidalAttackView attack = new SinusoidalAttackView(
-				unit.getAperture(), unit.getDirection(), 100, unit.getView());
+				unit.getAperture(), unit.getDirection(), power, unit.getView());
 		unit.getView().addChild(attack);
+		Sound sound = unit.getSound();
 		unit.getSound().playToSpeakers();
-		// gameEngine.getDisplay().auto3D(unit.getView(),
-		// unit.getDirection(),100, 6000);
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		if (!gameEngine.getMonsterList().isEmpty()) {
+			for (int i = 0; (i < gameEngine.getMonsterList().size())
+					&& (gameEngine.getMonsterList().get(i) != null); i++) {
+				Monster monster = gameEngine.getMonsterList().get(i);
+				double xdiff = monster.getPos().getX() - unit.getPos().getX();
+				double ydiff = monster.getPos().getY() - unit.getPos().getY();
+				double theta = (180 * Math.atan2(ydiff, xdiff) / Math.PI) - 90;
+				if ((monster.getPos().distanceTo(unit.getPos()) < power)
+						&& (((unit.getDirection() - unit.getAperture() / 2) % 360 <= theta % 360) && ((unit
+								.getDirection() + unit.getAperture() / 2) % 360 >= theta % 360))) {
+					System.out.println("player :"
+							+ sound.filter(monster.getDefence().getShield())
+									.getDegats() / 30000000);
+					monster.decreaseLife(sound.filter(
+							monster.getDefence().getShield()).getDegats() / 30000000);
+
+				}
+				gameEngine.getMonsterList().trimToSize();
+			}
+		}
 	}
 
 	public void act() {
 		isTurn = true;
-		movingUTurn();
-		chooseWeaponTurn();
-		soundEditPTurn();
-		UAperture();
-		UDirection();
-		UAttack();
+		for(Unit unit: unitList){
+			audioRender.setSound(unit.getSound());
+			movingUTurn(unit);
+			chooseWeaponTurn(unit);
+			soundEditPTurn(unit);
+			UAperture(unit);
+			UDirection(unit);
+			UAttack(unit);
+		}
 		isTurn = false;
 
 	}

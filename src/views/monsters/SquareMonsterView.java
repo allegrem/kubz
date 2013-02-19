@@ -5,9 +5,9 @@ import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glVertex3d;
+import objLoader.ObjDisplay;
 
 import org.lwjgl.opengl.GL11;
-
 import org.lwjgl.util.ReadableColor;
 
 import utilities.Maths;
@@ -32,9 +32,10 @@ public class SquareMonsterView extends MonsterView {
 		super(position, color);
 		
 	}
+	
 
-	@Override
-	public void paint() {
+	//@Override
+	public void paint2() {
 		actualizePosition();
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		
@@ -123,6 +124,28 @@ public class SquareMonsterView extends MonsterView {
 
 	}
 	
+	public void paint() {
+		actualizePosition();
+		int x=(int) Math.round(getX());
+		int y=(int) Math.round(getY());
+		int iangle=(int) Math.round(getAngle());
+		
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
+		
+		glMatrixMode(GL_MODELVIEW);
+		GL11.glPushMatrix();
+		
+
+			ObjDisplay.ROUNDED_CUBE.render(actualColor,x,y,(int)0.2,iangle);
+		
+		GL11.glLoadIdentity();
+		GL11.glPopMatrix();
+		
+		paintChildren();
+		
+
+	}
+	
 	@Override
 	public String getCharac() {
 		return "S"+super.getCharac();
@@ -135,6 +158,13 @@ public class SquareMonsterView extends MonsterView {
 		if(dist+taille>=vect.norme())
 			return true;
 		return false;
+	}
+
+
+	@Override
+	public void setUnTracked(boolean b) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

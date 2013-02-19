@@ -2,7 +2,7 @@ package views.attacks;
 
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
-import map2.Map;
+import map.Map;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
@@ -10,6 +10,7 @@ import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.glu.PartialDisk;
 
 import utilities.Point;
+import views.interfaces.Displayable;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
 
@@ -76,12 +77,12 @@ public class AttackConeView implements DisplayableChild {
 		 */
 		collision : for(float i=15;i<=power;i+=10){
 		if(!reflected){
-		 for (DisplayableFather object: Map.getMap().getObjects()){
+		 for (Displayable object: Map.getMap().getObjects()){
 			if (object !=father && object.collisionCanOccure(new Point(father.getX(),father.getY()),i+5)){
 				beta=direction-aperture/2;
 			while(beta<=direction+aperture/2 ){	
 				y=father.getY()+i*Math.cos(Math.PI/180*beta);
-				x=father.getX()+i*Math.sin(Math.PI/180*beta);
+				x=father.getX()+i*Math.sin(Math.PI/180*beta+Math.PI);
 				if (object.isInZone(new Point(x,y))){
 					reflected=true;
 					fin=Math.round(i-15);
@@ -150,7 +151,7 @@ public class AttackConeView implements DisplayableChild {
 	}
 	
 	/**
-	 * Modification de la puissance du cone
+	 * Modification redde la puissance du cone
 	 * @param power
 	 */
 	public void setPower(int power){
@@ -191,6 +192,12 @@ public class AttackConeView implements DisplayableChild {
 	@Override
 	public boolean isDead() {
 		return dead;
+	}
+
+	@Override
+	public boolean collisionCanOccure(Point point, float f) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	

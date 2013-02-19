@@ -2,13 +2,14 @@ package views.attacks;
 
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
-import map2.Map;
+import map.Map;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 import utilities.Lines;
 import utilities.Point;
+import views.interfaces.Displayable;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
 
@@ -74,7 +75,7 @@ public class SinusoidalAttackView implements DisplayableChild {
 		 */
 		collision : for(float i=11;i<=power;i+=10){
 		if(!reflected){
-		 for (DisplayableFather object: Map.getMap().getObjects()){
+		 for (Displayable object: Map.getMap().getObjects()){
 			if (object !=father && object.collisionCanOccure(new Point(father.getX(),father.getY()),11.0f/10.0f*i)){
 				beta=direction-aperture/2;
 			while(beta<=direction+aperture/2 ){	
@@ -104,7 +105,7 @@ public class SinusoidalAttackView implements DisplayableChild {
 		GL11.glPushMatrix();
 		GL11.glTranslated(father.getX(), father.getY(),father.getHeight()/2 );
 		GL11.glRotated(direction,0,0,1);
-		Lines.drawSinus((float) aperture, i, 10, 0.1f);
+		Lines.drawSinus((float) aperture, i, 20, 0.1f);
 		GL11.glLoadIdentity();
 		GL11.glPopMatrix();
 		
@@ -198,6 +199,12 @@ public class SinusoidalAttackView implements DisplayableChild {
 	@Override
 	public boolean isDead() {
 		return dead;
+	}
+
+	@Override
+	public boolean collisionCanOccure(Point point, float f) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	

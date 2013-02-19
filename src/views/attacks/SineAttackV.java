@@ -121,4 +121,10 @@ public class SineAttackV implements DisplayableChild{
 		return dead;
 	}
 
+	@Override
+	public boolean collisionCanOccure(Point point, float f) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

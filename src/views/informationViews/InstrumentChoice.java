@@ -158,5 +158,11 @@ public class InstrumentChoice implements DisplayableChild{
 	public void setChosen(int num){
 			//chosen=colors.get(num);		
 	}
+
+	@Override
+	public boolean collisionCanOccure(Point point, float f) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

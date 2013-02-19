@@ -2,7 +2,7 @@ package views.monsters;
 
 import java.util.ArrayList;
 
-import map2.Map;
+import map.Map;
 
 import org.lwjgl.util.ReadableColor;
 
@@ -21,7 +21,7 @@ import views.interfaces.DisplayableFather;
  */
 public abstract class MonsterView implements DisplayableFather{
 	protected static final double size= 30;
-	protected static final double height = 30;
+	protected static final double height = 80;
 	private Point position;
 	private Point positionToGo=new Point(0,0);
 	private double angle=0;

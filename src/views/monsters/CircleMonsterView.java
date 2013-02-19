@@ -75,6 +75,12 @@ public class CircleMonsterView extends MonsterView {
 		return false;
 	}
 
+	@Override
+	public void setUnTracked(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 }
