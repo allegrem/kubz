@@ -35,13 +35,21 @@ public class Text {
 
     private int texture;
 
-    
     //build colours for font with alpha transparency
     private static final Color OPAQUE_WHITE = new Color(255,255,255,255);
    
     private static final Color TRANSPARENT_BLACK = new Color(100,100,100);
     private int base;                       // Base Display List For The Font Set
+   
 
+public Text(){
+
+}
+
+
+    /* Some liberties had to be taken with this method.  I could not get the glCallLists() to work, so
+     * it is done manually instead.
+     */
     public void glPrint(int x, int y, ReadableColor color, String msg) {                                      // Custom GL "Print" Routine
     	GL11.glEnable(GL11.GL_TEXTURE_2D);
     	x-=(int)(msg.length()*15/2);
@@ -50,7 +58,6 @@ public class Text {
 		GL11.glPushMatrix();
 		GL11.glTranslated(x, y,100);
     	if(msg != null) {
-            GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture);
             for(int i=0;i<msg.length();i++) {
                 GL11.glCallList(base + msg.charAt(i));
                 GL11.glTranslatef(15f, 0.0f, 0.0f);
@@ -58,6 +65,9 @@ public class Text {
         }
     	GL11.glLoadIdentity();
     	GL11.glPopMatrix();
+    	GL11.glCallList(0);
+    	GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
+    	GL11.glDisable(GL11.GL_TEXTURE_2D);
     }
 
 

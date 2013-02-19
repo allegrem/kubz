@@ -198,6 +198,7 @@ public class ObjDisplay {
 		GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
 		GL11.glEnableClientState(GL11.GL_NORMAL_ARRAY);
 		GL11.glColor3ub((byte)color.getRed(), (byte)color.getGreen(),(byte)color.getBlue());
+		GL11.glPushMatrix();
 		GL11.glTranslated(x, y,z);
 		GL11.glRotatef(a, 0,0, 1);
 		GL11.glScalef((float)15, (float)15, (float)40);
@@ -205,6 +206,8 @@ public class ObjDisplay {
 		GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
 		GL11.glDisableClientState(GL11.GL_NORMAL_ARRAY);
 		GL20.glUseProgram(0);
+    	GL11.glLoadIdentity();
+    	GL11.glPopMatrix();
 	}
 
 	/**
