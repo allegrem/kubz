@@ -316,7 +316,7 @@ public class AudioRender implements Displayable,Observer{
 public void setSound(Sound sound) {
 	this.sound=sound;
 	sound.addObserver(this);
-	update(null,null);
+	update=true;
 	
 }
 

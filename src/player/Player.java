@@ -24,6 +24,7 @@ import synthesis.fmInstruments.WoodInstrument;
 import synthesis.fmInstruments.XylophoneInstrument;
 import views.attacks.AttackConeView;
 import views.attacks.SinusoidalAttackView;
+import views.informationViews.AudioRender;
 import views.informationViews.InstrumentsChoice;
 
 public class Player {
@@ -41,6 +42,7 @@ public class Player {
 	int power = 100;
 
 	private GameEngine gameEngine;
+	private AudioRender audioRender;
 
 	/**
 	 * Creation d'un joueur avec une Unit et deux Parameter
@@ -63,7 +65,8 @@ public class Player {
 						.getCenter().getY());
 		this.shield = new BandsFilter(11);
 		this.shield.random();
-		//gameEngine.getDisplay().setSound(unit.getSound());
+		audioRender = new AudioRender(gameEngine.getDisplay(),unitList.get(0).getSound(),parameters[0],parameters[1]);
+		gameEngine.getMap().add(audioRender);
 	}
 
 	/**
@@ -487,6 +490,7 @@ public class Player {
 	public void act() {
 		isTurn = true;
 		for(Unit unit: unitList){
+			audioRender.setSound(unit.getSound());
 			movingUTurn(unit);
 			chooseWeaponTurn(unit);
 			soundEditPTurn(unit);
