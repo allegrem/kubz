@@ -25,6 +25,8 @@ import synthesis.filters.BandsFilter;
  */
 public class SLBandsFilterView extends JPanel {
 
+	private static final int MAX_FILTER_POINTS = 500;
+
 	private static final long serialVersionUID = 1L;
 
 	private BandsFilter bandsFilter;
@@ -80,7 +82,7 @@ public class SLBandsFilterView extends JPanel {
 		btnRandom.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				bandsFilter.random();
+				bandsFilter.random(MAX_FILTER_POINTS);
 			}
 		});
 		toolBar_2.add(btnRandom);
