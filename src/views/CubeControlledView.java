@@ -160,8 +160,8 @@ public class CubeControlledView implements DisplayableFather{
 		return false;
 	}
 	
-	//@Override
-	public void paint2() {
+	@Override
+	public void paint() {
 		int x=(int) Math.round(position.getX());
 		int y=(int) Math.round(position.getY());
 		int iangle=(int) Math.round(angle);
@@ -178,16 +178,24 @@ public class CubeControlledView implements DisplayableFather{
 			
 			GL11.glTranslated(x,y,0);
 			GL11.glRotated(iangle,0,0,1);
-			GL11.glColor3ub((byte) (color.getRed()), (byte) (color.getGreen()) , (byte) (color.getBlue()));
+			//GL11.glColor3ub((byte) (color.getRed()), (byte) (color.getGreen()) , (byte) (color.getBlue()));
 			
 			GL11.glBegin(GL_QUADS);
 			
 			GL11.glNormal3f(0, 0, 1.0f);
 			
+			GL11.glColor3ub((byte)237,(byte)28,(byte)36);
 			glVertex3d(-size/2,-size/2, 0.2);
+			
+			GL11.glColor3ub((byte)137,(byte)28,(byte)36);
 			glVertex3d(size/2,-size/2, 0.2);
+			
+			GL11.glColor3ub((byte)137,(byte)28,(byte)36);
 			glVertex3d(size/2,size/2, 0.2);
+			
+			GL11.glColor3ub((byte)137,(byte)28,(byte)36);
 			glVertex3d(-size/2,+size/2, 0.2);
+			
 			GL11.glEnd();
 			
 			GL11.glLoadIdentity();
@@ -200,7 +208,7 @@ public class CubeControlledView implements DisplayableFather{
 	}
 	
 	
-	public void paint() {
+	public void paint2() {
 		int x=(int) Math.round(position.getX());
 		int y=(int) Math.round(position.getY());
 		int iangle=(int) Math.round(angle);

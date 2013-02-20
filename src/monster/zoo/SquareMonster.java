@@ -8,6 +8,7 @@ import org.lwjgl.util.ReadableColor;
 
 import utilities.Point;
 import views.informationViews.LifeView;
+import views.monsters.CircleMonsterView;
 import views.monsters.SquareMonsterView;
 import gameEngine.GameEngine;
 
@@ -18,7 +19,7 @@ public class SquareMonster extends Monster {
 		this.choice = new ChooseDistance(this);
 		this.attack = new FixedFrenquenceAttack(this, 6);
 		this.move = new RegularMove(this, 200);
-		view= new SquareMonsterView(new Point(xStart,yStart), color);
+		view= new CircleMonsterView(new Point(xStart,yStart), color);
 		gameEngine.getMap().add(view);	
 		lifeView=new LifeView(view);
 		view.addChild(lifeView);
