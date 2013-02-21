@@ -44,7 +44,6 @@ public class GameEngine extends Thread {
 		map = new Map();
 		display.setMap(map);
 		display.start();
-		display.print(100, 100, Color.BLUE, "Le texte marche !");
 		while (!display.initialized()) {
 			try {
 				Thread.sleep(10);

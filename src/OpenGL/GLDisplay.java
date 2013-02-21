@@ -67,6 +67,8 @@ public class GLDisplay extends Thread{
 	private int frequency=50;
 	private  boolean initialized=false;
 	private Text texte;
+	private final int nFrames=20;// Nbre de frames pour le motion-blur
+	private int i=0;
 	
 	/*
 	 * Parametres de la projection

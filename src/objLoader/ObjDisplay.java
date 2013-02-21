@@ -29,7 +29,7 @@ public class ObjDisplay {
 	 */
 	public static enum Objet
 	{
-		ROUNDED_CUBE("objets/cube.obj");
+		ROUNDED_CUBE("objets/roundedCube.obj");
 	
 	    // Membres :
 	  
@@ -191,6 +191,12 @@ public class ObjDisplay {
 	 */
 	public static void renderVBO(Objet obj,ReadableColor color,int x, int y, int z, int a){
 		GL20.glUseProgram(obj.shaderProgram);
+		int dx=GL20.glGetUniformLocation(obj.shaderProgram, "dx");
+		int dy=GL20.glGetUniformLocation(obj.shaderProgram, "dy");
+		int dz=GL20.glGetUniformLocation(obj.shaderProgram, "dz");
+		GL20.glUniform1i(dx,x);
+		GL20.glUniform1i(dy,y);
+		GL20.glUniform1i(dz,z);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,obj.vboVertexHandle);
 		GL11.glVertexPointer(3,GL11.GL_FLOAT,0,0L);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, obj.vboNormalHandle);
@@ -199,7 +205,7 @@ public class ObjDisplay {
 		GL11.glEnableClientState(GL11.GL_NORMAL_ARRAY);
 		GL11.glColor3ub((byte)color.getRed(), (byte)color.getGreen(),(byte)color.getBlue());
 		GL11.glPushMatrix();
-		GL11.glTranslated(x, y,z);
+		//GL11.glTranslated(x, y,z);
 		GL11.glRotatef(a, 0,0, 1);
 		GL11.glScalef((float)15, (float)15, (float)40);
 		GL11.glDrawArrays(GL11.GL_TRIANGLES,0,obj.m.faces.size()*3);
