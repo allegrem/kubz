@@ -1,5 +1,6 @@
 package gameEngine;
 
+import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class GameEngine extends Thread {
 		map = new Map();
 		display.setMap(map);
 		display.start();
+		display.print(100, 100, Color.BLUE, "Le texte marche !");
 		while (!display.initialized()) {
 			try {
 				Thread.sleep(10);
@@ -166,7 +168,7 @@ public class GameEngine extends Thread {
 			for (Player player : playerList) {
 				boolean unitsOk = true; 
 				/*
-				 * on verifie que chacune des Unit de player sont à leur place
+				 * on verifie que chacune des Unit de player sont ï¿½ leur place
 				 */
 				for (Unit unit : player.getUnitList()) {
 					boolean unitOk = checkPos(unit);

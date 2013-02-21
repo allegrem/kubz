@@ -45,7 +45,7 @@ public class Player {
 	private AudioRender audioRender;
 
 	/**
-	 * Creation d'un joueur avec une Unit et deux Parameter
+	 * Creation d'un joueur avec deux Unit et deux Parameter
 	 */
 	public Player(GameEngine gameEngine, Base base) {
 

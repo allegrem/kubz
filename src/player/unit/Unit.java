@@ -12,6 +12,7 @@ import synthesis.Sound;
 import synthesis.fmInstruments.TwoOscFmInstrument;
 import utilities.Point;
 import views.CubeControlledView;
+import views.informationViews.AudioRender;
 import views.informationViews.LifeView;
 import views.interfaces.DisplayableFather;
 import player.*;
