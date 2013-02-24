@@ -67,6 +67,8 @@ public class GLDisplay extends Thread{
 	private int frequency=50;
 	private  boolean initialized=false;
 	private Text texte;
+	private final int nFrames=20;// Nbre de frames pour le motion-blur
+	private int i=0;
 	
 	/*
 	 * Parametres de la projection
@@ -120,7 +122,6 @@ public class GLDisplay extends Thread{
 	 */
 	public GLDisplay(GameEngine gameEngine){
 		this.gameEngine=gameEngine;
-		texte=new Text();
 		KeyboardManager.setGameEngine(gameEngine);
 	}
 
@@ -138,6 +139,7 @@ public class GLDisplay extends Thread{
 		camDx=(float)(display_width/2.0);
 		camDy=(float)(display_height/2.0);
 		setCameraDirection();
+		texte=new Text();
 		initialized=true;
 		while(do_run){
 			
@@ -179,7 +181,6 @@ public class GLDisplay extends Thread{
 		initDisplay();
 		initGL();
 		lighting.enable();
-		texte.buildFont();
 		try {
 			Keyboard.create();
 		} catch (LWJGLException e) {

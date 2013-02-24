@@ -1,7 +1,7 @@
 package utilities;
 /**
  * Sert a calculer differetentes distances
- * @author Valeh
+ * @author valeh
  *
  */
 public class Distance {

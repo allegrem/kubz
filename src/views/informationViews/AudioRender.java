@@ -392,15 +392,20 @@ public void paint() {
 	GL11.glDisable(GL11.GL_TEXTURE_2D);
 
 	if(sound!=null){
+		GL20.glUseProgram(shaderProgram);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vboVertexHandle);
 		GL11.glVertexPointer(3,GL11.GL_FLOAT,0,0L);
 		GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
 		GL11.glColor3ub((byte)ReadableColor.BLACK.getRed(),(byte)ReadableColor.BLACK.getGreen(),(byte)ReadableColor.BLACK.getBlue());
+		GL11.glPushMatrix();
 		GL11.glTranslated(parameter1.getX(),parameter1.getY(),0);
 		GL11.glRotatef(angle, 0, 0, 1);
 		GL11.glDrawArrays(GL11.GL_LINES,0,(zoomX-2)*2);
 		GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+		GL20.glUseProgram(0);
+		GL11.glLoadIdentity();
+    	GL11.glPopMatrix();
 	}
 
 	}

@@ -296,6 +296,7 @@ public class WallView implements DisplayableFather{
 			Color.gray.bind();
 
 			Textures.textureWall.bind();// On applique la texture
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D,Textures.textureWall.getTextureID());
 
 		}
 
