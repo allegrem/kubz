@@ -7,8 +7,6 @@ package player;
 
 import java.util.ArrayList;
 
-import org.lwjgl.util.ReadableColor;
-
 import monster.zoo.*;
 import base.Base;
 import gameEngine.GameEngine;
@@ -257,6 +255,7 @@ public class Player {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			System.out.println(unit.getPos().getX() + " " + unit.getPos().getY());
 
 		}
 		KeyboardManager.tap = false;

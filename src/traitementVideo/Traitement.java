@@ -21,14 +21,32 @@ public class Traitement {
 	private VirtualPixel[][] vi;
 	private ArrayList<ArrayList<VirtualPixel>> groupesConnexes;
 	private GameEngine gameEngine;
-
-	/*=================>FIRST !!!!//les boucles ne sont pas parcourues comme il faut en plus :/
-			
-	=================>SECOND !!!! // verifier l'ajout des groupes	*/	
+	private int LENGHT;
+	private int HEIGHT;
+	private int distance = 5;
 	
-	//=================> CLAIREMENT IL FAUT REECRIRE UPDATE CONNEXE !!
-			
+		
+	public Traitement(int LENGHT, int HEIGHT) {
+		super();
+		this.LENGHT = LENGHT;
+		this.HEIGHT = HEIGHT;
+	}
+	
+	/**
+	 * Constructeur uttilise pour les tests unitaires
+	 */
+	public Traitement(){
+		super();
+	}
+
+	
 	public void updateConnexe(VirtualPixel[][] screen, int LENGHT, int HEIGHT){
+		this.LENGHT = LENGHT;
+		this.HEIGHT = HEIGHT;
+		updateConnexe(screen);
+	}
+	
+	public void updateConnexe(VirtualPixel[][] screen){
 		vi = screen;
 		ArrayList<ArrayList<VirtualPixel>> groupesConnexesIntermediaire;
 		groupesConnexesIntermediaire = new ArrayList<ArrayList<VirtualPixel>>();
@@ -196,11 +214,56 @@ public class Traitement {
 		int expectedY1 = (int) (vc.getPos1().getY() + vc.getY1Speed());
 		int expectedY2 = (int) (vc.getPos2().getY() + vc.getY2Speed());
 		int expectedY3 = (int) (vc.getPos3().getY() + vc.getY3Speed());
+		
 		/*
-		 * Bon là c'est hyper HYPER dégueu mais j'ai pas trouvé comment faire
-		 * joli :/ (enfin si mais ça prend trois plombes...(la seule boucle que
-		 * j'ai trouvé fait 50 lignes ...))
+		 * Ici on établie les pixels à distance distance de la position attendue
+		 * Ensuite on parcours ces pixels par distance croissante a la position attendue
+		 * Si on trouve une tache lumineuse on considere que c'est la nouvelle position et on sort de la boucle
+		 * Si on ne trouve pas de tache lumineuse on appelle le GameEngine
 		 */
+		ArrayList<ArrayList<VirtualPixel>> pos1Lists = parcoursSpirale(expectedX1, expectedY1, distance);
+		boolean found1 = false;
+		for(ArrayList<VirtualPixel> list : pos1Lists){
+			for(VirtualPixel vp: list){
+				if (vp.isBrightness()){
+					updatePosSpeed1(vc, vp.getPos().getX(), vp.getPos().getY());
+					found1 = true;
+					break;
+				}
+			}
+			if (found1) break;
+		}
+		if (!found1) gameEngine.setFrozen(null);
+		
+		ArrayList<ArrayList<VirtualPixel>> pos2Lists = parcoursSpirale(expectedX2, expectedY2, distance);
+		boolean found2 = false;
+		for(ArrayList<VirtualPixel> list : pos2Lists){
+			for(VirtualPixel vp: list){
+				if (vp.isBrightness()){
+					updatePosSpeed2(vc, vp.getPos().getX(), vp.getPos().getY());
+					found2 = true;
+					break;
+				}
+			}
+			if (found2) break;
+		}
+		if (!found2) gameEngine.setFrozen(null);
+		
+		ArrayList<ArrayList<VirtualPixel>> pos3Lists = parcoursSpirale(expectedX3, expectedY3, distance);
+		boolean found3 = false;
+		for(ArrayList<VirtualPixel> list : pos3Lists){
+			for(VirtualPixel vp: list){
+				if (vp.isBrightness()){
+					updatePosSpeed1(vc, vp.getPos().getX(), vp.getPos().getY());
+					found3 = true;
+					break;
+				}
+			}
+			if (found3) break;
+		}
+		if (!found3) gameEngine.setFrozen(null);
+		
+		/*
 		if (vi[expectedX1][expectedY1].isBrightness() == true)
 			updatePosSpeed1(vc, expectedX1, expectedY1);
 		else if (vi[expectedX1 + 1][expectedY1].isBrightness() == true)
@@ -359,7 +422,9 @@ public class Traitement {
 			updatePosSpeed3(vc, expectedX3 + 2, expectedY3 - 2);
 		else
 			gameEngine.setFrozen(vc.getOwner());
+		*/
 	}
+	
 
 	/**
 	 * Methode qui met a jour la position et la vitesse de la premiere diode
@@ -414,5 +479,31 @@ public class Traitement {
 			ArrayList<ArrayList<VirtualPixel>> groupesConnexes) {
 		this.groupesConnexes = groupesConnexes;
 	}
+	
+	
+	/**
+	 * Methode qui retourne une ArrayList d'ArrayList de VirtualPixe ou l'ArrayList
+	 * numéro i contient les pixels distants de i de (x,y)
+	 * @param x
+	 * @param y
+	 * @param dist
+	 */
+	private ArrayList<ArrayList<VirtualPixel>> parcoursSpirale(int x, int y, int dist){
+		int upDist = Math.min(dist, y);
+		int downDist = Math.min(dist,HEIGHT - y);
+		int leftDist = Math.min(dist, x);
+		int rightDist = Math.min(dist,LENGHT - x);
+		ArrayList<ArrayList<VirtualPixel>> points = new ArrayList<ArrayList<VirtualPixel>>();
+		points.ensureCapacity((int) Math.sqrt(2*dist*dist));
+		for(int i = (x-leftDist); i<= (x+rightDist); i++){
+			for(int j = (y-upDist); j<= (y+downDist); j++){
+				int d = (int) Math.sqrt(i*i + j*j);
+				points.get(d).add(this.vi[i][j]);
+			}
+		}
+		return points;		
+	}
+	
+	
 
 }
