@@ -29,7 +29,7 @@ public interface AudioBlock {
 	 * @param t l'instant auquel doit être calculé le son
 	 * @return le son calculé à l'instant t
 	 */
-	public Float play(Float t) throws RequireAudioBlocksException;
+	public Float play(Float t);
 	
 	
 	/**
@@ -40,6 +40,6 @@ public interface AudioBlock {
 	 * @throws RequireAudioBlsocksException  si l’AudioBlock n’a pas toutes les 
 	 * entrées nécessaires pour calculer le son.
 	 */
-	public Float phi(Float t) throws RequireAudioBlocksException; 
+	public Float phi(Float t); 
 	
 }
