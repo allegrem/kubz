@@ -68,13 +68,6 @@ public class MidiKeyboard extends JFrame {
 		rootPane.registerKeyboardAction(action, stroke,
 				JComponent.WHEN_IN_FOCUSED_WINDOW);
 		this.setRootPane(rootPane); 
-
-		// =============
-		// instr.command(new MidiCommand(MidiCommand.NOTE_ON, 69, 33));
-		// instr.command(new MidiCommand(MidiCommand.NOTE_ON, 73, 33));
-		// instr.command(new MidiCommand(MidiCommand.NOTE_ON, 76, 33));
-		// byte[] result = instr.play(44100, 44100);
-		// ==============
 		
 		instr.start();
 
@@ -86,25 +79,39 @@ public class MidiKeyboard extends JFrame {
 	protected int charToNote(char keyChar) {
 		switch (keyChar) {
 		case 'q':
-			return 60;
-		case 's':
+			return 60; //do3
+		case 'z':
 			return 61;
-		case 'd':
-			return 62;
-		case 'f':
+		case 's':
+			return 62; //re3
+		case 'e':
 			return 63;
-		case 'g':
-			return 64;
-		case 'h':
-			return 65;
-		case 'j':
+		case 'd':
+			return 64; //mi3
+		case 'f':
+			return 65; //fa3
+		case 't':
 			return 66;
-		case 'k':
-			return 67;
-		case 'l':
+		case 'g':
+			return 67; //sol3
+		case 'y':
 			return 68;
+		case 'h':
+			return 69; //la3
+		case 'u':
+			return 70;
+		case 'j':
+			return 71; //si3
+		case 'k':
+			return 72; //do4
+		case 'o':
+			return 73;
+		case 'l':
+			return 74; //re4
+		case 'p':
+			return 75;
 		case 'm':
-			return 69;
+			return 76; //mi4
 		default:
 			return 0;
 		}

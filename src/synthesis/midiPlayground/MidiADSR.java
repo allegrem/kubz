@@ -33,9 +33,9 @@ public class MidiADSR implements MidiAudioBlock {
 	//return a value between 0 and amplitude
 	@Override
 	public Float play(Float t) {
-		float x = 1f;
-		float a_ = a.play(t) / x, s_ = s.play(t), d_ = d.play(t) / x, r_ = r.play(t) / x;
+		float a_ = a.play(t), s_ = s.play(t), d_ = d.play(t), r_ = r.play(t);
 		float result;
+		
 		if (releasing) {
 			if (t < releaseTime + r_)
 				result = - releaseAmp / r_ * t + releaseAmp + releaseAmp * releaseTime / r_;
