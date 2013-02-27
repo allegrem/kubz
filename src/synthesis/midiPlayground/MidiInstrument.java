@@ -5,16 +5,33 @@ import java.io.IOException;
 import synthesis.audiooutput.SpeakersOutput;
 import synthesis.exceptions.AudioException;
 
+/**
+ * This abstract class defines the default behavior of a MIDI Instrument. An
+ * instrument can play several notes at the same time (the maximum number of
+ * notes defined by the constant {@link MidiInstrument#MAX_SIMULTANEOUS_NOTES}).
+ * For now, the instrument can be played in real time with the
+ * {@link MidiInstrument#run()} method.
+ * 
+ * @author allegrem
+ */
 public abstract class MidiInstrument extends Thread {
 
+	/**
+	 * Maximal number of notes which can be played simultaneously.
+	 */
 	private static final int MAX_SIMULTANEOUS_NOTES = 10;
 
-	private final SubMidiInstrument[] subInstruments;
+	private final SubMidiInstrument[] subInstruments; // each note is handled by
+														// a subinstrument
 
-	private int lastSubInstrumentIndex;
+	private int lastSubInstrumentIndex; // index in the subinstruments list
 
-	private boolean keepPlaying = true;
+	private boolean keepPlaying = true; // set it to false to stop the run loop
 
+	/**
+	 * Create a new MidiInstrument. Each subinstrument loads the audioblocks as
+	 * defined in the {@link MidiInstrument#buildInstrument()} method.
+	 */
 	public MidiInstrument() {
 		subInstruments = new SubMidiInstrument[MAX_SIMULTANEOUS_NOTES];
 		lastSubInstrumentIndex = MAX_SIMULTANEOUS_NOTES - 1;
@@ -22,8 +39,22 @@ public abstract class MidiInstrument extends Thread {
 			subInstruments[i] = new SubMidiInstrument(buildInstrument());
 	}
 
+	/**
+	 * Build the instrument. This method must be redefined in each instrument.
+	 * It defines how the AudioBlocks are connected between them.
+	 * 
+	 * @return The output MidiAudioBlock.
+	 */
 	protected abstract MidiAudioBlock buildInstrument();
 
+	/**
+	 * This method handles MIDI commands. {@link MidiCommand#NOTE_ON}: add the
+	 * note to the subinstrument list (remove the oldest note played if the list
+	 * is full), then the command is given to the subinstrument.
+	 * {@link MidiCommand#NOTE_OFF}: gives the command to the subinstrument
+	 * which is playing this note. By default, the command is broadcasted to
+	 * all the subinstruments.
+	 */
 	public void command(MidiCommand command) {
 		switch (command.getCommand()) {
 		case MidiCommand.NOTE_ON:
@@ -46,10 +77,16 @@ public abstract class MidiInstrument extends Thread {
 
 	}
 
+	/**
+	 * 
+	 * @param sampleRate
+	 * @param samples
+	 * @return
+	 */
 	public byte[] play(int sampleRate, int samples) {
 		int[] out = new int[samples];
 		int notes = 0; // count number of simultaneous played notes
-		
+
 		for (SubMidiInstrument subInstrument : subInstruments) {
 			int zeros = 0; // count number of zeros returned by playNextSample
 			int s; // sample counter
@@ -67,10 +104,11 @@ public abstract class MidiInstrument extends Thread {
 			if (s == samples) // if the loop was not broken
 				notes++;
 		}
-		
+
 		byte[] outBytes = new byte[samples];
 		if (notes > 0) {
-			for (int s = 0; s < samples; s++) // normalize the output level
+			for (int s = 0; s < samples; s++)
+				// normalize the output level
 				outBytes[s] = (byte) (out[s] / notes);
 		}
 		return outBytes;
