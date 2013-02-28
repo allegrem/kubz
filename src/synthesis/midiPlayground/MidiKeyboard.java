@@ -15,6 +15,7 @@ import javax.swing.KeyStroke;
 
 import synthesis.audiooutput.SpeakersOutput;
 import synthesis.exceptions.AudioException;
+import synthesis.midiPlayground.MidiInstruments.SinusInstrument;
 
 public class MidiKeyboard extends JFrame {
 
