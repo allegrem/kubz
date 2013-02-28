@@ -8,6 +8,8 @@ import synthesis.midiPlayground.MidiInstrument;
 import synthesis.midiPlayground.MidiSineWaveOscillator;
 import synthesis.midiPlayground.NoteBlock;
 
+//This is not a TwoOscFm but only the oscillator 
+
 public class SinusInstrument extends MidiInstrument {
 
 	private MidiADSR amp;

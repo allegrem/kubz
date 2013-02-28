@@ -8,8 +8,8 @@ public class MidiMultiplier implements MidiAudioBlock{
 	private MidiAudioBlock block2;
 	
 	public MidiMultiplier(MidiAudioBlock block1, MidiAudioBlock block2){
-		block1 = block1;
-		block2 = block2;		
+		this.block1 = block1;
+		this.block2 = block2;		
 	}
 	
 	@Override
