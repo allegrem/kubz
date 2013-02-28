@@ -1,11 +1,12 @@
 package synthesis.midiPlayground.MidiInstruments;
 
 import synthesis.basicblocks.noinputblocks.Constant;
+import synthesis.midiPlayground.MidiADSR;
+import synthesis.midiPlayground.MidiAudioBlock;
+import synthesis.midiPlayground.MidiConstant;
+import synthesis.midiPlayground.MidiInstrument;
+import synthesis.midiPlayground.MidiSineWaveOscillator;
 import synthesis.midiPlayground.NoteBlock;
-import synthesis.midiPlayground.MidiAudioBlocks.MidiADSR;
-import synthesis.midiPlayground.MidiAudioBlocks.MidiAudioBlock;
-import synthesis.midiPlayground.MidiAudioBlocks.MidiConstant;
-import synthesis.midiPlayground.MidiAudioBlocks.MidiSineWaveOscillator;
 
 public class SinusInstrument extends MidiInstrument {
 
