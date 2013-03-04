@@ -27,7 +27,6 @@ import views.attacks.AttackConeView;
 import views.attacks.SinusoidalAttackView;
 import views.informationViews.AudioRender;
 import views.informationViews.InstrumentsChoice;
-import wall.Wall;
 
 public class PlayerNewVersion extends Player {
 
@@ -40,7 +39,7 @@ public class PlayerNewVersion extends Player {
 	private int choice;
 	private int lastAngle1;
 	private int lastAngle2;
-	private ArrayList<Monster> seenMonsters;
+
 
 	int power = 100;
 
@@ -52,7 +51,7 @@ public class PlayerNewVersion extends Player {
 	 */
 	public PlayerNewVersion(GameEngine gameEngine, Base base) {
 		super(gameEngine, base);
-		seenMonsters = new ArrayList<Monster>();
+
 	}
 
 	/**
@@ -366,36 +365,7 @@ public class PlayerNewVersion extends Player {
 	/**
 	 * Methode qui declenche le choix de l'ouverture d'attaque de Unit
 	 */
-	private void updtaeSeenMonsters(Unit unit) {
-		ArrayList<Monster> monsterList = gameEngine.getMonsterList();
-		seenMonsters = monsterList;
-		ArrayList<Wall> walls = gameEngine.getWalls();
-		ArrayList<ArrayList<Double>> angleList = new ArrayList<ArrayList<Double>>();
-		for (Wall wall : walls) {
-			double x1diff = wall.getExtremity1().getX() - unit.getPos().getX();
-			double y1diff = wall.getExtremity1().getY() - unit.getPos().getY();
-			double extrem1Theta = (180 * Math.atan2(y1diff, x1diff) / Math.PI) - 90;
-			double x2diff = wall.getExtremity2().getX() - unit.getPos().getX();
-			double y2diff = wall.getExtremity2().getY() - unit.getPos().getY();
-			double extrem2Theta = (180 * Math.atan2(y2diff, x2diff) / Math.PI) - 90;
-			ArrayList<Double> angles = new ArrayList<Double>();
-			angles.add(new Double(extrem1Theta));
-			angles.add(new Double(extrem2Theta));
-			angleList.add(angles);
-		}
-		for (Monster monster : monsterList) {
-			double xdiff = monster.getPos().getX() - unit.getPos().getX();
-			double ydiff = monster.getPos().getY() - unit.getPos().getY();
-			double monsterTheta = (180 * Math.atan2(ydiff, xdiff) / Math.PI) - 90;
-			for (ArrayList<Double> angles : angleList) {
-				if (((angles.get(1) < monsterTheta)
-						&& (angles.get(2) > monsterTheta) || ((angles.get(1) > monsterTheta) && (angles
-						.get(2) < monsterTheta))))
-					seenMonsters.remove(monster);
-			}
 
-		}
-	}
 
 	public void UDirection(Unit unit) {
 		setPStatesToWaiting();
