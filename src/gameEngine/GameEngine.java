@@ -68,7 +68,7 @@ public class GameEngine extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		bases.add(new Base(ReadableColor.ORANGE, this));
+		bases.add(new Base(ReadableColor.ORANGE, this, true, true));
 		playerList.add(new Player(this, bases.get(0)));
 		playerList.add(new Player(this, bases.get(0)));
 		//playerList.add(new Player(this,bases.get(0)));

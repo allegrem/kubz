@@ -250,7 +250,7 @@ public class Player {
 				unit.rotate(1);
 			if (KeyboardManager.xKey)
 				unit.rotate(-1);
-			try {
+			try { 
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
