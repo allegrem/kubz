@@ -2,7 +2,9 @@ package synthesis.midiPlayground.MidiInstruments;
 
 import java.io.IOException;
 
+import synthesis.audiooutput.AudioOutput;
 import synthesis.audiooutput.SpeakersOutput;
+import synthesis.audiooutput.WavFileOutput;
 import synthesis.exceptions.AudioException;
 import synthesis.midiPlayground.MidiCommand;
 import synthesis.midiPlayground.SubMidiInstrument;
@@ -30,6 +32,7 @@ public abstract class MidiInstrument extends Thread {
 	private int lastSubInstrumentIndex; // index in the subinstruments list
 
 	private boolean keepPlaying = true; // set it to false to stop the run loop
+	WavFileOutput wavFileOutput = new WavFileOutput("sound.wav"); //to hear all the modifs during the synthesis
 
 	/**
 	 * Create a new MidiInstrument. Each subinstrument loads the audioblocks as
@@ -39,7 +42,7 @@ public abstract class MidiInstrument extends Thread {
 		subInstruments = new SubMidiInstrument[MAX_SIMULTANEOUS_NOTES];
 		lastSubInstrumentIndex = MAX_SIMULTANEOUS_NOTES - 1;
 		for (int i = 0; i < subInstruments.length; i++)
-			subInstruments[i] = new SubMidiInstrument(buildInstrument());
+			subInstruments[i] = new SubMidiInstrument((synthesis.midiPlayground.MidiAudioBlock) buildInstrument());
 	}
 
 	/**
@@ -140,6 +143,7 @@ public abstract class MidiInstrument extends Thread {
 	public void run() {
 		// open speakers output
 		SpeakersOutput speakersOutput = new SpeakersOutput();
+		//open WavFile as well (done implicitly)	
 		try {
 			speakersOutput.open();
 		} catch (IOException e1) {
@@ -152,6 +156,7 @@ public abstract class MidiInstrument extends Thread {
 			byte[] out = play(44100, 500);
 			try {
 				speakersOutput.play(out);
+				wavFileOutput.play(out);
 			} catch (AudioException e) {
 				e.printStackTrace();
 			}
@@ -166,14 +171,42 @@ public abstract class MidiInstrument extends Thread {
 
 		// close speakers output
 		speakersOutput.close();
+		//if I close the wav here we won't hear anything in 'cause each passage in the while re-write 
+		//over the existing sound in the wav (which is on some ms, so we won't hear anythnig)
 	}
 
 	public void startPlaying() {
 		keepPlaying = true;
 	}
 
+	//for each instr, when it's finished, lets us hear the sound
 	public void stopPlaying() {
 		keepPlaying = false;
 	}
-
+		
+	/**
+	 * This method aims to produce the wav file containing the final sound
+	 * i.e. the attack and let us here it through the speakers as well.
+	 *<br /> It is called when the ser taps on the cube.
+	 * @author valeh
+	 */
+	public void letSoundOut(){
+		stopPlaying();
+		try {
+			wavFileOutput.close();
+		} catch (IOException e1) {			
+			e1.printStackTrace();
+		}
+		
+		byte[] finalPlay = play(44100,44100*2); //2s playing
+		WavFileOutput finalWav = new WavFileOutput("Attack");
+		finalWav.play(finalPlay);
+		try {
+			finalWav.close();
+		} catch (IOException e) {			
+			e.printStackTrace();
+		}
+		
+		
+	}
 }
