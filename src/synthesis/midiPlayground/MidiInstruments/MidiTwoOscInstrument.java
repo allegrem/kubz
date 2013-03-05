@@ -9,7 +9,7 @@ import synthesis.midiPlayground.MidiAudioBlocks.MidiGain;
 import synthesis.midiPlayground.MidiAudioBlocks.MidiMultiplier;
 import synthesis.midiPlayground.MidiAudioBlocks.MidiSineWaveOscillator;
 
-//Actually, sonce we can no more really choose fp, fm and mod separately, this class doesn't seem so useful!
+//Actually, once we can no more really choose fp, fm and mod separately, this class doesn't seem so useful!
 public class MidiTwoOscInstrument extends MidiInstrument {
 
 	// default values for mod(2),fp(2*fm) and amp(100)

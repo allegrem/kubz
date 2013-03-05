@@ -42,8 +42,9 @@ public class BellInstrument extends FmInstrumentNParams {
 		} catch (TooManyInputsException e) {
 			e.printStackTrace();
 		}
-		SineWaveOscillator osc1 = new SineWaveOscillator(fm, new Constant(
-				(float) 190));
+		/*SineWaveOscillator osc1 = new SineWaveOscillator(fm, new Constant(
+				(float) 190));*/
+		SineWaveOscillator osc1 = new SineWaveOscillator(fm, env); //it's supposed to be with the env actually
 		Adder add = new Adder(fp, osc1);
 		setOut(new SineWaveOscillator(add, env));
 	}

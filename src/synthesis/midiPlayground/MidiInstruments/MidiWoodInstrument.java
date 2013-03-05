@@ -10,7 +10,7 @@ import synthesis.midiPlayground.MidiAudioBlocks.MidiSineWaveOscillator;
 
 public class MidiWoodInstrument extends MidiInstrument {
 	//default values for vibrato(a=0.5%,fv=7Hz)
-	//for ADSR, for mod(2)
+	//for ADSR and for mod(2)
 	
 	public MidiWoodInstrument() {
 		super();
