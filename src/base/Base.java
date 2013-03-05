@@ -10,7 +10,7 @@ public class Base {
 	private Point size;
 	private int sens;
 	private ReadableColor color;
-	//private static final float radius = 80.0f; // on code le rayon des bases "en dur"
+	public static final float radius = 80.0f; // on code le rayon des bases "en dur"
 	private BaseView view;
 	private GameEngine gameEngine;
 
@@ -30,16 +30,13 @@ public class Base {
 		view = new BaseView(center, color, sens);
 		gameEngine.getMap().add(view);
 	}
-	public Base( ReadableColor color,GameEngine gameEngine) {
+	public Base( ReadableColor color,GameEngine gameEngine, boolean top, boolean left) {
 		this.gameEngine=gameEngine;
-		center=null;
-		int centerx=gameEngine.getWidth()/2;
-		int centery=gameEngine.getHeight()-100;
-		this.center=new Point(centerx,centery);
-		int sizex=gameEngine.getWidth();
-		int sizey=200;
-		this.size=new Point(sizex,sizey);
-		view = null;
+		center = new Point(0,0);
+		if(top)center.setY(0);
+		else center.setY(gameEngine.getHeight());
+		if(left) center.setX(0);
+		else center.setX(gameEngine.getWidth());
 	}
 	public Point getCenter() {
 		return center;

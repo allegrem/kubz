@@ -18,6 +18,7 @@ import traitementVideo.Traitement;
 import utilities.Point;
 import utilities.RandomPerso;
 import views.staticViews.BackgroundView;
+import wall.Wall;
 //import wall.Wall;
 import cube.Cube;
 
@@ -28,7 +29,7 @@ public class GameEngine extends Thread {
 	private final int height;
 	public ArrayList<Monster> monsterList;
 	private ArrayList<Player> playerList;
-	// private ArrayList<Wall> walls;
+	private ArrayList<Wall> walls;
 	private ArrayList<Base> bases;
 	// private CubeManager cubeManager;
 	private GLDisplay display;
@@ -62,13 +63,13 @@ public class GameEngine extends Thread {
 			monsterList = reader.readMonsters();
 			// bases=reader.readBases();
 			bases = new ArrayList<Base>();
-			// walls=reader.readWalls();
+		    walls=reader.readWalls();
 			playerList = new ArrayList<Player>();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		bases.add(new Base(ReadableColor.ORANGE, this));
+		bases.add(new Base(ReadableColor.ORANGE, this, true, true));
 		playerList.add(new Player(this, bases.get(0)));
 		playerList.add(new Player(this, bases.get(0)));
 		//playerList.add(new Player(this,bases.get(0)));
@@ -266,5 +267,11 @@ public class GameEngine extends Thread {
 		// la on verifie que le traitement voit bien le cube
 		cubeOwner.getCube().setIrOff();
 		return result;
+	}
+	
+	
+	
+	public ArrayList<Wall> getWalls(){
+		return walls;
 	}
 }

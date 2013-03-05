@@ -2,11 +2,13 @@ package player;
 
 /**
  * Classe qui represente un joueur, a des reference vers ses unites et parametres
+ * 
+ * Nouvelle version (jouable avec les 5 parametres)
+ * 
  * @author Felix
  */
 
 import java.util.ArrayList;
-
 import monster.zoo.*;
 import base.Base;
 import gameEngine.GameEngine;
@@ -20,12 +22,13 @@ import synthesis.fmInstruments.PianoInstrument2;
 import synthesis.fmInstruments.TwoOscFmInstrument;
 import synthesis.fmInstruments.WoodInstrument;
 import synthesis.fmInstruments.XylophoneInstrument;
+import utilities.Point;
 import views.attacks.AttackConeView;
 import views.attacks.SinusoidalAttackView;
 import views.informationViews.AudioRender;
 import views.informationViews.InstrumentsChoice;
 
-public class Player {
+public class PlayerNewVersion extends Player {
 
 	private ArrayList<Unit> unitList;
 	private Parameter[] parameters;
@@ -37,6 +40,7 @@ public class Player {
 	private int lastAngle1;
 	private int lastAngle2;
 
+
 	int power = 100;
 
 	private GameEngine gameEngine;
@@ -45,26 +49,9 @@ public class Player {
 	/**
 	 * Creation d'un joueur avec deux Unit et deux Parameter
 	 */
-	public Player(GameEngine gameEngine, Base base) {
+	public PlayerNewVersion(GameEngine gameEngine, Base base) {
+		super(gameEngine, base);
 
-		this.gameEngine = gameEngine;
-		this.base = base;
-		unitList = new ArrayList<Unit>();
-		unitList.add(new Unit(this));
-		//unitList.add(new Unit(this));
-		this.parameters = new Parameter[2];
-		parameters[0] = new Parameter(this);
-		parameters[1] = new Parameter(this);
-		parameters[0].setLocation(
-				base.getCenter().getX() - parameters[0].getSize(), base
-						.getCenter().getY());
-		parameters[1].setLocation(
-				base.getCenter().getX() + parameters[1].getSize(), base
-						.getCenter().getY());
-		this.shield = new BandsFilter(11);
-		this.shield.random();
-		audioRender = new AudioRender(gameEngine.getDisplay(),unitList.get(0).getSound(),parameters[0],parameters[1]);
-		gameEngine.getMap().add(audioRender);
 	}
 
 	/**
@@ -98,20 +85,17 @@ public class Player {
 		return (int) parameters[0].getPos().distanceTo(parameters[1].getPos());
 	}
 
-	
-	public void removeUnit(Unit unit){
+	public void removeUnit(Unit unit) {
 		gameEngine.getUnitList().remove(unit);
 		unit.getView().removeChild(unit.getLifeView());
 		gameEngine.getMap().remove(unit.getView());
 		unit.getView().setUnTracked(false);
 		unitList.remove(unit);
-		if (unitList.isEmpty()){		
+		if (unitList.isEmpty()) {
 			gameEngine.removePlayer(this);
 		}
 	}
-	
-	
-	
+
 	public BandsFilter getShield() {
 		return shield;
 	}
@@ -163,11 +147,9 @@ public class Player {
 		return paramsState;
 	}
 
-	
 	/**
 	 * Bloc des methodes oe on choisit l'etat de l'unite
 	 */
-	
 
 	public void setUStateToAngle(Unit unit) {
 		unit.setUStateToAngle();
@@ -200,17 +182,15 @@ public class Player {
 	public UnitState getState(Unit unit) {
 		return unit.getState();
 	}
-	
-	
 
 	/**
 	 * A present on va utiliser les methode du haut pour les differentes phases
 	 * de jeu
 	 */
-	
+
 	public void WaitingTurn() {
 		setPStatesToWaiting();
-		for(Unit unit : unitList){
+		for (Unit unit : unitList) {
 			setUStateToWaiting(unit);
 		}
 	}
@@ -220,7 +200,7 @@ public class Player {
 	 */
 	public void choosingUTurn() {
 		setPStatesToWaiting();
-		for(Unit unit : unitList){
+		for (Unit unit : unitList) {
 			setUStateToSelect(unit);
 		}
 		while (!KeyboardManager.tap) {
@@ -250,12 +230,13 @@ public class Player {
 				unit.rotate(1);
 			if (KeyboardManager.xKey)
 				unit.rotate(-1);
-			try { 
+			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			System.out.println(unit.getPos().getX() + " " + unit.getPos().getY());
+			System.out.println(unit.getPos().getX() + " "
+					+ unit.getPos().getY());
 
 		}
 		KeyboardManager.tap = false;
@@ -308,8 +289,8 @@ public class Player {
 	}
 
 	/**
-	 * Methode qui declenche la creation du son via les Parameter
-	 * Ici les Parameters sont liees au Player
+	 * Methode qui declenche la creation du son via les Parameter Ici les
+	 * Parameters sont liees au Player
 	 */
 	public void soundEditPTurn(Unit unit) {
 		setPStatesToSoundEdit();
@@ -351,11 +332,10 @@ public class Player {
 			}
 			if (KeyboardManager.aKey) {
 				unit.getSound().playToSpeakers();
-				/*try {
-					Thread.sleep(3000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}*/
+				/*
+				 * try { Thread.sleep(3000); } catch (InterruptedException e) {
+				 * e.printStackTrace(); }
+				 */
 			}
 			if (!(KeyboardManager.zKey || KeyboardManager.sKey
 					|| KeyboardManager.qKey || KeyboardManager.dKey
@@ -382,10 +362,11 @@ public class Player {
 		KeyboardManager.tap = false;
 	}
 
-	
 	/**
 	 * Methode qui declenche le choix de l'ouverture d'attaque de Unit
 	 */
+
+
 	public void UDirection(Unit unit) {
 		setPStatesToWaiting();
 		setUStateToDirection(unit);
@@ -475,7 +456,7 @@ public class Player {
 
 	public void act() {
 		isTurn = true;
-		for(Unit unit: unitList){
+		for (Unit unit : unitList) {
 			audioRender.setSound(unit.getSound());
 			movingUTurn(unit);
 			chooseWeaponTurn(unit);
@@ -510,6 +491,24 @@ public class Player {
 
 	public int getnParams() {
 		return nParams;
+	}
+
+	public boolean isInMap(Point newPos) {
+		if (newPos.getX() < 0)
+			return false;
+		if (newPos.getX() > gameEngine.getWidth())
+			return false;
+		if (newPos.getY() < 0)
+			return false;
+		if (newPos.getY() > gameEngine.getHeight())
+			return false;
+		return true;
+	}
+
+	public boolean isInBase(Point newPos) {
+		if (newPos.distanceTo(base.getCenter()) < base.radius)
+			return true;
+		return false;
 	}
 
 }
