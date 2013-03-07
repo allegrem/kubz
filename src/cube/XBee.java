@@ -17,7 +17,7 @@ public class XBee extends Thread implements Runnable{
     private String dataReceive = null;
     private Scanner sc = new Scanner(System.in);
 
-    int [] buf =  new int[209];
+    int [] buf =  new int[109];
 
     /* Socket part, adapted from http://systembash.com/content/a-simple-java-tcp-server-and-tcp-client/ */
     /* Open a new socket on localhost:4161 */
@@ -54,7 +54,7 @@ public class XBee extends Thread implements Runnable{
     public void run () {
        	while(true){
             readFrame();
-        	parseRXFrame();
+       		parseRXFrame();
 
        	}
 
@@ -72,7 +72,7 @@ public int readByte() {
 	while(n==0) {
 		try {
 			n = inStream.read(b, 0, 1);
-		} catch (IOException e){
+			} catch (IOException e){
 			e.printStackTrace();
 		}
 	}
@@ -81,25 +81,15 @@ public int readByte() {
 
 /* Read the complete next frame */
 public void readFrame (){
-	// Initialize the Array where the Frame will be
-	for(int i=0; i<209; i++)
-		buf[i] = 0;
-	
 	// Read char by char until next frame (0x7E)
 	// There is 209 char maximum.
 	int n = 0;
-	while(n < 209) {
+	while(n < 109) {
 		int b;
 		b = readByte();
 		if(b==0x7e) 
 			// New frame detected, use the previous
 			return;
-		
-		// Unescape escaped chars
-		if(b==0x7d) {
-			b = readByte();
-			b = b ^ 0x20;
-		}
 		
 		// Until that, we complete the buffer
 		buf[n] = b;
@@ -109,13 +99,18 @@ public void readFrame (){
 
 /* Parse the frame in order to decode the data */
 public void parseRXFrame (){
-	// XXX : TODO : Calculate Checksum
+	// XXX : TODO : Calculate Checksum + vérif ID + vérif longueur
 	int addr = buf[3]*256 + buf[4];
-
+	System.out.println("addr = " + addr);
+	
 	try {
-	char [] c = {(char)buf[7],(char)buf[8],(char)buf[9],(char)buf[10],(char)buf[11],(char)buf[12],(char)buf[13],(char)buf[14]};
-	String s = new String(c);
-	int angle = (int)Long.parseLong(s, 16);
+	//char [] c = {(char)buf[7],(char)buf[8],(char)buf[9],(char)buf[10],(char)buf[11],(char)buf[12],(char)buf[13],(char)buf[14]};
+	//String s = new String(c);
+	//int angle = (int)Long.parseLong(s, 16);
+	
+	int angle = buf[7];
+		
+	System.out.println("angle = " + angle);
 	
 	// Put the angle in the cube which has the good address.
 	manager.getCube(addr).setAngle(angle);	
@@ -125,42 +120,32 @@ public void parseRXFrame (){
 }
 
 /* Send the frame which will diffuse the message given */
-public void sendRXFrame (String message){
-	byte[] msg =  new byte[200];
-    byte[] dataSend = new byte[208];
-	byte sum = 0x00;
-	String st = "";
+public void sendTXFrame (byte[] message, int addr){
+    byte[] dataSend = new byte[message.length + 9];
+	byte sum = 0;
+	int frameLength = 5 + message.length;
 	
 	try{
-		msg = message.getBytes();
-
+		
 	    // send the begin of the frame (0x7E)
-		dataSend[0] = 0x7E;
-		dataSend[1] = 0x00;
-		dataSend[2] = (byte)(11 + message.length()); // Frame length
-		dataSend[3] = 0x00;
-		dataSend[4] = 0x01; // API identifier
-		dataSend[5] = 0x52; // Frame ID
-		dataSend[6] = 0x00; // 5-12 -> Broadcast mode
-		dataSend[7] = 0x00;
-		dataSend[8] = 0x00;
-		dataSend[9] = 0x00;
-		dataSend[10] = 0x00;
-		dataSend[11] = 0x00;
-		dataSend[12] = (byte)(-1);
-		dataSend[13] = (byte)(-1);
-		dataSend[14] = 0x04; // Send packet with Broadcast Pan ID
+		dataSend[0] = 0x7E; //0x7E
+		dataSend[1] = (byte)(frameLength/256);
+		dataSend[2] = (byte)(frameLength); // Frame length
+		dataSend[3] = 0x01;
+		dataSend[4] = 'M'; // Frame ID
+		dataSend[5] = (byte)0xFF; // 0xFF
+		dataSend[6] = (byte)0xFF; // 0xFF
+		dataSend[7] = 0x01;
 		
-		for (int i=0; i<msg.length; i++){
-			dataSend[i+15] = msg[i]; // Put the data in the packet
-			sum = (byte) ((sum + msg[i]) & 0xFF);
-		}
+		for (int i=0; i<message.length; i++)
+			dataSend[i+8] = message[i]; // Put the data in the packet
 		
-		sum = (byte) (((sum + dataSend[3] + dataSend[4] + dataSend[5] + dataSend[6] + dataSend[7] + dataSend[8] + dataSend[9] + dataSend[10] + dataSend[11] + dataSend[12] + dataSend[13] + dataSend[14])+0) & 0xFF);
+		for (int i = 3; i < (8 + message.length); i++)
+			sum += dataSend[i];
 		
-		dataSend[15 + msg.length]= (byte) (0xFF - (sum)); // checksum				
+		dataSend[9 + message.length]= (byte)(-1 - sum); // checksum				
 		
-	    outToServer.writeBytes(st); // Send the frame
+	    outToServer.write(dataSend); // Send the frame
 	    outToServer.flush();
 	} catch (Exception e){
 	   e.printStackTrace();
