@@ -1,6 +1,7 @@
-package synthesis.midiPlayground;
+package synthesis.midiPlayground.MidiInstruments;
 
-import synthesis.exceptions.RequireAudioBlocksException;
+import synthesis.midiPlayground.MidiCommand;
+import synthesis.midiPlayground.MidiAudioBlocks.MidiAudioBlock;
 
 public class SubMidiInstrument {
 	

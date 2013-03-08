@@ -1,12 +1,11 @@
 package synthesis.midiPlayground.MidiInstruments;
 
+import synthesis.midiPlayground.MidiInstruments.MidiInstrument;
 import synthesis.midiPlayground.NoteBlock;
-import synthesis.midiPlayground.MidiAudioBlocks.MidiADSR;
 import synthesis.midiPlayground.MidiAudioBlocks.MidiAdder;
 import synthesis.midiPlayground.MidiAudioBlocks.MidiAudioBlock;
 import synthesis.midiPlayground.MidiAudioBlocks.MidiConstant;
 import synthesis.midiPlayground.MidiAudioBlocks.MidiGain;
-import synthesis.midiPlayground.MidiAudioBlocks.MidiMultiplier;
 import synthesis.midiPlayground.MidiAudioBlocks.MidiSineWaveOscillator;
 
 //Actually, once we can no more really choose fp, fm and mod separately, this class doesn't seem so useful!

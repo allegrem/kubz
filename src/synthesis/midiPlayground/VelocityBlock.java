@@ -1,5 +1,7 @@
 package synthesis.midiPlayground;
 
+import synthesis.midiPlayground.MidiAudioBlocks.MidiAudioBlock;
+
 public class VelocityBlock implements MidiAudioBlock {
 	
 	private Float velocity = 0f;

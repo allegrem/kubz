@@ -1,5 +1,7 @@
 package synthesis.midiPlayground;
 
+import synthesis.midiPlayground.MidiAudioBlocks.MidiAudioBlock;
+
 public class NoteBlock implements MidiAudioBlock {
 	
 	private Float note = 0f;
