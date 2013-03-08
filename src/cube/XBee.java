@@ -1,11 +1,10 @@
 package cube;
 
-import java.io.*;
-import java.net.*;
-import java.util.Arrays;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.Socket;
 import java.util.Scanner;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.ArrayList;
 
 import cubeManager.CubeManager;
 
@@ -50,12 +49,19 @@ public class XBee extends Thread implements Runnable{
         }
     }
     
-     @Override
+	@Override
     public void run () {
        	while(true){
             readFrame();
        		parseRXFrame();
-
+       		byte[] mess = new byte[6];
+       		mess[0]='L';
+       		mess[1]=127;
+       		mess[2]=0;
+       		mess[3]=0;
+       		mess[4]=0;
+       		mess[5]=1;
+       		sendTXFrame(mess, 45671);
        	}
 
     }
@@ -66,7 +72,7 @@ public void setCubeManager(CubeManager cubeManager) {
 }
 
 /* Read the next byte receive */
-public int readByte() {
+private int readByte() {
 	byte [] b = new byte[1];
 	int n=0;
 	while(n==0) {
@@ -79,73 +85,127 @@ public int readByte() {
 	return (int) b[0] & 0xff;
 }
 
+/* Read the next unescaped byte received */
+private int readByteUnescaped() {
+	int b;
+	b = readByte();
+	if (b==0x7d)
+		b=readByte() ^ 0x20;	
+	return b;
+}
+
 /* Read the complete next frame */
-public void readFrame (){
-	// Read char by char until next frame (0x7E)
-	// There is 209 char maximum.
-	int n = 0;
-	while(n < 109) {
-		int b;
-		b = readByte();
-		if(b==0x7e) 
-			// New frame detected, use the previous
-			return;
+private void readFrame (){
+	while(true){
+	// Read char by char until first 0x7E
+	while(readByte()!=(byte)0x7E)
 		
-		// Until that, we complete the buffer
-		buf[n] = b;
-		n = n+1;
+	buf[0]=(byte)0x7E;	
+	
+	// Get frame size
+	buf[1] = readByteUnescaped();
+	buf[2] = readByteUnescaped();
+	int size =  (int)(buf[1])*256+(int)(buf[2]);
+	
+	// Verify size
+	if(size>105) {
+	  System.out.println("Impossible size " + size);
+	  continue;
+	}
+
+	// Get payload
+	int n = 0;
+	while(n<size) {
+	  // Store incoming chard
+	    buf[3+n] = readByteUnescaped();
+	    n = n+1;
+	}
+
+	// Get checksum
+	buf[3+size] = readByteUnescaped();
+	
+	 // Verify checksum
+	 byte sum=0;
+	 for(int i=0; i<(size+1); i++)
+	    sum += buf[3+i];
+	 if(sum!=(byte)0xff) {
+	    System.out.println("Bad checksum");
+	    continue;
+	  }
+	 else return;
+	}
+}
+
+private void parseRXFrame(){
+	switch(buf[3]) {
+    case 0x89:
+      System.out.println("ACK");
+      break;
+    case 0x80 : 
+      System.out.println("64bits RX frame");
+      break;
+    case 0x81 : 
+      System.out.println("16bits RX frame");
+      parse16BitFrame();
+      break;
+    default:
+      System.out.println("Unknown frame ID" + buf[3]);
+      break;
 	}
 }
 
 /* Parse the frame in order to decode the data */
-public void parseRXFrame (){
-	// XXX : TODO : Calculate Checksum + vérif ID + vérif longueur
-	int addr = buf[3]*256 + buf[4];
-	System.out.println("addr = " + addr);
+private void parse16BitFrame (){
+	int addr = buf[4]*256 + buf[5];
 	
 	try {
-	//char [] c = {(char)buf[7],(char)buf[8],(char)buf[9],(char)buf[10],(char)buf[11],(char)buf[12],(char)buf[13],(char)buf[14]};
-	//String s = new String(c);
-	//int angle = (int)Long.parseLong(s, 16);
-	
-	int angle = buf[7];
-		
-	System.out.println("angle = " + angle);
+	int angle =buf[9]*256+buf[8];
+	if (angle > 32767)
+		angle = angle - 65536;
+	System.out.println(String.format("Angle=%d", angle));
 	
 	// Put the angle in the cube which has the good address.
 	manager.getCube(addr).setAngle(angle);	
+	
 	} catch (Exception e){
 		e.printStackTrace();
 	}
 }
 
 /* Send the frame which will diffuse the message given */
-public void sendTXFrame (byte[] message, int addr){
+public synchronized void sendTXFrame (byte[] message, int addr){
     byte[] dataSend = new byte[message.length + 9];
-	byte sum = 0;
 	int frameLength = 5 + message.length;
 	
 	try{
-		
 	    // send the begin of the frame (0x7E)
 		dataSend[0] = 0x7E; //0x7E
 		dataSend[1] = (byte)(frameLength/256);
 		dataSend[2] = (byte)(frameLength); // Frame length
 		dataSend[3] = 0x01;
-		dataSend[4] = 'M'; // Frame ID
-		dataSend[5] = (byte)0xFF; // 0xFF
-		dataSend[6] = (byte)0xFF; // 0xFF
-		dataSend[7] = 0x01;
+		dataSend[4] = (byte)(65+Math.random()*26); // Frame ID
+		dataSend[5] = (byte)(addr/256); // 0xFF
+		dataSend[6] = (byte)(addr & 0xFF); // 0xFF
+		dataSend[7] = 0x00;
 		
 		for (int i=0; i<message.length; i++)
 			dataSend[i+8] = message[i]; // Put the data in the packet
 		
+		byte sum = 0;
 		for (int i = 3; i < (8 + message.length); i++)
 			sum += dataSend[i];
 		
-		dataSend[9 + message.length]= (byte)(-1 - sum); // checksum				
+		dataSend[8 + message.length]= (byte)(-1 - sum); // checksum				
 		
-	    outToServer.write(dataSend); // Send the frame
+		outToServer.write(0x7e);
+		for (int i=1; i<dataSend.length; i++) {
+			if((dataSend[i]==0x7e) || (dataSend[i]==0x7d) || (dataSend[i]==0x11) || (dataSend[i]==0x13)) {
+			      outToServer.write(0x7d);
+			      outToServer.write(dataSend[i] ^ 0x20);
+			}	
+			else	
+				outToServer.write(dataSend[i]);
+		}
 	    outToServer.flush();
 	} catch (Exception e){
 	   e.printStackTrace();
