@@ -1,27 +1,21 @@
 package synthesis.midiPlayground;
 
-import java.awt.KeyEventDispatcher;
-import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 
-import synthesis.audiooutput.SpeakersOutput;
-import synthesis.exceptions.AudioException;
 import synthesis.midiPlayground.MidiInstruments.SinusInstrument;
 
 public class MidiKeyboard extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private SinusInstrument instr;
-	private SpeakersOutput speakersOutput;
 
 	public MidiKeyboard() {
 		super("Kubz Keyboard");

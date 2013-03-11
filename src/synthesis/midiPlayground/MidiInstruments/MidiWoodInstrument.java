@@ -1,5 +1,6 @@
 package synthesis.midiPlayground.MidiInstruments;
 
+import synthesis.midiPlayground.MidiInstruments.MidiInstrument;
 import synthesis.midiPlayground.MidiAudioBlocks.MidiADSR;
 import synthesis.midiPlayground.MidiAudioBlocks.MidiAdder;
 import synthesis.midiPlayground.MidiAudioBlocks.MidiAudioBlock;

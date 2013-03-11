@@ -2,12 +2,10 @@ package synthesis.midiPlayground.MidiInstruments;
 
 import java.io.IOException;
 
-import synthesis.audiooutput.AudioOutput;
 import synthesis.audiooutput.SpeakersOutput;
 import synthesis.audiooutput.WavFileOutput;
 import synthesis.exceptions.AudioException;
 import synthesis.midiPlayground.MidiCommand;
-import synthesis.midiPlayground.SubMidiInstrument;
 import synthesis.midiPlayground.MidiAudioBlocks.MidiAudioBlock;
 
 /**
