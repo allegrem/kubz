@@ -19,7 +19,7 @@ public class Melody extends Thread {
 	
 	public MidiInstrument instrument;
 	
-	public int tune;
+	public int tune; //move it to instrument !!
 
 	private boolean keepPlaying = false;
 	
