@@ -1,7 +1,7 @@
 package wall;
 
 /**
- * Classe qui permet de repr�senter les murs dans le mod�le
+ * Classe qui permet de representer les murs dans le modele
  * @author Felix
  */
 
