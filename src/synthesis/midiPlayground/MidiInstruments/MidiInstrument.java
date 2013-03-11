@@ -31,7 +31,7 @@ public abstract class MidiInstrument extends Thread {
 
 	private int lastSubInstrumentIndex; // index in the subinstruments list
 
-	private boolean keepPlaying = true; // set it to false to stop the run loop
+	private boolean keepPlaying = false; // set it to false to stop the run loop
 	WavFileOutput wavFileOutput = new WavFileOutput("sound.wav"); //to hear all the modifs during the synthesis
 
 	/**
@@ -140,6 +140,7 @@ public abstract class MidiInstrument extends Thread {
 		return null;
 	}
 
+	//DO NOT CALL RUN DIRECTLY (call startPlaying instead)
 	public void run() {
 		// open speakers output
 		SpeakersOutput speakersOutput = new SpeakersOutput();
@@ -177,6 +178,7 @@ public abstract class MidiInstrument extends Thread {
 
 	public void startPlaying() {
 		keepPlaying = true;
+		start();
 	}
 
 	//for each instr, when it's finished, lets us hear the sound

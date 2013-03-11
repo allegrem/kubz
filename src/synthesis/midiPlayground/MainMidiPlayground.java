@@ -12,7 +12,13 @@ public class MainMidiPlayground {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		MidiKeyboard keyboard = new MidiKeyboard();
+		//The Keyboard 
+		//MidiKeyboard keyboard = new MidiKeyboard();
+		
+		// ==========================
+		
+		Melody melody = new Melody();
+		melody.startPlaying();
 	}
 
 }
