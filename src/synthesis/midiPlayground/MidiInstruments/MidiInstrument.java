@@ -113,6 +113,7 @@ public abstract class MidiInstrument extends Thread {
 
 		byte[] outBytes = new byte[samples];
 		if (notes > 0) {
+			/***/ notes = 1;
 			for (int s = 0; s < samples; s++)
 				// normalize the output level
 				outBytes[s] = (byte) (out[s] / notes);
@@ -208,7 +209,6 @@ public abstract class MidiInstrument extends Thread {
 		} catch (IOException e) {			
 			e.printStackTrace();
 		}
-		
 		
 	}
 }
