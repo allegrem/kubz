@@ -1,4 +1,6 @@
-package synthesis.midiPlayground;
+package synthesis.midiPlayground.MidiAudioBlocks;
+
+import synthesis.midiPlayground.MidiCommand;
 
 public class NoteBlock implements MidiAudioBlock {
 	

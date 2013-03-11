@@ -42,7 +42,7 @@ public abstract class MidiInstrument extends Thread {
 		subInstruments = new SubMidiInstrument[MAX_SIMULTANEOUS_NOTES];
 		lastSubInstrumentIndex = MAX_SIMULTANEOUS_NOTES - 1;
 		for (int i = 0; i < subInstruments.length; i++)
-			subInstruments[i] = new SubMidiInstrument((synthesis.midiPlayground.MidiAudioBlock) buildInstrument());
+			subInstruments[i] = new SubMidiInstrument(buildInstrument());
 	}
 
 	/**

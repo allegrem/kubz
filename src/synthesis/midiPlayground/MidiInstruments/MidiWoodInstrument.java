@@ -1,12 +1,12 @@
 package synthesis.midiPlayground.MidiInstruments;
 
-import synthesis.midiPlayground.NoteBlock;
 import synthesis.midiPlayground.MidiAudioBlocks.MidiADSR;
 import synthesis.midiPlayground.MidiAudioBlocks.MidiAdder;
 import synthesis.midiPlayground.MidiAudioBlocks.MidiAudioBlock;
 import synthesis.midiPlayground.MidiAudioBlocks.MidiConstant;
 import synthesis.midiPlayground.MidiAudioBlocks.MidiGain;
 import synthesis.midiPlayground.MidiAudioBlocks.MidiSineWaveOscillator;
+import synthesis.midiPlayground.MidiAudioBlocks.NoteBlock;
 
 public class MidiWoodInstrument extends MidiInstrument {
 	//default values for vibrato(a=0.5%,fv=7Hz)
