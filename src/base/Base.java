@@ -7,7 +7,7 @@ import views.staticViews.BaseView;
 
 public class Base {
 	private Point center;
-	private Point size;
+	private double size;
 	private int sens;
 	private ReadableColor color;
 	public static final float radius = 80.0f; // on code le rayon des bases "en dur"
@@ -21,26 +21,47 @@ public class Base {
 	 * @param color
 	 * @param gameEngine 
 	 */
-	public Base(Point center, ReadableColor color, int sens, GameEngine gameEngine) {
+	public Base(ReadableColor color, int sens, GameEngine gameEngine) {
 		super();
-		this.center = center;
+		this.center=new Point(0,0);
+		if(sens==BaseView.HAUT){
+			center.setY(0);
+			center.setX(gameEngine.getWidth()/2);
+		}
+		if(sens==BaseView.BAS){
+			center.setY(gameEngine.getHeight());
+			center.setX(gameEngine.getWidth()/2);
+		}
+		if(sens==BaseView.GAUCHE){
+			center.setY(gameEngine.getHeight()/2);
+			center.setX(0);
+		}
+		if(sens==BaseView.DROITE){
+			center.setY(gameEngine.getHeight()/2);
+			center.setX(gameEngine.getWidth());
+		}
+		this.sens = sens;
+		this.color = color;
+		this.gameEngine=gameEngine;
+		view = new BaseView(center, color, sens);
+		this.size=view.getSize();
+		gameEngine.getMap().add(view);
+	}
+	
+	public Base(Point center,ReadableColor color, int sens, GameEngine gameEngine) {
+		super();
+		this.center=center;
 		this.sens = sens;
 		this.color = color;
 		this.gameEngine=gameEngine;
 		view = new BaseView(center, color, sens);
 		gameEngine.getMap().add(view);
 	}
-	public Base( ReadableColor color,GameEngine gameEngine, boolean top, boolean left) {
-		this.gameEngine=gameEngine;
-		center = new Point(0,0);
-		if(top)center.setY(0);
-		else center.setY(gameEngine.getHeight());
-		if(left) center.setX(0);
-		else center.setX(gameEngine.getWidth());
-	}
+	
 	public Point getCenter() {
 		return center;
 	}
+	
 	public void setCenter(Point center) {
 		this.center = center;
 		view.setCenter(center);
@@ -60,7 +81,7 @@ public class Base {
 	public GameEngine getGameEngine(){
 		return gameEngine;
 	}
-	public Point getSize(){
+	public double getSize(){
 		return size;
 	}
 	

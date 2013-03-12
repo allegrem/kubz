@@ -51,7 +51,6 @@ public class Player {
 		this.base = base;
 		unitList = new ArrayList<Unit>();
 		unitList.add(new Unit(this));
-		//unitList.add(new Unit(this));
 		this.parameters = new Parameter[2];
 		parameters[0] = new Parameter(this);
 		parameters[1] = new Parameter(this);

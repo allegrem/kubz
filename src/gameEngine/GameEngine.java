@@ -18,6 +18,7 @@ import traitementVideo.Traitement;
 import utilities.Point;
 import utilities.RandomPerso;
 import views.staticViews.BackgroundView;
+import views.staticViews.BaseView;
 import wall.Wall;
 //import wall.Wall;
 import cube.Cube;
@@ -69,7 +70,8 @@ public class GameEngine extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		bases.add(new Base(ReadableColor.ORANGE, this, true, true));
+		bases.add(new Base(ReadableColor.ORANGE,BaseView.BAS,this));
+	
 		playerList.add(new Player(this, bases.get(0)));
 		playerList.add(new Player(this, bases.get(0)));
 		//playerList.add(new Player(this,bases.get(0)));
