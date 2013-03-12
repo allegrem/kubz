@@ -255,8 +255,6 @@ public class Player {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			System.out.println(unit.getPos().getX() + " " + unit.getPos().getY());
-
 		}
 		KeyboardManager.tap = false;
 	}
