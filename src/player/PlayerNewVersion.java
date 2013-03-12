@@ -292,6 +292,9 @@ public class PlayerNewVersion extends Player {
 	 * Methode qui declenche la creation du son via les Parameter Ici les
 	 * Parameters sont liees au Player
 	 */
+	
+	//=============>>>> a modifier pour tenir compte de bases rondes ?
+	
 	public void soundEditPTurn(Unit unit) {
 		setPStatesToSoundEdit();
 		setUStateToWaiting(unit);
@@ -299,26 +302,25 @@ public class PlayerNewVersion extends Player {
 		boolean isModified = true;
 		while (!KeyboardManager.tap) {
 			if ((KeyboardManager.zKey)
-					&& (parameters[choice].getY() - size > (base.getCenter()
-							.getY() - (base.getSize().getY() / 2)))) {
+					&& (base.getCenter().distanceTo(new Point(parameters[choice].getX(),parameters[choice].getY()-1))<Base.radius)) {
 				parameters[choice].translate(0, -1);
 				isModified = true;
 			}
 			if ((KeyboardManager.sKey)
 					&& (parameters[choice].getY() + size < (base.getCenter()
-							.getY() + (base.getSize().getY() / 2)))) {
+							.getY() + (base.getCenter().getY() / 2)))) {
 				parameters[choice].translate(0, 1);
 				isModified = true;
 			}
 			if ((KeyboardManager.qKey)
 					&& (parameters[choice].getX() - size > (base.getCenter()
-							.getX() - (base.getSize().getX() / 2)))) {
+							.getX() - (base.getCenter().getX() / 2)))) {
 				parameters[choice].translate(-1, 0);
 				isModified = true;
 			}
 			if ((KeyboardManager.dKey)
 					&& (parameters[choice].getX() + size < (base.getCenter()
-							.getX() + (base.getSize().getX() / 2)))) {
+							.getX() + (base.getCenter().getX() / 2)))) {
 				parameters[choice].translate(1, 0);
 				isModified = true;
 			}
