@@ -14,12 +14,12 @@ public class DelayedMidiCommand {
 	public final Float delay;
 
 	/**
-	 * @param midiCommand
+	 * @param midiCommand2
 	 * @param delay
 	 */
-	public DelayedMidiCommand(MidiCommand midiCommand, Float delay) {
+	public DelayedMidiCommand(MidiCommand midiCommand2, Float delay) {
 		super();
-		this.midiCommand = midiCommand;
+		this.midiCommand = midiCommand2;
 		this.delay = delay;
 	}
 

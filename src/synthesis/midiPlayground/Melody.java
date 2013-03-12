@@ -7,7 +7,7 @@ import synthesis.midiPlayground.MidiInstruments.MidiInstrument;
 import synthesis.midiPlayground.MidiInstruments.MidiWoodInstrument;
 import synthesis.midiPlayground.MidiInstruments.SinusInstrument;
 import synthesis.midiPlayground.MidiPatterns.MidiPattern;
-import synthesis.midiPlayground.MidiPatterns.MidiPattern1;
+import synthesis.midiPlayground.MidiPatterns.MidiPattern2;
 
 /**
  * @author allegrem
@@ -29,7 +29,7 @@ public class Melody extends Thread {
 	public Melody() {
 		//default parameters
 		tempo = 100;
-		pattern = new MidiPattern1(); //TODO
+		pattern = new MidiPattern2(); //TODO
 		setInstrument(new MidiWoodInstrument()); //instrument + parameter (TODO)
 		tune = 60; //C0
 	}

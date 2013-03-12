@@ -10,7 +10,7 @@ public class MainMidiPlayground {
 		//The Keyboard 
 		//MidiKeyboard keyboard = new MidiKeyboard();
 		
-		// ==========================
+		//==========================
 		
 		Melody melody = new Melody();
 		melody.startPlaying();
