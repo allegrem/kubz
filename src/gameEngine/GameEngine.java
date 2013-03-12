@@ -271,7 +271,9 @@ public class GameEngine extends Thread {
 		return result;
 	}
 	
-	
+	public void updatePos(){
+		
+	}
 	
 	public ArrayList<Wall> getWalls(){
 		return walls;

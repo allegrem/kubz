@@ -13,6 +13,7 @@ import cube.Cube;
 import gameEngine.GameEngine;
 import synthesis.Sound;
 import synthesis.fmInstruments.TwoOscFmInstrument;
+import traitementVideo.VideoCube;
 import utilities.Point;
 import views.CubeControlledView;
 import views.informationViews.LifeView;
@@ -37,6 +38,7 @@ public class Unit extends CubeOwner {
 	private LifeView lifeView;
 	private ArrayList<Monster> seenMonsters;
 	private Monster target;
+	private VideoCube videoCube;
 
 	public Unit(Player owner) {
 		life = 15;

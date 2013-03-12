@@ -5,11 +5,11 @@ package player;
  */
 
 import cube.Cube;
-import traitementVideo.VirtualCube;
+import traitementVideo.VideoCube;
 
 public class CubeOwner {
 	protected Cube cube;
-	protected VirtualCube vCube;
+	protected VideoCube vCube;
 
 	public CubeOwner() {
 		// TODO Auto-generated constructor stub
@@ -27,7 +27,7 @@ public class CubeOwner {
 	 * Retourne le cube du traitement de l'image auquel est associe le CubeOwner
 	 * @return
 	 */
-	public VirtualCube getVCube(){
+	public VideoCube getVCube(){
 		return vCube;
 	}
 

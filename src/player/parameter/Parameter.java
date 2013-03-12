@@ -10,7 +10,7 @@ import player.CubeOwner;
 import player.Player;
 import views.CubeControlledView;
 import views.informationViews.MobileBase;
-import traitementVideo.VirtualCube;
+import traitementVideo.VideoCube;
 import utilities.Point;
 
 public class Parameter extends CubeOwner{
@@ -60,7 +60,7 @@ public class Parameter extends CubeOwner{
 	 * Retourne le cube du traitement de l'image auquel est associe Parameter
 	 * @return
 	 */
-	public VirtualCube getVCube(){
+	public VideoCube getVCube(){
 		return vCube;
 	}
 

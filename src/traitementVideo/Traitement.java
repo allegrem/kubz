@@ -207,7 +207,7 @@ public class Traitement {
 	 * 
 	 * @param vc
 	 */
-	public void localSearch(VirtualCube vc) {
+	public void localSearch(VideoCube vc) {
 		int expectedX1 = (int) (vc.getPos1().getX() + vc.getX1Speed());
 		int expectedX2 = (int) (vc.getPos2().getX() + vc.getX2Speed());
 		int expectedX3 = (int) (vc.getPos3().getX() + vc.getX3Speed());
@@ -434,7 +434,7 @@ public class Traitement {
 	 * @param newXPos
 	 * @param newYPos
 	 */
-	private void updatePosSpeed1(VirtualCube vc, double newXPos, double newYPos) {
+	private void updatePosSpeed1(VideoCube vc, double newXPos, double newYPos) {
 		vc.setX1Speed((newXPos - vc.getPos1().getX()) / fps);
 		vc.setY1Speed((newYPos - vc.getPos1().getX()) / fps);
 		vc.getPos1().setX(newXPos);
@@ -449,7 +449,7 @@ public class Traitement {
 	 * @param newXPos
 	 * @param newYPos
 	 */
-	private void updatePosSpeed2(VirtualCube vc, double newXPos, double newYPos) {
+	private void updatePosSpeed2(VideoCube vc, double newXPos, double newYPos) {
 		vc.setX2Speed((newXPos - vc.getPos2().getX()) / fps);
 		vc.setY2Speed((newYPos - vc.getPos2().getX()) / fps);
 		vc.getPos2().setX(newXPos);
@@ -464,7 +464,7 @@ public class Traitement {
 	 * @param newXPos
 	 * @param newYPos
 	 */
-	private void updatePosSpeed3(VirtualCube vc, double newXPos, double newYPos) {
+	private void updatePosSpeed3(VideoCube vc, double newXPos, double newYPos) {
 		vc.setX3Speed((newXPos - vc.getPos3().getX()) / fps);
 		vc.setY3Speed((newYPos - vc.getPos3().getX()) / fps);
 		vc.getPos3().setX(newXPos);
