@@ -6,6 +6,8 @@ package synthesis.midiPlayground;
 import synthesis.midiPlayground.MidiInstruments.MidiInstrument;
 import synthesis.midiPlayground.MidiInstruments.MidiWoodInstrument;
 import synthesis.midiPlayground.MidiInstruments.SinusInstrument;
+import synthesis.midiPlayground.MidiPatterns.MidiPattern;
+import synthesis.midiPlayground.MidiPatterns.MidiPattern1;
 
 /**
  * @author allegrem
@@ -19,7 +21,7 @@ public class Melody extends Thread {
 	
 	public MidiInstrument instrument;
 	
-	public int tune; //move it to instrument !!
+	public int tune; //move it to instrument !! ("note de depart?")
 
 	private boolean keepPlaying = false;
 	
@@ -27,7 +29,7 @@ public class Melody extends Thread {
 	public Melody() {
 		//default parameters
 		tempo = 100;
-		pattern = new MidiPattern(); //TODO
+		pattern = new MidiPattern1(); //TODO
 		setInstrument(new MidiWoodInstrument()); //instrument + parameter (TODO)
 		tune = 60; //C0
 	}
@@ -56,8 +58,9 @@ public class Melody extends Thread {
 	/**
 	 * @param pattern the pattern to set
 	 */
-	public void setPattern() {
+	public void setPattern(MidiPattern pattern) {
 		//TODO
+		this.pattern = pattern;
 	}
 
 	/**
