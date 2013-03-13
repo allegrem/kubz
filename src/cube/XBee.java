@@ -54,14 +54,6 @@ public class XBee extends Thread implements Runnable{
        	while(true){
             readFrame();
        		parseRXFrame();
-       		byte[] mess = new byte[6];
-       		mess[0]='L';
-       		mess[1]=127;
-       		mess[2]=0;
-       		mess[3]=0;
-       		mess[4]=0;
-       		mess[5]=1;
-       		sendTXFrame(mess, 45671);
        	}
 
     }
@@ -136,6 +128,7 @@ private void readFrame (){
 	}
 }
 
+/* Choose the kind of Frame it is and execute the parsing which is adapted */
 private void parseRXFrame(){
 	switch(buf[3]) {
     case 0x89:
@@ -210,10 +203,8 @@ public synchronized void sendTXFrame (byte[] message, int addr){
 	} catch (Exception e){
 	   e.printStackTrace();
 	} 
-	
-
-
 }
+
 
 }
 
