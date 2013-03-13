@@ -15,7 +15,7 @@ import synthesis.midiPlayground.MidiCommand;
 public abstract class MidiPattern {
 //public class MidiPattern {
 
-	protected ArrayList<DelayedMidiCommand> pattern = new ArrayList<DelayedMidiCommand>();
+	protected ArrayList<DelayedMidiCommand> pattern = null;
 	protected int index = 0;
 
 	/**
