@@ -3,12 +3,16 @@
  */
 package synthesis.midiPlayground;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import synthesis.midiPlayground.MidiInstruments.MidiInstrument;
 import synthesis.midiPlayground.MidiInstruments.MidiWoodInstrument;
 import synthesis.midiPlayground.MidiInstruments.SinusInstrument;
 import synthesis.midiPlayground.MidiPatterns.MidiPattern;
 import synthesis.midiPlayground.MidiPatterns.MidiPattern1;
 import synthesis.midiPlayground.MidiPatterns.MidiPattern2;
+import synthesis.midiPlayground.MidiPatterns.MidiPattern3;
 
 /**
  * @author allegrem
@@ -29,10 +33,11 @@ public class Melody extends Thread {
 	
 	public Melody() {
 		//default parameters
-		tempo = 100;
-		pattern = new MidiPattern2(); //TODO
+		tempo = 60;
+		pattern = new MidiPattern3(); 
 		setInstrument(new MidiWoodInstrument()); //instrument + parameter (TODO)
-		tune = 65; //F4
+		//tune = 65; //F4
+		tune = 77; //F5
 	}
 
 	/**
@@ -59,8 +64,7 @@ public class Melody extends Thread {
 	/**
 	 * @param pattern the pattern to set
 	 */
-	public void setPattern(MidiPattern pattern) {
-		//TODO
+	public void setPattern(MidiPattern pattern) {		
 		this.pattern = pattern;
 	}
 
@@ -131,12 +135,14 @@ public class Melody extends Thread {
 			}
 
 			debug_i++;
-			if(debug_i == 11)
-				setInstrument(new SinusInstrument());
-			if(debug_i == 16)
-				setTempo(60);
-			if(debug_i == 24)
+			//if(debug_i == 11)
+				//setInstrument(new SinusInstrument());
+			//if(debug_i == 16)
+				//setTempo(60);
+			if (debug_i == 104)
 				stopPlaying();
+			
+		
 		}
 		
 		System.out.println("stopping run in Melody");
@@ -152,5 +158,7 @@ public class Melody extends Thread {
 		keepPlaying = false;
 		instrument.stopPlaying();
 	}
+
+	
 	
 }

@@ -3,6 +3,14 @@ package synthesis.midiPlayground.MidiPatterns;
 import java.util.ArrayList;
 import synthesis.midiPlayground.*;
 
+
+/**
+ * 
+ * @author valeh
+ *
+ */
+
+//start with a F4
 public class MidiPattern2 extends MidiPattern{
 	
 	public  MidiPattern2(){
@@ -52,11 +60,11 @@ public class MidiPattern2 extends MidiPattern{
 		pattern.add(new DelayedMidiCommand(new MidiCommand(MidiCommand.NOTE_ON, 0, 100), 13f));
 		pattern.add(new DelayedMidiCommand(new MidiCommand(MidiCommand.NOTE_OFF, 0, 100), 13.5f));
 		
-		pattern.add(new DelayedMidiCommand(new MidiCommand(MidiCommand.NOTE_ON, -4, 100), 14f));
-		pattern.add(new DelayedMidiCommand(new MidiCommand(MidiCommand.NOTE_OFF, -4, 100), 14.5f));
+		pattern.add(new DelayedMidiCommand(new MidiCommand(MidiCommand.NOTE_ON, -3, 100), 14f));
+		pattern.add(new DelayedMidiCommand(new MidiCommand(MidiCommand.NOTE_OFF, -3, 100), 14.5f));
 		
-		pattern.add(new DelayedMidiCommand(new MidiCommand(MidiCommand.NOTE_ON, -4, 100), 15f));
-		pattern.add(new DelayedMidiCommand(new MidiCommand(MidiCommand.NOTE_OFF, -4, 100), 15.5f));
+		pattern.add(new DelayedMidiCommand(new MidiCommand(MidiCommand.NOTE_ON, -3, 100), 15f));
+		pattern.add(new DelayedMidiCommand(new MidiCommand(MidiCommand.NOTE_OFF, -3, 100), 15.5f));
 		
 	}
 
