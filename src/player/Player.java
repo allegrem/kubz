@@ -27,6 +27,7 @@ import views.attacks.AttackConeView;
 import views.attacks.SinusoidalAttackView;
 import views.informationViews.AudioRender;
 import views.informationViews.InstrumentsChoice;
+import views.informationViews.Link;
 
 public class Player{
 
@@ -45,6 +46,7 @@ public class Player{
 
 	private GameEngine gameEngine;
 	private AudioRender audioRender;
+	private Link link;
 
 	/**
 	 * Creation d'un joueur avec deux Unit et deux Parameter
@@ -66,6 +68,9 @@ public class Player{
 						.getCenter().getY());
 		this.shield = new BandsFilter(11);
 		this.shield.random();
+		link=new Link(base,parameters[0],parameters[1]);
+		gameEngine.getMap().add(link);
+		
 		
 		/*
 		 * Probleme:ce qui prenait du temps lors de l'affichage du son c'etait le calcul
