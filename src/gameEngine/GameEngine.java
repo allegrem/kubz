@@ -149,7 +149,6 @@ public class GameEngine extends Thread {
 		while (display.isAlive()) {
 			playerTurn();
 			monsterTurn();
-			System.out.println(playerList.size());
 		}
 	}
 
