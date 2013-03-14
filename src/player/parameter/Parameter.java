@@ -34,8 +34,6 @@ public class Parameter extends CubeOwner{
 		view.setInvisible3D(true);
 		size = view.getSize();
 		view.setInvisible3D(true);
-		baseView=new MobileBase(view);
-		view.addChild(baseView);
 		gameEngine.getMap().add(view);
 		
 	}

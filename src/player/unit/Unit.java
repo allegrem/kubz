@@ -179,7 +179,7 @@ public class Unit extends CubeOwner {
 	/**
 	 * Methode qui permet de calculer quels sont les monsttres visibles par Unit
 	 * On considere que la seule raison qu'un Monster ne soit pas visble est
-	 * qu'il y ait un mur qui le sépare de Unit
+	 * qu'il y ait un mur qui le sï¿½pare de Unit
 	 */
 	private void updtaeSeenMonsters() {
 		ArrayList<Monster> monsterList = gameEngine.getMonsterList();
@@ -188,7 +188,7 @@ public class Unit extends CubeOwner {
 		ArrayList<ArrayList<Double>> angleList = new ArrayList<ArrayList<Double>>();
 		double xu = this.getPos().getX();
 		double yu = this.getPos().getY();
-		// ici on construit la liste des intervalle d'angles qui définissent les
+		// ici on construit la liste des intervalle d'angles qui dï¿½finissent les
 		// murs
 		for (Wall wall : walls) {
 			double x1 = wall.getExtremity1().getX();
@@ -207,7 +207,7 @@ public class Unit extends CubeOwner {
 			angleList.add(angles);
 		}
 		// ici on verifie que le Monster ne se situe pas dans un angle de vue
-		// auquel un mur appartient (reste a gérer le cas ou il est devant le
+		// auquel un mur appartient (reste a gï¿½rer le cas ou il est devant le
 		// mur)
 		for (Monster monster : monsterList) {
 			double xm = monster.getPos().getX();
