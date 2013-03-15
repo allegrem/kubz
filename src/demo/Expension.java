@@ -20,7 +20,7 @@ public class Expension implements DisplayableChild{
 	private int color=245;
 	private int color2=235;
 	private int sens=1;
-	private int v=5;
+	private int v=10;
 	private double r=0;
 	private Disk disk=new Disk();
 
@@ -38,6 +38,7 @@ public class Expension implements DisplayableChild{
 	@Override
 	public void paint() {
 		System.out.println(color);
+		if(color>=10 && bColor>=10){
 			if(r+v*sens>radius-10){
 				sens=-1;
 				bColor=color-10;
@@ -51,14 +52,13 @@ public class Expension implements DisplayableChild{
 			}else{
 				r+=v*sens;
 			}
+		}else{
+			color=0;
+			color2=0;
+			bColor=0;
+		}
 			
-			if(color<10){
-				color=10;
-			}
-			
-			if(bColor<10){
-				bColor=10;
-			}
+		
 		paintBackground();
 		
 		glMatrixMode(GL_MODELVIEW);
