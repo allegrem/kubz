@@ -176,13 +176,16 @@ public abstract class MidiInstrument extends Thread {
 	}
 
 	public void startPlaying() {
-		keepPlaying = true;
-		start();
+		if(!keepPlaying) {
+			keepPlaying = true;
+			start();
+		}
 	}
 
 	//for each instr, when it's finished, lets us hear the sound
 	public void stopPlaying() {
-		keepPlaying = false;
+		if(keepPlaying)
+			keepPlaying = false;
 	}
 		
 	/**

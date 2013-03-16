@@ -27,14 +27,21 @@ public class MidiTestFrame extends JFrame {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				System.out.println("key typed: " + e.getKeyChar());
 				switch(e.getKeyChar()) {
 				case ' ':
-					System.out.println("space");
+					System.out.println("(un)pause");
 					if(melody.isPlaying())
-						melody.stopPlaying();
+						melody.pause();
 					else
-						melody.startPlaying();
+						melody.unpause();
+					break;
+				case 'a':
+					melody.setTempo(melody.getTempo()+1);
+					System.out.println("tempo up : "+melody.getTempo());
+					break;
+				case 'q':
+					System.out.println("tempo down : "+melody.getTempo());
+					melody.setTempo(melody.getTempo()-1);
 					break;
 				}
 			}

@@ -19,6 +19,13 @@ public class MidiCommand {
 	 * Fired when a key is released. Param1: note code. Param2: velocity.
 	 */
 	public final static int NOTE_OFF = 128;
+	
+	/**
+	 * Some special messages.
+	 * All sound off : param1=120, param2=0.
+	 */
+	public final static int CHANNEL_MODE_MESSAGE = 176;
+	public final static int CHANNEL_MODE_MESSAGE_ALL_SOUND_OFF = 120;
 
 	private final int command;
 
