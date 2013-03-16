@@ -22,7 +22,7 @@ public class MainFmInstrTest {
 		env0.plugin(new Constant(320f)); //this will be by default
 		//AudioBlock input0 = env0;
 		Float freq0 = 90.0f;
-		SineWaveOscillator swo = new SineWaveOscillator(new Constant(freq0),env0);
+		SineOscillator swo = new SineOscillator(new Constant(freq0),env0);
 		
 		Float freq1 = (float) (freq0);
 		Adder adder = new Adder( new Constant(freq1),swo );
@@ -33,7 +33,7 @@ public class MainFmInstrTest {
 		//FixedSineWaveOscillator osc1 = new FixedSineWaveOscillator(100f, 10*100f); 
 		env1.plugin(new Constant(520f)); //this will be by default
 
-		SineWaveOscillator swoOut = new SineWaveOscillator(adder,env1);
+		SineOscillator swoOut = new SineOscillator(adder,env1);
 		AudioBlock out = swoOut;*/
 		FixedADSR env = new FixedADSR(0.002f,0.998f,0.0f,0.0f,1f);
 		try {

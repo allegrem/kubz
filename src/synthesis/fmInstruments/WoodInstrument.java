@@ -51,7 +51,7 @@ public class WoodInstrument extends FmInstrumentNParams {
 
 		// modulating the amplitude with a vibrato synchronized with the one for
 		// the frequency,the result's odd!
-		// Adder ampVibrato = new Adder(amp, new SineWaveOscillator(vibrFreq,new
+		// Adder ampVibrato = new Adder(amp, new SineOscillator(vibrFreq,new
 		// Multiplier(amp,vibrGainFactor)));
 		ADSR env1 = new ADSR(a, new Constant(0.2f), new Constant(0.8f),
 				new Constant(0.1f), 3f, amp);
