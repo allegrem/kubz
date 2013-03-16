@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import synthesis.AudioBlock;
-import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.parameter.ParamBlock;
 import synthesis.parameter.ParameterAudioBlock;
 
@@ -39,7 +38,7 @@ public abstract class FmInstrumentNParams extends FmInstrument implements AudioB
 	 * @see synthesis.AudioBlock#play(java.lang.Float)
 	 */
 	@Override
-	public final Float play(Float t) throws RequireAudioBlocksException {
+	public final Float play(Float t) {
 		return out.play(t);
 	}
 
@@ -51,7 +50,7 @@ public abstract class FmInstrumentNParams extends FmInstrument implements AudioB
 	 * @see synthesis.AudioBlock#phi(java.lang.Float)
 	 */
 	@Override
-	public final Float phi(Float t) throws RequireAudioBlocksException {
+	public final Float phi(Float t) {
 		return out.phi(t);
 	}
 

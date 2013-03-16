@@ -5,7 +5,6 @@ import java.io.IOException;
 import synthesis.AudioBlock;
 import synthesis.SynthesisUtilities;
 import synthesis.audiooutput.SpeakersOutput;
-import synthesis.audiooutput.WavFileOutput;
 import synthesis.basicblocks.noinputblocks.Constant;
 import synthesis.basicblocks.oneinputblocks.Gain;
 import synthesis.basicblocks.orderedinputsblocks.ADSR;

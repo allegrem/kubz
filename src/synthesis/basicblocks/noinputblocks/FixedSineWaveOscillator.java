@@ -32,7 +32,7 @@ public class FixedSineWaveOscillator implements AudioBlock {
 	 * the frequency.
 	 */
 	@Override
-	public Float play(Float t) throws RequireAudioBlocksException {
+	public Float play(Float t) {
 		return (float) (amplitude * Math.cos(2*Math.PI*frequency*t));
 	}
 

@@ -5,12 +5,9 @@ package synthesis.midiPlayground;
 
 import synthesis.midiPlayground.MidiAudioBlocks.MidiEffectBlock;
 import synthesis.midiPlayground.MidiInstruments.MidiInstrument;
-import synthesis.midiPlayground.MidiInstruments.MidiTwoOscInstrument;
 import synthesis.midiPlayground.MidiInstruments.MidiWoodInstrument;
 import synthesis.midiPlayground.MidiPatterns.MidiPattern;
 import synthesis.midiPlayground.MidiPatterns.MidiPattern1;
-import synthesis.midiPlayground.MidiPatterns.MidiPattern2;
-import synthesis.midiPlayground.MidiPatterns.MidiPattern3;
 
 /**
  * @author allegrem
@@ -34,18 +31,11 @@ public class Melody extends Thread {
 
 	public Melody() {
 		// default parameters
-		tempo = 60;
+		tempo = 80;
 		pattern = new MidiPattern1();
-//		instrument = new MidiWoodInstrument();
+		instrument = new MidiWoodInstrument();
 		tune = 60;
-		
 		parameter = MidiEffectBlock.DEFAULT_VALUE;
-		
-		/** test **/
-		tempo = 40;
-		pattern = new MidiPattern1();
-		instrument = new MidiTwoOscInstrument();
-		setParameter(19);
 		
 		// start playing
 		start();

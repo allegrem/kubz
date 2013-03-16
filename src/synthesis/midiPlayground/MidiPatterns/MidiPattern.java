@@ -6,7 +6,6 @@ package synthesis.midiPlayground.MidiPatterns;
 import java.util.ArrayList;
 
 import synthesis.midiPlayground.DelayedMidiCommand;
-import synthesis.midiPlayground.MidiCommand;
 
 /**
  * @author allegrem

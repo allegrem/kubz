@@ -7,7 +7,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import synthesis.AudioBlock;
-import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.parameter.ParamBlock;
 import synthesis.parameter.ParameterAudioBlock;
 
@@ -54,7 +53,7 @@ public class FmInstruments3Params extends FmInstrument implements
 	 * @see synthesis.AudioBlock#play(java.lang.Float)
 	 */
 	@Override
-	public final Float play(Float t) throws RequireAudioBlocksException {
+	public final Float play(Float t) {
 		return instrument.play(t);
 	}
 
@@ -66,7 +65,7 @@ public class FmInstruments3Params extends FmInstrument implements
 	 * @see synthesis.AudioBlock#phi(java.lang.Float)
 	 */
 	@Override
-	public final Float phi(Float t) throws RequireAudioBlocksException {
+	public final Float phi(Float t) {
 		return instrument.phi(t);
 	}
 

@@ -129,7 +129,7 @@ public class SineWaveOscillator implements AudioBlock {
 	 * @see synthesis.AudioBlock#play(java.lang.Float)
 	 */
 	@Override
-	public Float play(Float t) throws RequireAudioBlocksException {		
+	public Float play(Float t) {		
 		return (float) (amplitude.play(t) * 
 				Math.cos(frequency.phi(t)));
 	}
@@ -148,7 +148,7 @@ public class SineWaveOscillator implements AudioBlock {
 	 * @see synthesis.AudioBlock#phi(java.lang.Float)
 	 */
 	@Override
-	public Float phi(Float t) throws RequireAudioBlocksException {
+	public Float phi(Float t) {
 /*		//looks for the closest smaller time computed
 		Float sum = 0f;
 		Float startTime = phiCache.floorKey(t);

@@ -8,7 +8,6 @@ import synthesis.basicblocks.oneinputblocks.Gain;
 import synthesis.basicblocks.severalinputsblocks.Adder;
 import synthesis.exceptions.AudioException;
 import synthesis.exceptions.RequireAudioBlocksException;
-import synthesis.fmInstruments.PianoInstrument2;
 import synthesis.fmInstruments.WoodInstrument;
 import synthesis.fmInstruments.XylophoneInstrument;
 import synthesis.parameter.ParameterAudioBlock;
