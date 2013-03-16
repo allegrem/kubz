@@ -22,10 +22,17 @@ public class MidiCommand {
 	
 	/**
 	 * Some special messages.
-	 * All sound off : param1=120, param2=0.
+	 * All notes off : param1 = 123 ; param2 = 0.
 	 */
 	public final static int CHANNEL_MODE_MESSAGE = 176;
-	public final static int CHANNEL_MODE_MESSAGE_ALL_SOUND_OFF = 120;
+	public final static int CHANNEL_MODE_MESSAGE_ALL_NOTES_OFF = 123;
+	
+	/**
+	 * Control change messages.
+	 * Effect Control 1 : param1 = 12 ; param2 = effect value.
+	 */
+	public final static int CONTROL_CHANGE = 176;
+	public final static int CONTROL_CHANGE_EFFECT_CONTROL_1 = 12;
 
 	private final int command;
 

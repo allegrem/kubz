@@ -3,6 +3,7 @@
  */
 package synthesis.midiPlayground;
 
+import synthesis.midiPlayground.MidiAudioBlocks.MidiEffectBlock;
 import synthesis.midiPlayground.MidiInstruments.MidiInstrument;
 import synthesis.midiPlayground.MidiInstruments.MidiWoodInstrument;
 import synthesis.midiPlayground.MidiPatterns.MidiPattern;
@@ -20,6 +21,8 @@ public class Melody extends Thread {
 
 	public MidiInstrument instrument;
 
+	public int parameter;
+
 	public int tune; // move it to instrument !! ("note de depart?")
 
 	private boolean keepPlaying = true; // can be true and false only once
@@ -32,8 +35,9 @@ public class Melody extends Thread {
 		pattern = new MidiPattern3();
 		this.instrument = new MidiWoodInstrument(); // instrument + parameter
 													// (TODO)
-		// tune = 65; //F4
 		tune = 77; // F5
+		
+		parameter = MidiEffectBlock.DEFAULT_VALUE;
 
 		// start playing
 		start();
@@ -85,6 +89,7 @@ public class Melody extends Thread {
 		if (keepPlaying)
 			this.instrument.stopPlaying();
 		this.instrument = instrument;
+		setParameter(getParameter()); //resend the parameter
 	}
 
 	/**
@@ -140,7 +145,7 @@ public class Melody extends Thread {
 					if (sleeptime < 0) // if we are back at the beginning of the
 										// pattern
 						sleeptime = (long) (c.getDelayInSeconds(tempo) * 1000);
-//					System.out.println("sleeping for " + sleeptime + " ms");
+					// System.out.println("sleeping for " + sleeptime + " ms");
 					sleep(sleeptime);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -162,13 +167,13 @@ public class Melody extends Thread {
 
 	// pause the melody
 	public void pause() {
-		allSoundOff(); 
+		allSoundOff();
 		pause = true;
 	}
 
 	private void allSoundOff() {
 		instrument.command(new MidiCommand(MidiCommand.CHANNEL_MODE_MESSAGE,
-				MidiCommand.CHANNEL_MODE_MESSAGE_ALL_SOUND_OFF, 0));
+				MidiCommand.CHANNEL_MODE_MESSAGE_ALL_NOTES_OFF, 0));
 	}
 
 	// resume the melody
@@ -179,6 +184,16 @@ public class Melody extends Thread {
 	// true if the melody is not paused
 	public boolean isPlaying() {
 		return !pause;
+	}
+
+	public void setParameter(int parameter) {
+		this.parameter = parameter;
+		instrument.command(new MidiCommand(MidiCommand.CONTROL_CHANGE,
+				MidiCommand.CONTROL_CHANGE_EFFECT_CONTROL_1, parameter));
+	}
+
+	public int getParameter() {
+		return parameter;
 	}
 
 }

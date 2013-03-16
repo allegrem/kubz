@@ -31,7 +31,7 @@ public class SubMidiInstrument {
 		} else if (command.getCommand() == MidiCommand.NOTE_OFF)
 			note = 0;
 		else if (command.getCommand() == MidiCommand.CHANNEL_MODE_MESSAGE
-				&& command.getParam1() == MidiCommand.CHANNEL_MODE_MESSAGE_ALL_SOUND_OFF) {
+				&& command.getParam1() == MidiCommand.CHANNEL_MODE_MESSAGE_ALL_NOTES_OFF) {
 			//all sound off: call again command() with the right note off message
 			command(new MidiCommand(MidiCommand.NOTE_OFF, note, 0));
 		}

@@ -51,7 +51,7 @@ public abstract class MidiInstrument extends Thread {
 	 * @return The output MidiAudioBlock.
 	 */
 	protected abstract MidiAudioBlock buildInstrument();
-
+	
 	/**
 	 * This method handles MIDI commands. {@link MidiCommand#NOTE_ON}: add the
 	 * note to the subinstrument list (remove the oldest note played if the list
@@ -144,7 +144,6 @@ public abstract class MidiInstrument extends Thread {
 	public void run() {
 		// open speakers output
 		SpeakersOutput speakersOutput = new SpeakersOutput();
-		//open WavFile as well (done implicitly)	
 		try {
 			speakersOutput.open();
 		} catch (IOException e1) {
@@ -172,11 +171,8 @@ public abstract class MidiInstrument extends Thread {
 
 		// close speakers output
 		speakersOutput.close();
-		//if I close the wav here we won't hear anything in 'cause each passage in the while re-write 
-		//over the existing sound in the wav (which is on some ms, so we won't hear anythnig)
 	}
 
-	//for each instr, when it's finished, lets us hear the sound
 	public void stopPlaying() {
 		if(keepPlaying)
 			keepPlaying = false;

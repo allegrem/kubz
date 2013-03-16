@@ -69,6 +69,14 @@ public class MidiTestFrame extends JFrame {
 					}
 					System.out.println("instrument up : "+melody.getInstrument().getClass().getName());
 					break;
+				case 'r':
+					melody.setParameter(melody.getParameter()+1);
+					System.out.println("parameter up : "+melody.getParameter());
+					break;
+				case 'f':
+					melody.setParameter(melody.getParameter()-1);
+					System.out.println("parameter up : "+melody.getParameter());
+					break;
 				}
 			}
 
