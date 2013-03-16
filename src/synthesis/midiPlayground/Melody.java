@@ -149,16 +149,23 @@ public class Melody extends Thread {
 	}
 
 	public void startPlaying() {
-		keepPlaying = true;
-		instrument.startPlaying();
-		start();
+		if(!keepPlaying) {
+			keepPlaying = true;
+			instrument.startPlaying();
+			start();
+		}
 	}
 
 	public void stopPlaying() {
-		keepPlaying = false;
-		instrument.stopPlaying();
+		if(keepPlaying) {
+			keepPlaying = false;
+			instrument.stopPlaying();
+		}
 	}
-
 	
+	
+	public boolean isPlaying() {
+		return keepPlaying;
+	}
 	
 }

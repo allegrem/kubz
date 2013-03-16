@@ -1,7 +1,7 @@
 package synthesis.midiPlayground;
 
 
-public class MainMidiPlayground {
+public class MainMidiPlayground extends Thread {
 
 	/**
 	 * @param args
@@ -12,8 +12,17 @@ public class MainMidiPlayground {
 		
 		//==========================
 		
-		Melody melody = new Melody();
-		melody.startPlaying();
+		
+//		Melody melody = new Melody();
+//		melody.startPlaying();
+//		try {
+//			sleep(3000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//		melody.stopPlaying();
+		
+		new MidiTestFrame();
 	}
 
 }
