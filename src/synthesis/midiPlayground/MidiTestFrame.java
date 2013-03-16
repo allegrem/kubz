@@ -43,6 +43,14 @@ public class MidiTestFrame extends JFrame {
 					System.out.println("tempo down : "+melody.getTempo());
 					melody.setTempo(melody.getTempo()-1);
 					break;
+				case 'z':
+					melody.setTune(melody.getTune()+1);
+					System.out.println("tune up : "+melody.getTune());
+					break;
+				case 's':
+					melody.setTune(melody.getTune()-1);
+					System.out.println("tune down : "+melody.getTune());
+					break;
 				}
 			}
 

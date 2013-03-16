@@ -102,6 +102,7 @@ public class Melody extends Thread {
 	 *            the tune to set
 	 */
 	public void setTune(int tune) {
+		allSoundOff();
 		this.tune = tune;
 	}
 
@@ -174,9 +175,13 @@ public class Melody extends Thread {
 
 	// pause the melody
 	public void pause() {
-		instrument.command(new MidiCommand(MidiCommand.CHANNEL_MODE_MESSAGE,
-				MidiCommand.CHANNEL_MODE_MESSAGE_ALL_SOUND_OFF, 0)); 
+		allSoundOff(); 
 		pause = true;
+	}
+
+	private void allSoundOff() {
+		instrument.command(new MidiCommand(MidiCommand.CHANNEL_MODE_MESSAGE,
+				MidiCommand.CHANNEL_MODE_MESSAGE_ALL_SOUND_OFF, 0));
 	}
 
 	// resume the melody
