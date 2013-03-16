@@ -25,5 +25,6 @@ public class NoteBlock implements MidiAudioBlock {
 	
 	private Float noteToFreq(int note) {
 		return (float) ((440f / 32f) * Math.pow(2, ((note - 9f) / 12f)));
+		
 	}
 }
