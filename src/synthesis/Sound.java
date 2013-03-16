@@ -1,4 +1,3 @@
-
 package synthesis;
 
 import java.security.InvalidParameterException;
@@ -10,7 +9,6 @@ import org.apache.commons.math3.transform.DftNormalization;
 import org.apache.commons.math3.transform.FastFourierTransformer;
 import org.apache.commons.math3.transform.TransformType;
 
-import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.filters.BandsFilter;
 import synthesis.fmInstruments.FmInstrument;
 
@@ -75,14 +73,10 @@ public class Sound extends Observable implements Observer {
 	 * {@link Sound#updateSpectrum()} is called.
 	 */
 	private void updateSound() {
-		try {
-			sound = new byte[(int) (length * AudioBlock.SAMPLE_RATE)];
-			for (int i = 0; i < length * AudioBlock.SAMPLE_RATE; i++) {
-				float f = instrument.play((i) / AudioBlock.SAMPLE_RATE);
-				sound[i] = (byte) f;
-			}
-		} catch (RequireAudioBlocksException e) {
-			e.printStackTrace();
+		sound = new byte[(int) (length * AudioBlock.SAMPLE_RATE)];
+		for (int i = 0; i < length * AudioBlock.SAMPLE_RATE; i++) {
+			float f = instrument.play((i) / AudioBlock.SAMPLE_RATE);
+			sound[i] = (byte) f;
 		}
 		updateSpectrum();
 	}
@@ -158,33 +152,39 @@ public class Sound extends Observable implements Observer {
 		instrument2.addObserver(this);
 		updateSound();
 	}
-	
+
 	// methode VV
 	protected void applyFilter3(BandsFilter filter) {
 		// ArrayList<Double> soundFiltered = new ArrayList<Double>();
 		// byte[] soundFiltered = new byte[(int)
 		// (this.length*AudioBlock.SAMPLE_RATE)];
 		float time = 0;
-		
-		int sampleLength = (int) ( AudioBlock.SAMPLE_RATE * (200 / 1000)); // *20ms		
-																		// sampling
-		int bandfreq = (int) (this.length * AudioBlock.SAMPLE_RATE / 2)/filter.getBarNumber(); // length of each band of the filter
-																							  // (11 bands on the whole)
 
-		for (int i = 0; i < (int) ((this.length * AudioBlock.SAMPLE_RATE / 2)/ sampleLength); i++) { // (length*SR/2) / sampleLength (n�of
-										// samples in the first half
-			time += i * (200 / 1000); // the i-th sampling 
+		int sampleLength = (int) (AudioBlock.SAMPLE_RATE * (200 / 1000)); // *20ms
+																			// sampling
+		int bandfreq = (int) (this.length * AudioBlock.SAMPLE_RATE / 2)
+				/ filter.getBarNumber(); // length of each band of the filter
+											// (11 bands on the whole)
+
+		for (int i = 0; i < (int) ((this.length * AudioBlock.SAMPLE_RATE / 2) / sampleLength); i++) { // (length*SR/2)
+																										// /
+																										// sampleLength
+																										// (n�of
+			// samples in the first half
+			time += i * (200 / 1000); // the i-th sampling
 			byte[] soundi = new byte[sampleLength];
 			for (int j = 0; j < sampleLength; j++) {
-				
+
 				soundi[j] = sound[(int) (j + time * AudioBlock.SAMPLE_RATE)];
 			}
-			
+
 			System.out.println("fourier");
 			Complex[] fourierCoeffs = computeFourier(soundi);
 			System.out.println("fin fourier");
-			
-			int bari = (int) (time * AudioBlock.SAMPLE_RATE / bandfreq) ; // which bar choose																				
+
+			int bari = (int) (time * AudioBlock.SAMPLE_RATE / bandfreq); // which
+																			// bar
+																			// choose
 			int coeff = filter.getBar(bari);
 			double[] fourierFiltered = new double[fourierCoeffs.length];
 			for (int h = 0; h < fourierCoeffs.length; h++) {
@@ -213,8 +213,8 @@ public class Sound extends Observable implements Observer {
 			int barNumber = i / barLength;
 			double barValue = (double) filter.getBar(barNumber) / 100.;
 			spectrum[i] = spectrum[i].multiply(barValue);
-			spectrum[spectrum.length - i - 1] = spectrum[spectrum.length
-					- i - 1].multiply(barValue);
+			spectrum[spectrum.length - i - 1] = spectrum[spectrum.length - i
+					- 1].multiply(barValue);
 		}
 
 		// inverse transform
