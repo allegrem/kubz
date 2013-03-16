@@ -25,7 +25,5 @@ public class MidiBellInstrument extends MidiInstrument {
 		return new MidiSineWaveOscillator(adder,amp);
 
 	}
-	
-	
 
 }

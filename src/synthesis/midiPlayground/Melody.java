@@ -36,7 +36,6 @@ public class Melody extends Thread {
 		tune = 77; // F5
 
 		// start playing
-		instrument.startPlaying();
 		start();
 	}
 
@@ -86,8 +85,6 @@ public class Melody extends Thread {
 		if (keepPlaying)
 			this.instrument.stopPlaying();
 		this.instrument = instrument;
-		if (keepPlaying)
-			this.instrument.startPlaying();
 	}
 
 	/**
@@ -111,7 +108,6 @@ public class Melody extends Thread {
 
 		DelayedMidiCommand c = pattern.getNext();
 		DelayedMidiCommand last_c;
-		int debug_i = 0;
 
 		// initial sleep
 		try {
@@ -144,20 +140,11 @@ public class Melody extends Thread {
 					if (sleeptime < 0) // if we are back at the beginning of the
 										// pattern
 						sleeptime = (long) (c.getDelayInSeconds(tempo) * 1000);
-					System.out.println("sleeping for " + sleeptime + " ms");
+//					System.out.println("sleeping for " + sleeptime + " ms");
 					sleep(sleeptime);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-
-				debug_i++;
-				// if(debug_i == 11)
-				// setInstrument(new SinusInstrument());
-				// if(debug_i == 16)
-				// setTempo(60);
-				if (debug_i == 104)
-					stopPlaying();
-
 			}
 		}
 

@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 
+import synthesis.midiPlayground.MidiInstruments.MidiInstrumentsLibrary;
+
 public class MidiTestFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -50,6 +52,22 @@ public class MidiTestFrame extends JFrame {
 				case 's':
 					melody.setTune(melody.getTune()-1);
 					System.out.println("tune down : "+melody.getTune());
+					break;
+				case 'e':
+					try {
+						melody.setInstrument(MidiInstrumentsLibrary.getNextInstrument(melody.getInstrument()));
+					} catch (InstantiationException | IllegalAccessException e1) {
+						e1.printStackTrace();
+					}
+					System.out.println("instrument up : "+melody.getInstrument().getClass().getName());
+					break;
+				case 'd':
+					try {
+						melody.setInstrument(MidiInstrumentsLibrary.getPreviousInstrument(melody.getInstrument()));
+					} catch (InstantiationException | IllegalAccessException e1) {
+						e1.printStackTrace();
+					}
+					System.out.println("instrument up : "+melody.getInstrument().getClass().getName());
 					break;
 				}
 			}

@@ -21,7 +21,6 @@ public class SinusInstrument extends MidiInstrument {
 
 	
 	protected MidiAudioBlock buildInstrument() {
-		
 			NoteBlock fm = new NoteBlock();
 			amp = new MidiADSR(new MidiConstant(0.3f), new MidiConstant(0.3f), new MidiConstant(0.5f), new MidiConstant(1f));
 			return new MidiSineWaveOscillator((MidiAudioBlock) fm, amp);

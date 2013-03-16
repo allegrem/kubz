@@ -29,7 +29,7 @@ public abstract class MidiInstrument extends Thread {
 
 	private int lastSubInstrumentIndex; // index in the subinstruments list
 
-	private boolean keepPlaying = false; // set it to false to stop the run loop
+	private boolean keepPlaying = true; // set it to false to stop the run loop
 	WavFileOutput wavFileOutput = new WavFileOutput("sound.wav"); //to hear all the modifs during the synthesis
 
 	/**
@@ -41,6 +41,7 @@ public abstract class MidiInstrument extends Thread {
 		lastSubInstrumentIndex = MAX_SIMULTANEOUS_NOTES - 1;
 		for (int i = 0; i < subInstruments.length; i++)
 			subInstruments[i] = new SubMidiInstrument(buildInstrument());
+		start(); //start playing
 	}
 
 	/**
@@ -175,13 +176,6 @@ public abstract class MidiInstrument extends Thread {
 		//over the existing sound in the wav (which is on some ms, so we won't hear anythnig)
 	}
 
-	public void startPlaying() {
-		if(!keepPlaying) {
-			keepPlaying = true;
-			start();
-		}
-	}
-
 	//for each instr, when it's finished, lets us hear the sound
 	public void stopPlaying() {
 		if(keepPlaying)
@@ -212,4 +206,5 @@ public abstract class MidiInstrument extends Thread {
 		}
 		
 	}
+
 }
