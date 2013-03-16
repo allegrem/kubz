@@ -13,7 +13,7 @@ public class Disco {
 	private Map map;
 	private int nombre=5;
 	private ArrayList<Tuile> tuiles=new ArrayList<Tuile>();
-	private long pause=500;
+	private long pause=100;
 	private long startingTime=0;
 	private GLDisplay display;
 
@@ -31,7 +31,7 @@ public class Disco {
 	private void moveTuiles() {
 		if(System.currentTimeMillis()-startingTime>pause){
 			startingTime=System.currentTimeMillis();
-			tuiles.get(RandomPerso.entier(tuiles.size())).rotate(5);
+			tuiles.get(RandomPerso.entier(tuiles.size())).rotate(2);
 		}
 		
 	}
