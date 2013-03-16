@@ -36,6 +36,7 @@ public class SubMidiInstrument {
 			command(new MidiCommand(MidiCommand.NOTE_OFF, note, 0));
 		}
 		out.command(command);
+		System.out.println(command);
 	}
 
 	public byte playNextSample(int sampleRate) {

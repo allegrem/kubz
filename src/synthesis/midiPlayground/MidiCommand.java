@@ -80,5 +80,11 @@ public class MidiCommand {
 	public int getParam2() {
 		return param2;
 	}
+	
+
+	public String toString() {
+		return "command: " + getCommand() + " "
+				+ getParam1() + " " + getParam2();
+	}
 
 }

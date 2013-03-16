@@ -5,8 +5,11 @@ package synthesis.midiPlayground;
 
 import synthesis.midiPlayground.MidiAudioBlocks.MidiEffectBlock;
 import synthesis.midiPlayground.MidiInstruments.MidiInstrument;
+import synthesis.midiPlayground.MidiInstruments.MidiTwoOscInstrument;
 import synthesis.midiPlayground.MidiInstruments.MidiWoodInstrument;
 import synthesis.midiPlayground.MidiPatterns.MidiPattern;
+import synthesis.midiPlayground.MidiPatterns.MidiPattern1;
+import synthesis.midiPlayground.MidiPatterns.MidiPattern2;
 import synthesis.midiPlayground.MidiPatterns.MidiPattern3;
 
 /**
@@ -32,13 +35,18 @@ public class Melody extends Thread {
 	public Melody() {
 		// default parameters
 		tempo = 60;
-		pattern = new MidiPattern3();
-		this.instrument = new MidiWoodInstrument(); // instrument + parameter
-													// (TODO)
-		tune = 77; // F5
+		pattern = new MidiPattern1();
+//		instrument = new MidiWoodInstrument();
+		tune = 60;
 		
 		parameter = MidiEffectBlock.DEFAULT_VALUE;
-
+		
+		/** test **/
+		tempo = 40;
+		pattern = new MidiPattern1();
+		instrument = new MidiTwoOscInstrument();
+		setParameter(19);
+		
 		// start playing
 		start();
 	}
@@ -71,6 +79,8 @@ public class Melody extends Thread {
 	 */
 	public void setPattern(MidiPattern pattern) {
 		this.pattern = pattern;
+		allSoundOff();
+		interrupt(); //force reloading the next command
 	}
 
 	/**
@@ -145,10 +155,10 @@ public class Melody extends Thread {
 					if (sleeptime < 0) // if we are back at the beginning of the
 										// pattern
 						sleeptime = (long) (c.getDelayInSeconds(tempo) * 1000);
-					// System.out.println("sleeping for " + sleeptime + " ms");
 					sleep(sleeptime);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					//if the sleep is interrupted, reload the next command
+					c = pattern.getNext();
 				}
 			}
 		}

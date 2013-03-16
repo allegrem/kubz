@@ -29,9 +29,6 @@ public abstract class MidiPattern {
 	
 	
 	
-	//protected abstract void buildPattern();
-	
-	//pattern test
 	protected abstract void buildPattern();
 	
 	

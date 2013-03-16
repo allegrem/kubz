@@ -31,7 +31,8 @@ public class DelayedMidiCommand {
 		if (midiCommand.getCommand() == MidiCommand.NOTE_ON
 				|| midiCommand.getCommand() == MidiCommand.NOTE_OFF)
 			param1 += tune;
-		return new MidiCommand(midiCommand.getCommand(), param1, midiCommand.getParam2());
+		return new MidiCommand(midiCommand.getCommand(), param1,
+				midiCommand.getParam2());
 	}
 
 	/**
@@ -44,4 +45,5 @@ public class DelayedMidiCommand {
 	public Float getDelayInSeconds(int tempo) {
 		return delay * 60f / (float) tempo;
 	}
+
 }
