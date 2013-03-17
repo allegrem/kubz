@@ -1,7 +1,6 @@
 package synthesis.basicblocks.noinputblocks;
 
 import synthesis.AudioBlock;
-import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
  * This class handles a square wave oscillator which works at a fixed frequency

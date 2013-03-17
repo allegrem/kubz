@@ -5,7 +5,6 @@ package synthesis.basicblocks.orderedinputsblocks;
 
 import synthesis.AudioBlock;
 import synthesis.basicblocks.oneinputblocks.FixedADSR;
-import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.exceptions.TooManyInputsException;
 
 /**
@@ -70,7 +69,7 @@ public class ADSR implements AudioBlock {
 	 * @see synthesis.AudioBlock#play(java.lang.Float)
 	 */
 	@Override
-	public Float play(Float t) throws RequireAudioBlocksException {
+	public Float play(Float t) {
 		FixedADSR env = new FixedADSR(a.play(t), d.play(t), s.play(t),
 				r.play(t), duration);
 		try {

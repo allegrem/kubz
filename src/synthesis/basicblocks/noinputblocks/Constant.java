@@ -1,7 +1,6 @@
 package synthesis.basicblocks.noinputblocks;
 
 import synthesis.AudioBlock;
-import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
  * This class handles an AudioBlock which return a constant value.

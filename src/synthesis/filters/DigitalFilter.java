@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 import synthesis.basicblocks.oneinputblocks.OneInputBlock;
-import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
  * @author allegrem
@@ -35,7 +34,7 @@ public class DigitalFilter extends OneInputBlock {
 	 * @see synthesis.AudioBlock#play(java.lang.Float)
 	 */
 	@Override
-	public Float compute(Float t) throws RequireAudioBlocksException {
+	public Float compute(Float t) {
 		//does not compute time before 0
 		if (t < 0)
 			return 0f;
@@ -68,7 +67,7 @@ public class DigitalFilter extends OneInputBlock {
 	 * @see synthesis.AudioBlock#phi(java.lang.Float)
 	 */
 	@Override
-	public Float computePhi(Float t) throws RequireAudioBlocksException {
+	public Float computePhi(Float t) {
 		// TODO Auto-generated method stub
 		System.out.println("ERROR! Not yet implemented");
 		return null;

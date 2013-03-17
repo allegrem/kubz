@@ -3,7 +3,6 @@ package synthesis.basicblocks.severalinputsblocks;
 import java.util.ArrayList;
 
 import synthesis.AudioBlock;
-import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
  * This abstract class handles the plugin and plugout methods
@@ -52,30 +51,5 @@ public abstract class SeveralInputBlock implements AudioBlock {
 	public void plugin(AudioBlock a) {
 		entries.add(a);	
 	}
-	
-	/**
-	 * Returns s(t) (the output signal at t). Raises RequireAudioBlockException 
-	 * error if the list is empty. 
-	 * @param t the specified instant
-	 */
-	@Override
-	public Float play(Float t) throws RequireAudioBlocksException{
-		if (entries == null) 
-			throw new RequireAudioBlocksException(this);
-		return null;
-	}
-	
-	/**
-	 * Calculates the phi of the output signal.
-	 * @param t the specified instant
-	 * @see AudioBlock#phi(Float)
-	 */
-	@Override
-	public Float phi(Float t) throws RequireAudioBlocksException{
-		if (entries==null)
-			throw new RequireAudioBlocksException(this);
-		return null;
-	}
-	
 
 }
