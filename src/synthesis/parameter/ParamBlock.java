@@ -121,7 +121,7 @@ public class ParamBlock extends Observable implements ParameterAudioBlock {
 		setValue(getValue() + incr);
 	}
 	
-	
+	//choose a value between min and max 
 	public void random() {
 		setValue((int) (getMin() + Math.random() * (double) (getMax() - getMin())));
 	}

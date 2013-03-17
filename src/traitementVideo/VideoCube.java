@@ -5,39 +5,40 @@ import java.util.ArrayList;
 import cube.*;
 import utilities.Point;
 
-public class VirtualCube {
+public class VideoCube {
 	
 	private Point pos1;
 	private Point pos2;
-	private Point pos3;
 	private double x1Speed;
-	private double x2Speed;
-	private double x3Speed;
+	private double x2Speed;;
 	private double y1Speed;
 	private double y2Speed;
-	private double y3Speed;
 	private final Cube owner;
 	private ArrayList<Point> pos;
+	private Point meanPos;
+	private double x1;
+	private double x2;
+	private double y1;
+	private double y2;
 	
 	
 	
 	
-	
-	public VirtualCube(Point pos1, Point pos2, Point pos3, Cube owner) {
+	public VideoCube(Point pos1, Point pos2, /*Point pos3,*/Cube owner) {
 		super();
 		this.pos1 = pos1;
 		this.pos2 = pos2;
-		this.pos3 = pos3;
+		x2 = pos2.getX();
+		y2 = pos2.getY();
+		x1 = pos1.getX();
+		y1 = pos1.getY();
 		this.owner = owner;
 		x1Speed = 0;
 		x2Speed = 0;
-		x3Speed = 0;
 		y1Speed = 0;
 		y2Speed = 0;
-		y3Speed = 0;
 		pos.add(this.pos1);
-		pos.add(this.pos2);
-		pos.add(this.pos3);		
+		pos.add(this.pos2);		
 	}
 	
 	public Point getPos1() {
@@ -45,18 +46,16 @@ public class VirtualCube {
 	}
 	public void setPos1(Point pos1) {
 		this.pos1 = pos1;
+		x1 = pos1.getX();
+		y1 = pos1.getY();
 	}
 	public Point getPos2() {
 		return pos2;
 	}
 	public void setPos2(Point pos2) {
 		this.pos2 = pos2;
-	}
-	public Point getPos3() {
-		return pos3;
-	}
-	public void setPos3(Point pos3) {
-		this.pos3 = pos3;
+		x2 = pos2.getX();
+		y2 = pos2.getY();
 	}
 	public double getX1Speed() {
 		return x1Speed;
@@ -70,12 +69,6 @@ public class VirtualCube {
 	public void setX2Speed(double x2Speed) {
 		this.x2Speed = x2Speed;
 	}
-	public double getX3Speed() {
-		return x3Speed;
-	}
-	public void setX3Speed(double x3Speed) {
-		this.x3Speed = x3Speed;
-	}
 	public double getY1Speed() {
 		return y1Speed;
 	}
@@ -88,19 +81,19 @@ public class VirtualCube {
 	public void setY2Speed(double y2Speed) {
 		this.y2Speed = y2Speed;
 	}
-	public double getY3Speed() {
-		return y3Speed;
-	}
-	public void setY3Speed(double y3Speed) {
-		this.y3Speed = y3Speed;
-	}
-
 	public Cube getOwner(){
 		return owner;
-	}
-	
+	}	
 	public ArrayList<Point> getPos(){
 		return pos;
+	}
+	
+	public void updateMeanPos(){
+		meanPos.move((x1+x2)/2, (y1+y2)/2);
+	}
+	
+	public Point getMeanPos(){
+		return meanPos;
 	}
 	
 }

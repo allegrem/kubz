@@ -24,45 +24,6 @@ public class Cube{
         this.xBee = currentXBee;
     }
 
-	/**
-	 * Method to set the RGB color of the LEDS
-	 * @param : The 3 short that control R,G and B color, and the short for the delay.
-	 */
-	public void setRGB(byte R, byte G, byte B, short delay){
-		String message = "L" + R + G + B + delay; 
-		// XXX TODO :xBee.sendRXFrame(message);		  
-	}
-
-    /**
-     * Method to switch on or off the IR LEDS using the pattern given
-     * @param : byte, the 3 last bit determined witch LEDS are switch on.
-     */
-	private void setIR(byte pattern){
-		String message = "I" + pattern;
-		//XXX TODO : xBee.sendRXFrame(message);
-    }
-	
-	/* Switch all the ir leds on */
-	public void setIrOn(){
-        /* Type byte is signed */
-		setIR((byte)(-121));
-	}
-	
-	/* Switch all the ir leds off */
-	public void setIrOff(){
-        /* Type byte is signed */
-		setIR((byte)(-128));
-	}
-
-    /**
-     * Method to switch on the Motor using the pattern given
-     * @param : byte
-     */
-	public void setMotor(byte pattern) {
-         String message = "M" + pattern;
-         // XXX TODO : xBee.sendRXFrame(message);
-	}
-
     /**
      * Method to get the actual cube angle
      * @return angle (float)
@@ -102,6 +63,52 @@ public class Cube{
 	/* Change the id with the one given */
 	public void setID (int i){
 		this.id = i;
+	}
+	
+	/* Switch the RGB leds of the cube with the right colors */
+	public void setRGB (int R, int G, int B, short delay) {
+		byte[] mess = new byte[6];
+		
+		/* if the delay is wrong, maximum time */
+		if (delay < 0)
+			delay = 32767;
+		
+		mess[0]='L';
+		mess[1]=(byte)R;
+		mess[2]=(byte)G;
+		mess[3]=(byte)B;
+		mess[4]=(byte)(delay>>8);
+		mess[5]=(byte)delay;
+			
+		this.xBee.sendTXFrame(mess, this.id);	
+	}
+
+	/* Switch the IR leds with the right pattern */
+	public void setIR (byte pattern) {
+		byte[] mess = new byte[2];
+		
+		mess[0]='I';
+		mess[1]=pattern;
+			
+		this.xBee.sendTXFrame(mess, this.id);	
+	}
+	
+	public void setIrOn(){
+		this.setIR((byte)7);
+	}
+	
+	public void setIrOff(){
+		this.setIR((byte)0);
+	}
+
+	/* Switch the motor with the given intensity */
+	public void setMotor (byte intensity) {
+		byte[] mess = new byte[2];
+		
+		mess[0]='M';
+		mess[1]=intensity;
+			
+		this.xBee.sendTXFrame(mess, this.id);	
 	}
 
 }

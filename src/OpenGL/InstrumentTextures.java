@@ -7,6 +7,12 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
+/**
+ * Classe qui sert a l'origine pour le chargement des textures des differents
+ * instruments.
+ * @author valeh
+ *
+ */
 public class InstrumentTextures {
 	
 	public static Texture[] textureList = new Texture[6];

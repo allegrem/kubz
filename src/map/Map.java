@@ -31,7 +31,6 @@ public class Map {
 	public synchronized void paint() {
 		for(Displayable object: listObjects){
 			object.paint();
-			
 		}
 
 	}

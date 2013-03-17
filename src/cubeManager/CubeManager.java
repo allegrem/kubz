@@ -17,33 +17,57 @@ public class CubeManager {
         this.freeCubesList = new ArrayList<Cube>();
     }
 	
-    /* Take a free Cube and put it on the usedCubesList */
-	public Cube getFreeCube(){
-		Cube cube = freeCubesList.remove(0);
-		usedCubesList.add(cube);
-		return cube;
-	}
-	
-	/* Return the list of the cubes actually used */
-	public ArrayList<Cube> getAllCubes(){
-		return usedCubesList;
-	}
-
-	/* Return the cube which has the address given */
-    public Cube getCube (int adress){
-
-        Cube rep = new Cube(null);
-
-        for (int i = 0; i < this.freeCubesList.size(); i++){
-            if (freeCubesList.get(i).getID() == adress) rep = freeCubesList.get(i);
-        }
-
-        return rep;
-    }
-	
     /* Add a cube to the freeCubesList */
     public void addFreeCube (Cube c){
     	this.freeCubesList.add(c);
     }
+    
+    /* Add a cube to the usedCubesList */
+    public void addUsedCube (Cube c){
+    	this.usedCubesList.add(c);
+    }
+	
+	/* Return the list of the cubes actually used */
+	public ArrayList<Cube> getUsedCubesList(){
+		return usedCubesList;
+	}
+	
+	/* Return the list of the cubes actually free */
+	public ArrayList<Cube> getFreeCubesList(){
+		return freeCubesList;
+	}
+	
+    /* Return the cube which has the address given */
+    public Cube getCube (int address){
+        Cube cube = new Cube(null);
+        
+        for (int i = 0; i < this.freeCubesList.size(); i++){
+            if (freeCubesList.get(i).getID() == address) cube = freeCubesList.get(i);
+        }
 
+        for (int i = 0; i < this.usedCubesList.size(); i++){
+            if (usedCubesList.get(i).getID() == address) cube = usedCubesList.get(i);
+        }
+        return cube;
+    }
+    
+    /* Take a free Cube and put it on the usedCubesList */
+   	public Cube switchFreeCube(){
+   		Cube cube = freeCubesList.remove(0);
+   		usedCubesList.add(cube);
+   		return cube;
+   	}    
+   	
+   	/* Take an used Cube and put it on the freeCubesList */
+   	public Cube switchUsedCube(int addr){
+   		Cube cube = new Cube(null);
+        for (int i = 0; i < this.usedCubesList.size(); i++){
+            if (usedCubesList.get(i).getID() == addr) {
+            	cube = usedCubesList.get(i);
+            	usedCubesList.remove(i);
+            }
+        }
+   		freeCubesList.add(cube);
+   		return cube;
+   	}
 }

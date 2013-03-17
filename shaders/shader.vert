@@ -6,5 +6,4 @@ void main(void)
 
 	color = gl_Color.rgb;
     gl_Position = ftransform();
-
 }

@@ -7,10 +7,10 @@ import views.staticViews.BaseView;
 
 public class Base {
 	private Point center;
-	private Point size;
+	private double size;
 	private int sens;
 	private ReadableColor color;
-	//private static final float radius = 80.0f; // on code le rayon des bases "en dur"
+	public static final float radius = 80.0f; // on code le rayon des bases "en dur"
 	private BaseView view;
 	private GameEngine gameEngine;
 
@@ -21,29 +21,47 @@ public class Base {
 	 * @param color
 	 * @param gameEngine 
 	 */
-	public Base(Point center, ReadableColor color, int sens, GameEngine gameEngine) {
+	public Base(ReadableColor color, int sens, GameEngine gameEngine) {
 		super();
-		this.center = center;
+		this.center=new Point(0,0);
+		if(sens==BaseView.HAUT){
+			center.setY(0);
+			center.setX(gameEngine.getWidth()/2);
+		}
+		if(sens==BaseView.BAS){
+			center.setY(gameEngine.getHeight());
+			center.setX(gameEngine.getWidth()/2);
+		}
+		if(sens==BaseView.GAUCHE){
+			center.setY(gameEngine.getHeight()/2);
+			center.setX(0);
+		}
+		if(sens==BaseView.DROITE){
+			center.setY(gameEngine.getHeight()/2);
+			center.setX(gameEngine.getWidth());
+		}
+		this.sens = sens;
+		this.color = color;
+		this.gameEngine=gameEngine;
+		view = new BaseView(center, color, sens);
+		this.size=view.getSize();
+		gameEngine.getMap().add(view);
+	}
+	
+	public Base(Point center,ReadableColor color, int sens, GameEngine gameEngine) {
+		super();
+		this.center=center;
 		this.sens = sens;
 		this.color = color;
 		this.gameEngine=gameEngine;
 		view = new BaseView(center, color, sens);
 		gameEngine.getMap().add(view);
 	}
-	public Base( ReadableColor color,GameEngine gameEngine) {
-		this.gameEngine=gameEngine;
-		center=null;
-		int centerx=gameEngine.getWidth()/2;
-		int centery=gameEngine.getHeight()-100;
-		this.center=new Point(centerx,centery);
-		int sizex=gameEngine.getWidth();
-		int sizey=200;
-		this.size=new Point(sizex,sizey);
-		view = null;
-	}
+	
 	public Point getCenter() {
 		return center;
 	}
+	
 	public void setCenter(Point center) {
 		this.center = center;
 		view.setCenter(center);
@@ -63,7 +81,7 @@ public class Base {
 	public GameEngine getGameEngine(){
 		return gameEngine;
 	}
-	public Point getSize(){
+	public double getSize(){
 		return size;
 	}
 	

@@ -6,14 +6,19 @@ package player.unit;
  * 
  */
 
+import java.util.ArrayList;
+
+import monster.zoo.Monster;
 import cube.Cube;
 import gameEngine.GameEngine;
 import synthesis.Sound;
 import synthesis.fmInstruments.TwoOscFmInstrument;
+import traitementVideo.VideoCube;
 import utilities.Point;
 import views.CubeControlledView;
 import views.informationViews.LifeView;
 import views.interfaces.DisplayableFather;
+import wall.Wall;
 import player.*;
 
 public class Unit extends CubeOwner {
@@ -31,6 +36,9 @@ public class Unit extends CubeOwner {
 	private GameEngine gameEngine;
 	private int power;
 	private LifeView lifeView;
+	private ArrayList<Monster> seenMonsters;
+	private Monster target;
+	private VideoCube videoCube;
 
 	public Unit(Player owner) {
 		life = 15;
@@ -43,6 +51,8 @@ public class Unit extends CubeOwner {
 		size = view.getSize();
 		gameEngine.getMap().add(view);
 		this.sound = new Sound(TwoOscFmInstrument.getFmInstruments3Params(), 3f);
+		seenMonsters = new ArrayList<Monster>();
+		target = null;
 
 	}
 
@@ -167,6 +177,78 @@ public class Unit extends CubeOwner {
 	}
 
 	/**
+	 * Methode qui permet de calculer quels sont les monsttres visibles par Unit
+	 * On considere que la seule raison qu'un Monster ne soit pas visble est
+	 * qu'il y ait un mur qui le s�pare de Unit
+	 */
+	private void updtaeSeenMonsters() {
+		ArrayList<Monster> monsterList = gameEngine.getMonsterList();
+		seenMonsters = monsterList;
+		ArrayList<Wall> walls = gameEngine.getWalls();
+		ArrayList<ArrayList<Double>> angleList = new ArrayList<ArrayList<Double>>();
+		double xu = this.getPos().getX();
+		double yu = this.getPos().getY();
+		// ici on construit la liste des intervalle d'angles qui d�finissent les
+		// murs
+		for (Wall wall : walls) {
+			double x1 = wall.getExtremity1().getX();
+			double x2 = wall.getExtremity2().getX();
+			double y1 = wall.getExtremity1().getY();
+			double y2 = wall.getExtremity2().getY();
+			double x1diff = x1 - xu;
+			double y1diff = y1 - yu;
+			double extrem1Theta = (180 * Math.atan2(y1diff, x1diff) / Math.PI) - 90;
+			double x2diff = x2 - xu;
+			double y2diff = y2 - yu;
+			double extrem2Theta = (180 * Math.atan2(y2diff, x2diff) / Math.PI) - 90;
+			ArrayList<Double> angles = new ArrayList<Double>();
+			angles.add(new Double(extrem1Theta));
+			angles.add(new Double(extrem2Theta));
+			angleList.add(angles);
+		}
+		// ici on verifie que le Monster ne se situe pas dans un angle de vue
+		// auquel un mur appartient (reste a g�rer le cas ou il est devant le
+		// mur)
+		for (Monster monster : monsterList) {
+			double xm = monster.getPos().getX();
+			double ym = monster.getPos().getY();
+			double xdiff = xm - xu;
+			double ydiff = ym - yu;
+			double monsterTheta = (180 * Math.atan2(ydiff, xdiff) / Math.PI) - 90;
+			for (int i = 0; i < angleList.size(); i++) {
+				ArrayList<Double> angles = angleList.get(i);
+				Wall wall = null;
+				if (((angles.get(1) < monsterTheta)
+						&& (angles.get(2) > monsterTheta) || ((angles.get(1) > monsterTheta) && (angles
+						.get(2) < monsterTheta))))
+					wall = walls.get(i);
+				double xp1 = wall.getExtremity1().getX();
+				double yp1 = wall.getExtremity1().getY();
+				double xp2 = wall.getExtremity2().getX();
+				double yp2 = wall.getExtremity2().getY();
+				// calcul de l'intersection entre la droite qui relie Unit a
+				// Monster et du wall
+				double xi = (yu - yp1 - xu * (ym - yu) / (xm - xu) + xp1
+						* (yp2 - yp1) / (xp2 - xp1))
+						/ ((yp2 - yp1) / (xp2 - xp1) - (ym - yu) / (xm - xu));
+				double yi = yu + (xi - xu) * (ym - yu) / (xm - xu);
+				if (monster.getPos().distanceTo(pos) > pos
+						.distanceTo(new Point(xi, yi))) {
+					seenMonsters.remove(monster);
+				}
+			}
+		}
+	}
+
+	public ArrayList<Monster> getSeenMonsters() {
+		return seenMonsters;
+	}
+
+	public void setSeenMonsters(ArrayList<Monster> seenMonsters) {
+		this.seenMonsters = seenMonsters;
+	}
+
+	/**
 	 * Methode relatives a la direction de l'attaque
 	 * 
 	 * @param theta
@@ -279,7 +361,5 @@ public class Unit extends CubeOwner {
 	public void setLifeView(LifeView lifeView) {
 		this.lifeView = lifeView;
 	}
-	
-	
 
 }

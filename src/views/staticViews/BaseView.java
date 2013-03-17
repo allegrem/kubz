@@ -38,7 +38,7 @@ public class BaseView implements DisplayableFather{
 	private Point size;
 	
 	/**
-	 * Nouvelle base
+	 * Nouvelle base circulaire
 	 * @param center Centre de la base
 	 * @param color Couleur de la abse
 	 * @param sens Emplacement de la base (Haut, Bas, Gauche ou Droite)
@@ -50,11 +50,19 @@ public class BaseView implements DisplayableFather{
 		rectangular=false;
 	}
 	
+	/**
+	 * Base "rectangulaire"
+	 * 
+	 * @param center
+	 * @param size
+	 * @param color
+	 */
 	public BaseView(Point center,Point size,ReadableColor color) {
 		rectangular=true;
 		this.center = center;
 		this.color=color;
 		this.size=size;
+		rectangular=true;
 	}
 
 	@Override

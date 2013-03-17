@@ -1,7 +1,7 @@
 package wall;
 
 /**
- * Classe qui permet de repr�senter les murs dans le mod�le
+ * Classe qui permet de representer les murs dans le modele
  * @author Felix
  */
 
@@ -60,4 +60,22 @@ public class Wall {
 	public GameEngine getGameEngine(){
 		return gameEngine;
 	}
+
+	public Point getExtremity1() {
+		return extremity1;
+	}
+
+	public void setExtremity1(Point extremity1) {
+		this.extremity1 = extremity1;
+	}
+
+	public Point getExtremity2() {
+		return extremity2;
+	}
+
+	public void setExtremity2(Point extremity2) {
+		this.extremity2 = extremity2;
+	}
+	
+	
 }

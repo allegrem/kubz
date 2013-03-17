@@ -8,6 +8,7 @@ import org.lwjgl.util.ReadableColor;
 
 import utilities.Point;
 import views.informationViews.LifeView;
+import views.monsters.CircleMonsterView;
 import views.monsters.SquareMonsterView;
 import gameEngine.GameEngine;
 

@@ -1,5 +1,6 @@
 package gameEngine;
 
+import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 
 import java.util.ArrayList;
@@ -7,17 +8,18 @@ import java.util.ArrayList;
 import base.Base;
 
 import OpenGL.GLDisplay;
+import OpenGL.KeyboardManager;
 import map.Map;
 import map.MapReader;
 import monster.zoo.Monster;
 import player.*;
 import player.unit.Unit;
-import synthesis.Sound;
-import synthesis.fmInstruments.BellInstrument;
 import traitementVideo.Traitement;
 import utilities.Point;
 import utilities.RandomPerso;
 import views.staticViews.BackgroundView;
+import views.staticViews.BaseView;
+import wall.Wall;
 //import wall.Wall;
 import cube.Cube;
 
@@ -28,7 +30,7 @@ public class GameEngine extends Thread {
 	private final int height;
 	public ArrayList<Monster> monsterList;
 	private ArrayList<Player> playerList;
-	// private ArrayList<Wall> walls;
+	private ArrayList<Wall> walls;
 	private ArrayList<Base> bases;
 	// private CubeManager cubeManager;
 	private GLDisplay display;
@@ -62,16 +64,18 @@ public class GameEngine extends Thread {
 			monsterList = reader.readMonsters();
 			// bases=reader.readBases();
 			bases = new ArrayList<Base>();
-			// walls=reader.readWalls();
+		    walls=reader.readWalls();
 			playerList = new ArrayList<Player>();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		bases.add(new Base(ReadableColor.ORANGE, this));
+		bases.add(new Base(ReadableColor.ORANGE,BaseView.HAUT,this));
+	
 		playerList.add(new Player(this, bases.get(0)));
-		// playerList.add(new Player(this,bases.get(0)));
-		// playerList.add(new Player(this));
+		//playerList.add(new Player(this, bases.get(0)));
+		//playerList.add(new Player(this,bases.get(0)));
+		//playerList.add(new Player(this));
 
 	}
 
@@ -112,6 +116,25 @@ public class GameEngine extends Thread {
 		}
 	}
 
+	public void removePlayer(Player player) {
+		playerList.remove(player);
+		if (playerList.isEmpty()) {
+			// quand tous les joueurs sont morts on affiche "game over"
+			display.print(width / 2, height / 2, ReadableColor.RED,
+					" Game Over !");
+			// tant que l'on appuie pas sur la touche q le jeu tourne en boucle
+			while (!KeyboardManager.qKey) {
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) { // automatiquement
+					e.printStackTrace();
+				}
+			}
+			System.exit(0);
+
+		}
+	}
+
 	/**
 	 * Methode qui freeze le jeu, condition de relance sur le mode normal a
 	 * revoir, a lancer quand un cube disparait
@@ -126,7 +149,6 @@ public class GameEngine extends Thread {
 		while (display.isAlive()) {
 			playerTurn();
 			monsterTurn();
-
 		}
 	}
 
@@ -161,12 +183,13 @@ public class GameEngine extends Thread {
 		while (!ok) {
 			internOk = true;
 			/*
-			 * on verifie que les elements lies a chaque Player sont bien a leur place
+			 * on verifie que les elements lies a chaque Player sont bien a leur
+			 * place
 			 */
 			for (Player player : playerList) {
-				boolean unitsOk = true; 
+				boolean unitsOk = true;
 				/*
-				 * on verifie que chacune des Unit de player sont à leur place
+				 * on verifie que chacune des Unit de player sont ï¿½ leur place
 				 */
 				for (Unit unit : player.getUnitList()) {
 					boolean unitOk = checkPos(unit);
@@ -176,7 +199,9 @@ public class GameEngine extends Thread {
 					else
 						unit.getCube().setRGB((byte) 127, (byte) 0, (byte) 0,
 								(short) 500);
-					unitsOk = unitsOk&&unitOk; // si une des unit de player n'est pas a sa place, alors tout se bloque
+					unitsOk = unitsOk && unitOk; // si une des unit de player
+													// n'est pas a sa place,
+													// alors tout se bloque
 				}
 				/*
 				 * on verifie que les Parameter de player sont bien a leur place
@@ -243,5 +268,13 @@ public class GameEngine extends Thread {
 		// la on verifie que le traitement voit bien le cube
 		cubeOwner.getCube().setIrOff();
 		return result;
+	}
+	
+	public void updatePos(){
+		
+	}
+	
+	public ArrayList<Wall> getWalls(){
+		return walls;
 	}
 }
