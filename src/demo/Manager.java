@@ -41,7 +41,6 @@ public class Manager{
 			}
 			width = display.getmapDisplay_width();
 			height = display.getmapDisplay_height();
-			System.out.println("Width: " + width + " Height: " + height);
 			map.setWidth(width);
 			map.setLength(height);
 			display.setLightPlace(0.0f, (float) height / 2, 0.0f);
@@ -50,8 +49,7 @@ public class Manager{
 			//map.add(expension);
 			//expension.start();
 			
-			new Disco(display,map,height);
-			
+			//new Disco(display,map,height);
 			
 	while (display.isAlive()) {
 				try {

@@ -74,7 +74,7 @@ public class GrabberShow implements Runnable {
 			int comptX = 0, comptY = 0;
 			double cupos = 0;
 			for (int i = 0; i < myImage.pixels.length; i++) {
-				if ((myImage.pixels[i] & 0xFF) > 45) {
+				if ((myImage.pixels[i] & 0xFF) > 10) {
 					white = true;
 					posX = comptX;
 					posY = comptY;
