@@ -148,12 +148,40 @@ public class BandsFilter extends Observable {
 		setChanged();
 		notifyObservers();
 	}
-	
+
+	/**
+	 * Replace the value of all the bars with a value between 0 (-inifinity dB)
+	 * and 100 (0dB). The total of all the values must be equal to the given
+	 * parameter. Then observers are notified.
+	 */
+	public void random(int maxPoints) {
+		int points = 0;
+		for (int i = 0; i < bars.length; i++) {
+			int rand = (int) (Math.random() * 100);
+			bars[i] = rand;
+			points += rand;
+		}
+		int diff = points - maxPoints;
+		int i = 0;
+		while(diff != 0) {
+			int delta = diff / (bars.length - i);
+			if (bars[i] - delta > 0 && bars[i] - delta <= 100) {
+				bars[i] -= delta;
+				diff -= delta;
+			}
+			i++;
+			if (i == bars.length)
+				i = 0;
+		}
+		setChanged();
+		notifyObservers();
+	}
+
 	/**
 	 * Return the number of bars of the filter.
 	 */
 	public int getBarNumber() {
 		return bars.length;
 	}
-	
+
 }

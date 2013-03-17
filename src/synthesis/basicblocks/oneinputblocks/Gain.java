@@ -1,7 +1,6 @@
 package synthesis.basicblocks.oneinputblocks;
 
 import synthesis.AudioBlock;
-import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.exceptions.TooManyInputsException;
 
 /**
@@ -45,7 +44,7 @@ public class Gain extends OneInputBlock {
 	 * The sound produced is given by : out(t) = gain * in(t).
 	 */
 	@Override
-	public Float compute(Float t) throws RequireAudioBlocksException {
+	public Float compute(Float t) {
 		return in.play(t) * gain;
 	}
 
@@ -54,7 +53,7 @@ public class Gain extends OneInputBlock {
 	 * @return out(t) = gain * in.phi(t)
 	 */
 	@Override
-	public Float computePhi(Float t) throws RequireAudioBlocksException {
+	public Float computePhi(Float t) {
 		return in.phi(t) * gain;
 	}
 

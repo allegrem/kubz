@@ -3,7 +3,6 @@ package synthesis.basicblocks.severalinputsblocks;
 import java.util.ArrayList;
 
 import synthesis.AudioBlock;
-import synthesis.exceptions.RequireAudioBlocksException;
 
 /** 
 *This class returns the product of its entries.
@@ -45,8 +44,7 @@ public class Multiplier extends SeveralInputBlock {
 	 * @param t the specified instant
 	 */
 	@Override
-	public Float play(Float t) throws RequireAudioBlocksException{
-		super.play(t);
+	public Float play(Float t){
 		float s = 1f;
 		for (AudioBlock a : entries)		
 				s *= a.play(t);
@@ -60,12 +58,9 @@ public class Multiplier extends SeveralInputBlock {
 	 * @see SeveralInputBlock#phi(Float)
 	 */
 	@Override
-	public Float phi(Float t) throws RequireAudioBlocksException {
-		
-		Float phi = super.phi(t);    
+	public Float phi(Float t) {
 		System.out.println("ERROR.Not yet implemented.");
-		return phi;
-		
+		return null;
 	}
 
 

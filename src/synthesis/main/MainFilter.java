@@ -3,7 +3,6 @@ package synthesis.main;
 import java.io.IOException;
 
 import synthesis.Sound;
-import synthesis.audiooutput.AudioOutput;
 import synthesis.audiooutput.SpeakersOutput;
 import synthesis.audiooutput.WavFileOutput;
 import synthesis.exceptions.AudioException;

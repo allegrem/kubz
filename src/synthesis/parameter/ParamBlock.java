@@ -1,7 +1,6 @@
 package synthesis.parameter;
 
 import java.util.Observable;
-import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
  * This class handles a basic parameter block. The value set by the user and the
@@ -45,7 +44,7 @@ public class ParamBlock extends Observable implements ParameterAudioBlock {
 	 * @see synthesis.AudioBlock#play(java.lang.Float)
 	 */
 	@Override
-	public Float play(Float t) throws RequireAudioBlocksException {
+	public Float play(Float t) {
 		return (float) value;
 	}
 
@@ -56,7 +55,7 @@ public class ParamBlock extends Observable implements ParameterAudioBlock {
 	 * @see synthesis.AudioBlock#phi(java.lang.Float)
 	 */
 	@Override
-	public Float phi(Float t) throws RequireAudioBlocksException {
+	public Float phi(Float t) {
 		return (float) (2 * Math.PI * value * t);
 	}
 

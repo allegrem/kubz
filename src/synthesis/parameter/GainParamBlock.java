@@ -3,7 +3,6 @@
  */
 package synthesis.parameter;
 
-import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
  * This class handles a parameter block with a gain. The value can be modified
@@ -43,7 +42,7 @@ public class GainParamBlock extends ParamBlock {
 	 * @see synthesis.AudioBlock#play(java.lang.Float)
 	 */
 	@Override
-	public Float play(Float t) throws RequireAudioBlocksException {
+	public Float play(Float t) {
 		return getValue() * gain;
 	}
 
@@ -54,7 +53,7 @@ public class GainParamBlock extends ParamBlock {
 	 * @see synthesis.AudioBlock#phi(java.lang.Float)
 	 */
 	@Override
-	public Float phi(Float t) throws RequireAudioBlocksException {
+	public Float phi(Float t) {
 		return (float) (2 * Math.PI * getValue() * gain * t);
 	}
 

@@ -1,7 +1,6 @@
 package synthesis.basicblocks.noinputblocks;
 
 import synthesis.AudioBlock;
-import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
  * This class handles a sine wave oscillator which works at a fixed frequency
@@ -32,7 +31,7 @@ public class FixedSineWaveOscillator implements AudioBlock {
 	 * the frequency.
 	 */
 	@Override
-	public Float play(Float t) throws RequireAudioBlocksException {
+	public Float play(Float t) {
 		return (float) (amplitude * Math.cos(2*Math.PI*frequency*t));
 	}
 

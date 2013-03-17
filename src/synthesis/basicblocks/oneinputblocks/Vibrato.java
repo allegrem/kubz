@@ -4,7 +4,6 @@ import synthesis.AudioBlock;
 import synthesis.basicblocks.orderedinputsblocks.SineWaveOscillator;
 import synthesis.basicblocks.noinputblocks.Constant;
 import synthesis.basicblocks.severalinputsblocks.Adder;
-import synthesis.exceptions.RequireAudioBlocksException;
 
 
 /**
@@ -22,14 +21,14 @@ public class Vibrato extends OneInputBlock{
 	}
 
 	@Override
-	protected Float compute(Float t) throws RequireAudioBlocksException {
+	protected Float compute(Float t) {
 		AudioBlock osc = new SineWaveOscillator(new Constant(freq),new Gain(gain,in));
 		Adder out = new Adder(in,osc);
 		return out.play(t);
 	}
 
 	@Override
-	protected Float computePhi(Float t) throws RequireAudioBlocksException {
+	protected Float computePhi(Float t) {
 		AudioBlock osc = new SineWaveOscillator(new Constant(freq),new Gain(gain,in));
 		AudioBlock out = new Adder(in,osc);
 		return out.phi(t);

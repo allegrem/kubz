@@ -1,7 +1,6 @@
 package synthesis.basicblocks.noinputblocks;
 
 import synthesis.AudioBlock;
-import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
  * This class generates a white noise, aka a flat-spectrum signal.
@@ -13,7 +12,7 @@ public class WhiteNoise implements AudioBlock {
 	 * @see synthesis.AudioBlock#play(java.lang.Float)
 	 */
 	@Override
-	public Float play(Float t) throws RequireAudioBlocksException {
+	public Float play(Float t) {
 		return (float) ((Math.random() - 0.5) * 250);
 	}
 
@@ -22,7 +21,7 @@ public class WhiteNoise implements AudioBlock {
 	 * @see synthesis.AudioBlock#phi(java.lang.Float)
 	 */
 	@Override
-	public Float phi(Float t) throws RequireAudioBlocksException {
+	public Float phi(Float t) {
 		return (float) ((Math.random() - 0.5) * 250);
 	}
 
