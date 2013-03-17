@@ -45,8 +45,12 @@ public class Manager{
 			map.setWidth(width);
 			map.setLength(height);
 			display.setLightPlace(0.0f, (float) height / 2, 0.0f);
-			//map.add(new Expension(new Point(width/3,height/3), height));
-			new Disco(display,map,height);
+			
+			Expension expension=new Expension(new Point(width/2,height/2), height);
+			//map.add(expension);
+			//expension.start();
+			
+			//new Disco(display,map,height);
 			
 	while (display.isAlive()) {
 				try {

@@ -17,12 +17,13 @@ public class Expension implements DisplayableChild{
 	private int size;
 	private double radius;
 	private int bColor=255;
-	private int color=245;
+	private int color=0;
 	private int color2=235;
 	private int sens=1;
-	private int v=10;
+	private int v=1;
 	private double r=0;
 	private Disk disk=new Disk();
+	private boolean start=false;
 
 	public Expension(Point center,int size){
 		this.center=center;
@@ -37,8 +38,7 @@ public class Expension implements DisplayableChild{
 
 	@Override
 	public void paint() {
-		System.out.println(color);
-		if(color>=10 && bColor>=10){
+		/*if(color>=10 && bColor>=10){
 			if(r+v*sens>radius-10){
 				sens=-1;
 				bColor=color-10;
@@ -56,10 +56,20 @@ public class Expension implements DisplayableChild{
 			color=0;
 			color2=0;
 			bColor=0;
-		}
-			
+		}*/
 		
 		paintBackground();
+		
+		if(start){
+			if(r+v<=radius){
+				r+=v;
+			}else{
+				r=radius;
+				bColor=0;
+				start=false;
+			}
+		
+		
 		
 		glMatrixMode(GL_MODELVIEW);
 		GL11.glPushMatrix();
@@ -67,10 +77,14 @@ public class Expension implements DisplayableChild{
 		
 		GL11.glColor3ub((byte)255, (byte)color, (byte)color);
 		disk.draw(0, (float)r, 100, 10);
-		GL11.glColor3ub((byte)255, (byte)color2, (byte)color2);
-		disk.draw((float)r, (float)(r+10), 100, 10);
+		//GL11.glColor3ub((byte)255, (byte)color2, (byte)color2);
+		//disk.draw((float)r, (float)(r+10), 100, 10);
 		GL11.glPopMatrix();
+		}
+	}
 	
+	public void start(){
+		start=true;
 	}
 
 	public void paintBackground(){
