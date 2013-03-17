@@ -140,6 +140,7 @@ public void setFather(DisplayableFather father) {
 public boolean isDead() {
 	// TODO Auto-generated method stub
 	return false;
+	
 }
 
 public ReadableColor randomColor(){
