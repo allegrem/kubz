@@ -17,15 +17,21 @@ import midisynthesis.patterns.MidiPattern1;
  */
 public class Melody extends Thread {
 
-	public int tempo;
+	private static final int TEMPO_MIN = 40;
+	private static final int TEMPO_MAX = 160;
 
-	public MidiPattern pattern;
+	private static final int TUNE_MIN = 40;
+	private static final int TUNE_MAX = 100;
 
-	public Instrument instrument;
+	private int tempo;
 
-	public int parameter;
+	private MidiPattern pattern;
 
-	public int tune; // move it to instrument !! ("note de depart?")
+	private Instrument instrument;
+
+	private int parameter;
+
+	private int tune; // move it to instrument !! ("note de depart?")
 
 	private boolean keepPlaying = true; // can be true and false only once
 
@@ -38,7 +44,7 @@ public class Melody extends Thread {
 		instrument = new WoodInstrument();
 		tune = 60;
 		parameter = EffectBlock.DEFAULT_VALUE;
-		
+
 		// start playing
 		start();
 	}
@@ -56,6 +62,11 @@ public class Melody extends Thread {
 	 */
 	public void setTempo(int tempo) {
 		this.tempo = tempo;
+
+		if (this.tempo > TEMPO_MAX)
+			this.tempo = TEMPO_MAX;
+		else if (this.tempo < TEMPO_MIN)
+			this.tempo = TEMPO_MIN;
 	}
 
 	/**
@@ -72,7 +83,7 @@ public class Melody extends Thread {
 	public void setPattern(MidiPattern pattern) {
 		this.pattern = pattern;
 		allSoundOff();
-		interrupt(); //force reloading the next command
+		interrupt(); // force reloading the next command
 	}
 
 	/**
@@ -91,7 +102,7 @@ public class Melody extends Thread {
 		if (keepPlaying)
 			this.instrument.stopPlaying();
 		this.instrument = instrument;
-		setParameter(getParameter()); //resend the parameter
+		setParameter(getParameter()); // resend the parameter
 	}
 
 	/**
@@ -108,6 +119,11 @@ public class Melody extends Thread {
 	public void setTune(int tune) {
 		allSoundOff();
 		this.tune = tune;
+
+		if (this.tune > TUNE_MAX)
+			this.tune = TUNE_MAX;
+		else if (this.tune < TUNE_MIN)
+			this.tune = TUNE_MIN;
 	}
 
 	public void run() {
@@ -149,7 +165,7 @@ public class Melody extends Thread {
 						sleeptime = (long) (c.getDelayInSeconds(tempo) * 1000);
 					sleep(sleeptime);
 				} catch (InterruptedException e) {
-					//if the sleep is interrupted, reload the next command
+					// if the sleep is interrupted, reload the next command
 					c = pattern.getNext();
 				}
 			}
@@ -190,8 +206,14 @@ public class Melody extends Thread {
 
 	public void setParameter(int parameter) {
 		this.parameter = parameter;
+
+		if (this.parameter < 0)
+			this.parameter = 0;
+		else if (this.parameter > 127)
+			this.parameter = 127;
+
 		instrument.command(new MidiCommand(MidiCommand.CONTROL_CHANGE,
-				MidiCommand.CONTROL_CHANGE_EFFECT_CONTROL_1, parameter));
+				MidiCommand.CONTROL_CHANGE_EFFECT_CONTROL_1, this.parameter));
 	}
 
 	public int getParameter() {
