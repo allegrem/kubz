@@ -1,7 +1,6 @@
 package synthesis.basicblocks.noinputblocks;
 
 import synthesis.AudioBlock;
-import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
  * This class handles an AudioBlock which return a constant value.
@@ -26,7 +25,7 @@ public class Constant implements AudioBlock {
 	 * Simply returns the value of the constant.
 	 */
 	@Override
-	public Float play(Float t) throws RequireAudioBlocksException {
+	public Float play(Float t) {
 		return constant;
 	}
 

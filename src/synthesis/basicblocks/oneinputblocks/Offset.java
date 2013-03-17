@@ -1,7 +1,5 @@
 package synthesis.basicblocks.oneinputblocks;
 
-import synthesis.exceptions.RequireAudioBlocksException;
-
 /**
  * This class handles an offset block which adds a constant to the input signal.
  * @see Offset#play(Float)
@@ -26,7 +24,7 @@ public class Offset extends OneInputBlock {
 	 * The sound produced is given by : out(t) = offset + in(t).
 	 */
 	@Override
-	public Float compute(Float t) throws RequireAudioBlocksException {
+	public Float compute(Float t) {
 		return in.play(t) + offset;
 	}
 
@@ -35,7 +33,7 @@ public class Offset extends OneInputBlock {
 	 * @return out(t) = 2 * Pi * offset * t + in.phi(t)
 	 */
 	@Override
-	public Float computePhi(Float t) throws RequireAudioBlocksException {
+	public Float computePhi(Float t) {
 		return (float) (2 * Math.PI * offset * t + in.phi(t));
 	}
 

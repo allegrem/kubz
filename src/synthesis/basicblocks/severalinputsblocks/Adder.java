@@ -3,7 +3,6 @@ package synthesis.basicblocks.severalinputsblocks;
 import java.util.ArrayList;
 
 import synthesis.AudioBlock;
-import synthesis.exceptions.RequireAudioBlocksException;
 
 /**
 *This class returns the sum of its entries.
@@ -43,8 +42,7 @@ public class Adder extends SeveralInputBlock {
 	 * @param t the specified instant
 	 */
 	@Override
-	public Float play(Float t) throws RequireAudioBlocksException{
-		super.play(t);
+	public Float play(Float t) {
 		float s = 0.0f;
 		for (AudioBlock a : entries)		
 			s += a.play(t).floatValue();
@@ -59,8 +57,7 @@ public class Adder extends SeveralInputBlock {
 	 * @see SeveralInputBlock#phi(Float)
 	 */
 	@Override
-	public Float phi(Float t) throws RequireAudioBlocksException {
-		super.phi(t);
+	public Float phi(Float t) {
 		Float phi = 0f;
 		for (AudioBlock e : entries)
 			phi += e.phi(t);

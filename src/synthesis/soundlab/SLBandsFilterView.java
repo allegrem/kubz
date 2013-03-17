@@ -5,8 +5,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -24,6 +22,8 @@ import synthesis.filters.BandsFilter;
  * @author allegrem
  */
 public class SLBandsFilterView extends JPanel {
+
+	private static final int MAX_FILTER_POINTS = 500;
 
 	private static final long serialVersionUID = 1L;
 
@@ -80,7 +80,7 @@ public class SLBandsFilterView extends JPanel {
 		btnRandom.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				bandsFilter.random();
+				bandsFilter.random(MAX_FILTER_POINTS);
 			}
 		});
 		toolBar_2.add(btnRandom);

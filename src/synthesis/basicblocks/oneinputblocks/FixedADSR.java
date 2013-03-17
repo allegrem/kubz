@@ -1,8 +1,6 @@
 package synthesis.basicblocks.oneinputblocks;
 
 
-import synthesis.exceptions.RequireAudioBlocksException;
-
 /**
  * This class produces an ADSR envelop with fixed parameters.
  * @author valeh
@@ -31,7 +29,7 @@ public class FixedADSR extends OneInputBlock {
 	}
 	
 	@Override
-	public Float compute(Float t) throws RequireAudioBlocksException {
+	public Float compute(Float t) {
 		
 		float previous = in.play(t).floatValue();
 		float sPrevious = s*previous;
@@ -62,8 +60,7 @@ public class FixedADSR extends OneInputBlock {
 
 
 	@Override
-	protected Float computePhi(Float t) throws RequireAudioBlocksException {
-		// TODO Auto-generated method stub
+	protected Float computePhi(Float t) {
 		return null;
 	}
 	
