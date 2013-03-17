@@ -210,10 +210,10 @@ public class Traitement {
 	public void localSearch(VideoCube vc) {
 		int expectedX1 = (int) (vc.getPos1().getX() + vc.getX1Speed());
 		int expectedX2 = (int) (vc.getPos2().getX() + vc.getX2Speed());
-		int expectedX3 = (int) (vc.getPos3().getX() + vc.getX3Speed());
+		//int expectedX3 = (int) (vc.getPos3().getX() + vc.getX3Speed());
 		int expectedY1 = (int) (vc.getPos1().getY() + vc.getY1Speed());
 		int expectedY2 = (int) (vc.getPos2().getY() + vc.getY2Speed());
-		int expectedY3 = (int) (vc.getPos3().getY() + vc.getY3Speed());
+		//int expectedY3 = (int) (vc.getPos3().getY() + vc.getY3Speed());
 		
 		/*
 		 * Ici on établie les pixels à distance distance de la position attendue
@@ -233,7 +233,7 @@ public class Traitement {
 			}
 			if (found1) break;
 		}
-		if (!found1) gameEngine.setFrozen(null);
+		if (!found1) /*gameEngine.setFrozen(null)*/ System.out.println("cube perdu");
 		
 		ArrayList<ArrayList<VirtualPixel>> pos2Lists = parcoursSpirale(expectedX2, expectedY2, distance);
 		boolean found2 = false;
@@ -247,9 +247,9 @@ public class Traitement {
 			}
 			if (found2) break;
 		}
-		if (!found2) gameEngine.setFrozen(null);
+		if (!found2) /*gameEngine.setFrozen(null)*/ System.out.println("cube perdu");
 		
-		ArrayList<ArrayList<VirtualPixel>> pos3Lists = parcoursSpirale(expectedX3, expectedY3, distance);
+		/*ArrayList<ArrayList<VirtualPixel>> pos3Lists = parcoursSpirale(expectedX3, expectedY3, distance);
 		boolean found3 = false;
 		for(ArrayList<VirtualPixel> list : pos3Lists){
 			for(VirtualPixel vp: list){
@@ -262,7 +262,7 @@ public class Traitement {
 			if (found3) break;
 		}
 		if (!found3) gameEngine.setFrozen(null);
-		
+		*/
 		/*
 		if (vi[expectedX1][expectedY1].isBrightness() == true)
 			updatePosSpeed1(vc, expectedX1, expectedY1);
