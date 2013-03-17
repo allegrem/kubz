@@ -464,7 +464,7 @@ public class Traitement {
 	 * @param newXPos
 	 * @param newYPos
 	 */
-	private void updatePosSpeed3(VideoCube vc, double newXPos, double newYPos) {
+	/*private void updatePosSpeed3(VideoCube vc, double newXPos, double newYPos) {
 		vc.setX3Speed((newXPos - vc.getPos3().getX()) / fps);
 		vc.setY3Speed((newYPos - vc.getPos3().getX()) / fps);
 		vc.getPos3().setX(newXPos);
