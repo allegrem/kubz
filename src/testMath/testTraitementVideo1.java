@@ -20,9 +20,10 @@ public class testTraitementVideo1 {
 		VideoCube cube = new VideoCube(traitement.getGroupePos(1),traitement.getGroupePos(2),null);
 		
 		// boucle d'update 
-		traitement.updateConnexe(testscreen);
-		traitement.localSearch(cube);
-		
+		while(true){
+			traitement.updateConnexe(testscreen);
+			traitement.localSearch(cube);
+		}
 
 	}
 
