@@ -24,11 +24,13 @@ import gameEngine.GameEngine;
 
 import java.io.File;
 import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
 
 import javax.imageio.ImageIO;
 
 import objLoader.ObjDisplay;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -69,6 +71,7 @@ public class GLDisplay extends Thread{
 	private Text texte;
 	private final int nFrames=20;// Nbre de frames pour le motion-blur
 	private int i=0;
+	private int decalagex=0;
 	
 	/*
 	 * Parametres de la projection
@@ -125,6 +128,19 @@ public class GLDisplay extends Thread{
 		KeyboardManager.setGameEngine(gameEngine);
 	}
 
+	public void correctParallelism(){
+		FloatBuffer projMat = BufferUtils.createFloatBuffer(16);
+		GL11.glGetFloat(GL11.GL_PROJECTION_MATRIX,projMat);
+		projMat.put(0,(float) (projMat.get(0)-0.8/display_height));
+		for(int i=0;i<16;i++)
+			System.out.println(projMat.get(i));
+		glMatrixMode(GL_PROJECTION);
+		GL11.glLoadMatrix(projMat);
+
+	}
+	
+	
+	
 	/**
 	 *Methode tournant en continu pendant l'execution
 	 *du thread 
@@ -133,7 +149,7 @@ public class GLDisplay extends Thread{
 	public void run(){
 		initialize();
 		mapDisplay_height=(int)(display_height);
-		mapDisplay_width=display_height;
+		mapDisplay_width=(int)display_height;
 		lightDx=(float)(display_width/2.0);
 		lightDy=(float)(display_height/2.0);
 		camDx=(float)(display_width/2.0);
@@ -141,6 +157,7 @@ public class GLDisplay extends Thread{
 		setCameraDirection();
 		texte=new Text();
 		initialized=true;
+		correctParallelism();
 		while(do_run){
 			
 		if (Display.isCloseRequested()||KeyboardManager.quit)
@@ -159,10 +176,14 @@ public class GLDisplay extends Thread{
 				resetLight();
 			}
 		}
-		
+		glMatrixMode(GL_MODELVIEW);
+		GL11.glPushMatrix();
+		GL11.glTranslatef(decalagex,0,0);
 		mainRender(); //On actualise la fenetre avec le nouveau rendu
 		glPrint();
 		update(); //On actualise la fenetre avec le nouveau rendu
+		
+		GL11.glPopMatrix();
 		Display.sync(frequency); //On synchronise l'affichage sur le bon FPS
 	
 		
@@ -230,12 +251,14 @@ public class GLDisplay extends Thread{
 	 */
 	private void initDisplay() {
 		try {
-			DisplayMode mode = Display.getDesktopDisplayMode();
+			//DisplayMode mode = Display.getDesktopDisplayMode();
+			DisplayMode mode = new DisplayMode(700,700);
 			display_width = mode.getWidth();
             display_height = mode.getHeight();
             frequency = mode.getFrequency();
 			// Creation d'une fenetre permettant de dessiner avec OpenGL
 			Display.setDisplayModeAndFullscreen(mode);
+			Display.setFullscreen(false);
 			Display.setTitle("Kubz");
 			ByteBuffer[] list = new ByteBuffer[2];
 			list[0] = MyBuffer.convertImageData(ImageIO.read(new File("Icone/Kubz32.jpeg")));
