@@ -157,7 +157,7 @@ public class GLDisplay extends Thread{
 		setCameraDirection();
 		texte=new Text();
 		initialized=true;
-		correctParallelism();
+		//correctParallelism();
 		while(do_run){
 			
 		if (Display.isCloseRequested()||KeyboardManager.quit)
@@ -251,14 +251,14 @@ public class GLDisplay extends Thread{
 	 */
 	private void initDisplay() {
 		try {
-			//DisplayMode mode = Display.getDesktopDisplayMode();
-			DisplayMode mode = new DisplayMode(700,700);
+			DisplayMode mode = Display.getDesktopDisplayMode();
+			//DisplayMode mode = new DisplayMode(700,700);
 			display_width = mode.getWidth();
             display_height = mode.getHeight();
             frequency = mode.getFrequency();
 			// Creation d'une fenetre permettant de dessiner avec OpenGL
 			Display.setDisplayModeAndFullscreen(mode);
-			Display.setFullscreen(false);
+			//Display.setFullscreen(false);
 			Display.setTitle("Kubz");
 			ByteBuffer[] list = new ByteBuffer[2];
 			list[0] = MyBuffer.convertImageData(ImageIO.read(new File("Icone/Kubz32.jpeg")));
