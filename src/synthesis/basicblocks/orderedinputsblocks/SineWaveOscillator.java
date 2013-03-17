@@ -14,12 +14,12 @@ import synthesis.exceptions.TooManyInputsException;
 public class SineWaveOscillator implements AudioBlock {
 
 	/**
-	 * The frequency input of the SineWaveOscillator AudioBlock. 
+	 * The frequency input of the SineOscillator AudioBlock. 
 	 */
 	public static final int FREQUENCY_IN = 0;
 	
 	/**
-	 * The amplitude input of the SineWaveOscillator AudioBlock. 
+	 * The amplitude input of the SineOscillator AudioBlock. 
 	 */
 	public static final int AMPLITUDE_IN = 1;
 	
@@ -30,7 +30,7 @@ public class SineWaveOscillator implements AudioBlock {
 
 	
 	/**
-	 * Creates a new SineWaveOscillator with the given frequency and 
+	 * Creates a new SineOscillator with the given frequency and 
 	 * amplitude blocks
 	 * @param frequency The AudioBlock which will control the frequency of
 	 * the oscillator
@@ -46,7 +46,7 @@ public class SineWaveOscillator implements AudioBlock {
 	
 	
 	/**
-	 * Creates a new SineWaveOscillator with no block plugged in
+	 * Creates a new SineOscillator with no block plugged in
 	 */
 	public SineWaveOscillator() {
 		super();
@@ -70,7 +70,7 @@ public class SineWaveOscillator implements AudioBlock {
 	 * Plugs in the given AudioBlock in the given input.
 	 * @param a The AudioBlock to plug in.
 	 * @param i The input number where to plug the AudioBlock in. See 
-	 * {@link SineWaveOscillator} for the list of constants associated to inputs.
+	 * {@link SineOscillator} for the list of constants associated to inputs.
 	 * @throws TooManyInputsException if an AudioBlock was already plugged in
 	 * the given input.
 	 * @throws InvalidInputException if the given input number is not valid.
@@ -98,7 +98,7 @@ public class SineWaveOscillator implements AudioBlock {
 	
 	/**
 	 * Plugs out the AudioBlock plugged in the given input.
-	 * @param i The input number to plug out. See {@link SineWaveOscillator} 
+	 * @param i The input number to plug out. See {@link SineOscillator} 
 	 * for the list of constants associated to inputs.
 	 * @throws InvalidInputException if the given input number is not valid.
 	 */
@@ -129,7 +129,7 @@ public class SineWaveOscillator implements AudioBlock {
 	 * @see synthesis.AudioBlock#play(java.lang.Float)
 	 */
 	@Override
-	public Float play(Float t) throws RequireAudioBlocksException {		
+	public Float play(Float t) {		
 		return (float) (amplitude.play(t) * 
 				Math.cos(frequency.phi(t)));
 	}
@@ -148,7 +148,7 @@ public class SineWaveOscillator implements AudioBlock {
 	 * @see synthesis.AudioBlock#phi(java.lang.Float)
 	 */
 	@Override
-	public Float phi(Float t) throws RequireAudioBlocksException {
+	public Float phi(Float t) {
 /*		//looks for the closest smaller time computed
 		Float sum = 0f;
 		Float startTime = phiCache.floorKey(t);

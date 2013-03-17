@@ -33,7 +33,7 @@ public class FixedSquareWaveOscillator implements AudioBlock {
 	 *  where a is the amplitude and f the frequency
 	 */
 	@Override
-	public Float play(Float t) throws RequireAudioBlocksException {
+	public Float play(Float t) {
 		if (Math.sin(2*Math.PI*frequency*t) >= 0)
 			return amplitude;
 		else

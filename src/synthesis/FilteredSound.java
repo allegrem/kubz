@@ -9,7 +9,6 @@ import org.apache.commons.math3.transform.DftNormalization;
 import org.apache.commons.math3.transform.FastFourierTransformer;
 import org.apache.commons.math3.transform.TransformType;
 
-import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.filters.BandsFilter;
 import synthesis.fmInstruments.FmInstrumentNParams;
 
@@ -57,14 +56,10 @@ public class FilteredSound extends Observable implements Observer {
 	}
 
 	private void updateOriginalSound() {
-		try {
-			originalSound = new byte[(int) (length*AudioBlock.SAMPLE_RATE)];
-			for(int i = 0; i<length*AudioBlock.SAMPLE_RATE ; i++) {
-				float f = instrument.play((i)/AudioBlock.SAMPLE_RATE);
-				originalSound[i] = (byte) f;
-			}
-		} catch (RequireAudioBlocksException e) {
-			e.printStackTrace();
+		originalSound = new byte[(int) (length*AudioBlock.SAMPLE_RATE)];
+		for(int i = 0; i<length*AudioBlock.SAMPLE_RATE ; i++) {
+			float f = instrument.play((i)/AudioBlock.SAMPLE_RATE);
+			originalSound[i] = (byte) f;
 		}
 		updateOriginalSpectrum();
 	}

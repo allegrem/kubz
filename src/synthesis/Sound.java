@@ -12,7 +12,6 @@ import org.apache.commons.math3.transform.TransformType;
 
 import synthesis.audiooutput.SpeakersOutput;
 import synthesis.exceptions.AudioException;
-import synthesis.exceptions.RequireAudioBlocksException;
 import synthesis.filters.BandsFilter;
 import synthesis.fmInstruments.FmInstrument;
 
@@ -77,14 +76,10 @@ public class Sound extends Observable implements Observer {
 	 * {@link Sound#updateSpectrum()} is called.
 	 */
 	private void updateSound() {
-		try {
-			sound = new byte[(int) (length * AudioBlock.SAMPLE_RATE)];
-			for (int i = 0; i < length * AudioBlock.SAMPLE_RATE; i++) {
-				float f = instrument.play((i) / AudioBlock.SAMPLE_RATE);
-				sound[i] = (byte) f;
-			}
-		} catch (RequireAudioBlocksException e) {
-			e.printStackTrace();
+		sound = new byte[(int) (length * AudioBlock.SAMPLE_RATE)];
+		for (int i = 0; i < length * AudioBlock.SAMPLE_RATE; i++) {
+			float f = instrument.play((i) / AudioBlock.SAMPLE_RATE);
+			sound[i] = (byte) f;
 		}
 		updateSpectrum();
 	}

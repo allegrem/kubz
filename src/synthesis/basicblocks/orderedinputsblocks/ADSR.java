@@ -88,7 +88,7 @@ public class ADSR implements AudioBlock {
 	 * @see synthesis.AudioBlock#phi(java.lang.Float)
 	 */
 	@Override
-	public Float phi(Float t) throws RequireAudioBlocksException {
+	public Float phi(Float t) {
 		// TODO Auto-generated method stub
 		return null;
 	}

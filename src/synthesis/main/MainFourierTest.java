@@ -5,7 +5,6 @@ import java.io.IOException;
 import synthesis.AudioBlock;
 import synthesis.SynthesisUtilities;
 import synthesis.audiooutput.SpeakersOutput;
-import synthesis.audiooutput.WavFileOutput;
 import synthesis.basicblocks.noinputblocks.Constant;
 import synthesis.basicblocks.oneinputblocks.Gain;
 import synthesis.basicblocks.orderedinputsblocks.ADSR;
@@ -26,7 +25,7 @@ public class MainFourierTest {
 		
 		/*FixedSineWaveOscillator osc1 = new FixedSineWaveOscillator(1f,(float) (500));
 		Adder add = new Adder(osc1,new Constant((float) 500));
-		SineWaveOscillator osc2 = new SineWaveOscillator(add,new Constant((float) 500));*/
+		SineOscillator osc2 = new SineOscillator(add,new Constant((float) 500));*/
 		
 		ADSR env1 = new ADSR(new Constant(0.3f), new Constant(0.2f), new Constant(0.8f), new Constant(0.1f), 1f, new Constant(100f));
 		AudioBlock fm = new Constant(600f);

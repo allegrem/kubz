@@ -92,7 +92,7 @@ public class MainSynthesis {
 /*		FixedSineWaveOscillator o1 = new FixedSineWaveOscillator(440f, 440f);
 		Offset off = new Offset(440f);
 		off.plugin(o1);
-		SineWaveOscillator o2 = new SineWaveOscillator(off, new Constant(120f));
+		SineOscillator o2 = new SineOscillator(off, new Constant(120f));
 		
 <<<<<<< HEAD
 		DigitalFilter filter = new DigitalFilter(feedback, feedforward);
@@ -110,10 +110,10 @@ public class MainSynthesis {
 		//envelop.plugin(add);
 		out = add;
 =======
-		SineWaveOscillator o1_ = new SineWaveOscillator(new Constant(440f), new Constant(440f));
+		SineOscillator o1_ = new SineOscillator(new Constant(440f), new Constant(440f));
 		Offset off_ = new Offset(440f);
 		off_.plugin(o1_);
-		SineWaveOscillator o2_ = new SineWaveOscillator(off_, new Constant(120f));
+		SineOscillator o2_ = new SineOscillator(off_, new Constant(120f));
 >>>>>>> refs/heads/synthesis
 
 		

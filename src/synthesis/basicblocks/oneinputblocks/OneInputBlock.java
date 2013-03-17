@@ -56,6 +56,7 @@ public abstract class OneInputBlock implements AudioBlock {
 	 * This method defines the default behavior for a OneInputBlock. It throws 
 	 * an exception if no input is plugged in. The output signal computing is 
 	 * implemented in {@link OneInputBlock#compute(Float)}. 
+	 * @throws RequireAudioBlocksException 
 	 * @see synthesis.AudioBlock#play(Float)
 	 */
 	@Override
