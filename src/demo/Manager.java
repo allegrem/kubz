@@ -49,7 +49,7 @@ public class Manager{
 			//map.add(expension);
 			//expension.start();
 			
-			//new Disco(display,map,height);
+			new Disco(display,map,height);
 			
 	while (display.isAlive()) {
 				try {
