@@ -32,6 +32,7 @@ public class Cube{
 		return this.angle;
 	}
 	
+	//probablement pas nécessaire
 	public int getAngleChange(){
 		int retour = lastAngle - angle;
 		lastAngle = angle;

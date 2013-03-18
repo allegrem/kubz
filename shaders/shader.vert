@@ -22,6 +22,6 @@ void main() {
     float ny=y;
     float dx=x-fmidle*echelle+fwidth*echelle/2.0;
     float nx=fmidle*echelle-fwidth*echelle/2.0+(ny)/(fheight*echelle)*dx;
-    gl_Position=vec4(nx,y,z,w);
+    gl_Position=vec4(x,y,z,w);
     
 }

@@ -35,7 +35,6 @@ public class Player{
 	private Parameter[] parameters;
 	private Base base;
 	private int nParams = 2;
-	private BandsFilter shield;
 	private boolean isTurn;
 	private int choice;
 	private int lastAngle1;
@@ -66,8 +65,6 @@ public class Player{
 		parameters[1].setLocation(
 				base.getCenter().getX() + parameters[1].getSize(), base
 						.getCenter().getY());
-		this.shield = new BandsFilter(11);
-		this.shield.random();
 		link=new Link(base,parameters[0],parameters[1]);
 		gameEngine.getMap().add(link);
 		
@@ -86,8 +83,8 @@ public class Player{
 	}
 
 	/**
-	 * Methode qui retourne l'angle du premier cube parametre
-	 * 
+	 * Methode qui retourne l'angle du premier cube Parameter1.
+	 * Pour le choix de l'instrument.
 	 * @return
 	 */
 	public int getChangeAngle1() {
@@ -98,7 +95,7 @@ public class Player{
 
 	/**
 	 * Methode retourne l'angle du second cube parametre
-	 * 
+	 * Pour le pattern de la melody (paramètre plus ou moins discret)
 	 * @return
 	 */
 	public int getChangeAngle2() {
@@ -108,12 +105,33 @@ public class Player{
 	}
 
 	/**
-	 * methode qui retourne la distance entre les deux parametres
-	 * 
+	 * methode qui retourne la distance entre le cube Parameter1 et le centre de la base
+	 *  Pour le paramètre d'instrument.
 	 * @return
 	 */
-	public int getChangeDistance() {
-		return (int) parameters[0].getPos().distanceTo(parameters[1].getPos());
+	public int getCube1Distance() {
+		return (int) parameters[0].getPos().distanceTo(base.getCenter());
+	}
+	
+	/**
+	 * methode qui retourne la distance entre le cube Parameter2 et le centre de la base
+	 * Pour la note de depart
+	 * @return
+	 */
+	public int getCube2Distance() {
+		return (int) parameters[1].getPos().distanceTo(base.getCenter());
+	}
+	
+	
+	/**
+	 * Methode qui permet de déterminet l'angle entre les deux cubes Parameter
+	 * Pour le Tempo
+	 * @return
+	 */
+	public int getCubesAperture() {
+		double theta = 0;
+		int offset = 0;
+		return (int) Math.round(theta)+offset ;
 	}
 
 	public void removeUnit(Unit unit) {
@@ -127,13 +145,6 @@ public class Player{
 		}
 	}
 
-	public BandsFilter getShield() {
-		return shield;
-	}
-
-	public void setShield(BandsFilter shield) {
-		this.shield = shield;
-	}
 
 	public ArrayList<Unit> getUnitList() {
 		return unitList;
@@ -361,19 +372,13 @@ public class Player{
 			}
 			if (KeyboardManager.aKey) {
 				unit.getSound().playToSpeakers();
-				/*
-				 * try { Thread.sleep(3000); } catch (InterruptedException e) {
-				 * e.printStackTrace(); }
-				 */
+				
 			}
 			if (!(KeyboardManager.zKey || KeyboardManager.sKey
 					|| KeyboardManager.qKey || KeyboardManager.dKey
 					|| KeyboardManager.wKey || KeyboardManager.xKey)) {
 				if (isModified) {
-					FmInstruments3Params instrument = (FmInstruments3Params) unit
-							.getSound().getInstrument();
-					instrument.changeParams(getChangeAngle1(),
-							getChangeAngle2(), getChangeDistance());
+					//zik
 					isModified = false;
 				}
 
@@ -384,10 +389,7 @@ public class Player{
 				e.printStackTrace();
 			}
 		}
-		FmInstruments3Params instrument = (FmInstruments3Params) unit
-				.getSound().getInstrument();
-		instrument.changeParams(getChangeAngle1(), getChangeAngle2(),
-				getChangeDistance());
+		//zik
 		KeyboardManager.tap = false;
 	}
 

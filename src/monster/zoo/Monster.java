@@ -157,7 +157,7 @@ public class Monster {
 				Wall wall = null;
 				if (((angles.get(0) < unitTheta)
 						&& (angles.get(1) > unitTheta) || ((angles.get(0) > unitTheta) && (angles
-						.get(1) < unitTheta))))
+						.get(1) < unitTheta)))){
 					wall = walls.get(i);
 					System.out.println(i);
 				double xp1 = wall.getExtremity1().getX();
@@ -173,7 +173,7 @@ public class Monster {
 				if (unit.getPos().distanceTo(pos) > pos
 						.distanceTo(new Point(xi, yi))) {
 					seenUnits.remove(unit);
-				}
+				}}
 			}
 		}
 	}

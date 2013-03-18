@@ -8,6 +8,7 @@ package player.unit;
 
 import java.util.ArrayList;
 
+import midisynthesis.Melody;
 import monster.zoo.Monster;
 import cube.Cube;
 import gameEngine.GameEngine;
@@ -28,8 +29,7 @@ public class Unit extends CubeOwner {
 	private Point pos = new Point(10, 10);
 	private double aperture;
 	private double direction;
-	private double instrumentChoiceAngle = 0;
-	private Sound sound;
+	private Melody melody;
 	private UnitState state;
 	private CubeControlledView view;
 	private Player owner;
@@ -50,7 +50,7 @@ public class Unit extends CubeOwner {
 		view.addChild(lifeView);
 		size = view.getSize();
 		gameEngine.getMap().add(view);
-		this.sound = new Sound(TwoOscFmInstrument.getFmInstruments3Params(), 3f);
+		melody = new Melody();
 		seenMonsters = new ArrayList<Monster>();
 		target = null;
 
@@ -361,5 +361,15 @@ public class Unit extends CubeOwner {
 	public void setLifeView(LifeView lifeView) {
 		this.lifeView = lifeView;
 	}
+
+	public Melody getMelody() {
+		return melody;
+	}
+
+	public void setMelody(Melody melody) {
+		this.melody = melody;
+	}
+	
+	
 
 }
