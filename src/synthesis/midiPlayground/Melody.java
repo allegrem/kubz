@@ -32,9 +32,9 @@ public class Melody extends Thread {
 	
 	public Melody() {
 		//default parameters
-		tempo = 80;
-		pattern = new MidiPattern3(); 
-		setInstrument(new MidiXylophoneInstr()); //instrument + parameter (TODO)
+		tempo = 70;
+		pattern = new MidiPattern1(); 
+		setInstrument(new SinusInstrument()); //instrument + parameter (TODO)
 		tune = 65; //F4
 		//tune = 77; //F5
 	}
