@@ -6,9 +6,8 @@ package synthesis.midiPlayground;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import synthesis.midiPlayground.MidiInstruments.MidiInstrument;
-import synthesis.midiPlayground.MidiInstruments.MidiWoodInstrument;
-import synthesis.midiPlayground.MidiInstruments.SinusInstrument;
+import synthesis.midiPlayground.MidiAudioBlocks.MidiSineWaveOscillator;
+import synthesis.midiPlayground.MidiInstruments.*;
 import synthesis.midiPlayground.MidiPatterns.MidiPattern;
 import synthesis.midiPlayground.MidiPatterns.MidiPattern1;
 import synthesis.midiPlayground.MidiPatterns.MidiPattern2;
@@ -33,11 +32,11 @@ public class Melody extends Thread {
 	
 	public Melody() {
 		//default parameters
-		tempo = 60;
+		tempo = 80;
 		pattern = new MidiPattern3(); 
-		setInstrument(new MidiWoodInstrument()); //instrument + parameter (TODO)
-		//tune = 65; //F4
-		tune = 77; //F5
+		setInstrument(new MidiXylophoneInstr()); //instrument + parameter (TODO)
+		tune = 65; //F4
+		//tune = 77; //F5
 	}
 
 	/**
