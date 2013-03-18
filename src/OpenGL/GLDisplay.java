@@ -120,6 +120,7 @@ public class GLDisplay extends Thread{
 	private int shaderProgram;
 	private int vertexShader;
 	private int fragmentShader;
+	private float parallelisme=0.5f;
 	
 	/**
 	 * Lancement de l'affichage
@@ -190,6 +191,15 @@ public class GLDisplay extends Thread{
 	        GL20.glAttachShader(shaderProgram, fragmentShader);
 	        GL20.glLinkProgram(shaderProgram);
 	        GL20.glValidateProgram(shaderProgram);
+	        GL20.glUseProgram(shaderProgram);
+	    	int lH=GL20.glGetUniformLocation(shaderProgram, "display_height");
+	    	int lW=GL20.glGetUniformLocation(shaderProgram, "display_width");
+			int lA=GL20.glGetUniformLocation(shaderProgram, "alpha");
+			int lM=GL20.glGetUniformLocation(shaderProgram, "midle");
+			GL20.glUniform1i(lH,display_height);
+			GL20.glUniform1i(lW,display_width);
+			GL20.glUniform1f(lA,parallelisme);
+			GL20.glUniform1f(lM,(float)(mapDisplay_width/2.0));
 	}
 	
 	/**
@@ -209,7 +219,6 @@ public class GLDisplay extends Thread{
 		texte=new Text();
 		initialized=true;
 		loadShaders();
-		GL20.glUseProgram(shaderProgram);
 		while(do_run){
 			
 		if (Display.isCloseRequested()||KeyboardManager.quit)
