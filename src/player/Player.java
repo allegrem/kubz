@@ -75,6 +75,8 @@ public class Player{
 		gameEngine.getMap().add(link);
 		compteurPattern = 0;
 		compteurInstr = 0;
+		lastAngle1 = (int) parameters[0].getAngle();
+		lastAngle2 = (int) parameters[1].getAngle();
 		
 	}
 
@@ -112,7 +114,9 @@ public class Player{
 	 * @return
 	 */
 	public int getCube1Distance() {
-		return (int) parameters[0].getPos().distanceTo(base.getCenter());
+		int sensibilite = 1;
+		int offset = 0;
+		return (int) (offset + sensibilite*parameters[0].getPos().distanceTo(base.getCenter()));
 	}
 	
 	/**
@@ -121,7 +125,9 @@ public class Player{
 	 * @return
 	 */
 	public int getCube2Distance() {
-		return (int) parameters[1].getPos().distanceTo(base.getCenter());
+		int sensibilite = 1;
+		int offset = 0;
+		return (int) (offset + sensibilite*parameters[1].getPos().distanceTo(base.getCenter()));
 	}
 	
 	
@@ -416,7 +422,12 @@ public class Player{
 								e1.printStackTrace();
 							}
 						}
-						
+					
+					//On regle le parametre d'instrument
+					melody.setParameter(getCube1Distance());
+					
+					//on regle la note de depart
+					melody.setTune(getCube2Distance());
 						
 					isModified = false;
 				}
