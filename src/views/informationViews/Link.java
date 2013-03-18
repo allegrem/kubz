@@ -49,7 +49,7 @@ public class Link implements DisplayableChild{
 		angle1=Math.toDegrees(Math.min(angleP1,angleP2));
 		angle2=Math.toDegrees(Math.abs(angleP2-angleP1));
 		radius=0.33*Math.min(parameter1.getPos().distanceTo(base.getCenter()), parameter2.getPos().distanceTo(base.getCenter()));
-		System.out.println(parameter1.getPos().distanceTo(base.getCenter()));
+		//System.out.println(parameter1.getPos().distanceTo(base.getCenter()));
 	}
 
 	@Override

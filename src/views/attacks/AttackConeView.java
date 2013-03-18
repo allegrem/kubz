@@ -48,12 +48,10 @@ public class AttackConeView implements DisplayableChild {
 		fatherAngle=father.getAngle();
 	}
 	
-	@Override
 	public void setFather( DisplayableFather father){
 		this.father=father;
 	}
 	
-	@Override
 	public void paint(){
 		
 		direction%=360;
@@ -159,42 +157,36 @@ public class AttackConeView implements DisplayableChild {
 	}
 	
 
-	@Override
 	public int getTimeOut() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
 	public void setTimeOut(int time) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public boolean isInZone(Point mousePoint) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
+	
 	public void setColor(ReadableColor color) {
 	this.color=color;
 		
 	}
 
-	@Override
 	public String getCharac() {
 		
 		return "AttackCone";
 	}
 
-	@Override
 	public boolean isDead() {
 		return dead;
 	}
 
-	@Override
 	public boolean collisionCanOccure(Point point, float f) {
 		// TODO Auto-generated method stub
 		return false;

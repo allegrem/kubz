@@ -266,9 +266,6 @@ public class Player{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			System.out.println(unit.getPos().getX() + " "
-					+ unit.getPos().getY());
-
 		}
 		KeyboardManager.tap = false;
 	}
@@ -458,7 +455,7 @@ public class Player{
 				unit.getAperture(), unit.getDirection(), power, unit.getView());
 		unit.getView().addChild(attack);
 		Sound sound = unit.getSound();
-		unit.getSound().playToSpeakers();
+		//unit.getSound().playToSpeakers();
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {

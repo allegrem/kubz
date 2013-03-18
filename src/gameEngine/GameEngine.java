@@ -65,6 +65,7 @@ public class GameEngine extends Thread {
 			// bases=reader.readBases();
 			bases = new ArrayList<Base>();
 		    walls=reader.readWalls();
+		    System.out.println("Taille de walls " + walls.size());
 			playerList = new ArrayList<Player>();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -147,7 +148,7 @@ public class GameEngine extends Thread {
 	 */
 	public void run() {
 		while (display.isAlive()) {
-			playerTurn();
+			//playerTurn();
 			monsterTurn();
 		}
 	}

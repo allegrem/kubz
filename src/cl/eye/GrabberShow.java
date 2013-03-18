@@ -57,7 +57,7 @@ public class GrabberShow implements Runnable {
 		path.setContentPane(jp);
 	}
 
-	@Override
+	
 	/**
 	 * methode principale elle va rechercher les maxima de couleurs puis va tracker les maxima rouge 
 	 * on track d'abord le premier maxima et on va considerer  tous ceux qui ont un rouge proche de celui du maxima
@@ -91,8 +91,8 @@ public class GrabberShow implements Runnable {
 			}
 			cupos = Math.sqrt((posnX - posX) * (posnX - posX) + (posnY - posY)
 					* (posnY - posY));
-			System.out.println("posnY: " + posnY + ";posnX: " + posnX
-					+ ";posX " + posX + ";posY: " + posY + "cupos: " + cupos);
+			//System.out.println("posnY: " + posnY + ";posnX: " + posnX
+					//+ ";posX " + posX + ";posY: " + posY + "cupos: " + cupos);
 			if (cupos < 100) {
 				paint(posX, posY, cupos);
 				posnX = posX;

@@ -155,10 +155,11 @@ public class Monster {
 			for (int i = 0; i < angleList.size(); i++) {
 				ArrayList<Double> angles = angleList.get(i);
 				Wall wall = null;
-				if (((angles.get(1) < unitTheta)
-						&& (angles.get(2) > unitTheta) || ((angles.get(1) > unitTheta) && (angles
-						.get(2) < unitTheta))))
+				if (((angles.get(0) < unitTheta)
+						&& (angles.get(1) > unitTheta) || ((angles.get(0) > unitTheta) && (angles
+						.get(1) < unitTheta))))
 					wall = walls.get(i);
+					System.out.println(i);
 				double xp1 = wall.getExtremity1().getX();
 				double yp1 = wall.getExtremity1().getY();
 				double xp2 = wall.getExtremity2().getX();
@@ -247,6 +248,7 @@ public class Monster {
 	}
 	
 	public void act(){
+		System.out.println("tata");
 		setSeenUnits(gameEngine.getUnitList());
 		setCible();
 		move();
