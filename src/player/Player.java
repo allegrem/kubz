@@ -9,6 +9,9 @@ package player;
  */
 
 import java.util.ArrayList;
+
+import midisynthesis.Melody;
+import midisynthesis.instruments.InstrumentLibrary;
 import monster.zoo.*;
 import base.Base;
 import gameEngine.GameEngine;
@@ -38,6 +41,7 @@ public class Player{
 	private boolean isTurn;
 	private int choice;
 	private int lastAngle1;
+	private int compteurInstr;
 	private int lastAngle2;
 
 
@@ -68,29 +72,20 @@ public class Player{
 		link=new Link(base,parameters[0],parameters[1]);
 		gameEngine.getMap().add(link);
 		
-		
-		/*
-		 * Probleme:ce qui prenait du temps lors de l'affichage du son c'etait le calcul
-		 * de celui-ci et pas son affichage
-		 * Du coup, si on supprime l'affichage, on a l'impression que ca lag sans savoir
-		 * pourquoi alors que c'est le son qui se met a jour
-		 * 
-		 * 
-		 */
-		
-		//audioRender = new AudioRender(gameEngine.getDisplay(),unitList.get(0).getSound(),parameters[0],parameters[1]);
-		//gameEngine.getMap().add(audioRender);
 	}
 
 	/**
-	 * Methode qui retourne l'angle du premier cube Parameter1.
+	 * Methode qui retourne le nombre de changement d'instrument, en rapport avec l'angle de Parameter1
 	 * Pour le choix de l'instrument.
 	 * @return
 	 */
-	public int getChangeAngle1() {
-		int retour = lastAngle1 - parameters[0].getAngle();
+	public int getChangeInstrument() {
+		int sensibility = 45;
+		compteurInstr = parameters[0].getAngle() - lastAngle1;
 		lastAngle1 = parameters[0].getAngle();
-		return retour;
+		int changeInstrument = Math.round(compteurInstr/sensibility);
+		compteurInstr = compteurInstr - changeInstrument*sensibility;
+		return changeInstrument;
 	}
 
 	/**
@@ -330,13 +325,16 @@ public class Player{
 	/**
 	 * Methode qui declenche la creation du son via les Parameter Ici les
 	 * Parameters sont liees au Player
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
 	
 	/*=============>>>> a modifier pour que le parametre ne puisse pas sortir
 	 * de la base (Demi-cercle et pas cercle ! Donc peut sortir d'un cote...)
 	 * 
 	 */
-	public void soundEditPTurn(Unit unit) {
+	public void soundEditPTurn(Unit unit) throws InstantiationException, IllegalAccessException {
+		Melody melody = unit.getMelody();
 		setPStatesToSoundEdit();
 		setUStateToWaiting(unit);
 		double size = unit.getSize() * Math.sqrt(2) / 2;
@@ -371,14 +369,23 @@ public class Player{
 				isModified = true;
 			}
 			if (KeyboardManager.aKey) {
-				unit.getSound().playToSpeakers();
+				
 				
 			}
 			if (!(KeyboardManager.zKey || KeyboardManager.sKey
 					|| KeyboardManager.qKey || KeyboardManager.dKey
 					|| KeyboardManager.wKey || KeyboardManager.xKey)) {
 				if (isModified) {
-					//zik
+					//on passe a l'intrument suivant autant de fois que necessaire
+					int iter = getChangeInstrument();
+					if(iter>0)
+						for(int i=0;i<getChangeInstrument();i++){
+							melody.setInstrument(InstrumentLibrary.getNextInstrument(melody.getInstrument()));
+						}
+					if(iter<0)
+						for(int i=0;i<-getChangeInstrument();i++){
+							melody.setInstrument(InstrumentLibrary.getPreviousInstrument(melody.getInstrument()));
+						}
 					isModified = false;
 				}
 

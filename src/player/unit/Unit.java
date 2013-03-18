@@ -65,9 +65,6 @@ public class Unit extends CubeOwner {
 		return owner;
 	}
 
-	public Sound getSound() {
-		return sound;
-	}
 
 	/**
 	 * Retourne le cube physique auquel est associ� Unit
@@ -77,10 +74,6 @@ public class Unit extends CubeOwner {
 	public Cube getCube() {
 		return cube;
 
-	}
-
-	public void setSound(Sound sound) {
-		this.sound = sound;
 	}
 
 	/**
@@ -268,28 +261,6 @@ public class Unit extends CubeOwner {
 
 	public double getDirection() {
 		return direction;
-	}
-
-	/**
-	 * Methode relatives au choix de l'instrument
-	 * 
-	 * @param theta
-	 * @param dTheta
-	 */
-	public void setInstrumentChoice(double theta) {
-		instrumentChoiceAngle = theta;
-		view.setIstrumentChoice(theta);
-		view.setAngle(theta);
-	}
-
-	public void rotateInstrumentChoice(double dTheta) {
-		instrumentChoiceAngle = instrumentChoiceAngle + dTheta;
-		view.rotateIstrumentChoice(dTheta);
-		view.rotate(dTheta);
-	}
-
-	public double getInstrumentChoiceAngle() {
-		return instrumentChoiceAngle;
 	}
 
 	public int getPower() {
