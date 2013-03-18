@@ -18,7 +18,7 @@ public class Disco {
 	private GLDisplay display;
 
 	public Disco(GLDisplay display,Map map,int size){
-		this.size=Math.round(size/nombre)+1;
+		this.size=Math.round(size/nombre);
 		this.map=map;
 		this.display=display;
 		RandomPerso.initialize();

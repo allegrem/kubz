@@ -36,7 +36,7 @@ public void paint(){
 	glMatrixMode(GL_MODELVIEW);
 	GL11.glPushMatrix();
 	GL11.glTranslatef(x+size/2, y+size/2, 0);
-	GL11.glRotated(angle,rx, ry, 0);
+	GL11.glRotated(angle,rx, -ry, 0);
 	GL11.glTranslated(-size/2, -size/2, 0);
 	
 	GL11.glBegin(GL11.GL_QUADS);
@@ -52,6 +52,28 @@ public void paint(){
 	GL11.glVertex3d(size, 0, -0.01);
 	GL11.glVertex3d(size,size, -0.01);
 	GL11.glVertex3d(0, size, -0.01);	
+	
+	GL11.glColor3ub((byte)0, (byte)0, (byte)0);
+	GL11.glVertex3d(0, 0, -0.01);
+	GL11.glVertex3d(0, size, -0.01);
+	GL11.glVertex3d(0,size, 0.01);
+	GL11.glVertex3d(0, 0, 0.01);	
+	
+	GL11.glVertex3d(0, size, -0.01);
+	GL11.glVertex3d(size, size, -0.01);
+	GL11.glVertex3d(size,size, 0.01);
+	GL11.glVertex3d(0, size, 0.01);
+	
+	GL11.glVertex3d(size, size, -0.01);
+	GL11.glVertex3d(size, 0, -0.01);
+	GL11.glVertex3d(size,0, 0.01);
+	GL11.glVertex3d(size, size, 0.01);
+	
+	GL11.glVertex3d(size, 0, -0.01);
+	GL11.glVertex3d(0, 0, -0.01);
+	GL11.glVertex3d(0,0, 0.01);
+	GL11.glVertex3d(size, 0, 0.01);
+	
 	GL11.glEnd();
 	GL11.glPopMatrix();
 	angle+=speed;
@@ -75,7 +97,7 @@ public void rotate(int speed){
 	if(this.speed==0){
 		this.speed=speed;
 	
-	switch(RandomPerso.entier(3)){
+	switch(RandomPerso.entier(4)){
 	case 0:
 		rx=1;
 		ry=0;
@@ -88,6 +110,11 @@ public void rotate(int speed){
 	
 	case 2:
 		rx=1;
+		ry=1;
+		break;
+		
+	case 3:
+		rx=-1;
 		ry=1;
 		break;
 	}
