@@ -392,7 +392,7 @@ public void paint() {
 	GL11.glDisable(GL11.GL_TEXTURE_2D);
 
 	if(sound!=null){
-		GL20.glUseProgram(shaderProgram);
+			//GL20.glUseProgram(shaderProgram);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vboVertexHandle);
 		GL11.glVertexPointer(3,GL11.GL_FLOAT,0,0L);
 		GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
@@ -403,7 +403,7 @@ public void paint() {
 		GL11.glDrawArrays(GL11.GL_LINES,0,(zoomX-2)*2);
 		GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
-		GL20.glUseProgram(0);
+			//GL20.glUseProgram(0);
 		GL11.glLoadIdentity();
     	GL11.glPopMatrix();
 	}

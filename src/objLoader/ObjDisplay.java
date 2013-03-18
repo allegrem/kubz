@@ -190,7 +190,7 @@ public class ObjDisplay {
 	 * @param a
 	 */
 	public static void renderVBO(Objet obj,ReadableColor color,int x, int y, int z, int a){
-		GL20.glUseProgram(obj.shaderProgram);
+			//GL20.glUseProgram(obj.shaderProgram);
 //		int dx=GL20.glGetUniformLocation(obj.shaderProgram, "dx");
 //		int dy=GL20.glGetUniformLocation(obj.shaderProgram, "dy");
 //		int dz=GL20.glGetUniformLocation(obj.shaderProgram, "dz");
@@ -211,7 +211,7 @@ public class ObjDisplay {
 		GL11.glDrawArrays(GL11.GL_TRIANGLES,0,obj.m.faces.size()*3);
 		GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
 		GL11.glDisableClientState(GL11.GL_NORMAL_ARRAY);
-		GL20.glUseProgram(0);
+			//GL20.glUseProgram(0);
     	GL11.glLoadIdentity();
     	GL11.glPopMatrix();
 	}

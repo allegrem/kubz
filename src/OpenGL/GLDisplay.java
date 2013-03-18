@@ -22,7 +22,10 @@ import static org.lwjgl.opengl.GL11.glShadeModel;
 
 import gameEngine.GameEngine;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 
 import javax.imageio.ImageIO;
@@ -114,6 +117,9 @@ public class GLDisplay extends Thread{
 	private int mx=0;
 	private int my=0;
 	private ReadableColor mColor=null;
+	private int shaderProgram;
+	private int vertexShader;
+	private int fragmentShader;
 	
 	/**
 	 * Lancement de l'affichage
@@ -125,6 +131,67 @@ public class GLDisplay extends Thread{
 		KeyboardManager.setGameEngine(gameEngine);
 	}
 
+	private void loadShaders(){
+		   shaderProgram = GL20.glCreateProgram();
+	       vertexShader = GL20.glCreateShader(GL20.GL_VERTEX_SHADER);
+	       fragmentShader = GL20.glCreateShader(GL20.GL_FRAGMENT_SHADER);
+	        StringBuilder vertexShaderSource = new StringBuilder();
+	        StringBuilder fragmentShaderSource = new StringBuilder();
+	        BufferedReader reader = null;
+	        try {
+	            reader = new BufferedReader(new FileReader("shaders/shader.vert"));
+	            String line;
+	            while ((line = reader.readLine()) != null) {
+	                vertexShaderSource.append(line).append('\n');
+	            }
+	        } catch (IOException e) {
+	            System.err.println("Vertex shader wasn't loaded properly.");
+	            e.printStackTrace();
+	            System.exit(1);
+	        } finally {
+	            if (reader != null) {
+	                try {
+	                    reader.close();
+	                } catch (IOException e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	        }
+	        BufferedReader reader2 = null;
+	        try {
+	            reader2 = new BufferedReader(new FileReader("shaders/shader.frag"));
+	            String line;
+	            while ((line = reader2.readLine()) != null) {
+	                fragmentShaderSource.append(line).append('\n');
+	            }
+	        } catch (IOException e) {
+	            System.err.println("Fragment shader wasn't loaded properly.");
+	            System.exit(1);
+	        } finally {
+	            if (reader2 != null) {
+	                try {
+	                    reader2.close();
+	                } catch (IOException e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	        }
+	        GL20.glShaderSource(vertexShader, vertexShaderSource);
+	        GL20.glCompileShader(vertexShader);
+	        if (GL20.glGetShaderi(vertexShader, GL20.GL_COMPILE_STATUS) == GL11.GL_FALSE) {
+	            System.err.println("Vertex shader wasn't able to be compiled correctly.");
+	        }
+	        GL20.glShaderSource(fragmentShader, fragmentShaderSource);
+	        GL20.glCompileShader(fragmentShader);
+	        if (GL20.glGetShaderi(fragmentShader, GL20.GL_COMPILE_STATUS) == GL11.GL_FALSE) {
+	            System.err.println("Fragment shader wasn't able to be compiled correctly.");
+	        }
+	        GL20.glAttachShader(shaderProgram, vertexShader);
+	        GL20.glAttachShader(shaderProgram, fragmentShader);
+	        GL20.glLinkProgram(shaderProgram);
+	        GL20.glValidateProgram(shaderProgram);
+	}
+	
 	/**
 	 *Methode tournant en continu pendant l'execution
 	 *du thread 
@@ -141,6 +208,8 @@ public class GLDisplay extends Thread{
 		setCameraDirection();
 		texte=new Text();
 		initialized=true;
+		loadShaders();
+		GL20.glUseProgram(shaderProgram);
 		while(do_run){
 			
 		if (Display.isCloseRequested()||KeyboardManager.quit)
@@ -168,6 +237,7 @@ public class GLDisplay extends Thread{
 		
 		
 		}
+		GL20.glUseProgram(0);
 		ObjDisplay.cleanUp();
 		close();//Fermeture de la fenêtre
 		

@@ -1,9 +1,9 @@
-varying vec3 color;
+vec4 position;
 
-void main(void)
+void main() {
 
-{
-
-	color = gl_Color.rgb;
-    gl_Position = ftransform();
+	gl_FrontColor = gl_Color;
+    position = gl_ModelViewProjectionMatrix * gl_Vertex;
+    gl_Position=position+vec4(0,0,0,0);
+    
 }
