@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import midisynthesis.Melody;
 import midisynthesis.instruments.InstrumentLibrary;
+import midisynthesis.patterns.MidiPatternsLibaray;
 import monster.zoo.*;
 import base.Base;
 import gameEngine.GameEngine;
@@ -43,6 +44,7 @@ public class Player{
 	private int lastAngle1;
 	private int compteurInstr;
 	private int lastAngle2;
+	private int compteurPattern;
 
 
 	int power = 100;
@@ -71,6 +73,8 @@ public class Player{
 						.getCenter().getY());
 		link=new Link(base,parameters[0],parameters[1]);
 		gameEngine.getMap().add(link);
+		compteurPattern = 0;
+		compteurInstr = 0;
 		
 	}
 
@@ -93,10 +97,13 @@ public class Player{
 	 * Pour le pattern de la melody (paramètre plus ou moins discret)
 	 * @return
 	 */
-	public int getChangeAngle2() {
-		int retour = lastAngle2 - parameters[1].getAngle();
+	public int getChangePattern() {
+		int sensibility = 45;
+		compteurPattern = parameters[1].getAngle() - lastAngle2;
 		lastAngle2 = parameters[1].getAngle();
-		return retour;
+		int changePattern = Math.round(compteurPattern/sensibility);
+		compteurPattern = compteurPattern - changePattern*sensibility;
+		return changePattern;
 	}
 
 	/**
@@ -306,18 +313,6 @@ public class Player{
 			}
 		}
 		// modification de l'instrument en cours d'utilisation
-		if (fmChoice == 0)
-			unit.getSound().setInstrument(
-					PianoInstrument2.getFmInstruments3Params());
-		if (fmChoice == 1)
-			unit.getSound().setInstrument(
-					TwoOscFmInstrument.getFmInstruments3Params());
-		if (fmChoice == 2)
-			unit.getSound().setInstrument(
-					WoodInstrument.getFmInstruments3Params());
-		if (fmChoice == 3)
-			unit.getSound().setInstrument(
-					XylophoneInstrument.getFmInstruments3Params());
 		unit.getView().removeChild(instChoice);
 		KeyboardManager.tap = false;
 	}
@@ -376,16 +371,53 @@ public class Player{
 					|| KeyboardManager.qKey || KeyboardManager.dKey
 					|| KeyboardManager.wKey || KeyboardManager.xKey)) {
 				if (isModified) {
+					//on modifie l'instrument en fonctionde l'angle du Parameter1
+					int iterInstrum = getChangeInstrument();
 					//on passe a l'intrument suivant autant de fois que necessaire
-					int iter = getChangeInstrument();
-					if(iter>0)
-						for(int i=0;i<getChangeInstrument();i++){
-							melody.setInstrument(InstrumentLibrary.getNextInstrument(melody.getInstrument()));
+					if(iterInstrum>0)
+						for(int i=0;i<iterInstrum;i++){
+							try {
+								melody.setInstrument(InstrumentLibrary
+										.getNextInstrument(melody.getInstrument()));
+							} catch (InstantiationException | IllegalAccessException e1) {
+								e1.printStackTrace();
+							}
 						}
-					if(iter<0)
-						for(int i=0;i<-getChangeInstrument();i++){
-							melody.setInstrument(InstrumentLibrary.getPreviousInstrument(melody.getInstrument()));
+					//on passe a l'intrument precedent autant de fois que necessaire
+					if(iterInstrum<0)
+						for(int i=0;i<-iterInstrum;i++){
+							try {
+								melody.setInstrument(InstrumentLibrary
+										.getPreviousInstrument(melody.getInstrument()));
+							} catch (InstantiationException | IllegalAccessException e1) {
+								e1.printStackTrace();
+							}
 						}
+					
+					//on modifie le Pattern en fonction de l'angle du Parameter2
+					int iterPattern = getChangePattern();
+					//on passe au Pattern suivant autant de fois que necessaire
+					if(iterPattern>0)
+						for(int i=0;i<iterPattern;i++){
+							try {
+								melody.setPattern(MidiPatternsLibaray
+										.getNextPattern(melody.getPattern()));
+							} catch (InstantiationException | IllegalAccessException e1) {
+								e1.printStackTrace();
+							}
+						}
+					//on passe au Pattern precedent autant de fois que necessaire
+					if(iterPattern<0)
+						for(int i=0;i<-iterPattern;i++){
+							try {
+								melody.setPattern(MidiPatternsLibaray
+										.getPreviousPattern(melody.getPattern()));
+							} catch (InstantiationException | IllegalAccessException e1) {
+								e1.printStackTrace();
+							}
+						}
+						
+						
 					isModified = false;
 				}
 
@@ -463,7 +495,7 @@ public class Player{
 		SinusoidalAttackView attack = new SinusoidalAttackView(
 				unit.getAperture(), unit.getDirection(), power, unit.getView());
 		unit.getView().addChild(attack);
-		Sound sound = unit.getSound();
+
 		//unit.getSound().playToSpeakers();
 		try {
 			Thread.sleep(3000);
