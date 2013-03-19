@@ -110,8 +110,10 @@ public class GameEngine extends Thread {
 
 	/**
 	 * Methode qui lance les actions du(des) joueur(s)
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
-	public void playerTurn() {
+	public void playerTurn() throws InstantiationException, IllegalAccessException {
 		for (Player player : playerList) {
 			player.act();
 		}
@@ -148,8 +150,13 @@ public class GameEngine extends Thread {
 	 */
 	public void run() {
 		while (display.isAlive()) {
-			//playerTurn();
-			monsterTurn();
+			try {
+				playerTurn();
+			} catch (InstantiationException | IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//monsterTurn();
 		}
 	}
 

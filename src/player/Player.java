@@ -297,7 +297,7 @@ public class Player{
 		KeyboardManager.tap = false;
 	}
 
-	public void chooseWeaponTurn(Unit unit) {
+	/*public void chooseWeaponTurn(Unit unit) {
 		InstrumentsChoice instChoice = new InstrumentsChoice(gameEngine);
 		unit.getView().addChild(instChoice);
 		int fmChoice = 0;
@@ -329,7 +329,7 @@ public class Player{
 		// modification de l'instrument en cours d'utilisation
 		unit.getView().removeChild(instChoice);
 		KeyboardManager.tap = false;
-	}
+	}*/
 
 	/**
 	 * Methode qui declenche la creation du son via les Parameter Ici les
@@ -378,8 +378,10 @@ public class Player{
 				isModified = true;
 			}
 			if (KeyboardManager.aKey) {
-				
-				
+				if (melody.isPlaying())
+					melody.pause();
+				else
+					melody.unpause();
 			}
 			if (!(KeyboardManager.zKey || KeyboardManager.sKey
 					|| KeyboardManager.qKey || KeyboardManager.dKey
@@ -513,7 +515,7 @@ public class Player{
 
 	}
 
-	public void UAttack(Unit unit) {
+	/*public void UAttack(Unit unit) {
 		SinusoidalAttackView attack = new SinusoidalAttackView(
 				unit.getAperture(), unit.getDirection(), power, unit.getView());
 		unit.getView().addChild(attack);
@@ -544,18 +546,18 @@ public class Player{
 				gameEngine.getMonsterList().trimToSize();
 			}
 		}
-	}
+	}*/
 
-	public void act() {
+	public void act() throws InstantiationException, IllegalAccessException {
 		isTurn = true;
 		for (Unit unit : unitList) {
 			//audioRender.setSound(unit.getSound());
 			movingUTurn(unit);
-			chooseWeaponTurn(unit);
+			//chooseWeaponTurn(unit);
 			soundEditPTurn(unit);
 			UAperture(unit);
 			UDirection(unit);
-			UAttack(unit);
+			//UAttack(unit);
 		}
 		isTurn = false;
 
