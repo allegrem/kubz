@@ -11,6 +11,7 @@ public class VirtualPixel {
 	public Point getPos(){
 		return this.pos;
 	}
+
 	
 	public VirtualPixel(boolean brightness, int groupeConnexe, Point pos) {
 		this.brightness = brightness;

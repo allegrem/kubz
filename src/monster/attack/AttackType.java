@@ -22,10 +22,8 @@ public abstract class AttackType {
 	
 	public AttackType(Monster monster) {
 		this.monster = monster;
-		FmInstruments3Params instrument = WoodInstrument
-				.getFmInstruments3Params();
-		instrument.random();
 		this.attackMelody = new Melody();
+		
 	}
 
 

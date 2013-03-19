@@ -248,7 +248,6 @@ public class Monster {
 	}
 	
 	public void act(){
-		System.out.println("tata");
 		setSeenUnits(gameEngine.getUnitList());
 		setCible();
 		move();

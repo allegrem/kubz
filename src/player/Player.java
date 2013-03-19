@@ -46,7 +46,6 @@ public class Player{
 	private int lastAngle2;
 	private int compteurPattern;
 
-
 	int power = 100;
 
 	private GameEngine gameEngine;
@@ -294,42 +293,9 @@ public class Player{
 				e.printStackTrace();
 			}
 		}
+		unit.updtaeSeenMonsters();
 		KeyboardManager.tap = false;
 	}
-
-	/*public void chooseWeaponTurn(Unit unit) {
-		InstrumentsChoice instChoice = new InstrumentsChoice(gameEngine);
-		unit.getView().addChild(instChoice);
-		int fmChoice = 0;
-		while (!KeyboardManager.tap) {
-
-			if (unit.getInstrumentChoiceAngle() >= 0) {
-				instChoice
-						.setChosen((int) ((unit.getInstrumentChoiceAngle() % 360) / 90));
-				fmChoice = (int) ((unit.getInstrumentChoiceAngle() % 360) / 90);
-			} else {
-				instChoice.setChosen((int) (((360 * (1 + Math.abs((int) ((unit
-						.getInstrumentChoiceAngle() / 360)))) + unit
-						.getInstrumentChoiceAngle()) % 360) / 90));
-				fmChoice = (int) (((360 * (1 + Math.abs((int) ((unit
-						.getInstrumentChoiceAngle() / 360)))) + unit
-						.getInstrumentChoiceAngle()) % 360) / 90);
-
-			}
-			if (KeyboardManager.wKey)
-				unit.rotateInstrumentChoice(1);
-			if (KeyboardManager.xKey)
-				unit.rotateInstrumentChoice(-1);
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		// modification de l'instrument en cours d'utilisation
-		unit.getView().removeChild(instChoice);
-		KeyboardManager.tap = false;
-	}*/
 
 	/**
 	 * Methode qui declenche la creation du son via les Parameter Ici les
@@ -491,31 +457,6 @@ public class Player{
 		KeyboardManager.tap = false;
 	}
 
-	public void UAperture(Unit unit) {
-		setPStatesToWaiting();
-		setUStateToDirection(unit);
-		AttackConeView attackCone = new AttackConeView(unit.getAperture(),
-				unit.getDirection(), 100, unit.getView());
-		unit.getView().addChild(attackCone);
-		while (!KeyboardManager.tap) {
-			if (KeyboardManager.wKey && unit.getAperture() > 0) {
-				unit.rotateAperture(-1);
-				attackCone.setAperture(unit.getAperture());
-			}
-			if (KeyboardManager.xKey && unit.getAperture() < 360) {
-				unit.rotateAperture(1);
-				attackCone.setAperture(unit.getAperture());
-			}
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		unit.getView().removeChild(attackCone);
-		KeyboardManager.tap = false;
-
-	}
 
 	/*public void UAttack(Unit unit) {
 		SinusoidalAttackView attack = new SinusoidalAttackView(
@@ -557,7 +498,7 @@ public class Player{
 			movingUTurn(unit);
 			//chooseWeaponTurn(unit);
 			soundEditPTurn(unit);
-			UAperture(unit);
+			//UAperture(unit);
 			UDirection(unit);
 			//UAttack(unit);
 		}

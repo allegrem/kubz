@@ -9,6 +9,7 @@ public class DefenceType {
 	
 	public DefenceType(){
 		this.melody = new Melody();
+		
 	}
 
 	public Melody getMelody() {

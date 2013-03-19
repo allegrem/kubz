@@ -29,7 +29,6 @@ public class GrabberShow implements Runnable {
 														// position de l'objet
 														// tracké
 	private JPanel jp = new JPanel();
-	private int compconn;
 	private int posXold; 
 	private int posYold;
 	private boolean white;
@@ -39,7 +38,7 @@ public class GrabberShow implements Runnable {
 	public static final int CAMERA_HEIGHT = 480;
 	private int cameraRate = 75; // fps maximum pour cette resolution
 	private ImagePanel imagePanel;
-	private VirtualPixel[][] virtualTab = new VirtualPixel[CAMERA_HEIGHT][CAMERA_WIDTH];
+	private VirtualPixel[][] cameraScreen = new VirtualPixel[CAMERA_HEIGHT][CAMERA_WIDTH];
 	
 	/**
 	 * permet d'avoir un interface controlé
@@ -55,6 +54,11 @@ public class GrabberShow implements Runnable {
 
 		path.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 		path.setContentPane(jp);
+		for(int i=0; i< CAMERA_HEIGHT;i++){
+			for (int j = 0; j < CAMERA_WIDTH; j ++){
+				cameraScreen[i][j] = new VirtualPixel(false, 0, new Point(i,j));
+			}
+		}
 	}
 
 	
@@ -65,34 +69,33 @@ public class GrabberShow implements Runnable {
 	 */
 	public void run() {
 		int posnY = 0, posnX = 0;
+		int iter =0;
 		while (true) {
 
 			myCamera.getCameraFrame(myImage.pixels, 1000);
 			myImage.filter(PImage.THRESHOLD, 0.25f); //passage en mode threshold
-			compconn = 0;
 			int posX = 0, posY = 0;
 			int comptX = 0, comptY = 0;
 			double cupos = 0;
 			for (int i = 0; i < myImage.pixels.length; i++) {
 				if ((myImage.pixels[i] & 0xFF) > 10) {
 					white = true;
-					posX = comptX;
-					posY = comptY;
 				}
 				else white = false;
-				//virtualTab[comptX][comptY] = new VirtualPixel(white, 0, new Point(comptX,comptY));
-				comptX++; // on parcours l'image en largeur
+				//ici on met le tableau de pixel à jour
+				cameraScreen[comptY][comptX].setBrightness(white);
+				cameraScreen[comptY][comptX].setGroupeConnexe(0);	
+				comptX++; // on parcourt l'image en largeur
 				if (comptX == CAMERA_WIDTH) // on descend d'une ligne
 				{
 					comptX = 0;
 					comptY++;
-				}
-				//virtualTab[comptX][comptY] = new VirtualPixel(comptX,comptY,white,compconn);
+				}			
 			}
-			cupos = Math.sqrt((posnX - posX) * (posnX - posX) + (posnY - posY)
+			iter++;
+			System.out.println(iter);
+			/*cupos = Math.sqrt((posnX - posX) * (posnX - posX) + (posnY - posY)
 					* (posnY - posY));
-			//System.out.println("posnY: " + posnY + ";posnX: " + posnX
-					//+ ";posX " + posX + ";posY: " + posY + "cupos: " + cupos);
 			if (cupos < 100) {
 				paint(posX, posY, cupos);
 				posnX = posX;
@@ -109,16 +112,7 @@ public class GrabberShow implements Runnable {
 				((WritableRaster) raster).setDataElements(0, 0, CAMERA_WIDTH,
 						CAMERA_HEIGHT, myImage.pixels);
 				imagePanel.updateImage(raster);
-			}
-			// Je pense que comme ca, ca peut marcher, t'auras juste a decommenter et creer l'objet Traitement ou il faudra
-			
-			//Traitement traitement = new Traitement();
-			//traitement.updateConnexe(virtualTab);
-			//traitement.getGroupesPos(); // te renvoie une liste de points (coordonnées en double) qui sont les centres des taches (normalement)
-			  
-			 
-			
-			
+			}	*/
 		}
 	}
 
@@ -175,12 +169,12 @@ public class GrabberShow implements Runnable {
 		return true;
 	}
 
-	public VirtualPixel[][] getVirtualTab() {
-		return virtualTab;
+	public VirtualPixel[][] getcameraScreen() {
+		return cameraScreen;
 	}
 
-	public void setVirtualTab(VirtualPixel[][] virtualTab) {
-		this.virtualTab = virtualTab;
+	public void setcameraScreen(VirtualPixel[][] cameraScreen) {
+		this.cameraScreen = cameraScreen;
 	}
 	
 	

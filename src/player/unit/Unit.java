@@ -175,7 +175,7 @@ public class Unit extends CubeOwner {
 	 * On considere que la seule raison qu'un Monster ne soit pas visble est
 	 * qu'il y ait un mur qui le s�pare de Unit
 	 */
-	private void updtaeSeenMonsters() {
+	public void updtaeSeenMonsters() {
 		ArrayList<Monster> monsterList = gameEngine.getMonsterList();
 		seenMonsters = monsterList;
 		ArrayList<Wall> walls = gameEngine.getWalls();
@@ -212,23 +212,21 @@ public class Unit extends CubeOwner {
 			for (int i = 0; i < angleList.size(); i++) {
 				ArrayList<Double> angles = angleList.get(i);
 				Wall wall = null;
-				if (((angles.get(1) < monsterTheta)
-						&& (angles.get(2) > monsterTheta) || ((angles.get(1) > monsterTheta) && (angles
-						.get(2) < monsterTheta))))
+				if (((angles.get(0) < monsterTheta)&& (angles.get(1) > monsterTheta) || ((angles.get(0) > monsterTheta) && (angles.get(0) < monsterTheta)))){
 					wall = walls.get(i);
-				double xp1 = wall.getExtremity1().getX();
-				double yp1 = wall.getExtremity1().getY();
-				double xp2 = wall.getExtremity2().getX();
-				double yp2 = wall.getExtremity2().getY();
-				// calcul de l'intersection entre la droite qui relie Unit a
-				// Monster et du wall
-				double xi = (yu - yp1 - xu * (ym - yu) / (xm - xu) + xp1
-						* (yp2 - yp1) / (xp2 - xp1))
-						/ ((yp2 - yp1) / (xp2 - xp1) - (ym - yu) / (xm - xu));
-				double yi = yu + (xi - xu) * (ym - yu) / (xm - xu);
-				if (monster.getPos().distanceTo(pos) > pos
-						.distanceTo(new Point(xi, yi))) {
-					seenMonsters.remove(monster);
+					double xp1 = wall.getExtremity1().getX();
+					double yp1 = wall.getExtremity1().getY();
+					double xp2 = wall.getExtremity2().getX();
+					double yp2 = wall.getExtremity2().getY();
+					// calcul de l'intersection entre la droite qui relie Unit a
+					// Monster et du wall
+					double xi = (yu - yp1 - xu * (ym - yu) / (xm - xu) + xp1
+							* (yp2 - yp1) / (xp2 - xp1))
+							/ ((yp2 - yp1) / (xp2 - xp1) - (ym - yu) / (xm - xu));
+					double yi = yu + (xi - xu) * (ym - yu) / (xm - xu);
+					if (monster.getPos().distanceTo(pos) > pos.distanceTo(new Point(xi, yi))) {
+						seenMonsters.remove(monster);
+					}
 				}
 			}
 		}
