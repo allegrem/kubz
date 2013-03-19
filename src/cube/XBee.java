@@ -11,7 +11,7 @@ import cubeManager.CubeManager;
 public class XBee extends Thread implements Runnable{
 
 	/* Ref on the cube manager in order to actualize the good cube*/
-    private CubeManager manager = new CubeManager();
+    private CubeManager manager = new CubeManager(this);
     
     private String dataReceive = null;
     private Scanner sc = new Scanner(System.in);
@@ -132,7 +132,7 @@ private void readFrame (){
 private void parseRXFrame(){
 	switch(buf[3]) {
     case 0x89:
-      System.out.println("ACK");
+      //System.out.println("ACK");
       break;
     case 0x80 : 
       System.out.println("64bits RX frame");
@@ -150,6 +150,7 @@ private void parseRXFrame(){
 /* Parse the frame in order to decode the data */
 private void parse16BitFrame (){
 	int addr = buf[4]*256 + buf[5];
+	System.out.println(String.format("address = %d", addr));
 	
 	try {
 	int angle =buf[9]*256+buf[8];
@@ -159,6 +160,7 @@ private void parse16BitFrame (){
 	
 	// Put the angle in the cube which has the good address.
 	manager.getCube(addr).setAngle(angle);	
+	System.out.println(String.format("Angle du cube = %d ",manager.getCube(addr).getAngle()));
 	
 	} catch (Exception e){
 		e.printStackTrace();
