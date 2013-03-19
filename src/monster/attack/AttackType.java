@@ -16,7 +16,7 @@ import views.attacks.SinusoidalAttackView;
 
 public abstract class AttackType {
 	protected Monster monster;
-	protected Melody melody;
+	protected Melody attackMelody;
 	protected int power = 100; 
 	protected int distance = 100;
 	
@@ -25,7 +25,7 @@ public abstract class AttackType {
 		FmInstruments3Params instrument = WoodInstrument
 				.getFmInstruments3Params();
 		instrument.random();
-		this.melody = new Melody();
+		this.attackMelody = new Melody();
 	}
 
 
@@ -35,17 +35,20 @@ public abstract class AttackType {
 			double adjacent = monster.getCible().getY() - monster.getY();
 			SinusoidalAttackView attack = new SinusoidalAttackView(20, 180* Math.atan2(oppose, adjacent) / Math.PI, power,monster.getView());
 			monster.getView().addChild(attack);
-			double dTempo = Math.exp(Math.abs(melody.getTempo()-monster.getCible().getMelody().getTempo()));
-			double dTune = Math.exp(Math.abs(melody.getTune()-monster.getCible().getMelody().getTune()));
-			double dParameter = Math.exp(Math.abs(melody.getParameter()-monster.getCible().getMelody().getParameter()));
+			
+			//les degats sont calcules comme une fonction de la ressemblance entre la melody du monstre et celle du joueur
+			//ici on va calculer cette ressemblance
+			double dTempo = Math.exp(Math.abs(attackMelody.getTempo()-monster.getCible().getDefenceMelody().getTempo()));
+			double dTune = Math.exp(Math.abs(attackMelody.getTune()-monster.getCible().getDefenceMelody().getTune()));
+			double dParameter = Math.exp(Math.abs(attackMelody.getParameter()-monster.getCible().getDefenceMelody().getParameter()));
 			int dInstrum;
-			if(melody.getInstrument().equals(monster.getCible().getMelody().getInstrument())) dInstrum = 1;
+			if(attackMelody.getInstrument().equals(monster.getCible().getDefenceMelody().getInstrument())) dInstrum = 1;
 			else dInstrum = 0;
 			int dPattern;
-			if(melody.getPattern().equals(monster.getCible().getMelody().getPattern())) dPattern = 1;
+			if(attackMelody.getPattern().equals(monster.getCible().getDefenceMelody().getPattern())) dPattern = 1;
 			else dPattern = 0;
 			int degats = (int) ((int) power* dPattern*dInstrum*dTune*dTempo*dParameter);
-			//sound.playToSpeakers(); //A NE PAS ENLEVER QUAND JE FAIS MON NAZI SUR LES COMMENTAIRES
+			//on inflige a present les degats au joueur
 			if (distance > monster.getPos().distanceTo(monster.getCible().getPos())) {
 				monster.getCible().decreaseLife(degats);
 			}

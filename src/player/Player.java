@@ -343,7 +343,7 @@ public class Player{
 	 * 
 	 */
 	public void soundEditPTurn(Unit unit) throws InstantiationException, IllegalAccessException {
-		Melody melody = unit.getMelody();
+		Melody melody = unit.getAttackMelody();
 		setPStatesToSoundEdit();
 		setUStateToWaiting(unit);
 		double size = unit.getSize() * Math.sqrt(2) / 2;
@@ -443,6 +443,7 @@ public class Player{
 					melody.setTempo(getCubesAperture());
 						
 					isModified = false;
+					
 				}
 
 			}
@@ -454,6 +455,7 @@ public class Player{
 		}
 		//zik
 		KeyboardManager.tap = false;
+		unit.setAttackMelody(melody);
 	}
 
 	/**

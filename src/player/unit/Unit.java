@@ -29,7 +29,8 @@ public class Unit extends CubeOwner {
 	private Point pos = new Point(10, 10);
 	private double aperture;
 	private double direction;
-	private Melody melody;
+	private Melody attackMelody;
+	private Melody defenceMelody;
 	private UnitState state;
 	private CubeControlledView view;
 	private Player owner;
@@ -38,7 +39,6 @@ public class Unit extends CubeOwner {
 	private LifeView lifeView;
 	private ArrayList<Monster> seenMonsters;
 	private Monster target;
-	private VideoCube videoCube;
 
 	public Unit(Player owner) {
 		life = 15;
@@ -50,7 +50,8 @@ public class Unit extends CubeOwner {
 		view.addChild(lifeView);
 		size = view.getSize();
 		gameEngine.getMap().add(view);
-		melody = new Melody();
+		attackMelody = new Melody();
+		defenceMelody = new Melody();
 		seenMonsters = new ArrayList<Monster>();
 		target = null;
 
@@ -333,14 +334,22 @@ public class Unit extends CubeOwner {
 		this.lifeView = lifeView;
 	}
 
-	public Melody getMelody() {
-		return melody;
+	public Melody getAttackMelody() {
+		return attackMelody;
 	}
 
-	public void setMelody(Melody melody) {
-		this.melody = melody;
+	public void setAttackMelody(Melody attackMelody) {
+		this.attackMelody = attackMelody;
 	}
-	
-	
+
+	public Melody getDefenceMelody() {
+		return defenceMelody;
+	}
+
+	public void setDefenceMelody(Melody defenceMelody) {
+		this.defenceMelody = defenceMelody;
+	}
+
+
 
 }
