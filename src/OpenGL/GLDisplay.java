@@ -58,6 +58,17 @@ import map.Map;
  * 
  */
 public class GLDisplay extends Thread{
+	
+	
+	/*Réglages de l'affichage*/
+	private float decalageX=350; //Decalage de l'affichage a l'horizontale
+	private float decalageY=0; //Decalage de l'affichage a la verticale
+	private float sens=1; //sens=-1 -> image renversee
+	private float parallelisme=0.1f; // Correction du paralellisme
+	private float invParal=1; //Si -1, parallelisme inverse dans l'autre sens
+	
+	
+	
 
 	private GameEngine gameEngine;
 	private int display_width=700;
@@ -118,9 +129,9 @@ public class GLDisplay extends Thread{
 	private int my=0;
 	private ReadableColor mColor=null;
 	private int shaderProgram;
-	private int vertexShader;
+	private int vertexShader;		
 	private int fragmentShader;
-	private float parallelisme=0.5f;
+
 	
 	/**
 	 * Lancement de l'affichage
@@ -196,10 +207,18 @@ public class GLDisplay extends Thread{
 	    	int lW=GL20.glGetUniformLocation(shaderProgram, "display_width");
 			int lA=GL20.glGetUniformLocation(shaderProgram, "alpha");
 			int lM=GL20.glGetUniformLocation(shaderProgram, "midle");
+			int lS=GL20.glGetUniformLocation(shaderProgram, "sens");
+			int lI=GL20.glGetUniformLocation(shaderProgram, "inv");
+			int lX=GL20.glGetUniformLocation(shaderProgram, "decalageX");
+			int lY=GL20.glGetUniformLocation(shaderProgram, "decalageY");
 			GL20.glUniform1i(lH,display_height);
 			GL20.glUniform1i(lW,display_width);
 			GL20.glUniform1f(lA,parallelisme);
 			GL20.glUniform1f(lM,(float)(mapDisplay_width/2.0));
+			GL20.glUniform1f(lS,sens);
+			GL20.glUniform1f(lI,invParal);
+			GL20.glUniform1f(lX,decalageX);
+			GL20.glUniform1f(lY,decalageY);
 	}
 	
 	/**
