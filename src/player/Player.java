@@ -137,9 +137,17 @@ public class Player{
 	 * @return
 	 */
 	public int getCubesAperture() {
-		double theta = 0;
+		int sensibility = 1;
 		int offset = 0;
-		return (int) Math.round(theta)+offset ;
+		double dx1 = parameters[0].getX() - base.getCenter().getX();
+		double dy1 = parameters[0].getY() - base.getCenter().getY();
+		double dx2 = parameters[1].getX() - base.getCenter().getX();
+		double dy2 = parameters[1].getY() - base.getCenter().getY();
+		double scalar = dx1*dx2 +dy1*dy2;
+		double n1 = dx1*dx1 + dy1*dy1;
+		double n2 = dx2*dx2 + dy2*dy2;
+		double theta = 180*Math.acos(scalar/(n1*n2))/Math.PI;
+		return (int) ((int) sensibility*theta+offset) ;
 	}
 
 	public void removeUnit(Unit unit) {
@@ -428,6 +436,9 @@ public class Player{
 					
 					//on regle la note de depart
 					melody.setTune(getCube2Distance());
+					
+					//on regle le tempo
+					melody.setTempo(getCubesAperture());
 						
 					isModified = false;
 				}
