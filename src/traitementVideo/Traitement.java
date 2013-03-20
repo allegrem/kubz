@@ -24,7 +24,7 @@ public class Traitement {
 	private int LENGHT = 640;
 	private int HEIGHT = 480;
 	private int distance = 5;
-	private int seuil = 0;
+	private int seuil = 100;
 	private VirtualPixel[][] traitScreen;
 
 	public Traitement(int LENGHT, int HEIGHT) {
@@ -34,7 +34,7 @@ public class Traitement {
 		this.traitScreen = new VirtualPixel[HEIGHT][LENGHT];
 		for (int i = 0; i < HEIGHT; i++) {
 			for (int j = 0; j < LENGHT; j++) {
-				traitScreen[i][j] = new VirtualPixel(false, 0, new Point(i, j),0);
+				traitScreen[i][j] = new VirtualPixel(false, 0, new Point(i, j),(byte) 0);
 			}
 		}
 	}
@@ -46,14 +46,20 @@ public class Traitement {
 		super();
 	}
 
+	public void flouGaussien(int LENGHT, int HEIGHT){
+		this.LENGHT = LENGHT;
+		this.HEIGHT = HEIGHT;
+		flouGaussien();
+	}
+	
 	public void flouGaussien() {
-		int[][] gauss = { { 1, 2, 1 }, { 2, 4, 2 }, { 1, 2, 1 } };
-		int[][] newCoefs = new int[HEIGHT][LENGHT];
+		byte[][] gauss = { { 1, 2, 1 }, { 2, 4, 2 }, { 1, 2, 1 } };
+		byte[][] newCoefs = new byte[HEIGHT][LENGHT];
 		// ici on calcule les nouvelles intensites apres le passage du filtre
 		// gaussien
-		for (int i = 2; i < HEIGHT - 2; i++) {
-			for (int j = 2; j < LENGHT - 2; j++) {
-				int coef = (int) ((
+		for (int i = 2; i < (HEIGHT - 2); i++) {
+			for (int j = 2; j < (LENGHT - 2); j++) {
+				byte coef = (byte) ((
 						gauss[0][0]	* traitScreen[i - 1][j - 1].getIntensite()
 						+ gauss[0][1] * traitScreen[i - 1][j].getIntensite()
 						+ gauss[0][2] * traitScreen[i - 1][j + 1].getIntensite()
@@ -200,7 +206,7 @@ public class Traitement {
 		ArrayList<ArrayList<VirtualPixel>> vase = new ArrayList<ArrayList<VirtualPixel>>();
 		vase.add(new ArrayList<VirtualPixel>());
 		for (ArrayList<VirtualPixel> list : groupesConnexesIntermediaire) {
-			if (!(list.size() == 0)) {
+			if (list.size() > 3) {
 				vase.add(list);
 			}
 		}

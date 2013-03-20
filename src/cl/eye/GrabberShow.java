@@ -39,15 +39,16 @@ public class GrabberShow implements Runnable {
 	private int cameraRate = 75; // fps maximum pour cette resolution
 	private ImagePanel imagePanel;
 	private VirtualPixel[][] cameraScreen = new VirtualPixel[CAMERA_HEIGHT][CAMERA_WIDTH];
+	private Traitement traitement;
 	
 	/**
 	 * permet d'avoir un interface controlé
 	 */
-	public GrabberShow() {
+	public GrabberShow(Traitement traitement) {
 		// Verifies the native library loaded
 		if (!setupCameras())
 			System.exit(0);
-
+		this.traitement = traitement;
 		canvas.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 		imagePanel = new ImagePanel(CAMERA_WIDTH, CAMERA_HEIGHT);
 		canvas.setContentPane(imagePanel);
@@ -56,7 +57,7 @@ public class GrabberShow implements Runnable {
 		path.setContentPane(jp);
 		for(int i=0; i< CAMERA_HEIGHT;i++){
 			for (int j = 0; j < CAMERA_WIDTH; j ++){
-				cameraScreen[i][j] = new VirtualPixel(false, 0, new Point(i,j),0);
+				cameraScreen[i][j] = new VirtualPixel(false, 0, new Point(i,j),(byte) 0);
 			}
 		}
 	}
@@ -72,7 +73,7 @@ public class GrabberShow implements Runnable {
 		while (true) {
 
 			myCamera.getCameraFrame(myImage.pixels, 1000);
-			myImage.filter(PImage.THRESHOLD, 0.25f); //passage en mode threshold
+			//myImage.filter(PImage.THRESHOLD, 0.25f); //passage en mode threshold
 			int posX = 0, posY = 0;
 			int comptX = 0, comptY = 0;
 			double cupos = 0;
@@ -82,9 +83,10 @@ public class GrabberShow implements Runnable {
 				}
 				else white = false;*/
 				//ici on met le tableau de pixel à jour
+				//System.out.println(myImage.pixels[i] & 0xFF);
 				cameraScreen[comptY][comptX].setBrightness(false);
 				cameraScreen[comptY][comptX].setGroupeConnexe(0);
-				cameraScreen[comptY][comptX].setIntensite(myImage.pixels[i] & 0xFF);
+				cameraScreen[comptY][comptX].setIntensite((byte) (myImage.pixels[i] & 0xFF));
 				comptX++; // on parcourt l'image en largeur
 				if (comptX == CAMERA_WIDTH) // on descend d'une ligne
 				{
@@ -92,7 +94,7 @@ public class GrabberShow implements Runnable {
 					comptY++;
 				}			
 			}
-			/*cupos = Math.sqrt((posnX - posX) * (posnX - posX) + (posnY - posY)
+			cupos = Math.sqrt((posnX - posX) * (posnX - posX) + (posnY - posY)
 					* (posnY - posY));
 			if (cupos < 100) {
 				paint(posX, posY, cupos);
@@ -103,14 +105,15 @@ public class GrabberShow implements Runnable {
 			{
 				//mise a jour de la fenetre affichant l'image de la camera
 				byte[] byteArray = new byte[CAMERA_HEIGHT * CAMERA_WIDTH];
-				for (int j = 0; j < CAMERA_HEIGHT * CAMERA_WIDTH; j++)
+				for (int j = 0; j < CAMERA_HEIGHT * CAMERA_WIDTH; j++){
 					byteArray[j] = (byte) myImage.pixels[j];
+				}
 				Raster raster = Raster.createPackedRaster(DataBuffer.TYPE_INT,
 						CAMERA_WIDTH, CAMERA_HEIGHT, 3, 8, null);
 				((WritableRaster) raster).setDataElements(0, 0, CAMERA_WIDTH,
 						CAMERA_HEIGHT, myImage.pixels);
 				imagePanel.updateImage(raster);
-			}	*/
+			}	
 		}
 	}
 

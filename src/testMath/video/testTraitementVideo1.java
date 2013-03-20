@@ -5,6 +5,8 @@ package testMath.video;
  * @author Felix
  */
 
+import java.lang.annotation.Target;
+
 import cl.eye.GrabberShow;
 import traitementVideo.Traitement;
 import traitementVideo.VideoCube;
@@ -15,10 +17,10 @@ public class testTraitementVideo1 {
 
 	public static void main(String[] args) {
 		int iter = 0;
-		GrabberShow gs = new GrabberShow();
+		Traitement traitement = new Traitement();
+		GrabberShow gs = new GrabberShow(traitement);
         Thread th = new Thread(gs);
         th.start();
-		Traitement traitement = new Traitement();
 		traitement.updateConnexe(gs.getcameraScreen());
 		try {
 			Thread.sleep(100);

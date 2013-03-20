@@ -7,14 +7,14 @@ public class VirtualPixel {
 	private boolean brightness;
 	private int groupeConnexe;
 	private final Point pos;
-	private int intensite;
+	private byte intensite;
 	
 	public Point getPos(){
 		return this.pos;
 	}
 
 	
-	public VirtualPixel(boolean brightness, int groupeConnexe, Point pos, int intensite) {
+	public VirtualPixel(boolean brightness, int groupeConnexe, Point pos, byte intensite) {
 		this.brightness = brightness;
 		this.groupeConnexe = groupeConnexe;
 		this.pos = pos;
@@ -41,7 +41,7 @@ public class VirtualPixel {
 		return intensite;
 	}
 
-	public void setIntensite(int intensite) {
+	public void setIntensite(byte intensite) {
 		this.intensite = intensite;
 	}
 	
