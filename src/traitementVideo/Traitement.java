@@ -24,7 +24,7 @@ public class Traitement {
 	private int LENGHT = 640;
 	private int HEIGHT = 480;
 	private int distance = 5;
-	private int seuil = 100;
+	private int seuil = 5;
 	private VirtualPixel[][] traitScreen;
 
 	public Traitement(int LENGHT, int HEIGHT) {
@@ -82,13 +82,16 @@ public class Traitement {
 	}
 
 	public void seuil() {
+		//int iter = 0;
 		for (int i = 0; i < HEIGHT; i++) {
 			for (int j = 0; j < LENGHT; j++) {
-				if (traitScreen[i][j].getIntensite() > seuil){
+				if (traitScreen[i][j].getIntensite() >= seuil){
 					traitScreen[i][j].setBrightness(true);
+					//iter++;
 				}
 			}
 		}
+		//System.out.println(iter);
 	}
 
 	public void updateConnexe(VirtualPixel[][] screen, int LENGHT, int HEIGHT) {
@@ -116,6 +119,13 @@ public class Traitement {
 																			// connexe
 																			// 0
 		int compteurComposante = 1;
+		
+		//on remet les composantes a zero
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < LENGHT; j++) {
+					traitScreen[i][j].setGroupeConnexe(0);
+			}
+		}
 
 		if (vi[0][0].isBrightness()) {
 			groupesConnexesIntermediaire.add(new ArrayList<VirtualPixel>());
