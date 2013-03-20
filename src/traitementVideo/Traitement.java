@@ -24,114 +24,183 @@ public class Traitement {
 	private int LENGHT;
 	private int HEIGHT;
 	private int distance = 5;
-	
-		
+	private int seuil = 4;
+	private VirtualPixel[][] traitScreen;
+
 	public Traitement(int LENGHT, int HEIGHT) {
 		super();
 		this.LENGHT = LENGHT;
 		this.HEIGHT = HEIGHT;
+		this.traitScreen = new VirtualPixel[HEIGHT][LENGHT];
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < LENGHT; j++) {
+				traitScreen[i][j] = new VirtualPixel(false, 0, new Point(i, j),
+						0);
+			}
+		}
 	}
-	
+
 	/**
 	 * Constructeur uttilise pour les tests unitaires
 	 */
-	public Traitement(){
+	public Traitement() {
 		super();
 	}
 
-	
-	public void updateConnexe(VirtualPixel[][] screen, int LENGHT, int HEIGHT){
+	public void flouGaussien() {
+		int[][] gauss = { { 1, 2, 1 }, { 2, 4, 2 }, { 1, 2, 1 } };
+		int[][] newCoefs = new int[HEIGHT][LENGHT];
+		// ici on calcule les nouvelles intensites apres le passage du filtre
+		// gaussien
+		for (int i = 2; i < HEIGHT - 2; i++) {
+			for (int j = 2; j < LENGHT - 2; j++) {
+				int coef = (int) ((
+						gauss[0][0]	* traitScreen[i - 1][j - 1].getIntensite()
+						+ gauss[0][1] * traitScreen[i - 1][j].getIntensite()
+						+ gauss[0][2] * traitScreen[i - 1][j + 1].getIntensite()
+						+ gauss[1][0] * traitScreen[i][j - 1].getIntensite()
+						+ gauss[1][1] * traitScreen[i][j].getIntensite()
+						+ gauss[1][2] * traitScreen[i][j + 1].getIntensite()
+						+ gauss[2][0] * traitScreen[i + 1][j - 1].getIntensite()
+						+ gauss[2][1] * traitScreen[i + 1][j].getIntensite() 
+						+ gauss[2][2] * traitScreen[i + 1][j + 1].getIntensite()) 
+						/ 16);
+				newCoefs[i][j] = coef;
+			}
+		}
+		// on change les intensites pour les nouvelles intensites
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < LENGHT; j++) {
+				traitScreen[i][j].setIntensite(newCoefs[i][j]);
+			}
+		}
+	}
+
+	public void seuil() {
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < LENGHT; j++) {
+				if (traitScreen[i][j].getIntensite() > seuil)
+					traitScreen[i][j].setBrightness(true);
+			}
+		}
+	}
+
+	public void updateConnexe(VirtualPixel[][] screen, int LENGHT, int HEIGHT) {
 		this.LENGHT = LENGHT;
 		this.HEIGHT = HEIGHT;
 		updateConnexe(screen);
 	}
-	
-	public void updateConnexe(VirtualPixel[][] screen){
+
+	public void updateConnexe() {
+		updateConnexe(traitScreen);
+	}
+
+	public void updateConnexe(VirtualPixel[][] screen) {
 		vi = screen;
 		ArrayList<ArrayList<VirtualPixel>> groupesConnexesIntermediaire;
 		groupesConnexesIntermediaire = new ArrayList<ArrayList<VirtualPixel>>();
-		groupesConnexesIntermediaire.add(new ArrayList<VirtualPixel>()); //on ajoute la liste des pixels de groupe connexe 0
+		groupesConnexesIntermediaire.add(new ArrayList<VirtualPixel>()); // on
+																			// ajoute
+																			// la
+																			// liste
+																			// des
+																			// pixels
+																			// de
+																			// groupe
+																			// connexe
+																			// 0
 		int compteurComposante = 1;
-		
-		if(vi[0][0].isBrightness()){
+
+		if (vi[0][0].isBrightness()) {
 			groupesConnexesIntermediaire.add(new ArrayList<VirtualPixel>());
 			vi[0][0].setGroupeConnexe(compteurComposante);
 			groupesConnexesIntermediaire.get(compteurComposante).add(vi[0][0]);
 			compteurComposante++;
 		}
-		//parcours de la premiere ligne
-		for(int j=1;j<LENGHT;j++){
-			if(vi[0][j].isBrightness()){
-				if(!vi[0][j-1].isBrightness()){
-					groupesConnexesIntermediaire.add(new ArrayList<VirtualPixel>());
+		// parcours de la premiere ligne
+		for (int j = 1; j < LENGHT; j++) {
+			if (vi[0][j].isBrightness()) {
+				if (!vi[0][j - 1].isBrightness()) {
+					groupesConnexesIntermediaire
+							.add(new ArrayList<VirtualPixel>());
 					vi[0][j].setGroupeConnexe(compteurComposante);
-					groupesConnexesIntermediaire.get(compteurComposante).add(vi[0][j]);
+					groupesConnexesIntermediaire.get(compteurComposante).add(
+							vi[0][j]);
 					compteurComposante++;
-				}
-				else{
-					int newGroupe = vi[0][j-1].getGroupeConnexe();
+				} else {
+					int newGroupe = vi[0][j - 1].getGroupeConnexe();
 					vi[0][j].setGroupeConnexe(newGroupe);
 					groupesConnexesIntermediaire.get(newGroupe).add(vi[0][j]);
 				}
-			
+
 			}
-			
+
 		}
-		//parcours de la premiere colone
-		for(int i=1;i<HEIGHT;i++){
-			if(vi[i][0].isBrightness()){
-				if(!vi[i-1][0].isBrightness()){
-					groupesConnexesIntermediaire.add(new ArrayList<VirtualPixel>());
+		// parcours de la premiere colone
+		for (int i = 1; i < HEIGHT; i++) {
+			if (vi[i][0].isBrightness()) {
+				if (!vi[i - 1][0].isBrightness()) {
+					groupesConnexesIntermediaire
+							.add(new ArrayList<VirtualPixel>());
 					vi[i][0].setGroupeConnexe(compteurComposante);
-					groupesConnexesIntermediaire.get(compteurComposante).add(vi[i][0]);
+					groupesConnexesIntermediaire.get(compteurComposante).add(
+							vi[i][0]);
 					compteurComposante++;
-				}
-				else{
-					int newGroupe = vi[i-1][0].getGroupeConnexe();
+				} else {
+					int newGroupe = vi[i - 1][0].getGroupeConnexe();
 					vi[i][0].setGroupeConnexe(newGroupe);
 					groupesConnexesIntermediaire.get(newGroupe).add(vi[i][0]);
 				}
-			
+
 			}
-			
+
 		}
-		//parcours du reste du tableau normalement
-		for(int i=1; i<HEIGHT;i++){
-			for(int j=1; j<LENGHT; j++){
-				if(vi[i][j].isBrightness()){
-					if((vi[i-1][j].isBrightness())&&!(vi[i][j-1].isBrightness())){
-						
-						int newGroupe = vi[i-1][j].getGroupeConnexe();
+		// parcours du reste du tableau normalement
+		for (int i = 1; i < HEIGHT; i++) {
+			for (int j = 1; j < LENGHT; j++) {
+				if (vi[i][j].isBrightness()) {
+					if ((vi[i - 1][j].isBrightness())
+							&& !(vi[i][j - 1].isBrightness())) {
+
+						int newGroupe = vi[i - 1][j].getGroupeConnexe();
 						vi[i][j].setGroupeConnexe(newGroupe);
-						groupesConnexesIntermediaire.get(newGroupe).add(vi[i][j]);
+						groupesConnexesIntermediaire.get(newGroupe).add(
+								vi[i][j]);
 					}
-					if(!(vi[i-1][j].isBrightness())&&(vi[i][j-1].isBrightness())){
-						int newGroupe = vi[i][j-1].getGroupeConnexe();
+					if (!(vi[i - 1][j].isBrightness())
+							&& (vi[i][j - 1].isBrightness())) {
+						int newGroupe = vi[i][j - 1].getGroupeConnexe();
 						vi[i][j].setGroupeConnexe(newGroupe);
-						groupesConnexesIntermediaire.get(newGroupe).add(vi[i][j]);
+						groupesConnexesIntermediaire.get(newGroupe).add(
+								vi[i][j]);
 					}
-					if(!(vi[i-1][j].isBrightness())&&!(vi[i][j-1].isBrightness())){
-						groupesConnexesIntermediaire.add(new ArrayList<VirtualPixel>());
+					if (!(vi[i - 1][j].isBrightness())
+							&& !(vi[i][j - 1].isBrightness())) {
+						groupesConnexesIntermediaire
+								.add(new ArrayList<VirtualPixel>());
 						vi[i][j].setGroupeConnexe(compteurComposante);
-						groupesConnexesIntermediaire.get(compteurComposante).add(vi[i][j]);
+						groupesConnexesIntermediaire.get(compteurComposante)
+								.add(vi[i][j]);
 						compteurComposante++;
 					}
-					if((vi[i-1][j].isBrightness())&&(vi[i][j-1].isBrightness())){
-						int groupe1 = vi[i-1][j].getGroupeConnexe();
-						int groupe2 = vi[i][j-1].getGroupeConnexe();
+					if ((vi[i - 1][j].isBrightness())
+							&& (vi[i][j - 1].isBrightness())) {
+						int groupe1 = vi[i - 1][j].getGroupeConnexe();
+						int groupe2 = vi[i][j - 1].getGroupeConnexe();
 						vi[i][j].setGroupeConnexe(groupe2);
 						groupesConnexesIntermediaire.get(groupe2).add(vi[i][j]);
-						uniongroupesConnexeIntermediare(groupesConnexesIntermediaire,groupe1,groupe2);
-					}					
+						uniongroupesConnexeIntermediare(
+								groupesConnexesIntermediaire, groupe1, groupe2);
+					}
 				}
 			}
 		}
-		
-		//on actualise le tableau des groupes connexes
+
+		// on actualise le tableau des groupes connexes
 		ArrayList<ArrayList<VirtualPixel>> vase = new ArrayList<ArrayList<VirtualPixel>>();
 		vase.add(new ArrayList<VirtualPixel>());
-		for (ArrayList<VirtualPixel> list : groupesConnexesIntermediaire){
-			if(!(list.size()==0)){
+		for (ArrayList<VirtualPixel> list : groupesConnexesIntermediaire) {
+			if (!(list.size() == 0)) {
 				vase.add(list);
 			}
 		}
@@ -170,25 +239,31 @@ public class Traitement {
 	 * @param groupe1
 	 * @param groupe2
 	 */
-	private static void uniongroupesConnexeIntermediare(ArrayList<ArrayList<VirtualPixel>> groupesConnexeIntermediare,int groupe1, int groupe2) {
-		if (groupesConnexeIntermediare.get(groupe1).size() < groupesConnexeIntermediare.get(groupe2).size()) {
-			groupesConnexeIntermediare.get(groupe2).addAll(groupesConnexeIntermediare.get(groupe1));
+	private static void uniongroupesConnexeIntermediare(
+			ArrayList<ArrayList<VirtualPixel>> groupesConnexeIntermediare,
+			int groupe1, int groupe2) {
+		if (groupesConnexeIntermediare.get(groupe1).size() < groupesConnexeIntermediare
+				.get(groupe2).size()) {
+			groupesConnexeIntermediare.get(groupe2).addAll(
+					groupesConnexeIntermediare.get(groupe1));
 			groupesConnexeIntermediare.get(groupe1).clear();
 		} else {
-			groupesConnexeIntermediare.get(groupe1).addAll(groupesConnexeIntermediare.get(groupe2));
+			groupesConnexeIntermediare.get(groupe1).addAll(
+					groupesConnexeIntermediare.get(groupe2));
 			groupesConnexeIntermediare.get(groupe2).clear();
 		}
 	}
 
 	/**
-	 * Methode qui renvoie la position moyenne d'une composante connexe
-	 * On considere que le centre de la tache est son barycentre 
+	 * Methode qui renvoie la position moyenne d'une composante connexe On
+	 * considere que le centre de la tache est son barycentre
+	 * 
 	 * @param groupe
 	 * @return
 	 */
 	public Point getGroupePos(int groupe) {
 		double xMoy = 0;
-		double yMoy = 0;		
+		double yMoy = 0;
 		for (VirtualPixel vp : groupesConnexes.get(groupe)) {
 			xMoy = xMoy + vp.getPos().getX();
 			yMoy = yMoy + vp.getPos().getY();
@@ -210,221 +285,216 @@ public class Traitement {
 	public void localSearch(VideoCube vc) {
 		int expectedX1 = (int) (vc.getPos1().getX() + vc.getX1Speed());
 		int expectedX2 = (int) (vc.getPos2().getX() + vc.getX2Speed());
-		//int expectedX3 = (int) (vc.getPos3().getX() + vc.getX3Speed());
+		// int expectedX3 = (int) (vc.getPos3().getX() + vc.getX3Speed());
 		int expectedY1 = (int) (vc.getPos1().getY() + vc.getY1Speed());
 		int expectedY2 = (int) (vc.getPos2().getY() + vc.getY2Speed());
-		//int expectedY3 = (int) (vc.getPos3().getY() + vc.getY3Speed());
-		
+		// int expectedY3 = (int) (vc.getPos3().getY() + vc.getY3Speed());
+
 		/*
 		 * Ici on établie les pixels à distance distance de la position attendue
-		 * Ensuite on parcours ces pixels par distance croissante a la position attendue
-		 * Si on trouve une tache lumineuse on considere que c'est la nouvelle position et on sort de la boucle
-		 * Si on ne trouve pas de tache lumineuse on appelle le GameEngine
+		 * Ensuite on parcours ces pixels par distance croissante a la position
+		 * attendue Si on trouve une tache lumineuse on considere que c'est la
+		 * nouvelle position et on sort de la boucle Si on ne trouve pas de
+		 * tache lumineuse on appelle le GameEngine
 		 */
-		ArrayList<ArrayList<VirtualPixel>> pos1Lists = parcoursSpirale(expectedX1, expectedY1, distance);
+		ArrayList<ArrayList<VirtualPixel>> pos1Lists = parcoursSpirale(
+				expectedX1, expectedY1, distance);
 		boolean found1 = false;
-		for(ArrayList<VirtualPixel> list : pos1Lists){
-			for(VirtualPixel vp: list){
-				if (vp.isBrightness()){
+		for (ArrayList<VirtualPixel> list : pos1Lists) {
+			for (VirtualPixel vp : list) {
+				if (vp.isBrightness()) {
 					updatePosSpeed1(vc, vp.getPos().getX(), vp.getPos().getY());
 					found1 = true;
 					break;
 				}
 			}
-			if (found1) break;
+			if (found1)
+				break;
 		}
-		if (!found1) /*gameEngine.setFrozen(null)*/ System.out.println("cube perdu");
-		
-		ArrayList<ArrayList<VirtualPixel>> pos2Lists = parcoursSpirale(expectedX2, expectedY2, distance);
+		if (!found1) /* gameEngine.setFrozen(null) */
+			System.out.println("cube perdu");
+
+		ArrayList<ArrayList<VirtualPixel>> pos2Lists = parcoursSpirale(
+				expectedX2, expectedY2, distance);
 		boolean found2 = false;
-		for(ArrayList<VirtualPixel> list : pos2Lists){
-			for(VirtualPixel vp: list){
-				if (vp.isBrightness()){
+		for (ArrayList<VirtualPixel> list : pos2Lists) {
+			for (VirtualPixel vp : list) {
+				if (vp.isBrightness()) {
 					updatePosSpeed2(vc, vp.getPos().getX(), vp.getPos().getY());
 					found2 = true;
 					break;
 				}
 			}
-			if (found2) break;
+			if (found2)
+				break;
 		}
-		if (!found2) /*gameEngine.setFrozen(null)*/ System.out.println("cube perdu");
-		
-		/*ArrayList<ArrayList<VirtualPixel>> pos3Lists = parcoursSpirale(expectedX3, expectedY3, distance);
-		boolean found3 = false;
-		for(ArrayList<VirtualPixel> list : pos3Lists){
-			for(VirtualPixel vp: list){
-				if (vp.isBrightness()){
-					updatePosSpeed1(vc, vp.getPos().getX(), vp.getPos().getY());
-					found3 = true;
-					break;
-				}
-			}
-			if (found3) break;
-		}
-		if (!found3) gameEngine.setFrozen(null);
-		*/
+		if (!found2) /* gameEngine.setFrozen(null) */
+			System.out.println("cube perdu");
+
 		/*
-		if (vi[expectedX1][expectedY1].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1, expectedY1);
-		else if (vi[expectedX1 + 1][expectedY1].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1 + 1, expectedY1);
-		else if (vi[expectedX1 + 1][expectedY1 + 1].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1 + 1, expectedY1 + 1);
-		else if (vi[expectedX1][expectedY1 + 1].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1, expectedY1 + 1);
-		else if (vi[expectedX1 - 1][expectedY1 + 1].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1 - 1, expectedY1 + 1);
-		else if (vi[expectedX1 - 1][expectedY1].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1 - 1, expectedY1);
-		else if (vi[expectedX1 - 1][expectedY1 - 1].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1 - 1, expectedY1 - 1);
-		else if (vi[expectedX1][expectedY1 - 1].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1, expectedY1 - 1);
-		else if (vi[expectedX1 + 1][expectedY1 - 1].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1 + 1, expectedY1 - 1);
-		else if (vi[expectedX1 + 2][expectedY1 - 1].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1 + 2, expectedY1 - 1);
-		else if (vi[expectedX1 + 2][expectedY1].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1 + 2, expectedY1);
-		else if (vi[expectedX1 + 2][expectedY1 + 1].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1 + 2, expectedY1 + 1);
-		else if (vi[expectedX1 + 2][expectedY1 + 2].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1 + 2, expectedY1 + 2);
-		else if (vi[expectedX1 + 1][expectedY1 + 2].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1 + 1, expectedY1 + 2);
-		else if (vi[expectedX1][expectedY1 + 2].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1, expectedY1 + 2);
-		else if (vi[expectedX1 - 1][expectedY1 + 2].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1 - 1, expectedY1 + 2);
-		else if (vi[expectedX1 - 2][expectedY1 + 2].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1 - 2, expectedY1 + 2);
-		else if (vi[expectedX1 - 2][expectedY1 + 1].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1 - 2, expectedY1 + 1);
-		else if (vi[expectedX1 - 2][expectedY1].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1 - 2, expectedY1);
-		else if (vi[expectedX1 - 2][expectedY1 - 1].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1 - 2, expectedY1 - 1);
-		else if (vi[expectedX1 - 2][expectedY1 - 2].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1 - 2, expectedY1 - 2);
-		else if (vi[expectedX1 - 1][expectedY1 - 2].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1 - 1, expectedY1 - 2);
-		else if (vi[expectedX1][expectedY1 - 2].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1, expectedY1 - 2);
-		else if (vi[expectedX1 + 1][expectedY1 - 2].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1 + 1, expectedY1 - 2);
-		else if (vi[expectedX1 + 2][expectedY1 - 2].isBrightness() == true)
-			updatePosSpeed1(vc, expectedX1 + 2, expectedY1 - 2);
-		else
-			gameEngine.setFrozen(vc.getOwner());
-
-		if (vi[expectedX2][expectedY2].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2, expectedY2);
-		else if (vi[expectedX2 + 1][expectedY2].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2 + 1, expectedY2);
-		else if (vi[expectedX2 + 1][expectedY2 + 1].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2 + 1, expectedY2 + 1);
-		else if (vi[expectedX2][expectedY2 + 1].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2, expectedY2 + 1);
-		else if (vi[expectedX2 - 1][expectedY2 + 1].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2 - 1, expectedY2 + 1);
-		else if (vi[expectedX2 - 1][expectedY2].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2 - 1, expectedY2);
-		else if (vi[expectedX2 - 1][expectedY2 - 1].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2 - 1, expectedY2 - 1);
-		else if (vi[expectedX2][expectedY2 - 1].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2, expectedY2 - 1);
-		else if (vi[expectedX2 + 1][expectedY2 - 1].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2 + 1, expectedY2 - 1);
-		else if (vi[expectedX2 + 2][expectedY2 - 1].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2 + 2, expectedY2 - 1);
-		else if (vi[expectedX2 + 2][expectedY2].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2 + 2, expectedY2);
-		else if (vi[expectedX2 + 2][expectedY2 + 1].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2 + 2, expectedY2 + 1);
-		else if (vi[expectedX2 + 2][expectedY2 + 2].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2 + 2, expectedY2 + 2);
-		else if (vi[expectedX2 + 1][expectedY2 + 2].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2 + 1, expectedY2 + 2);
-		else if (vi[expectedX2][expectedY2 + 2].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2, expectedY2 + 2);
-		else if (vi[expectedX2 - 1][expectedY2 + 2].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2 - 1, expectedY2 + 2);
-		else if (vi[expectedX2 - 2][expectedY2 + 2].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2 - 2, expectedY2 + 2);
-		else if (vi[expectedX2 - 2][expectedY2 + 1].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2 - 2, expectedY2 + 1);
-		else if (vi[expectedX2 - 2][expectedY2].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2 - 2, expectedY2);
-		else if (vi[expectedX2 - 2][expectedY2 - 1].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2 - 2, expectedY2 - 1);
-		else if (vi[expectedX2 - 2][expectedY2 - 2].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2 - 2, expectedY2 - 2);
-		else if (vi[expectedX2 - 1][expectedY2 - 2].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2 - 1, expectedY2 - 2);
-		else if (vi[expectedX2][expectedY2 - 2].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2, expectedY2 - 2);
-		else if (vi[expectedX2 + 1][expectedY2 - 2].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2 + 1, expectedY2 - 2);
-		else if (vi[expectedX2 + 2][expectedY2 - 2].isBrightness() == true)
-			updatePosSpeed2(vc, expectedX2 + 2, expectedY2 - 2);
-		else
-			gameEngine.setFrozen(vc.getOwner());
-
-		if (vi[expectedX3][expectedY3].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3, expectedY3);
-		else if (vi[expectedX3 + 1][expectedY3].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3 + 1, expectedY3);
-		else if (vi[expectedX3 + 1][expectedY3 + 1].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3 + 1, expectedY3 + 1);
-		else if (vi[expectedX3][expectedY3 + 1].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3, expectedY3 + 1);
-		else if (vi[expectedX3 - 1][expectedY3 + 1].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3 - 1, expectedY3 + 1);
-		else if (vi[expectedX3 - 1][expectedY3].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3 - 1, expectedY3);
-		else if (vi[expectedX3 - 1][expectedY3 - 1].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3 - 1, expectedY3 - 1);
-		else if (vi[expectedX3][expectedY3 - 1].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3, expectedY3 - 1);
-		else if (vi[expectedX3 + 1][expectedY3 - 1].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3 + 1, expectedY3 - 1);
-		else if (vi[expectedX3 + 2][expectedY3 - 1].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3 + 2, expectedY3 - 1);
-		else if (vi[expectedX3 + 2][expectedY3].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3 + 2, expectedY3);
-		else if (vi[expectedX3 + 2][expectedY3 + 1].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3 + 2, expectedY3 + 1);
-		else if (vi[expectedX3 + 2][expectedY3 + 2].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3 + 2, expectedY3 + 2);
-		else if (vi[expectedX3 + 1][expectedY3 + 2].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3 + 1, expectedY3 + 2);
-		else if (vi[expectedX3][expectedY3 + 2].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3, expectedY3 + 2);
-		else if (vi[expectedX3 - 1][expectedY3 + 2].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3 - 1, expectedY3 + 2);
-		else if (vi[expectedX3 - 2][expectedY3 + 2].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3 - 2, expectedY3 + 2);
-		else if (vi[expectedX3 - 2][expectedY3 + 1].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3 - 2, expectedY3 + 1);
-		else if (vi[expectedX3 - 2][expectedY3].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3 - 2, expectedY3);
-		else if (vi[expectedX3 - 2][expectedY3 - 1].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3 - 2, expectedY3 - 1);
-		else if (vi[expectedX3 - 2][expectedY3 - 2].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3 - 2, expectedY3 - 2);
-		else if (vi[expectedX3 - 1][expectedY3 - 2].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3 - 1, expectedY3 - 2);
-		else if (vi[expectedX3][expectedY3 - 2].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3, expectedY3 - 2);
-		else if (vi[expectedX3 + 1][expectedY3 - 2].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3 + 1, expectedY3 - 2);
-		else if (vi[expectedX3 + 2][expectedY3 - 2].isBrightness() == true)
-			updatePosSpeed3(vc, expectedX3 + 2, expectedY3 - 2);
-		else
-			gameEngine.setFrozen(vc.getOwner());
-		*/
+		 * ArrayList<ArrayList<VirtualPixel>> pos3Lists =
+		 * parcoursSpirale(expectedX3, expectedY3, distance); boolean found3 =
+		 * false; for(ArrayList<VirtualPixel> list : pos3Lists){
+		 * for(VirtualPixel vp: list){ if (vp.isBrightness()){
+		 * updatePosSpeed1(vc, vp.getPos().getX(), vp.getPos().getY()); found3 =
+		 * true; break; } } if (found3) break; } if (!found3)
+		 * gameEngine.setFrozen(null);
+		 */
+		/*
+		 * if (vi[expectedX1][expectedY1].isBrightness() == true)
+		 * updatePosSpeed1(vc, expectedX1, expectedY1); else if (vi[expectedX1 +
+		 * 1][expectedY1].isBrightness() == true) updatePosSpeed1(vc, expectedX1
+		 * + 1, expectedY1); else if (vi[expectedX1 + 1][expectedY1 +
+		 * 1].isBrightness() == true) updatePosSpeed1(vc, expectedX1 + 1,
+		 * expectedY1 + 1); else if (vi[expectedX1][expectedY1 +
+		 * 1].isBrightness() == true) updatePosSpeed1(vc, expectedX1, expectedY1
+		 * + 1); else if (vi[expectedX1 - 1][expectedY1 + 1].isBrightness() ==
+		 * true) updatePosSpeed1(vc, expectedX1 - 1, expectedY1 + 1); else if
+		 * (vi[expectedX1 - 1][expectedY1].isBrightness() == true)
+		 * updatePosSpeed1(vc, expectedX1 - 1, expectedY1); else if
+		 * (vi[expectedX1 - 1][expectedY1 - 1].isBrightness() == true)
+		 * updatePosSpeed1(vc, expectedX1 - 1, expectedY1 - 1); else if
+		 * (vi[expectedX1][expectedY1 - 1].isBrightness() == true)
+		 * updatePosSpeed1(vc, expectedX1, expectedY1 - 1); else if
+		 * (vi[expectedX1 + 1][expectedY1 - 1].isBrightness() == true)
+		 * updatePosSpeed1(vc, expectedX1 + 1, expectedY1 - 1); else if
+		 * (vi[expectedX1 + 2][expectedY1 - 1].isBrightness() == true)
+		 * updatePosSpeed1(vc, expectedX1 + 2, expectedY1 - 1); else if
+		 * (vi[expectedX1 + 2][expectedY1].isBrightness() == true)
+		 * updatePosSpeed1(vc, expectedX1 + 2, expectedY1); else if
+		 * (vi[expectedX1 + 2][expectedY1 + 1].isBrightness() == true)
+		 * updatePosSpeed1(vc, expectedX1 + 2, expectedY1 + 1); else if
+		 * (vi[expectedX1 + 2][expectedY1 + 2].isBrightness() == true)
+		 * updatePosSpeed1(vc, expectedX1 + 2, expectedY1 + 2); else if
+		 * (vi[expectedX1 + 1][expectedY1 + 2].isBrightness() == true)
+		 * updatePosSpeed1(vc, expectedX1 + 1, expectedY1 + 2); else if
+		 * (vi[expectedX1][expectedY1 + 2].isBrightness() == true)
+		 * updatePosSpeed1(vc, expectedX1, expectedY1 + 2); else if
+		 * (vi[expectedX1 - 1][expectedY1 + 2].isBrightness() == true)
+		 * updatePosSpeed1(vc, expectedX1 - 1, expectedY1 + 2); else if
+		 * (vi[expectedX1 - 2][expectedY1 + 2].isBrightness() == true)
+		 * updatePosSpeed1(vc, expectedX1 - 2, expectedY1 + 2); else if
+		 * (vi[expectedX1 - 2][expectedY1 + 1].isBrightness() == true)
+		 * updatePosSpeed1(vc, expectedX1 - 2, expectedY1 + 1); else if
+		 * (vi[expectedX1 - 2][expectedY1].isBrightness() == true)
+		 * updatePosSpeed1(vc, expectedX1 - 2, expectedY1); else if
+		 * (vi[expectedX1 - 2][expectedY1 - 1].isBrightness() == true)
+		 * updatePosSpeed1(vc, expectedX1 - 2, expectedY1 - 1); else if
+		 * (vi[expectedX1 - 2][expectedY1 - 2].isBrightness() == true)
+		 * updatePosSpeed1(vc, expectedX1 - 2, expectedY1 - 2); else if
+		 * (vi[expectedX1 - 1][expectedY1 - 2].isBrightness() == true)
+		 * updatePosSpeed1(vc, expectedX1 - 1, expectedY1 - 2); else if
+		 * (vi[expectedX1][expectedY1 - 2].isBrightness() == true)
+		 * updatePosSpeed1(vc, expectedX1, expectedY1 - 2); else if
+		 * (vi[expectedX1 + 1][expectedY1 - 2].isBrightness() == true)
+		 * updatePosSpeed1(vc, expectedX1 + 1, expectedY1 - 2); else if
+		 * (vi[expectedX1 + 2][expectedY1 - 2].isBrightness() == true)
+		 * updatePosSpeed1(vc, expectedX1 + 2, expectedY1 - 2); else
+		 * gameEngine.setFrozen(vc.getOwner());
+		 * 
+		 * if (vi[expectedX2][expectedY2].isBrightness() == true)
+		 * updatePosSpeed2(vc, expectedX2, expectedY2); else if (vi[expectedX2 +
+		 * 1][expectedY2].isBrightness() == true) updatePosSpeed2(vc, expectedX2
+		 * + 1, expectedY2); else if (vi[expectedX2 + 1][expectedY2 +
+		 * 1].isBrightness() == true) updatePosSpeed2(vc, expectedX2 + 1,
+		 * expectedY2 + 1); else if (vi[expectedX2][expectedY2 +
+		 * 1].isBrightness() == true) updatePosSpeed2(vc, expectedX2, expectedY2
+		 * + 1); else if (vi[expectedX2 - 1][expectedY2 + 1].isBrightness() ==
+		 * true) updatePosSpeed2(vc, expectedX2 - 1, expectedY2 + 1); else if
+		 * (vi[expectedX2 - 1][expectedY2].isBrightness() == true)
+		 * updatePosSpeed2(vc, expectedX2 - 1, expectedY2); else if
+		 * (vi[expectedX2 - 1][expectedY2 - 1].isBrightness() == true)
+		 * updatePosSpeed2(vc, expectedX2 - 1, expectedY2 - 1); else if
+		 * (vi[expectedX2][expectedY2 - 1].isBrightness() == true)
+		 * updatePosSpeed2(vc, expectedX2, expectedY2 - 1); else if
+		 * (vi[expectedX2 + 1][expectedY2 - 1].isBrightness() == true)
+		 * updatePosSpeed2(vc, expectedX2 + 1, expectedY2 - 1); else if
+		 * (vi[expectedX2 + 2][expectedY2 - 1].isBrightness() == true)
+		 * updatePosSpeed2(vc, expectedX2 + 2, expectedY2 - 1); else if
+		 * (vi[expectedX2 + 2][expectedY2].isBrightness() == true)
+		 * updatePosSpeed2(vc, expectedX2 + 2, expectedY2); else if
+		 * (vi[expectedX2 + 2][expectedY2 + 1].isBrightness() == true)
+		 * updatePosSpeed2(vc, expectedX2 + 2, expectedY2 + 1); else if
+		 * (vi[expectedX2 + 2][expectedY2 + 2].isBrightness() == true)
+		 * updatePosSpeed2(vc, expectedX2 + 2, expectedY2 + 2); else if
+		 * (vi[expectedX2 + 1][expectedY2 + 2].isBrightness() == true)
+		 * updatePosSpeed2(vc, expectedX2 + 1, expectedY2 + 2); else if
+		 * (vi[expectedX2][expectedY2 + 2].isBrightness() == true)
+		 * updatePosSpeed2(vc, expectedX2, expectedY2 + 2); else if
+		 * (vi[expectedX2 - 1][expectedY2 + 2].isBrightness() == true)
+		 * updatePosSpeed2(vc, expectedX2 - 1, expectedY2 + 2); else if
+		 * (vi[expectedX2 - 2][expectedY2 + 2].isBrightness() == true)
+		 * updatePosSpeed2(vc, expectedX2 - 2, expectedY2 + 2); else if
+		 * (vi[expectedX2 - 2][expectedY2 + 1].isBrightness() == true)
+		 * updatePosSpeed2(vc, expectedX2 - 2, expectedY2 + 1); else if
+		 * (vi[expectedX2 - 2][expectedY2].isBrightness() == true)
+		 * updatePosSpeed2(vc, expectedX2 - 2, expectedY2); else if
+		 * (vi[expectedX2 - 2][expectedY2 - 1].isBrightness() == true)
+		 * updatePosSpeed2(vc, expectedX2 - 2, expectedY2 - 1); else if
+		 * (vi[expectedX2 - 2][expectedY2 - 2].isBrightness() == true)
+		 * updatePosSpeed2(vc, expectedX2 - 2, expectedY2 - 2); else if
+		 * (vi[expectedX2 - 1][expectedY2 - 2].isBrightness() == true)
+		 * updatePosSpeed2(vc, expectedX2 - 1, expectedY2 - 2); else if
+		 * (vi[expectedX2][expectedY2 - 2].isBrightness() == true)
+		 * updatePosSpeed2(vc, expectedX2, expectedY2 - 2); else if
+		 * (vi[expectedX2 + 1][expectedY2 - 2].isBrightness() == true)
+		 * updatePosSpeed2(vc, expectedX2 + 1, expectedY2 - 2); else if
+		 * (vi[expectedX2 + 2][expectedY2 - 2].isBrightness() == true)
+		 * updatePosSpeed2(vc, expectedX2 + 2, expectedY2 - 2); else
+		 * gameEngine.setFrozen(vc.getOwner());
+		 * 
+		 * if (vi[expectedX3][expectedY3].isBrightness() == true)
+		 * updatePosSpeed3(vc, expectedX3, expectedY3); else if (vi[expectedX3 +
+		 * 1][expectedY3].isBrightness() == true) updatePosSpeed3(vc, expectedX3
+		 * + 1, expectedY3); else if (vi[expectedX3 + 1][expectedY3 +
+		 * 1].isBrightness() == true) updatePosSpeed3(vc, expectedX3 + 1,
+		 * expectedY3 + 1); else if (vi[expectedX3][expectedY3 +
+		 * 1].isBrightness() == true) updatePosSpeed3(vc, expectedX3, expectedY3
+		 * + 1); else if (vi[expectedX3 - 1][expectedY3 + 1].isBrightness() ==
+		 * true) updatePosSpeed3(vc, expectedX3 - 1, expectedY3 + 1); else if
+		 * (vi[expectedX3 - 1][expectedY3].isBrightness() == true)
+		 * updatePosSpeed3(vc, expectedX3 - 1, expectedY3); else if
+		 * (vi[expectedX3 - 1][expectedY3 - 1].isBrightness() == true)
+		 * updatePosSpeed3(vc, expectedX3 - 1, expectedY3 - 1); else if
+		 * (vi[expectedX3][expectedY3 - 1].isBrightness() == true)
+		 * updatePosSpeed3(vc, expectedX3, expectedY3 - 1); else if
+		 * (vi[expectedX3 + 1][expectedY3 - 1].isBrightness() == true)
+		 * updatePosSpeed3(vc, expectedX3 + 1, expectedY3 - 1); else if
+		 * (vi[expectedX3 + 2][expectedY3 - 1].isBrightness() == true)
+		 * updatePosSpeed3(vc, expectedX3 + 2, expectedY3 - 1); else if
+		 * (vi[expectedX3 + 2][expectedY3].isBrightness() == true)
+		 * updatePosSpeed3(vc, expectedX3 + 2, expectedY3); else if
+		 * (vi[expectedX3 + 2][expectedY3 + 1].isBrightness() == true)
+		 * updatePosSpeed3(vc, expectedX3 + 2, expectedY3 + 1); else if
+		 * (vi[expectedX3 + 2][expectedY3 + 2].isBrightness() == true)
+		 * updatePosSpeed3(vc, expectedX3 + 2, expectedY3 + 2); else if
+		 * (vi[expectedX3 + 1][expectedY3 + 2].isBrightness() == true)
+		 * updatePosSpeed3(vc, expectedX3 + 1, expectedY3 + 2); else if
+		 * (vi[expectedX3][expectedY3 + 2].isBrightness() == true)
+		 * updatePosSpeed3(vc, expectedX3, expectedY3 + 2); else if
+		 * (vi[expectedX3 - 1][expectedY3 + 2].isBrightness() == true)
+		 * updatePosSpeed3(vc, expectedX3 - 1, expectedY3 + 2); else if
+		 * (vi[expectedX3 - 2][expectedY3 + 2].isBrightness() == true)
+		 * updatePosSpeed3(vc, expectedX3 - 2, expectedY3 + 2); else if
+		 * (vi[expectedX3 - 2][expectedY3 + 1].isBrightness() == true)
+		 * updatePosSpeed3(vc, expectedX3 - 2, expectedY3 + 1); else if
+		 * (vi[expectedX3 - 2][expectedY3].isBrightness() == true)
+		 * updatePosSpeed3(vc, expectedX3 - 2, expectedY3); else if
+		 * (vi[expectedX3 - 2][expectedY3 - 1].isBrightness() == true)
+		 * updatePosSpeed3(vc, expectedX3 - 2, expectedY3 - 1); else if
+		 * (vi[expectedX3 - 2][expectedY3 - 2].isBrightness() == true)
+		 * updatePosSpeed3(vc, expectedX3 - 2, expectedY3 - 2); else if
+		 * (vi[expectedX3 - 1][expectedY3 - 2].isBrightness() == true)
+		 * updatePosSpeed3(vc, expectedX3 - 1, expectedY3 - 2); else if
+		 * (vi[expectedX3][expectedY3 - 2].isBrightness() == true)
+		 * updatePosSpeed3(vc, expectedX3, expectedY3 - 2); else if
+		 * (vi[expectedX3 + 1][expectedY3 - 2].isBrightness() == true)
+		 * updatePosSpeed3(vc, expectedX3 + 1, expectedY3 - 2); else if
+		 * (vi[expectedX3 + 2][expectedY3 - 2].isBrightness() == true)
+		 * updatePosSpeed3(vc, expectedX3 + 2, expectedY3 - 2); else
+		 * gameEngine.setFrozen(vc.getOwner());
+		 */
 	}
-	
 
 	/**
 	 * Methode qui met a jour la position et la vitesse de la premiere diode
@@ -464,46 +534,51 @@ public class Traitement {
 	 * @param newXPos
 	 * @param newYPos
 	 */
-	/*private void updatePosSpeed3(VideoCube vc, double newXPos, double newYPos) {
-		vc.setX3Speed((newXPos - vc.getPos3().getX()) / fps);
-		vc.setY3Speed((newYPos - vc.getPos3().getX()) / fps);
-		vc.getPos3().setX(newXPos);
-		vc.getPos3().setY(newYPos);
-	}
-
-	public ArrayList<ArrayList<VirtualPixel>> getGroupesConnexes() {
-		return groupesConnexes;
-	}
-
-	public void setGroupesConnexes(
-			ArrayList<ArrayList<VirtualPixel>> groupesConnexes) {
-		this.groupesConnexes = groupesConnexes;
-	}
-	
-	
-	/**
-	 * Methode qui retourne une ArrayList d'ArrayList de VirtualPixe ou l'ArrayList
-	 * numéro i contient les pixels distants de i de (x,y)
+	/*
+	 * private void updatePosSpeed3(VideoCube vc, double newXPos, double
+	 * newYPos) { vc.setX3Speed((newXPos - vc.getPos3().getX()) / fps);
+	 * vc.setY3Speed((newYPos - vc.getPos3().getX()) / fps);
+	 * vc.getPos3().setX(newXPos); vc.getPos3().setY(newYPos); }
+	 * 
+	 * public ArrayList<ArrayList<VirtualPixel>> getGroupesConnexes() { return
+	 * groupesConnexes; }
+	 * 
+	 * public void setGroupesConnexes( ArrayList<ArrayList<VirtualPixel>>
+	 * groupesConnexes) { this.groupesConnexes = groupesConnexes; }
+	 * 
+	 * 
+	 * /** Methode qui retourne une ArrayList d'ArrayList de VirtualPixe ou
+	 * l'ArrayList numéro i contient les pixels distants de i de (x,y)
+	 * 
 	 * @param x
+	 * 
 	 * @param y
+	 * 
 	 * @param dist
 	 */
-	private ArrayList<ArrayList<VirtualPixel>> parcoursSpirale(int x, int y, int dist){
+	private ArrayList<ArrayList<VirtualPixel>> parcoursSpirale(int x, int y,
+			int dist) {
 		int upDist = Math.min(dist, y);
-		int downDist = Math.min(dist,HEIGHT - y);
+		int downDist = Math.min(dist, HEIGHT - y);
 		int leftDist = Math.min(dist, x);
-		int rightDist = Math.min(dist,LENGHT - x);
+		int rightDist = Math.min(dist, LENGHT - x);
 		ArrayList<ArrayList<VirtualPixel>> points = new ArrayList<ArrayList<VirtualPixel>>();
-		points.ensureCapacity((int) Math.sqrt(2*dist*dist));
-		for(int i = (x-leftDist); i<= (x+rightDist); i++){
-			for(int j = (y-upDist); j<= (y+downDist); j++){
-				int d = (int) Math.sqrt(i*i + j*j);
+		points.ensureCapacity((int) Math.sqrt(2 * dist * dist));
+		for (int i = (x - leftDist); i <= (x + rightDist); i++) {
+			for (int j = (y - upDist); j <= (y + downDist); j++) {
+				int d = (int) Math.sqrt(i * i + j * j);
 				points.get(d).add(this.vi[i][j]);
 			}
 		}
-		return points;		
+		return points;
 	}
-	
-	
+
+	public VirtualPixel[][] getTraitScreen() {
+		return traitScreen;
+	}
+
+	public void setTraitScreen(VirtualPixel[][] traitScreen) {
+		this.traitScreen = traitScreen;
+	}
 
 }
