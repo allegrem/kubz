@@ -56,7 +56,7 @@ public class GrabberShow implements Runnable {
 		path.setContentPane(jp);
 		for(int i=0; i< CAMERA_HEIGHT;i++){
 			for (int j = 0; j < CAMERA_WIDTH; j ++){
-				cameraScreen[i][j] = new VirtualPixel(false, 0, new Point(i,j));
+				cameraScreen[i][j] = new VirtualPixel(false, 0, new Point(i,j),0);
 			}
 		}
 	}
@@ -69,7 +69,6 @@ public class GrabberShow implements Runnable {
 	 */
 	public void run() {
 		int posnY = 0, posnX = 0;
-		int iter =0;
 		while (true) {
 
 			myCamera.getCameraFrame(myImage.pixels, 1000);
@@ -78,13 +77,14 @@ public class GrabberShow implements Runnable {
 			int comptX = 0, comptY = 0;
 			double cupos = 0;
 			for (int i = 0; i < myImage.pixels.length; i++) {
-				if ((myImage.pixels[i] & 0xFF) > 10) {
+				/*if ((myImage.pixels[i] & 0xFF) > 10) {
 					white = true;
 				}
-				else white = false;
+				else white = false;*/
 				//ici on met le tableau de pixel à jour
-				cameraScreen[comptY][comptX].setBrightness(white);
-				cameraScreen[comptY][comptX].setGroupeConnexe(0);	
+				cameraScreen[comptY][comptX].setBrightness(false);
+				cameraScreen[comptY][comptX].setGroupeConnexe(0);
+				cameraScreen[comptY][comptX].setIntensite(myImage.pixels[i] & 0xFF);
 				comptX++; // on parcourt l'image en largeur
 				if (comptX == CAMERA_WIDTH) // on descend d'une ligne
 				{
@@ -92,8 +92,6 @@ public class GrabberShow implements Runnable {
 					comptY++;
 				}			
 			}
-			iter++;
-			System.out.println(iter);
 			/*cupos = Math.sqrt((posnX - posX) * (posnX - posX) + (posnY - posY)
 					* (posnY - posY));
 			if (cupos < 100) {

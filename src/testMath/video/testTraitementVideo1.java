@@ -12,9 +12,9 @@ import traitementVideo.VirtualPixel;
 
 public class testTraitementVideo1 {
 	
-	GrabberShow gs;
 
 	public static void main(String[] args) {
+		int iter = 0;
 		GrabberShow gs = new GrabberShow();
         Thread th = new Thread(gs);
         th.start();
@@ -25,12 +25,18 @@ public class testTraitementVideo1 {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		VideoCube cube = new VideoCube(traitement.getGroupePos(1),traitement.getGroupePos(2),null);
+		//VideoCube cube = new VideoCube(traitement.getGroupePos(1),traitement.getGroupePos(2),null);
 		
 		// boucle d'update 
 		while(true){
-			traitement.updateConnexe(gs.getcameraScreen());
-			traitement.localSearch(cube);
+			traitement.setTraitScreen(gs.getcameraScreen());
+			traitement.flouGaussien();
+			traitement.seuil();
+			traitement.updateConnexe();
+//			System.out.println(iter);
+//			iter++;
+			//System.out.println(traitement.getGroupesPos().size());
+			//traitement.localSearch(cube);
 		}
 
 	}

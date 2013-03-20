@@ -21,10 +21,10 @@ public class Traitement {
 	private VirtualPixel[][] vi;
 	private ArrayList<ArrayList<VirtualPixel>> groupesConnexes;
 	private GameEngine gameEngine;
-	private int LENGHT;
-	private int HEIGHT;
+	private int LENGHT = 640;
+	private int HEIGHT = 480;
 	private int distance = 5;
-	private int seuil = 4;
+	private int seuil = 0;
 	private VirtualPixel[][] traitScreen;
 
 	public Traitement(int LENGHT, int HEIGHT) {
@@ -34,8 +34,7 @@ public class Traitement {
 		this.traitScreen = new VirtualPixel[HEIGHT][LENGHT];
 		for (int i = 0; i < HEIGHT; i++) {
 			for (int j = 0; j < LENGHT; j++) {
-				traitScreen[i][j] = new VirtualPixel(false, 0, new Point(i, j),
-						0);
+				traitScreen[i][j] = new VirtualPixel(false, 0, new Point(i, j),0);
 			}
 		}
 	}
@@ -79,8 +78,9 @@ public class Traitement {
 	public void seuil() {
 		for (int i = 0; i < HEIGHT; i++) {
 			for (int j = 0; j < LENGHT; j++) {
-				if (traitScreen[i][j].getIntensite() > seuil)
+				if (traitScreen[i][j].getIntensite() > seuil){
 					traitScreen[i][j].setBrightness(true);
+				}
 			}
 		}
 	}
