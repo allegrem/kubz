@@ -71,7 +71,7 @@ public class GameEngine extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		bases.add(new Base(ReadableColor.ORANGE,BaseView.HAUT,this));
+		bases.add(new Base(ReadableColor.ORANGE,BaseView.BAS,this));
 	
 		playerList.add(new Player(this, bases.get(0)));
 		//playerList.add(new Player(this, bases.get(0)));
@@ -156,7 +156,7 @@ public class GameEngine extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			//monsterTurn();
+			monsterTurn();
 		}
 	}
 

@@ -46,7 +46,7 @@ public class Player{
 	private int lastAngle2;
 	private int compteurPattern;
 
-	int power = 100;
+	int power = 180;
 
 	private GameEngine gameEngine;
 	private AudioRender audioRender;
@@ -432,8 +432,8 @@ public class Player{
 	public void UDirection(Unit unit) {
 		setPStatesToWaiting();
 		setUStateToDirection(unit);
-		AttackConeView attackCone = new AttackConeView(unit.getAperture(),
-				unit.getDirection(), 100, unit.getView());
+		AttackConeView attackCone = new AttackConeView(30,
+				unit.getDirection(), power, unit.getView());
 		unit.getView().addChild(attackCone);
 		while (!KeyboardManager.tap) {
 			if (KeyboardManager.wKey) {
@@ -448,7 +448,7 @@ public class Player{
 				attackCone.setDirection((long) (360 + unit.getDirection()));
 			}
 			try {
-				Thread.sleep(10);
+				Thread.sleep(30);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -458,7 +458,8 @@ public class Player{
 	}
 
 
-	/*public void UAttack(Unit unit) {
+	public void UAttack(Unit unit) {
+		unit.setAperture(30);
 		SinusoidalAttackView attack = new SinusoidalAttackView(
 				unit.getAperture(), unit.getDirection(), power, unit.getView());
 		unit.getView().addChild(attack);
@@ -479,17 +480,12 @@ public class Player{
 				if ((monster.getPos().distanceTo(unit.getPos()) < power)
 						&& (((unit.getDirection() - unit.getAperture() / 2) % 360 <= theta % 360) && ((unit
 								.getDirection() + unit.getAperture() / 2) % 360 >= theta % 360))) {
-					System.out.println("player :"
-							+ sound.filter(monster.getDefence().getShield())
-									.getDegats() / 30000000);
-					monster.decreaseLife(sound.filter(
-							monster.getDefence().getShield()).getDegats() / 30000000);
-
+					monster.decreaseLife(68);
 				}
 				gameEngine.getMonsterList().trimToSize();
 			}
 		}
-	}*/
+	}
 
 	public void act() throws InstantiationException, IllegalAccessException {
 		isTurn = true;
@@ -500,7 +496,7 @@ public class Player{
 			soundEditPTurn(unit);
 			//UAperture(unit);
 			UDirection(unit);
-			//UAttack(unit);
+			UAttack(unit);
 		}
 		isTurn = false;
 

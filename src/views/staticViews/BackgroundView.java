@@ -38,6 +38,9 @@ public class BackgroundView implements DisplayableFather{
 	private int red1 = 255, green1 = 255,blue1 = 240;
 	private int red2 = 255, green2 = 255,blue2 = 240;
 	
+//	private int red1 = 0, green1 = 0,blue1 = 0;
+//	private int red2 = 0, green2 = 0,blue2 = 0;
+	
 	/*
 	 * Sens de variation des differentes
 	 * composantes des couleurs

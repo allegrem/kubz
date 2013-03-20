@@ -72,7 +72,7 @@ public class Link implements DisplayableChild{
 		GL11.glEnd();
 		
 		GL11.glTranslated(base.getCenter().getX(), base.getCenter().getY(), 0.2);
-		disk.draw(0f, (float)radius, 50, 1,(float)angle1,(float)angle2);
+		//disk.draw(0f, (float)radius, 50, 1,(float)angle2,(float)angle1);
 		
 		
 		GL11.glPopMatrix();
