@@ -21,19 +21,19 @@ public class Traitement {
 	private VirtualPixel[][] vi;
 	private ArrayList<ArrayList<VirtualPixel>> groupesConnexes;
 	private GameEngine gameEngine;
-	private int LENGHT = 640;
+	private int LENGTH = 640;
 	private int HEIGHT = 480;
 	private int distance = 5;
 	private int seuil = 5;
 	private VirtualPixel[][] traitScreen;
 
-	public Traitement(int LENGHT, int HEIGHT) {
+	public Traitement(int LENGTH, int HEIGHT) {
 		super();
-		this.LENGHT = LENGHT;
+		this.LENGTH = LENGTH;
 		this.HEIGHT = HEIGHT;
-		this.traitScreen = new VirtualPixel[HEIGHT][LENGHT];
+		this.traitScreen = new VirtualPixel[HEIGHT][LENGTH];
 		for (int i = 0; i < HEIGHT; i++) {
-			for (int j = 0; j < LENGHT; j++) {
+			for (int j = 0; j < LENGTH; j++) {
 				traitScreen[i][j] = new VirtualPixel(false, 0, new Point(i, j),(byte) 0);
 			}
 		}
@@ -46,19 +46,19 @@ public class Traitement {
 		super();
 	}
 
-	public void flouGaussien(int LENGHT, int HEIGHT){
-		this.LENGHT = LENGHT;
+	public void flouGaussien(int LENGTH, int HEIGHT){
+		this.LENGTH = LENGTH;
 		this.HEIGHT = HEIGHT;
 		flouGaussien();
 	}
 	
 	public void flouGaussien() {
 		byte[][] gauss = { { 1, 2, 1 }, { 2, 4, 2 }, { 1, 2, 1 } };
-		byte[][] newCoefs = new byte[HEIGHT][LENGHT];
+		byte[][] newCoefs = new byte[HEIGHT][LENGTH];
 		// ici on calcule les nouvelles intensites apres le passage du filtre
 		// gaussien
-		for (int i = 2; i < (HEIGHT - 2); i++) {
-			for (int j = 2; j < (LENGHT - 2); j++) {
+		for (int i = 2; i < (HEIGHT - 3); i++) {
+			for (int j = 2; j < (LENGTH - 2); j++) {
 				byte coef = (byte) ((
 						gauss[0][0]	* traitScreen[i - 1][j - 1].getIntensite()
 						+ gauss[0][1] * traitScreen[i - 1][j].getIntensite()
@@ -75,7 +75,7 @@ public class Traitement {
 		}
 		// on change les intensites pour les nouvelles intensites
 		for (int i = 0; i < HEIGHT; i++) {
-			for (int j = 0; j < LENGHT; j++) {
+			for (int j = 0; j < LENGTH; j++) {
 				traitScreen[i][j].setIntensite(newCoefs[i][j]);
 			}
 		}
@@ -84,7 +84,7 @@ public class Traitement {
 	public void seuil() {
 		//int iter = 0;
 		for (int i = 0; i < HEIGHT; i++) {
-			for (int j = 0; j < LENGHT; j++) {
+			for (int j = 0; j < LENGTH; j++) {
 				if (traitScreen[i][j].getIntensite() >= seuil){
 					traitScreen[i][j].setBrightness(true);
 					//iter++;
@@ -94,8 +94,8 @@ public class Traitement {
 		//System.out.println(iter);
 	}
 
-	public void updateConnexe(VirtualPixel[][] screen, int LENGHT, int HEIGHT) {
-		this.LENGHT = LENGHT;
+	public void updateConnexe(VirtualPixel[][] screen, int LENGTH, int HEIGHT) {
+		this.LENGTH = LENGTH;
 		this.HEIGHT = HEIGHT;
 		updateConnexe(screen);
 	}
@@ -122,7 +122,7 @@ public class Traitement {
 		
 		//on remet les composantes a zero
 		for (int i = 0; i < HEIGHT; i++) {
-			for (int j = 0; j < LENGHT; j++) {
+			for (int j = 0; j < LENGTH; j++) {
 					traitScreen[i][j].setGroupeConnexe(0);
 			}
 		}
@@ -134,7 +134,7 @@ public class Traitement {
 			compteurComposante++;
 		}
 		// parcours de la premiere ligne
-		for (int j = 1; j < LENGHT; j++) {
+		for (int j = 1; j < LENGTH; j++) {
 			if (vi[0][j].isBrightness()) {
 				if (!vi[0][j - 1].isBrightness()) {
 					groupesConnexesIntermediaire
@@ -173,7 +173,7 @@ public class Traitement {
 		}
 		// parcours du reste du tableau normalement
 		for (int i = 1; i < HEIGHT; i++) {
-			for (int j = 1; j < LENGHT; j++) {
+			for (int j = 1; j < LENGTH; j++) {
 				if (vi[i][j].isBrightness()) {
 					if ((vi[i - 1][j].isBrightness())
 							&& !(vi[i][j - 1].isBrightness())) {
@@ -577,7 +577,7 @@ public class Traitement {
 		int upDist = Math.min(dist, y);
 		int downDist = Math.min(dist, HEIGHT - y);
 		int leftDist = Math.min(dist, x);
-		int rightDist = Math.min(dist, LENGHT - x);
+		int rightDist = Math.min(dist, LENGTH - x);
 		ArrayList<ArrayList<VirtualPixel>> points = new ArrayList<ArrayList<VirtualPixel>>();
 		points.ensureCapacity((int) Math.sqrt(2 * dist * dist));
 		for (int i = (x - leftDist); i <= (x + rightDist); i++) {

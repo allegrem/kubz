@@ -6,7 +6,7 @@ import cl.eye.GrabberShow;
 public class MainTraitementImage {
 	   public static void main(String[] args) {
 		   System.out.println("Starting test grabber");
-	        GrabberShow gs = new GrabberShow(new Traitement());
+	        GrabberShow gs = new GrabberShow(new Traitement(480,640));
 	        Thread th = new Thread(gs);
 	        th.start();
 	    }
