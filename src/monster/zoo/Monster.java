@@ -119,67 +119,13 @@ public class Monster {
 	}
 
 	private void updateSeenUnits() {
-		ArrayList<Unit> unitList = gameEngine.getUnitList();
-		seenUnits = unitList;
+		seenUnits = gameEngine.getUnitList();
+		ArrayList<Unit> removeUnits = new ArrayList<Unit>();
 		ArrayList<Wall> walls = gameEngine.getWalls();
-//		ArrayList<ArrayList<Double>> angleList = new ArrayList<ArrayList<Double>>();
 		double xm = this.getPos().getX();
 		double ym = this.getPos().getY();
-		// ici on construit la liste des intervalle d'angles qui définissent les
-		// murs
-		// for (Wall wall : walls) {
-		// double x1 = wall.getExtremity1().getX();
-		// double x2 = wall.getExtremity2().getX();
-		// double y1 = wall.getExtremity1().getY();
-		// double y2 = wall.getExtremity2().getY();
-		// double x1diff = x1 - xm;
-		// double y1diff = y1 - ym;
-		// double extrem1Theta = (180 * Math.atan2(y1diff, x1diff) / Math.PI) -
-		// 90;
-		// double x2diff = x2 - xm;
-		// double y2diff = y2 - ym;
-		// double extrem2Theta = (180 * Math.atan2(y2diff, x2diff) / Math.PI) -
-		// 90;
-		// ArrayList<Double> angles = new ArrayList<Double>();
-		// angles.add(new Double(extrem1Theta));
-		// angles.add(new Double(extrem2Theta));
-		// angleList.add(angles);
-		// }
-		// ici on verifie que le Monster ne se situe pas dans un angle de vue
-		// auquel un mur appartient
-		// for (Unit unit : unitList) {
-		// double xu = unit.getPos().getX();
-		// double yu = unit.getPos().getY();
-		// double xdiff = xm - xu;
-		// double ydiff = ym - yu;
-		// double unitTheta = (180 * Math.atan2(ydiff, xdiff) / Math.PI) - 90;
-		// for (int i = 0; i < angleList.size(); i++) {
-		// ArrayList<Double> angles = angleList.get(i);
-		// Wall wall = null;
-		// if (((angles.get(0) < unitTheta)
-		// && (angles.get(1) > unitTheta) || ((angles.get(0) > unitTheta) &&
-		// (angles
-		// .get(1) < unitTheta)))){
-		// wall = walls.get(i);
-		// System.out.println(i);
-		// double xp1 = wall.getExtremity1().getX();
-		// double yp1 = wall.getExtremity1().getY();
-		// double xp2 = wall.getExtremity2().getX();
-		// double yp2 = wall.getExtremity2().getY();
-		// // calcul de l'intersection entre la droite qui relie Unit a
-		// // Monster et du wall
-		// double xi = (ym - yp1 - xm * (yu - ym) / (xu - xm) + xp1
-		// * (yp2 - yp1) / (xp2 - xp1))
-		// / ((yp2 - yp1) / (xp2 - xp1) - (yu - ym) / (xu - xm));
-		// double yi = ym + (xi - xm) * (yu - ym) / (xu - xm);
-		// if (unit.getPos().distanceTo(pos) > pos
-		// .distanceTo(new Point(xi, yi))) {
-		// seenUnits.remove(unit);
-		// }}
-		// }
-		// }
-
-		for (Unit unit : unitList) {
+		//System.out.println(unitList.size());
+		for (Unit unit : seenUnits) {
 			double xu = unit.getPos().getX();
 			double yu = unit.getPos().getY();
 			for (Wall wall : walls) {
@@ -193,17 +139,21 @@ public class Monster {
 						* (yp2 - yp1) / (xp2 - xp1))
 						/ ((yp2 - yp1) / (xp2 - xp1) - (yu - ym) / (xu - xm));
 				double yi = ym + (xi - xm) * (yu - ym) / (xu - xm);
-				if ((xi <= Math.max(xp1, xp2))
+				if (!((xi <= Math.max(xp1, xp2))
 						&& (xi >= Math.min(xp1, xp2))
-						&& (yi <= Math.max(yp1, yp2))
-						&& (yi >= Math.min(yp1, yp2))
 						&& (pos.distanceTo(new Point(xi, yi)) < pos
-								.distanceTo(unit.getPos()))) {
-					seenUnits.remove(unit);
+								.distanceTo(unit.getPos())))) {
+					removeUnits.add(unit);
+					
 				}
 			}
 		}
+		for(Unit unit:removeUnits){
+			seenUnits.remove(unit);
+				
+		}
 	}
+	
 
 	public Unit getCible() {
 		return cible;
@@ -281,7 +231,7 @@ public class Monster {
 	}
 
 	public void act() {
-		setSeenUnits(gameEngine.getUnitList());
+		//setSeenUnits(gameEngine.getUnitList());
 		setCible();
 		move();
 		attack.attack(cible);

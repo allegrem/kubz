@@ -8,6 +8,7 @@ uniform float inv;
 uniform float decalageX;
 uniform float decalageY;
 uniform float multX;
+uniform float multY;
 
 
 void main() {
@@ -29,6 +30,6 @@ void main() {
     float ny=fheight*echelleh+inv*alpha*ty;
     float dx=multX*(x-fmidle*echelle+fwidth*echelle/2.0);
     float nx=fmidle*echelle-fwidth*echelle/2.0+sens*(ny)/(fheight*echelleh)*dx;
-    gl_Position=vec4(nx+decalageX*echelle,y+decalageY*echelleh,z,w);
+    gl_Position=vec4(nx+decalageX*echelle,multY*(y+decalageY*echelleh),z,w);
     
 }
