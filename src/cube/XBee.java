@@ -23,7 +23,7 @@ public class XBee extends Thread implements Runnable{
     Socket clientSocket;
     {
          try {
-            clientSocket = new Socket("localhost", 4161);
+            clientSocket = new Socket("169.254.109.52", 4161);
         } catch (IOException e) {
             e.printStackTrace();
         }
