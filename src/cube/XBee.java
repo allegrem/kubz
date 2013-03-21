@@ -150,17 +150,15 @@ private void parseRXFrame(){
 /* Parse the frame in order to decode the data */
 private void parse16BitFrame (){
 	int addr = buf[4]*256 + buf[5];
-	System.out.println(String.format("address = %d", addr));
+	//System.out.println(String.format("address = %d", addr));
 	
 	try {
 	int angle =buf[9]*256+buf[8];
 	if (angle > 32767)
 		angle = angle - 65536;
-	System.out.println(String.format("Angle=%d", angle));
 	
 	// Put the angle in the cube which has the good address.
 	manager.getCube(addr).setAngle(angle);	
-	System.out.println(String.format("Angle du cube = %d ",manager.getCube(addr).getAngle()));
 	
 	} catch (Exception e){
 		e.printStackTrace();
