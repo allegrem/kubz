@@ -25,6 +25,7 @@ import views.interfaces.DisplayableFather;
 public class Link implements DisplayableChild{
 	private double radius=10;
 	
+	
 	private Base base;
 	private Parameter parameter1;
 	private Parameter parameter2;
@@ -78,7 +79,7 @@ public class Link implements DisplayableChild{
 		GL11.glEnd();
 		
 		GL11.glTranslated(base.getCenter().getX(), base.getCenter().getY(), 0.2);
-		//disk.draw(0f, (float)radius, 50, 1,(float)angle2,(float)angle1);
+		disk.draw(0f, (float)radius, 50, 1,(float)angle1,(float)angle2);
 		
 		
 		GL11.glPopMatrix();
