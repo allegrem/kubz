@@ -62,14 +62,15 @@ public class GLDisplay extends Thread{
 	
 	/*Reglages de l'affichage*/
 
-	private float decalageX=297; //Decalage de l'affichage a l'horizontale
+	private float decalageX=210; //Decalage de l'affichage a l'horizontale
 	private float decalageY=0; //Decalage de l'affichage a la verticale
-	private float multX=1.11f; //Facteur multiplicatif pour etendre l'affichage selon x
-	private float multY=0.97f; //Facteur multiplicatif pour etendre l'affichage selon x
+	private float multX=1.0f; //Facteur multiplicatif pour etendre l'affichage selon x
+	private float multY=0.85f; //Facteur multiplicatif pour etendre l'affichage selon x
 	private float sens=1; //sens=-1 -> image renversee
 	private float parallelisme=0.11f; // Correction du paralellisme
 	private float invParal=1; //Si -1, parallelisme inverse dans l'autre sens
 	
+
 	
 	
 

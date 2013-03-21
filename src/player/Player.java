@@ -78,6 +78,9 @@ public class Player{
 		compteurInstr = 0;
 		lastAngle1 = (int) parameters[0].getAngle();
 		lastAngle2 = (int) parameters[1].getAngle();
+		gameEngine.getCubeManager().getCube(45679).setRGB(0, 0, 255, (short)10);
+		gameEngine.getCubeManager().getCube(15000).setRGB(0, 255, 0, (short)10);
+		gameEngine.getCubeManager().getCube(15075).setRGB(0, 255, 0, (short)10);
 		
 	}
 
@@ -271,6 +274,9 @@ public class Player{
 	 * Methode qui declenche le mouvement de Unit
 	 */
 	public void movingUTurn(Unit unit) {
+		gameEngine.getCubeManager().getCube(45679).setRGB(0, 0, 255, (short)10);
+		gameEngine.getCubeManager().getCube(15000).setRGB(0, 255, 0, (short)10);
+		gameEngine.getCubeManager().getCube(15075).setRGB(0, 255, 0, (short)10);
 		setPStatesToWaiting();
 		setUStateToMoving(unit);		//unit.getView().setAngle(-gameEngine.getCubeManager().getCube(45679).getAngle()/2);
 		double size = unit.getSize() * Math.sqrt(2) / 2;
@@ -280,6 +286,7 @@ public class Player{
 		DisplayableFather view=unit.getView();
 		float viewSize=(float) (view.getSize()/2);
 		while (!KeyboardManager.tap) {
+			unit.setDirection(-gameEngine.getCubeManager().getCube(45679).getAngle()/2);
 			i=0;
 			j=0;
 			if ((KeyboardManager.zKey) && (unit.getY() - size > 0))
@@ -329,6 +336,9 @@ public class Player{
 	 * 
 	 */
 	public void soundEditPTurn(Unit unit) throws InstantiationException, IllegalAccessException {
+		gameEngine.getCubeManager().getCube(45679).setRGB(0, 0, 255, (short)10);
+		gameEngine.getCubeManager().getCube(15000).setRGB(0, 255, 0, (short)10);
+		gameEngine.getCubeManager().getCube(15075).setRGB(0, 255, 0, (short)10);
 		Melody melody = unit.getAttackMelody();
 		setPStatesToSoundEdit();
 		setUStateToWaiting(unit);
@@ -372,10 +382,10 @@ public class Player{
 				else
 					melody.unpause();
 			}
-			if (!(KeyboardManager.zKey || KeyboardManager.sKey
+			if (/*!(KeyboardManager.zKey || KeyboardManager.sKey
 					|| KeyboardManager.qKey || KeyboardManager.dKey
-					|| KeyboardManager.wKey || KeyboardManager.xKey)) {
-				if (isModified) {
+					|| KeyboardManager.wKey || KeyboardManager.xKey)*/true) {
+				if (/*isModified*/ true) {
 					//on modifie l'instrument en fonctionde l'angle du Parameter1
 					int iterInstrum = getChangeInstrument();
 					//on passe a l'intrument suivant autant de fois que necessaire
@@ -454,13 +464,16 @@ public class Player{
 
 
 	public void UDirection(Unit unit) {
+		gameEngine.getCubeManager().getCube(45679).setRGB(0, 0, 255, (short)10);
+		gameEngine.getCubeManager().getCube(15000).setRGB(0, 255, 0, (short)10);
+		gameEngine.getCubeManager().getCube(15075).setRGB(0, 255, 0, (short)10);
 		setPStatesToWaiting();
 		setUStateToDirection(unit);
 		AttackConeView attackCone = new AttackConeView(30,
 				unit.getDirection(), power, unit.getView());
 		unit.getView().addChild(attackCone);
-		unit.setDirection(gameEngine.getCubeManager().getCube(45679).getAngle()/2);
 		while (!KeyboardManager.tap) {
+			unit.setDirection(-gameEngine.getCubeManager().getCube(45679).getAngle()/3.5);
 			if (KeyboardManager.wKey) {
 				unit.rotateDirection(1);
 			}
@@ -484,6 +497,9 @@ public class Player{
 
 
 	public void UAttack(Unit unit) {
+		gameEngine.getCubeManager().getCube(45679).setRGB(0, 0, 255, (short)10);
+		gameEngine.getCubeManager().getCube(15000).setRGB(0, 255, 0, (short)10);
+		gameEngine.getCubeManager().getCube(15075).setRGB(0, 255, 0, (short)10);
 		unit.setAperture(30);
 		SinusoidalAttackView attack = new SinusoidalAttackView(
 				unit.getAperture(), unit.getDirection(), power, unit.getView());
@@ -515,6 +531,9 @@ public class Player{
 	public void act() throws InstantiationException, IllegalAccessException {
 		isTurn = true;
 		for (Unit unit : unitList) {
+			gameEngine.getCubeManager().getCube(45679).setRGB(0, 0, 255, (short)10);
+			gameEngine.getCubeManager().getCube(15000).setRGB(0, 255, 0, (short)10);
+			gameEngine.getCubeManager().getCube(15075).setRGB(0, 255, 0, (short)10);
 			//audioRender.setSound(unit.getSound());
 			movingUTurn(unit);
 			//chooseWeaponTurn(unit);
