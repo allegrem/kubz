@@ -60,7 +60,7 @@ public class Monster {
 		this.seenUnits = new ArrayList<Unit>();
 		this.setGameEngine(gameEngine);
 		move=new RandomMove(this,500);
-		this.life = 100;
+		this.life = 1;
 		
 	}
 	
@@ -126,7 +126,7 @@ public class Monster {
 		ArrayList<ArrayList<Double>> angleList = new ArrayList<ArrayList<Double>>();
 		double xm = this.getPos().getX();
 		double ym = this.getPos().getY();
-		// ici on construit la liste des intervalle d'angles qui définissent les
+		// ici on construit la liste des intervalle d'angles qui dï¿½finissent les
 		// murs
 		for (Wall wall : walls) {
 			double x1 = wall.getExtremity1().getX();
@@ -157,10 +157,10 @@ public class Monster {
 				Wall wall = null;
 				if (((angles.get(0) < unitTheta)
 						&& (angles.get(1) > unitTheta) || ((angles.get(0) > unitTheta) && (angles
-						.get(1) < unitTheta)))){
+						.get(1) < unitTheta))))
 					wall = walls.get(i);
 					System.out.println(i);
-				double xp1 = wall.getExtremity1().getX();
+					double xp1 = wall.getExtremity1().getX();
 				double yp1 = wall.getExtremity1().getY();
 				double xp2 = wall.getExtremity2().getX();
 				double yp2 = wall.getExtremity2().getY();
@@ -173,7 +173,7 @@ public class Monster {
 				if (unit.getPos().distanceTo(pos) > pos
 						.distanceTo(new Point(xi, yi))) {
 					seenUnits.remove(unit);
-				}}
+				}
 			}
 		}
 	}
@@ -248,6 +248,7 @@ public class Monster {
 	}
 	
 	public void act(){
+		System.out.println("tata");
 		setSeenUnits(gameEngine.getUnitList());
 		setCible();
 		move();

@@ -61,8 +61,10 @@ public class GLDisplay extends Thread{
 	
 	
 	/*Réglages de l'affichage*/
+
 	private float decalageX=290; //Decalage de l'affichage a l'horizontale
 	private float decalageY=0; //Decalage de l'affichage a la verticale
+	private float multX=1.0f; //Facteur multiplicatif pour étendre l'affichage selon x
 	private float sens=1; //sens=-1 -> image renversee
 	private float parallelisme=0.0f; // Correction du paralellisme
 	private float invParal=1; //Si -1, parallelisme inverse dans l'autre sens
@@ -211,6 +213,7 @@ public class GLDisplay extends Thread{
 			int lI=GL20.glGetUniformLocation(shaderProgram, "inv");
 			int lX=GL20.glGetUniformLocation(shaderProgram, "decalageX");
 			int lY=GL20.glGetUniformLocation(shaderProgram, "decalageY");
+			int lMu=GL20.glGetUniformLocation(shaderProgram, "multX");
 			GL20.glUniform1i(lH,display_height);
 			GL20.glUniform1i(lW,display_width);
 			GL20.glUniform1f(lA,parallelisme);
@@ -219,6 +222,7 @@ public class GLDisplay extends Thread{
 			GL20.glUniform1f(lI,invParal);
 			GL20.glUniform1f(lX,decalageX);
 			GL20.glUniform1f(lY,decalageY);
+			GL20.glUniform1f(lMu,multX);
 	}
 	
 	/**
