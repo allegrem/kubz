@@ -1,18 +1,15 @@
 package gameEngine;
 
-import org.lwjgl.util.Color;
-import org.lwjgl.util.ReadableColor;
-
 import java.util.ArrayList;
 
-import base.Base;
-
-import OpenGL.GLDisplay;
-import OpenGL.KeyboardManager;
 import map.Map;
 import map.MapReader;
 import monster.zoo.Monster;
-import player.*;
+
+import org.lwjgl.util.ReadableColor;
+
+import player.CubeOwner;
+import player.Player;
 import player.unit.Unit;
 import traitementVideo.Traitement;
 import utilities.Point;
@@ -20,12 +17,18 @@ import utilities.RandomPerso;
 import views.staticViews.BackgroundView;
 import views.staticViews.BaseView;
 import wall.Wall;
-//import wall.Wall;
+import OpenGL.GLDisplay;
+import OpenGL.KeyboardManager;
+import base.Base;
 import cube.Cube;
+import cube.XBee;
+import cubeManager.CubeManager;
+//import wall.Wall;
 
 //import cubeManager.*;
 
 public class GameEngine extends Thread {
+
 	private final int width;
 	private final int height;
 	public ArrayList<Monster> monsterList;
@@ -38,9 +41,11 @@ public class GameEngine extends Thread {
 	private MapReader reader = new MapReader("Maps/bFile.txt",
 			"Maps/mFile.txt", "Maps/WFile.txt", this);
 	private Traitement traitement;
+	private CubeManager cubeManager;
 
-	public GameEngine() {
+	public GameEngine(CubeManager cubeManager) {
 		RandomPerso.initialize();
+		this.cubeManager = cubeManager;
 		display = new GLDisplay(this);
 		map = new Map();
 		display.setMap(map);
@@ -285,4 +290,14 @@ public class GameEngine extends Thread {
 	public ArrayList<Wall> getWalls(){
 		return walls;
 	}
+
+	public CubeManager getCubeManager() {
+		return cubeManager;
+	}
+
+	public void setCubeManager(CubeManager cubeManager) {
+		this.cubeManager = cubeManager;
+	}
+	
+	
 }

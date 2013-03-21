@@ -95,7 +95,7 @@ public class Player{
 
 	/**
 	 * Methode retourne l'angle du second cube parametre
-	 * Pour le pattern de la melody (paramètre plus ou moins discret)
+	 * Pour le pattern de la melody (paramï¿½tre plus ou moins discret)
 	 * @return
 	 */
 	public int getChangePattern() {
@@ -109,7 +109,7 @@ public class Player{
 
 	/**
 	 * methode qui retourne la distance entre le cube Parameter1 et le centre de la base
-	 *  Pour le paramètre d'instrument.
+	 *  Pour le paramï¿½tre d'instrument.
 	 * @return
 	 */
 	public int getCube1Distance() {
@@ -131,7 +131,7 @@ public class Player{
 	
 	
 	/**
-	 * Methode qui permet de déterminet l'angle entre les deux cubes Parameter
+	 * Methode qui permet de dï¿½terminet l'angle entre les deux cubes Parameter
 	 * Pour le Tempo
 	 * @return
 	 */
@@ -270,7 +270,7 @@ public class Player{
 	 */
 	public void movingUTurn(Unit unit) {
 		setPStatesToWaiting();
-		setUStateToMoving(unit);
+		setUStateToMoving(unit);		//unit.getView().setAngle(-gameEngine.getCubeManager().getCube(45679).getAngle()/2);
 		double size = unit.getSize() * Math.sqrt(2) / 2;
 		while (!KeyboardManager.tap) {
 			if ((KeyboardManager.zKey) && (unit.getY() - size > 0))
@@ -312,9 +312,12 @@ public class Player{
 		Melody melody = unit.getAttackMelody();
 		setPStatesToSoundEdit();
 		setUStateToWaiting(unit);
+		melody.unpause();
 		double size = unit.getSize() * Math.sqrt(2) / 2;
 		boolean isModified = true;
 		while (!KeyboardManager.tap) {
+			parameters[0].setAngle(-gameEngine.getCubeManager().getCube(15000).getAngle()/2);
+			parameters[1].setAngle(-gameEngine.getCubeManager().getCube(15075).getAngle()/2);
 			if ((KeyboardManager.zKey)
 					&& (base.getCenter().distanceTo(new Point(parameters[choice].getX(),parameters[choice].getY()-1))<Base.radius)) {
 				parameters[choice].translate(0, -1);
@@ -421,6 +424,7 @@ public class Player{
 		}
 		//zik
 		KeyboardManager.tap = false;
+		melody.pause();
 		unit.setAttackMelody(melody);
 	}
 
@@ -435,6 +439,7 @@ public class Player{
 		AttackConeView attackCone = new AttackConeView(30,
 				unit.getDirection(), power, unit.getView());
 		unit.getView().addChild(attackCone);
+		unit.setDirection(gameEngine.getCubeManager().getCube(45679).getAngle()/2);
 		while (!KeyboardManager.tap) {
 			if (KeyboardManager.wKey) {
 				unit.rotateDirection(1);
