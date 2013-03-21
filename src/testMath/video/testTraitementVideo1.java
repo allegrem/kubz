@@ -23,22 +23,27 @@ public class testTraitementVideo1 {
         Thread th = new Thread(gs);
         th.start();
 		try {
-			Thread.sleep(100);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		//traitement.updateConnexe(gs.getcameraScreen());
+		traitement.updateConnexe(gs.getcameraScreen());
 		//VideoCube cube = new VideoCube(traitement.getGroupePos(1),traitement.getGroupePos(2),null);
 		
 		// boucle d'update 
 		while(true){
 			traitement.setTraitScreen(gs.getcameraScreen());
-			traitement.flouGaussien();
+			traitement.flouMedian();
 			traitement.seuil();
 			traitement.updateConnexe();
 //			System.out.println(iter);
 //			iter++;
-			System.out.println(traitement.getGroupesPos().size());
+			System.out.println("taches: " + (traitement.getGroupesPos().size()-1));
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			//traitement.localSearch(cube);
 		}
 

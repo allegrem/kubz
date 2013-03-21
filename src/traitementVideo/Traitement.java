@@ -24,7 +24,8 @@ public class Traitement {
 	private int LENGTH = 640;
 	private int HEIGHT = 480;
 	private int distance = 5;
-	private int seuil = 5;
+	private int taille = 17;
+	private int seuil = 60;
 	private VirtualPixel[][] traitScreen;
 
 	public Traitement(int LENGTH, int HEIGHT) {
@@ -80,18 +81,49 @@ public class Traitement {
 			}
 		}
 	}
+	
+	public void flouMedian() {
+		byte[][] median = { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
+		byte[][] newCoefs = new byte[HEIGHT][LENGTH];
+		// ici on calcule les nouvelles intensites apres le passage du filtre
+		// gaussien
+		for (int i = 2; i < (HEIGHT - 3); i++) {
+			for (int j = 2; j < (LENGTH - 2); j++) {
+				byte coef = (byte) ((
+						median[0][0]	* traitScreen[i - 1][j - 1].getIntensite()
+						+ median[0][1] * traitScreen[i - 1][j].getIntensite()
+						+ median[0][2] * traitScreen[i - 1][j + 1].getIntensite()
+						+ median[1][0] * traitScreen[i][j - 1].getIntensite()
+						+ median[1][1] * traitScreen[i][j].getIntensite()
+						+ median[1][2] * traitScreen[i][j + 1].getIntensite()
+						+ median[2][0] * traitScreen[i + 1][j - 1].getIntensite()
+						+ median[2][1] * traitScreen[i + 1][j].getIntensite() 
+						+ median[2][2] * traitScreen[i + 1][j + 1].getIntensite()) 
+						/ 9);
+				newCoefs[i][j] = coef;
+			}
+		}
+		// on change les intensites pour les nouvelles intensites
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < LENGTH; j++) {
+				traitScreen[i][j].setIntensite(newCoefs[i][j]);
+			}
+		}
+	}
 
 	public void seuil() {
-		//int iter = 0;
+		int iter = 0;
 		for (int i = 0; i < HEIGHT; i++) {
 			for (int j = 0; j < LENGTH; j++) {
 				if (traitScreen[i][j].getIntensite() >= seuil){
 					traitScreen[i][j].setBrightness(true);
-					//iter++;
+					iter++;
+				}else{
+					traitScreen[i][j].setBrightness(false);
 				}
 			}
 		}
-		//System.out.println(iter);
+		System.out.println("pixels allumes: " + iter);
 	}
 
 	public void updateConnexe(VirtualPixel[][] screen, int LENGTH, int HEIGHT) {
@@ -216,7 +248,7 @@ public class Traitement {
 		ArrayList<ArrayList<VirtualPixel>> vase = new ArrayList<ArrayList<VirtualPixel>>();
 		vase.add(new ArrayList<VirtualPixel>());
 		for (ArrayList<VirtualPixel> list : groupesConnexesIntermediaire) {
-			if (list.size() > 3) {
+			if (list.size() > taille) {
 				vase.add(list);
 			}
 		}
@@ -230,7 +262,7 @@ public class Traitement {
 	 * @return
 	 */
 	public ArrayList<Point> getGroupesPos() {
-		ArrayList<Point> groupesConnexeIntermediarePos = new ArrayList<Point>();
+		ArrayList<Point> groupesConnexesPos = new ArrayList<Point>();
 		for (ArrayList<VirtualPixel> array : groupesConnexes) {
 			double xMoy = 0;
 			double yMoy = 0;
@@ -238,10 +270,10 @@ public class Traitement {
 				xMoy = xMoy + vp.getPos().getX();
 				yMoy = yMoy + vp.getPos().getY();
 			}
-			groupesConnexeIntermediarePos.add(new Point((int) (xMoy / array
+			groupesConnexesPos.add(new Point((int) (xMoy / array
 					.size()), (int) (yMoy / array.size())));
 		}
-		return groupesConnexeIntermediarePos;
+		return groupesConnexesPos;
 	}
 
 	/**

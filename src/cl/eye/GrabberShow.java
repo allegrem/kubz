@@ -84,8 +84,8 @@ public class GrabberShow implements Runnable {
 				else white = false;*/
 				//ici on met le tableau de pixel à jour
 				//System.out.println(myImage.pixels[i] & 0xFF);
-				cameraScreen[comptY][comptX].setBrightness(false);
-				cameraScreen[comptY][comptX].setGroupeConnexe(0);
+//				cameraScreen[comptY][comptX].setBrightness(false);
+//				cameraScreen[comptY][comptX].setGroupeConnexe(0);
 				cameraScreen[comptY][comptX].setIntensite((byte) (myImage.pixels[i] & 0xFF));
 				comptX++; // on parcourt l'image en largeur
 				if (comptX == CAMERA_WIDTH) // on descend d'une ligne
