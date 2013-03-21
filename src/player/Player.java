@@ -32,6 +32,8 @@ import views.attacks.SinusoidalAttackView;
 import views.informationViews.AudioRender;
 import views.informationViews.InstrumentsChoice;
 import views.informationViews.Link;
+import views.interfaces.Displayable;
+import views.interfaces.DisplayableFather;
 
 public class Player{
 
@@ -272,17 +274,35 @@ public class Player{
 		setPStatesToWaiting();
 		setUStateToMoving(unit);
 		double size = unit.getSize() * Math.sqrt(2) / 2;
+		int i=0;
+		int j=0;
+		boolean collision;
+		DisplayableFather view=unit.getView();
+		float viewSize=(float) (view.getSize()/2);
 		while (!KeyboardManager.tap) {
+			i=0;
+			j=0;
 			if ((KeyboardManager.zKey) && (unit.getY() - size > 0))
-				unit.translate(0, -1);
+				j=-1;
 			if ((KeyboardManager.sKey)
 					&& (unit.getY() + size < gameEngine.getHeight()))
-				unit.translate(0, 1);
+				j=1;
 			if ((KeyboardManager.qKey) && (unit.getX() - size > 0))
-				unit.translate(-1, 0);
+				i=-1;
 			if ((KeyboardManager.dKey)
 					&& (unit.getX() + size < gameEngine.getWidth()))
-				unit.translate(1, 0);
+				i=1;
+			collision=false;
+			for(Displayable obj:gameEngine.getMap().getObjects()){
+				if(obj!=view && obj.isInZone(new Point(view.getX()+i*viewSize,view.getY()+j*viewSize))){
+					collision=true;	
+					System.out.println(obj);
+				}
+				
+			}
+			if(!collision)
+				unit.translate(i, j);
+		
 			if (KeyboardManager.wKey)
 				unit.rotate(1);
 			if (KeyboardManager.xKey)
