@@ -56,6 +56,12 @@ public class Cube{
 
     }
 	
+	/* Put the value of the tap */
+	public void setTap(int tap){
+		if (tap != 0)
+			this.tap = true;
+	}
+	
 	/* Change the angle with the value given */
 	public void setAngle (int ang){
 		this.angle = ang;

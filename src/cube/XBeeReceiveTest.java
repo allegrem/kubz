@@ -1,7 +1,5 @@
 package cube;
 
-import java.util.ArrayList;
-
 import cubeManager.CubeManager;
 
 public class XBeeReceiveTest {

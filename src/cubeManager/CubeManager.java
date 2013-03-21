@@ -51,9 +51,13 @@ public class CubeManager {
         cube8.setID(35916);
         this.addFreeCube(cube8);
         
-        /*Cube cube9 = new Cube(xbee);
-        cube9.setID(45679);
-        this.addFreeCube(cube9);*/
+        Cube cube9 = new Cube(xbee);
+        cube9.setID(45676);
+        this.addFreeCube(cube9);
+        
+        Cube cube10 = new Cube(xbee);
+        cube10.setID(14977);
+        this.addFreeCube(cube10);
             
     }
 	
