@@ -24,8 +24,8 @@ public class Traitement {
 	private int LENGTH = 640;
 	private int HEIGHT = 480;
 	private int distance = 5;
-	private int taille = 17;
-	private int seuil = 60;
+	private int taille = 5;
+	private int seuil = 1;
 	private VirtualPixel[][] traitScreen;
 
 	public Traitement(int LENGTH, int HEIGHT) {
@@ -58,7 +58,7 @@ public class Traitement {
 		byte[][] newCoefs = new byte[HEIGHT][LENGTH];
 		// ici on calcule les nouvelles intensites apres le passage du filtre
 		// gaussien
-		for (int i = 2; i < (HEIGHT - 3); i++) {
+		for (int i = 2; i < (HEIGHT - 2); i++) {
 			for (int j = 2; j < (LENGTH - 2); j++) {
 				byte coef = (byte) ((
 						gauss[0][0]	* traitScreen[i - 1][j - 1].getIntensite()
