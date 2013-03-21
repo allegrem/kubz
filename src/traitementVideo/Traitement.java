@@ -9,9 +9,9 @@ import utilities.*;
 public class Traitement {
 
 	/**
-	 * Cette méthode permet de parcourir l'image pour en déterminer les
-	 * composantes connexes (ici les taches lumineueses) La structure de données
-	 * employée ici est une structure Union-Find basique (tourne en O(n*ln(n))
+	 * Cette mï¿½thode permet de parcourir l'image pour en dï¿½terminer les
+	 * composantes connexes (ici les taches lumineueses) La structure de donnï¿½es
+	 * employï¿½e ici est une structure Union-Find basique (tourne en O(n*ln(n))
 	 * ou n nombre de pixels)
 	 * 
 	 * @param screen
@@ -40,7 +40,7 @@ public class Traitement {
 	}
 
 	/**
-	 * Constructeur uttilise pour les tests unitaires
+	 * Constructeur utilise pour les tests unitaires
 	 */
 	public Traitement() {
 		super();
@@ -245,10 +245,10 @@ public class Traitement {
 	}
 
 	/**
-	 * Methode qui permet de mettre à jour la structure Union-Find mise en place
-	 * actuellemnt elle ajoute la plus petite ArrayList à la plus grande
-	 * (complexité en nln(n) où n nombre de pixels à true) (si j'ai du courage
-	 * j'implémenterai celle de Tarjan ou de Hopcroft-Ullman mais je promets
+	 * Methode qui permet de mettre ï¿½ jour la structure Union-Find mise en place
+	 * actuellemnt elle ajoute la plus petite ArrayList ï¿½ la plus grande
+	 * (complexitï¿½ en nln(n) oï¿½ n nombre de pixels ï¿½ true) (si j'ai du courage
+	 * j'implï¿½menterai celle de Tarjan ou de Hopcroft-Ullman mais je promets
 	 * rien)
 	 * 
 	 * @param groupesConnexeIntermediare
@@ -293,7 +293,7 @@ public class Traitement {
 	/**
 	 * Methode qui permet d'actualiser la position et la vitesse des cubes Elle
 	 * utilise une recherche locale en partant de la position attendue du cube
-	 * Methode un peu dégueu mais je vois pas trop comment la faire avec un joli
+	 * Methode un peu dï¿½gueu mais je vois pas trop comment la faire avec un joli
 	 * boucle
 	 * 
 	 * @param vc
@@ -307,7 +307,7 @@ public class Traitement {
 		// int expectedY3 = (int) (vc.getPos3().getY() + vc.getY3Speed());
 
 		/*
-		 * Ici on établie les pixels à distance distance de la position attendue
+		 * Ici on ï¿½tablie les pixels ï¿½ distance distance de la position attendue
 		 * Ensuite on parcours ces pixels par distance croissante a la position
 		 * attendue Si on trouve une tache lumineuse on considere que c'est la
 		 * nouvelle position et on sort de la boucle Si on ne trouve pas de
@@ -543,7 +543,7 @@ public class Traitement {
 	}
 
 	/**
-	 * Methode qui met a jour la position et la vitesse de la troisième diode
+	 * Methode qui met a jour la position et la vitesse de la troisiï¿½me diode
 	 * d'un cube
 	 * 
 	 * @param vc
@@ -564,7 +564,7 @@ public class Traitement {
 	 * 
 	 * 
 	 * /** Methode qui retourne une ArrayList d'ArrayList de VirtualPixe ou
-	 * l'ArrayList numéro i contient les pixels distants de i de (x,y)
+	 * l'ArrayList numï¿½ro i contient les pixels distants de i de (x,y)
 	 * 
 	 * @param x
 	 * 

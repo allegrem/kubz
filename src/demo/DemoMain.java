@@ -1,5 +1,10 @@
 package demo;
 
+/**
+ * Lancement du programme qui sert pour la video de demo
+ * @author berthier
+ *
+ */
 public class DemoMain {
 
 	/**

@@ -12,6 +12,11 @@ import utilities.RandomPerso;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
 
+/**
+ * Une "tuile" servant pour le mode "Disco"
+ * @author berthier
+ *
+ */
 public class Tuile  implements DisplayableChild  {
 private int size;
 private ReadableColor upColor;

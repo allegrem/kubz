@@ -18,6 +18,12 @@ import wall.Wall;
 import OpenGL.GLDisplay;
 import base.Base;
 
+/**
+ * Equivalent du gameEngine pour la demo.
+ * Se charge de lancer l'affichage
+ * @author berthier
+ *
+ */
 public class Manager{
 
 		private final int width;

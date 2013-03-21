@@ -11,6 +11,12 @@ import utilities.Point;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
 
+/**
+ * Un cercle part du centre de l'ecran et s'aggrandit jusqu'a colorier tout
+ * le background
+ * @author berthier
+ *
+ */
 public class Expension implements DisplayableChild{
 	
 	private Point center;

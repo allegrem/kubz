@@ -8,6 +8,11 @@ import utilities.RandomPerso;
 
 import map.Map;
 
+/**
+ * Les carres qui se retournent et changent de couleur facon "disco"
+ * @author berthier
+ *
+ */
 public class Disco {
 	private int size;
 	private Map map;
