@@ -19,18 +19,9 @@ import gameEngine.GameEngine;
 import OpenGL.KeyboardManager;
 import player.parameter.*;
 import player.unit.*;
-import synthesis.Sound;
-import synthesis.filters.BandsFilter;
-import synthesis.fmInstruments.FmInstruments3Params;
-import synthesis.fmInstruments.PianoInstrument2;
-import synthesis.fmInstruments.TwoOscFmInstrument;
-import synthesis.fmInstruments.WoodInstrument;
-import synthesis.fmInstruments.XylophoneInstrument;
 import utilities.Point;
 import views.attacks.AttackConeView;
 import views.attacks.SinusoidalAttackView;
-import views.informationViews.AudioRender;
-import views.informationViews.InstrumentsChoice;
 import views.informationViews.Link;
 import views.interfaces.Displayable;
 import views.interfaces.DisplayableFather;
@@ -55,7 +46,7 @@ public class Player {
 	private final int power = 180;
 
 	private final GameEngine gameEngine;
-	private AudioRender audioRender;
+
 	private Link link;
 
 	/**
@@ -357,8 +348,6 @@ public class Player {
 		Melody melody = unit.getAttackMelody();
 		setPStatesToSoundEdit();
 		setUStateToWaiting(unit);
-		double size = unit.getSize() * Math.sqrt(2) / 2;
-		boolean isModified = true;
 		while (!KeyboardManager.tap) {
 			parameters[0].setAngle((int)(-gameEngine.getCubeManager().getCube(param1id)
 					.getAngle() / factor));
@@ -369,36 +358,30 @@ public class Player {
 							new Point(parameters[choice].getX(),
 									parameters[choice].getY() - 1)) < Base.radius)) {
 				parameters[choice].translate(0, -1);
-				isModified = true;
 			}
 			if ((KeyboardManager.sKey)
 					&& (base.getCenter().distanceTo(
 							new Point(parameters[choice].getX(),
 									parameters[choice].getY() + 1)) < Base.radius)) {
 				parameters[choice].translate(0, 1);
-				isModified = true;
 			}
 			if ((KeyboardManager.qKey)
 					&& (base.getCenter().distanceTo(
 							new Point(parameters[choice].getX() - 1,
 									parameters[choice].getY())) < Base.radius)) {
 				parameters[choice].translate(-1, 0);
-				isModified = true;
 			}
 			if ((KeyboardManager.dKey)
 					&& (base.getCenter().distanceTo(
 							new Point(parameters[choice].getX() + 1,
 									parameters[choice].getY())) < Base.radius)) {
 				parameters[choice].translate(1, 0);
-				isModified = true;
 			}
 			if (KeyboardManager.wKey) {
 				parameters[choice].rotate(1);
-				isModified = true;
 			}
 			if (KeyboardManager.xKey) {
 				parameters[choice].rotate(-1);
-				isModified = true;
 			}
 			if (KeyboardManager.aKey) {
 				if (melody.isPlaying())
@@ -461,7 +444,6 @@ public class Player {
 			// on regle le tempo
 			melody.setTempo(getCubesAperture());
 
-			isModified = false;
 
 		}
 
@@ -588,7 +570,7 @@ public class Player {
 	}
 
 	public boolean isInBase(Point newPos) {
-		if (newPos.distanceTo(base.getCenter()) < base.radius)
+		if (newPos.distanceTo(base.getCenter()) < Base.radius)
 			return true;
 		return false;
 	}

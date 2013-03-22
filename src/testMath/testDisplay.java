@@ -31,7 +31,7 @@ public class testDisplay {
 
 	}
 	
-	private boolean aPressed(){
+	public boolean aPressed(){
 		Display.update();
 		return Keyboard.isKeyDown(Keyboard.KEY_A);
 	}

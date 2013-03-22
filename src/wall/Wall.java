@@ -24,7 +24,7 @@ public class Wall {
 		super();
 		this.extremity1 = extremity1;
 		this.extremity2 = extremity2;
-		this.thickness = thickness;
+		this.setThickness(thickness);
 		this.gameEngine=gameEngine;
 		view=new WallView(extremity1,extremity2,thickness,type);
 		gameEngine.getMap().add(view);
@@ -35,7 +35,7 @@ public class Wall {
 	public void ChangeWall(Point extremity1, Point extremity2, int thickness) {
 		this.extremity1 = extremity1;
 		this.extremity2 = extremity2;
-		this.thickness = thickness;
+		this.setThickness(thickness);
 		view.ChangeWall(extremity1, extremity2, thickness);
 	}
 	public void translateX(double longueur) {
@@ -75,6 +75,14 @@ public class Wall {
 
 	public void setExtremity2(Point extremity2) {
 		this.extremity2 = extremity2;
+	}
+
+	public int getThickness() {
+		return thickness;
+	}
+
+	public void setThickness(int thickness) {
+		this.thickness = thickness;
 	}
 	
 	

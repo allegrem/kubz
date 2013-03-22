@@ -159,14 +159,6 @@ public class Monster {
 		return cible;
 	}
 
-	/**
-	 * En attendant de coder la vue des monstres
-	 * 
-	 * @param unitList
-	 */
-	private void setSeenUnits(ArrayList<Unit> unitList) {
-		seenUnits = unitList;
-	}
 
 	/** Actions liees a la position **/
 

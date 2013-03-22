@@ -1,13 +1,10 @@
 package gameEngine;
 
 import java.util.ArrayList;
-
 import map.Map;
 import map.MapReader;
 import monster.zoo.Monster;
-
 import org.lwjgl.util.ReadableColor;
-
 import player.CubeOwner;
 import player.Player;
 import player.unit.Unit;
@@ -21,11 +18,7 @@ import OpenGL.GLDisplay;
 import OpenGL.KeyboardManager;
 import base.Base;
 import cube.Cube;
-import cube.XBee;
 import cubeManager.CubeManager;
-//import wall.Wall;
-
-//import cubeManager.*;
 
 public class GameEngine extends Thread {
 
@@ -78,7 +71,7 @@ public class GameEngine extends Thread {
 		}
 		bases.add(new Base(ReadableColor.ORANGE,BaseView.BAS,this));
 	
-		playerList.add(new Player(this, bases.get(0)));
+		playerList.add(new Player(this, bases.get(0), 0, 15000, 15075));
 		//playerList.add(new Player(this, bases.get(0)));
 		//playerList.add(new Player(this,bases.get(0)));
 		//playerList.add(new Player(this));

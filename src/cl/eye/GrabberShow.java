@@ -5,13 +5,9 @@ import java.awt.Graphics;
 import java.awt.image.DataBuffer;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
-
 import javax.swing.JPanel;
-
 import com.googlecode.javacv.CanvasFrame;
-
 import processing.core.PImage;
-import traitementVideo.Traitement;
 import traitementVideo.VirtualPixel;
 import utilities.Point;
 import videoprocessing.ImagePanel;
@@ -29,9 +25,6 @@ public class GrabberShow implements Runnable {
 														// position de l'objet
 														// tracké
 	private JPanel jp = new JPanel();
-	private int posXold; 
-	private int posYold;
-	private boolean white;
 	private CLCamera myCamera = null;
 	private PImage myImage = null;
 	public static final int CAMERA_WIDTH = 640;
@@ -39,16 +32,14 @@ public class GrabberShow implements Runnable {
 	private int cameraRate = 75; // fps maximum pour cette resolution
 	private ImagePanel imagePanel;
 	private VirtualPixel[][] cameraScreen = new VirtualPixel[CAMERA_HEIGHT][CAMERA_WIDTH];
-	private Traitement traitement;
 	
 	/**
 	 * permet d'avoir un interface controlé
 	 */
-	public GrabberShow(Traitement traitement) {
+	public GrabberShow() {
 		// Verifies the native library loaded
 		if (!setupCameras())
 			System.exit(0);
-		this.traitement = traitement;
 		canvas.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 		imagePanel = new ImagePanel(CAMERA_WIDTH, CAMERA_HEIGHT);
 		canvas.setContentPane(imagePanel);
@@ -73,19 +64,11 @@ public class GrabberShow implements Runnable {
 		while (true) {
 
 			myCamera.getCameraFrame(myImage.pixels, 1000);
-			//myImage.filter(PImage.THRESHOLD, 0.25f); //passage en mode threshold
 			int posX = 0, posY = 0;
 			int comptX = 0, comptY = 0;
 			double cupos = 0;
 			for (int i = 0; i < myImage.pixels.length; i++) {
-				/*if ((myImage.pixels[i] & 0xFF) > 10) {
-					white = true;
-				}
-				else white = false;*/
 				//ici on met le tableau de pixel à jour
-				//System.out.println(myImage.pixels[i] & 0xFF);
-//				cameraScreen[comptY][comptX].setBrightness(false);
-//				cameraScreen[comptY][comptX].setGroupeConnexe(0);
 				cameraScreen[comptY][comptX].setIntensite((byte) (myImage.pixels[i] & 0xFF));
 				comptX++; // on parcourt l'image en largeur
 				if (comptX == CAMERA_WIDTH) // on descend d'une ligne

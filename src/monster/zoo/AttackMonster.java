@@ -2,13 +2,10 @@ package monster.zoo;
 
 import org.lwjgl.util.ReadableColor;
 
-import synthesis.fmInstruments.BellInstrument;
 import utilities.Point;
 import views.informationViews.LifeView;
 import views.monsters.SquareMonsterView;
 import gameEngine.GameEngine;
-import midisynthesis.instruments.Instrument;
-import midisynthesis.patterns.MidiPattern;
 import midisynthesis.patterns.MidiPattern1;
 import monster.attack.ChooseDistance;
 import monster.attack.FixedFrenquenceAttack;
@@ -19,7 +16,7 @@ public class AttackMonster extends Monster{
 	public AttackMonster(float xStart, float yStart,ReadableColor color, GameEngine gameEngine) {
 		super(xStart, yStart, gameEngine);
 		this.choice = new ChooseDistance(this);
-		this.attack = new FixedFrenquenceAttack(this, 1, 1, 1, 1, new MidiPattern1(), new midisynthesis.instruments.BellInstrument());
+		this.attack = new FixedFrenquenceAttack(this, 1, 1, 1, new MidiPattern1(), new midisynthesis.instruments.BellInstrument());
 		this.move = new RegularMove(this, 200);
 		view= new SquareMonsterView(new Point(xStart,yStart), color);
 		gameEngine.getMap().add(view);	

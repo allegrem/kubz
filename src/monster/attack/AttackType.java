@@ -5,10 +5,6 @@ package monster.attack;
  */
 
 import player.unit.*;
-import synthesis.Sound;
-import synthesis.fmInstruments.FmInstruments3Params;
-import synthesis.fmInstruments.WoodInstrument;
-
 import midisynthesis.Melody;
 import monster.zoo.Monster;
 

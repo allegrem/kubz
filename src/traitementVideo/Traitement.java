@@ -1,9 +1,6 @@
 package traitementVideo;
 
-import gameEngine.GameEngine;
-
 import java.util.*;
-
 import utilities.*;
 
 public class Traitement {
@@ -20,12 +17,11 @@ public class Traitement {
 	private int fps;
 	private VirtualPixel[][] vi;
 	private ArrayList<ArrayList<VirtualPixel>> groupesConnexes;
-	private GameEngine gameEngine;
 	private int LENGTH = 640;
 	private int HEIGHT = 480;
 	private int distance = 5;
 	private int taille = 5;
-	private int seuil = 1;
+	private int seuil = 30;
 	private VirtualPixel[][] traitScreen;
 
 	public Traitement(int LENGTH, int HEIGHT) {

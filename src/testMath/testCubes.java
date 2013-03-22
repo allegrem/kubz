@@ -7,7 +7,6 @@ import org.lwjgl.opengl.DisplayMode;
 
 import synthesis.Sound;
 import synthesis.fmInstruments.FmInstruments3Params;
-import synthesis.fmInstruments.TwoOscFmInstrument;
 import synthesis.fmInstruments.WoodInstrument;
 import cube.Cube;
 import cube.XBee;

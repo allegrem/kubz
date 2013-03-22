@@ -5,21 +5,18 @@ package testMath.video;
  * @author Felix
  */
 
-import java.lang.annotation.Target;
 
 import cl.eye.GrabberShow;
 import traitementVideo.Traitement;
-import traitementVideo.VideoCube;
-import traitementVideo.VirtualPixel;
+
 
 public class testTraitementVideo1 {
 	
 
 	public static void main(String[] args) {
-		int iter = 0;
 		Traitement traitement = new Traitement(640,480);
 		traitement.updateConnexe();
-		GrabberShow gs = new GrabberShow(traitement);
+		GrabberShow gs = new GrabberShow();
         Thread th = new Thread(gs);
         th.start();
 		try {
@@ -36,8 +33,6 @@ public class testTraitementVideo1 {
 			traitement.flouMedian();
 			traitement.seuil();
 			traitement.updateConnexe();
-//			System.out.println(iter);
-//			iter++;
 			System.out.println("taches: " + (traitement.getGroupesPos().size()-1));
 			try {
 				Thread.sleep(100);

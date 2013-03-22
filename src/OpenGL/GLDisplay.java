@@ -41,12 +41,10 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.glu.GLU;
 
-import synthesis.Sound;
 import utilities.Maths;
 import utilities.MyBuffer;
 import utilities.Point;
 import utilities.Vector;
-import views.informationViews.AudioRender;
 import views.interfaces.DisplayableFather;
 import map.Map;
 
@@ -81,12 +79,10 @@ public class GLDisplay extends Thread{
 	private int mapDisplay_height=0;
 	private boolean do_run=true;
 	private Map map;
-	private Sound sound;
 	private int frequency=50;
 	private  boolean initialized=false;
 	private Text texte;
 	private final int nFrames=20;// Nbre de frames pour le motion-blur
-	private int i=0;
 	
 	/*
 	 * Parametres de la projection

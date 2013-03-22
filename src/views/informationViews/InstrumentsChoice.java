@@ -3,8 +3,6 @@ package views.informationViews;
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 
-import gameEngine.GameEngine;
-
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
@@ -14,9 +12,7 @@ import utilities.Point;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
 import org.lwjgl.util.glu.Disk;
-import org.newdawn.slick.Color;
 
-import OpenGL.Textures;
 
 /**
  * Affichage de cercles autour de l'unite pour le choix des instruments.
@@ -31,17 +27,15 @@ public class InstrumentsChoice implements DisplayableChild{
 	private Disk disk;
 	private int rayon=20;
 	private ReadableColor chosen;
-	private GameEngine gameEngine;
 	
 	
-	public InstrumentsChoice(GameEngine gameEngine){
+	public InstrumentsChoice(){
 		disk=new Disk();
 		addInstrument(ReadableColor.BLUE);
 		addInstrument(ReadableColor.RED);
 		addInstrument(ReadableColor.GREEN);
 		addInstrument(ReadableColor.ORANGE);
 		chosen=colors.get(0);
-		this.gameEngine=gameEngine;
 		
 	}
 

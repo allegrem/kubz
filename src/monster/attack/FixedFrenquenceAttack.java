@@ -11,16 +11,16 @@ import monster.zoo.Monster;
 
 public class FixedFrenquenceAttack extends AttackType {
 
-	private int strenght;
 
-	public FixedFrenquenceAttack(Monster monster, int strenght, int tune, int tempo, int parameter, MidiPattern pattern, Instrument instrument) {
+	public FixedFrenquenceAttack(Monster monster, int tune, int tempo, int parameter, MidiPattern pattern, Instrument instrument) {
 		super(monster);
-		this.strenght = strenght;
 		this.attackMelody.setTempo(tempo);
 		this.attackMelody.setTune(tune);
 		this.attackMelody.setParameter(parameter);
 		this.attackMelody.setPattern(pattern);
 		this.attackMelody.setInstrument(instrument);
 	}
+	
+	
 
 }

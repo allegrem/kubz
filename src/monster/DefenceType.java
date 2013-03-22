@@ -1,9 +1,6 @@
 package monster;
 
 import midisynthesis.Melody;
-import midisynthesis.instruments.InstrumentLibrary;
-import midisynthesis.patterns.MidiPatternsLibaray;
-
 public class DefenceType {
 	protected Melody melody;
 	
