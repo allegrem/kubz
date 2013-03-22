@@ -40,12 +40,12 @@ public class GrabberShow implements Runnable {
 		// Verifies the native library loaded
 		if (!setupCameras())
 			System.exit(0);
-		canvas.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-		imagePanel = new ImagePanel(CAMERA_WIDTH, CAMERA_HEIGHT);
-		canvas.setContentPane(imagePanel);
-
-		path.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-		path.setContentPane(jp);
+//		canvas.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+//		imagePanel = new ImagePanel(CAMERA_WIDTH, CAMERA_HEIGHT);
+//		canvas.setContentPane(imagePanel);
+//
+//		path.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+//		path.setContentPane(jp);
 		for(int i=0; i< CAMERA_HEIGHT;i++){
 			for (int j = 0; j < CAMERA_WIDTH; j ++){
 				cameraScreen[i][j] = new VirtualPixel(false, 0, new Point(i,j),(byte) 0);
@@ -60,13 +60,13 @@ public class GrabberShow implements Runnable {
 	 * ensuite on donne leurs positions 
 	 */
 	public void run() {
-		int posnY = 0, posnX = 0;
+		//int posnY = 0, posnX = 0;
 		while (true) {
 
 			myCamera.getCameraFrame(myImage.pixels, 1000);
-			int posX = 0, posY = 0;
+			//int posX = 0, posY = 0;
 			int comptX = 0, comptY = 0;
-			double cupos = 0;
+			//double cupos = 0;
 			for (int i = 0; i < myImage.pixels.length; i++) {
 				//ici on met le tableau de pixel à jour
 				cameraScreen[comptY][comptX].setIntensite((byte) (myImage.pixels[i] & 0xFF));
@@ -77,7 +77,7 @@ public class GrabberShow implements Runnable {
 					comptY++;
 				}			
 			}
-			cupos = Math.sqrt((posnX - posX) * (posnX - posX) + (posnY - posY)
+			/*cupos = Math.sqrt((posnX - posX) * (posnX - posX) + (posnY - posY)
 					* (posnY - posY));
 			if (cupos < 100) {
 				paint(posX, posY, cupos);
@@ -96,7 +96,7 @@ public class GrabberShow implements Runnable {
 				((WritableRaster) raster).setDataElements(0, 0, CAMERA_WIDTH,
 						CAMERA_HEIGHT, myImage.pixels);
 				imagePanel.updateImage(raster);
-			}	
+			}	*/
 		}
 	}
 
@@ -111,16 +111,16 @@ public class GrabberShow implements Runnable {
 	 * @param posY
 	 *            est la position vertical de l'objet
 	 */
-	private void paint(int posX, int posY, double cupos) {
-		Graphics g = jp.getGraphics();
-		path.setSize(CAMERA_WIDTH, CAMERA_HEIGHT); // donne en parametre la
-													// hauteur et la largeur de
-													// l'img
-		g.clearRect(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-		g.setColor(Color.green);
-		g.fillOval(posX, posY, 10, 10);
-		g.drawOval(posX, posY, 10, 10);
-	}
+//	private void paint(int posX, int posY, double cupos) {
+//		Graphics g = jp.getGraphics();
+//		path.setSize(CAMERA_WIDTH, CAMERA_HEIGHT); // donne en parametre la
+//													// hauteur et la largeur de
+//													// l'img
+//		g.clearRect(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+//		g.setColor(Color.green);
+//		g.fillOval(posX, posY, 10, 10);
+//		g.drawOval(posX, posY, 10, 10);
+//	}
 
 	public boolean setupCameras() {
 		System.out.println("Getting number of cameras");

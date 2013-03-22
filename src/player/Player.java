@@ -156,6 +156,8 @@ public class Player {
 	 * 
 	 * @return
 	 */
+	
+	// va de 15 a 80
 	public int getCube1Distance() {
 		int sensibilite = 1;
 		int offset = 0;
@@ -169,6 +171,8 @@ public class Player {
 	 * 
 	 * @return
 	 */
+	
+	// va de 15 a 80
 	public int getCube2Distance() {
 		int sensibilite = 1;
 		int offset = 0;
@@ -182,6 +186,8 @@ public class Player {
 	 * 
 	 * @return
 	 */
+	
+	// va de 40 à 140 à peu près
 	public int getCubesAperture() {
 		int sensibility = 1;
 		int offset = 0;
@@ -432,6 +438,7 @@ public class Player {
 			Melody melody = unit.getAttackMelody();
 			setPStatesToSoundEdit();
 			setUStateToWaiting(unit);
+			melody.unpause();
 			while (!KeyboardManager.tap) {
 	//			parameters[0].setAngle((int)(-gameEngine.getCubeManager().getCube(param1id)
 	//					.getAngle() / factor));

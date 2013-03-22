@@ -38,8 +38,6 @@ public class Monster {
 	protected double life;
 	protected LifeView lifeView;
 	protected MonsterView view;
-
-	// private LifeType life;
 	private DefenceType defence;
 
 	/**
@@ -125,7 +123,6 @@ public class Monster {
 		ArrayList<Wall> walls = gameEngine.getWalls();
 		double xm = this.getPos().getX();
 		double ym = this.getPos().getY();
-		//System.out.println(unitList.size());
 		for (Unit unit : seenUnits) {
 			double xu = unit.getPos().getX();
 			double yu = unit.getPos().getY();
@@ -224,12 +221,9 @@ public class Monster {
 	}
 
 	public void act() {
-//		setSeenUnits(gameEngine.getUnitList());
 		setCible();
 		move();
 		attack.attack(cible);
-		// attack(attack.result());
-		// gameEngine.getDisplay().auto3D(view, cible.getView(), 6000);
 		try {
 			Thread.sleep(6000);
 		} catch (InterruptedException e) {

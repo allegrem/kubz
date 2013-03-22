@@ -20,8 +20,8 @@ public class Traitement {
 	private int LENGTH = 640;
 	private int HEIGHT = 480;
 	private int distance = 5;
-	private int taille = 17;
-	private int seuil = 60;
+	private int taille = 30;
+	private int seuil = 70;
 	private VirtualPixel[][] traitScreen;
 
 	public Traitement(int LENGTH, int HEIGHT) {
@@ -95,18 +95,16 @@ public class Traitement {
 		// bord
 		for (int i = 2; i < (HEIGHT - 2); i++) {
 			for (int j = 2; j < (LENGTH - 2); j++) {
-				byte coef = (byte) ((median[0][0]
-						* traitScreen[i - 1][j - 1].getIntensite()
+				byte coef = (byte) 
+						((median[0][0] * traitScreen[i - 1][j - 1].getIntensite()
 						+ median[0][1] * traitScreen[i - 1][j].getIntensite()
-						+ median[0][2]
-						* traitScreen[i - 1][j + 1].getIntensite()
+						+ median[0][2] * traitScreen[i - 1][j + 1].getIntensite()
 						+ median[1][0] * traitScreen[i][j - 1].getIntensite()
 						+ median[1][1] * traitScreen[i][j].getIntensite()
 						+ median[1][2] * traitScreen[i][j + 1].getIntensite()
-						+ median[2][0]
-						* traitScreen[i + 1][j - 1].getIntensite()
-						+ median[2][1] * traitScreen[i + 1][j].getIntensite() + median[2][2]
-						* traitScreen[i + 1][j + 1].getIntensite()) / 9);
+						+ median[2][0] * traitScreen[i + 1][j - 1].getIntensite()
+						+ median[2][1] * traitScreen[i + 1][j].getIntensite() 
+						+ median[2][2] * traitScreen[i + 1][j + 1].getIntensite()) / 9);
 				newCoefs[i][j] = coef;
 			}
 		}
