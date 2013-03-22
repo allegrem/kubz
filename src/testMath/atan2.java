@@ -9,13 +9,13 @@ public class atan2 {
 	 */
 	public static void main(String[] args) {
 		int a = -1;
-		int b = 6;
+		int b = 10;
 		if (a>=0)
 		System.out.println("test circulaire : " + a%b);
 		else
-		System.out.println("test circulaire : " + (b-Math.abs((a%b))));
+		System.out.println("test circulaire : " + ((a%b +b)%b));
 		
-		for(int i=0; i<-2;i++){
+		/*for(int i=0; i<-2;i++){
 			System.out.println("iteration n°" + i );
 		}
 		
@@ -25,7 +25,7 @@ public class atan2 {
 		
 		for(int i=0; i<10000;i++){
 			System.out.println(i);
-		}
+		}*/
 		
 
 	}

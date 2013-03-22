@@ -364,6 +364,55 @@ public class Player {
 		unit.updtaeSeenMonsters();
 		KeyboardManager.tap = false;
 	}
+	
+	
+
+	public void UDirection(Unit unit) {
+		setPStatesToWaiting();
+		setUStateToDirection(unit);
+		unit.updtaeSeenMonsters();
+		ArrayList<Monster> seenMonsters = unit.getSeenMonsters();
+//		AttackConeView attackCone = new AttackConeView(30, unit.getDirection(),
+//				power, unit.getView());
+//		unit.getView().addChild(attackCone);
+		if(seenMonsters.size()>0){
+			unit.setPreviousTarget(seenMonsters.get(0));
+			unit.setTarget(seenMonsters.get(0));
+			AttackConeView cibleView =  new AttackConeView(360, 0, 40, unit.getTarget().getView());
+			unit.getTarget().getView().addChild(cibleView);
+			while (!KeyboardManager.tap) {
+				unit.updateTarget();		
+				if(!(unit.getPreviousTarget().equals(unit.getTarget()))){
+					unit.getPreviousTarget().getView().removeChild(cibleView);
+					cibleView =  new AttackConeView(360, 0, 40, unit.getTarget().getView());
+					unit.getTarget().getView().addChild(cibleView);
+				}
+				
+	//			unit.setDirection(-gameEngine.getCubeManager().getCube(unitid)
+	//					.getAngle() / factor);
+				if (KeyboardManager.wKey) {
+					unit.rotateDirection(1);
+				}
+				if (KeyboardManager.xKey) {
+					unit.rotateDirection(-1);
+				}
+//				if (unit.getDirection() > 0) {
+//					attackCone.setDirection((long) unit.getDirection());
+//				} else {
+//					attackCone.setDirection((long) (360 + unit.getDirection()));
+//				}
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			unit.getTarget().getView().removeChild(cibleView);
+//			unit.getView().removeChild(attackCone);
+			KeyboardManager.tap = false;
+		}
+	}
+	
 
 	/**
 	 * Methode qui declenche la creation du son via les Parameter Ici les
@@ -373,10 +422,6 @@ public class Player {
 	 * @throws InstantiationException
 	 */
 
-	/*
-	 * =============>>>> a modifier pour que le parametre ne puisse pas sortir
-	 * de la base (Demi-cercle et pas cercle ! Donc peut sortir d'un cote...)
-	 */
 	public void soundEditPTurn(Unit unit) throws InstantiationException,
 			IllegalAccessException {
 		Melody melody = unit.getAttackMelody();
@@ -493,39 +538,8 @@ public class Player {
 		unit.setAttackMelody(melody);
 	}
 
-	/**
-	 * Methode qui declenche le choix de l'ouverture d'attaque de Unit
-	 */
 
-	public void UDirection(Unit unit) {
-		setPStatesToWaiting();
-		setUStateToDirection(unit);
-		AttackConeView attackCone = new AttackConeView(30, unit.getDirection(),
-				power, unit.getView());
-		unit.getView().addChild(attackCone);
-		while (!KeyboardManager.tap) {
-//			unit.setDirection(-gameEngine.getCubeManager().getCube(unitid)
-//					.getAngle() / factor);
-			if (KeyboardManager.wKey) {
-				unit.rotateDirection(1);
-			}
-			if (KeyboardManager.xKey) {
-				unit.rotateDirection(-1);
-			}
-			if (unit.getDirection() > 0) {
-				attackCone.setDirection((long) unit.getDirection());
-			} else {
-				attackCone.setDirection((long) (360 + unit.getDirection()));
-			}
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		unit.getView().removeChild(attackCone);
-		KeyboardManager.tap = false;
-	}
+
 
 	public void UAttack(Unit unit) {
 		unit.setAperture(30);
@@ -558,8 +572,8 @@ public class Player {
 		isTurn = true;
 		for (Unit unit : unitList) {
 			movingUTurn(unit);
-			soundEditPTurn(unit);
 			UDirection(unit);
+			soundEditPTurn(unit);
 			UAttack(unit);
 		}
 		isTurn = false;

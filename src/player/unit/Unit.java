@@ -36,6 +36,7 @@ public class Unit extends CubeOwner {
 	private LifeView lifeView;
 	private ArrayList<Monster> seenMonsters;
 	private Monster target;
+	private Monster previousTarget;
 
 	public Unit(Player owner) {
 		life = 15;
@@ -173,59 +174,49 @@ public class Unit extends CubeOwner {
 	 * qu'il y ait un mur qui le s�pare de Unit
 	 */
 	public void updtaeSeenMonsters() {
-		ArrayList<Monster> monsterList = gameEngine.getMonsterList();
-		seenMonsters = monsterList;
+		seenMonsters = gameEngine.getMonsterList();
+		ArrayList<Monster> removeMonsters = new ArrayList<Monster>();
 		ArrayList<Wall> walls = gameEngine.getWalls();
-		ArrayList<ArrayList<Double>> angleList = new ArrayList<ArrayList<Double>>();
-		double xu = this.getPos().getX();
-		double yu = this.getPos().getY();
-		// ici on construit la liste des intervalle d'angles qui d�finissent les
-		// murs
-		for (Wall wall : walls) {
-			double x1 = wall.getExtremity1().getX();
-			double x2 = wall.getExtremity2().getX();
-			double y1 = wall.getExtremity1().getY();
-			double y2 = wall.getExtremity2().getY();
-			double x1diff = x1 - xu;
-			double y1diff = y1 - yu;
-			double extrem1Theta = (180 * Math.atan2(y1diff, x1diff) / Math.PI) - 90;
-			double x2diff = x2 - xu;
-			double y2diff = y2 - yu;
-			double extrem2Theta = (180 * Math.atan2(y2diff, x2diff) / Math.PI) - 90;
-			ArrayList<Double> angles = new ArrayList<Double>();
-			angles.add(new Double(extrem1Theta));
-			angles.add(new Double(extrem2Theta));
-			angleList.add(angles);
-		}
-		// ici on verifie que le Monster ne se situe pas dans un angle de vue
-		// auquel un mur appartient (reste a g�rer le cas ou il est devant le
-		// mur)
-		for (Monster monster : monsterList) {
-			double xm = monster.getPos().getX();
-			double ym = monster.getPos().getY();
-			double xdiff = xm - xu;
-			double ydiff = ym - yu;
-			double monsterTheta = (180 * Math.atan2(ydiff, xdiff) / Math.PI) - 90;
-			for (int i = 0; i < angleList.size(); i++) {
-				ArrayList<Double> angles = angleList.get(i);
-				Wall wall = null;
-				if (((angles.get(0) < monsterTheta)&& (angles.get(1) > monsterTheta) || ((angles.get(0) > monsterTheta) && (angles.get(0) < monsterTheta)))){
-					wall = walls.get(i);
-					double xp1 = wall.getExtremity1().getX();
-					double yp1 = wall.getExtremity1().getY();
-					double xp2 = wall.getExtremity2().getX();
-					double yp2 = wall.getExtremity2().getY();
-					// calcul de l'intersection entre la droite qui relie Unit a
-					// Monster et du wall
-					double xi = (yu - yp1 - xu * (ym - yu) / (xm - xu) + xp1
-							* (yp2 - yp1) / (xp2 - xp1))
-							/ ((yp2 - yp1) / (xp2 - xp1) - (ym - yu) / (xm - xu));
-					double yi = yu + (xi - xu) * (ym - yu) / (xm - xu);
-					if (monster.getPos().distanceTo(pos) > pos.distanceTo(new Point(xi, yi))) {
-						seenMonsters.remove(monster);
-					}
+		double xm = this.getPos().getX();
+		double ym = this.getPos().getY();
+		//System.out.println(unitList.size());
+		for (Monster monster : seenMonsters) {
+			double xu = monster.getPos().getX();
+			double yu = monster.getPos().getY();
+			for (Wall wall : walls) {
+				double xp1 = wall.getExtremity1().getX();
+				double yp1 = wall.getExtremity1().getY();
+				double xp2 = wall.getExtremity2().getX();
+				double yp2 = wall.getExtremity2().getY();
+				// calcul de l'intersection entre la droite qui relie Unit a
+				// Monster et du wall
+				double xi = (ym - yp1 - xm * (yu - ym) / (xu - xm) + xp1
+						* (yp2 - yp1) / (xp2 - xp1))
+						/ ((yp2 - yp1) / (xp2 - xp1) - (yu - ym) / (xu - xm));
+				double yi = ym + (xi - xm) * (yu - ym) / (xu - xm);
+				if (((xi <= Math.max(xp1, xp2))
+						&& (xi >= Math.min(xp1, xp2))
+						&& (pos.distanceTo(new Point(xi, yi)) < pos
+								.distanceTo(monster.getPos())))) {
+					removeMonsters.add(monster);
+					
 				}
 			}
+		}
+		for(Monster monster : removeMonsters){
+			seenMonsters.remove(monster);
+				
+		}
+	}
+	
+	public void updateTarget(){
+		int targetNumber = (int) (direction/40); 
+		int size = seenMonsters.size();
+		previousTarget = target;
+		target = null;
+		if (size>0){
+			if (targetNumber>=0) target = seenMonsters.get(targetNumber%size);
+			else target = seenMonsters.get((size-Math.abs((targetNumber%size))-1));
 		}
 	}
 
@@ -345,6 +336,22 @@ public class Unit extends CubeOwner {
 		this.defenceMelody = defenceMelody;
 	}
 
+	public Monster getTarget() {
+		return target;
+	}
 
+	public void setTarget(Monster target) {
+		this.target = target;
+	}
 
+	public Monster getPreviousTarget() {
+		return previousTarget;
+	}
+
+	public void setPreviousTarget(Monster previousTarget) {
+		this.previousTarget = previousTarget;
+	}
+	
+	
+	
 }
