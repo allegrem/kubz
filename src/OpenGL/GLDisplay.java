@@ -326,11 +326,11 @@ public class GLDisplay extends Thread{
 				e.printStackTrace();
 			}
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_O)){
+		if (Keyboard.isKeyDown(Keyboard.KEY_K)){
 			parallelisme-=0.01;
 			updateParams();
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_P)){
+		if (Keyboard.isKeyDown(Keyboard.KEY_L)){
 			parallelisme+=0.01;
 			updateParams();
 		}
