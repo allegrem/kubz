@@ -25,6 +25,7 @@ import views.attacks.SinusoidalAttackView;
 import views.informationViews.Link;
 import views.interfaces.Displayable;
 import views.interfaces.DisplayableFather;
+import views.staticViews.BaseView;
 
 public class Player {
 
@@ -62,12 +63,44 @@ public class Player {
 		this.parameters = new Parameter[2];
 		parameters[0] = new Parameter(this);
 		parameters[1] = new Parameter(this);
-		parameters[0].setLocation(
-				base.getCenter().getX() - parameters[0].getSize(), base
-						.getCenter().getY());
-		parameters[1].setLocation(
-				base.getCenter().getX() + parameters[1].getSize(), base
-						.getCenter().getY());
+		
+		if (base.getSens()==BaseView.BAS){
+			parameters[0].setLocation(
+					base.getCenter().getX() - parameters[0].getSize(), base
+							.getCenter().getY() - parameters[0].getSize());
+			parameters[1].setLocation(
+					base.getCenter().getX() + parameters[1].getSize(), base
+							.getCenter().getY() - parameters[0].getSize());
+			unitList.get(0).setLocation((int) (base.getCenter().getX()) , (int) (base.getCenter().getY()-1.2*base.radius));
+		}
+		if (base.getSens()==BaseView.HAUT){
+			parameters[0].setLocation(
+					base.getCenter().getX() + parameters[0].getSize(), base
+							.getCenter().getY()-parameters[0].getSize());
+			parameters[1].setLocation(
+					base.getCenter().getX() - parameters[1].getSize(), base
+							.getCenter().getY()-parameters[0].getSize());
+			unitList.get(0).setLocation((int) (base.getCenter().getX()) , (int) (base.getCenter().getY()+1.2*base.radius));
+		}
+		if (base.getSens()==BaseView.GAUCHE){
+			parameters[0].setLocation(
+					base.getCenter().getX() + parameters[0].getSize(), base
+							.getCenter().getY() - parameters[0].getSize());
+			parameters[1].setLocation(
+					base.getCenter().getX() + parameters[1].getSize(), base
+							.getCenter().getY() + parameters[0].getSize());
+			unitList.get(0).setLocation((int) (base.getCenter().getX()+1.2*base.radius) , (int) (base.getCenter().getY()));
+		}
+		if (base.getSens()==BaseView.DROITE){
+			parameters[0].setLocation(
+					base.getCenter().getX() - parameters[0].getSize(), base
+							.getCenter().getY() - parameters[0].getSize());
+			parameters[1].setLocation(
+					base.getCenter().getX() - parameters[1].getSize(), base
+							.getCenter().getY() + parameters[0].getSize());
+			unitList.get(0).setLocation((int) (base.getCenter().getX()-1.2*base.radius) , (int) (base.getCenter().getY()));
+		}
+	
 		link = new Link(base, parameters[0], parameters[1]);
 		gameEngine.getMap().add(link);
 		compteurPattern = 0;
@@ -85,6 +118,7 @@ public class Player {
 //				.setRGB(0, 255, 0, (short) 10);
 
 	}
+	
 
 	/**
 	 * Methode qui retourne le nombre de changement d'instrument, en rapport
@@ -310,7 +344,7 @@ public class Player {
 						&& obj.isInZone(new Point(view.getX() + i * viewSize,
 								view.getY() + j * viewSize))) {
 					collision = true;
-					System.out.println(obj);
+					//System.out.println(obj);
 				}
 
 			}
