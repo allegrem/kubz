@@ -380,12 +380,15 @@ public class Player {
 			unit.setTarget(seenMonsters.get(0));
 			AttackConeView cibleView =  new AttackConeView(360, 0, 40, unit.getTarget().getView());
 			unit.getTarget().getView().addChild(cibleView);
+			unit.getTarget().getDefence().getMelody().unpause();
 			while (!KeyboardManager.tap) {
 				unit.updateTarget();		
 				if(!(unit.getPreviousTarget().equals(unit.getTarget()))){
+					unit.getPreviousTarget().getDefence().getMelody().pause();
 					unit.getPreviousTarget().getView().removeChild(cibleView);
 					cibleView =  new AttackConeView(360, 0, 40, unit.getTarget().getView());
 					unit.getTarget().getView().addChild(cibleView);
+					unit.getTarget().getDefence().getMelody().unpause();
 				}
 				
 	//			unit.setDirection(-gameEngine.getCubeManager().getCube(unitid)
@@ -408,6 +411,7 @@ public class Player {
 				}
 			}
 			unit.getTarget().getView().removeChild(cibleView);
+			unit.getTarget().getDefence().getMelody().pause();
 //			unit.getView().removeChild(attackCone);
 			KeyboardManager.tap = false;
 		}
