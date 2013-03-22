@@ -28,7 +28,6 @@ public class GameEngine extends Thread {
 	private ArrayList<Player> playerList;
 	private ArrayList<Wall> walls;
 	private ArrayList<Base> bases;
-	// private CubeManager cubeManager;
 	private GLDisplay display;
 	private Map map;
 	private MapReader reader = new MapReader("Maps/bFile.txt",
@@ -36,9 +35,9 @@ public class GameEngine extends Thread {
 	private Traitement traitement;
 	private CubeManager cubeManager;
 
-	public GameEngine(CubeManager cubeManager) {
+	public GameEngine(/*CubeManager cubeManager*/) {
 		RandomPerso.initialize();
-		this.cubeManager = cubeManager;
+//		this.cubeManager = cubeManager;
 		display = new GLDisplay(this);
 		map = new Map();
 		display.setMap(map);
@@ -71,10 +70,7 @@ public class GameEngine extends Thread {
 		}
 		bases.add(new Base(ReadableColor.ORANGE,BaseView.BAS,this));
 	
-		playerList.add(new Player(this, bases.get(0), 0, 15000, 15075));
-		//playerList.add(new Player(this, bases.get(0)));
-		//playerList.add(new Player(this,bases.get(0)));
-		//playerList.add(new Player(this));
+		playerList.add(new Player(this, bases.get(0), 45679, 15000, 15075));
 
 	}
 
@@ -263,7 +259,6 @@ public class GameEngine extends Thread {
 
 	private boolean checkPos(CubeOwner cubeOwner) {
 		cubeOwner.getCube().setIrOn();
-		// traitement.updateConnexe(null); // int�gration avec la cam �
 		// regler pour recuperer l'image
 		ArrayList<Point> currentPositions = new ArrayList<Point>();
 		for (int i = 1; i <= 3; i++) {

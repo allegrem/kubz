@@ -77,12 +77,12 @@ public class Player {
 		this.param1id = param1id;
 		this.param2id = param2id;
 		this.unitid = unitid;
-		gameEngine.getCubeManager().getCube(unitid)
-				.setRGB(0, 0, 255, (short) 10);
-		gameEngine.getCubeManager().getCube(param1id)
-				.setRGB(0, 255, 0, (short) 10);
-		gameEngine.getCubeManager().getCube(param2id)
-				.setRGB(0, 255, 0, (short) 10);
+//		gameEngine.getCubeManager().getCube(unitid)
+//				.setRGB(0, 0, 255, (short) 10);
+//		gameEngine.getCubeManager().getCube(param1id)
+//				.setRGB(0, 255, 0, (short) 10);
+//		gameEngine.getCubeManager().getCube(param2id)
+//				.setRGB(0, 255, 0, (short) 10);
 
 	}
 
@@ -290,8 +290,8 @@ public class Player {
 		DisplayableFather view = unit.getView();
 		float viewSize = (float) (view.getSize() / 2);
 		while (!KeyboardManager.tap) {
-			unit.setDirection(-gameEngine.getCubeManager().getCube(unitid)
-					.getAngle() / 2);
+//			unit.setDirection(-gameEngine.getCubeManager().getCube(unitid)
+//					.getAngle() / factor);
 			i = 0;
 			j = 0;
 			if ((KeyboardManager.zKey) && (unit.getY() - size > 0))
@@ -349,10 +349,10 @@ public class Player {
 		setPStatesToSoundEdit();
 		setUStateToWaiting(unit);
 		while (!KeyboardManager.tap) {
-			parameters[0].setAngle((int)(-gameEngine.getCubeManager().getCube(param1id)
-					.getAngle() / factor));
-			parameters[1].setAngle((int)(-gameEngine.getCubeManager().getCube(param2id)
-					.getAngle() / factor));
+//			parameters[0].setAngle((int)(-gameEngine.getCubeManager().getCube(param1id)
+//					.getAngle() / factor));
+//			parameters[1].setAngle((int)(-gameEngine.getCubeManager().getCube(param2id)
+//					.getAngle() / factor));
 			if ((KeyboardManager.zKey)
 					&& (base.getCenter().distanceTo(
 							new Point(parameters[choice].getX(),
@@ -444,13 +444,13 @@ public class Player {
 			// on regle le tempo
 			melody.setTempo(getCubesAperture());
 
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 
-		}
 
-		try {
-			Thread.sleep(10);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
 		}
 
 		// zik
@@ -470,8 +470,8 @@ public class Player {
 				power, unit.getView());
 		unit.getView().addChild(attackCone);
 		while (!KeyboardManager.tap) {
-			unit.setDirection(-gameEngine.getCubeManager().getCube(unitid)
-					.getAngle() / factor);
+//			unit.setDirection(-gameEngine.getCubeManager().getCube(unitid)
+//					.getAngle() / factor);
 			if (KeyboardManager.wKey) {
 				unit.rotateDirection(1);
 			}
@@ -525,7 +525,6 @@ public class Player {
 		for (Unit unit : unitList) {
 			movingUTurn(unit);
 			soundEditPTurn(unit);
-			// UAperture(unit);
 			UDirection(unit);
 			UAttack(unit);
 		}

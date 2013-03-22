@@ -20,8 +20,8 @@ public class Traitement {
 	private int LENGTH = 640;
 	private int HEIGHT = 480;
 	private int distance = 5;
-	private int taille = 20;
-	private int seuil = 35;
+	private int taille = 17;
+	private int seuil = 60;
 	private VirtualPixel[][] traitScreen;
 
 	public Traitement(int LENGTH, int HEIGHT) {

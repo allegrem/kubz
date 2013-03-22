@@ -139,7 +139,7 @@ public class Monster {
 						* (yp2 - yp1) / (xp2 - xp1))
 						/ ((yp2 - yp1) / (xp2 - xp1) - (yu - ym) / (xu - xm));
 				double yi = ym + (xi - xm) * (yu - ym) / (xu - xm);
-				if (!((xi <= Math.max(xp1, xp2))
+				if (((xi <= Math.max(xp1, xp2))
 						&& (xi >= Math.min(xp1, xp2))
 						&& (pos.distanceTo(new Point(xi, yi)) < pos
 								.distanceTo(unit.getPos())))) {
@@ -223,7 +223,7 @@ public class Monster {
 	}
 
 	public void act() {
-		//setSeenUnits(gameEngine.getUnitList());
+//		setSeenUnits(gameEngine.getUnitList());
 		setCible();
 		move();
 		attack.attack(cible);
