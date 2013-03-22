@@ -174,7 +174,8 @@ public class Unit extends CubeOwner {
 	 * qu'il y ait un mur qui le s�pare de Unit
 	 */
 	public void updtaeSeenMonsters() {
-		seenMonsters = gameEngine.getMonsterList();
+		seenMonsters.clear();
+		seenMonsters.addAll(gameEngine.getMonsterList());
 		ArrayList<Monster> removeMonsters = new ArrayList<Monster>();
 		ArrayList<Wall> walls = gameEngine.getWalls();
 		double xm = this.getPos().getX();

@@ -119,7 +119,8 @@ public class Monster {
 	}
 
 	private void updateSeenUnits() {
-		seenUnits = gameEngine.getUnitList();
+		seenUnits.clear();
+		seenUnits.addAll(gameEngine.getUnitList());
 		ArrayList<Unit> removeUnits = new ArrayList<Unit>();
 		ArrayList<Wall> walls = gameEngine.getWalls();
 		double xm = this.getPos().getX();

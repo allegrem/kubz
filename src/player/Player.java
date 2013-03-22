@@ -428,146 +428,155 @@ public class Player {
 
 	public void soundEditPTurn(Unit unit) throws InstantiationException,
 			IllegalAccessException {
-		Melody melody = unit.getAttackMelody();
-		setPStatesToSoundEdit();
-		setUStateToWaiting(unit);
-		while (!KeyboardManager.tap) {
-//			parameters[0].setAngle((int)(-gameEngine.getCubeManager().getCube(param1id)
-//					.getAngle() / factor));
-//			parameters[1].setAngle((int)(-gameEngine.getCubeManager().getCube(param2id)
-//					.getAngle() / factor));
-			if ((KeyboardManager.zKey)
-					&& (base.getCenter().distanceTo(
-							new Point(parameters[choice].getX(),
-									parameters[choice].getY() - 1)) < Base.radius)) {
-				parameters[choice].translate(0, -1);
-			}
-			if ((KeyboardManager.sKey)
-					&& (base.getCenter().distanceTo(
-							new Point(parameters[choice].getX(),
-									parameters[choice].getY() + 1)) < Base.radius)) {
-				parameters[choice].translate(0, 1);
-			}
-			if ((KeyboardManager.qKey)
-					&& (base.getCenter().distanceTo(
-							new Point(parameters[choice].getX() - 1,
-									parameters[choice].getY())) < Base.radius)) {
-				parameters[choice].translate(-1, 0);
-			}
-			if ((KeyboardManager.dKey)
-					&& (base.getCenter().distanceTo(
-							new Point(parameters[choice].getX() + 1,
-									parameters[choice].getY())) < Base.radius)) {
-				parameters[choice].translate(1, 0);
-			}
-			if (KeyboardManager.wKey) {
-				parameters[choice].rotate(1);
-			}
-			if (KeyboardManager.xKey) {
-				parameters[choice].rotate(-1);
-			}
-			if (KeyboardManager.aKey) {
-				if (melody.isPlaying())
-					melody.pause();
-				else
-					melody.unpause();
-			}
-			// on modifie l'instrument en fonctionde l'angle du Parameter1
-			int iterInstrum = getChangeInstrument();
-			// on passe a l'intrument suivant autant de fois que necessaire
-			if (iterInstrum > 0)
-				for (int i = 0; i < iterInstrum; i++) {
-					try {
-						melody.setInstrument(InstrumentLibrary
-								.getNextInstrument(melody.getInstrument()));
-					} catch (InstantiationException | IllegalAccessException e1) {
-						e1.printStackTrace();
-					}
+		if(unit.getSeenMonsters().size()>0){
+			Melody melody = unit.getAttackMelody();
+			setPStatesToSoundEdit();
+			setUStateToWaiting(unit);
+			while (!KeyboardManager.tap) {
+	//			parameters[0].setAngle((int)(-gameEngine.getCubeManager().getCube(param1id)
+	//					.getAngle() / factor));
+	//			parameters[1].setAngle((int)(-gameEngine.getCubeManager().getCube(param2id)
+	//					.getAngle() / factor));
+				if ((KeyboardManager.zKey)
+						&& (base.getCenter().distanceTo(
+								new Point(parameters[choice].getX(),
+										parameters[choice].getY() - 1)) < Base.radius)) {
+					parameters[choice].translate(0, -1);
 				}
-			// on passe a l'intrument precedent autant de fois que necessaire
-			if (iterInstrum < 0)
-				for (int i = 0; i < -iterInstrum; i++) {
-					try {
-						melody.setInstrument(InstrumentLibrary
-								.getPreviousInstrument(melody.getInstrument()));
-					} catch (InstantiationException | IllegalAccessException e1) {
-						e1.printStackTrace();
-					}
+				if ((KeyboardManager.sKey)
+						&& (base.getCenter().distanceTo(
+								new Point(parameters[choice].getX(),
+										parameters[choice].getY() + 1)) < Base.radius)) {
+					parameters[choice].translate(0, 1);
 				}
-
-			// on modifie le Pattern en fonction de l'angle du Parameter2
-			int iterPattern = getChangePattern();
-			// on passe au Pattern suivant autant de fois que necessaire
-			if (iterPattern > 0)
-				for (int i = 0; i < iterPattern; i++) {
-					try {
-						melody.setPattern(MidiPatternsLibaray
-								.getNextPattern(melody.getPattern()));
-					} catch (InstantiationException | IllegalAccessException e1) {
-						e1.printStackTrace();
-					}
+				if ((KeyboardManager.qKey)
+						&& (base.getCenter().distanceTo(
+								new Point(parameters[choice].getX() - 1,
+										parameters[choice].getY())) < Base.radius)) {
+					parameters[choice].translate(-1, 0);
 				}
-			// on passe au Pattern precedent autant de fois que necessaire
-			if (iterPattern < 0)
-				for (int i = 0; i < -iterPattern; i++) {
-					try {
-						melody.setPattern(MidiPatternsLibaray
-								.getPreviousPattern(melody.getPattern()));
-					} catch (InstantiationException | IllegalAccessException e1) {
-						e1.printStackTrace();
-					}
+				if ((KeyboardManager.dKey)
+						&& (base.getCenter().distanceTo(
+								new Point(parameters[choice].getX() + 1,
+										parameters[choice].getY())) < Base.radius)) {
+					parameters[choice].translate(1, 0);
 				}
-
-			// On regle le parametre d'instrument
-			melody.setParameter(getCube1Distance());
-
-			// on regle la note de depart
-			melody.setTune(getCube2Distance());
-
-			// on regle le tempo
-			melody.setTempo(getCubesAperture());
-
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+				if (KeyboardManager.wKey) {
+					parameters[choice].rotate(1);
+				}
+				if (KeyboardManager.xKey) {
+					parameters[choice].rotate(-1);
+				}
+				if (KeyboardManager.aKey) {
+					if (melody.isPlaying())
+						melody.pause();
+					else
+						melody.unpause();
+				}
+				// on modifie l'instrument en fonctionde l'angle du Parameter1
+				int iterInstrum = getChangeInstrument();
+				// on passe a l'intrument suivant autant de fois que necessaire
+				if (iterInstrum > 0)
+					for (int i = 0; i < iterInstrum; i++) {
+						try {
+							melody.setInstrument(InstrumentLibrary
+									.getNextInstrument(melody.getInstrument()));
+						} catch (InstantiationException | IllegalAccessException e1) {
+							e1.printStackTrace();
+						}
+					}
+				// on passe a l'intrument precedent autant de fois que necessaire
+				if (iterInstrum < 0)
+					for (int i = 0; i < -iterInstrum; i++) {
+						try {
+							melody.setInstrument(InstrumentLibrary
+									.getPreviousInstrument(melody.getInstrument()));
+						} catch (InstantiationException | IllegalAccessException e1) {
+							e1.printStackTrace();
+						}
+					}
+	
+				// on modifie le Pattern en fonction de l'angle du Parameter2
+				int iterPattern = getChangePattern();
+				// on passe au Pattern suivant autant de fois que necessaire
+				if (iterPattern > 0)
+					for (int i = 0; i < iterPattern; i++) {
+						try {
+							melody.setPattern(MidiPatternsLibaray
+									.getNextPattern(melody.getPattern()));
+						} catch (InstantiationException | IllegalAccessException e1) {
+							e1.printStackTrace();
+						}
+					}
+				// on passe au Pattern precedent autant de fois que necessaire
+				if (iterPattern < 0)
+					for (int i = 0; i < -iterPattern; i++) {
+						try {
+							melody.setPattern(MidiPatternsLibaray
+									.getPreviousPattern(melody.getPattern()));
+						} catch (InstantiationException | IllegalAccessException e1) {
+							e1.printStackTrace();
+						}
+					}
+	
+				// On regle le parametre d'instrument
+				melody.setParameter(getCube1Distance());
+	
+				// on regle la note de depart
+				melody.setTune(getCube2Distance());
+	
+				// on regle le tempo
+				melody.setTempo(getCubesAperture());
+	
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+	
 			}
-
-
+	
+			// zik
+			KeyboardManager.tap = false;
+			melody.pause();
+			unit.setAttackMelody(melody);
 		}
-
-		// zik
-		KeyboardManager.tap = false;
-		melody.pause();
-		unit.setAttackMelody(melody);
 	}
 
 
 
 
 	public void UAttack(Unit unit) {
-		unit.setAperture(30);
-		SinusoidalAttackView attack = new SinusoidalAttackView(
-				unit.getAperture(), unit.getDirection(), power, unit.getView());
-		unit.getView().addChild(attack);
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		if (!gameEngine.getMonsterList().isEmpty()) {
-			for (int i = 0; (i < gameEngine.getMonsterList().size())
-					&& (gameEngine.getMonsterList().get(i) != null); i++) {
-				Monster monster = gameEngine.getMonsterList().get(i);
-				double xdiff = monster.getPos().getX() - unit.getPos().getX();
-				double ydiff = monster.getPos().getY() - unit.getPos().getY();
-				double theta = (180 * Math.atan2(ydiff, xdiff) / Math.PI) - 90;
-				if ((monster.getPos().distanceTo(unit.getPos()) < power)
-						&& (((unit.getDirection() - unit.getAperture() / 2) % 360 <= theta % 360) && ((unit
-								.getDirection() + unit.getAperture() / 2) % 360 >= theta % 360))) {
-					monster.decreaseLife(68);
+		if(unit.getSeenMonsters().size()>0){
+			unit.setAperture(30);
+			Monster target = unit.getTarget();
+			double xdiff = target.getPos().getX() - unit.getPos().getX();
+			double ydiff = target.getPos().getY() - unit.getPos().getY();
+			double theta = (180 * Math.atan2(ydiff, xdiff) / Math.PI) - 90;
+			SinusoidalAttackView attack = new SinusoidalAttackView(
+					unit.getAperture(), theta, power, unit.getView());
+			unit.getView().addChild(attack);
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			if(target!=null){
+				double dTempo = Math.exp(Math.abs(unit.getAttackMelody().getTempo()-target.getDefence().getMelody().getTempo()));
+				double dTune = Math.exp(Math.abs(unit.getAttackMelody().getTune()-target.getDefence().getMelody().getTune()));
+				double dParameter = Math.exp(Math.abs(unit.getAttackMelody().getParameter()-target.getDefence().getMelody().getParameter()));
+				int dInstrum;
+				if(unit.getAttackMelody().getInstrument().equals(target.getDefence().getMelody().getInstrument())) dInstrum = 1;
+				else dInstrum = 0;
+				int dPattern;
+				if(unit.getAttackMelody().getPattern().equals(target.getDefence().getMelody().getPattern())) dPattern = 1;
+				else dPattern = 0;
+				int degats = (int) ((int) power* dPattern*dInstrum*dTune*dTempo*dParameter);
+				//on inflige a present les degats a la cibe
+				if (power > target.getPos().distanceTo(unit.getPos())) {
+					target.decreaseLife(degats);
 				}
-				gameEngine.getMonsterList().trimToSize();
+				target.decreaseLife(degats);
 			}
 		}
 	}
