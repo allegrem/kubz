@@ -5,7 +5,6 @@ package testMath.video;
  * @author Felix
  */
 
-
 import cl.eye.GrabberShow;
 import traitementVideo.Traitement;
 

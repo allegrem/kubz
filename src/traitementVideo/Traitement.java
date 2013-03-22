@@ -20,8 +20,8 @@ public class Traitement {
 	private int LENGTH = 640;
 	private int HEIGHT = 480;
 	private int distance = 5;
-	private int taille = 5;
-	private int seuil = 30;
+	private int taille = 20;
+	private int seuil = 35;
 	private VirtualPixel[][] traitScreen;
 
 	public Traitement(int LENGTH, int HEIGHT) {
@@ -31,7 +31,8 @@ public class Traitement {
 		this.traitScreen = new VirtualPixel[HEIGHT][LENGTH];
 		for (int i = 0; i < HEIGHT; i++) {
 			for (int j = 0; j < LENGTH; j++) {
-				traitScreen[i][j] = new VirtualPixel(false, 0, new Point(i, j),(byte) 0);
+				traitScreen[i][j] = new VirtualPixel(false, 0, new Point(i, j),
+						(byte) 0);
 			}
 		}
 	}
@@ -43,30 +44,35 @@ public class Traitement {
 		super();
 	}
 
-	public void flouGaussien(int LENGTH, int HEIGHT){
+	public void flouGaussien(int LENGTH, int HEIGHT) {
 		this.LENGTH = LENGTH;
 		this.HEIGHT = HEIGHT;
 		flouGaussien();
 	}
-	
+
 	public void flouGaussien() {
 		byte[][] gauss = { { 1, 2, 1 }, { 2, 4, 2 }, { 1, 2, 1 } };
 		byte[][] newCoefs = new byte[HEIGHT][LENGTH];
 		// ici on calcule les nouvelles intensites apres le passage du filtre
 		// gaussien
+		
+		// on pourrait l'appliquer proprement sur les bords mais je ne sais pas
+		// comment se comporte un noyau de convolution au niveau des effets de
+		// bord
 		for (int i = 2; i < (HEIGHT - 2); i++) {
 			for (int j = 2; j < (LENGTH - 2); j++) {
-				byte coef = (byte) ((
-						gauss[0][0]	* traitScreen[i - 1][j - 1].getIntensite()
+				byte coef = (byte) ((gauss[0][0]
+						* traitScreen[i - 1][j - 1].getIntensite()
 						+ gauss[0][1] * traitScreen[i - 1][j].getIntensite()
-						+ gauss[0][2] * traitScreen[i - 1][j + 1].getIntensite()
+						+ gauss[0][2]
+						* traitScreen[i - 1][j + 1].getIntensite()
 						+ gauss[1][0] * traitScreen[i][j - 1].getIntensite()
 						+ gauss[1][1] * traitScreen[i][j].getIntensite()
 						+ gauss[1][2] * traitScreen[i][j + 1].getIntensite()
-						+ gauss[2][0] * traitScreen[i + 1][j - 1].getIntensite()
-						+ gauss[2][1] * traitScreen[i + 1][j].getIntensite() 
-						+ gauss[2][2] * traitScreen[i + 1][j + 1].getIntensite()) 
-						/ 16);
+						+ gauss[2][0]
+						* traitScreen[i + 1][j - 1].getIntensite()
+						+ gauss[2][1] * traitScreen[i + 1][j].getIntensite() + gauss[2][2]
+						* traitScreen[i + 1][j + 1].getIntensite()) / 16);
 				newCoefs[i][j] = coef;
 			}
 		}
@@ -77,25 +83,30 @@ public class Traitement {
 			}
 		}
 	}
-	
+
 	public void flouMedian() {
 		byte[][] median = { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
 		byte[][] newCoefs = new byte[HEIGHT][LENGTH];
 		// ici on calcule les nouvelles intensites apres le passage du filtre
 		// gaussien
-		for (int i = 2; i < (HEIGHT - 3); i++) {
+
+		// on pourrait l'appliquer proprement sur les bords mais je ne sais pas
+		// comment se comporte un noyau de convolution au niveau des effets de
+		// bord
+		for (int i = 2; i < (HEIGHT - 2); i++) {
 			for (int j = 2; j < (LENGTH - 2); j++) {
-				byte coef = (byte) ((
-						median[0][0]	* traitScreen[i - 1][j - 1].getIntensite()
+				byte coef = (byte) ((median[0][0]
+						* traitScreen[i - 1][j - 1].getIntensite()
 						+ median[0][1] * traitScreen[i - 1][j].getIntensite()
-						+ median[0][2] * traitScreen[i - 1][j + 1].getIntensite()
+						+ median[0][2]
+						* traitScreen[i - 1][j + 1].getIntensite()
 						+ median[1][0] * traitScreen[i][j - 1].getIntensite()
 						+ median[1][1] * traitScreen[i][j].getIntensite()
 						+ median[1][2] * traitScreen[i][j + 1].getIntensite()
-						+ median[2][0] * traitScreen[i + 1][j - 1].getIntensite()
-						+ median[2][1] * traitScreen[i + 1][j].getIntensite() 
-						+ median[2][2] * traitScreen[i + 1][j + 1].getIntensite()) 
-						/ 9);
+						+ median[2][0]
+						* traitScreen[i + 1][j - 1].getIntensite()
+						+ median[2][1] * traitScreen[i + 1][j].getIntensite() + median[2][2]
+						* traitScreen[i + 1][j + 1].getIntensite()) / 9);
 				newCoefs[i][j] = coef;
 			}
 		}
@@ -111,10 +122,10 @@ public class Traitement {
 		int iter = 0;
 		for (int i = 0; i < HEIGHT; i++) {
 			for (int j = 0; j < LENGTH; j++) {
-				if (traitScreen[i][j].getIntensite() >= seuil){
+				if (traitScreen[i][j].getIntensite() >= seuil) {
 					traitScreen[i][j].setBrightness(true);
 					iter++;
-				}else{
+				} else {
 					traitScreen[i][j].setBrightness(false);
 				}
 			}
@@ -147,11 +158,11 @@ public class Traitement {
 																			// connexe
 																			// 0
 		int compteurComposante = 1;
-		
-		//on remet les composantes a zero
+
+		// on remet les composantes a zero
 		for (int i = 0; i < HEIGHT; i++) {
 			for (int j = 0; j < LENGTH; j++) {
-					traitScreen[i][j].setGroupeConnexe(0);
+				traitScreen[i][j].setGroupeConnexe(0);
 			}
 		}
 
@@ -266,8 +277,8 @@ public class Traitement {
 				xMoy = xMoy + vp.getPos().getX();
 				yMoy = yMoy + vp.getPos().getY();
 			}
-			groupesConnexesPos.add(new Point((int) (xMoy / array
-					.size()), (int) (yMoy / array.size())));
+			groupesConnexesPos.add(new Point((int) (xMoy / array.size()),
+					(int) (yMoy / array.size())));
 		}
 		return groupesConnexesPos;
 	}
