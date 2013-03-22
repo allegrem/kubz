@@ -19,15 +19,12 @@ public class SinusInstrument extends Instrument {
 		super();
 	}
 
-	
 	protected MidiAudioBlock buildInstrument() {
-			NoteBlock fm = new NoteBlock();
-			amp = new ADSR(new Constant(0.3f), new Constant(0.3f), new Constant(0.5f), new Constant(1f));
-			return new SineOscillator((MidiAudioBlock) fm, amp);
-		
-	}
+		MidiAudioBlock fm = new NoteBlock();
+		amp = new ADSR(new Constant(0.3f), new Constant(0.3f), new Constant(
+				0.5f), new Constant(1f));
+		return new SineOscillator(fm, amp);
 
-	
-	
+	}
 
 }
