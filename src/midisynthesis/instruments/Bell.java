@@ -9,9 +9,9 @@ import midisynthesis.audioblocks.MidiAudioBlock;
 import midisynthesis.audioblocks.NoteBlock;
 import midisynthesis.audioblocks.SineOscillator;
 
-public class BellInstrument extends Instrument {
+public class Bell extends Instrument {
 
-	public BellInstrument() {
+	public Bell() {
 		super();
 	}
 

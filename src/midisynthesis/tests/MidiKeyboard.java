@@ -10,20 +10,20 @@ import javax.swing.JFrame;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 
-import midisynthesis.instruments.SinusInstrument;
+import midisynthesis.instruments.GhostSinus;
 import midisynthesis.midicommand.MidiCommand;
 
 
 public class MidiKeyboard extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private SinusInstrument instr;
+	private GhostSinus instr;
 
 	public MidiKeyboard() {
 		super("Kubz Keyboard");
 
 		//create instrument
-		instr = new SinusInstrument();
+		instr = new GhostSinus();
 
 		//keyboard listener
 		addKeyListener(new KeyListener() {
