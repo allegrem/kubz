@@ -30,7 +30,7 @@ import views.interfaces.DisplayableFather;
  *
  */
 public class CubeControlledView implements DisplayableFather{
-	private double size= 30;
+	private double size= 60;
 	private double height = 80;
 	private Point position;
 	private ArrayList<DisplayableChild> children= new ArrayList<DisplayableChild>();

@@ -203,26 +203,32 @@ public class GLDisplay extends Thread{
 	        GL20.glLinkProgram(shaderProgram);
 	        GL20.glValidateProgram(shaderProgram);
 	        GL20.glUseProgram(shaderProgram);
-	    	int lH=GL20.glGetUniformLocation(shaderProgram, "display_height");
-	    	int lW=GL20.glGetUniformLocation(shaderProgram, "display_width");
-			int lA=GL20.glGetUniformLocation(shaderProgram, "alpha");
-			int lM=GL20.glGetUniformLocation(shaderProgram, "midle");
-			int lS=GL20.glGetUniformLocation(shaderProgram, "sens");
-			int lI=GL20.glGetUniformLocation(shaderProgram, "inv");
-			int lX=GL20.glGetUniformLocation(shaderProgram, "decalageX");
-			int lY=GL20.glGetUniformLocation(shaderProgram, "decalageY");
-			int lMuX=GL20.glGetUniformLocation(shaderProgram, "multX");
-			int lMuY=GL20.glGetUniformLocation(shaderProgram, "multY");
-			GL20.glUniform1i(lH,display_height);
-			GL20.glUniform1i(lW,display_width);
-			GL20.glUniform1f(lA,parallelisme);
-			GL20.glUniform1f(lM,(float)(mapDisplay_width/2.0));
-			GL20.glUniform1f(lS,sens);
-			GL20.glUniform1f(lI,invParal);
-			GL20.glUniform1f(lX,decalageX);
-			GL20.glUniform1f(lY,decalageY);
-			GL20.glUniform1f(lMuX,multX);
-			GL20.glUniform1f(lMuY,multY);
+	        updateParams();
+	    	
+	}
+	
+	private void updateParams(){
+		int lH=GL20.glGetUniformLocation(shaderProgram, "display_height");
+    	int lW=GL20.glGetUniformLocation(shaderProgram, "display_width");
+		int lA=GL20.glGetUniformLocation(shaderProgram, "alpha");
+		int lM=GL20.glGetUniformLocation(shaderProgram, "midle");
+		int lS=GL20.glGetUniformLocation(shaderProgram, "sens");
+		int lI=GL20.glGetUniformLocation(shaderProgram, "inv");
+		int lX=GL20.glGetUniformLocation(shaderProgram, "decalageX");
+		int lY=GL20.glGetUniformLocation(shaderProgram, "decalageY");
+		int lMuX=GL20.glGetUniformLocation(shaderProgram, "multX");
+		int lMuY=GL20.glGetUniformLocation(shaderProgram, "multY");
+		GL20.glUniform1i(lH,display_height);
+		GL20.glUniform1i(lW,display_width);
+		GL20.glUniform1f(lA,parallelisme);
+		GL20.glUniform1f(lM,(float)(mapDisplay_width/2.0));
+		GL20.glUniform1f(lS,sens);
+		GL20.glUniform1f(lI,invParal);
+		GL20.glUniform1f(lX,decalageX);
+		GL20.glUniform1f(lY,decalageY);
+		GL20.glUniform1f(lMuX,multX);
+		GL20.glUniform1f(lMuY,multY);
+		
 	}
 	
 	/**
@@ -247,6 +253,7 @@ public class GLDisplay extends Thread{
 		if (Display.isCloseRequested()||KeyboardManager.quit)
 				do_run = false; // On arrete le programme
 		clear(); //On nettoie la fenetre
+		checkAffichage();
 		KeyboardManager.checkKeyboard();
 		glMatrixMode(GL_MODELVIEW);
 		GL11.glTranslatef((float)(1000),0f,0f);
@@ -275,6 +282,70 @@ public class GLDisplay extends Thread{
 		
 	}
 	
+
+	private void checkAffichage() {
+		if (Keyboard.isKeyDown(Keyboard.KEY_UP)){
+			decalageY++;
+			updateParams();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)){
+			decalageY--;
+			updateParams();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
+			decalageX++;
+			updateParams();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
+			decalageX--;
+			updateParams();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD8)){
+			multY+=0.01;
+			updateParams();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD2)){
+			multY-=0.01;
+			updateParams();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD6)){
+			multX+=0.01;
+			updateParams();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD4)){
+			multX-=0.01;
+			updateParams();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_I)){
+			sens*=-1;
+			updateParams();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_O)){
+			parallelisme-=0.01;
+			updateParams();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_P)){
+			parallelisme+=0.01;
+			updateParams();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_M)){
+			invParal*=-1;
+			updateParams();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
 
 	/**
 	 * Initialisation de l'OpenGL
