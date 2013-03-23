@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import synthesis.midiPlayground.DelayedMidiCommand;
 import synthesis.midiPlayground.*;
 
-
+//tune : 65 (F4)
 
 public class MidiPattern1 extends MidiPattern{
 	
