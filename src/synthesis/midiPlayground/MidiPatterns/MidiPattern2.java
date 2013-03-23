@@ -10,7 +10,8 @@ import synthesis.midiPlayground.*;
  *
  */
 
-//start with a F4
+//starting tune : 77 (F5)
+
 public class MidiPattern2 extends MidiPattern{
 	
 	public  MidiPattern2(){

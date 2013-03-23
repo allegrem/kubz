@@ -11,7 +11,7 @@ import synthesis.midiPlayground.MidiCommand;
  *
  */
 
-//start with a F5 
+//starting tune : 77 (F5) 
 public class MidiPattern3 extends MidiPattern{
 	
 	public  MidiPattern3(){

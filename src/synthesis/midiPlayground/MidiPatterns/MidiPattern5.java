@@ -5,6 +5,14 @@ import java.util.ArrayList;
 import synthesis.midiPlayground.DelayedMidiCommand;
 import synthesis.midiPlayground.MidiCommand;
 
+/**
+ * 
+ * @author valeh
+ *
+ */
+
+//starting tune : 76 (E5)
+
 public class MidiPattern5 extends MidiPattern{
 	
 	public MidiPattern5(){
