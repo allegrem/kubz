@@ -159,8 +159,8 @@ public class Player {
 	
 	// va de 15 a 80
 	public int getCube1Distance() {
-		int sensibilite = 1;
-		int offset = 0;
+		int sensibilite = 2;
+		int offset = -29;
 		return (int) (offset + sensibilite
 				* parameters[0].getPos().distanceTo(base.getCenter()));
 	}
@@ -175,7 +175,7 @@ public class Player {
 	// va de 15 a 80
 	public int getCube2Distance() {
 		int sensibilite = 1;
-		int offset = 0;
+		int offset = 25;
 		return (int) (offset + sensibilite
 				* parameters[1].getPos().distanceTo(base.getCenter()));
 	}
@@ -190,7 +190,7 @@ public class Player {
 	// va de 40 à 140 à peu près
 	public int getCubesAperture() {
 		int sensibility = 1;
-		int offset = 0;
+		int offset = 6;
 		double dx1 = parameters[0].getX() - base.getCenter().getX();
 		double dy1 = parameters[0].getY() - base.getCenter().getY();
 		double dx2 = parameters[1].getX() - base.getCenter().getX();

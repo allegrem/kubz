@@ -19,11 +19,16 @@ import videoprocessing.ImagePanel;
  */
 public class GrabberShow implements Runnable {
 	
-	private CanvasFrame canvas = new CanvasFrame("Web Cam"); // fenetre contenant la vue
-														// de la cam
-	private CanvasFrame path = new CanvasFrame("Detection"); // fenetre contenant la
-														// position de l'objet
-														// tracké
+
+
+	private CanvasFrame canvas = new CanvasFrame("Web Cam"); // fenetre
+																// contenant la
+																// vue
+	// de la cam
+	private CanvasFrame path = new CanvasFrame("Detection"); // fenetre
+																// contenant la
+	// position de l'objet
+	// tracké
 	private JPanel jp = new JPanel();
 	private CLCamera myCamera = null;
 	private PImage myImage = null;
@@ -32,7 +37,8 @@ public class GrabberShow implements Runnable {
 	private int cameraRate = 75; // fps maximum pour cette resolution
 	private ImagePanel imagePanel;
 	private VirtualPixel[][] cameraScreen = new VirtualPixel[CAMERA_HEIGHT][CAMERA_WIDTH];
-	
+	private byte[][] screen = new byte[CAMERA_HEIGHT][CAMERA_WIDTH];
+
 	/**
 	 * permet d'avoir un interface controlé
 	 */
@@ -40,55 +46,56 @@ public class GrabberShow implements Runnable {
 		// Verifies the native library loaded
 		if (!setupCameras())
 			System.exit(0);
-//		canvas.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-//		imagePanel = new ImagePanel(CAMERA_WIDTH, CAMERA_HEIGHT);
-//		canvas.setContentPane(imagePanel);
-//
-//		path.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-//		path.setContentPane(jp);
-		for(int i=0; i< CAMERA_HEIGHT;i++){
-			for (int j = 0; j < CAMERA_WIDTH; j ++){
-				cameraScreen[i][j] = new VirtualPixel(false, 0, new Point(i,j),(byte) 0);
+		canvas.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+		imagePanel = new ImagePanel(CAMERA_WIDTH, CAMERA_HEIGHT);
+		canvas.setContentPane(imagePanel);
+
+		path.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+		path.setContentPane(jp);
+		for (int i = 0; i < CAMERA_HEIGHT; i++) {
+			for (int j = 0; j < CAMERA_WIDTH; j++) {
+				cameraScreen[i][j] = new VirtualPixel(false, 0,
+						new Point(i, j), (byte) 0);
 			}
 		}
 	}
 
-	
 	/**
-	 * methode principale elle va rechercher les maxima de couleurs puis va tracker les maxima rouge 
-	 * on track d'abord le premier maxima et on va considerer  tous ceux qui ont un rouge proche de celui du maxima
-	 * ensuite on donne leurs positions 
+	 * methode principale elle va rechercher les maxima de couleurs puis va
+	 * tracker les maxima rouge on track d'abord le premier maxima et on va
+	 * considerer tous ceux qui ont un rouge proche de celui du maxima ensuite
+	 * on donne leurs positions
 	 */
 	public void run() {
-		//int posnY = 0, posnX = 0;
+		// int posnY = 0, posnX = 0;
 		while (true) {
 
 			myCamera.getCameraFrame(myImage.pixels, 1000);
-			//int posX = 0, posY = 0;
-			int comptX = 0, comptY = 0;
-			//double cupos = 0;
-			for (int i = 0; i < myImage.pixels.length; i++) {
-				//ici on met le tableau de pixel à jour
-				cameraScreen[comptY][comptX].setIntensite((byte) (myImage.pixels[i] & 0xFF));
-				comptX++; // on parcourt l'image en largeur
-				if (comptX == CAMERA_WIDTH) // on descend d'une ligne
-				{
-					comptX = 0;
-					comptY++;
-				}			
-			}
-			/*cupos = Math.sqrt((posnX - posX) * (posnX - posX) + (posnY - posY)
-					* (posnY - posY));
-			if (cupos < 100) {
-				paint(posX, posY, cupos);
-				posnX = posX;
-				posnY = posY;
-			}
+//			// int posX = 0, posY = 0;
+//			int comptX = 0, comptY = 0;
+//			// double cupos = 0;
+//			for (int i = 0; i < myImage.pixels.length; i++) {
+//				// ici on met le tableau de pixel à jour
+//				cameraScreen[comptY][comptX]
+//						.setIntensite((byte) (myImage.pixels[i] & 0xFF));
+//				comptX++; // on parcourt l'image en largeur
+//				if (comptX == CAMERA_WIDTH) // on descend d'une ligne
+//				{
+//					comptX = 0;
+//					comptY++;
+//				}
+//
+//			}
+			/*
+			 * cupos = Math.sqrt((posnX - posX) * (posnX - posX) + (posnY -
+			 * posY) (posnY - posY)); if (cupos < 100) { paint(posX, posY,
+			 * cupos); posnX = posX; posnY = posY; }
+			 */
 			if (myImage != null) // si l'on ne get pas la cam
 			{
-				//mise a jour de la fenetre affichant l'image de la camera
+				// mise a jour de la fenetre affichant l'image de la camera
 				byte[] byteArray = new byte[CAMERA_HEIGHT * CAMERA_WIDTH];
-				for (int j = 0; j < CAMERA_HEIGHT * CAMERA_WIDTH; j++){
+				for (int j = 0; j < CAMERA_HEIGHT * CAMERA_WIDTH; j++) {
 					byteArray[j] = (byte) myImage.pixels[j];
 				}
 				Raster raster = Raster.createPackedRaster(DataBuffer.TYPE_INT,
@@ -96,7 +103,7 @@ public class GrabberShow implements Runnable {
 				((WritableRaster) raster).setDataElements(0, 0, CAMERA_WIDTH,
 						CAMERA_HEIGHT, myImage.pixels);
 				imagePanel.updateImage(raster);
-			}	*/
+			}
 		}
 	}
 
@@ -111,16 +118,16 @@ public class GrabberShow implements Runnable {
 	 * @param posY
 	 *            est la position vertical de l'objet
 	 */
-//	private void paint(int posX, int posY, double cupos) {
-//		Graphics g = jp.getGraphics();
-//		path.setSize(CAMERA_WIDTH, CAMERA_HEIGHT); // donne en parametre la
-//													// hauteur et la largeur de
-//													// l'img
-//		g.clearRect(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-//		g.setColor(Color.green);
-//		g.fillOval(posX, posY, 10, 10);
-//		g.drawOval(posX, posY, 10, 10);
-//	}
+	 private void paint(int posX, int posY, double cupos) {
+	 Graphics g = jp.getGraphics();
+	 path.setSize(CAMERA_WIDTH, CAMERA_HEIGHT); // donne en parametre la
+	 // hauteur et la largeur de
+	 // l'img
+	 g.clearRect(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+	 g.setColor(Color.green);
+	 g.fillOval(posX, posY, 10, 10);
+	 g.drawOval(posX, posY, 10, 10);
+	 }
 
 	public boolean setupCameras() {
 		System.out.println("Getting number of cameras");
@@ -155,14 +162,27 @@ public class GrabberShow implements Runnable {
 
 	public VirtualPixel[][] getcameraScreen() {
 		return cameraScreen;
+
 	}
 
 	public void setcameraScreen(VirtualPixel[][] cameraScreen) {
 		this.cameraScreen = cameraScreen;
 	}
 	
-	
-	
-	
-	
+	public byte[][] getByteScreen(){
+		myCamera.getCameraFrame(myImage.pixels, 1000);
+		int comptX = 0, comptY = 0;
+		for (int i = 0; i < myImage.pixels.length; i++) {
+			//ici on met le tableau de pixel à jour
+			screen[comptX][comptY] = (byte) (myImage.pixels[i] & 0xFF);
+			comptX++; // on parcourt l'image en largeur
+			if (comptX == CAMERA_WIDTH) // on descend d'une ligne
+			{
+				comptX = 0;
+				comptY++;
+			}			
+		}
+		return screen;
+	}
+
 }

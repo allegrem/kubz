@@ -28,11 +28,12 @@ public class testTraitementVideo1 {
 		
 		// boucle d'update 
 		while(true){
-			traitement.setTraitScreen(gs.getcameraScreen());
-			traitement.flouMedian();
-			traitement.seuil();
-			traitement.updateConnexe();
-			System.out.println("taches: " + (traitement.getGroupesPos().size()-1));
+//			traitement.setTraitScreen(gs.getcameraScreen());
+//			traitement.flouMedian();
+//			traitement.seuil();
+//			traitement.updateConnexe();
+//			System.out.println("taches: " + (traitement.getGroupesPos().size()-1));
+			gs.getByteScreen();
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
