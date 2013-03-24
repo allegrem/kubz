@@ -1,7 +1,8 @@
 package monster.move;
 
 /**
- * Composante de Monster qui permet d'en g�rer le mouvement
+ * Composante de Monster qui permet d'en gerer le mouvement
+ * @author Felix
  */
 
 import player.unit.Unit;

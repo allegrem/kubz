@@ -1,5 +1,11 @@
 package main;
 
+/**
+ * @author Felix
+ * @author Paul
+ * 
+ */
+
 import cube.XBee;
 import cubeManager.CubeManager;
 import OpenGL.GLDisplay;

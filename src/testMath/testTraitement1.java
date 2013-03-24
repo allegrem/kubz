@@ -2,6 +2,7 @@ package testMath;
 
 /**
  * Test à lancer pour vérifier que le repérage des groupes connexes se fait bien sur un point
+ * @author Felix
  */
 import traitementVideo.Traitement;
 import traitementVideo.VirtualPixel;

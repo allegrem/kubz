@@ -2,10 +2,9 @@ package testMath;
 
 /**
  * Test à lancer pour vérifier que le repérage des groupes connexes se fait bien sur deux points l'un a cote de l'autre
+ * @author Felix
  */
 
-/* pour le moment quand on met deux pixels allumes non cote a cote ca marche correctement, mais des qu'ils sont l'un a cote de l'autre 
- * ca ne marche pas*/
 import traitementVideo.Traitement;
 import traitementVideo.VirtualPixel;
 import utilities.Point;

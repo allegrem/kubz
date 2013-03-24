@@ -1,5 +1,10 @@
 package testMath;
 
+/**
+ * 
+ * @author Felix
+ */
+
 import traitementVideo.Traitement;
 import traitementVideo.VirtualPixel;
 import utilities.Point;

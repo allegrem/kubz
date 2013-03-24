@@ -13,9 +13,10 @@ import utilities.Point;
 import videoprocessing.ImagePanel;
 
 /**
- * 
- * @author Charly Cette classe permet de gérer le tracking d' objet. les
+ * Cette classe permet de gérer le tracking d' objet. les
  *         methodes qu'elle implement sont run, paint et grabbershow
+ * @author Charly
+ * @author Felix
  */
 public class GrabberShow implements Runnable {
 	
@@ -36,7 +37,7 @@ public class GrabberShow implements Runnable {
 	public static final int CAMERA_HEIGHT = 480;
 	private int frameRate = 30; // fps maximum pour cette resolution
 	private ImagePanel imagePanel;
-	private VirtualPixel[][] cameraScreen = new VirtualPixel[CAMERA_HEIGHT][CAMERA_WIDTH];
+	private VirtualPixel[][] cameraScreen = new VirtualPixel[CAMERA_WIDTH][CAMERA_HEIGHT];
 	private byte[][] screen = new byte[CAMERA_HEIGHT][CAMERA_WIDTH];
 
 	/**
@@ -52,8 +53,8 @@ public class GrabberShow implements Runnable {
 
 		path.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 		path.setContentPane(jp);
-		for (int i = 0; i < CAMERA_HEIGHT; i++) {
-			for (int j = 0; j < CAMERA_WIDTH; j++) {
+		for (int i = 0; i < CAMERA_WIDTH; i++) {
+			for (int j = 0; j < CAMERA_HEIGHT; j++) {
 				cameraScreen[i][j] = new VirtualPixel(false, 0,
 						new Point(i, j), (byte) 0);
 			}
@@ -76,7 +77,7 @@ public class GrabberShow implements Runnable {
 			// double cupos = 0;
 			for (int i = 0; i < myImage.pixels.length; i++) {
 				// ici on met le tableau de pixel à jour
-				cameraScreen[comptY][comptX]
+				cameraScreen[comptX][comptY]
 						.setIntensite((byte) (myImage.pixels[i] & 0xFF));
 				comptX++; // on parcourt l'image en largeur
 				if (comptX == CAMERA_WIDTH) // on descend d'une ligne

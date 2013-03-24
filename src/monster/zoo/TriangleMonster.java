@@ -1,5 +1,11 @@
 package monster.zoo;
 
+/**
+ * 
+ * @author Felix
+ * @author Paul
+ */
+
 import midisynthesis.patterns.MidiPattern1;
 import monster.attack.ChooseDistance;
 import monster.attack.FixedFrenquenceAttack;

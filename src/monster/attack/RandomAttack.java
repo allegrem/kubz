@@ -1,5 +1,10 @@
 package monster.attack;
 
+/**
+ * 
+ * @author Felix
+ */
+
 import monster.zoo.Monster;
 
 

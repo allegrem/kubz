@@ -1,5 +1,10 @@
 package base;
 
+/**
+ * @author Felix
+ * 
+ */
+
 import gameEngine.GameEngine;
 import org.lwjgl.util.ReadableColor;
 import utilities.Point;

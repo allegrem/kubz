@@ -1,5 +1,10 @@
 package traitementVideo;
 
+/**
+ * 
+ * @author Felix
+ */
+
 import java.util.*;
 import utilities.*;
 
@@ -10,12 +15,8 @@ public class Traitement {
 	 * composantes connexes (ici les taches lumineueses) La structure de données
 	 * employée ici est une structure Union-Find basique (tourne en O(n*ln(n))
 	 * ou n nombre de pixels)
-	 * 
-	 * @param screen
-	 * @return
 	 */
 	private int fps;
-	private VirtualPixel[][] vi;
 	private ArrayList<ArrayList<VirtualPixel>> groupesConnexes;
 	private int LENGTH = 640;
 	private int HEIGHT = 480;
@@ -24,15 +25,15 @@ public class Traitement {
 	private int seuil = 90;
 	private int nseuils = 0; //nombre de pixels au dessus du seuil, utile pour debug et reglage des seuils
 	private int ncomp = 0; // nombre de composantes connexes, utile pour debug et reglage des seuils
-	private VirtualPixel[][] traitScreen;
+	private VirtualPixel[][] traitScreen; // le premier indice correspond a x(gauche/droite) et le second a y (haut/bas)
 
 	public Traitement(int LENGTH, int HEIGHT) {
 		super();
 		this.LENGTH = LENGTH;
 		this.HEIGHT = HEIGHT;
-		this.traitScreen = new VirtualPixel[HEIGHT][LENGTH];
-		for (int i = 0; i < HEIGHT; i++) {
-			for (int j = 0; j < LENGTH; j++) {
+		this.traitScreen = new VirtualPixel[LENGTH][HEIGHT];
+		for (int i = 0; i < LENGTH; i++) {
+			for (int j = 0; j < HEIGHT; j++) {
 				traitScreen[i][j] = new VirtualPixel(false, 0, new Point(i, j),
 						(byte) 0);
 			}
@@ -54,15 +55,15 @@ public class Traitement {
 
 	public void flouGaussien() {
 		byte[][] gauss = { { 1, 2, 1 }, { 2, 4, 2 }, { 1, 2, 1 } };
-		byte[][] newCoefs = new byte[HEIGHT][LENGTH];
+		byte[][] newCoefs = new byte[LENGTH][HEIGHT];
 		// ici on calcule les nouvelles intensites apres le passage du filtre
 		// gaussien
 		
 		// on pourrait l'appliquer proprement sur les bords mais je ne sais pas
 		// comment se comporte un noyau de convolution au niveau des effets de
 		// bord
-		for (int i = 2; i < (HEIGHT - 2); i++) {
-			for (int j = 2; j < (LENGTH - 2); j++) {
+		for (int i = 2; i < (LENGTH - 2); i++) {
+			for (int j = 2; j < (HEIGHT - 2); j++) {
 				byte coef = (byte) ((gauss[0][0]
 						* traitScreen[i - 1][j - 1].getIntensite()
 						+ gauss[0][1] * traitScreen[i - 1][j].getIntensite()
@@ -79,8 +80,8 @@ public class Traitement {
 			}
 		}
 		// on change les intensites pour les nouvelles intensites
-		for (int i = 0; i < HEIGHT; i++) {
-			for (int j = 0; j < LENGTH; j++) {
+		for (int i = 0; i < LENGTH; i++) {
+			for (int j = 0; j < HEIGHT; j++) {
 				traitScreen[i][j].setIntensite(newCoefs[i][j]);
 			}
 		}
@@ -88,15 +89,15 @@ public class Traitement {
 
 	public void flouMoyen() {
 		byte[][] median = { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
-		byte[][] newCoefs = new byte[HEIGHT][LENGTH];
+		byte[][] newCoefs = new byte[LENGTH][HEIGHT];
 		// ici on calcule les nouvelles intensites apres le passage du filtre
 		// gaussien
 
 		// on pourrait l'appliquer proprement sur les bords mais je ne sais pas
 		// comment se comporte un noyau de convolution au niveau des effets de
 		// bord
-		for (int i = 2; i < (HEIGHT - 2); i++) {
-			for (int j = 2; j < (LENGTH - 2); j++) {
+		for (int i = 2; i < (LENGTH - 2); i++) {
+			for (int j = 2; j < (HEIGHT - 2); j++) {
 				byte coef = (byte) 
 						((median[0][0] * traitScreen[i - 1][j - 1].getIntensite()
 						+ median[0][1] * traitScreen[i - 1][j].getIntensite()
@@ -111,18 +112,18 @@ public class Traitement {
 			}
 		}
 		// on change les intensites pour les nouvelles intensites
-		for (int i = 0; i < HEIGHT; i++) {
-			for (int j = 0; j < LENGTH; j++) {
+		for (int i = 0; i < LENGTH; i++) {
+			for (int j = 0; j < HEIGHT; j++) {
 				traitScreen[i][j].setIntensite(newCoefs[i][j]);
 			}
 		}
 	}
 	
 	public void flouMedian(){
-		byte[][] newCoefs = new byte[HEIGHT][LENGTH];
+		byte[][] newCoefs = new byte[LENGTH][HEIGHT];
 		byte[] buffer = new byte[9];
-		for (int i = 2; i < (HEIGHT - 2); i++) {
-			for (int j = 2; j < (LENGTH - 2); j++) {
+		for (int i = 2; i < (LENGTH - 2); i++) {
+			for (int j = 2; j < (HEIGHT - 2); j++) {
 				buffer[0] = traitScreen[i - 1][j - 1].getIntensite();
 				buffer[1] = traitScreen[i - 1][j].getIntensite();
 				buffer[2] = traitScreen[i - 1][j + 1].getIntensite();
@@ -137,8 +138,8 @@ public class Traitement {
 			}
 		}
 		// on change les intensites pour les nouvelles intensites
-		for (int i = 0; i < HEIGHT; i++) {
-			for (int j = 0; j < LENGTH; j++) {
+		for (int i = 0; i < LENGTH; i++) {
+			for (int j = 0; j < HEIGHT; j++) {
 				traitScreen[i][j].setIntensite(newCoefs[i][j]);
 			}
 		}
@@ -147,8 +148,8 @@ public class Traitement {
 
 	public void seuil() {
 		nseuils= 0;
-		for (int i = 0; i < HEIGHT; i++) {
-			for (int j = 0; j < LENGTH; j++) {
+		for (int i = 0; i < LENGTH; i++) {
+			for (int j = 0; j < HEIGHT; j++) {
 				if (traitScreen[i][j].getIntensite() >= seuil) {
 					traitScreen[i][j].setBrightness(true);
 					nseuils ++;
@@ -170,7 +171,7 @@ public class Traitement {
 	}
 
 	public void updateConnexe(VirtualPixel[][] screen) {
-		vi = screen;
+		traitScreen = screen;
 		ArrayList<ArrayList<VirtualPixel>> groupesConnexesIntermediaire;
 		groupesConnexesIntermediaire = new ArrayList<ArrayList<VirtualPixel>>();
 		groupesConnexesIntermediaire.add(new ArrayList<VirtualPixel>()); // on
@@ -186,90 +187,90 @@ public class Traitement {
 		int compteurComposante = 1;
 
 		// on remet les composantes a zero
-		for (int i = 0; i < HEIGHT; i++) {
-			for (int j = 0; j < LENGTH; j++) {
+		for (int i = 0; i < LENGTH; i++) {
+			for (int j = 0; j < HEIGHT; j++) {
 				traitScreen[i][j].setGroupeConnexe(0);
 			}
 		}
 
-		if (vi[0][0].isBrightness()) {
+		if (traitScreen[0][0].isBrightness()) {
 			groupesConnexesIntermediaire.add(new ArrayList<VirtualPixel>());
-			vi[0][0].setGroupeConnexe(compteurComposante);
-			groupesConnexesIntermediaire.get(compteurComposante).add(vi[0][0]);
+			traitScreen[0][0].setGroupeConnexe(compteurComposante);
+			groupesConnexesIntermediaire.get(compteurComposante).add(traitScreen[0][0]);
 			compteurComposante++;
 		}
 		// parcours de la premiere ligne
-		for (int j = 1; j < LENGTH; j++) {
-			if (vi[0][j].isBrightness()) {
-				if (!vi[0][j - 1].isBrightness()) {
+		for (int j = 1; j < HEIGHT; j++) {
+			if (traitScreen[0][j].isBrightness()) {
+				if (!traitScreen[0][j - 1].isBrightness()) {
 					groupesConnexesIntermediaire
 							.add(new ArrayList<VirtualPixel>());
-					vi[0][j].setGroupeConnexe(compteurComposante);
+					traitScreen[0][j].setGroupeConnexe(compteurComposante);
 					groupesConnexesIntermediaire.get(compteurComposante).add(
-							vi[0][j]);
+							traitScreen[0][j]);
 					compteurComposante++;
 				} else {
-					int newGroupe = vi[0][j - 1].getGroupeConnexe();
-					vi[0][j].setGroupeConnexe(newGroupe);
-					groupesConnexesIntermediaire.get(newGroupe).add(vi[0][j]);
+					int newGroupe = traitScreen[0][j - 1].getGroupeConnexe();
+					traitScreen[0][j].setGroupeConnexe(newGroupe);
+					groupesConnexesIntermediaire.get(newGroupe).add(traitScreen[0][j]);
 				}
 
 			}
 
 		}
 		// parcours de la premiere colone
-		for (int i = 1; i < HEIGHT; i++) {
-			if (vi[i][0].isBrightness()) {
-				if (!vi[i - 1][0].isBrightness()) {
+		for (int i = 1; i < LENGTH; i++) {
+			if (traitScreen[i][0].isBrightness()) {
+				if (!traitScreen[i - 1][0].isBrightness()) {
 					groupesConnexesIntermediaire
 							.add(new ArrayList<VirtualPixel>());
-					vi[i][0].setGroupeConnexe(compteurComposante);
+					traitScreen[i][0].setGroupeConnexe(compteurComposante);
 					groupesConnexesIntermediaire.get(compteurComposante).add(
-							vi[i][0]);
+							traitScreen[i][0]);
 					compteurComposante++;
 				} else {
-					int newGroupe = vi[i - 1][0].getGroupeConnexe();
-					vi[i][0].setGroupeConnexe(newGroupe);
-					groupesConnexesIntermediaire.get(newGroupe).add(vi[i][0]);
+					int newGroupe = traitScreen[i - 1][0].getGroupeConnexe();
+					traitScreen[i][0].setGroupeConnexe(newGroupe);
+					groupesConnexesIntermediaire.get(newGroupe).add(traitScreen[i][0]);
 				}
 
 			}
 
 		}
 		// parcours du reste du tableau normalement
-		for (int i = 1; i < HEIGHT; i++) {
-			for (int j = 1; j < LENGTH; j++) {
-				if (vi[i][j].isBrightness()) {
-					if ((vi[i - 1][j].isBrightness())
-							&& !(vi[i][j - 1].isBrightness())) {
+		for (int i = 1; i < LENGTH; i++) {
+			for (int j = 1; j < HEIGHT; j++) {
+				if (traitScreen[i][j].isBrightness()) {
+					if ((traitScreen[i - 1][j].isBrightness())
+							&& !(traitScreen[i][j - 1].isBrightness())) {
 
-						int newGroupe = vi[i - 1][j].getGroupeConnexe();
-						vi[i][j].setGroupeConnexe(newGroupe);
+						int newGroupe = traitScreen[i - 1][j].getGroupeConnexe();
+						traitScreen[i][j].setGroupeConnexe(newGroupe);
 						groupesConnexesIntermediaire.get(newGroupe).add(
-								vi[i][j]);
+								traitScreen[i][j]);
 					}
-					if (!(vi[i - 1][j].isBrightness())
-							&& (vi[i][j - 1].isBrightness())) {
-						int newGroupe = vi[i][j - 1].getGroupeConnexe();
-						vi[i][j].setGroupeConnexe(newGroupe);
+					if (!(traitScreen[i - 1][j].isBrightness())
+							&& (traitScreen[i][j - 1].isBrightness())) {
+						int newGroupe = traitScreen[i][j - 1].getGroupeConnexe();
+						traitScreen[i][j].setGroupeConnexe(newGroupe);
 						groupesConnexesIntermediaire.get(newGroupe).add(
-								vi[i][j]);
+								traitScreen[i][j]);
 					}
-					if (!(vi[i - 1][j].isBrightness())
-							&& !(vi[i][j - 1].isBrightness())) {
+					if (!(traitScreen[i - 1][j].isBrightness())
+							&& !(traitScreen[i][j - 1].isBrightness())) {
 						groupesConnexesIntermediaire
 								.add(new ArrayList<VirtualPixel>());
-						vi[i][j].setGroupeConnexe(compteurComposante);
+						traitScreen[i][j].setGroupeConnexe(compteurComposante);
 						groupesConnexesIntermediaire.get(compteurComposante)
-								.add(vi[i][j]);
+								.add(traitScreen[i][j]);
 						compteurComposante++;
 					}
-					if ((vi[i - 1][j].isBrightness())
-							&& (vi[i][j - 1].isBrightness())) {
-						int groupe1 = vi[i - 1][j].getGroupeConnexe();
-						int groupe2 = vi[i][j - 1].getGroupeConnexe();
-						vi[i][j].setGroupeConnexe(groupe2);
-						groupesConnexesIntermediaire.get(groupe2).add(vi[i][j]);
+					if ((traitScreen[i - 1][j].isBrightness())
+							&& (traitScreen[i][j - 1].isBrightness())) {
+						int groupe1 = traitScreen[i - 1][j].getGroupeConnexe();
+						int groupe2 = traitScreen[i][j - 1].getGroupeConnexe();
+						traitScreen[i][j].setGroupeConnexe(groupe2);
+						groupesConnexesIntermediaire.get(groupe2).add(traitScreen[i][j]);
 						uniongroupesConnexeIntermediare(
 								groupesConnexesIntermediaire, groupe1, groupe2);
 					}
@@ -357,7 +358,7 @@ public class Traitement {
 	}
 
 	/**
-	 * Methode qui permet d'actualiser la position et la vitesse des cubes Elle
+	 * Methode qui permet d'actualiser la position et la traitScreentesse des cubes Elle
 	 * utilise une recherche locale en partant de la position attendue du cube
 	 * Methode un peu dégueu mais je vois pas trop comment la faire avec un joli
 	 * boucle
@@ -423,163 +424,163 @@ public class Traitement {
 		 * gameEngine.setFrozen(null);
 		 */
 		/*
-		 * if (vi[expectedX1][expectedY1].isBrightness() == true)
-		 * updatePosSpeed1(vc, expectedX1, expectedY1); else if (vi[expectedX1 +
+		 * if (traitScreen[expectedX1][expectedY1].isBrightness() == true)
+		 * updatePosSpeed1(vc, expectedX1, expectedY1); else if (traitScreen[expectedX1 +
 		 * 1][expectedY1].isBrightness() == true) updatePosSpeed1(vc, expectedX1
-		 * + 1, expectedY1); else if (vi[expectedX1 + 1][expectedY1 +
+		 * + 1, expectedY1); else if (traitScreen[expectedX1 + 1][expectedY1 +
 		 * 1].isBrightness() == true) updatePosSpeed1(vc, expectedX1 + 1,
-		 * expectedY1 + 1); else if (vi[expectedX1][expectedY1 +
+		 * expectedY1 + 1); else if (traitScreen[expectedX1][expectedY1 +
 		 * 1].isBrightness() == true) updatePosSpeed1(vc, expectedX1, expectedY1
-		 * + 1); else if (vi[expectedX1 - 1][expectedY1 + 1].isBrightness() ==
+		 * + 1); else if (traitScreen[expectedX1 - 1][expectedY1 + 1].isBrightness() ==
 		 * true) updatePosSpeed1(vc, expectedX1 - 1, expectedY1 + 1); else if
-		 * (vi[expectedX1 - 1][expectedY1].isBrightness() == true)
+		 * (traitScreen[expectedX1 - 1][expectedY1].isBrightness() == true)
 		 * updatePosSpeed1(vc, expectedX1 - 1, expectedY1); else if
-		 * (vi[expectedX1 - 1][expectedY1 - 1].isBrightness() == true)
+		 * (traitScreen[expectedX1 - 1][expectedY1 - 1].isBrightness() == true)
 		 * updatePosSpeed1(vc, expectedX1 - 1, expectedY1 - 1); else if
-		 * (vi[expectedX1][expectedY1 - 1].isBrightness() == true)
+		 * (traitScreen[expectedX1][expectedY1 - 1].isBrightness() == true)
 		 * updatePosSpeed1(vc, expectedX1, expectedY1 - 1); else if
-		 * (vi[expectedX1 + 1][expectedY1 - 1].isBrightness() == true)
+		 * (traitScreen[expectedX1 + 1][expectedY1 - 1].isBrightness() == true)
 		 * updatePosSpeed1(vc, expectedX1 + 1, expectedY1 - 1); else if
-		 * (vi[expectedX1 + 2][expectedY1 - 1].isBrightness() == true)
+		 * (traitScreen[expectedX1 + 2][expectedY1 - 1].isBrightness() == true)
 		 * updatePosSpeed1(vc, expectedX1 + 2, expectedY1 - 1); else if
-		 * (vi[expectedX1 + 2][expectedY1].isBrightness() == true)
+		 * (traitScreen[expectedX1 + 2][expectedY1].isBrightness() == true)
 		 * updatePosSpeed1(vc, expectedX1 + 2, expectedY1); else if
-		 * (vi[expectedX1 + 2][expectedY1 + 1].isBrightness() == true)
+		 * (traitScreen[expectedX1 + 2][expectedY1 + 1].isBrightness() == true)
 		 * updatePosSpeed1(vc, expectedX1 + 2, expectedY1 + 1); else if
-		 * (vi[expectedX1 + 2][expectedY1 + 2].isBrightness() == true)
+		 * (traitScreen[expectedX1 + 2][expectedY1 + 2].isBrightness() == true)
 		 * updatePosSpeed1(vc, expectedX1 + 2, expectedY1 + 2); else if
-		 * (vi[expectedX1 + 1][expectedY1 + 2].isBrightness() == true)
+		 * (traitScreen[expectedX1 + 1][expectedY1 + 2].isBrightness() == true)
 		 * updatePosSpeed1(vc, expectedX1 + 1, expectedY1 + 2); else if
-		 * (vi[expectedX1][expectedY1 + 2].isBrightness() == true)
+		 * (traitScreen[expectedX1][expectedY1 + 2].isBrightness() == true)
 		 * updatePosSpeed1(vc, expectedX1, expectedY1 + 2); else if
-		 * (vi[expectedX1 - 1][expectedY1 + 2].isBrightness() == true)
+		 * (traitScreen[expectedX1 - 1][expectedY1 + 2].isBrightness() == true)
 		 * updatePosSpeed1(vc, expectedX1 - 1, expectedY1 + 2); else if
-		 * (vi[expectedX1 - 2][expectedY1 + 2].isBrightness() == true)
+		 * (traitScreen[expectedX1 - 2][expectedY1 + 2].isBrightness() == true)
 		 * updatePosSpeed1(vc, expectedX1 - 2, expectedY1 + 2); else if
-		 * (vi[expectedX1 - 2][expectedY1 + 1].isBrightness() == true)
+		 * (traitScreen[expectedX1 - 2][expectedY1 + 1].isBrightness() == true)
 		 * updatePosSpeed1(vc, expectedX1 - 2, expectedY1 + 1); else if
-		 * (vi[expectedX1 - 2][expectedY1].isBrightness() == true)
+		 * (traitScreen[expectedX1 - 2][expectedY1].isBrightness() == true)
 		 * updatePosSpeed1(vc, expectedX1 - 2, expectedY1); else if
-		 * (vi[expectedX1 - 2][expectedY1 - 1].isBrightness() == true)
+		 * (traitScreen[expectedX1 - 2][expectedY1 - 1].isBrightness() == true)
 		 * updatePosSpeed1(vc, expectedX1 - 2, expectedY1 - 1); else if
-		 * (vi[expectedX1 - 2][expectedY1 - 2].isBrightness() == true)
+		 * (traitScreen[expectedX1 - 2][expectedY1 - 2].isBrightness() == true)
 		 * updatePosSpeed1(vc, expectedX1 - 2, expectedY1 - 2); else if
-		 * (vi[expectedX1 - 1][expectedY1 - 2].isBrightness() == true)
+		 * (traitScreen[expectedX1 - 1][expectedY1 - 2].isBrightness() == true)
 		 * updatePosSpeed1(vc, expectedX1 - 1, expectedY1 - 2); else if
-		 * (vi[expectedX1][expectedY1 - 2].isBrightness() == true)
+		 * (traitScreen[expectedX1][expectedY1 - 2].isBrightness() == true)
 		 * updatePosSpeed1(vc, expectedX1, expectedY1 - 2); else if
-		 * (vi[expectedX1 + 1][expectedY1 - 2].isBrightness() == true)
+		 * (traitScreen[expectedX1 + 1][expectedY1 - 2].isBrightness() == true)
 		 * updatePosSpeed1(vc, expectedX1 + 1, expectedY1 - 2); else if
-		 * (vi[expectedX1 + 2][expectedY1 - 2].isBrightness() == true)
+		 * (traitScreen[expectedX1 + 2][expectedY1 - 2].isBrightness() == true)
 		 * updatePosSpeed1(vc, expectedX1 + 2, expectedY1 - 2); else
 		 * gameEngine.setFrozen(vc.getOwner());
 		 * 
-		 * if (vi[expectedX2][expectedY2].isBrightness() == true)
-		 * updatePosSpeed2(vc, expectedX2, expectedY2); else if (vi[expectedX2 +
+		 * if (traitScreen[expectedX2][expectedY2].isBrightness() == true)
+		 * updatePosSpeed2(vc, expectedX2, expectedY2); else if (traitScreen[expectedX2 +
 		 * 1][expectedY2].isBrightness() == true) updatePosSpeed2(vc, expectedX2
-		 * + 1, expectedY2); else if (vi[expectedX2 + 1][expectedY2 +
+		 * + 1, expectedY2); else if (traitScreen[expectedX2 + 1][expectedY2 +
 		 * 1].isBrightness() == true) updatePosSpeed2(vc, expectedX2 + 1,
-		 * expectedY2 + 1); else if (vi[expectedX2][expectedY2 +
+		 * expectedY2 + 1); else if (traitScreen[expectedX2][expectedY2 +
 		 * 1].isBrightness() == true) updatePosSpeed2(vc, expectedX2, expectedY2
-		 * + 1); else if (vi[expectedX2 - 1][expectedY2 + 1].isBrightness() ==
+		 * + 1); else if (traitScreen[expectedX2 - 1][expectedY2 + 1].isBrightness() ==
 		 * true) updatePosSpeed2(vc, expectedX2 - 1, expectedY2 + 1); else if
-		 * (vi[expectedX2 - 1][expectedY2].isBrightness() == true)
+		 * (traitScreen[expectedX2 - 1][expectedY2].isBrightness() == true)
 		 * updatePosSpeed2(vc, expectedX2 - 1, expectedY2); else if
-		 * (vi[expectedX2 - 1][expectedY2 - 1].isBrightness() == true)
+		 * (traitScreen[expectedX2 - 1][expectedY2 - 1].isBrightness() == true)
 		 * updatePosSpeed2(vc, expectedX2 - 1, expectedY2 - 1); else if
-		 * (vi[expectedX2][expectedY2 - 1].isBrightness() == true)
+		 * (traitScreen[expectedX2][expectedY2 - 1].isBrightness() == true)
 		 * updatePosSpeed2(vc, expectedX2, expectedY2 - 1); else if
-		 * (vi[expectedX2 + 1][expectedY2 - 1].isBrightness() == true)
+		 * (traitScreen[expectedX2 + 1][expectedY2 - 1].isBrightness() == true)
 		 * updatePosSpeed2(vc, expectedX2 + 1, expectedY2 - 1); else if
-		 * (vi[expectedX2 + 2][expectedY2 - 1].isBrightness() == true)
+		 * (traitScreen[expectedX2 + 2][expectedY2 - 1].isBrightness() == true)
 		 * updatePosSpeed2(vc, expectedX2 + 2, expectedY2 - 1); else if
-		 * (vi[expectedX2 + 2][expectedY2].isBrightness() == true)
+		 * (traitScreen[expectedX2 + 2][expectedY2].isBrightness() == true)
 		 * updatePosSpeed2(vc, expectedX2 + 2, expectedY2); else if
-		 * (vi[expectedX2 + 2][expectedY2 + 1].isBrightness() == true)
+		 * (traitScreen[expectedX2 + 2][expectedY2 + 1].isBrightness() == true)
 		 * updatePosSpeed2(vc, expectedX2 + 2, expectedY2 + 1); else if
-		 * (vi[expectedX2 + 2][expectedY2 + 2].isBrightness() == true)
+		 * (traitScreen[expectedX2 + 2][expectedY2 + 2].isBrightness() == true)
 		 * updatePosSpeed2(vc, expectedX2 + 2, expectedY2 + 2); else if
-		 * (vi[expectedX2 + 1][expectedY2 + 2].isBrightness() == true)
+		 * (traitScreen[expectedX2 + 1][expectedY2 + 2].isBrightness() == true)
 		 * updatePosSpeed2(vc, expectedX2 + 1, expectedY2 + 2); else if
-		 * (vi[expectedX2][expectedY2 + 2].isBrightness() == true)
+		 * (traitScreen[expectedX2][expectedY2 + 2].isBrightness() == true)
 		 * updatePosSpeed2(vc, expectedX2, expectedY2 + 2); else if
-		 * (vi[expectedX2 - 1][expectedY2 + 2].isBrightness() == true)
+		 * (traitScreen[expectedX2 - 1][expectedY2 + 2].isBrightness() == true)
 		 * updatePosSpeed2(vc, expectedX2 - 1, expectedY2 + 2); else if
-		 * (vi[expectedX2 - 2][expectedY2 + 2].isBrightness() == true)
+		 * (traitScreen[expectedX2 - 2][expectedY2 + 2].isBrightness() == true)
 		 * updatePosSpeed2(vc, expectedX2 - 2, expectedY2 + 2); else if
-		 * (vi[expectedX2 - 2][expectedY2 + 1].isBrightness() == true)
+		 * (traitScreen[expectedX2 - 2][expectedY2 + 1].isBrightness() == true)
 		 * updatePosSpeed2(vc, expectedX2 - 2, expectedY2 + 1); else if
-		 * (vi[expectedX2 - 2][expectedY2].isBrightness() == true)
+		 * (traitScreen[expectedX2 - 2][expectedY2].isBrightness() == true)
 		 * updatePosSpeed2(vc, expectedX2 - 2, expectedY2); else if
-		 * (vi[expectedX2 - 2][expectedY2 - 1].isBrightness() == true)
+		 * (traitScreen[expectedX2 - 2][expectedY2 - 1].isBrightness() == true)
 		 * updatePosSpeed2(vc, expectedX2 - 2, expectedY2 - 1); else if
-		 * (vi[expectedX2 - 2][expectedY2 - 2].isBrightness() == true)
+		 * (traitScreen[expectedX2 - 2][expectedY2 - 2].isBrightness() == true)
 		 * updatePosSpeed2(vc, expectedX2 - 2, expectedY2 - 2); else if
-		 * (vi[expectedX2 - 1][expectedY2 - 2].isBrightness() == true)
+		 * (traitScreen[expectedX2 - 1][expectedY2 - 2].isBrightness() == true)
 		 * updatePosSpeed2(vc, expectedX2 - 1, expectedY2 - 2); else if
-		 * (vi[expectedX2][expectedY2 - 2].isBrightness() == true)
+		 * (traitScreen[expectedX2][expectedY2 - 2].isBrightness() == true)
 		 * updatePosSpeed2(vc, expectedX2, expectedY2 - 2); else if
-		 * (vi[expectedX2 + 1][expectedY2 - 2].isBrightness() == true)
+		 * (traitScreen[expectedX2 + 1][expectedY2 - 2].isBrightness() == true)
 		 * updatePosSpeed2(vc, expectedX2 + 1, expectedY2 - 2); else if
-		 * (vi[expectedX2 + 2][expectedY2 - 2].isBrightness() == true)
+		 * (traitScreen[expectedX2 + 2][expectedY2 - 2].isBrightness() == true)
 		 * updatePosSpeed2(vc, expectedX2 + 2, expectedY2 - 2); else
 		 * gameEngine.setFrozen(vc.getOwner());
 		 * 
-		 * if (vi[expectedX3][expectedY3].isBrightness() == true)
-		 * updatePosSpeed3(vc, expectedX3, expectedY3); else if (vi[expectedX3 +
+		 * if (traitScreen[expectedX3][expectedY3].isBrightness() == true)
+		 * updatePosSpeed3(vc, expectedX3, expectedY3); else if (traitScreen[expectedX3 +
 		 * 1][expectedY3].isBrightness() == true) updatePosSpeed3(vc, expectedX3
-		 * + 1, expectedY3); else if (vi[expectedX3 + 1][expectedY3 +
+		 * + 1, expectedY3); else if (traitScreen[expectedX3 + 1][expectedY3 +
 		 * 1].isBrightness() == true) updatePosSpeed3(vc, expectedX3 + 1,
-		 * expectedY3 + 1); else if (vi[expectedX3][expectedY3 +
+		 * expectedY3 + 1); else if (traitScreen[expectedX3][expectedY3 +
 		 * 1].isBrightness() == true) updatePosSpeed3(vc, expectedX3, expectedY3
-		 * + 1); else if (vi[expectedX3 - 1][expectedY3 + 1].isBrightness() ==
+		 * + 1); else if (traitScreen[expectedX3 - 1][expectedY3 + 1].isBrightness() ==
 		 * true) updatePosSpeed3(vc, expectedX3 - 1, expectedY3 + 1); else if
-		 * (vi[expectedX3 - 1][expectedY3].isBrightness() == true)
+		 * (traitScreen[expectedX3 - 1][expectedY3].isBrightness() == true)
 		 * updatePosSpeed3(vc, expectedX3 - 1, expectedY3); else if
-		 * (vi[expectedX3 - 1][expectedY3 - 1].isBrightness() == true)
+		 * (traitScreen[expectedX3 - 1][expectedY3 - 1].isBrightness() == true)
 		 * updatePosSpeed3(vc, expectedX3 - 1, expectedY3 - 1); else if
-		 * (vi[expectedX3][expectedY3 - 1].isBrightness() == true)
+		 * (traitScreen[expectedX3][expectedY3 - 1].isBrightness() == true)
 		 * updatePosSpeed3(vc, expectedX3, expectedY3 - 1); else if
-		 * (vi[expectedX3 + 1][expectedY3 - 1].isBrightness() == true)
+		 * (traitScreen[expectedX3 + 1][expectedY3 - 1].isBrightness() == true)
 		 * updatePosSpeed3(vc, expectedX3 + 1, expectedY3 - 1); else if
-		 * (vi[expectedX3 + 2][expectedY3 - 1].isBrightness() == true)
+		 * (traitScreen[expectedX3 + 2][expectedY3 - 1].isBrightness() == true)
 		 * updatePosSpeed3(vc, expectedX3 + 2, expectedY3 - 1); else if
-		 * (vi[expectedX3 + 2][expectedY3].isBrightness() == true)
+		 * (traitScreen[expectedX3 + 2][expectedY3].isBrightness() == true)
 		 * updatePosSpeed3(vc, expectedX3 + 2, expectedY3); else if
-		 * (vi[expectedX3 + 2][expectedY3 + 1].isBrightness() == true)
+		 * (traitScreen[expectedX3 + 2][expectedY3 + 1].isBrightness() == true)
 		 * updatePosSpeed3(vc, expectedX3 + 2, expectedY3 + 1); else if
-		 * (vi[expectedX3 + 2][expectedY3 + 2].isBrightness() == true)
+		 * (traitScreen[expectedX3 + 2][expectedY3 + 2].isBrightness() == true)
 		 * updatePosSpeed3(vc, expectedX3 + 2, expectedY3 + 2); else if
-		 * (vi[expectedX3 + 1][expectedY3 + 2].isBrightness() == true)
+		 * (traitScreen[expectedX3 + 1][expectedY3 + 2].isBrightness() == true)
 		 * updatePosSpeed3(vc, expectedX3 + 1, expectedY3 + 2); else if
-		 * (vi[expectedX3][expectedY3 + 2].isBrightness() == true)
+		 * (traitScreen[expectedX3][expectedY3 + 2].isBrightness() == true)
 		 * updatePosSpeed3(vc, expectedX3, expectedY3 + 2); else if
-		 * (vi[expectedX3 - 1][expectedY3 + 2].isBrightness() == true)
+		 * (traitScreen[expectedX3 - 1][expectedY3 + 2].isBrightness() == true)
 		 * updatePosSpeed3(vc, expectedX3 - 1, expectedY3 + 2); else if
-		 * (vi[expectedX3 - 2][expectedY3 + 2].isBrightness() == true)
+		 * (traitScreen[expectedX3 - 2][expectedY3 + 2].isBrightness() == true)
 		 * updatePosSpeed3(vc, expectedX3 - 2, expectedY3 + 2); else if
-		 * (vi[expectedX3 - 2][expectedY3 + 1].isBrightness() == true)
+		 * (traitScreen[expectedX3 - 2][expectedY3 + 1].isBrightness() == true)
 		 * updatePosSpeed3(vc, expectedX3 - 2, expectedY3 + 1); else if
-		 * (vi[expectedX3 - 2][expectedY3].isBrightness() == true)
+		 * (traitScreen[expectedX3 - 2][expectedY3].isBrightness() == true)
 		 * updatePosSpeed3(vc, expectedX3 - 2, expectedY3); else if
-		 * (vi[expectedX3 - 2][expectedY3 - 1].isBrightness() == true)
+		 * (traitScreen[expectedX3 - 2][expectedY3 - 1].isBrightness() == true)
 		 * updatePosSpeed3(vc, expectedX3 - 2, expectedY3 - 1); else if
-		 * (vi[expectedX3 - 2][expectedY3 - 2].isBrightness() == true)
+		 * (traitScreen[expectedX3 - 2][expectedY3 - 2].isBrightness() == true)
 		 * updatePosSpeed3(vc, expectedX3 - 2, expectedY3 - 2); else if
-		 * (vi[expectedX3 - 1][expectedY3 - 2].isBrightness() == true)
+		 * (traitScreen[expectedX3 - 1][expectedY3 - 2].isBrightness() == true)
 		 * updatePosSpeed3(vc, expectedX3 - 1, expectedY3 - 2); else if
-		 * (vi[expectedX3][expectedY3 - 2].isBrightness() == true)
+		 * (traitScreen[expectedX3][expectedY3 - 2].isBrightness() == true)
 		 * updatePosSpeed3(vc, expectedX3, expectedY3 - 2); else if
-		 * (vi[expectedX3 + 1][expectedY3 - 2].isBrightness() == true)
+		 * (traitScreen[expectedX3 + 1][expectedY3 - 2].isBrightness() == true)
 		 * updatePosSpeed3(vc, expectedX3 + 1, expectedY3 - 2); else if
-		 * (vi[expectedX3 + 2][expectedY3 - 2].isBrightness() == true)
+		 * (traitScreen[expectedX3 + 2][expectedY3 - 2].isBrightness() == true)
 		 * updatePosSpeed3(vc, expectedX3 + 2, expectedY3 - 2); else
 		 * gameEngine.setFrozen(vc.getOwner());
 		 */
 	}
 
 	/**
-	 * Methode qui met a jour la position et la vitesse de la premiere diode
+	 * Methode qui met a jour la position et la traitScreentesse de la premiere diode
 	 * d'un cube
 	 * 
 	 * @param vc
@@ -594,7 +595,7 @@ public class Traitement {
 	}
 
 	/**
-	 * Methode qui met a jour la position et la vitesse de la seconde diode d'un
+	 * Methode qui met a jour la position et la traitScreentesse de la seconde diode d'un
 	 * cube
 	 * 
 	 * @param vc
@@ -609,7 +610,7 @@ public class Traitement {
 	}
 
 	/**
-	 * Methode qui met a jour la position et la vitesse de la troisième diode
+	 * Methode qui met a jour la position et la traitScreentesse de la troisième diode
 	 * d'un cube
 	 * 
 	 * @param vc
@@ -617,7 +618,7 @@ public class Traitement {
 	 * @param newYPos
 	 */
 	/*
-	 * private void updatePosSpeed3(VideoCube vc, double newXPos, double
+	 * private void updatePosSpeed3(VideoScreen vc, double newXPos, double
 	 * newYPos) { vc.setX3Speed((newXPos - vc.getPos3().getX()) / fps);
 	 * vc.setY3Speed((newYPos - vc.getPos3().getX()) / fps);
 	 * vc.getPos3().setX(newXPos); vc.getPos3().setY(newYPos); }
@@ -629,7 +630,7 @@ public class Traitement {
 	 * groupesConnexes) { this.groupesConnexes = groupesConnexes; }
 	 * 
 	 * 
-	 * /** Methode qui retourne une ArrayList d'ArrayList de VirtualPixe ou
+	 * /** Methode qui retourne une ArrayList d'ArrayList de vitualPixe ou
 	 * l'ArrayList numéro i contient les pixels distants de i de (x,y)
 	 * 
 	 * @param x
@@ -648,8 +649,8 @@ public class Traitement {
 		points.ensureCapacity((int) Math.sqrt(2 * dist * dist));
 		for (int i = (x - leftDist); i <= (x + rightDist); i++) {
 			for (int j = (y - upDist); j <= (y + downDist); j++) {
-				int d = (int) Math.sqrt(i * i + j * j);
-				points.get(d).add(this.vi[i][j]);
+				int d = (int) Math.sqrt((i * i) + (j * j));
+				points.get(d).add(this.traitScreen[i][j]);
 			}
 		}
 		return points;

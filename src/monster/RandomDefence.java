@@ -1,5 +1,11 @@
 package monster;
 
+/**
+ * @author Felix
+ * @author Paul
+ * 
+ */
+
 import midisynthesis.instruments.InstrumentLibrary;
 import midisynthesis.patterns.MidiPatternsLibaray;
 

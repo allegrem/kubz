@@ -1,5 +1,10 @@
 package testMath;
 
+/**
+ * 
+ * @author Felix
+ */
+
 import cube.Cube;
 import cube.XBee;
 import cubeManager.CubeManager;

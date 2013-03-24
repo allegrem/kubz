@@ -1,5 +1,11 @@
 package traitementVideo;
 
+/**
+ * 
+ * @author Felix
+ */
+
+
 import java.util.ArrayList;
 
 import cube.*;

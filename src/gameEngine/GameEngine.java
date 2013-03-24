@@ -1,5 +1,11 @@
 package gameEngine;
 
+/**
+ * @author Felix
+ * @author Paul
+ * 
+ */
+
 import java.util.ArrayList;
 import map.Map;
 import map.MapReader;

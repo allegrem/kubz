@@ -1,5 +1,10 @@
 package traitementVideo;
 
+/**
+ * 
+ * @author Felix
+ */
+
 import utilities.*;
 
 public class VirtualPixel {

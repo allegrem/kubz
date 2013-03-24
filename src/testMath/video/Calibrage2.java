@@ -1,18 +1,15 @@
 package testMath.video;
 
 /**
- * 
+ * Test qui donne le pourcentage de fois ou le nombre de taches trouvees est bon
  * @author Felix
  */
 
-import cl.eye.GrabberShow;
 import traitementVideo.Traitement;
-import traitementVideo.VideoCube;
+import cl.eye.GrabberShow;
 
-
-public class testTraitementVideo1 {
+public class Calibrage2 {
 	
-
 	public static void main(String[] args) {
 		Traitement traitement = new Traitement(640,480);
 		traitement.updateConnexe();
@@ -24,31 +21,20 @@ public class testTraitementVideo1 {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		int size = 0;
-		while(size!=2){
-			traitement.setTraitScreen(gs.getcameraScreen());
-			traitement.flouMedian();
-			traitement.flouMedian();
-			traitement.seuil();
-			traitement.updateConnexe();
-			size = traitement.getGroupesPos().size()-1;
-		}
-		System.out.println("Debut du Tracking");
-		VideoCube cube = new VideoCube(traitement.getGroupePos(1),traitement.getGroupePos(2),null);
 		double good = 0;
 		double iter = 0;
 		// boucle d'update 
 		while(true){
+			iter++;
 			traitement.setTraitScreen(gs.getcameraScreen());
 			traitement.flouMedian();
 			traitement.flouMedian();
 			traitement.seuil();
 			traitement.updateConnexe();
-			size = traitement.getGroupesPos().size()-1;
-			System.out.println("taches: " + size);
-			if(size == 2){
-				traitement.localSearch(cube);
-			}
+			if(traitement.getNcomp()==2) good++;
+			System.out.println(good/iter);
 		}
+
 	}
+
 }

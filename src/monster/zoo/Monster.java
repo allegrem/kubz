@@ -1,6 +1,7 @@
 package monster.zoo;
 
-/**classe qui sert de modele e MonsterView
+/**
+ * Classe qui sert de modele e MonsterView
  * @author Felix
  */
 

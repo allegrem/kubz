@@ -1,5 +1,10 @@
 package monster;
 
+/**
+ * 
+ * @author Felix
+ */
+
 import midisynthesis.Melody;
 public class DefenceType {
 	protected Melody melody;

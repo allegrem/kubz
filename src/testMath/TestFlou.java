@@ -1,10 +1,15 @@
 package testMath;
 
+/**
+ * 
+ * @author Felix
+ */
+
 import traitementVideo.Traitement;
 import traitementVideo.VirtualPixel;
 import utilities.Point;
 
-public class tesflou {
+public class TestFlou {
 
 	public static void main(String[] args) {
 		Traitement traitement = new Traitement();
