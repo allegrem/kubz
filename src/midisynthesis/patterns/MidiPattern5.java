@@ -1,7 +1,9 @@
 package midisynthesis.patterns;
 
 import java.util.ArrayList;
-import midisynthesis.midicommand.*;
+
+import midisynthesis.midicommand.DelayedMidiCommand;
+import midisynthesis.midicommand.MidiCommand;
 
 /**
  * 
