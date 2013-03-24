@@ -245,7 +245,7 @@ public class GLDisplay extends Thread{
 		camDx=(float)(display_width/2.0);
 		camDy=(float)(display_height/2.0);
 		setCameraDirection();
-		texte=new Text();
+		//texte=new Text();
 		initialized=true;
 		loadShaders();
 		while(do_run){
