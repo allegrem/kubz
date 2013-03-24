@@ -21,7 +21,7 @@ public class GrabberShow implements Runnable {
 	
 
 
-	private CanvasFrame canvas = new CanvasFrame("Web Cam"); // fenetre
+	private CanvasFrame canvas = new CanvasFrame("Playstation Eye"); // fenetre
 																// contenant la
 																// vue
 	// de la cam
@@ -34,7 +34,7 @@ public class GrabberShow implements Runnable {
 	private PImage myImage = null;
 	public static final int CAMERA_WIDTH = 640;
 	public static final int CAMERA_HEIGHT = 480;
-	private int cameraRate = 75; // fps maximum pour cette resolution
+	private int frameRate = 30; // fps maximum pour cette resolution
 	private ImagePanel imagePanel;
 	private VirtualPixel[][] cameraScreen = new VirtualPixel[CAMERA_HEIGHT][CAMERA_WIDTH];
 	private byte[][] screen = new byte[CAMERA_HEIGHT][CAMERA_WIDTH];
@@ -71,21 +71,21 @@ public class GrabberShow implements Runnable {
 		while (true) {
 
 			myCamera.getCameraFrame(myImage.pixels, 1000);
-//			// int posX = 0, posY = 0;
-//			int comptX = 0, comptY = 0;
-//			// double cupos = 0;
-//			for (int i = 0; i < myImage.pixels.length; i++) {
-//				// ici on met le tableau de pixel à jour
-//				cameraScreen[comptY][comptX]
-//						.setIntensite((byte) (myImage.pixels[i] & 0xFF));
-//				comptX++; // on parcourt l'image en largeur
-//				if (comptX == CAMERA_WIDTH) // on descend d'une ligne
-//				{
-//					comptX = 0;
-//					comptY++;
-//				}
-//
-//			}
+			// int posX = 0, posY = 0;
+			int comptX = 0, comptY = 0;
+			// double cupos = 0;
+			for (int i = 0; i < myImage.pixels.length; i++) {
+				// ici on met le tableau de pixel à jour
+				cameraScreen[comptY][comptX]
+						.setIntensite((byte) (myImage.pixels[i] & 0xFF));
+				comptX++; // on parcourt l'image en largeur
+				if (comptX == CAMERA_WIDTH) // on descend d'une ligne
+				{
+					comptX = 0;
+					comptY++;
+				}
+
+			}
 			/*
 			 * cupos = Math.sqrt((posnX - posX) * (posnX - posX) + (posnY -
 			 * posY) (posnY - posY)); if (cupos < 100) { paint(posX, posY,
@@ -146,7 +146,7 @@ public class GrabberShow implements Runnable {
 		// ----------------------(i, CLEYE_GRAYSCALE/COLOR, CLEYE_QVGA/VGA,
 		// Framerate)
 		myCamera.createCamera(0, CLCamera.CLEYE_COLOR_PROCESSED,
-				CLCamera.CLEYE_VGA, cameraRate);
+				CLCamera.CLEYE_VGA, frameRate);
 
 		// Starts camera captures
 		myCamera.startCamera();

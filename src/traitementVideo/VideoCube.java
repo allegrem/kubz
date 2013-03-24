@@ -37,6 +37,7 @@ public class VideoCube {
 		x2Speed = 0;
 		y1Speed = 0;
 		y2Speed = 0;
+		pos = new  ArrayList<Point>();
 		pos.add(this.pos1);
 		pos.add(this.pos2);		
 	}

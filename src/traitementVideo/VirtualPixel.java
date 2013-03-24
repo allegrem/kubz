@@ -37,7 +37,7 @@ public class VirtualPixel {
 		this.brightness = brightness;
 	}
 
-	public int getIntensite() {
+	public byte getIntensite() {
 		return intensite;
 	}
 

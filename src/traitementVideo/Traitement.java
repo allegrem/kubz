@@ -20,8 +20,10 @@ public class Traitement {
 	private int LENGTH = 640;
 	private int HEIGHT = 480;
 	private int distance = 5;
-	private int taille = 30;
-	private int seuil = 50;
+	private int taille = 50;
+	private int seuil = 90;
+	private int nseuils = 0; //nombre de pixels au dessus du seuil, utile pour debug et reglage des seuils
+	private int ncomp = 0; // nombre de composantes connexes, utile pour debug et reglage des seuils
 	private VirtualPixel[][] traitScreen;
 
 	public Traitement(int LENGTH, int HEIGHT) {
@@ -84,7 +86,7 @@ public class Traitement {
 		}
 	}
 
-	public void flouMedian() {
+	public void flouMoyen() {
 		byte[][] median = { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
 		byte[][] newCoefs = new byte[HEIGHT][LENGTH];
 		// ici on calcule les nouvelles intensites apres le passage du filtre
@@ -115,20 +117,46 @@ public class Traitement {
 			}
 		}
 	}
+	
+	public void flouMedian(){
+		byte[][] newCoefs = new byte[HEIGHT][LENGTH];
+		byte[] buffer = new byte[9];
+		for (int i = 2; i < (HEIGHT - 2); i++) {
+			for (int j = 2; j < (LENGTH - 2); j++) {
+				buffer[0] = traitScreen[i - 1][j - 1].getIntensite();
+				buffer[1] = traitScreen[i - 1][j].getIntensite();
+				buffer[2] = traitScreen[i - 1][j + 1].getIntensite();
+				buffer[3] = traitScreen[i][j - 1].getIntensite();
+				buffer[4] = traitScreen[i][j].getIntensite();
+				buffer[5] = traitScreen[i][j + 1].getIntensite();
+				buffer[6] = traitScreen[i + 1][j - 1].getIntensite();
+				buffer[7] = traitScreen[i + 1][j].getIntensite() ;
+				buffer[8] = traitScreen[i + 1][j + 1].getIntensite();			
+				byte coef = findNthLowestNumber(buffer,(byte) 9,(byte) 5);
+				newCoefs[i][j] = coef;
+			}
+		}
+		// on change les intensites pour les nouvelles intensites
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < LENGTH; j++) {
+				traitScreen[i][j].setIntensite(newCoefs[i][j]);
+			}
+		}
+	}
+	
 
 	public void seuil() {
-		int iter = 0;
+		nseuils= 0;
 		for (int i = 0; i < HEIGHT; i++) {
 			for (int j = 0; j < LENGTH; j++) {
 				if (traitScreen[i][j].getIntensite() >= seuil) {
 					traitScreen[i][j].setBrightness(true);
-					iter++;
+					nseuils ++;
 				} else {
 					traitScreen[i][j].setBrightness(false);
 				}
 			}
 		}
-		System.out.println("pixels allumes: " + iter);
 	}
 
 	public void updateConnexe(VirtualPixel[][] screen, int LENGTH, int HEIGHT) {
@@ -258,6 +286,7 @@ public class Traitement {
 			}
 		}
 		groupesConnexes = vase;
+		ncomp = groupesConnexes.size()-1;
 	}
 
 	/**
@@ -633,5 +662,59 @@ public class Traitement {
 	public void setTraitScreen(VirtualPixel[][] traitScreen) {
 		this.traitScreen = traitScreen;
 	}
+	
+	/**
+	 * Methode pour trouver la mediane d'un tableau de nombres
+	 * Algorithme trouve dans "algorithmique" de Cormen
+	 * Implementation trouvee sur http://www.developpez.net
+	 * @param buf
+	 * @param bufLength
+	 * @param n
+	 * @return
+	 */
+	public static byte findNthLowestNumber(byte[] buf, int bufLength, int n) {
+		// Modified algorithm according to http://www.geocities.com/zabrodskyvlada/3alg.html
+		// Contributed by Heinz Klar
+        int i,j;
+        int l=0;
+        int m=bufLength-1;
+        byte med=buf[n];
+        byte dum ;
+ 
+        while (l<m) {
+            i=l ;
+            j=m ;
+            do {
+                while (buf[i]<med) i++ ;
+                while (med<buf[j]) j-- ;
+                dum=buf[j];
+                buf[j]=buf[i];
+                buf[i]=dum;
+                i++ ; j-- ;
+            } while ((j>=n) && (i<=n)) ;
+            if (j<n) l=i ;
+            if (n<i) m=j ;
+            med=buf[n] ;
+        }
+    return med ;
+    }
+
+	public int getNseuils() {
+		return nseuils;
+	}
+
+	public void setNseuils(int nseuils) {
+		this.nseuils = nseuils;
+	}
+
+	public int getNcomp() {
+		return ncomp;
+	}
+
+	public void setNcomp(int ncomp) {
+		this.ncomp = ncomp;
+	}
+	
+	
 
 }
