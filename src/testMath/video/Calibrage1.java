@@ -29,7 +29,7 @@ public class Calibrage1 {
 			traitement.seuil();
 			traitement.updateConnexe();
 			System.out.println("taches: " + traitement.getNcomp());
-			// System.out.println("pixels: " + traitement.getNseuils());
+			System.out.println("pixels: " + traitement.getNseuils());
 		}
 	}
 

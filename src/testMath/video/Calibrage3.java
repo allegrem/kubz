@@ -1,16 +1,12 @@
 package testMath.video;
 
-/**
- * Test qui donne le pourcentage de fois ou le nombre de taches trouvees est bon
- * @author Felix
- */
-
 import traitementVideo.Traitement;
 import cl.eye.GrabberShow;
 
-public class Calibrage2 {
+public class Calibrage3 {
 	
 	public static void main(String[] args) {
+		int size;
 		Traitement traitement = new Traitement(640,480);
 		GrabberShow gs = new GrabberShow();
         Thread th = new Thread(gs);
@@ -20,18 +16,20 @@ public class Calibrage2 {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		double good = 0;
-		double iter = 0;
 		// boucle d'update 
 		while(true){
-			iter++;
 			traitement.setTraitScreen(gs.getcameraScreen());
 			traitement.flouMedian();
 			traitement.flouMedian();
+//			traitement.flouGaussien();
 			traitement.seuil();
 			traitement.updateConnexe();
-			if(traitement.getNcomp()==4) good++;
-			System.out.println(good/iter);
+			size =  traitement.getNcomp() + 1;
+			for(int i=1; i<size; i++){
+				if(i!=size-1)
+				System.out.print(" tache " + i + " : x=" + (int) traitement.getGroupePos(i).getX() + " , y=" + (int) traitement.getGroupePos(i).getY());
+				else System.out.println(" tache " + i + " : x=" + (int) traitement.getGroupePos(i).getX() + " , y=" + (int) traitement.getGroupePos(i).getY());
+			}
 		}
 
 	}

@@ -1,5 +1,9 @@
 package testMath;
 
+import java.util.ArrayList;
+
+import traitementVideo.VirtualPixel;
+
 
 
 public class atan2 {
@@ -14,6 +18,14 @@ public class atan2 {
 		System.out.println("test circulaire : " + a%b);
 		else
 		System.out.println("test circulaire : " + ((a%b +b)%b));
+		
+		int dist = 7;
+		ArrayList<ArrayList<VirtualPixel>> points = new ArrayList<ArrayList<VirtualPixel>>();
+		points.ensureCapacity((int) Math.sqrt(2 * dist * dist));
+		System.out.println(points.size());
+		
+		System.out.print(1);
+		System.out.print(1);
 		
 		/*for(int i=0; i<-2;i++){
 			System.out.println("iteration n°" + i );
