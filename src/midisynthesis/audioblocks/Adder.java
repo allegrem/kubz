@@ -1,7 +1,11 @@
 package midisynthesis.audioblocks;
 
 import midisynthesis.midicommand.MidiCommand;
-
+/**
+ * This class adds two entries.
+ * @author valeh
+ *
+ */
 public class Adder implements MidiAudioBlock{
 	
 	private MidiAudioBlock block1;

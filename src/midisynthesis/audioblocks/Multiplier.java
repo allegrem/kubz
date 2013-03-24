@@ -1,7 +1,11 @@
 package midisynthesis.audioblocks;
 
 import midisynthesis.midicommand.MidiCommand;
-
+/**
+ * This class multiplies two entries.
+ * @author valeh
+ *
+ */
 public class Multiplier implements MidiAudioBlock{
 	
 	private MidiAudioBlock block1;

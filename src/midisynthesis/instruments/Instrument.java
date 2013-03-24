@@ -181,7 +181,7 @@ public abstract class Instrument extends Thread {
 	/**
 	 * This method aims to produce the wav file containing the final sound
 	 * i.e. the attack and let us here it through the speakers as well.
-	 *<br /> It is called when the ser taps on the cube.
+	 *<br /> It is called when the user taps on the cube.
 	 * @author valeh
 	 */
 	public void letSoundOut(){
