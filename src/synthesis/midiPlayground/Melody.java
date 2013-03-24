@@ -16,6 +16,7 @@ import synthesis.midiPlayground.MidiPatterns.MidiPattern3;
 import synthesis.midiPlayground.MidiPatterns.MidiPattern4;
 import synthesis.midiPlayground.MidiPatterns.MidiPattern5;
 import synthesis.midiPlayground.MidiPatterns.MidiPattern6;
+import synthesis.midiPlayground.MidiPatterns.MidiPattern7;
 
 /**
  * @author allegrem
@@ -37,12 +38,13 @@ public class Melody extends Thread {
 	public Melody() {
 		//default parameters
 		tempo = 80;
-		pattern = new MidiPattern6(); 
-		setInstrument(new MidiBellInstrument()); //instrument + parameter (TODO)
+		pattern = new MidiPattern7(); 
+		setInstrument(new SinusInstrument()); //instrument + parameter (TODO)
 		//tune = 65; //F4
 		//tune = 77; //F5		
 		//tune = 84; //C3
-		tune = 76; //E5
+		//tune = 76; //E5
+		tune = 49; //D#3
 		
 		
 	}
