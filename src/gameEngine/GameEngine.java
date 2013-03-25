@@ -8,7 +8,6 @@ package gameEngine;
 
 import java.util.ArrayList;
 
-import main.Starting2;
 import map.Map;
 import map.MapReader;
 import monster.zoo.Monster;
@@ -27,6 +26,7 @@ import views.staticViews.BaseView;
 import wall.Wall;
 import OpenGL.GLDisplay;
 import OpenGL.KeyboardManager;
+import OpenGL.Starting2;
 import base.Base;
 import cube.Cube;
 import cubeManager.CubeManager;

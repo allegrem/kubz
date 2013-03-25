@@ -1,12 +1,13 @@
 package OpenGL;
 
-
+import java.util.ArrayList;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.glu.GLU;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
@@ -15,24 +16,32 @@ import org.lwjgl.opengl.ARBShaderObjects;
 import org.lwjgl.opengl.ARBVertexShader;
 import org.lwjgl.opengl.ARBFragmentShader;
 
-import OpenGL.Textures;
+import utilities.Point;
+import views.interfaces.DisplayableChild;
+import views.interfaces.DisplayableFather;
 
 
 
-public class Starting2 {
+
+public class Starting2 implements DisplayableFather {
 	
 	private boolean do_run = true;
 	private int display_width = 640;
 	private int display_height = 480;
 	private float ratio = (float) display_width/display_height;
 	private int angle;
+	private long waitingTime = 60;
+	private long startingTime;
 	
 	public Starting2(){
-		initDisplay();
+		startingTime = System.currentTimeMillis();				
+		/*initDisplay();
 		initGL();
 		
 		
-		while (do_run){			
+		while (do_run){
+			if (Display.isCloseRequested())
+				do_run = false;			
 			clear();
 			renderKubz();
 			renderCube();
@@ -45,11 +54,6 @@ public class Starting2 {
 	}
 	
 	
-	public void close() {
-	do_run=false;
-	}
-
-
 	private void clear(){
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 	}
@@ -57,14 +61,15 @@ public class Starting2 {
 	private void initDisplay(){
 	     try{
 	            //Creation d'une fenetre permettant de dessiner avec OpenGL        	
-	            Display.setDisplayModeAndFullscreen(new DisplayMode(display_width, display_height) );
+	            
 	            Display.create();
 
-	            DisplayMode mode = Display.getDisplayMode();
+	            DisplayMode mode = Display.getDesktopDisplayMode();
+	            Display.setDisplayModeAndFullscreen(mode);
 	        }catch(Exception e){
 	            System.out.println("Error setting up display: "+ e.getMessage());
 	            System.exit(0);
-	        }
+	        }*/
 		
 	}
 	
@@ -104,11 +109,12 @@ public class Starting2 {
       	GL11.glRotatef(angle, 1.0f, 1.0f, 1.0f);	
       	GL11.glTranslatef(0.0f, 0.0f, 6.5f);    
       	
-      	angle++;
+      	/*if (System.currentTimeMillis()-startingTime>=waitingTime){
+      		waitingTime = System.currentTimeMillis();      	
+      		angle++;
+      	}*/      	      
       	
-      	
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		
+		GL11.glEnable(GL11.GL_TEXTURE_2D);	
 		
 		if(Textures.K==null)
 			Textures.initK();
@@ -118,8 +124,6 @@ public class Starting2 {
 			Textures.initB();
 		if(Textures.Z==null)
 			Textures.initZ();
-		
-		
 						
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D,Textures.K.getTextureID()); 
         GL11.glBegin(GL11.GL_QUADS);										
@@ -204,21 +208,18 @@ public class Starting2 {
        GL11.glPopMatrix();
 	}
 	
-	private void initGL(){
-        /*GL viewport: nous utilisons toute la fenetre pour dessiner*/
-        GL11.glViewport(0, 0, display_width, display_height);
-        /*Matrice de projection (3D vers 3D): utilisationd'une projection perspective*/
+	/* private void initGL(){        
+        GL11.glViewport(0, 0, display_width, display_height);       
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glLoadIdentity();
         GLU.gluPerspective(45.0f,ratio,1f,50.0f);
         
 
-        /*Matrice de modele (e.g. positionnement initial de la "camera" )*/
+       
         GL11.glMatrixMode(GL11.GL_MODELVIEW);        
         GL11.glLoadIdentity();
         
-        
-        /*Diverses options OpenGL*/
+                
         GL11.glShadeModel(GL11.GL_SMOOTH);
         GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         GL11.glClearDepth(1.0f);
@@ -230,6 +231,116 @@ public class Starting2 {
 	public static void main(String[] args) {
 		new Starting2();
 	}
+*/
+
+	@Override
+	public void paint() {
+		renderCube();
+		renderKubz();		
+	}
 
 
+	@Override
+	public int getTimeOut() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public void setTimeOut(int time) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public boolean isInZone(Point mousePoint) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public void setColor(ReadableColor color) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public String getCharac() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public boolean collisionCanOccure(Point point, float f) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public double getX() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public double getY() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public ArrayList<DisplayableChild> getChildren() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void addChild(DisplayableChild object) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void removeChild(DisplayableChild child) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public double getAngle() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public double getSize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public double getHeight() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public void setUnTracked(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
 }
