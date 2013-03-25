@@ -190,7 +190,7 @@ public class SLWindow implements Observer {
 		mnInstrument.add(rdbtnmntmWood);
 		
 /********************************************XYLOPHONE********************************************************/
-		JRadioButtonMenuItem rdbtnmntmXylophone = new JRadioButtonMenuItem("XylophoneInstrument");
+		JRadioButtonMenuItem rdbtnmntmXylophone = new JRadioButtonMenuItem("Xylophone");
 		rdbtnmntmXylophone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setInstrument(new XylophoneInstrument());

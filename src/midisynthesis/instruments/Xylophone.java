@@ -1,14 +1,18 @@
 package midisynthesis.instruments;
 
-import midisynthesis.audioblocks.*;
-
+import midisynthesis.audioblocks.ADSR;
+import midisynthesis.audioblocks.Adder;
+import midisynthesis.audioblocks.Constant;
+import midisynthesis.audioblocks.MidiAudioBlock;
+import midisynthesis.audioblocks.NoteBlock;
+import midisynthesis.audioblocks.SineOscillator;
 
 /**
  * @author valeh
  */
-public class XylophoneInstr extends Instrument{
+public class Xylophone extends Instrument{
 	//default values for ADSR, epsilon(250),detune(5)
-	public XylophoneInstr() {
+	public Xylophone() {
 		super();
 	}
 
