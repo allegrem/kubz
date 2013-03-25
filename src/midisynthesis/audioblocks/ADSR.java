@@ -105,6 +105,10 @@ public class ADSR implements MidiAudioBlock {
 			releasing = false;
 		} else if (command.getCommand() == MidiCommand.NOTE_OFF)
 			releasing = true;
+		a.command(command);
+		d.command(command);
+		s.command(command);
+		r.command(command);
 	}
 
 }

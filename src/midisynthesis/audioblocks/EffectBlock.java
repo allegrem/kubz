@@ -33,7 +33,9 @@ public class EffectBlock implements MidiAudioBlock {
 	@Override
 	public void command(MidiCommand command) {
 		if (command.getCommand() == MidiCommand.CONTROL_CHANGE
-				&& command.getParam1() == MidiCommand.CONTROL_CHANGE_EFFECT_CONTROL_1)
+				&& command.getParam1() == MidiCommand.CONTROL_CHANGE_EFFECT_CONTROL_1) {
 			value = command.getParam2();
+			System.out.println("param change : " + (slope * value + offset));
+		}
 	}
 }

@@ -7,11 +7,11 @@ public class InstrumentLibrary {
 	private static final ArrayList<Class<?>> instruments;    
     static {
     	instruments = new ArrayList<Class<?>>();
-    	instruments.add(BellInstrument.class);
+    	instruments.add(Bell.class);
     	instruments.add(TwoOscInstrument.class);
     	instruments.add(WoodInstrument.class);
-    	instruments.add(SinusInstrument.class);
-    	instruments.add(XylophoneInstrument.class);
+    	instruments.add(Xylophone.class);
+    	instruments.add(GhostSinus.class);
     }
 	
 	public static Instrument getNextInstrument(Instrument i) throws InstantiationException, IllegalAccessException {

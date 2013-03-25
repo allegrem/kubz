@@ -10,9 +10,9 @@ import midisynthesis.audioblocks.SineOscillator;
 /**
  * @author valeh
  */
-public class XylophoneInstrument extends Instrument{
+public class Xylophone extends Instrument{
 	//default values for ADSR, epsilon(250),detune(5)
-	public XylophoneInstrument() {
+	public Xylophone() {
 		super();
 	}
 
