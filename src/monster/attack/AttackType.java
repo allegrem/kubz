@@ -7,7 +7,7 @@ package monster.attack;
 import player.unit.*;
 import midisynthesis.Melody;
 import midisynthesis.instruments.InstrumentLibrary;
-import midisynthesis.patterns.MidiPatternsLibaray;
+import midisynthesis.patterns.MidiPatternsLibrary;
 import monster.zoo.Monster;
 
 import views.attacks.SinusoidalAttackView;
@@ -88,7 +88,7 @@ public abstract class AttackType {
 			}
 		for (int j = 0; j < pattern; j++)
 			try {
-				attackMelody.setPattern(MidiPatternsLibaray
+				attackMelody.setPattern(MidiPatternsLibrary
 						.getNextPattern(attackMelody.getPattern()));
 			} catch (InstantiationException | IllegalAccessException e1) {
 				e1.printStackTrace();

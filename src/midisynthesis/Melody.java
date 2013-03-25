@@ -5,6 +5,7 @@ package midisynthesis;
 
 import midisynthesis.audioblocks.EffectBlock;
 import midisynthesis.instruments.Instrument;
+import midisynthesis.instruments.WindInstrument;
 import midisynthesis.instruments.WoodInstrument;
 import midisynthesis.midicommand.DelayedMidiCommand;
 import midisynthesis.midicommand.MidiCommand;
@@ -21,7 +22,7 @@ public class Melody extends Thread {
 	private static final int TEMPO_MAX = 160;
 
 	private static final int TUNE_MIN = 40;
-	private static final int TUNE_MAX = 80;
+	private static final int TUNE_MAX = 100;
 
 	private int tempo;
 
@@ -31,7 +32,7 @@ public class Melody extends Thread {
 
 	private int parameter;
 
-	private int tune;
+	private int tune; // move it to instrument !! ("note de depart?")
 
 	private boolean keepPlaying = true; // can be true and false only once
 
@@ -41,7 +42,7 @@ public class Melody extends Thread {
 		// default parameters
 		tempo = 80;
 		pattern = new MidiPattern1();
-		instrument = new WoodInstrument();
+		instrument = new WindInstrument();
 		tune = 60;
 		parameter = EffectBlock.DEFAULT_VALUE;
 
@@ -58,7 +59,7 @@ public class Melody extends Thread {
 
 	/**
 	 * @param tempo
-	 *            the tempo to set
+	 * the tempo to set
 	 */
 	public void setTempo(int tempo) {
 		this.tempo = tempo;

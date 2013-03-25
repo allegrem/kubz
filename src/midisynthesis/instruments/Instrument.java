@@ -30,7 +30,7 @@ public abstract class Instrument extends Thread {
 	private int lastSubInstrumentIndex; // index in the subinstruments list
 
 	private boolean keepPlaying = true; // set it to false to stop the run loop
-	WavFileOutput wavFileOutput = new WavFileOutput("sound.wav"); //to hear all the modifs during the synthesis
+//	WavFileOutput wavFileOutput = new WavFileOutput("sound.wav"); //to hear all the modifs during the synthesis
 
 	/**
 	 * Create a new Instrument. Each subinstrument loads the audioblocks as
@@ -157,7 +157,7 @@ public abstract class Instrument extends Thread {
 			byte[] out = play(44100, 500);
 			try {
 				speakersOutput.play(out);
-				wavFileOutput.play(out);
+				//wavFileOutput.play(out);
 			} catch (AudioException e) {
 				e.printStackTrace();
 			}
@@ -186,22 +186,22 @@ public abstract class Instrument extends Thread {
 	 * @author valeh
 	 */
 	public void letSoundOut(){
-		stopPlaying();
-		try {
-			wavFileOutput.close();
-		} catch (IOException e1) {			
-			e1.printStackTrace();
-		}
-		
-		byte[] finalPlay = play(44100,44100*2); //2s playing
-		WavFileOutput finalWav = new WavFileOutput("Attack");
-		finalWav.play(finalPlay);
-		try {
-			finalWav.close();
-		} catch (IOException e) {			
-			e.printStackTrace();
-		}
-		
+//		stopPlaying();
+////		try {
+////			wavFileOutput.close();
+////		} catch (IOException e1) {			
+////			e1.printStackTrace();
+////		}
+//		
+//		byte[] finalPlay = play(44100,44100*2); //2s playing
+//		WavFileOutput finalWav = new WavFileOutput("Attack");
+//		finalWav.play(finalPlay);
+//		try {
+//			finalWav.close();
+//		} catch (IOException e) {			
+//			e.printStackTrace();
+//		}
+//		
 	}
 
 }

@@ -21,10 +21,12 @@ public class Traitement {
 	ArrayList<Point> groupesConnexesPos = new ArrayList<Point>();
 	private int LENGTH = 640;
 	private int HEIGHT = 480;
-	private int rayonConnexe = 5;
+	private int rayonConnexe = 6;
 	private int distance = 7;
-	private int taille = 11; // 30 (deux medians un moyen)
+	private int taille = 5; // 30 (deux medians un moyen)
 	private int seuil = 11; // 17 (deux medians un moyen)
+	private byte[][] tabSeuil; //sisi Tardieu représente (a la volee)
+	private byte[] buffscreen = new byte[HEIGHT*LENGTH];
 	private int nseuils = 0; // nombre de pixels au dessus du seuil, utile pour
 								// debug et reglage des seuils
 	private int ncomp = 0; // nombre de composantes connexes, utile pour debug
@@ -165,6 +167,20 @@ public class Traitement {
 				}
 			}
 		}
+	}
+	
+	public void seuilTardieu(){
+		nseuils = 0;
+		for (int i = 0; i < LENGTH; i++) {
+			for (int j = 0; j < HEIGHT; j++) {
+				if (traitScreen[i][j].getIntensite() >= tabSeuil[i][j]) {
+					traitScreen[i][j].setBrightness(true);
+					nseuils++;
+				} else {
+					traitScreen[i][j].setBrightness(false);
+				}
+			}
+		}		
 	}
 
 	public void updateConnexe(VirtualPixel[][] screen, int LENGTH, int HEIGHT) {
@@ -565,6 +581,25 @@ public class Traitement {
 
 	public void setNcomp(int ncomp) {
 		this.ncomp = ncomp;
+	}
+	
+	public void setBuffScreen(byte[] buffcreen){
+		this.buffscreen = buffcreen;
+	}
+	
+	public void setSeuil(){
+		this.seuil = (int) 1.2*findNthLowestNumber(buffscreen, buffscreen.length-1, buffscreen.length-1);	
+	}
+	
+	public void printMax(){
+		byte max = (byte) 0;
+		for(int i=0; i<HEIGHT*LENGTH;i++)
+			if (buffscreen[i]>max) max = buffscreen[i];
+		System.out.println("Max : " + max);
+	}
+	
+	public void setTabSeuil(byte[][] tabSeuil){
+		
 	}
 
 }

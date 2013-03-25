@@ -7,7 +7,7 @@ package monster;
  */
 
 import midisynthesis.instruments.InstrumentLibrary;
-import midisynthesis.patterns.MidiPatternsLibaray;
+import midisynthesis.patterns.MidiPatternsLibrary;
 
 public class RandomDefence extends DefenceType{
 
@@ -30,7 +30,7 @@ public class RandomDefence extends DefenceType{
 			}
 		for(int j=0;j<pattern;j++) 
 			try {
-			melody.setPattern(MidiPatternsLibaray.getNextPattern(melody.getPattern()));
+			melody.setPattern(MidiPatternsLibrary.getNextPattern(melody.getPattern()));
 		} catch (InstantiationException | IllegalAccessException e1) {
 			e1.printStackTrace();
 		}

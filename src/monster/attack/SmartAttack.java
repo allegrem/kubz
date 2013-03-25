@@ -1,7 +1,7 @@
 package monster.attack;
 
 import midisynthesis.instruments.InstrumentLibrary;
-import midisynthesis.patterns.MidiPatternsLibaray;
+import midisynthesis.patterns.MidiPatternsLibrary;
 import monster.zoo.Monster;
 
 public class SmartAttack extends AttackType {
@@ -31,7 +31,7 @@ public class SmartAttack extends AttackType {
 			if (attackMelody.getPattern() != monster.getCible()
 					.getDefenceMelody().getPattern())
 				try {
-					attackMelody.setPattern(MidiPatternsLibaray
+					attackMelody.setPattern(MidiPatternsLibrary
 							.getNextPattern(attackMelody.getPattern()));
 				} catch (InstantiationException | IllegalAccessException e1) {
 					e1.printStackTrace();

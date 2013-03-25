@@ -2,6 +2,8 @@ package kubzDemo;
 
 import java.awt.Container;
 import java.awt.GridLayout;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,13 +18,14 @@ import cubeManager.CubeManager;
  * @author paul
  *
  */
-public class Fenetre extends JFrame{
+public class Fenetre extends JFrame implements WindowListener{
 	private Container conteneur=this.getContentPane(); //On cree un objet qui pointe vers le conteneur de la fenetre (auquel on peut ajouter des JObjects)
 	private int R=127;
 	private int G=127;
 	private int B=127;
 	private int V=127;
 	private Cube cube;
+	private Get get ;
 
 	private JLabel label1=new JLabel("Angle= 0");
 	private JLabel label2=new JLabel("     ..........");
@@ -34,14 +37,14 @@ public class Fenetre extends JFrame{
 	 */
 	public Fenetre(){
 		setTitle("Kubz manager");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		XBee xbee = new XBee(); // Create a new XBee     
 	    CubeManager cubeManager = new CubeManager(xbee); // Create a new cube manager
 	    xbee.setCubeManager(cubeManager); // Add the cube manager in the XBee  
 	    xbee.start(); // Start the XBee thread
 	    cube=cubeManager.getCube(45679);
-	    Get angle =new Get(this);
-	    angle.start();
+	    get =new Get(this);
+	    get.start();
 		conteneur.setLayout(new GridLayout(1,6));// On cree un layout de type border pour le conteneur
 		conteneur.add(new RSlider(0, 255,this));
 		conteneur.add(new GSlider(0, 255,this));
@@ -115,5 +118,49 @@ public class Fenetre extends JFrame{
 
 	public Cube getCube() {
 		return cube;
+	}
+
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		get.interrupt();
+		this.dispose();		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent arg0) {
+		get.interrupt();
+		this.dispose();
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

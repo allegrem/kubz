@@ -35,10 +35,14 @@ public class GrabberShow implements Runnable {
 	private PImage myImage = null;
 	public static final int CAMERA_WIDTH = 640;
 	public static final int CAMERA_HEIGHT = 480;
+	public final int Left = 60;
+	public final int Right = 380;
+	public final int Top = 80;
+	public final int Bottom = 380;
 	private int frameRate = 30; // fps maximum pour cette resolution
 	private ImagePanel imagePanel;
-	private VirtualPixel[][] cameraScreen = new VirtualPixel[CAMERA_WIDTH][CAMERA_HEIGHT];
-	private byte[][] screen = new byte[CAMERA_HEIGHT][CAMERA_WIDTH];
+	private VirtualPixel[][] cameraScreen = new VirtualPixel[(Right-Left+1)][(Bottom-Top+1)];
+	private byte[] bytescreen = new byte[(Right-Left+1) * (Bottom-Top+1) +1 ];
 
 	/**
 	 * permet d'avoir un interface controlé
@@ -53,8 +57,8 @@ public class GrabberShow implements Runnable {
 
 		path.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 		path.setContentPane(jp);
-		for (int i = 0; i < CAMERA_WIDTH; i++) {
-			for (int j = 0; j < CAMERA_HEIGHT; j++) {
+		for (int i = 0; i < (Right-Left+1); i++) {
+			for (int j = 0; j < (Bottom-Top+1); j++) {
 				cameraScreen[i][j] = new VirtualPixel(false, 0,
 						new Point(i, j), (byte) 0);
 			}
@@ -69,16 +73,21 @@ public class GrabberShow implements Runnable {
 	 */
 	public void run() {
 		// int posnY = 0, posnX = 0;
+		int bytepos;
 		while (true) {
-
+			bytepos = 0;
 			myCamera.getCameraFrame(myImage.pixels, 1000);
 			// int posX = 0, posY = 0;
 			int comptX = 0, comptY = 0;
 			// double cupos = 0;
 			for (int i = 0; i < myImage.pixels.length; i++) {
-				// ici on met le tableau de pixel à jour
-				cameraScreen[comptX][comptY]
-						.setIntensite((byte) (myImage.pixels[i] & 0xFF));
+				// ici on mem t le tableau de pixel à jour
+				if((comptX>=Left)&&(comptX<=Right)&&(comptY<=Bottom)&&(comptY>=Top)){
+					bytepos++;
+					cameraScreen[comptX-Left][comptY-Top]
+							.setIntensite((byte) (myImage.pixels[i] & 0xFF));
+					bytescreen[bytepos]=(byte) (myImage.pixels[i] & 0xFF);
+			}
 				comptX++; // on parcourt l'image en largeur
 				if (comptX == CAMERA_WIDTH) // on descend d'une ligne
 				{
@@ -170,20 +179,11 @@ public class GrabberShow implements Runnable {
 		this.cameraScreen = cameraScreen;
 	}
 	
-	public byte[][] getByteScreen(){
-		myCamera.getCameraFrame(myImage.pixels, 1000);
-		int comptX = 0, comptY = 0;
-		for (int i = 0; i < myImage.pixels.length; i++) {
-			//ici on met le tableau de pixel à jour
-			screen[comptX][comptY] = (byte) (myImage.pixels[i] & 0xFF);
-			comptX++; // on parcourt l'image en largeur
-			if (comptX == CAMERA_WIDTH) // on descend d'une ligne
-			{
-				comptX = 0;
-				comptY++;
-			}			
-		}
-		return screen;
+
+	public byte[] getBytescreen() {
+		return bytescreen;
 	}
+	
+	
 
 }

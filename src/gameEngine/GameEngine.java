@@ -7,6 +7,7 @@ package gameEngine;
  */
 
 import java.util.ArrayList;
+
 import map.Map;
 import map.MapReader;
 import monster.zoo.Monster;
@@ -25,6 +26,7 @@ import views.staticViews.BaseView;
 import wall.Wall;
 import OpenGL.GLDisplay;
 import OpenGL.KeyboardManager;
+import OpenGL.Starting2;
 import base.Base;
 import cube.Cube;
 import cubeManager.CubeManager;
@@ -73,6 +75,7 @@ public class GameEngine extends Thread {
 		map.setLength(height);
 		display.setLightPlace(0.0f, (float) height / 2, 0.0f);
 		map.add(new BackgroundView(width, height, 5000));
+		//map.add(new Starting2());
 		try {
 			monsterList = reader.readMonsters();
 			// bases=reader.readBases();
@@ -84,12 +87,12 @@ public class GameEngine extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		bases.add(new Base(ReadableColor.ORANGE,BaseView.BAS,this));
+//		bases.add(new Base(ReadableColor.ORANGE,BaseView.BAS,this));
 		bases.add(new Base(ReadableColor.BLUE,BaseView.GAUCHE,this));
 		bases.add(new Base(ReadableColor.GREEN,BaseView.DROITE,this));
 		playerList.add(new Player(this, bases.get(0), 45679, 15000, 15075));
 		playerList.add(new Player(this, bases.get(1), 45675, 45671, 14837));
-		playerList.add(new Player(this, bases.get(2), 53192, 35916, 45676));
+//		playerList.add(new Player(this, bases.get(2), 53192, 35916, 45676));
 
 	}
 
