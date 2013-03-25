@@ -9,111 +9,198 @@ package player;
  */
 
 import java.util.ArrayList;
+
+import midisynthesis.Melody;
+import midisynthesis.instruments.InstrumentLibrary;
+import midisynthesis.patterns.MidiPatternsLibaray;
 import monster.zoo.*;
 import base.Base;
 import gameEngine.GameEngine;
 import OpenGL.KeyboardManager;
 import player.parameter.*;
 import player.unit.*;
-import synthesis.Sound;
-import synthesis.filters.BandsFilter;
-import synthesis.fmInstruments.FmInstruments3Params;
-import synthesis.fmInstruments.PianoInstrument2;
-import synthesis.fmInstruments.TwoOscFmInstrument;
-import synthesis.fmInstruments.WoodInstrument;
-import synthesis.fmInstruments.XylophoneInstrument;
 import utilities.Point;
 import views.attacks.AttackConeView;
 import views.attacks.SinusoidalAttackView;
-import views.informationViews.AudioRender;
-import views.informationViews.InstrumentsChoice;
 import views.informationViews.Link;
+import views.interfaces.Displayable;
+import views.interfaces.DisplayableFather;
+import views.staticViews.BaseView;
 
-public class Player{
+public class Player {
 
 	private ArrayList<Unit> unitList;
-	private Parameter[] parameters;
+	private final Parameter[] parameters;
 	private Base base;
-	private int nParams = 2;
-	private BandsFilter shield;
+	private final int nParams = 2;
 	private boolean isTurn;
 	private int choice;
 	private int lastAngle1;
+	private int compteurInstr;
 	private int lastAngle2;
+	private int compteurPattern;
+	private final int unitid;
+	private final int param1id;
+	private final int param2id;
+	private final double factor = 4;
+	private int comptVideo = 0;
 
+	private final int power = 180;
 
-	int power = 100;
+	private final GameEngine gameEngine;
 
-	private GameEngine gameEngine;
-	private AudioRender audioRender;
 	private Link link;
 
 	/**
 	 * Creation d'un joueur avec deux Unit et deux Parameter
 	 */
-	public Player(GameEngine gameEngine, Base base) {
-		
+	public Player(GameEngine gameEngine, Base base, int unitid, int param1id,
+			int param2id) {
+
 		this.gameEngine = gameEngine;
 		this.base = base;
+		this.unitid = unitid;
+		this.param1id = param1id;
+		this.param2id = param2id;
 		unitList = new ArrayList<Unit>();
-		unitList.add(new Unit(this));
+		unitList.add(new Unit(this, unitid));
 		this.parameters = new Parameter[2];
-		parameters[0] = new Parameter(this);
-		parameters[1] = new Parameter(this);
-		parameters[0].setLocation(
-				base.getCenter().getX() - parameters[0].getSize(), base
-						.getCenter().getY());
-		parameters[1].setLocation(
-				base.getCenter().getX() + parameters[1].getSize(), base
-						.getCenter().getY());
-		this.shield = new BandsFilter(11);
-		this.shield.random();
-		link=new Link(base,parameters[0],parameters[1]);
+		parameters[0] = new Parameter(this, param1id);
+		parameters[1] = new Parameter(this, param2id);
+		
+		if (base.getSens()==BaseView.BAS){
+			parameters[0].setLocation(
+					base.getCenter().getX() - parameters[0].getSize(), base
+							.getCenter().getY() - parameters[0].getSize());
+			parameters[1].setLocation(
+					base.getCenter().getX() + parameters[1].getSize(), base
+							.getCenter().getY() - parameters[0].getSize());
+			unitList.get(0).setLocation((int) (base.getCenter().getX()) , (int) (base.getCenter().getY()-1.2*base.radius));
+		}
+		if (base.getSens()==BaseView.HAUT){
+			parameters[0].setLocation(
+					base.getCenter().getX() + parameters[0].getSize(), base
+							.getCenter().getY()-parameters[0].getSize());
+			parameters[1].setLocation(
+					base.getCenter().getX() - parameters[1].getSize(), base
+							.getCenter().getY()-parameters[0].getSize());
+			unitList.get(0).setLocation((int) (base.getCenter().getX()) , (int) (base.getCenter().getY()+1.2*base.radius));
+		}
+		if (base.getSens()==BaseView.GAUCHE){
+			parameters[0].setLocation(
+					base.getCenter().getX() + parameters[0].getSize(), base
+							.getCenter().getY() - parameters[0].getSize());
+			parameters[1].setLocation(
+					base.getCenter().getX() + parameters[1].getSize(), base
+							.getCenter().getY() + parameters[0].getSize());
+			unitList.get(0).setLocation((int) (base.getCenter().getX()+1.2*base.radius) , (int) (base.getCenter().getY()));
+		}
+		if (base.getSens()==BaseView.DROITE){
+			parameters[0].setLocation(
+					base.getCenter().getX() - parameters[0].getSize(), base
+							.getCenter().getY() - parameters[0].getSize());
+			parameters[1].setLocation(
+					base.getCenter().getX() - parameters[1].getSize(), base
+							.getCenter().getY() + parameters[0].getSize());
+			unitList.get(0).setLocation((int) (base.getCenter().getX()-1.2*base.radius) , (int) (base.getCenter().getY()));
+		}
+	
+		link = new Link(base, parameters[0], parameters[1]);
 		gameEngine.getMap().add(link);
-		
-		
-		/*
-		 * Probleme:ce qui prenait du temps lors de l'affichage du son c'etait le calcul
-		 * de celui-ci et pas son affichage
-		 * Du coup, si on supprime l'affichage, on a l'impression que ca lag sans savoir
-		 * pourquoi alors que c'est le son qui se met a jour
-		 * 
-		 * 
-		 */
-		
-		//audioRender = new AudioRender(gameEngine.getDisplay(),unitList.get(0).getSound(),parameters[0],parameters[1]);
-		//gameEngine.getMap().add(audioRender);
+		compteurPattern = 0;
+		compteurInstr = 0;
+		lastAngle1 = (int) parameters[0].getAngle();
+		lastAngle2 = (int) parameters[1].getAngle();
+//		gameEngine.getCubeManager().getCube(unitid)
+//				.setRGB(0, 0, 255, (short) 10);
+//		gameEngine.getCubeManager().getCube(param1id)
+//				.setRGB(0, 255, 0, (short) 10);
+//		gameEngine.getCubeManager().getCube(param2id)
+//				.setRGB(0, 255, 0, (short) 10);
+
 	}
+	
 
 	/**
-	 * Methode qui retourne l'angle du premier cube parametre
+	 * Methode qui retourne le nombre de changement d'instrument, en rapport
+	 * avec l'angle de Parameter1 Pour le choix de l'instrument.
 	 * 
 	 * @return
 	 */
-	public int getChangeAngle1() {
-		int retour = lastAngle1 - parameters[0].getAngle();
+	public int getChangeInstrument() {
+		int sensibility = 45;
+		compteurInstr = parameters[0].getAngle() - lastAngle1;
 		lastAngle1 = parameters[0].getAngle();
-		return retour;
+		int changeInstrument = Math.round(compteurInstr / sensibility);
+		compteurInstr = compteurInstr - changeInstrument * sensibility;
+		return changeInstrument;
 	}
 
 	/**
-	 * Methode retourne l'angle du second cube parametre
+	 * Methode retourne l'angle du second cube parametre Pour le pattern de la
+	 * melody (paramï¿½tre plus ou moins discret)
 	 * 
 	 * @return
 	 */
-	public int getChangeAngle2() {
-		int retour = lastAngle2 - parameters[1].getAngle();
+	public int getChangePattern() {
+		int sensibility = 45;
+		compteurPattern = parameters[1].getAngle() - lastAngle2;
 		lastAngle2 = parameters[1].getAngle();
-		return retour;
+		int changePattern = Math.round(compteurPattern / sensibility);
+		compteurPattern = compteurPattern - changePattern * sensibility;
+		return changePattern;
 	}
 
 	/**
-	 * methode qui retourne la distance entre les deux parametres
+	 * methode qui retourne la distance entre le cube Parameter1 et le centre de
+	 * la base Pour le paramï¿½tre d'instrument.
 	 * 
 	 * @return
 	 */
-	public int getChangeDistance() {
-		return (int) parameters[0].getPos().distanceTo(parameters[1].getPos());
+	
+	// va de 15 a 80
+	public int getCube1Distance() {
+		int sensibilite = 2;
+		int offset = -29;
+		return (int) (offset + sensibilite
+				* parameters[0].getPos().distanceTo(base.getCenter()));
+	}
+
+	/**
+	 * methode qui retourne la distance entre le cube Parameter2 et le centre de
+	 * la base Pour la note de depart
+	 * 
+	 * @return
+	 */
+	
+	// va de 15 a 80
+	public int getCube2Distance() {
+		int sensibilite = 1;
+		int offset = 25;
+		return (int) (offset + sensibilite
+				* parameters[1].getPos().distanceTo(base.getCenter()));
+	}
+
+	/**
+	 * Methode qui permet de dï¿½terminet l'angle entre les deux cubes Parameter
+	 * Pour le Tempo
+	 * 
+	 * @return
+	 */
+	
+	// va de 40 à 140 à peu près
+	public int getCubesAperture() {
+		int sensibility = 1;
+		int offset = 6;
+		double dx1 = parameters[0].getX() - base.getCenter().getX();
+		double dy1 = parameters[0].getY() - base.getCenter().getY();
+		double dx2 = parameters[1].getX() - base.getCenter().getX();
+		double dy2 = parameters[1].getY() - base.getCenter().getY();
+		double scalar = dx1 * dx2 + dy1 * dy2;
+		double n1 = dx1 * dx1 + dy1 * dy1;
+		double n2 = dx2 * dx2 + dy2 * dy2;
+		double theta = 180 * Math.acos(scalar / (n1 * n2)) / Math.PI;
+		return (int) ((int) sensibility * theta + offset);
 	}
 
 	public void removeUnit(Unit unit) {
@@ -125,14 +212,6 @@ public class Player{
 		if (unitList.isEmpty()) {
 			gameEngine.removePlayer(this);
 		}
-	}
-
-	public BandsFilter getShield() {
-		return shield;
-	}
-
-	public void setShield(BandsFilter shield) {
-		this.shield = shield;
 	}
 
 	public ArrayList<Unit> getUnitList() {
@@ -246,17 +325,42 @@ public class Player{
 		setPStatesToWaiting();
 		setUStateToMoving(unit);
 		double size = unit.getSize() * Math.sqrt(2) / 2;
+		int i = 0;
+		int j = 0;
+		boolean collision;
+		DisplayableFather view = unit.getView();
+		float viewSize = (float) (view.getSize() / 2);
 		while (!KeyboardManager.tap) {
+//			unit.setDirection(-gameEngine.getCubeManager().getCube(unitid)
+//					.getAngle() / factor);
+//			if(comptVideo >15){
+//				comptVideo = 0;
+//				gameEngine.updateImage();
+//			}
+			i = 0;
+			j = 0;
 			if ((KeyboardManager.zKey) && (unit.getY() - size > 0))
-				unit.translate(0, -1);
+				j = -1;
 			if ((KeyboardManager.sKey)
 					&& (unit.getY() + size < gameEngine.getHeight()))
-				unit.translate(0, 1);
+				j = 1;
 			if ((KeyboardManager.qKey) && (unit.getX() - size > 0))
-				unit.translate(-1, 0);
+				i = -1;
 			if ((KeyboardManager.dKey)
 					&& (unit.getX() + size < gameEngine.getWidth()))
-				unit.translate(1, 0);
+				i = 1;
+			collision = false;
+			for (Displayable obj : gameEngine.getMap().getObjects()) {
+				if (obj != view
+						&& obj.isInZone(new Point(view.getX() + i * viewSize,
+								view.getY() + j * viewSize))) {
+					collision = true;
+				}
+
+			}
+			if (!collision)
+				unit.translate(i, j);
+
 			if (KeyboardManager.wKey)
 				unit.rotate(1);
 			if (KeyboardManager.xKey)
@@ -266,232 +370,240 @@ public class Player{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			comptVideo++;
 		}
+		unit.updtaeSeenMonsters();
 		KeyboardManager.tap = false;
 	}
-
-	public void chooseWeaponTurn(Unit unit) {
-		InstrumentsChoice instChoice = new InstrumentsChoice(gameEngine);
-		unit.getView().addChild(instChoice);
-		int fmChoice = 0;
-		while (!KeyboardManager.tap) {
-
-			if (unit.getInstrumentChoiceAngle() >= 0) {
-				instChoice
-						.setChosen((int) ((unit.getInstrumentChoiceAngle() % 360) / 90));
-				fmChoice = (int) ((unit.getInstrumentChoiceAngle() % 360) / 90);
-			} else {
-				instChoice.setChosen((int) (((360 * (1 + Math.abs((int) ((unit
-						.getInstrumentChoiceAngle() / 360)))) + unit
-						.getInstrumentChoiceAngle()) % 360) / 90));
-				fmChoice = (int) (((360 * (1 + Math.abs((int) ((unit
-						.getInstrumentChoiceAngle() / 360)))) + unit
-						.getInstrumentChoiceAngle()) % 360) / 90);
-
-			}
-			if (KeyboardManager.wKey)
-				unit.rotateInstrumentChoice(1);
-			if (KeyboardManager.xKey)
-				unit.rotateInstrumentChoice(-1);
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		// modification de l'instrument en cours d'utilisation
-		if (fmChoice == 0)
-			unit.getSound().setInstrument(
-					PianoInstrument2.getFmInstruments3Params());
-		if (fmChoice == 1)
-			unit.getSound().setInstrument(
-					TwoOscFmInstrument.getFmInstruments3Params());
-		if (fmChoice == 2)
-			unit.getSound().setInstrument(
-					WoodInstrument.getFmInstruments3Params());
-		if (fmChoice == 3)
-			unit.getSound().setInstrument(
-					XylophoneInstrument.getFmInstruments3Params());
-		unit.getView().removeChild(instChoice);
-		KeyboardManager.tap = false;
-	}
-
-	/**
-	 * Methode qui declenche la creation du son via les Parameter Ici les
-	 * Parameters sont liees au Player
-	 */
 	
-	/*=============>>>> a modifier pour que le parametre ne puisse pas sortir
-	 * de la base (Demi-cercle et pas cercle ! Donc peut sortir d'un cote...)
-	 * 
-	 */
-	public void soundEditPTurn(Unit unit) {
-		setPStatesToSoundEdit();
-		setUStateToWaiting(unit);
-		double size = unit.getSize() * Math.sqrt(2) / 2;
-		boolean isModified = true;
-		while (!KeyboardManager.tap) {
-			if ((KeyboardManager.zKey)
-					&& (base.getCenter().distanceTo(new Point(parameters[choice].getX(),parameters[choice].getY()-1))<Base.radius)) {
-				parameters[choice].translate(0, -1);
-				isModified = true;
-			}
-			if ((KeyboardManager.sKey)
-					&& (base.getCenter().distanceTo(new Point(parameters[choice].getX(),parameters[choice].getY()+1))<Base.radius)) {
-				parameters[choice].translate(0, 1);
-				isModified = true;
-			}
-			if ((KeyboardManager.qKey)
-					&& (base.getCenter().distanceTo(new Point(parameters[choice].getX()-1,parameters[choice].getY()))<Base.radius)) {
-				parameters[choice].translate(-1, 0);
-				isModified = true;
-			}
-			if ((KeyboardManager.dKey)
-					&& (base.getCenter().distanceTo(new Point(parameters[choice].getX()+1,parameters[choice].getY()))<Base.radius)) {
-				parameters[choice].translate(1, 0);
-				isModified = true;
-			}
-			if (KeyboardManager.wKey) {
-				parameters[choice].rotate(1);
-				isModified = true;
-			}
-			if (KeyboardManager.xKey) {
-				parameters[choice].rotate(-1);
-				isModified = true;
-			}
-			if (KeyboardManager.aKey) {
-				unit.getSound().playToSpeakers();
-				/*
-				 * try { Thread.sleep(3000); } catch (InterruptedException e) {
-				 * e.printStackTrace(); }
-				 */
-			}
-			if (!(KeyboardManager.zKey || KeyboardManager.sKey
-					|| KeyboardManager.qKey || KeyboardManager.dKey
-					|| KeyboardManager.wKey || KeyboardManager.xKey)) {
-				if (isModified) {
-					FmInstruments3Params instrument = (FmInstruments3Params) unit
-							.getSound().getInstrument();
-					instrument.changeParams(getChangeAngle1(),
-							getChangeAngle2(), getChangeDistance());
-					isModified = false;
-				}
-
-			}
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		FmInstruments3Params instrument = (FmInstruments3Params) unit
-				.getSound().getInstrument();
-		instrument.changeParams(getChangeAngle1(), getChangeAngle2(),
-				getChangeDistance());
-		KeyboardManager.tap = false;
-	}
-
-	/**
-	 * Methode qui declenche le choix de l'ouverture d'attaque de Unit
-	 */
-
+	
 
 	public void UDirection(Unit unit) {
 		setPStatesToWaiting();
 		setUStateToDirection(unit);
-		AttackConeView attackCone = new AttackConeView(unit.getAperture(),
-				unit.getDirection(), 100, unit.getView());
-		unit.getView().addChild(attackCone);
-		while (!KeyboardManager.tap) {
-			if (KeyboardManager.wKey) {
-				unit.rotateDirection(1);
+		unit.updtaeSeenMonsters();
+		ArrayList<Monster> seenMonsters = unit.getSeenMonsters();
+//		AttackConeView attackCone = new AttackConeView(30, unit.getDirection(),
+//				power, unit.getView());
+//		unit.getView().addChild(attackCone);
+		if(seenMonsters.size()>0){
+			unit.setPreviousTarget(seenMonsters.get(0));
+			unit.setTarget(seenMonsters.get(0));
+			AttackConeView cibleView =  new AttackConeView(360, 0, 40, unit.getTarget().getView());
+			unit.getTarget().getView().addChild(cibleView);
+			unit.getTarget().getDefence().getMelody().unpause();
+			while (!KeyboardManager.tap) {
+				unit.updateTarget();		
+				if(!(unit.getPreviousTarget().equals(unit.getTarget()))){
+					unit.getPreviousTarget().getDefence().getMelody().pause();
+					unit.getPreviousTarget().getView().removeChild(cibleView);
+					cibleView =  new AttackConeView(360, 0, 40, unit.getTarget().getView());
+					unit.getTarget().getView().addChild(cibleView);
+					unit.getTarget().getDefence().getMelody().unpause();
+				}
+				
+	//			unit.setDirection(-gameEngine.getCubeManager().getCube(unitid)
+	//					.getAngle() / factor);
+				if (KeyboardManager.wKey) {
+					unit.rotateDirection(1);
+				}
+				if (KeyboardManager.xKey) {
+					unit.rotateDirection(-1);
+				}
+//				if (unit.getDirection() > 0) {
+//					attackCone.setDirection((long) unit.getDirection());
+//				} else {
+//					attackCone.setDirection((long) (360 + unit.getDirection()));
+//				}
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
-			if (KeyboardManager.xKey) {
-				unit.rotateDirection(-1);
-			}
-			if (unit.getDirection() > 0) {
-				attackCone.setDirection((long) unit.getDirection());
-			} else {
-				attackCone.setDirection((long) (360 + unit.getDirection()));
-			}
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			unit.getTarget().getView().removeChild(cibleView);
+			unit.getTarget().getDefence().getMelody().pause();
+//			unit.getView().removeChild(attackCone);
+			KeyboardManager.tap = false;
 		}
-		unit.getView().removeChild(attackCone);
-		KeyboardManager.tap = false;
+	}
+	
+
+	/**
+	 * Methode qui declenche la creation du son via les Parameter Ici les
+	 * Parameters sont liees au Player
+	 * 
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 */
+
+	public void soundEditPTurn(Unit unit) throws InstantiationException,
+			IllegalAccessException {
+		if(unit.getSeenMonsters().size()>0){
+			Melody melody = unit.getAttackMelody();
+			setPStatesToSoundEdit();
+			setUStateToWaiting(unit);
+			melody.unpause();
+			while (!KeyboardManager.tap) {
+	//			parameters[0].setAngle((int)(-gameEngine.getCubeManager().getCube(param1id)
+	//					.getAngle() / factor));
+	//			parameters[1].setAngle((int)(-gameEngine.getCubeManager().getCube(param2id)
+	//					.getAngle() / factor));
+//				if(comptVideo >15){
+	//				comptVideo = 0;
+	//				gameEngine.updateImage();
+//			}
+				if ((KeyboardManager.zKey)
+						&& (base.getCenter().distanceTo(
+								new Point(parameters[choice].getX(),
+										parameters[choice].getY() - 1)) < Base.radius)) {
+					parameters[choice].translate(0, -1);
+				}
+				if ((KeyboardManager.sKey)
+						&& (base.getCenter().distanceTo(
+								new Point(parameters[choice].getX(),
+										parameters[choice].getY() + 1)) < Base.radius)) {
+					parameters[choice].translate(0, 1);
+				}
+				if ((KeyboardManager.qKey)
+						&& (base.getCenter().distanceTo(
+								new Point(parameters[choice].getX() - 1,
+										parameters[choice].getY())) < Base.radius)) {
+					parameters[choice].translate(-1, 0);
+				}
+				if ((KeyboardManager.dKey)
+						&& (base.getCenter().distanceTo(
+								new Point(parameters[choice].getX() + 1,
+										parameters[choice].getY())) < Base.radius)) {
+					parameters[choice].translate(1, 0);
+				}
+				if (KeyboardManager.wKey) {
+					parameters[choice].rotate(1);
+				}
+				if (KeyboardManager.xKey) {
+					parameters[choice].rotate(-1);
+				}
+				if (KeyboardManager.aKey) {
+					if (melody.isPlaying())
+						melody.pause();
+					else
+						melody.unpause();
+				}
+				// on modifie l'instrument en fonctionde l'angle du Parameter1
+				int iterInstrum = getChangeInstrument();
+				// on passe a l'intrument suivant autant de fois que necessaire
+				if (iterInstrum > 0)
+					for (int i = 0; i < iterInstrum; i++) {
+						try {
+							melody.setInstrument(InstrumentLibrary
+									.getNextInstrument(melody.getInstrument()));
+						} catch (InstantiationException | IllegalAccessException e1) {
+							e1.printStackTrace();
+						}
+					}
+				// on passe a l'intrument precedent autant de fois que necessaire
+				if (iterInstrum < 0)
+					for (int i = 0; i < -iterInstrum; i++) {
+						try {
+							melody.setInstrument(InstrumentLibrary
+									.getPreviousInstrument(melody.getInstrument()));
+						} catch (InstantiationException | IllegalAccessException e1) {
+							e1.printStackTrace();
+						}
+					}
+	
+				// on modifie le Pattern en fonction de l'angle du Parameter2
+				int iterPattern = getChangePattern();
+				// on passe au Pattern suivant autant de fois que necessaire
+				if (iterPattern > 0)
+					for (int i = 0; i < iterPattern; i++) {
+						try {
+							melody.setPattern(MidiPatternsLibaray
+									.getNextPattern(melody.getPattern()));
+						} catch (InstantiationException | IllegalAccessException e1) {
+							e1.printStackTrace();
+						}
+					}
+				// on passe au Pattern precedent autant de fois que necessaire
+				if (iterPattern < 0)
+					for (int i = 0; i < -iterPattern; i++) {
+						try {
+							melody.setPattern(MidiPatternsLibaray
+									.getPreviousPattern(melody.getPattern()));
+						} catch (InstantiationException | IllegalAccessException e1) {
+							e1.printStackTrace();
+						}
+					}
+	
+				// On regle le parametre d'instrument
+				melody.setParameter(getCube1Distance());
+	
+				// on regle la note de depart
+				melody.setTune(getCube2Distance());
+	
+				// on regle le tempo
+				melody.setTempo(getCubesAperture());
+	
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				comptVideo++;
+	
+			}
+	
+			// zik
+			KeyboardManager.tap = false;
+			melody.pause();
+			unit.setAttackMelody(melody);
+		}
 	}
 
-	public void UAperture(Unit unit) {
-		setPStatesToWaiting();
-		setUStateToDirection(unit);
-		AttackConeView attackCone = new AttackConeView(unit.getAperture(),
-				unit.getDirection(), 100, unit.getView());
-		unit.getView().addChild(attackCone);
-		while (!KeyboardManager.tap) {
-			if (KeyboardManager.wKey && unit.getAperture() > 0) {
-				unit.rotateAperture(-1);
-				attackCone.setAperture(unit.getAperture());
-			}
-			if (KeyboardManager.xKey && unit.getAperture() < 360) {
-				unit.rotateAperture(1);
-				attackCone.setAperture(unit.getAperture());
-			}
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		unit.getView().removeChild(attackCone);
-		KeyboardManager.tap = false;
 
-	}
+
 
 	public void UAttack(Unit unit) {
-		SinusoidalAttackView attack = new SinusoidalAttackView(
-				unit.getAperture(), unit.getDirection(), power, unit.getView());
-		unit.getView().addChild(attack);
-		Sound sound = unit.getSound();
-		//unit.getSound().playToSpeakers();
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		if (!gameEngine.getMonsterList().isEmpty()) {
-			for (int i = 0; (i < gameEngine.getMonsterList().size())
-					&& (gameEngine.getMonsterList().get(i) != null); i++) {
-				Monster monster = gameEngine.getMonsterList().get(i);
-				double xdiff = monster.getPos().getX() - unit.getPos().getX();
-				double ydiff = monster.getPos().getY() - unit.getPos().getY();
-				double theta = (180 * Math.atan2(ydiff, xdiff) / Math.PI) - 90;
-				if ((monster.getPos().distanceTo(unit.getPos()) < power)
-						&& (((unit.getDirection() - unit.getAperture() / 2) % 360 <= theta % 360) && ((unit
-								.getDirection() + unit.getAperture() / 2) % 360 >= theta % 360))) {
-					System.out.println("player :"
-							+ sound.filter(monster.getDefence().getShield())
-									.getDegats() / 30000000);
-					monster.decreaseLife(sound.filter(
-							monster.getDefence().getShield()).getDegats() / 30000000);
-
+		if(unit.getSeenMonsters().size()>0){
+			unit.setAperture(30);
+			Monster target = unit.getTarget();
+			double xdiff = target.getPos().getX() - unit.getPos().getX();
+			double ydiff = target.getPos().getY() - unit.getPos().getY();
+			double theta = (180 * Math.atan2(ydiff, xdiff) / Math.PI) - 90;
+			SinusoidalAttackView attack = new SinusoidalAttackView(
+					unit.getAperture(), theta, power, unit.getView());
+			unit.getView().addChild(attack);
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			if(target!=null){
+				double dTempo = Math.exp(Math.abs(unit.getAttackMelody().getTempo()-target.getDefence().getMelody().getTempo()));
+				double dTune = Math.exp(Math.abs(unit.getAttackMelody().getTune()-target.getDefence().getMelody().getTune()));
+				double dParameter = Math.exp(Math.abs(unit.getAttackMelody().getParameter()-target.getDefence().getMelody().getParameter()));
+				int dInstrum;
+				if(unit.getAttackMelody().getInstrument().equals(target.getDefence().getMelody().getInstrument())) dInstrum = 1;
+				else dInstrum = 0;
+				int dPattern;
+				if(unit.getAttackMelody().getPattern().equals(target.getDefence().getMelody().getPattern())) dPattern = 1;
+				else dPattern = 0;
+				int degats = (int) ((int) power* dPattern*dInstrum*dTune*dTempo*dParameter);
+				//on inflige a present les degats a la cibe
+				if (power > target.getPos().distanceTo(unit.getPos())) {
+					target.decreaseLife(degats);
 				}
-				gameEngine.getMonsterList().trimToSize();
+				target.decreaseLife(degats);
 			}
 		}
 	}
 
-	public void act() {
+	public void act() throws InstantiationException, IllegalAccessException {
 		isTurn = true;
 		for (Unit unit : unitList) {
-			//audioRender.setSound(unit.getSound());
 			movingUTurn(unit);
-			chooseWeaponTurn(unit);
-			soundEditPTurn(unit);
-			UAperture(unit);
 			UDirection(unit);
+			soundEditPTurn(unit);
 			UAttack(unit);
 		}
 		isTurn = false;
@@ -535,7 +647,7 @@ public class Player{
 	}
 
 	public boolean isInBase(Point newPos) {
-		if (newPos.distanceTo(base.getCenter()) < base.radius)
+		if (newPos.distanceTo(base.getCenter()) < Base.radius)
 			return true;
 		return false;
 	}

@@ -1,5 +1,10 @@
 package testMath;
 
+/**
+ * 
+ * @author Felix
+ */
+
 import traitementVideo.Traitement;
 import traitementVideo.VirtualPixel;
 import utilities.Point;
@@ -19,15 +24,15 @@ public class testTraitement3 {
 		VirtualPixel[][] testscreen = new VirtualPixel[LENGHT][HEIGHT];
 		for (int i = 0; i < LENGHT; i++) {
 			for (int j = 0; j < HEIGHT; j++) {
-				testscreen[i][j] = new VirtualPixel(false, 0, new Point(i, j));
+				testscreen[i][j] = new VirtualPixel(false, 0, new Point(i, j),(byte) 0);
 			}
 		}
 		if ((x1 <= LENGHT - 1) && (y1 <= HEIGHT - 1)&&(x1 >= 1) && (y1 >= 1)) {
-			testscreen[x1][y1] = new VirtualPixel(true, 0, new Point(x1, y1));
-			testscreen[x1 + 1][y1] = new VirtualPixel(true, 0, new Point(x1 + 1, y1));
-			testscreen[x1 - 1][y1] = new VirtualPixel(true, 0, new Point(x1 - 1, y1));
-			testscreen[x1][y1 + 1] = new VirtualPixel(true, 0, new Point(x1, y1 + 1));
-			testscreen[x1][y1 - 1] = new VirtualPixel(true, 0, new Point(x1, y1 - 1));
+			testscreen[x1][y1] = new VirtualPixel(true, 0, new Point(x1, y1),(byte) 0);
+			testscreen[x1 + 1][y1] = new VirtualPixel(true, 0, new Point(x1 + 1, y1),(byte) 0);
+			testscreen[x1 - 1][y1] = new VirtualPixel(true, 0, new Point(x1 - 1, y1),(byte) 0);
+			testscreen[x1][y1 + 1] = new VirtualPixel(true, 0, new Point(x1, y1 + 1),(byte) 0);
+			testscreen[x1][y1 - 1] = new VirtualPixel(true, 0, new Point(x1, y1 - 1),(byte) 0);
 			traitement.updateConnexe(testscreen, LENGHT, HEIGHT);
 			Point pos1 = traitement.getGroupePos(1);
 			if((pos1.getX()==(double)x1)&&(pos1.getY()==(double)y1)){
@@ -44,7 +49,7 @@ public class testTraitement3 {
 		VirtualPixel[][] testscreen = new VirtualPixel[LENGHT][HEIGHT];
 		for (int i = 0; i < LENGHT; i++) {
 			for (int j = 0; j < HEIGHT; j++) {
-				testscreen[i][j] = new VirtualPixel(false, 0, new Point(i, j));
+				testscreen[i][j] = new VirtualPixel(false, 0, new Point(i, j),(byte) 0);
 			}
 		}
 		if ((x1 <= LENGHT - 1) && (y1 <= HEIGHT - 1)&&(x1 >= 1) && (y1 >= 1)&&(x2 <= LENGHT - 1) && (y2 <= HEIGHT - 1)&&(x2 >= 1) && (y2 >= 1)) {

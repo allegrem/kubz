@@ -8,12 +8,10 @@ package player.unit;
 
 import java.util.ArrayList;
 
+import midisynthesis.Melody;
 import monster.zoo.Monster;
 import cube.Cube;
 import gameEngine.GameEngine;
-import synthesis.Sound;
-import synthesis.fmInstruments.TwoOscFmInstrument;
-import traitementVideo.VideoCube;
 import utilities.Point;
 import views.CubeControlledView;
 import views.informationViews.LifeView;
@@ -28,8 +26,8 @@ public class Unit extends CubeOwner {
 	private Point pos = new Point(10, 10);
 	private double aperture;
 	private double direction;
-	private double instrumentChoiceAngle = 0;
-	private Sound sound;
+	private Melody attackMelody;
+	private Melody defenceMelody;
 	private UnitState state;
 	private CubeControlledView view;
 	private Player owner;
@@ -38,23 +36,28 @@ public class Unit extends CubeOwner {
 	private LifeView lifeView;
 	private ArrayList<Monster> seenMonsters;
 	private Monster target;
-	private VideoCube videoCube;
+	private Monster previousTarget;
 
-	public Unit(Player owner) {
+
+
+
+	public Unit(Player owner2, int unitid) {
+		super(unitid);
 		life = 15;
 		this.state = new WaitingUState();
-		this.owner = owner;
+		this.owner = owner2;
 		gameEngine = owner.getGameEngine();
 		view = new CubeControlledView(pos);
 		lifeView = new LifeView(view);
 		view.addChild(lifeView);
 		size = view.getSize();
 		gameEngine.getMap().add(view);
-		this.sound = new Sound(TwoOscFmInstrument.getFmInstruments3Params(), 3f);
+		attackMelody = new Melody();
+		defenceMelody = new Melody();
 		seenMonsters = new ArrayList<Monster>();
 		target = null;
-
 	}
+
 
 	/**
 	 * Renvoie le Player auquel est lie cet Unit
@@ -65,9 +68,6 @@ public class Unit extends CubeOwner {
 		return owner;
 	}
 
-	public Sound getSound() {
-		return sound;
-	}
 
 	/**
 	 * Retourne le cube physique auquel est associ� Unit
@@ -77,10 +77,6 @@ public class Unit extends CubeOwner {
 	public Cube getCube() {
 		return cube;
 
-	}
-
-	public void setSound(Sound sound) {
-		this.sound = sound;
 	}
 
 	/**
@@ -181,62 +177,51 @@ public class Unit extends CubeOwner {
 	 * On considere que la seule raison qu'un Monster ne soit pas visble est
 	 * qu'il y ait un mur qui le s�pare de Unit
 	 */
-	private void updtaeSeenMonsters() {
-		ArrayList<Monster> monsterList = gameEngine.getMonsterList();
-		seenMonsters = monsterList;
+	public void updtaeSeenMonsters() {
+		seenMonsters.clear();
+		seenMonsters.addAll(gameEngine.getMonsterList());
+		ArrayList<Monster> removeMonsters = new ArrayList<Monster>();
 		ArrayList<Wall> walls = gameEngine.getWalls();
-		ArrayList<ArrayList<Double>> angleList = new ArrayList<ArrayList<Double>>();
-		double xu = this.getPos().getX();
-		double yu = this.getPos().getY();
-		// ici on construit la liste des intervalle d'angles qui d�finissent les
-		// murs
-		for (Wall wall : walls) {
-			double x1 = wall.getExtremity1().getX();
-			double x2 = wall.getExtremity2().getX();
-			double y1 = wall.getExtremity1().getY();
-			double y2 = wall.getExtremity2().getY();
-			double x1diff = x1 - xu;
-			double y1diff = y1 - yu;
-			double extrem1Theta = (180 * Math.atan2(y1diff, x1diff) / Math.PI) - 90;
-			double x2diff = x2 - xu;
-			double y2diff = y2 - yu;
-			double extrem2Theta = (180 * Math.atan2(y2diff, x2diff) / Math.PI) - 90;
-			ArrayList<Double> angles = new ArrayList<Double>();
-			angles.add(new Double(extrem1Theta));
-			angles.add(new Double(extrem2Theta));
-			angleList.add(angles);
-		}
-		// ici on verifie que le Monster ne se situe pas dans un angle de vue
-		// auquel un mur appartient (reste a g�rer le cas ou il est devant le
-		// mur)
-		for (Monster monster : monsterList) {
-			double xm = monster.getPos().getX();
-			double ym = monster.getPos().getY();
-			double xdiff = xm - xu;
-			double ydiff = ym - yu;
-			double monsterTheta = (180 * Math.atan2(ydiff, xdiff) / Math.PI) - 90;
-			for (int i = 0; i < angleList.size(); i++) {
-				ArrayList<Double> angles = angleList.get(i);
-				Wall wall = null;
-				if (((angles.get(1) < monsterTheta)
-						&& (angles.get(2) > monsterTheta) || ((angles.get(1) > monsterTheta) && (angles
-						.get(2) < monsterTheta))))
-					wall = walls.get(i);
+		double xm = this.getPos().getX();
+		double ym = this.getPos().getY();
+		//System.out.println(unitList.size());
+		for (Monster monster : seenMonsters) {
+			double xu = monster.getPos().getX();
+			double yu = monster.getPos().getY();
+			for (Wall wall : walls) {
 				double xp1 = wall.getExtremity1().getX();
 				double yp1 = wall.getExtremity1().getY();
 				double xp2 = wall.getExtremity2().getX();
 				double yp2 = wall.getExtremity2().getY();
 				// calcul de l'intersection entre la droite qui relie Unit a
 				// Monster et du wall
-				double xi = (yu - yp1 - xu * (ym - yu) / (xm - xu) + xp1
+				double xi = (ym - yp1 - xm * (yu - ym) / (xu - xm) + xp1
 						* (yp2 - yp1) / (xp2 - xp1))
-						/ ((yp2 - yp1) / (xp2 - xp1) - (ym - yu) / (xm - xu));
-				double yi = yu + (xi - xu) * (ym - yu) / (xm - xu);
-				if (monster.getPos().distanceTo(pos) > pos
-						.distanceTo(new Point(xi, yi))) {
-					seenMonsters.remove(monster);
+						/ ((yp2 - yp1) / (xp2 - xp1) - (yu - ym) / (xu - xm));
+				double yi = ym + (xi - xm) * (yu - ym) / (xu - xm);
+				if (((xi <= Math.max(xp1, xp2))
+						&& (xi >= Math.min(xp1, xp2))
+						&& (pos.distanceTo(new Point(xi, yi)) < pos
+								.distanceTo(monster.getPos())))) {
+					removeMonsters.add(monster);
+					
 				}
 			}
+		}
+		for(Monster monster : removeMonsters){
+			seenMonsters.remove(monster);
+				
+		}
+	}
+	
+	public void updateTarget(){
+		int targetNumber = (int) (direction/40); 
+		int size = seenMonsters.size();
+		previousTarget = target;
+		target = null;
+		if (size>0){
+			if (targetNumber>=0) target = seenMonsters.get(targetNumber%size);
+			else target = seenMonsters.get((size-Math.abs((targetNumber%size))-1));
 		}
 	}
 
@@ -268,28 +253,6 @@ public class Unit extends CubeOwner {
 
 	public double getDirection() {
 		return direction;
-	}
-
-	/**
-	 * Methode relatives au choix de l'instrument
-	 * 
-	 * @param theta
-	 * @param dTheta
-	 */
-	public void setInstrumentChoice(double theta) {
-		instrumentChoiceAngle = theta;
-		view.setIstrumentChoice(theta);
-		view.setAngle(theta);
-	}
-
-	public void rotateInstrumentChoice(double dTheta) {
-		instrumentChoiceAngle = instrumentChoiceAngle + dTheta;
-		view.rotateIstrumentChoice(dTheta);
-		view.rotate(dTheta);
-	}
-
-	public double getInstrumentChoiceAngle() {
-		return instrumentChoiceAngle;
 	}
 
 	public int getPower() {
@@ -362,4 +325,38 @@ public class Unit extends CubeOwner {
 		this.lifeView = lifeView;
 	}
 
+	public Melody getAttackMelody() {
+		return attackMelody;
+	}
+
+	public void setAttackMelody(Melody attackMelody) {
+		this.attackMelody = attackMelody;
+	}
+
+	public Melody getDefenceMelody() {
+		return defenceMelody;
+	}
+
+	public void setDefenceMelody(Melody defenceMelody) {
+		this.defenceMelody = defenceMelody;
+	}
+
+	public Monster getTarget() {
+		return target;
+	}
+
+	public void setTarget(Monster target) {
+		this.target = target;
+	}
+
+	public Monster getPreviousTarget() {
+		return previousTarget;
+	}
+
+	public void setPreviousTarget(Monster previousTarget) {
+		this.previousTarget = previousTarget;
+	}
+	
+	
+	
 }

@@ -57,15 +57,7 @@ public class XBee extends Thread implements Runnable{
             readFrame();
        		parseRXFrame();
 
-       		if (i==50){
-       			this.manager.getCube(53192).setRGB(255, 255, 255, (short)50);
-       			this.manager.getCube(53192).setMotor((byte)255);
-       			System.out.println("Commande de Leds allumée trolololololoololol");
        		}
-       		else if (i==130)
-       			this.manager.getCube(53192).setMotor((byte)0);
-       		i++;
-       	}
 
     }
 

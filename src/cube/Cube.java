@@ -32,6 +32,7 @@ public class Cube{
 		return this.angle;
 	}
 	
+	//probablement pas n�cessaire
 	public int getAngleChange(){
 		int retour = lastAngle - angle;
 		lastAngle = angle;
@@ -43,7 +44,9 @@ public class Cube{
      * @return tap (boolean)
      */
 	public boolean getTap() {
-		return this.tap;
+		boolean b = this.tap;
+		this.tap = false;
+		return b;
 	}
 
     /**

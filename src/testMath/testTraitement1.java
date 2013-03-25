@@ -2,6 +2,7 @@ package testMath;
 
 /**
  * Test à lancer pour vérifier que le repérage des groupes connexes se fait bien sur un point
+ * @author Felix
  */
 import traitementVideo.Traitement;
 import traitementVideo.VirtualPixel;
@@ -37,11 +38,11 @@ public class testTraitement1 {
 		VirtualPixel[][] testscreen = new VirtualPixel[LENGHT][HEIGHT];
 		for (int i = 0; i < LENGHT; i++) {
 			for (int j = 0; j < HEIGHT; j++) {
-				testscreen[i][j] = new VirtualPixel(false, 0, new Point(i, j));
+				testscreen[i][j] = new VirtualPixel(false, 0, new Point(i, j), (byte) 0);
 			}
 		}
 		if ((x <= LENGHT) && (y <= HEIGHT)) {
-			testscreen[x][y] = new VirtualPixel(true, 0, new Point(x, y));
+			testscreen[x][y] = new VirtualPixel(true, 0, new Point(x, y),(byte) 0);
 			traitement.updateConnexe(testscreen, LENGHT, HEIGHT);
 			Point pos = traitement.getGroupePos(1);
 			if ((x == (int) pos.getX()) && (y == (int) pos.getY())) {

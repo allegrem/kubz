@@ -41,12 +41,10 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.glu.GLU;
 
-import synthesis.Sound;
 import utilities.Maths;
 import utilities.MyBuffer;
 import utilities.Point;
 import utilities.Vector;
-import views.informationViews.AudioRender;
 import views.interfaces.DisplayableFather;
 import map.Map;
 
@@ -60,14 +58,17 @@ import map.Map;
 public class GLDisplay extends Thread{
 	
 	
-	/*Réglages de l'affichage*/
-	private float decalageX=0; //Decalage de l'affichage a l'horizontale
+	/*Reglages de l'affichage*/
+
+	private float decalageX=210; //Decalage de l'affichage a l'horizontale
 	private float decalageY=0; //Decalage de l'affichage a la verticale
-	private float multX=1.0f; //Facteur multiplicatif pour étendre l'affichage selon x
+	private float multX=1.0f; //Facteur multiplicatif pour etendre l'affichage selon x
+	private float multY=0.85f; //Facteur multiplicatif pour etendre l'affichage selon x
 	private float sens=1; //sens=-1 -> image renversee
-	private float parallelisme=0.1f; // Correction du paralellisme
+	private float parallelisme=0.11f; // Correction du paralellisme
 	private float invParal=1; //Si -1, parallelisme inverse dans l'autre sens
 	
+
 	
 	
 
@@ -78,12 +79,10 @@ public class GLDisplay extends Thread{
 	private int mapDisplay_height=0;
 	private boolean do_run=true;
 	private Map map;
-	private Sound sound;
 	private int frequency=50;
 	private  boolean initialized=false;
 	private Text texte;
 	private final int nFrames=20;// Nbre de frames pour le motion-blur
-	private int i=0;
 	
 	/*
 	 * Parametres de la projection
@@ -204,24 +203,32 @@ public class GLDisplay extends Thread{
 	        GL20.glLinkProgram(shaderProgram);
 	        GL20.glValidateProgram(shaderProgram);
 	        GL20.glUseProgram(shaderProgram);
-	    	int lH=GL20.glGetUniformLocation(shaderProgram, "display_height");
-	    	int lW=GL20.glGetUniformLocation(shaderProgram, "display_width");
-			int lA=GL20.glGetUniformLocation(shaderProgram, "alpha");
-			int lM=GL20.glGetUniformLocation(shaderProgram, "midle");
-			int lS=GL20.glGetUniformLocation(shaderProgram, "sens");
-			int lI=GL20.glGetUniformLocation(shaderProgram, "inv");
-			int lX=GL20.glGetUniformLocation(shaderProgram, "decalageX");
-			int lY=GL20.glGetUniformLocation(shaderProgram, "decalageY");
-			int lMu=GL20.glGetUniformLocation(shaderProgram, "multX");
-			GL20.glUniform1i(lH,display_height);
-			GL20.glUniform1i(lW,display_width);
-			GL20.glUniform1f(lA,parallelisme);
-			GL20.glUniform1f(lM,(float)(mapDisplay_width/2.0));
-			GL20.glUniform1f(lS,sens);
-			GL20.glUniform1f(lI,invParal);
-			GL20.glUniform1f(lX,decalageX);
-			GL20.glUniform1f(lY,decalageY);
-			GL20.glUniform1f(lMu,multX);
+	        updateParams();
+	    	
+	}
+	
+	private void updateParams(){
+		int lH=GL20.glGetUniformLocation(shaderProgram, "display_height");
+    	int lW=GL20.glGetUniformLocation(shaderProgram, "display_width");
+		int lA=GL20.glGetUniformLocation(shaderProgram, "alpha");
+		int lM=GL20.glGetUniformLocation(shaderProgram, "midle");
+		int lS=GL20.glGetUniformLocation(shaderProgram, "sens");
+		int lI=GL20.glGetUniformLocation(shaderProgram, "inv");
+		int lX=GL20.glGetUniformLocation(shaderProgram, "decalageX");
+		int lY=GL20.glGetUniformLocation(shaderProgram, "decalageY");
+		int lMuX=GL20.glGetUniformLocation(shaderProgram, "multX");
+		int lMuY=GL20.glGetUniformLocation(shaderProgram, "multY");
+		GL20.glUniform1i(lH,display_height);
+		GL20.glUniform1i(lW,display_width);
+		GL20.glUniform1f(lA,parallelisme);
+		GL20.glUniform1f(lM,(float)(mapDisplay_width/2.0));
+		GL20.glUniform1f(lS,sens);
+		GL20.glUniform1f(lI,invParal);
+		GL20.glUniform1f(lX,decalageX);
+		GL20.glUniform1f(lY,decalageY);
+		GL20.glUniform1f(lMuX,multX);
+		GL20.glUniform1f(lMuY,multY);
+		
 	}
 	
 	/**
@@ -238,7 +245,7 @@ public class GLDisplay extends Thread{
 		camDx=(float)(display_width/2.0);
 		camDy=(float)(display_height/2.0);
 		setCameraDirection();
-		texte=new Text();
+		//texte=new Text();
 		initialized=true;
 		loadShaders();
 		while(do_run){
@@ -246,6 +253,7 @@ public class GLDisplay extends Thread{
 		if (Display.isCloseRequested()||KeyboardManager.quit)
 				do_run = false; // On arrete le programme
 		clear(); //On nettoie la fenetre
+		checkAffichage();
 		KeyboardManager.checkKeyboard();
 		glMatrixMode(GL_MODELVIEW);
 		GL11.glTranslatef((float)(1000),0f,0f);
@@ -274,6 +282,70 @@ public class GLDisplay extends Thread{
 		
 	}
 	
+
+	private void checkAffichage() {
+		if (Keyboard.isKeyDown(Keyboard.KEY_UP)){
+			decalageY++;
+			updateParams();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)){
+			decalageY--;
+			updateParams();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
+			decalageX++;
+			updateParams();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
+			decalageX--;
+			updateParams();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD8)){
+			multY+=0.01;
+			updateParams();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD2)){
+			multY-=0.01;
+			updateParams();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD6)){
+			multX+=0.01;
+			updateParams();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD4)){
+			multX-=0.01;
+			updateParams();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_I)){
+			sens*=-1;
+			updateParams();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_K)){
+			parallelisme-=0.01;
+			updateParams();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_L)){
+			parallelisme+=0.01;
+			updateParams();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_M)){
+			invParal*=-1;
+			updateParams();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
 
 	/**
 	 * Initialisation de l'OpenGL

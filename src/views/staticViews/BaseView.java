@@ -30,7 +30,7 @@ public class BaseView implements DisplayableFather{
 	public static final int GAUCHE=0;
 	public static final int DROITE=2;
 
-	private static final float radius = 80.0f;   //On code le rayon des bases "en dur".
+	private static final float radius = 120.0f;   //On code le rayon des bases "en dur".
 
 	private Point center;
 	private ReadableColor color;

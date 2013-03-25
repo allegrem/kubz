@@ -1,46 +1,59 @@
 package gameEngine;
 
-import org.lwjgl.util.Color;
-import org.lwjgl.util.ReadableColor;
+/**
+ * @author Felix
+ * @author Paul
+ * 
+ */
 
 import java.util.ArrayList;
-
-import base.Base;
-
-import OpenGL.GLDisplay;
-import OpenGL.KeyboardManager;
 import map.Map;
 import map.MapReader;
 import monster.zoo.Monster;
-import player.*;
+import org.lwjgl.util.ReadableColor;
+
+import cl.eye.GrabberShow;
+import player.CubeOwner;
+import player.Player;
 import player.unit.Unit;
 import traitementVideo.Traitement;
+import traitementVideo.VideoCube;
 import utilities.Point;
 import utilities.RandomPerso;
 import views.staticViews.BackgroundView;
 import views.staticViews.BaseView;
 import wall.Wall;
-//import wall.Wall;
+import OpenGL.GLDisplay;
+import OpenGL.KeyboardManager;
+import base.Base;
 import cube.Cube;
-
-//import cubeManager.*;
+import cubeManager.CubeManager;
 
 public class GameEngine extends Thread {
+
 	private final int width;
 	private final int height;
 	public ArrayList<Monster> monsterList;
 	private ArrayList<Player> playerList;
 	private ArrayList<Wall> walls;
 	private ArrayList<Base> bases;
-	// private CubeManager cubeManager;
 	private GLDisplay display;
 	private Map map;
 	private MapReader reader = new MapReader("Maps/bFile.txt",
 			"Maps/mFile.txt", "Maps/WFile.txt", this);
-	private Traitement traitement;
+	private final Traitement traitement;
+	private CubeManager cubeManager;
+	private ArrayList<VideoCube> cubeList = new ArrayList<VideoCube>();
+//	private final GrabberShow gs;
 
-	public GameEngine() {
+	public GameEngine(/*CubeManager cubeManager*/) {
 		RandomPerso.initialize();
+//		this.cubeManager = cubeManager;
+		traitement = new Traitement(640,480);
+//		traitement.updateConnexe();
+//		gs = new GrabberShow();
+//        Thread th = new Thread(gs);
+//        th.start();
 		display = new GLDisplay(this);
 		map = new Map();
 		display.setMap(map);
@@ -71,12 +84,12 @@ public class GameEngine extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		bases.add(new Base(ReadableColor.ORANGE,BaseView.HAUT,this));
-	
-		playerList.add(new Player(this, bases.get(0)));
-		//playerList.add(new Player(this, bases.get(0)));
-		//playerList.add(new Player(this,bases.get(0)));
-		//playerList.add(new Player(this));
+		bases.add(new Base(ReadableColor.ORANGE,BaseView.BAS,this));
+		bases.add(new Base(ReadableColor.BLUE,BaseView.GAUCHE,this));
+		bases.add(new Base(ReadableColor.GREEN,BaseView.DROITE,this));
+		playerList.add(new Player(this, bases.get(0), 45679, 15000, 15075));
+		playerList.add(new Player(this, bases.get(1), 45675, 45671, 14837));
+		playerList.add(new Player(this, bases.get(2), 53192, 35916, 45676));
 
 	}
 
@@ -110,8 +123,10 @@ public class GameEngine extends Thread {
 
 	/**
 	 * Methode qui lance les actions du(des) joueur(s)
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
-	public void playerTurn() {
+	public void playerTurn() throws InstantiationException, IllegalAccessException {
 		for (Player player : playerList) {
 			player.act();
 		}
@@ -148,7 +163,12 @@ public class GameEngine extends Thread {
 	 */
 	public void run() {
 		while (display.isAlive()) {
-			//playerTurn();
+			try {
+				playerTurn();
+			} catch (InstantiationException | IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			monsterTurn();
 		}
 	}
@@ -258,7 +278,6 @@ public class GameEngine extends Thread {
 
 	private boolean checkPos(CubeOwner cubeOwner) {
 		cubeOwner.getCube().setIrOn();
-		// traitement.updateConnexe(null); // int�gration avec la cam �
 		// regler pour recuperer l'image
 		ArrayList<Point> currentPositions = new ArrayList<Point>();
 		for (int i = 1; i <= 3; i++) {
@@ -275,7 +294,32 @@ public class GameEngine extends Thread {
 		
 	}
 	
-	public ArrayList<Wall> getWalls(){
+	public final ArrayList<Wall> getWalls(){
 		return walls;
 	}
+
+	public final CubeManager getCubeManager() {
+		return cubeManager;
+	}
+
+	public final void setCubeManager(CubeManager cubeManager) {
+		this.cubeManager = cubeManager;
+	}
+	
+	public final void updateImage(){
+//		traitement.setTraitScreen(gs.getcameraScreen());
+		traitement.flouMedian();
+		traitement.flouMedian();
+		traitement.seuil();
+		traitement.updateConnexe();
+		for (VideoCube vc : cubeList){
+			traitement.localSearch(vc);
+		}
+	}
+
+	public Traitement getTraitement() {
+		return traitement;
+	}
+
+	
 }

@@ -1,5 +1,10 @@
 package monster.zoo;
 
+/**
+ * 
+ * @author Felix
+ */
+
 import monster.move.RandomMove;
 import gameEngine.GameEngine;
 

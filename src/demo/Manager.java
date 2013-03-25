@@ -1,22 +1,10 @@
 package demo;
 
-import java.util.ArrayList;
 
 import map.Map;
-import map.MapReader;
-import monster.zoo.Monster;
-
-import org.lwjgl.util.ReadableColor;
-
-import player.Player;
-import traitementVideo.Traitement;
 import utilities.Point;
 import utilities.RandomPerso;
-import views.staticViews.BackgroundView;
-import views.staticViews.BaseView;
-import wall.Wall;
 import OpenGL.GLDisplay;
-import base.Base;
 
 public class Manager{
 

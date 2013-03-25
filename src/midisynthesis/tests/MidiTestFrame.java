@@ -82,7 +82,7 @@ public class MidiTestFrame extends JFrame {
 					break;
 				case 'f':
 					melody.setParameter(melody.getParameter() - 1);
-					System.out.println("parameter up : "
+					System.out.println("parameter down : "
 							+ melody.getParameter());
 					break;
 				case 't':

@@ -1,5 +1,10 @@
 package monster.zoo;
 
+/**
+ * 
+ * @author Felix
+ * @author Paul
+ */
 
 import org.lwjgl.util.ReadableColor;
 

@@ -5,23 +5,22 @@ package monster.attack;
  * @author Felix
  */
 
-import synthesis.Sound;
-import synthesis.fmInstruments.FmInstruments3Params;
-import synthesis.fmInstruments.TwoOscFmInstrument;
-
+import midisynthesis.instruments.Instrument;
+import midisynthesis.patterns.MidiPattern;
 import monster.zoo.Monster;
 
 public class FixedFrenquenceAttack extends AttackType {
 
-	private int strenght;
 
-	public FixedFrenquenceAttack(Monster monster, int strenght) {
+	public FixedFrenquenceAttack(Monster monster, int tune, int tempo, int parameter, MidiPattern pattern, Instrument instrument) {
 		super(monster);
-		this.strenght = strenght;
-		
-		FmInstruments3Params instrument = TwoOscFmInstrument.getFmInstruments3Params();
-		instrument.random();
-		sound = new Sound(instrument, 3f);
+		this.attackMelody.setTempo(tempo);
+		this.attackMelody.setTune(tune);
+		this.attackMelody.setParameter(parameter);
+		this.attackMelody.setPattern(pattern);
+		this.attackMelody.setInstrument(instrument);
 	}
+	
+	
 
 }

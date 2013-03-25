@@ -207,7 +207,7 @@ public class ObjDisplay {
 		GL11.glPushMatrix();
 		GL11.glTranslated(x, y,z);
 		GL11.glRotatef(a, 0,0, 1);
-		GL11.glScalef((float)15, (float)15, (float)40);
+		GL11.glScalef((float)20, (float)20, (float)40);
 		GL11.glDrawArrays(GL11.GL_TRIANGLES,0,obj.m.faces.size()*3);
 		GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
 		GL11.glDisableClientState(GL11.GL_NORMAL_ARRAY);

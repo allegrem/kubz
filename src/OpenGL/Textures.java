@@ -15,6 +15,67 @@ public class Textures {
 	public static Texture textureSea;
 	public static Texture textureWall;
 	public static Texture textureTry;
+	public static Texture K;
+	public static Texture U;
+	public static Texture B;
+	public static Texture Z;
+	public static Texture ksol1;
+	
+	public static void initksol1(){
+		ksol1=null;
+		try {
+
+			ksol1 = TextureLoader.getTexture("PNG",ResourceLoader.getResourceAsStream("Textures/ksol1.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}	
+	
+	public static void initB(){
+		B=null;
+		try {
+
+			B = TextureLoader.getTexture("PNG",ResourceLoader.getResourceAsStream("Textures/B1.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}	
+	
+	public static void initZ(){
+		Z=null;
+		try {
+
+			Z = TextureLoader.getTexture("PNG",ResourceLoader.getResourceAsStream("Textures/Z1.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}		
+	
+	public static void initU(){
+		U=null;
+		try {
+
+			U = TextureLoader.getTexture("PNG",ResourceLoader.getResourceAsStream("Textures/U1.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}		
+	
+	
+	public static void initK(){
+		K=null;
+		try {
+
+			K = TextureLoader.getTexture("PNG",ResourceLoader.getResourceAsStream("Textures/K1.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}		
 	
 	/**
 	 * Initilaisation de la texture du sol

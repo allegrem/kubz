@@ -1,5 +1,10 @@
 package testMath;
 
+/**
+ * 
+ * @author Felix
+ */
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -31,7 +36,7 @@ public class testDisplay {
 
 	}
 	
-	private boolean aPressed(){
+	public boolean aPressed(){
 		Display.update();
 		return Keyboard.isKeyDown(Keyboard.KEY_A);
 	}

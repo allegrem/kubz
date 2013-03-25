@@ -1,5 +1,10 @@
 package testMath;
 
+/**
+ * 
+ * @author Felix
+ */
+
 import cube.Cube;
 import cube.XBee;
 import cubeManager.CubeManager;
@@ -13,7 +18,7 @@ public class TestRot {
 		// TODO Auto-generated method stub
 		
 		XBee xbee = new XBee(); // Create a new XBee
-		CubeManager cubeManager = new CubeManager(); // Create a new cube
+		CubeManager cubeManager = new CubeManager(null); // Create a new cube
 														// manager		
 		int adress1 = 45679;
 		Cube cube1 = new Cube(xbee);

@@ -2,6 +2,11 @@ package midisynthesis.audioblocks;
 
 import midisynthesis.midicommand.MidiCommand;
 
+/**
+ * This class multiplies the block plugged in by a constant float.
+ * @author valeh
+ *
+ */
 public class Gain implements MidiAudioBlock {
 
 	private final MidiAudioBlock gain;

@@ -9,7 +9,6 @@ import gameEngine.GameEngine;
 import player.CubeOwner;
 import player.Player;
 import views.CubeControlledView;
-import views.informationViews.MobileBase;
 import traitementVideo.VideoCube;
 import utilities.Point;
 
@@ -23,10 +22,10 @@ public class Parameter extends CubeOwner{
 	private GameEngine gameEngine;
 	private double size;
 	private CubeControlledView view;
-	private MobileBase baseView;
 
 	
-	public Parameter(Player owner){
+	public Parameter(Player owner, int id){
+		super(id);
 		this.state = new WaitingPState();
 		this.setOwner(owner);
 		gameEngine=owner.getGameEngine();

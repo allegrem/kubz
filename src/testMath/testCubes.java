@@ -1,5 +1,11 @@
 package testMath;
 
+
+/**
+ * 
+ * @author Felix
+ */
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -7,7 +13,6 @@ import org.lwjgl.opengl.DisplayMode;
 
 import synthesis.Sound;
 import synthesis.fmInstruments.FmInstruments3Params;
-import synthesis.fmInstruments.TwoOscFmInstrument;
 import synthesis.fmInstruments.WoodInstrument;
 import cube.Cube;
 import cube.XBee;
@@ -27,7 +32,8 @@ public class testCubes {
 			e.printStackTrace();
 		}
 		XBee xbee = new XBee(); // Create a new XBee
-		CubeManager cubeManager = new CubeManager(); // Create a new cube
+		CubeManager cubeManager = new CubeManager(null
+				); // Create a new cube
 														// manager
 		int adress1 = 45679;
 		Cube cube1 = new Cube(xbee);

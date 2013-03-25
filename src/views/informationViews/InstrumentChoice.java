@@ -2,22 +2,13 @@ package views.informationViews;
 
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
-
 import gameEngine.GameEngine;
-
-import java.util.ArrayList;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.ReadableColor;
-
 import utilities.Point;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
-import org.lwjgl.util.glu.Disk;
-import org.newdawn.slick.opengl.Texture;
-
 import OpenGL.InstrumentTextures;
-import OpenGL.Textures;
 
 
 public class InstrumentChoice implements DisplayableChild{
@@ -26,12 +17,6 @@ public class InstrumentChoice implements DisplayableChild{
 	private double distance=90;	
 	private GameEngine gameEngine;
 	
-	private ReadableColor chosen;
-	
-	
-	
-
-
 	public InstrumentChoice(GameEngine gameEngine){
 		this.gameEngine=gameEngine;
 	}

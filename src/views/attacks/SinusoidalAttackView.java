@@ -150,13 +150,6 @@ public class SinusoidalAttackView implements DisplayableChild {
 		this.direction=direction;
 	}
 	
-	/**
-	 * Modification de l'aperture d'ouverture du cone
-	 * @param Aperture
-	 */
-	public void setAperture(double Aperture){
-		this.aperture=aperture;
-	}
 	
 	/**
 	 * Modification de la puissance du cone

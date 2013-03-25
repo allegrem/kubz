@@ -11,9 +11,9 @@ import map.Map;
 public class Disco {
 	private int size;
 	private Map map;
-	private int nombre=5;
+	private int nombre=18;
 	private ArrayList<Tuile> tuiles=new ArrayList<Tuile>();
-	private long pause=100;
+	private long pause=10;
 	private long startingTime=0;
 	private GLDisplay display;
 

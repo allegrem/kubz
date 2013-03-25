@@ -1,5 +1,10 @@
 package monster.move;
 
+/**
+ * 
+ * @author Felix
+ */
+
 import monster.zoo.Monster;
 
 public class RandomMove extends MoveType{

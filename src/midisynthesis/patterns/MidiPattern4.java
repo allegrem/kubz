@@ -16,6 +16,7 @@ public class MidiPattern4 extends MidiPattern {
 	public MidiPattern4(){
 		super();
 	}
+	
 	@Override
 	protected void buildPattern() {
 		pattern.add(new DelayedMidiCommand(new MidiCommand(MidiCommand.NOTE_ON, 0, 100), 1f));

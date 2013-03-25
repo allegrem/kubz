@@ -1,19 +1,25 @@
 package monster;
 
-import synthesis.filters.BandsFilter;
+/**
+ * 
+ * @author Felix
+ */
 
+import midisynthesis.Melody;
 public class DefenceType {
-	protected BandsFilter shield;
+	protected Melody melody;
 	
 	public DefenceType(){
-		this.shield = new BandsFilter(11);
-		shield.random();
+		this.melody = new Melody();
+		
 	}
 
-	public BandsFilter getShield() {
-		return shield;
+	public Melody getMelody() {
+		return melody;
 	}
-	public void setShield(BandsFilter shield) {
-		this.shield = shield;
+
+	public void setMelody(Melody melody) {
+		this.melody = melody;
 	}
+
 }

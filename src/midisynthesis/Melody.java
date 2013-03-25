@@ -35,7 +35,7 @@ public class Melody extends Thread {
 
 	private boolean keepPlaying = true; // can be true and false only once
 
-	private boolean pause = false; // can switch as many times as needed
+	private boolean pause = true; // can switch as many times as needed
 
 	public Melody() {
 		// default parameters
