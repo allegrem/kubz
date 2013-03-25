@@ -13,7 +13,7 @@ public class Get extends Thread{
 	
 	@Override
 	public void run(){
-		while(true){
+		while(!isInterrupted()){
 			if(fenetre.getCube().getTap()){
 				taped=true;
 				startingTime=System.currentTimeMillis()	;
