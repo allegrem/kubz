@@ -6,10 +6,10 @@ import cl.eye.GrabberShow;
 public class CalibrageMoins {
 	
 	public static void main(String[] args) {
-		Traitement traitement = new Traitement(640,480);
 		GrabberShow gs = new GrabberShow();
         Thread th = new Thread(gs);
         th.start();
+		Traitement traitement = new Traitement((gs.Right-gs.Left-1),(gs.Bottom-gs.Top-1));
         try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
