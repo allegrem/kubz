@@ -2,11 +2,6 @@ package midisynthesis.instruments;
 
 import midisynthesis.audioblocks.*;
 
-
-
-
-
-
 public class WindInstrument extends Instrument {
 	
 	public WindInstrument(){

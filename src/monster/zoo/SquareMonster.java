@@ -11,6 +11,7 @@ import monster.attack.ChooseDistance;
 import monster.attack.FixedFrenquenceAttack;
 import monster.move.RegularMove;
 import org.lwjgl.util.ReadableColor;
+
 import utilities.Point;
 import views.informationViews.LifeView;
 import views.monsters.SquareMonsterView;

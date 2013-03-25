@@ -7,6 +7,8 @@ package gameEngine;
  */
 
 import java.util.ArrayList;
+
+import main.Starting2;
 import map.Map;
 import map.MapReader;
 import monster.zoo.Monster;
@@ -73,6 +75,7 @@ public class GameEngine extends Thread {
 		map.setLength(height);
 		display.setLightPlace(0.0f, (float) height / 2, 0.0f);
 		map.add(new BackgroundView(width, height, 5000));
+		//map.add(new Starting2());
 		try {
 			monsterList = reader.readMonsters();
 			// bases=reader.readBases();

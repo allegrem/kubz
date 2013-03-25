@@ -28,7 +28,7 @@ public class Xylophone extends Instrument{
 		SineOscillator osc1 = new SineOscillator(new Adder(f0,epsilon),env);
 		SineOscillator osc2 = new SineOscillator(new Adder(new Constant(4*400f),epsilon), env);
 		
-		//OK it's ugly but a far as it works,it doesn't matter XD
+		//OK it's ugly but as far as it works,it doesn't matter XD
 		Adder adder = new Adder(osc1,osc2);
 		Adder adder2 = new Adder(adder,f0);
 		Adder adder3 = new Adder(adder2,new Adder(detune,f0));
