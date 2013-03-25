@@ -22,8 +22,11 @@ public class Main {
 //	    xbee.setCubeManager(cubeManager); // Add the cube manager in the XBee    
 //	    xbee.start(); // Start the XBee thread
 		GameEngine gameEngine=new GameEngine(/*cubeManager*/);
+		//Starting2 starting = new Starting2();
 		GLDisplay display=gameEngine.getDisplay();
+		
 		gameEngine.start();
+		
 		while(display.isAlive()){
 			try {
 				Thread.sleep(1000);

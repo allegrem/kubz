@@ -25,7 +25,7 @@ public class Textures {
 		ksol1=null;
 		try {
 
-			ksol1 = TextureLoader.getTexture("PNG",ResourceLoader.getResourceAsStream("Textures/ksol1.png"));
+			ksol1 = TextureLoader.getTexture("PNG",ResourceLoader.getResourceAsStream("Textures/ksol2.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
