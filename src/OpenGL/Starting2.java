@@ -1,4 +1,4 @@
-package main;
+package OpenGL;
 
 
 
@@ -32,9 +32,7 @@ public class Starting2 {
 		initGL();
 		
 		
-		while (do_run){
-			if (Display.isCloseRequested())
-				do_run = false;			
+		while (do_run){			
 			clear();
 			renderKubz();
 			renderCube();
@@ -47,6 +45,11 @@ public class Starting2 {
 	}
 	
 	
+	public void close() {
+	do_run=false;
+	}
+
+
 	private void clear(){
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 	}
@@ -227,4 +230,6 @@ public class Starting2 {
 	public static void main(String[] args) {
 		new Starting2();
 	}
+
+
 }

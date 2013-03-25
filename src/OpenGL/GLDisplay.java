@@ -131,6 +131,7 @@ public class GLDisplay extends Thread{
 	private int shaderProgram;
 	private int vertexShader;		
 	private int fragmentShader;
+	private boolean starting=true;
 
 	
 	/**
@@ -237,7 +238,9 @@ public class GLDisplay extends Thread{
 	 */
 	@Override
 	public void run(){
+	
 		initialize();
+		loadShaders();
 		mapDisplay_height=(int)(display_height);
 		mapDisplay_width=display_height;
 		lightDx=(float)(display_width/2.0);
@@ -247,9 +250,7 @@ public class GLDisplay extends Thread{
 		setCameraDirection();
 		//texte=new Text();
 		initialized=true;
-		loadShaders();
 		while(do_run){
-			
 		if (Display.isCloseRequested()||KeyboardManager.quit)
 				do_run = false; // On arrete le programme
 		clear(); //On nettoie la fenetre
@@ -267,7 +268,6 @@ public class GLDisplay extends Thread{
 				resetLight();
 			}
 		}
-		
 		mainRender(); //On actualise la fenetre avec le nouveau rendu
 		glPrint();
 		update(); //On actualise la fenetre avec le nouveau rendu
@@ -343,6 +343,9 @@ public class GLDisplay extends Thread{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_N)){
+			starting=false;
 		}
 		
 	}
