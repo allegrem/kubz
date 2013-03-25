@@ -25,7 +25,7 @@ public class CalibrageMoins {
 			traitement.flouMedian();
 			traitement.seuil();
 			traitement.updateConnexe();
-			if(traitement.getNcomp()>2) moins++;
+			if(traitement.getNcomp()<2) moins++;
 			System.out.println("pourcentage où moins " + 100*moins/iter);
 		}
 	}

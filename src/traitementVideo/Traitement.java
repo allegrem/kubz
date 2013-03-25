@@ -23,8 +23,8 @@ public class Traitement {
 	private int HEIGHT = 480;
 	private int rayonConnexe = 6;
 	private int distance = 7;
-	private int taille = 13; // 30 (deux medians un moyen)
-	private int seuil = 13; // 17 (deux medians un moyen)
+	private int taille = 5; // 30 (deux medians un moyen)
+	private int seuil = 11; // 17 (deux medians un moyen)
 	private byte[][] tabSeuil; //sisi Tardieu représente (a la volee)
 	private byte[] buffscreen = new byte[HEIGHT*LENGTH];
 	private int nseuils = 0; // nombre de pixels au dessus du seuil, utile pour

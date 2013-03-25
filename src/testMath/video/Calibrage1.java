@@ -24,14 +24,14 @@ public class Calibrage1 {
 		while (true) {
 			traitement.setTraitScreen(gs.getcameraScreen());
 			traitement.setBuffScreen(gs.getBytescreen());
-//			traitement.printMax();
+			traitement.printMax();
 			traitement.flouMedian();
 			traitement.flouMedian();
 //			traitement.setSeuil();
 			traitement.seuil();
 			traitement.updateConnexe();
 			System.out.println("taches: " + traitement.getNcomp());
-//			System.out.println("pixels: " + traitement.getNseuils());
+			System.out.println("pixels: " + traitement.getNseuils());
 		}
 	}
 
