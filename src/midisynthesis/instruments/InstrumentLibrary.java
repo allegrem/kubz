@@ -13,6 +13,7 @@ public class InstrumentLibrary {
     	instruments.add(Xylophone.class);
     	instruments.add(GhostSinus.class);
     	instruments.add(WaterPan.class);
+    	instruments.add(SpaceGun.class);
     }
 	
 	public static Instrument getNextInstrument(Instrument i) throws InstantiationException, IllegalAccessException {
