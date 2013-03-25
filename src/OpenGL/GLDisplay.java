@@ -300,19 +300,19 @@ public class GLDisplay extends Thread{
 			decalageX--;
 			updateParams();
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD8)){
+		if (Keyboard.isKeyDown(Keyboard.KEY_T)){
 			multY+=0.01;
 			updateParams();
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD2)){
+		if (Keyboard.isKeyDown(Keyboard.KEY_V)){
 			multY-=0.01;
 			updateParams();
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD6)){
+		if (Keyboard.isKeyDown(Keyboard.KEY_H)){
 			multX+=0.01;
 			updateParams();
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD4)){
+		if (Keyboard.isKeyDown(Keyboard.KEY_F)){
 			multX-=0.01;
 			updateParams();
 		}
