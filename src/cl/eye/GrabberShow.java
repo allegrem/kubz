@@ -35,6 +35,10 @@ public class GrabberShow implements Runnable {
 	private PImage myImage = null;
 	public static final int CAMERA_WIDTH = 640;
 	public static final int CAMERA_HEIGHT = 480;
+	public final int Left = 60;
+	public final int Right = 380;
+	public final int Top = 80;
+	public final int Bottom = 380;
 	private int frameRate = 30; // fps maximum pour cette resolution
 	private ImagePanel imagePanel;
 	private VirtualPixel[][] cameraScreen = new VirtualPixel[CAMERA_WIDTH][CAMERA_HEIGHT];
@@ -78,9 +82,11 @@ public class GrabberShow implements Runnable {
 			// double cupos = 0;
 			for (int i = 0; i < myImage.pixels.length; i++) {
 				// ici on met le tableau de pixel à jour
-				cameraScreen[comptX][comptY]
-						.setIntensite((byte) (myImage.pixels[i] & 0xFF));
-				bytescreen[i]=(byte) (myImage.pixels[i] & 0xFF);
+				if((comptX>Left)&&(comptX<Right)&&(comptY<Bottom)&&(comptY>Top){
+					cameraScreen[comptX][comptY]
+							.setIntensite((byte) (myImage.pixels[i] & 0xFF));
+					bytescreen[i]=(byte) (myImage.pixels[i] & 0xFF);
+			}
 				comptX++; // on parcourt l'image en largeur
 				if (comptX == CAMERA_WIDTH) // on descend d'une ligne
 				{
