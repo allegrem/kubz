@@ -4,7 +4,8 @@ public class Get extends Thread{
 	private Fenetre fenetre;
 	private boolean taped=false;
 	private long startingTime;
-	private long pause =100;
+	private long pause =500;
+	private boolean tap=false;
 	
 	
 	public Get(Fenetre fenetre){
@@ -14,10 +15,11 @@ public class Get extends Thread{
 	@Override
 	public void run(){
 		while(true){
-			if(fenetre.getCube().getTap()){
+			tap=fenetre.getCube().getTap();
+			if(tap){
 				taped=true;
 				startingTime=System.currentTimeMillis()	;
-			}else if(!fenetre.getCube().getTap()&& System.currentTimeMillis()-startingTime>pause ){
+			}else if(!tap&& System.currentTimeMillis()-startingTime>pause ){
 				taped=false;
 			}
 			
@@ -25,7 +27,7 @@ public class Get extends Thread{
 		if(taped){
 			fenetre.setLabel2("Tap !");	
 		}else{
-			fenetre.setLabel2("..........");	
+			fenetre.setLabel2("     ..........");	
 		}
 		
 		fenetre.setLabel1("Angle= "+ fenetre.getCube().getAngle());
