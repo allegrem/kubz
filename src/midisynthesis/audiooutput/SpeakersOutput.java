@@ -27,7 +27,7 @@ public class SpeakersOutput implements AudioOutput {
 	public void open() throws IOException {
         try {
 			line = AudioSystem.getSourceDataLine(AudioOutput.audioFormat);
-			//line.open(AudioOutput.audioFormat);
+			line.open(AudioOutput.audioFormat);
 		} catch (LineUnavailableException e) {
 			line = null;
 			throw new IOException("Unable to open a line to speakers output.");

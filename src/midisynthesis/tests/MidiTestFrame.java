@@ -12,7 +12,7 @@ import javax.swing.KeyStroke;
 
 import midisynthesis.Melody;
 import midisynthesis.instruments.InstrumentLibrary;
-import midisynthesis.patterns.MidiPatternsLibaray;
+import midisynthesis.patterns.MidiPatternsLibrary;
 
 
 public class MidiTestFrame extends JFrame {
@@ -87,7 +87,7 @@ public class MidiTestFrame extends JFrame {
 					break;
 				case 't':
 					try {
-						melody.setPattern(MidiPatternsLibaray
+						melody.setPattern(MidiPatternsLibrary
 								.getNextPattern(melody.getPattern()));
 					} catch (InstantiationException | IllegalAccessException e1) {
 						e1.printStackTrace();
@@ -97,7 +97,7 @@ public class MidiTestFrame extends JFrame {
 					break;
 				case 'g':
 					try {
-						melody.setPattern(MidiPatternsLibaray
+						melody.setPattern(MidiPatternsLibrary
 								.getPreviousPattern(melody.getPattern()));
 					} catch (InstantiationException | IllegalAccessException e1) {
 						e1.printStackTrace();

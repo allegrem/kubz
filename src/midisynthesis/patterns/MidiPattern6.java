@@ -1,7 +1,5 @@
 package midisynthesis.patterns;
 
-import java.util.ArrayList;
-
 import midisynthesis.midicommand.DelayedMidiCommand;
 import midisynthesis.midicommand.MidiCommand;
 
@@ -17,8 +15,6 @@ public class MidiPattern6 extends MidiPattern {
 	
 	public MidiPattern6() {
 		super();
-		pattern = new ArrayList<DelayedMidiCommand>();
-		buildPattern();			
 	}
 	
 	@Override

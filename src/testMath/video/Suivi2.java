@@ -4,7 +4,7 @@ import traitementVideo.Traitement;
 import traitementVideo.VideoCube;
 import cl.eye.GrabberShow;
 
-public class Suivi1 {
+public class Suivi2 {
 	
 	public static void main(String[] args) {
 		Traitement traitement = new Traitement(640,480);

@@ -51,7 +51,7 @@ public class BellInstrument extends FmInstrumentNParams {
 
 	//only one parameter :s
 //	public static FmInstruments3Params getFmInstruments3Params() {
-//		BellInstrument instrument = new BellInstrument();
+//		Bell instrument = new Bell();
 //		return new FmInstruments3Params(instrument, rot1, rot2, distance)
 //	}
 }

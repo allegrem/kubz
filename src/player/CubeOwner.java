@@ -10,9 +10,11 @@ import traitementVideo.VideoCube;
 public class CubeOwner {
 	protected Cube cube;
 	protected VideoCube vCube;
+	protected final int id;
 
-	public CubeOwner() {
+	public CubeOwner(int id) {
 		// TODO Auto-generated constructor stub
+		this.id = id;
 	}
 
 	/**
@@ -30,5 +32,17 @@ public class CubeOwner {
 	public VideoCube getVCube(){
 		return vCube;
 	}
+
+	/**
+	 * Permet de récupérer l'id du cube (c'est clairement pas optimisé, mais c'est un rush)
+	 * @return
+	 */
+	public int getId() {
+		return id;
+	}
+	
+	
+	
+	
 
 }

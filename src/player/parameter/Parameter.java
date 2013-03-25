@@ -24,7 +24,8 @@ public class Parameter extends CubeOwner{
 	private CubeControlledView view;
 
 	
-	public Parameter(Player owner){
+	public Parameter(Player owner, int id){
+		super(id);
 		this.state = new WaitingPState();
 		this.setOwner(owner);
 		gameEngine=owner.getGameEngine();

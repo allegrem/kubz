@@ -16,15 +16,15 @@ public class Traitement {
 	 * employée ici est une structure Union-Find basique (tourne en O(n*ln(n))
 	 * ou n nombre de pixels)
 	 */
-	private int fps;
+	private int fps = 6;
 	private ArrayList<ArrayList<VirtualPixel>> groupesConnexes;
 	ArrayList<Point> groupesConnexesPos = new ArrayList<Point>();
 	private int LENGTH = 640;
 	private int HEIGHT = 480;
-	private int rayonConnexe = 3; 
-	private int distance = 5;
-	private int taille = 15; // 30 (deux medians un moyen)
-	private int seuil = 9; // 17 (deux medians un moyen)
+	private int rayonConnexe = 5;
+	private int distance = 7;
+	private int taille = 11; // 30 (deux medians un moyen)
+	private int seuil = 11; // 17 (deux medians un moyen)
 	private int nseuils = 0; // nombre de pixels au dessus du seuil, utile pour
 								// debug et reglage des seuils
 	private int ncomp = 0; // nombre de composantes connexes, utile pour debug
@@ -318,23 +318,25 @@ public class Traitement {
 		// taches secondaires des diodes sont consideree comme distinctes (pas
 		// la même composante, meme si c'est le meme centre)
 		boolean[] removed = new boolean[groupesConnexes.size()];
-		for(int i=0;i<removed.length; i++) removed[i] = false;
+		for (int i = 0; i < removed.length; i++)
+			removed[i] = false;
 		ArrayList<Point> remove = new ArrayList<Point>();
-		for(int i=0;i<removed.length; i++){
-			if(!removed[i]){
+		for (int i = 0; i < removed.length; i++) {
+			if (!removed[i]) {
 				Point point = groupesConnexesPos.get(i);
-				for(int j=0;j<removed.length; j++){
-					if((!removed[j])&&(i!=j)&&(groupesConnexesPos.get(j).distanceTo(point)<rayonConnexe)){
+				for (int j = 0; j < removed.length; j++) {
+					if ((!removed[j])
+							&& (i != j)
+							&& (groupesConnexesPos.get(j).distanceTo(point) <= rayonConnexe)) {
 						remove.add(groupesConnexesPos.get(j));
-						removed[j]=true;
-					}						
+						removed[j] = true;
+					}
 				}
 			}
 		}
-		for(Point point: remove)
+		for (Point point : remove)
 			groupesConnexesPos.remove(point);
 		groupesConnexesPos.trimToSize();
-
 
 		ncomp = groupesConnexesPos.size() - 1;
 	}
@@ -395,10 +397,10 @@ public class Traitement {
 	 * @param vc
 	 */
 	public void localSearch(VideoCube vc) {
-		int expectedX1 = (int) (vc.getPos1().getX() + vc.getX1Speed());
-		int expectedX2 = (int) (vc.getPos2().getX() + vc.getX2Speed());
-		int expectedY1 = (int) (vc.getPos1().getY() + vc.getY1Speed());
-		int expectedY2 = (int) (vc.getPos2().getY() + vc.getY2Speed());
+		int expectedX1 = (int) (vc.getPos1().getX() + vc.getX1Speed() * fps);
+		int expectedX2 = (int) (vc.getPos2().getX() + vc.getX2Speed() * fps);
+		int expectedY1 = (int) (vc.getPos1().getY() + vc.getY1Speed() * fps);
+		int expectedY2 = (int) (vc.getPos2().getY() + vc.getY2Speed() * fps);
 
 		/*
 		 * Ici on établie les pixels à distance distance de la position attendue
@@ -408,7 +410,7 @@ public class Traitement {
 		 * tache lumineuse on appelle le GameEngine
 		 */
 		ArrayList<ArrayList<VirtualPixel>> pos1Lists = parcoursSpirale(
-				expectedX1, expectedY1, distance);
+				(int) vc.getPos1().getX(), (int) vc.getPos1().getY(), distance);
 		boolean found1 = false;
 		for (ArrayList<VirtualPixel> list : pos1Lists) {
 			for (VirtualPixel vp : list) {
@@ -425,7 +427,7 @@ public class Traitement {
 			System.out.println("cube perdu");
 
 		ArrayList<ArrayList<VirtualPixel>> pos2Lists = parcoursSpirale(
-				expectedX2, expectedY2, distance);
+				(int) vc.getPos2().getX(), (int) vc.getPos2().getY(), distance);
 		boolean found2 = false;
 		for (ArrayList<VirtualPixel> list : pos2Lists) {
 			for (VirtualPixel vp : list) {
@@ -440,6 +442,11 @@ public class Traitement {
 		}
 		if (!found2) /* gameEngine.setFrozen(null) */
 			System.out.println("cube perdu");
+		if (found1 && found2){
+//			System.out.println("Je te vois");
+			vc.updateMeanPos();
+			System.out.println("x : " + vc.getMeanPos().getX()+ ", y : "+ vc.getMeanPos().getY());
+		}
 	}
 
 	/**

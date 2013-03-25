@@ -38,10 +38,14 @@ public class Unit extends CubeOwner {
 	private Monster target;
 	private Monster previousTarget;
 
-	public Unit(Player owner) {
+
+
+
+	public Unit(Player owner2, int unitid) {
+		super(unitid);
 		life = 15;
 		this.state = new WaitingUState();
-		this.owner = owner;
+		this.owner = owner2;
 		gameEngine = owner.getGameEngine();
 		view = new CubeControlledView(pos);
 		lifeView = new LifeView(view);
@@ -52,8 +56,8 @@ public class Unit extends CubeOwner {
 		defenceMelody = new Melody();
 		seenMonsters = new ArrayList<Monster>();
 		target = null;
-
 	}
+
 
 	/**
 	 * Renvoie le Player auquel est lie cet Unit

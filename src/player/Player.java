@@ -43,6 +43,7 @@ public class Player {
 	private final int param1id;
 	private final int param2id;
 	private final double factor = 4;
+	private int comptVideo = 0;
 
 	private final int power = 180;
 
@@ -58,11 +59,14 @@ public class Player {
 
 		this.gameEngine = gameEngine;
 		this.base = base;
+		this.unitid = unitid;
+		this.param1id = param1id;
+		this.param2id = param2id;
 		unitList = new ArrayList<Unit>();
-		unitList.add(new Unit(this));
+		unitList.add(new Unit(this, unitid));
 		this.parameters = new Parameter[2];
-		parameters[0] = new Parameter(this);
-		parameters[1] = new Parameter(this);
+		parameters[0] = new Parameter(this, param1id);
+		parameters[1] = new Parameter(this, param2id);
 		
 		if (base.getSens()==BaseView.BAS){
 			parameters[0].setLocation(
@@ -107,9 +111,6 @@ public class Player {
 		compteurInstr = 0;
 		lastAngle1 = (int) parameters[0].getAngle();
 		lastAngle2 = (int) parameters[1].getAngle();
-		this.param1id = param1id;
-		this.param2id = param2id;
-		this.unitid = unitid;
 //		gameEngine.getCubeManager().getCube(unitid)
 //				.setRGB(0, 0, 255, (short) 10);
 //		gameEngine.getCubeManager().getCube(param1id)
@@ -332,6 +333,10 @@ public class Player {
 		while (!KeyboardManager.tap) {
 //			unit.setDirection(-gameEngine.getCubeManager().getCube(unitid)
 //					.getAngle() / factor);
+//			if(comptVideo >15){
+//				comptVideo = 0;
+//				gameEngine.updateImage();
+//			}
 			i = 0;
 			j = 0;
 			if ((KeyboardManager.zKey) && (unit.getY() - size > 0))
@@ -350,7 +355,6 @@ public class Player {
 						&& obj.isInZone(new Point(view.getX() + i * viewSize,
 								view.getY() + j * viewSize))) {
 					collision = true;
-					//System.out.println(obj);
 				}
 
 			}
@@ -366,6 +370,7 @@ public class Player {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			comptVideo++;
 		}
 		unit.updtaeSeenMonsters();
 		KeyboardManager.tap = false;
@@ -444,6 +449,10 @@ public class Player {
 	//					.getAngle() / factor));
 	//			parameters[1].setAngle((int)(-gameEngine.getCubeManager().getCube(param2id)
 	//					.getAngle() / factor));
+//				if(comptVideo >15){
+	//				comptVideo = 0;
+	//				gameEngine.updateImage();
+//			}
 				if ((KeyboardManager.zKey)
 						&& (base.getCenter().distanceTo(
 								new Point(parameters[choice].getX(),
@@ -540,6 +549,7 @@ public class Player {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				comptVideo++;
 	
 			}
 	
