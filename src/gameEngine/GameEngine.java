@@ -41,19 +41,19 @@ public class GameEngine extends Thread {
 	private Map map;
 	private MapReader reader = new MapReader("Maps/bFile.txt",
 			"Maps/mFile.txt", "Maps/WFile.txt", this);
-	private Traitement traitement;
+	private final Traitement traitement;
 	private CubeManager cubeManager;
 	private ArrayList<VideoCube> cubeList = new ArrayList<VideoCube>();
-	private final GrabberShow gs;
+//	private final GrabberShow gs;
 
 	public GameEngine(/*CubeManager cubeManager*/) {
 		RandomPerso.initialize();
 //		this.cubeManager = cubeManager;
-		Traitement traitement = new Traitement(640,480);
-		traitement.updateConnexe();
-		gs = new GrabberShow();
-        Thread th = new Thread(gs);
-        th.start();
+		traitement = new Traitement(640,480);
+//		traitement.updateConnexe();
+//		gs = new GrabberShow();
+//        Thread th = new Thread(gs);
+//        th.start();
 		display = new GLDisplay(this);
 		map = new Map();
 		display.setMap(map);
@@ -307,7 +307,7 @@ public class GameEngine extends Thread {
 	}
 	
 	public final void updateImage(){
-		traitement.setTraitScreen(gs.getcameraScreen());
+//		traitement.setTraitScreen(gs.getcameraScreen());
 		traitement.flouMedian();
 		traitement.flouMedian();
 		traitement.seuil();

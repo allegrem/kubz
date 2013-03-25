@@ -14,11 +14,11 @@ public class RandomDefence extends DefenceType{
 	public RandomDefence() {
 		super();
 		//generation aleatoire d'une melody
-		int tune = (int) Math.random();
-		int parameter = (int) Math.random();
-		int tempo = (int) Math.random();
-		int pattern = (int) Math.random();
-		int instrum = (int) Math.random();
+		int tune = (int) (40 +60*Math.random());
+		int parameter = (int) (127*Math.random());
+		int tempo = (int) (40 +120*Math.random());
+		int pattern = (int) (10*Math.random());
+		int instrum = (int) (12*Math.random());
 		melody.setTune(tune);
 		melody.setTempo(tempo);
 		melody.setParameter(parameter);

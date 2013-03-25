@@ -59,11 +59,14 @@ public class Player {
 
 		this.gameEngine = gameEngine;
 		this.base = base;
+		this.unitid = unitid;
+		this.param1id = param1id;
+		this.param2id = param2id;
 		unitList = new ArrayList<Unit>();
-		unitList.add(new Unit(this));
+		unitList.add(new Unit(this, unitid));
 		this.parameters = new Parameter[2];
-		parameters[0] = new Parameter(this);
-		parameters[1] = new Parameter(this);
+		parameters[0] = new Parameter(this, param1id);
+		parameters[1] = new Parameter(this, param2id);
 		
 		if (base.getSens()==BaseView.BAS){
 			parameters[0].setLocation(
@@ -108,9 +111,6 @@ public class Player {
 		compteurInstr = 0;
 		lastAngle1 = (int) parameters[0].getAngle();
 		lastAngle2 = (int) parameters[1].getAngle();
-		this.param1id = param1id;
-		this.param2id = param2id;
-		this.unitid = unitid;
 //		gameEngine.getCubeManager().getCube(unitid)
 //				.setRGB(0, 0, 255, (short) 10);
 //		gameEngine.getCubeManager().getCube(param1id)
@@ -355,7 +355,6 @@ public class Player {
 						&& obj.isInZone(new Point(view.getX() + i * viewSize,
 								view.getY() + j * viewSize))) {
 					collision = true;
-					//System.out.println(obj);
 				}
 
 			}
