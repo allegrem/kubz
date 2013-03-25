@@ -24,8 +24,11 @@ public class Calibrage1 {
 		// boucle d'update
 		while (true) {
 			traitement.setTraitScreen(gs.getcameraScreen());
+			traitement.setBuffScreen(gs.getBytescreen());
+//			traitement.printMax();
 			traitement.flouMedian();
 			traitement.flouMedian();
+//			traitement.setSeuil();
 			traitement.seuil();
 			traitement.updateConnexe();
 			System.out.println("taches: " + traitement.getNcomp());

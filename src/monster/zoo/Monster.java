@@ -224,7 +224,7 @@ public class Monster {
 	public void act() {
 		setCible();
 		move();
-		attack.attack(cible);
+		attack.attack();
 		try {
 			Thread.sleep(6000);
 		} catch (InterruptedException e) {

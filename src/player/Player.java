@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import midisynthesis.Melody;
 import midisynthesis.instruments.InstrumentLibrary;
-import midisynthesis.patterns.MidiPatternsLibaray;
+import midisynthesis.patterns.MidiPatternsLibrary;
 import monster.zoo.*;
 import base.Base;
 import gameEngine.GameEngine;
@@ -518,7 +518,7 @@ public class Player {
 				if (iterPattern > 0)
 					for (int i = 0; i < iterPattern; i++) {
 						try {
-							melody.setPattern(MidiPatternsLibaray
+							melody.setPattern(MidiPatternsLibrary
 									.getNextPattern(melody.getPattern()));
 						} catch (InstantiationException | IllegalAccessException e1) {
 							e1.printStackTrace();
@@ -528,7 +528,7 @@ public class Player {
 				if (iterPattern < 0)
 					for (int i = 0; i < -iterPattern; i++) {
 						try {
-							melody.setPattern(MidiPatternsLibaray
+							melody.setPattern(MidiPatternsLibrary
 									.getPreviousPattern(melody.getPattern()));
 						} catch (InstantiationException | IllegalAccessException e1) {
 							e1.printStackTrace();

@@ -7,7 +7,7 @@ package monster.attack;
 
 import player.unit.Unit;
 import midisynthesis.instruments.InstrumentLibrary;
-import midisynthesis.patterns.MidiPatternsLibaray;
+import midisynthesis.patterns.MidiPatternsLibrary;
 import monster.zoo.Monster;
 
 /**

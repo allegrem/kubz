@@ -39,6 +39,7 @@ public class GrabberShow implements Runnable {
 	private ImagePanel imagePanel;
 	private VirtualPixel[][] cameraScreen = new VirtualPixel[CAMERA_WIDTH][CAMERA_HEIGHT];
 	private byte[][] screen = new byte[CAMERA_HEIGHT][CAMERA_WIDTH];
+	private byte[] bytescreen = new byte[CAMERA_HEIGHT * CAMERA_WIDTH];
 
 	/**
 	 * permet d'avoir un interface controlé
@@ -79,6 +80,7 @@ public class GrabberShow implements Runnable {
 				// ici on met le tableau de pixel à jour
 				cameraScreen[comptX][comptY]
 						.setIntensite((byte) (myImage.pixels[i] & 0xFF));
+				bytescreen[i]=(byte) (myImage.pixels[i] & 0xFF);
 				comptX++; // on parcourt l'image en largeur
 				if (comptX == CAMERA_WIDTH) // on descend d'une ligne
 				{
@@ -185,5 +187,11 @@ public class GrabberShow implements Runnable {
 		}
 		return screen;
 	}
+
+	public byte[] getBytescreen() {
+		return bytescreen;
+	}
+	
+	
 
 }
