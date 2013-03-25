@@ -61,6 +61,7 @@ public abstract class Instrument extends Thread {
 	 * all the subinstruments.
 	 */
 	public void command(MidiCommand command) {
+		System.out.println(command);
 		switch (command.getCommand()) {
 		case MidiCommand.NOTE_ON:
 			incrLastSubInstrumentIndex();
