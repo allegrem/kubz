@@ -21,7 +21,6 @@ public class Calibrage3 {
 			traitement.setTraitScreen(gs.getcameraScreen());
 			traitement.flouMedian();
 			traitement.flouMedian();
-//			traitement.flouGaussien();
 			traitement.seuil();
 			traitement.updateConnexe();
 			size =  traitement.getNcomp() + 1;

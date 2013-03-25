@@ -30,8 +30,8 @@ public class Calibrage2 {
 			traitement.flouMedian();
 			traitement.seuil();
 			traitement.updateConnexe();
-			if(traitement.getNcomp()==4) good++;
-			System.out.println(good/iter);
+			if(traitement.getNcomp()==2) good++;
+			System.out.println("pourcentage de réussite " + 100*good/iter);
 		}
 
 	}

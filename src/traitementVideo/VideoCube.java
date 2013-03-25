@@ -46,6 +46,7 @@ public class VideoCube {
 		pos = new  ArrayList<Point>();
 		pos.add(this.pos1);
 		pos.add(this.pos2);		
+		meanPos = new Point((x1+x2)/2, (y1+y2)/2);
 	}
 	
 	public Point getPos1() {

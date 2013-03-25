@@ -11,10 +11,13 @@ import map.Map;
 import map.MapReader;
 import monster.zoo.Monster;
 import org.lwjgl.util.ReadableColor;
+
+import cl.eye.GrabberShow;
 import player.CubeOwner;
 import player.Player;
 import player.unit.Unit;
 import traitementVideo.Traitement;
+import traitementVideo.VideoCube;
 import utilities.Point;
 import utilities.RandomPerso;
 import views.staticViews.BackgroundView;
@@ -40,10 +43,17 @@ public class GameEngine extends Thread {
 			"Maps/mFile.txt", "Maps/WFile.txt", this);
 	private Traitement traitement;
 	private CubeManager cubeManager;
+	private ArrayList<VideoCube> cubeList = new ArrayList<VideoCube>();
+	private final GrabberShow gs;
 
 	public GameEngine(/*CubeManager cubeManager*/) {
 		RandomPerso.initialize();
 //		this.cubeManager = cubeManager;
+		Traitement traitement = new Traitement(640,480);
+		traitement.updateConnexe();
+		gs = new GrabberShow();
+        Thread th = new Thread(gs);
+        th.start();
 		display = new GLDisplay(this);
 		map = new Map();
 		display.setMap(map);
@@ -284,17 +294,32 @@ public class GameEngine extends Thread {
 		
 	}
 	
-	public ArrayList<Wall> getWalls(){
+	public final ArrayList<Wall> getWalls(){
 		return walls;
 	}
 
-	public CubeManager getCubeManager() {
+	public final CubeManager getCubeManager() {
 		return cubeManager;
 	}
 
-	public void setCubeManager(CubeManager cubeManager) {
+	public final void setCubeManager(CubeManager cubeManager) {
 		this.cubeManager = cubeManager;
 	}
 	
+	public final void updateImage(){
+		traitement.setTraitScreen(gs.getcameraScreen());
+		traitement.flouMedian();
+		traitement.flouMedian();
+		traitement.seuil();
+		traitement.updateConnexe();
+		for (VideoCube vc : cubeList){
+			traitement.localSearch(vc);
+		}
+	}
+
+	public Traitement getTraitement() {
+		return traitement;
+	}
+
 	
 }

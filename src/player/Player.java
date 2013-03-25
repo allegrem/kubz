@@ -43,6 +43,7 @@ public class Player {
 	private final int param1id;
 	private final int param2id;
 	private final double factor = 4;
+	private int comptVideo = 0;
 
 	private final int power = 180;
 
@@ -332,6 +333,10 @@ public class Player {
 		while (!KeyboardManager.tap) {
 //			unit.setDirection(-gameEngine.getCubeManager().getCube(unitid)
 //					.getAngle() / factor);
+//			if(comptVideo >15){
+//				comptVideo = 0;
+//				gameEngine.updateImage();
+//			}
 			i = 0;
 			j = 0;
 			if ((KeyboardManager.zKey) && (unit.getY() - size > 0))
@@ -366,6 +371,7 @@ public class Player {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			comptVideo++;
 		}
 		unit.updtaeSeenMonsters();
 		KeyboardManager.tap = false;
@@ -444,6 +450,10 @@ public class Player {
 	//					.getAngle() / factor));
 	//			parameters[1].setAngle((int)(-gameEngine.getCubeManager().getCube(param2id)
 	//					.getAngle() / factor));
+//				if(comptVideo >15){
+	//				comptVideo = 0;
+	//				gameEngine.updateImage();
+//			}
 				if ((KeyboardManager.zKey)
 						&& (base.getCenter().distanceTo(
 								new Point(parameters[choice].getX(),
@@ -540,6 +550,7 @@ public class Player {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				comptVideo++;
 	
 			}
 	
