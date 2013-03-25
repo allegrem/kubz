@@ -26,6 +26,7 @@ public class Fenetre extends JFrame implements WindowListener{
 	private int V=127;
 	private Cube cube;
 	private Get get ;
+	private XBee xbee;
 
 	private JLabel label1=new JLabel("Angle= 0");
 	private JLabel label2=new JLabel("     ..........");
@@ -37,12 +38,14 @@ public class Fenetre extends JFrame implements WindowListener{
 	 */
 	public Fenetre(){
 		setTitle("Kubz manager");
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		XBee xbee = new XBee(); // Create a new XBee     
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		addWindowListener(this);
+		xbee = new XBee(); // Create a new XBee     
 	    CubeManager cubeManager = new CubeManager(xbee); // Create a new cube manager
 	    xbee.setCubeManager(cubeManager); // Add the cube manager in the XBee  
 	    xbee.start(); // Start the XBee thread
-	    cube=cubeManager.getCube(45679);
+	    cube=cubeManager.getCube(45675);
+	    cube.setIR((byte)5);
 	    get =new Get(this);
 	    get.start();
 		conteneur.setLayout(new GridLayout(1,6));// On cree un layout de type border pour le conteneur
@@ -130,13 +133,15 @@ public class Fenetre extends JFrame implements WindowListener{
 	public void windowClosed(WindowEvent arg0) {
 		// TODO Auto-generated method stub
 		get.interrupt();
-		this.dispose();		
+		this.dispose();	
+		xbee.interrupt();
 	}
 
 	@Override
 	public void windowClosing(WindowEvent arg0) {
 		get.interrupt();
 		this.dispose();
+		xbee.interrupt();
 		
 	}
 

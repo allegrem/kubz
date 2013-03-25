@@ -53,7 +53,7 @@ public class XBee extends Thread implements Runnable{
     
 	@Override
     public void run () {
-       	while(true){
+       	while(!isInterrupted()){
             readFrame();
        		parseRXFrame();
        		}

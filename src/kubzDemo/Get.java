@@ -14,7 +14,7 @@ public class Get extends Thread{
 	
 	@Override
 	public void run(){
-		while(true){
+		while(!isInterrupted()){
 			tap=fenetre.getCube().getTap();
 			if(tap){
 				taped=true;
