@@ -3,7 +3,7 @@ package midisynthesis.patterns;
 import java.util.ArrayList;
 
 
-public class MidiPatternsLibaray {
+public class MidiPatternsLibrary {
 
 	private static final ArrayList<Class<?>> patterns;    
     static {
@@ -11,6 +11,10 @@ public class MidiPatternsLibaray {
     	patterns.add(MidiPattern1.class);
     	patterns.add(MidiPattern2.class);
     	patterns.add(MidiPattern3.class);
+    	patterns.add(MidiPattern4.class);
+    	patterns.add(MidiPattern5.class);
+    	patterns.add(MidiPattern6.class);
+    	patterns.add(MidiPattern7.class);
     }
 	
 	public static MidiPattern getNextPattern(MidiPattern i) throws InstantiationException, IllegalAccessException {

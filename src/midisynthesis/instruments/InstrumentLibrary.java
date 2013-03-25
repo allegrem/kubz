@@ -11,6 +11,7 @@ public class InstrumentLibrary {
     	instruments.add(TwoOscInstrument.class);
     	instruments.add(WoodInstrument.class);
     	instruments.add(SinusInstrument.class);
+    	instruments.add(XylophoneInstrument.class);
     }
 	
 	public static Instrument getNextInstrument(Instrument i) throws InstantiationException, IllegalAccessException {
