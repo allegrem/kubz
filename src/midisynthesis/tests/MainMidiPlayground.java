@@ -1,5 +1,7 @@
 package midisynthesis.tests;
 
+import midisynthesis.Melody;
+
 
 public class MainMidiPlayground {
 
@@ -7,7 +9,8 @@ public class MainMidiPlayground {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		new MidiTestFrame();
+	new Melody();
 	}
+	
 
 }

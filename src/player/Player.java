@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import midisynthesis.Melody;
 import midisynthesis.instruments.InstrumentLibrary;
-import midisynthesis.patterns.MidiPatternsLibaray;
+import midisynthesis.patterns.*;
 import monster.zoo.*;
 import base.Base;
 import gameEngine.GameEngine;

@@ -5,6 +5,7 @@ package midisynthesis;
 
 import midisynthesis.audioblocks.EffectBlock;
 import midisynthesis.instruments.Instrument;
+import midisynthesis.instruments.WindInstrument;
 import midisynthesis.instruments.WoodInstrument;
 import midisynthesis.midicommand.DelayedMidiCommand;
 import midisynthesis.midicommand.MidiCommand;
@@ -41,7 +42,7 @@ public class Melody extends Thread {
 		// default parameters
 		tempo = 80;
 		pattern = new MidiPattern1();
-		instrument = new WoodInstrument();
+		instrument = new WindInstrument();
 		tune = 60;
 		parameter = EffectBlock.DEFAULT_VALUE;
 

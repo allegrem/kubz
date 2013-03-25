@@ -62,7 +62,6 @@ public class BackgroundView implements DisplayableFather{
 		this.length=length;
 		this.time=100;
 		startTime=System.currentTimeMillis();
-
 	}
 
 	/**
