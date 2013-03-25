@@ -9,7 +9,9 @@ public class Angle extends Thread{
 	
 	@Override
 	public void run(){
+		while(true){
 		fenetre.setLabel("Angle= "+ fenetre.getCube().getAngle());
+		}
 	}
 
 }
