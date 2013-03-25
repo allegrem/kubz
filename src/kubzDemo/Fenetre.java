@@ -32,8 +32,8 @@ public class Fenetre extends JFrame{
 	private int V=127;
 	private Cube cube;
 
-	private JLabel label=new JLabel("Angle= 0");
-
+	private JLabel label1=new JLabel("Angle= 0");
+	private JLabel label2=new JLabel("..........");
 	
 	/**
 	 * Construction de la fenetre
@@ -49,14 +49,15 @@ public class Fenetre extends JFrame{
 	    xbee.setCubeManager(cubeManager); // Add the cube manager in the XBee  
 	    xbee.start(); // Start the XBee thread
 	    cube=cubeManager.getCube(15075);
-	    Angle angle =new Angle(this);
+	    Get angle =new Get(this);
 	    angle.start();
-		conteneur.setLayout(new GridLayout(1,4));// On cree un layout de type border pour le conteneur
+		conteneur.setLayout(new GridLayout(1,5));// On cree un layout de type border pour le conteneur
 		conteneur.add(new RSlider(0, 255,this));
 		conteneur.add(new GSlider(0, 255,this));
 		conteneur.add(new BSlider(0, 255,this));
 		conteneur.add(new VSlider(0, 255,this));
-		conteneur.add(label);
+		conteneur.add(label1);
+		conteneur.add(label2);
 		send();
 
 	}
@@ -112,8 +113,12 @@ public class Fenetre extends JFrame{
 
 
 
-	public void setLabel(String string) {
-		label.setText(string);
+	public void setLabel1(String string) {
+		label1.setText(string);
+	}
+	
+	public void setLabel2(String string) {
+		label2.setText(string);
 	}
 
 
