@@ -48,8 +48,14 @@ public class Link implements DisplayableChild{
 		double angleP2=Math.atan2((parameter2.getX()-base.getCenter().getX()),parameter2.getY()-base.getCenter().getY());
 		angle1=Math.toDegrees(Math.min(angleP1,angleP2));
 		angle2=Math.toDegrees(Math.abs(angleP2-angleP1));
+		if(angle2>180){
+			angle2=360-angle2;
+			angle1=Math.toDegrees(Math.max(angleP1,angleP2));
+		}
+		if(angle2==180){
+			angle2=360;
+		}
 		radius=0.33*Math.min(parameter1.getPos().distanceTo(base.getCenter()), parameter2.getPos().distanceTo(base.getCenter()));
-		//System.out.println(parameter1.getPos().distanceTo(base.getCenter()));
 	}
 
 	@Override

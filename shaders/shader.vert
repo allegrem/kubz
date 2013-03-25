@@ -7,6 +7,7 @@ uniform float sens;
 uniform float inv;
 uniform float decalageX;
 uniform float decalageY;
+uniform float multX;
 
 
 void main() {
@@ -26,7 +27,7 @@ void main() {
     float w=vertex.w;
     float ty=y-fheight/2.0*echelleh;
     float ny=fheight*echelleh+inv*alpha*ty;
-    float dx=x-fmidle*echelle+fwidth*echelle/2.0;
+    float dx=multX*(x-fmidle*echelle+fwidth*echelle/2.0);
     float nx=fmidle*echelle-fwidth*echelle/2.0+sens*(ny)/(fheight*echelleh)*dx;
     gl_Position=vec4(nx+decalageX*echelle,y+decalageY*echelleh,z,w);
     

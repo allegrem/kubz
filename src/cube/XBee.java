@@ -48,12 +48,23 @@ public class XBee extends Thread implements Runnable{
             e.printStackTrace();  
         }
     }
+
+    int i = 0;
     
 	@Override
     public void run () {
        	while(true){
             readFrame();
        		parseRXFrame();
+
+       		if (i==50){
+       			this.manager.getCube(53192).setRGB(255, 255, 255, (short)50);
+       			this.manager.getCube(53192).setMotor((byte)255);
+       			System.out.println("Commande de Leds allumée trolololololoololol");
+       		}
+       		else if (i==130)
+       			this.manager.getCube(53192).setMotor((byte)0);
+       		i++;
        	}
 
     }
@@ -156,11 +167,17 @@ private void parse16BitFrame (){
 	int angle =buf[9]*256+buf[8];
 	if (angle > 32767)
 		angle = angle - 65536;
-	System.out.println(String.format("Angle=%d", angle));
+	System.out.println(String.format("angle = %d", angle));
 	
 	// Put the angle in the cube which has the good address.
 	manager.getCube(addr).setAngle(angle);	
-	System.out.println(String.format("Angle du cube = %d ",manager.getCube(addr).getAngle()));
+	
+	int tap = buf[10];
+	System.out.println(String.format("tap = %d", tap));
+	
+	manager.getCube(addr).setTap(tap);
+	System.out.print("valeur de tap du cube = ");
+	System.out.println(manager.getCube(addr).getTap());
 	
 	} catch (Exception e){
 		e.printStackTrace();
