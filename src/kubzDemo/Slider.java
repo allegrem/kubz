@@ -36,7 +36,7 @@ public abstract class Slider extends JPanel {
 		this.min=min;
 		this.max=max;
 		this.fenetre=fenetre;
-		value=(min+max)/2;
+		setValue((min+max)/2);
 		build();
 	}
 
@@ -49,8 +49,8 @@ public abstract class Slider extends JPanel {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				valueLabel.setText(name + "= "+String.valueOf(slider.getValue()));
-				value=slider.getValue();
-				updateValue(value);
+				setValue(slider.getValue());
+				updateValue(getValue());
 			}
 
 			
@@ -62,4 +62,14 @@ public abstract class Slider extends JPanel {
 		
 	}
 	public abstract void updateValue(int value);
+
+
+	public int getValue() {
+		return value;
+	}
+
+
+	public void setValue(int value) {
+		this.value = value;
+	}
 }

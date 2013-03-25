@@ -26,10 +26,13 @@ import cubeManager.CubeManager;
  */
 public class Fenetre extends JFrame{
 	private Container conteneur=this.getContentPane(); //On cree un objet qui pointe vers le conteneur de la fenetre (auquel on peut ajouter des JObjects)
-	private int R=0;
-	private int G=0;
-	private int B=0;
+	private int R=127;
+	private int G=127;
+	private int B=127;
+	private int V=0;
 	private Cube cube;
+
+	private JLabel label=new JLabel("Angle= 0");
 
 	
 	/**
@@ -46,11 +49,31 @@ public class Fenetre extends JFrame{
 	    xbee.setCubeManager(cubeManager); // Add the cube manager in the XBee  
 	    xbee.start(); // Start the XBee thread
 	    cube=cubeManager.getCube(address);
-		conteneur.setLayout(new GridLayout(1,3));// On cree un layout de type border pour le conteneur
+	    Angle angle =new Angle(this);
+	    angle.start();
+		conteneur.setLayout(new GridLayout(1,4));// On cree un layout de type border pour le conteneur
 		conteneur.add(new RSlider(0, 255,this));
 		conteneur.add(new GSlider(0, 255,this));
 		conteneur.add(new BSlider(0, 255,this));
+		conteneur.add(new VSlider(0, 255,this));
+		conteneur.add(label);
+		send();
 
+	}
+	
+	public void send(){
+		cube.setRGB(R,G,B,(short)1);
+		cube.setMotor((byte)V);
+	}
+
+
+	public int getV() {
+		return V;
+	}
+
+
+	public void setV(int v) {
+		V = v;
 	}
 
 
@@ -86,8 +109,14 @@ public class Fenetre extends JFrame{
 		send();
 	}
 
-	public void send(){
-		cube.setRGB(R,G,B,(short)1);
+
+
+	public void setLabel(String string) {
+		label.setText(string);
 	}
-	
+
+
+	public Cube getCube() {
+		return cube;
+	}
 }
