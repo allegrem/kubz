@@ -23,8 +23,7 @@ public class Multiplier implements MidiAudioBlock{
 	
 	@Override
 	public Float phi(Float t) {
-		// TODO Auto-generated method stub
-		return null;
+		return block1.play(t).floatValue()*block2.phi(t).floatValue();
 	}
 	
 	@Override

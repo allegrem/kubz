@@ -21,7 +21,7 @@ public class Melody extends Thread {
 	private static final int TEMPO_MAX = 160;
 
 	private static final int TUNE_MIN = 40;
-	private static final int TUNE_MAX = 100;
+	private static final int TUNE_MAX = 80;
 
 	private int tempo;
 
@@ -31,7 +31,7 @@ public class Melody extends Thread {
 
 	private int parameter;
 
-	private int tune; // move it to instrument !! ("note de depart?")
+	private int tune;
 
 	private boolean keepPlaying = true; // can be true and false only once
 
