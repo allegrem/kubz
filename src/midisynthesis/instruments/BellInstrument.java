@@ -10,7 +10,6 @@ import midisynthesis.audioblocks.SineOscillator;
 
 public class BellInstrument extends Instrument {
 	
-	//default values for the ADSR
 	public BellInstrument(){
 		super();
 	}

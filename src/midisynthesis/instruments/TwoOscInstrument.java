@@ -9,10 +9,7 @@ import midisynthesis.audioblocks.SineOscillator;
 import midisynthesis.audioblocks.VelocityBlock;
 import midisynthesis.instruments.Instrument;
 
-//Actually, once we can no more really choose fp, fm and mod separately, this class doesn't seem so useful!
 public class TwoOscInstrument extends Instrument {
-
-	// default values for mod(2),fp(2*fm) and amp(100)
 
 	public TwoOscInstrument() {
 		super();

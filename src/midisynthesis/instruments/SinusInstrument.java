@@ -6,8 +6,6 @@ import midisynthesis.audioblocks.MidiAudioBlock;
 import midisynthesis.audioblocks.NoteBlock;
 import midisynthesis.audioblocks.SineOscillator;
 
-//This is not a TwoOscFm but only the oscillator 
-
 public class SinusInstrument extends Instrument {
 
 	private ADSR amp;
