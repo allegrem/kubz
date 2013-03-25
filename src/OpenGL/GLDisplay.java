@@ -250,6 +250,7 @@ public class GLDisplay extends Thread{
 		setCameraDirection();
 		//texte=new Text();
 		initialized=true;
+		Starting2 start=new Starting2();
 		while(do_run){
 		if (Display.isCloseRequested()||KeyboardManager.quit)
 				do_run = false; // On arrete le programme
@@ -268,8 +269,12 @@ public class GLDisplay extends Thread{
 				resetLight();
 			}
 		}
+		if(starting){
+			start.paint();
+		}else {
 		mainRender(); //On actualise la fenetre avec le nouveau rendu
 		glPrint();
+		}
 		update(); //On actualise la fenetre avec le nouveau rendu
 		Display.sync(frequency); //On synchronise l'affichage sur le bon FPS
 	
