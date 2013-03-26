@@ -48,16 +48,13 @@ public class XBee extends Thread implements Runnable{
             e.printStackTrace();  
         }
     }
-
-    int i = 0;
     
 	@Override
     public void run () {
        	while(!isInterrupted()){
             readFrame();
        		parseRXFrame();
-       		}
-
+       	}
     }
 
 /* Set the cube manager created at the beginning of the game */
