@@ -54,7 +54,7 @@ public class Fenetre extends JFrame implements WindowListener{
 		conteneur.add(new BSlider(0, 255,this));
 		conteneur.add(new VSlider(0, 255,this));
 		conteneur.add(label1);
-		conteneur.add(label2);
+		//conteneur.add(label2);
 		send();
 
 	}
