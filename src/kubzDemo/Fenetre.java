@@ -44,7 +44,7 @@ public class Fenetre extends JFrame implements WindowListener{
 	    CubeManager cubeManager = new CubeManager(xbee); // Create a new cube manager
 	    xbee.setCubeManager(cubeManager); // Add the cube manager in the XBee  
 	    xbee.start(); // Start the XBee thread
-	    cube=cubeManager.getCube(45675);
+	    cube=cubeManager.getCube(45676);
 	    get =new Get(this);
 	    get.start();
 		conteneur.setLayout(new GridLayout(1,6));// On cree un layout de type border pour le conteneur

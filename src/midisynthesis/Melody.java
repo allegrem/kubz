@@ -169,13 +169,15 @@ public class Melody extends Thread {
 			else {
 				// play the command
 				instrument.command(c.getMidiCommand(tune));
-				if((c.getMidiCommand(tune).getCommand() == MidiCommand.NOTE_ON)&&(hascube)){
-					owner.getGameEngine().getCubeManager().getCube(id1).setMotor((byte) 255);
-					owner.getGameEngine().getCubeManager().getCube(id2).setMotor((byte) 255);
-				}
-				else if((c.getMidiCommand(tune).getCommand() == MidiCommand.NOTE_OFF)&&(hascube)){
-					owner.getGameEngine().getCubeManager().getCube(id1).setMotor((byte) 0);
-					owner.getGameEngine().getCubeManager().getCube(id2).setMotor((byte) 0);
+				if(hascube) {
+					if((c.getMidiCommand(tune).getCommand() == MidiCommand.NOTE_ON)&&(hascube)){
+						owner.getGameEngine().getCubeManager().getCube(id1).setMotor((byte) 255);
+						owner.getGameEngine().getCubeManager().getCube(id2).setMotor((byte) 255);
+					}
+					else if((c.getMidiCommand(tune).getCommand() == MidiCommand.NOTE_OFF)&&(hascube)){
+						owner.getGameEngine().getCubeManager().getCube(id1).setMotor((byte) 0);
+						owner.getGameEngine().getCubeManager().getCube(id2).setMotor((byte) 0);
+					}
 				}
 
 
