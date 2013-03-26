@@ -91,11 +91,15 @@ public class GameEngine extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		init();
+		
+		
 //		bases.add(new Base(ReadableColor.ORANGE,BaseView.BAS,this));
 		bases.add(new Base(ReadableColor.BLUE,BaseView.GAUCHE,this));
 		bases.add(new Base(ReadableColor.GREEN,BaseView.DROITE,this));
-		playerList.add(new Player(this, bases.get(0), 45679, 15000, 15075));
-		playerList.add(new Player(this, bases.get(1), 45675, 45671, 14837));
+		playerList.add(new Player(this, bases.get(0), 45679, 15000, 15075, cubeList.get(0), cubeList.get(1), cubeList.get(2)));
+		playerList.add(new Player(this, bases.get(1), 45675, 45671, 14837, cubeList.get(3), cubeList.get(4), cubeList.get(5)));
 //		playerList.add(new Player(this, bases.get(2), 53192, 35916, 45676));
 
 

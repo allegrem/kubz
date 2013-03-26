@@ -24,10 +24,11 @@ public class Parameter extends CubeOwner{
 	private CubeControlledView view;
 
 	
-	public Parameter(Player owner, int id){
+	public Parameter(Player owner, int id, VideoCube vc){
 		super(id);
 		this.state = new WaitingPState();
 		this.setOwner(owner);
+		this.vCube = vc;
 		gameEngine=owner.getGameEngine();
 		view = new CubeControlledView(pos);
 		view.setInvisible3D(true);

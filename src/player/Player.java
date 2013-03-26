@@ -19,6 +19,7 @@ import gameEngine.GameEngine;
 import OpenGL.KeyboardManager;
 import player.parameter.*;
 import player.unit.*;
+import traitementVideo.VideoCube;
 import utilities.Point;
 import views.attacks.AttackConeView;
 import views.attacks.SinusoidalAttackView;
@@ -55,7 +56,7 @@ public class Player {
 	 * Creation d'un joueur avec deux Unit et deux Parameter
 	 */
 	public Player(GameEngine gameEngine, Base base, int unitid, int param1id,
-			int param2id) {
+			int param2id, VideoCube unitCube, VideoCube param1Cube, VideoCube param2Cube) {
 
 		this.gameEngine = gameEngine;
 		this.base = base;
@@ -63,10 +64,10 @@ public class Player {
 		this.param1id = param1id;
 		this.param2id = param2id;
 		unitList = new ArrayList<Unit>();
-		unitList.add(new Unit(this, unitid));
+		unitList.add(new Unit(this, unitid, unitCube));
 		this.parameters = new Parameter[2];
-		parameters[0] = new Parameter(this, param1id);
-		parameters[1] = new Parameter(this, param2id);
+		parameters[0] = new Parameter(this, param1id, param1Cube);
+		parameters[1] = new Parameter(this, param2id, param2Cube);
 		
 		if (base.getSens()==BaseView.BAS){
 			parameters[0].setLocation(
@@ -336,6 +337,7 @@ public class Player {
 //			if(comptVideo >15){
 //				comptVideo = 0;
 //				gameEngine.updateImage();
+				unit.setLocation((int) (unit.getVCube().getPos1().getX()+unit.getVCube().getPos2().getX())/2,(int) (unit.getVCube().getPos1().getY()+unit.getVCube().getPos2().getY())/2);
 //			}
 			i = 0;
 			j = 0;
@@ -452,6 +454,10 @@ public class Player {
 //				if(comptVideo >15){
 	//				comptVideo = 0;
 	//				gameEngine.updateImage();
+//					parameters[0].setLocation((int) (parameters[0].getVCube().getPos1().getX()+parameters[0].getVCube().getPos2().getX())/2,(int) (parameters[0].getVCube().getPos1().getY()+parameters[0].getVCube().getPos2().getY())/2);
+//					parameters[0].setLocation((int) (parameters[1].getVCube().getPos1().getX()+parameters[1].getVCube().getPos2().getX())/2,(int) (parameters[1].getVCube().getPos1().getY()+parameters[1].getVCube().getPos2().getY())/2);
+
+				
 //			}
 				if ((KeyboardManager.zKey)
 						&& (base.getCenter().distanceTo(
