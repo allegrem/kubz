@@ -26,8 +26,29 @@ public class Suivi2 {
 			traitement.updateConnexe();
 			size = traitement.getNcomp();
 		}
-		System.out.println("Creation du nouveau cube");
-		VideoCube cube = new VideoCube(traitement.getGroupePos(1),traitement.getGroupePos(2),null);
+		System.out.println("Creation du nouveau cube 1");
+		VideoCube cube1 = new VideoCube(traitement.getGroupePos(1),traitement.getGroupePos(2),null);
+		try {
+			Thread.sleep(8000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		size = 0;
+		while(size!=2){
+			traitement.setTraitScreen(gs.getcameraScreen());
+			traitement.flouMedian();
+			traitement.flouMedian();
+			traitement.seuil();
+			traitement.updateConnexe();
+			size = traitement.getNcomp();
+		}
+		System.out.println("Creation du nouveau cube 2");
+		VideoCube cube2 = new VideoCube(traitement.getGroupePos(1),traitement.getGroupePos(2),null);
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		System.out.println("Debut du Tracking");
 		// boucle d'update 
 		while(true){
@@ -37,8 +58,9 @@ public class Suivi2 {
 			traitement.seuil();
 			traitement.updateConnexe();
 			size = traitement.getNcomp();
-			if(size == 2){
-				traitement.localSearch(cube);
+			if(size == 4){
+				traitement.localSearch(cube1);
+				traitement.localSearch(cube2);
 			}
 		}
 	}

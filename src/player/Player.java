@@ -652,4 +652,16 @@ public class Player {
 		return false;
 	}
 
+
+	public int getParam1id() {
+		return param1id;
+	}
+
+
+	public int getParam2id() {
+		return param2id;
+	}
+	
+	
+
 }

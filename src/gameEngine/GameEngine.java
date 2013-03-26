@@ -46,16 +46,20 @@ public class GameEngine extends Thread {
 	private final Traitement traitement;
 	private CubeManager cubeManager;
 	private ArrayList<VideoCube> cubeList = new ArrayList<VideoCube>();
-//	private final GrabberShow gs;
+	private final GrabberShow gs;
 
 	public GameEngine(/*CubeManager cubeManager*/) {
 		RandomPerso.initialize();
 //		this.cubeManager = cubeManager;
-		traitement = new Traitement(640,480);
-//		traitement.updateConnexe();
-//		gs = new GrabberShow();
-//        Thread th = new Thread(gs);
-//        th.start();
+		gs = new GrabberShow();
+        Thread th = new Thread(gs);
+        th.start();
+        Traitement traitement = new Traitement((gs.Right-gs.Left-1),(gs.Bottom-gs.Top-1));
+        try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		display = new GLDisplay(this);
 		map = new Map();
 		display.setMap(map);
@@ -87,12 +91,14 @@ public class GameEngine extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		bases.add(new Base(ReadableColor.ORANGE,BaseView.BAS,this));
+		bases.add(new Base(ReadableColor.ORANGE,BaseView.BAS,this));
 		bases.add(new Base(ReadableColor.BLUE,BaseView.GAUCHE,this));
 		bases.add(new Base(ReadableColor.GREEN,BaseView.DROITE,this));
-		playerList.add(new Player(this, bases.get(0), 45679, 15000, 15075));
+//		playerList.add(new Player(this, bases.get(0), 45679, 15000, 15075));
 		playerList.add(new Player(this, bases.get(1), 45675, 45671, 14837));
-//		playerList.add(new Player(this, bases.get(2), 53192, 35916, 45676));
+		playerList.add(new Player(this, bases.get(2), 53192, 35916, 45676));
+		playerList.add(new Player(this, bases.get(0), 45675, 53192, 14977));
+
 
 	}
 
@@ -310,7 +316,7 @@ public class GameEngine extends Thread {
 	}
 	
 	public final void updateImage(){
-//		traitement.setTraitScreen(gs.getcameraScreen());
+		traitement.setTraitScreen(gs.getcameraScreen());
 		traitement.flouMedian();
 		traitement.flouMedian();
 		traitement.seuil();
@@ -319,6 +325,37 @@ public class GameEngine extends Thread {
 			traitement.localSearch(vc);
 		}
 	}
+	
+	public final void init(){
+		Traitement traitement = new Traitement(640,480);
+		traitement.updateConnexe();
+		GrabberShow gs = new GrabberShow();
+        Thread th = new Thread(gs);
+        th.start();
+        try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		int size = 0;
+		size = 0;
+		while(size!=2){
+			traitement.setTraitScreen(gs.getcameraScreen());
+			traitement.flouMedian();
+			traitement.flouMedian();
+			traitement.seuil();
+			traitement.updateConnexe();
+			size = traitement.getNcomp();
+		}
+		System.out.println("Creation du cube 2");
+		VideoCube cube2 = new VideoCube(traitement.getGroupePos(1),traitement.getGroupePos(2),null);
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 	public Traitement getTraitement() {
 		return traitement;

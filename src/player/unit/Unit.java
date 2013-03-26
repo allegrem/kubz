@@ -52,7 +52,7 @@ public class Unit extends CubeOwner {
 		view.addChild(lifeView);
 		size = view.getSize();
 		gameEngine.getMap().add(view);
-		attackMelody = new Melody();
+		attackMelody = new Melody(owner.getParam1id(), owner.getParam2id(), owner);
 		defenceMelody = new Melody();
 		seenMonsters = new ArrayList<Monster>();
 		target = null;

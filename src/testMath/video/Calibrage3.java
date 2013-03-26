@@ -29,6 +29,10 @@ public class Calibrage3 {
 				System.out.print(" tache " + i + " : x=" + (int) traitement.getGroupePos(i).getX() + " , y=" + (int) traitement.getGroupePos(i).getY());
 				else System.out.println(" tache " + i + " : x=" + (int) traitement.getGroupePos(i).getX() + " , y=" + (int) traitement.getGroupePos(i).getY());
 			}
+//			if (traitement.getNcomp()==2){
+//				System.out.println("Position du cube : x=" + (traitement.getGroupePos(1).getX()+traitement.getGroupePos(2).getX())/2 + " y=" + (traitement.getGroupePos(1).getY()+traitement.getGroupePos(2).getY())/2 );
+//			}
+			
 		}
 
 	}

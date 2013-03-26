@@ -131,7 +131,7 @@ public class GLDisplay extends Thread{
 	private int shaderProgram;
 	private int vertexShader;		
 	private int fragmentShader;
-	private boolean starting=true;
+	private boolean starting=false;
 
 	
 	/**

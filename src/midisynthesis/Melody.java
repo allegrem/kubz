@@ -3,6 +3,7 @@
  */
 package midisynthesis;
 
+import player.Player;
 import midisynthesis.audioblocks.EffectBlock;
 import midisynthesis.instruments.Instrument;
 import midisynthesis.instruments.WindInstrument;
@@ -31,6 +32,14 @@ public class Melody extends Thread {
 	private Instrument instrument;
 
 	private int parameter;
+	
+	private int id1;
+	
+	private int id2;
+	
+	private Player owner;
+	
+	private boolean hascube = false;
 
 	private int tune; // move it to instrument !! ("note de depart?")
 
@@ -48,6 +57,14 @@ public class Melody extends Thread {
 
 		// start playing
 		start();
+	}
+	
+	public Melody(int id1, int id2, Player owner) {
+		this();
+		this.id1 = id1;
+		this.id2 = id2;
+		this.owner = owner;
+		hascube = false;
 	}
 
 	/**
@@ -152,6 +169,15 @@ public class Melody extends Thread {
 			else {
 				// play the command
 				instrument.command(c.getMidiCommand(tune));
+				if((c.getMidiCommand(tune).getCommand() == MidiCommand.NOTE_ON)&&(hascube)){
+					owner.getGameEngine().getCubeManager().getCube(id1).setMotor((byte) 255);
+					owner.getGameEngine().getCubeManager().getCube(id2).setMotor((byte) 255);
+				}
+				else if((c.getMidiCommand(tune).getCommand() == MidiCommand.NOTE_OFF)&&(hascube)){
+					owner.getGameEngine().getCubeManager().getCube(id1).setMotor((byte) 0);
+					owner.getGameEngine().getCubeManager().getCube(id2).setMotor((byte) 0);
+				}
+
 
 				// get the next command
 				last_c = c;

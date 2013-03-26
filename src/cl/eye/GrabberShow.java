@@ -35,10 +35,10 @@ public class GrabberShow implements Runnable {
 	private PImage myImage = null;
 	public static final int CAMERA_WIDTH = 640;
 	public static final int CAMERA_HEIGHT = 480;
-	public final int Left = 60;
-	public final int Right = 380;
-	public final int Top = 80;
-	public final int Bottom = 380;
+	public final int Left = 0;
+	public final int Right = 640;
+	public final int Top = 0;
+	public final int Bottom = 480;
 	private int frameRate = 30; // fps maximum pour cette resolution
 	private ImagePanel imagePanel;
 	private VirtualPixel[][] cameraScreen = new VirtualPixel[(Right-Left+1)][(Bottom-Top+1)];

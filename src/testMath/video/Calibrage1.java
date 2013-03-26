@@ -12,9 +12,10 @@ public class Calibrage1 {
 
 	public static void main(String[] args) {
 		GrabberShow gs = new GrabberShow();
-        Thread th = new Thread(gs);
-        th.start();
-		Traitement traitement = new Traitement((gs.Right-gs.Left-1),(gs.Bottom-gs.Top-1));
+		Thread th = new Thread(gs);
+		th.start();
+		Traitement traitement = new Traitement((gs.Right - gs.Left - 1),
+				(gs.Bottom - gs.Top - 1));
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
@@ -24,14 +25,14 @@ public class Calibrage1 {
 		while (true) {
 			traitement.setTraitScreen(gs.getcameraScreen());
 			traitement.setBuffScreen(gs.getBytescreen());
-			traitement.printMax();
+//			 traitement.printMax();
 			traitement.flouMedian();
 			traitement.flouMedian();
-//			traitement.setSeuil();
+			// traitement.setSeuil();
 			traitement.seuil();
 			traitement.updateConnexe();
 			System.out.println("taches: " + traitement.getNcomp());
-			System.out.println("pixels: " + traitement.getNseuils());
+//			 System.out.println("pixels: " + traitement.getNseuils());
 		}
 	}
 

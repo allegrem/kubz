@@ -21,10 +21,10 @@ public class Traitement {
 	ArrayList<Point> groupesConnexesPos = new ArrayList<Point>();
 	private int LENGTH = 640;
 	private int HEIGHT = 480;
-	private int rayonConnexe = 6;
-	private int distance = 7;
-	private int taille = 5; // 30 (deux medians un moyen)
-	private int seuil = 11; // 17 (deux medians un moyen)
+	private int rayonConnexe = 6;	//7
+	private int distance = 12;		//7
+	private int taille = 9; // 30 (deux medians un moyen)	//30
+	private int seuil = 12; // 17 (deux medians un moyen)		//12
 	private byte[][] tabSeuil; //sisi Tardieu représente (a la volee)
 	private byte[] buffscreen = new byte[HEIGHT*LENGTH];
 	private int nseuils = 0; // nombre de pixels au dessus du seuil, utile pour
@@ -440,7 +440,7 @@ public class Traitement {
 				break;
 		}
 		if (!found1) /* gameEngine.setFrozen(null) */
-			System.out.println("cube perdu");
+			System.out.println("cube perdu 1");
 
 		ArrayList<ArrayList<VirtualPixel>> pos2Lists = parcoursSpirale(
 				(int) vc.getPos2().getX(), (int) vc.getPos2().getY(), distance);
@@ -457,11 +457,10 @@ public class Traitement {
 				break;
 		}
 		if (!found2) /* gameEngine.setFrozen(null) */
-			System.out.println("cube perdu");
+			System.out.println("cube perdu 2");
 		if (found1 && found2){
 //			System.out.println("Je te vois");
-			vc.updateMeanPos();
-			System.out.println("x : " + vc.getMeanPos().getX()+ ", y : "+ vc.getMeanPos().getY());
+			System.out.println(" x : " + (vc.getPos2().getX()+vc.getPos1().getX())/2+ ", y : "+ (vc.getPos2().getY()+vc.getPos1().getY())/2);
 		}
 	}
 
