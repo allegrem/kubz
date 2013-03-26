@@ -54,8 +54,7 @@ public class Starting2 implements DisplayableFather {
 	private void clear(){
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 	}
-	
-	private void initDisplay(){
+	l
 	     try{
 	            //Creation d'une fenetre permettant de dessiner avec OpenGL        	
 	            
