@@ -1,5 +1,7 @@
 package OpenGL;
 
+import static org.lwjgl.opengl.GL11.glEnable;
+
 import java.util.ArrayList;
 
 import org.lwjgl.LWJGLException;
@@ -20,17 +22,12 @@ import utilities.Point;
 import views.interfaces.DisplayableChild;
 import views.interfaces.DisplayableFather;
 
-
-
-
 public class Starting2 implements DisplayableFather {
 	
 	private boolean do_run = true;
-	private int display_width = 640;
-	private int display_height = 480;
-	private float ratio = (float) display_width/display_height;
 	private int angle;
-	private long waitingTime = 60;
+	private float cote = 90.0f;
+	private long waitingTime = 10;
 	private long startingTime;
 	
 	public Starting2(){
@@ -74,48 +71,62 @@ public class Starting2 implements DisplayableFather {
 	}
 	
 	private void renderKubz(){
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		GL11.glPushMatrix();
+		GL11.glLoadIdentity();
+		
+		GL11.glEnable(GL11.GL_TEXTURE_2D);				
+		GL11.glTranslatef(200, 100, -90);
+		
+		GL11.glScalef(90, 90, 1);
 		
 		if (Textures.ksol1==null)
 			Textures.initksol1();
-		
-		GL11.glLoadIdentity();
-		GL11.glTranslatef(-4,-1,-13);
-		
+						
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, Textures.ksol1.getTextureID());
-
 		
 		GL11.glBegin (GL11.GL_QUADS);		
-		GL11.glTexCoord2f (0, 1);
+		GL11.glTexCoord2f (0, 0);
 		GL11.glVertex3d (0.0, 0.0, 0.0);
 		
-		GL11.glTexCoord2f (1, 1);
+		GL11.glTexCoord2f (1, 0);
 		GL11.glVertex3d (5.0, 0.0, 0.0);
 		
-		GL11.glTexCoord2f (1, 0);
+		GL11.glTexCoord2f (1, 1);
 		GL11.glVertex3d (5.0, 5.0, 0.0);
 		
-		GL11.glTexCoord2f (0, 0);
+		GL11.glTexCoord2f (0, 1);
 		GL11.glVertex3d (0.0, 5.0, 0.0);
 		GL11.glEnd();
 	}
 	private void renderCube(){				     
+		GL11.glDisable(GL11.GL_LIGHTING);
+	    GL11.glDisable(GL11.GL_COLOR_MATERIAL);		
 		
-		GL11.glPushMatrix();
+	    GL11.glPushMatrix();
+		 
+		/*GL11.glMatrixMode(GL11.GL_PROJECTION);
+	    GL11.glLoadIdentity();
+	    GLU.gluPerspective(75.0f,-700/500,1f,10000.0f);*/
+
 		GL11.glLoadIdentity();
-		//GL11.glScalef(1, 1, (float) 0.1); scales the axes, useless!!
-		GL11.glTranslatef(5, 0, -16);
-    	GL11.glTranslatef(0.0f, 0.0f, -6.5f);  
-      	GL11.glRotatef(angle, 1.0f, 1.0f, 1.0f);	
-      	GL11.glTranslatef(0.0f, 0.0f, 6.5f);    
-      	
-      	/*if (System.currentTimeMillis()-startingTime>=waitingTime){
-      		waitingTime = System.currentTimeMillis();      	
-      		angle++;
-      	}*/      	      
-      	
 		GL11.glEnable(GL11.GL_TEXTURE_2D);	
-		
+		//GL11.glScalef(1, 1, (float) 0.1); scales the axes, useless!!
+		//GL11.glTranslatef(65, 0, -16);
+		GL11.glTranslatef(1000,400,-90);
+		GL11.glTranslatef(0.0f, 0.0f, -6.5f);  
+      	GL11.glRotatef(angle, 1.0f, 1.0f, 1.0f);	
+      	GL11.glTranslatef(0.0f, 0.0f, 6.5f);  
+      	
+      	
+      	GL11.glScalef(1, 1, 30);
+      	
+      	
+      	
+      	if (System.currentTimeMillis()-startingTime>=waitingTime){
+      		startingTime = System.currentTimeMillis();      	
+      		angle++;
+      	}     	      
+      	
 		if(Textures.K==null)
 			Textures.initK();
 		if(Textures.U==null)
@@ -124,31 +135,43 @@ public class Starting2 implements DisplayableFather {
 			Textures.initB();
 		if(Textures.Z==null)
 			Textures.initZ();
-						
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D,Textures.K.getTextureID()); 
-        GL11.glBegin(GL11.GL_QUADS);										
+
+		/*GL11.glBindTexture(GL11.GL_TEXTURE_2D,Textures.K.getTextureID()); 
+        GL11.glBegin(GL11.GL_QUADS);	               
+        GL11.glTexCoord2f(1,0);
+        GL11.glVertex3f( cote,-cote,-5.0f);  
+        GL11.glTexCoord2f(0,0);
+        GL11.glVertex3f(-cote,-cote,-5.0f);
+        GL11.glTexCoord2f(0,1);
+        GL11.glVertex3f( -cote,cote, -5.0f);
+        GL11.glTexCoord2f(1,1);
+        GL11.glVertex3f(cote, cote, -5.0f);	
+        GL11.glEnd();*/
+        
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D,Textures.K.getTextureID()); 
+        GL11.glBegin(GL11.GL_QUADS);	      
         //Face 1       
         GL11.glTexCoord2f(1,0);
-        GL11.glVertex3f( 1.0f,-1.0f,-5.0f);  
+        GL11.glVertex3f( cote,-cote,-5.0f);  
         GL11.glTexCoord2f(0,0);
-        GL11.glVertex3f(-1.0f,-1.0f,-5.0f);
+        GL11.glVertex3f(-cote,-cote,-5.0f);
         GL11.glTexCoord2f(0,1);
-        GL11.glVertex3f( -1.0f,1.0f, -5.0f);
+        GL11.glVertex3f( -cote,cote, -5.0f);
         GL11.glTexCoord2f(1,1);
-        GL11.glVertex3f(1.0f, 1.0f, -5.0f);	
+        GL11.glVertex3f(cote, cote, -5.0f);	
         GL11.glEnd();
         
         GL11.glBindTexture(GL11.GL_TEXTURE_2D,Textures.U.getTextureID());
         GL11.glBegin(GL11.GL_QUADS);    
         //Face 2
         GL11.glTexCoord2f(1,0);
-        GL11.glVertex3f( 1.0f,-1.0f,-8.0f);  
+        GL11.glVertex3f( cote,-cote,-8.0f);  
         GL11.glTexCoord2f(0,0);
-        GL11.glVertex3f(-1.0f,-1.0f,-8.0f);
+        GL11.glVertex3f(-cote,-cote,-8.0f);
         GL11.glTexCoord2f(0,1);
-        GL11.glVertex3f( -1.0f,1.0f, -8.0f);
+        GL11.glVertex3f( -cote,cote, -8.0f);
         GL11.glTexCoord2f(1,1);
-        GL11.glVertex3f(1.0f, 1.0f, -8.0f);	
+        GL11.glVertex3f(cote, cote, -8.0f);	
         GL11.glEnd();
        
         
@@ -156,53 +179,53 @@ public class Starting2 implements DisplayableFather {
         GL11.glBegin(GL11.GL_QUADS);
         //Face 3
         GL11.glTexCoord2f(1,0);
-        GL11.glVertex3f( -1.0f,-1.0f,-5.0f);
+        GL11.glVertex3f( -cote,-cote,-5.0f);
         GL11.glTexCoord2f(1,1);
-        GL11.glVertex3f(-1.0f, 1.0f, -5.0f);
+        GL11.glVertex3f(-cote, cote, -5.0f);
         GL11.glTexCoord2f(0,1);
-        GL11.glVertex3f( -1.0f,1.0f,-8.0f);
+        GL11.glVertex3f( -cote,cote,-8.0f);
         GL11.glTexCoord2f(0,0);
-        GL11.glVertex3f(-1.0f, -1.0f, -8.0f);
+        GL11.glVertex3f(-cote, -cote, -8.0f);
         GL11.glEnd();
         
         
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D,Textures.Z.getTextureID());
+       GL11.glBindTexture(GL11.GL_TEXTURE_2D,Textures.Z.getTextureID());
         GL11.glBegin(GL11.GL_QUADS);
         //Face 4                     
         GL11.glTexCoord2f(0,0);
-        GL11.glVertex3f(1.0f,-1.0f,-5.0f);
+        GL11.glVertex3f(cote,-cote,-5.0f);
         GL11.glTexCoord2f(0,1);
-        GL11.glVertex3f(1.0f,1.0f,-5.0f);
+        GL11.glVertex3f(cote,cote,-5.0f);
         GL11.glTexCoord2f(1,1);
-        GL11.glVertex3f( 1.0f,1.0f, -8.0f);
+        GL11.glVertex3f( cote,cote, -8.0f);
         GL11.glTexCoord2f(1,0);
-        GL11.glVertex3f( 1.0f,-1.0f, -8.0f);
+        GL11.glVertex3f( cote,-cote, -8.0f);
         GL11.glEnd();
         
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D,Textures.B.getTextureID());
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D,Textures.K.getTextureID());
         GL11.glBegin(GL11.GL_QUADS);
         //Face 5        
         GL11.glTexCoord2f(1,0);
-        GL11.glVertex3f(1.0f,1.0f,-5.0f);
+        GL11.glVertex3f(cote,cote,-5.0f);
         GL11.glTexCoord2f(1,1);
-        GL11.glVertex3f(1.0f,1.0f,-8.0f);
+        GL11.glVertex3f(cote,cote,-8.0f);
         GL11.glTexCoord2f(0,1);
-        GL11.glVertex3f( -1.0f,1.0f, -8.0f);
+        GL11.glVertex3f( -cote,cote, -8.0f);
         GL11.glTexCoord2f(0,0);
-        GL11.glVertex3f( -1.0f,1.0f, -5.0f);
+        GL11.glVertex3f(-cote,cote, -5.0f);
         GL11.glEnd();
         
         GL11.glBindTexture(GL11.GL_TEXTURE_2D,Textures.B.getTextureID());
         GL11.glBegin(GL11.GL_QUADS);
         //Face 6       
         GL11.glTexCoord2f(1,0);
-        GL11.glVertex3f(1.0f,-1.0f,-5.0f);
+        GL11.glVertex3f(cote,-cote,-5.0f);
         GL11.glTexCoord2f(1,1);
-        GL11.glVertex3f(1.0f,-1.0f,-8.0f);
+        GL11.glVertex3f(cote,-cote,-8.0f);
         GL11.glTexCoord2f(0,1);
-        GL11.glVertex3f( -1.0f,-1.0f, -8.0f);
+        GL11.glVertex3f( -cote,-cote, -8.0f);
         GL11.glTexCoord2f(0,0);
-        GL11.glVertex3f( -1.0f,-1.0f, -5.0f);  
+        GL11.glVertex3f( -cote,-cote, -5.0f);  
         GL11.glEnd();
                     
        GL11.glPopMatrix();
@@ -234,9 +257,10 @@ public class Starting2 implements DisplayableFather {
 */
 
 	@Override
-	public void paint() {
+	public void paint() {		
+		renderKubz();
 		renderCube();
-		renderKubz();		
+		
 	}
 
 

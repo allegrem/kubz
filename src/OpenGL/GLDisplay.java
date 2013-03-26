@@ -240,7 +240,7 @@ public class GLDisplay extends Thread{
 	public void run(){
 	
 		initialize();
-		loadShaders();
+		//loadShaders();
 		mapDisplay_height=(int)(display_height);
 		mapDisplay_width=display_height;
 		lightDx=(float)(display_width/2.0);
@@ -269,7 +269,7 @@ public class GLDisplay extends Thread{
 				resetLight();
 			}
 		}
-		if(starting){
+		if(starting){				
 			start.paint();
 		}else {
 		mainRender(); //On actualise la fenetre avec le nouveau rendu
@@ -414,7 +414,7 @@ public class GLDisplay extends Thread{
 			DisplayMode mode = Display.getDesktopDisplayMode();
 			display_width = mode.getWidth();
             display_height = mode.getHeight();
-            frequency = mode.getFrequency();
+            frequency = mode.getFrequency();           
 			// Creation d'une fenetre permettant de dessiner avec OpenGL
 			Display.setDisplayModeAndFullscreen(mode);
 			Display.setTitle("Kubz");
@@ -522,7 +522,9 @@ public class GLDisplay extends Thread{
 		if (mode3D){
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			GLU.gluPerspective(45.0f, -display_width / display_height, 1.0f,10000.0f);
+			GLU.gluPerspective(45.0f, -display_width / display_height, 1.
+					
+					0f,10000.0f);
 			glMatrixMode(GL_MODELVIEW);
 		}else{
 			glMatrixMode(GL_PROJECTION);
