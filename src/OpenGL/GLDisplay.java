@@ -522,9 +522,7 @@ public class GLDisplay extends Thread{
 		if (mode3D){
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			GLU.gluPerspective(45.0f, -display_width / display_height, 1.
-					
-					0f,10000.0f);
+			GLU.gluPerspective(45.0f, -display_width / display_height, 1.0f,10000.0f);
 			glMatrixMode(GL_MODELVIEW);
 		}else{
 			glMatrixMode(GL_PROJECTION);

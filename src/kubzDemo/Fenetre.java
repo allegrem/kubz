@@ -44,7 +44,6 @@ public class Fenetre extends JFrame implements WindowListener{
 	public Fenetre(){
 		setTitle("Kubz manager");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setSize(500,500);
 		XBee xbee = new XBee(); // Create a new XBee     
 	    CubeManager cubeManager = new CubeManager(xbee); // Create a new cube manager
 	    xbee.setCubeManager(cubeManager); // Add the cube manager in the XBee  
@@ -58,7 +57,7 @@ public class Fenetre extends JFrame implements WindowListener{
 		conteneur.add(new BSlider(0, 255,this));
 		conteneur.add(new VSlider(0, 255,this));
 		conteneur.add(label1);
-		conteneur.add(label2);
+		//conteneur.add(label2);
 		send();
 
 	}
