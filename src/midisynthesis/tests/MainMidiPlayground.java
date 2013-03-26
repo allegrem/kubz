@@ -6,7 +6,7 @@ import midisynthesis.Melody;
 public class MainMidiPlayground {
 
 	/**
-	 * @param args
+	 * @param args 
 	 */
 	public static void main(String[] args) {
 	new MidiTestFrame();

@@ -65,7 +65,7 @@ public class GLDisplay extends Thread{
 	private float multX=1.0f; //Facteur multiplicatif pour etendre l'affichage selon x
 	private float multY=0.85f; //Facteur multiplicatif pour etendre l'affichage selon x
 	private float sens=1; //sens=-1 -> image renversee
-	private float parallelisme=0.11f; // Correction du paralellisme
+	private float parallelisme=0.1f; // Correction du paralellisme
 	private float invParal=1; //Si -1, parallelisme inverse dans l'autre sens
 	
 
@@ -248,7 +248,7 @@ public class GLDisplay extends Thread{
 		camDx=(float)(display_width/2.0);
 		camDy=(float)(display_height/2.0);
 		setCameraDirection();
-		//texte=new Text();
+		texte=new Text();
 		initialized=true;
 		Starting2 start=new Starting2();
 		while(do_run){
@@ -258,7 +258,6 @@ public class GLDisplay extends Thread{
 		checkAffichage();
 		KeyboardManager.checkKeyboard();
 		glMatrixMode(GL_MODELVIEW);
-		GL11.glTranslatef((float)(1000),0f,0f);
 		setLightPosition();
 		if(modeChanged)
 			changeViewMode();
@@ -269,7 +268,7 @@ public class GLDisplay extends Thread{
 				resetLight();
 			}
 		}
-		if(starting){
+		if(starting){				
 			start.paint();
 		}else {
 		mainRender(); //On actualise la fenetre avec le nouveau rendu
@@ -414,7 +413,7 @@ public class GLDisplay extends Thread{
 			DisplayMode mode = Display.getDesktopDisplayMode();
 			display_width = mode.getWidth();
             display_height = mode.getHeight();
-            frequency = mode.getFrequency();
+            frequency = mode.getFrequency();           
 			// Creation d'une fenetre permettant de dessiner avec OpenGL
 			Display.setDisplayModeAndFullscreen(mode);
 			Display.setTitle("Kubz");

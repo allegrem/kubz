@@ -1,18 +1,12 @@
 package kubzDemo;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import javax.swing.ImageIcon;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JSlider;
-import javax.swing.SwingConstants;
 
 import cube.Cube;
 import cube.XBee;
@@ -32,9 +26,10 @@ public class Fenetre extends JFrame implements WindowListener{
 	private int V=127;
 	private Cube cube;
 	private Get get ;
+	private XBee xbee;
 
 	private JLabel label1=new JLabel("Angle= 0");
-	private JLabel label2=new JLabel("..........");
+	private JLabel label2=new JLabel("     ..........");
 	
 	/**
 	 * Construction de la fenetre
@@ -43,23 +38,22 @@ public class Fenetre extends JFrame implements WindowListener{
 	 */
 	public Fenetre(){
 		setTitle("Kubz manager");
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setSize(500,500);
-		XBee xbee = new XBee(); // Create a new XBee     
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		addWindowListener(this);
+		xbee = new XBee(); // Create a new XBee     
 	    CubeManager cubeManager = new CubeManager(xbee); // Create a new cube manager
 	    xbee.setCubeManager(cubeManager); // Add the cube manager in the XBee  
 	    xbee.start(); // Start the XBee thread
-	    cube=cubeManager.getCube(53192);
-	   // cube.setIR((byte)5);
+	    cube=cubeManager.getCube(45675);
 	    get =new Get(this);
 	    get.start();
-		conteneur.setLayout(new GridLayout(1,5));// On cree un layout de type border pour le conteneur
+		conteneur.setLayout(new GridLayout(1,6));// On cree un layout de type border pour le conteneur
 		conteneur.add(new RSlider(0, 255,this));
 		conteneur.add(new GSlider(0, 255,this));
 		conteneur.add(new BSlider(0, 255,this));
 		conteneur.add(new VSlider(0, 255,this));
 		conteneur.add(label1);
-		conteneur.add(label2);
+		//conteneur.add(label2);
 		send();
 
 	}
@@ -137,13 +131,16 @@ public class Fenetre extends JFrame implements WindowListener{
 	@Override
 	public void windowClosed(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		get.interrupt();
+		this.dispose();	
+		xbee.interrupt();
 	}
 
 	@Override
 	public void windowClosing(WindowEvent arg0) {
 		get.interrupt();
 		this.dispose();
+		xbee.interrupt();
 		
 	}
 
