@@ -55,7 +55,7 @@ public class Monster {
 		this.seenUnits = new ArrayList<Unit>();
 		this.setGameEngine(gameEngine);
 		move = new RandomMove(this, 500);
-		this.life = 100;
+		this.life = 10;
 
 	}
 

@@ -51,7 +51,7 @@ public class Melody extends Thread {
 		// default parameters
 		tempo = 80;
 		pattern = new MidiPattern1();
-		instrument = new WindInstrument();
+		instrument = new WoodInstrument();
 		tune = 60;
 		parameter = EffectBlock.DEFAULT_VALUE;
 
@@ -170,12 +170,12 @@ public class Melody extends Thread {
 				// play the command
 				instrument.command(c.getMidiCommand(tune));
 				if((c.getMidiCommand(tune).getCommand() == MidiCommand.NOTE_ON)&&(hascube)){
-					owner.getGameEngine().getCubeManager().getCube(id1).setMotor((byte) 255);
-					owner.getGameEngine().getCubeManager().getCube(id2).setMotor((byte) 255);
+//					owner.getGameEngine().getCubeManager().getCube(id1).setMotor((byte) 255);
+//					owner.getGameEngine().getCubeManager().getCube(id2).setMotor((byte) 255);
 				}
 				else if((c.getMidiCommand(tune).getCommand() == MidiCommand.NOTE_OFF)&&(hascube)){
-					owner.getGameEngine().getCubeManager().getCube(id1).setMotor((byte) 0);
-					owner.getGameEngine().getCubeManager().getCube(id2).setMotor((byte) 0);
+//					owner.getGameEngine().getCubeManager().getCube(id1).setMotor((byte) 0);
+//					owner.getGameEngine().getCubeManager().getCube(id2).setMotor((byte) 0);
 				}
 
 

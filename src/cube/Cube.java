@@ -99,6 +99,14 @@ public class Cube{
 		this.xBee.sendTXFrame(mess, this.id);
 		this.xBee.sendTXFrame(mess, this.id);
 		this.xBee.sendTXFrame(mess, this.id);
+		this.xBee.sendTXFrame(mess, this.id);
+		this.xBee.sendTXFrame(mess, this.id);
+		this.xBee.sendTXFrame(mess, this.id);
+		this.xBee.sendTXFrame(mess, this.id);
+		this.xBee.sendTXFrame(mess, this.id);
+		this.xBee.sendTXFrame(mess, this.id);
+		this.xBee.sendTXFrame(mess, this.id);
+		this.xBee.sendTXFrame(mess, this.id);
 	}
 
 	/* Switch the IR leds with the right pattern */
@@ -108,6 +116,14 @@ public class Cube{
 		mess[0]='I';
 		mess[1]=pattern;
 			
+		this.xBee.sendTXFrame(mess, this.id);	
+		this.xBee.sendTXFrame(mess, this.id);
+		this.xBee.sendTXFrame(mess, this.id);	
+		this.xBee.sendTXFrame(mess, this.id);
+		this.xBee.sendTXFrame(mess, this.id);	
+		this.xBee.sendTXFrame(mess, this.id);
+		this.xBee.sendTXFrame(mess, this.id);	
+		this.xBee.sendTXFrame(mess, this.id);
 		this.xBee.sendTXFrame(mess, this.id);	
 		this.xBee.sendTXFrame(mess, this.id);
 		this.xBee.sendTXFrame(mess, this.id);	
@@ -133,6 +149,14 @@ public class Cube{
 		mess[0]='M';
 		mess[1]=intensity;
 			
+		this.xBee.sendTXFrame(mess, this.id);
+		this.xBee.sendTXFrame(mess, this.id);
+		this.xBee.sendTXFrame(mess, this.id);
+		this.xBee.sendTXFrame(mess, this.id);
+		this.xBee.sendTXFrame(mess, this.id);
+		this.xBee.sendTXFrame(mess, this.id);
+		this.xBee.sendTXFrame(mess, this.id);
+		this.xBee.sendTXFrame(mess, this.id);
 		this.xBee.sendTXFrame(mess, this.id);
 		this.xBee.sendTXFrame(mess, this.id);
 		this.xBee.sendTXFrame(mess, this.id);

@@ -42,7 +42,7 @@ public class Unit extends CubeOwner {
 
 
 
-	public Unit(Player owner2, int unitid, VideoCube vc) {
+	public Unit(Player owner2, int unitid/*, VideoCube vc*/) {
 		super(unitid);
 		life = 15;
 		this.state = new WaitingUState();
@@ -52,7 +52,7 @@ public class Unit extends CubeOwner {
 		lifeView = new LifeView(view);
 		view.addChild(lifeView);
 		size = view.getSize();
-		this.vCube = vc;
+//		this.vCube = vc;
 		gameEngine.getMap().add(view);
 		attackMelody = new Melody(owner.getParam1id(), owner.getParam2id(), owner);
 		defenceMelody = new Melody();
