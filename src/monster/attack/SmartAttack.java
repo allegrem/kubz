@@ -11,23 +11,26 @@ public class SmartAttack extends AttackType {
 		generateAttackMelody();
 	}
 
-	protected void generateAtackMelody() {
-		if ((monster.getCible() != null)&&(monster.getCible()==previousTarget)) {
-			if (attackMelody.getTempo() > monster.getCible().getDefenceMelody()
-					.getTempo())
-				attackMelody.setTempo(attackMelody.getTempo() - 10);
-			else
-				attackMelody.setTempo(attackMelody.getTempo() + 10);
-			if (attackMelody.getTune() > monster.getCible().getDefenceMelody()
-					.getTune())
-				attackMelody.setTune(attackMelody.getTune() - 10);
-			else
-				attackMelody.setTempo(attackMelody.getTune() + 10);
-			if (attackMelody.getParameter() > monster.getCible()
-					.getDefenceMelody().getParameter())
-				attackMelody.setParameter(attackMelody.getParameter() - 10);
-			else
-				attackMelody.setParameter(attackMelody.getParameter() + 10);
+	@Override
+	/**
+	 * Le monstre va essayer de se rapprocher de la melody de la cible, ici pour les 
+	 * parametre Tune, Tempo et Parameter(=timbre) on implémente un correcteur proportionel de gain 0.5
+	 */
+	protected void generateAttackMelody() {
+		if ((monster.getCible() != null)
+				&& (monster.getCible() == previousTarget)) {
+			attackMelody.setTempo(attackMelody.getTempo()
+					- (int) 0.5
+					* (attackMelody.getTempo() - monster.getCible()
+							.getDefenceMelody().getTempo()));
+			attackMelody.setTune(attackMelody.getTune()
+					- (int) 0.5
+					* (attackMelody.getTune() - monster.getCible()
+							.getDefenceMelody().getTune()));
+			attackMelody.setParameter(attackMelody.getParameter()
+					- (int) 0.5
+					* (attackMelody.getParameter() - monster.getCible()
+							.getDefenceMelody().getParameter()));
 			if (attackMelody.getPattern() != monster.getCible()
 					.getDefenceMelody().getPattern())
 				try {
@@ -45,7 +48,8 @@ public class SmartAttack extends AttackType {
 					e.printStackTrace();
 				}
 		}
-		if((monster.getCible() != null)&&(monster.getCible()!=previousTarget)){
+		if ((monster.getCible() != null)
+				&& (monster.getCible() != previousTarget)) {
 			generateRandomAttackMelody();
 		}
 	}

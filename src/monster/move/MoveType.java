@@ -22,9 +22,7 @@ public abstract class MoveType {
 		height = monster.getGameEngine().getHeight();
 	}
 
-	public void move() {
-
-	}
+	public abstract void move();
 
 	/**
 	 * Le monstre se deplace vers une unit� � la vitesse speed Pas de

@@ -9,15 +9,17 @@ package monster.attack;
 import player.unit.Unit;
 import monster.zoo.Monster;
 
-public class ChooseDistance extends ChooseType{
-	
+public class ChooseDistance extends ChooseType {
 
 	public ChooseDistance(Monster monster) {
 		super(monster);
 	}
 
 	@Override
-	public int getPot(Unit unit){
+	/**
+	 * Le critere pour le choix de la cible est ici uniquement la distance, le joueur le plus proche sera la cible 
+	 */
+	public int getPot(Unit unit) {
 		return (int) -monster.getPos().distanceTo(unit.getPos());
 	}
 }

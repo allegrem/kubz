@@ -23,7 +23,7 @@ public class TriangleMonster extends Monster {
 	public TriangleMonster(float xStart, float yStart,ReadableColor color,GameEngine gameEngine) {
 		super(xStart, yStart, gameEngine);
 		this.choice = new ChooseDistance(this);
-		this.attack = new FixedFrenquenceAttack(this, 1, 1, 1, new MidiPattern1(), new midisynthesis.instruments.Bell());
+		this.attack = new FixedFrenquenceAttack(this);
 		this.move = new RegularMove(this, 200);
 		view= new SquareMonsterView(new Point(xStart,yStart), color);
 		gameEngine.getMap().add(view);

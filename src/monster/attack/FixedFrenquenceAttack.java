@@ -5,20 +5,23 @@ package monster.attack;
  * @author Felix
  */
 
-import midisynthesis.instruments.Instrument;
-import midisynthesis.patterns.MidiPattern;
 import monster.zoo.Monster;
 
 public class FixedFrenquenceAttack extends AttackType {
 
 
-	public FixedFrenquenceAttack(Monster monster, int tune, int tempo, int parameter, MidiPattern pattern, Instrument instrument) {
+	public FixedFrenquenceAttack(Monster monster) {
 		super(monster);
-		this.attackMelody.setTempo(tempo);
-		this.attackMelody.setTune(tune);
-		this.attackMelody.setParameter(parameter);
-		this.attackMelody.setPattern(pattern);
-		this.attackMelody.setInstrument(instrument);
+		generateRandomAttackMelody();
+	}
+
+	@Override
+	/**
+	 * La melody n'est jamais modifiee
+	 */
+	protected void generateAttackMelody() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

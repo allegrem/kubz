@@ -17,6 +17,9 @@ public class ChooseLife extends ChooseType{
 	}
 	
 	@Override
+	/**
+	 * Le critere pour le choix de la cibble est ici uniquement la vie, le joueur le plus faible sera la cible
+	 */
 	public int getPot(Unit unit){
 		return (int)  unit.getLife();
 	}
