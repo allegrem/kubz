@@ -12,7 +12,7 @@ public class SmartAttack extends AttackType {
 	}
 
 	protected void generateAtackMelody() {
-		if (monster.getCible() != null) {
+		if ((monster.getCible() != null)&&(monster.getCible()==previousTarget)) {
 			if (attackMelody.getTempo() > monster.getCible().getDefenceMelody()
 					.getTempo())
 				attackMelody.setTempo(attackMelody.getTempo() - 10);
@@ -44,6 +44,9 @@ public class SmartAttack extends AttackType {
 				} catch (InstantiationException | IllegalAccessException e) {
 					e.printStackTrace();
 				}
+		}
+		if((monster.getCible() != null)&&(monster.getCible()!=previousTarget)){
+			generateRandomAttackMelody();
 		}
 	}
 

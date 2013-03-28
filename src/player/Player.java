@@ -56,7 +56,10 @@ public class Player {
 	 * Creation d'un joueur avec deux Unit et deux Parameter
 	 */
 	public Player(GameEngine gameEngine, Base base, int unitid, int param1id,
-			int param2id/*, VideoCube unitCube, VideoCube param1Cube, VideoCube param2Cube*/) {
+			int param2id/*
+						 * , VideoCube unitCube, VideoCube param1Cube, VideoCube
+						 * param2Cube
+						 */) {
 
 		this.gameEngine = gameEngine;
 		this.base = base;
@@ -64,75 +67,80 @@ public class Player {
 		this.param1id = param1id;
 		this.param2id = param2id;
 		unitList = new ArrayList<Unit>();
-		unitList.add(new Unit(this, unitid/*, unitCube*/));
+		unitList.add(new Unit(this, unitid/* , unitCube */));
 		this.parameters = new Parameter[2];
-		parameters[0] = new Parameter(this, param1id/*, param1Cube*/);
-		parameters[1] = new Parameter(this, param2id/*, param2Cube*/);
-		
-		if (base.getSens()==BaseView.BAS){
+		parameters[0] = new Parameter(this, param1id/* , param1Cube */);
+		parameters[1] = new Parameter(this, param2id/* , param2Cube */);
+
+		if (base.getSens() == BaseView.BAS) {
 			parameters[0].setLocation(
 					base.getCenter().getX() - parameters[0].getSize(), base
 							.getCenter().getY() - parameters[0].getSize());
 			parameters[1].setLocation(
 					base.getCenter().getX() + parameters[1].getSize(), base
 							.getCenter().getY() - parameters[0].getSize());
-			unitList.get(0).setLocation((int) (base.getCenter().getX()) , (int) (base.getCenter().getY()-1.2*base.radius));
+			unitList.get(0).setLocation((int) (base.getCenter().getX()),
+					(int) (base.getCenter().getY() - 1.2 * base.radius));
 		}
-		if (base.getSens()==BaseView.HAUT){
+		if (base.getSens() == BaseView.HAUT) {
 			parameters[0].setLocation(
 					base.getCenter().getX() + parameters[0].getSize(), base
-							.getCenter().getY()-parameters[0].getSize());
+							.getCenter().getY() - parameters[0].getSize());
 			parameters[1].setLocation(
 					base.getCenter().getX() - parameters[1].getSize(), base
-							.getCenter().getY()-parameters[0].getSize());
-			unitList.get(0).setLocation((int) (base.getCenter().getX()) , (int) (base.getCenter().getY()+1.2*base.radius));
+							.getCenter().getY() - parameters[0].getSize());
+			unitList.get(0).setLocation((int) (base.getCenter().getX()),
+					(int) (base.getCenter().getY() + 1.2 * base.radius));
 		}
-		if (base.getSens()==BaseView.GAUCHE){
+		if (base.getSens() == BaseView.GAUCHE) {
 			parameters[0].setLocation(
 					base.getCenter().getX() + parameters[0].getSize(), base
 							.getCenter().getY() - parameters[0].getSize());
 			parameters[1].setLocation(
 					base.getCenter().getX() + parameters[1].getSize(), base
 							.getCenter().getY() + parameters[0].getSize());
-			unitList.get(0).setLocation((int) (base.getCenter().getX()+1.2*base.radius) , (int) (base.getCenter().getY()));
+			unitList.get(0).setLocation(
+					(int) (base.getCenter().getX() + 1.2 * base.radius),
+					(int) (base.getCenter().getY()));
 		}
-		if (base.getSens()==BaseView.DROITE){
+		if (base.getSens() == BaseView.DROITE) {
 			parameters[0].setLocation(
 					base.getCenter().getX() - parameters[0].getSize(), base
 							.getCenter().getY() - parameters[0].getSize());
 			parameters[1].setLocation(
 					base.getCenter().getX() - parameters[1].getSize(), base
 							.getCenter().getY() + parameters[0].getSize());
-			unitList.get(0).setLocation((int) (base.getCenter().getX()-1.2*base.radius) , (int) (base.getCenter().getY()));
+			unitList.get(0).setLocation(
+					(int) (base.getCenter().getX() - 1.2 * base.radius),
+					(int) (base.getCenter().getY()));
 		}
-	
+
 		link = new Link(base, parameters[0], parameters[1]);
 		gameEngine.getMap().add(link);
 		compteurPattern = 0;
 		compteurInstr = 0;
 		lastAngle1 = (int) parameters[0].getAngle();
 		lastAngle2 = (int) parameters[1].getAngle();
-		gameEngine.getCubeManager().getCube(unitid)
-				.setRGB(0, 0, 128, (short) 10);
-		gameEngine.getCubeManager().getCube(param1id)
-				.setRGB(0, 128, 0, (short) 10);
-		gameEngine.getCubeManager().getCube(param2id)
-				.setRGB(0, 128, 0, (short) 10);
-		gameEngine.getCubeManager().getCube(unitid)
-		.setRGB(0, 0, 128, (short) 10);
-gameEngine.getCubeManager().getCube(param1id)
-		.setRGB(0, 128, 0, (short) 10);
-gameEngine.getCubeManager().getCube(param2id)
-		.setRGB(0, 128, 0, (short) 10);
-gameEngine.getCubeManager().getCube(unitid)
-.setRGB(0, 0, 128, (short) 10);
-gameEngine.getCubeManager().getCube(param1id)
-.setRGB(0, 128, 0, (short) 10);
-gameEngine.getCubeManager().getCube(param2id)
-.setRGB(0, 128, 0, (short) 10);
+//		gameEngine.getCubeManager().getCube(unitid)
+//				.setRGB(0, 0, 128, (short) 10);
+//		gameEngine.getCubeManager().getCube(param1id)
+//				.setRGB(0, 128, 0, (short) 10);
+//		gameEngine.getCubeManager().getCube(param2id)
+//				.setRGB(0, 128, 0, (short) 10);
+//		gameEngine.getCubeManager().getCube(unitid)
+//				.setRGB(0, 0, 128, (short) 10);
+//		gameEngine.getCubeManager().getCube(param1id)
+//				.setRGB(0, 128, 0, (short) 10);
+//		gameEngine.getCubeManager().getCube(param2id)
+//				.setRGB(0, 128, 0, (short) 10);
+//		gameEngine.getCubeManager().getCube(unitid)
+//				.setRGB(0, 0, 128, (short) 10);
+//		gameEngine.getCubeManager().getCube(param1id)
+//				.setRGB(0, 128, 0, (short) 10);
+//		gameEngine.getCubeManager().getCube(param2id)
+//				.setRGB(0, 128, 0, (short) 10);
 
 	}
-	
 
 	/**
 	 * Methode qui retourne le nombre de changement d'instrument, en rapport
@@ -141,7 +149,7 @@ gameEngine.getCubeManager().getCube(param2id)
 	 * @return
 	 */
 	public int getChangeInstrument() {
-		int sensibility = 45;
+		int sensibility = 30;
 		compteurInstr = parameters[0].getAngle() - lastAngle1;
 		lastAngle1 = parameters[0].getAngle();
 		int changeInstrument = Math.round(compteurInstr / sensibility);
@@ -156,7 +164,7 @@ gameEngine.getCubeManager().getCube(param2id)
 	 * @return
 	 */
 	public int getChangePattern() {
-		int sensibility = 45;
+		int sensibility = 30;
 		compteurPattern = parameters[1].getAngle() - lastAngle2;
 		lastAngle2 = parameters[1].getAngle();
 		int changePattern = Math.round(compteurPattern / sensibility);
@@ -166,15 +174,15 @@ gameEngine.getCubeManager().getCube(param2id)
 
 	/**
 	 * methode qui retourne la distance entre le cube Parameter1 et le centre de
-	 * la base Pour le paramï¿½tre d'instrument.
+	 * la base Pour le timbre de l'instrument.
 	 * 
 	 * @return
 	 */
-	
+
 	// va de 15 a 80
 	public int getCube1Distance() {
-		int sensibilite = 2;
-		int offset = -29;
+		int sensibilite = 1;
+		int offset = -15;
 		return (int) (offset + sensibilite
 				* parameters[0].getPos().distanceTo(base.getCenter()));
 	}
@@ -185,7 +193,7 @@ gameEngine.getCubeManager().getCube(param2id)
 	 * 
 	 * @return
 	 */
-	
+
 	// va de 15 a 80
 	public int getCube2Distance() {
 		int sensibilite = 1;
@@ -200,7 +208,7 @@ gameEngine.getCubeManager().getCube(param2id)
 	 * 
 	 * @return
 	 */
-	
+
 	// va de 40 à 140 à peu près
 	public int getCubesAperture() {
 		int sensibility = 1;
@@ -344,13 +352,16 @@ gameEngine.getCubeManager().getCube(param2id)
 		DisplayableFather view = unit.getView();
 		float viewSize = (float) (view.getSize() / 2);
 		while (!KeyboardManager.tap) {
-			unit.setDirection(-gameEngine.getCubeManager().getCube(unitid)
-					.getAngle() / factor);
-//			if(comptVideo >15){
-//				comptVideo = 0;
-//				gameEngine.updateImage();
-//				unit.setLocation((int) (unit.getVCube().getPos1().getX()+unit.getVCube().getPos2().getX())/2,(int) (unit.getVCube().getPos1().getY()+unit.getVCube().getPos2().getY())/2);
-//			}
+//			unit.setDirection(-gameEngine.getCubeManager().getCube(unitid)
+//					.getAngle()
+//					/ factor);
+			// if(comptVideo >15){
+			// comptVideo = 0;
+			// gameEngine.updateImage();
+			// unit.setLocation((int)
+			// (unit.getVCube().getPos1().getX()+unit.getVCube().getPos2().getX())/2,(int)
+			// (unit.getVCube().getPos1().getY()+unit.getVCube().getPos2().getY())/2);
+			// }
 			i = 0;
 			j = 0;
 			if ((KeyboardManager.zKey) && (unit.getY() - size > 0))
@@ -389,51 +400,48 @@ gameEngine.getCubeManager().getCube(param2id)
 		unit.updtaeSeenMonsters();
 		KeyboardManager.tap = false;
 	}
-	
-	
 
 	public void UDirection(Unit unit) {
 		setPStatesToWaiting();
 		setUStateToDirection(unit);
 		unit.updtaeSeenMonsters();
 		ArrayList<Monster> seenMonsters = unit.getSeenMonsters();
-//		AttackConeView attackCone = new AttackConeView(30, unit.getDirection(),
-//				power, unit.getView());
-//		unit.getView().addChild(attackCone);
-		if(seenMonsters.size()>0){
+		// AttackConeView attackCone = new AttackConeView(30,
+		// unit.getDirection(),
+		// power, unit.getView());
+		// unit.getView().addChild(attackCone);
+		if (seenMonsters.size() > 0) {
 			unit.setPreviousTarget(seenMonsters.get(0));
 			unit.setTarget(seenMonsters.get(0));
-			AttackConeView cibleView =  new AttackConeView(360, 0, 40, unit.getTarget().getView());
+			AttackConeView cibleView = new AttackConeView(360, 0, 40, unit
+					.getTarget().getView());
 			unit.getTarget().getView().addChild(cibleView);
 			unit.getTarget().getDefence().getMelody().unpause();
 			while (!KeyboardManager.tap) {
-				parameters[0].setAngle((int)(-gameEngine.getCubeManager().getCube(param1id)
-						.getAngle() / factor));
-				parameters[1].setAngle((int)(-gameEngine.getCubeManager().getCube(param2id)
-						.getAngle() / factor));
-				
-				unit.updateTarget();		
-				if(!(unit.getPreviousTarget().equals(unit.getTarget()))){
+//				parameters[0].setAngle((int) (-gameEngine.getCubeManager()
+//						.getCube(param1id).getAngle() / factor));
+//				parameters[1].setAngle((int) (-gameEngine.getCubeManager()
+//						.getCube(param2id).getAngle() / factor));
+//				unit.setDirection(-gameEngine.getCubeManager().getCube(unitid)
+//						.getAngle()/ factor);
+
+				unit.updateTarget();
+				if (!(unit.getPreviousTarget().equals(unit.getTarget()))) {
 					unit.getPreviousTarget().getDefence().getMelody().pause();
 					unit.getPreviousTarget().getView().removeChild(cibleView);
-					cibleView =  new AttackConeView(360, 0, 40, unit.getTarget().getView());
+					cibleView = new AttackConeView(360, 0, 40, unit.getTarget()
+							.getView());
 					unit.getTarget().getView().addChild(cibleView);
 					unit.getTarget().getDefence().getMelody().unpause();
 				}
+
 				
-				unit.setDirection(-gameEngine.getCubeManager().getCube(unitid)
-						.getAngle() / factor);
 				if (KeyboardManager.wKey) {
 					unit.rotateDirection(1);
 				}
 				if (KeyboardManager.xKey) {
 					unit.rotateDirection(-1);
 				}
-//				if (unit.getDirection() > 0) {
-//					attackCone.setDirection((long) unit.getDirection());
-//				} else {
-//					attackCone.setDirection((long) (360 + unit.getDirection()));
-//				}
 				try {
 					Thread.sleep(10);
 				} catch (InterruptedException e) {
@@ -442,11 +450,9 @@ gameEngine.getCubeManager().getCube(param2id)
 			}
 			unit.getTarget().getView().removeChild(cibleView);
 			unit.getTarget().getDefence().getMelody().pause();
-//			unit.getView().removeChild(attackCone);
 			KeyboardManager.tap = false;
 		}
 	}
-	
 
 	/**
 	 * Methode qui declenche la creation du son via les Parameter Ici les
@@ -458,23 +464,28 @@ gameEngine.getCubeManager().getCube(param2id)
 
 	public void soundEditPTurn(Unit unit) throws InstantiationException,
 			IllegalAccessException {
-		if(unit.getSeenMonsters().size()>0){
+		if (unit.getSeenMonsters().size() > 0) {
 			Melody melody = unit.getAttackMelody();
 			setPStatesToSoundEdit();
 			setUStateToWaiting(unit);
 			melody.unpause();
 			while (!KeyboardManager.tap) {
-				parameters[0].setAngle((int)(-gameEngine.getCubeManager().getCube(param1id)
-						.getAngle() / factor));
-				parameters[1].setAngle((int)(-gameEngine.getCubeManager().getCube(param2id)
-						.getAngle() / factor));
-//				if(comptVideo >15){
-	//				comptVideo = 0;
-	//				gameEngine.updateImage();
-//					parameters[0].setLocation((int) (parameters[0].getVCube().getPos1().getX()+parameters[0].getVCube().getPos2().getX())/2,(int) (parameters[0].getVCube().getPos1().getY()+parameters[0].getVCube().getPos2().getY())/2);
-//					parameters[0].setLocation((int) (parameters[1].getVCube().getPos1().getX()+parameters[1].getVCube().getPos2().getX())/2,(int) (parameters[1].getVCube().getPos1().getY()+parameters[1].getVCube().getPos2().getY())/2);
-				
-//			}
+//				parameters[0].setAngle((int) (-gameEngine.getCubeManager()
+//						.getCube(param1id).getAngle() / factor));
+//				parameters[1].setAngle(
+//				(int) (-gameEngine.getCubeManager()
+//						.getCube(param2id).getAngle() / factor));
+				// if(comptVideo >15){
+				// comptVideo = 0;
+				// gameEngine.updateImage();
+				// parameters[0].setLocation((int)
+				// (parameters[0].getVCube().getPos1().getX()+parameters[0].getVCube().getPos2().getX())/2,(int)
+				// (parameters[0].getVCube().getPos1().getY()+parameters[0].getVCube().getPos2().getY())/2);
+				// parameters[0].setLocation((int)
+				// (parameters[1].getVCube().getPos1().getX()+parameters[1].getVCube().getPos2().getX())/2,(int)
+				// (parameters[1].getVCube().getPos1().getY()+parameters[1].getVCube().getPos2().getY())/2);
+
+				// }
 				if ((KeyboardManager.zKey)
 						&& (base.getCenter().distanceTo(
 								new Point(parameters[choice].getX(),
@@ -519,21 +530,25 @@ gameEngine.getCubeManager().getCube(param2id)
 						try {
 							melody.setInstrument(InstrumentLibrary
 									.getNextInstrument(melody.getInstrument()));
-						} catch (InstantiationException | IllegalAccessException e1) {
+						} catch (InstantiationException
+								| IllegalAccessException e1) {
 							e1.printStackTrace();
 						}
 					}
-				// on passe a l'intrument precedent autant de fois que necessaire
+				// on passe a l'intrument precedent autant de fois que
+				// necessaire
 				if (iterInstrum < 0)
 					for (int i = 0; i < -iterInstrum; i++) {
 						try {
 							melody.setInstrument(InstrumentLibrary
-									.getPreviousInstrument(melody.getInstrument()));
-						} catch (InstantiationException | IllegalAccessException e1) {
+									.getPreviousInstrument(melody
+											.getInstrument()));
+						} catch (InstantiationException
+								| IllegalAccessException e1) {
 							e1.printStackTrace();
 						}
 					}
-	
+
 				// on modifie le Pattern en fonction de l'angle du Parameter2
 				int iterPattern = getChangePattern();
 				// on passe au Pattern suivant autant de fois que necessaire
@@ -542,7 +557,8 @@ gameEngine.getCubeManager().getCube(param2id)
 						try {
 							melody.setPattern(MidiPatternsLibrary
 									.getNextPattern(melody.getPattern()));
-						} catch (InstantiationException | IllegalAccessException e1) {
+						} catch (InstantiationException
+								| IllegalAccessException e1) {
 							e1.printStackTrace();
 						}
 					}
@@ -552,29 +568,30 @@ gameEngine.getCubeManager().getCube(param2id)
 						try {
 							melody.setPattern(MidiPatternsLibrary
 									.getPreviousPattern(melody.getPattern()));
-						} catch (InstantiationException | IllegalAccessException e1) {
+						} catch (InstantiationException
+								| IllegalAccessException e1) {
 							e1.printStackTrace();
 						}
 					}
-	
+
 				// On regle le parametre d'instrument
 				melody.setParameter(getCube1Distance());
-	
+
 				// on regle la note de depart
 				melody.setTune(getCube2Distance());
-	
+
 				// on regle le tempo
 				melody.setTempo(getCubesAperture());
-	
+
 				try {
 					Thread.sleep(10);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 				comptVideo++;
-	
+
 			}
-	
+
 			// zik
 			KeyboardManager.tap = false;
 			melody.pause();
@@ -582,11 +599,8 @@ gameEngine.getCubeManager().getCube(param2id)
 		}
 	}
 
-
-
-
 	public void UAttack(Unit unit) {
-		if(unit.getSeenMonsters().size()>0){
+		if (unit.getSeenMonsters().size() > 0) {
 			unit.setAperture(30);
 			Monster target = unit.getTarget();
 			double xdiff = target.getPos().getX() - unit.getPos().getX();
@@ -600,22 +614,36 @@ gameEngine.getCubeManager().getCube(param2id)
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			if(target!=null){
-				double dTempo = Math.exp(Math.abs(unit.getAttackMelody().getTempo()-target.getDefence().getMelody().getTempo()));
-				double dTune = Math.exp(Math.abs(unit.getAttackMelody().getTune()-target.getDefence().getMelody().getTune()));
-				double dParameter = Math.exp(Math.abs(unit.getAttackMelody().getParameter()-target.getDefence().getMelody().getParameter()));
+			if (target != null) {
+				double dTempo = Math.exp(Math.abs(unit.getAttackMelody()
+						.getTempo()
+						- target.getDefence().getMelody().getTempo()));
+				double dTune = Math
+						.exp(Math.abs(unit.getAttackMelody().getTune()
+								- target.getDefence().getMelody().getTune()));
+				double dParameter = Math.exp(Math.abs(unit.getAttackMelody()
+						.getParameter()
+						- target.getDefence().getMelody().getParameter()));
 				int dInstrum;
-				if(unit.getAttackMelody().getInstrument().equals(target.getDefence().getMelody().getInstrument())) dInstrum = 1;
-				else dInstrum = 0;
+				if (unit.getAttackMelody()
+						.getInstrument()
+						.equals(target.getDefence().getMelody().getInstrument()))
+					dInstrum = 1;
+				else
+					dInstrum = 0;
 				int dPattern;
-				if(unit.getAttackMelody().getPattern().equals(target.getDefence().getMelody().getPattern())) dPattern = 1;
-				else dPattern = 0;
-				int degats = (int) ((int) power* dPattern*dInstrum*dTune*dTempo*dParameter);
-				//on inflige a present les degats a la cibe
+				if (unit.getAttackMelody().getPattern()
+						.equals(target.getDefence().getMelody().getPattern()))
+					dPattern = 1;
+				else
+					dPattern = 0;
+				int degats = (int) ((int) power * dPattern * dInstrum * dTune
+						* dTempo * dParameter);
+				// on inflige a present les degats a la cibe
 				if (power > target.getPos().distanceTo(unit.getPos())) {
 					target.decreaseLife(degats);
 				}
-				
+
 			}
 		}
 	}
@@ -674,16 +702,12 @@ gameEngine.getCubeManager().getCube(param2id)
 		return false;
 	}
 
-
 	public int getParam1id() {
 		return param1id;
 	}
 
-
 	public int getParam2id() {
 		return param2id;
 	}
-	
-	
 
 }

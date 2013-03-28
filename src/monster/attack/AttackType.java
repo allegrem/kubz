@@ -17,6 +17,7 @@ public abstract class AttackType {
 	protected Melody attackMelody;
 	protected int power = 100;
 	protected int distance = 100;
+	protected Unit previousTarget = null;
 
 	public AttackType(Monster monster) {
 		this.monster = monster;

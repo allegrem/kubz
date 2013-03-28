@@ -32,13 +32,13 @@ public class Melody extends Thread {
 	private Instrument instrument;
 
 	private int parameter;
-	
+
 	private int id1;
-	
+
 	private int id2;
-	
+
 	private Player owner;
-	
+
 	private boolean hascube = false;
 
 	private int tune; // move it to instrument !! ("note de depart?")
@@ -58,7 +58,7 @@ public class Melody extends Thread {
 		// start playing
 		start();
 	}
-	
+
 	public Melody(int id1, int id2, Player owner) {
 		this();
 		this.id1 = id1;
@@ -76,7 +76,7 @@ public class Melody extends Thread {
 
 	/**
 	 * @param tempo
-	 * the tempo to set
+	 *            the tempo to set
 	 */
 	public void setTempo(int tempo) {
 		this.tempo = tempo;
@@ -145,7 +145,7 @@ public class Melody extends Thread {
 	}
 
 	public void run() {
-		System.out.println("starting run in Melody");
+//		System.out.println("starting run in Melody");
 
 		DelayedMidiCommand c = pattern.getNext();
 		DelayedMidiCommand last_c;
@@ -169,15 +169,19 @@ public class Melody extends Thread {
 			else {
 				// play the command
 				instrument.command(c.getMidiCommand(tune));
-				if((c.getMidiCommand(tune).getCommand() == MidiCommand.NOTE_ON)&&(hascube)){
-//					owner.getGameEngine().getCubeManager().getCube(id1).setMotor((byte) 255);
-//					owner.getGameEngine().getCubeManager().getCube(id2).setMotor((byte) 255);
+				if ((c.getMidiCommand(tune).getCommand() == MidiCommand.NOTE_ON)
+						&& (hascube)) {
+					// owner.getGameEngine().getCubeManager().getCube(id1).setMotor((byte)
+					// 255);
+					// owner.getGameEngine().getCubeManager().getCube(id2).setMotor((byte)
+					// 255);
+				} else if ((c.getMidiCommand(tune).getCommand() == MidiCommand.NOTE_OFF)
+						&& (hascube)) {
+					// owner.getGameEngine().getCubeManager().getCube(id1).setMotor((byte)
+					// 0);
+					// owner.getGameEngine().getCubeManager().getCube(id2).setMotor((byte)
+					// 0);
 				}
-				else if((c.getMidiCommand(tune).getCommand() == MidiCommand.NOTE_OFF)&&(hascube)){
-//					owner.getGameEngine().getCubeManager().getCube(id1).setMotor((byte) 0);
-//					owner.getGameEngine().getCubeManager().getCube(id2).setMotor((byte) 0);
-				}
-
 
 				// get the next command
 				last_c = c;
@@ -198,7 +202,7 @@ public class Melody extends Thread {
 			}
 		}
 
-		System.out.println("stopping run in Melody");
+//		System.out.println("stopping run in Melody");
 	}
 
 	// stop the melody

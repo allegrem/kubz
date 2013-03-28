@@ -44,13 +44,13 @@ public class GameEngine extends Thread {
 	private MapReader reader = new MapReader("Maps/bFile.txt",
 			"Maps/mFile.txt", "Maps/WFile.txt", this);
 //	private Traitement traitement;
-	private CubeManager cubeManager;
+//	private CubeManager cubeManager;
 	private ArrayList<VideoCube> cubeList = new ArrayList<VideoCube>();
 //	private final GrabberShow gs;
 
-	public GameEngine(CubeManager cubeManager) {
+	public GameEngine(/*CubeManager cubeManager*/) {
 		RandomPerso.initialize();
-		this.cubeManager = cubeManager;
+//		this.cubeManager = cubeManager;
 //		gs = new GrabberShow();
 //        Thread th = new Thread(gs);
 //        th.start();
@@ -95,11 +95,11 @@ public class GameEngine extends Thread {
 		//init();
 		
 		
-//		bases.add(new Base(ReadableColor.ORANGE,BaseView.BAS,this));
-		bases.add(new Base(ReadableColor.BLUE,BaseView.GAUCHE,this));
-		bases.add(new Base(ReadableColor.GREEN,BaseView.DROITE,this));
+		bases.add(new Base(ReadableColor.ORANGE,BaseView.BAS,this));
+//		bases.add(new Base(ReadableColor.BLUE,BaseView.GAUCHE,this));
+//		bases.add(new Base(ReadableColor.GREEN,BaseView.DROITE,this));
 		playerList.add(new Player(this, bases.get(0), 45679, 15000, 15075/*, cubeList.get(0), cubeList.get(1), cubeList.get(2)*/));
-		playerList.add(new Player(this, bases.get(1), 45675, 45671, 14837/*, cubeList.get(3), cubeList.get(4), cubeList.get(5)*/));
+//		playerList.add(new Player(this, bases.get(1), 45675, 45671, 14837/*, cubeList.get(3), cubeList.get(4), cubeList.get(5)*/));
 //		playerList.add(new Player(this, bases.get(2), 53192, 35916, 45676));
 
 

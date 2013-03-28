@@ -5,9 +5,6 @@ package monster.attack;
  * @author Felix
  */
 
-import player.unit.Unit;
-import midisynthesis.instruments.InstrumentLibrary;
-import midisynthesis.patterns.MidiPatternsLibrary;
 import monster.zoo.Monster;
 
 /**

@@ -9,13 +9,9 @@ import utilities.Point;
 import views.informationViews.LifeView;
 import views.monsters.MonsterView;
 import wall.Wall;
-
 import gameEngine.GameEngine;
-
 import java.util.*;
-
 import player.unit.Unit;
-
 import monster.DefenceType;
 import monster.attack.AttackType;
 import monster.attack.ChooseType;
@@ -39,7 +35,7 @@ public class Monster {
 	protected double life;
 	protected LifeView lifeView;
 	protected MonsterView view;
-	private DefenceType defence;
+	protected DefenceType defence;
 
 	/**
 	 * cree un nouveau monstre e la position (xStart,yStart)
@@ -124,48 +120,78 @@ public class Monster {
 		ArrayList<Wall> walls = gameEngine.getWalls();
 		double xm = this.getPos().getX();
 		double ym = this.getPos().getY();
+
 		for (Unit unit : seenUnits) {
-			double xu = unit.getPos().getX();
-			double yu = unit.getPos().getY();
 			for (Wall wall : walls) {
+				// Construction de la liste des angles entre l'horizontale, le
+				// montre et les extremites du mur
 				double xp1 = wall.getExtremity1().getX();
 				double yp1 = wall.getExtremity1().getY();
 				double xp2 = wall.getExtremity2().getX();
 				double yp2 = wall.getExtremity2().getY();
-				// calcul de l'intersection entre la droite qui relie Unit a
-				// Monster et du wall
-				double xi = (ym - yp1 - xm * (yu - ym) / (xu - xm) + xp1
-						* (yp2 - yp1) / (xp2 - xp1))
-						/ ((yp2 - yp1) / (xp2 - xp1) - (yu - ym) / (xu - xm));
-				double yi = ym + (xi - xm) * (yu - ym) / (xu - xm);
-				if (((xi <= Math.max(xp1, xp2))
-						&& (xi >= Math.min(xp1, xp2))
-						&& (pos.distanceTo(new Point(xi, yi)) < pos
-								.distanceTo(unit.getPos())))) {
-					removeUnits.add(unit);
-					
+				double theta1 = 180 * Math.atan2(yp1 - ym, xp1 - xm) / Math.PI;
+				double theta2 = 180 * Math.atan2(yp2 - ym, xp2 - xm) / Math.PI;
+				double aperture = theta1 - theta2;
+				// contruction de l'angle (extrem1,monstre,unit)
+				double xu = unit.getX();
+				double yu = unit.getY();
+				double thetau = 180 * Math.atan2(yu - ym, xu - xm) / Math.PI;
+				boolean inAngle = false;
+
+				// on regarde si la droite qui va du monstre vers le joueur
+				// rencontre un mur
+				if ((Math.abs(aperture) < 180)
+						&& (inRange(thetau, theta1, theta2))) {
+					inAngle = true;
+					System.out.println("tata");
+				} else if ((Math.abs(aperture) > 180)
+						&& (!inRange(thetau, theta1, theta2))) {
+					inAngle = true;
+					System.out.println("tata");
+
+				}
+
+				// Maintenant qu'on sait qu'il y a ou pas un mur dans la zone ou
+				// est le joueur, on regarde si ce dernier est devant ou
+				// derriere le mur
+				if (inAngle) {
+					double xi = (ym - yp1 - xm * (yu - ym) / (xu - xm) + xp1
+							* (yp2 - yp1) / (xp2 - xp1))
+							/ ((yp2 - yp1) / (xp2 - xp1) - (yu - ym)
+									/ (xu - xm));
+					double yi = ym + (xi - xm) * (yu - ym) / (xu - xm);
+					if ((pos.distanceTo(new Point(xi, yi)) < pos
+							.distanceTo(unit.getPos()))) {
+						removeUnits.add(unit);
+					}
 				}
 			}
+
 		}
-		for(Unit unit:removeUnits){
+
+		// A present on enleve tous les joueurs qu'on ne voit pas de la liste
+		// des joueurs vus
+		for (Unit unit : removeUnits) {
 			seenUnits.remove(unit);
-				
 		}
+
 	}
-	
 
 	public Unit getCible() {
 		return cible;
 	}
-
 
 	/** Actions liees a la position **/
 
 	/**
 	 * lance la procedure de mouvement du monstre
 	 */
-	void move() {
+	private void move() {
 		move.move();
+	}
+	
+	private void attack(){
+		attack.attack();
 	}
 
 	public DefenceType getDefence() {
@@ -224,9 +250,9 @@ public class Monster {
 	public void act() {
 		setCible();
 		move();
-		attack.attack();
+		attack();
 		try {
-			Thread.sleep(6000);
+			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -253,5 +279,11 @@ public class Monster {
 		this.view = view;
 	}
 
+	public boolean inRange(double x, double range1, double range2) {
+		boolean result = false;
+		if ((x >= Math.min(range1, range2)) && (x <= Math.max(range1, range2)))
+			result = true;
+		return result;
+	}
 
 }
