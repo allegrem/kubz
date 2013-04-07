@@ -17,12 +17,20 @@ public abstract class AttackType {
 	protected Melody attackMelody;
 	protected int power = 100;
 	protected int distance = 100;
+	protected Unit previousTarget = null;
 
+	
+	//creation de l'attaque d'un monstre
 	public AttackType(Monster monster) {
 		this.monster = monster;
 		this.attackMelody = new Melody();
 
 	}
+
+	/**
+	 * On commence par generer la nouvelle melody du monstre
+	 * les degtas sont ensuite calcules et infliges a la cible du monstre (si il y a une cible)
+	 */
 
 	public void attack() {
 		generateAttackMelody();
@@ -66,9 +74,14 @@ public abstract class AttackType {
 
 	}
 
-	protected void generateAttackMelody() {
-	}
+	/**
+	 * Genere une nouvelle attackMelody
+	 */
+	protected  abstract void generateAttackMelody() ;
 
+	/**
+	 * Genere une Melody aleatoire (mais néanmoins "agreable" a l'oreille)
+	 */
 	protected void generateRandomAttackMelody() {
 		// generation aleatoire d'une melody
 		int tune = (int) (40 + 60 * Math.random());

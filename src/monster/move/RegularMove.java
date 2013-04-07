@@ -8,21 +8,21 @@ package monster.move;
 import player.unit.Unit;
 import monster.zoo.Monster;
 
-public class RegularMove extends MoveType{
-	
+public class RegularMove extends MoveType {
 
-	
 	public RegularMove(Monster monster, int speed) {
 		super(monster, speed);
 	}
 
 	@Override
-	public void move(){
+	/**
+	 * Le monstre se deplace vers sa cible si il en a une, sinon il se deplace de maniere aleatoire
+	 */
+	public void move() {
 		Unit cible = monster.getCible();
-		if (cible!=null){
+		if (cible != null) {
 			moveTo(cible);
-		}
-		else{
+		} else {
 			randMove();
 		}
 	}

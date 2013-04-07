@@ -14,7 +14,7 @@ public class RandomMove extends MoveType{
 	}
 	
 	/**
-	 * Son seul type de mouvement est de se d�placer vers une direction al�atoire
+	 * Son seul type de mouvement est de se deplacer vers une direction al�atoire
 	 */
 	@Override
 	public void move(){

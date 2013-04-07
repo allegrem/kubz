@@ -16,8 +16,7 @@ public abstract class ChooseType {
 		this.monster = monster;
 	}
 
-	public int getPot(Unit unit){
-		return 0;
-	}
+	public  abstract int getPot(Unit unit);
+	
 	
 }
