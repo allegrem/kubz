@@ -9,7 +9,8 @@ public class MainMidiPlayground {
 	 * @param args 
 	 */
 	public static void main(String[] args) {
-	new MidiTestFrame();
+		new MidiTestFrame();
+//		new MidiKeyboard();
 	}
 
 }

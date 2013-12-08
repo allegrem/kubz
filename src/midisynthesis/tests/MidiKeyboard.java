@@ -66,7 +66,7 @@ public class MidiKeyboard extends JFrame {
 				JComponent.WHEN_IN_FOCUSED_WINDOW);
 		this.setRootPane(rootPane); 
 		
-		instr.start();
+//		instr.start();
 
 		//show the window
 		setSize(300, 300);
